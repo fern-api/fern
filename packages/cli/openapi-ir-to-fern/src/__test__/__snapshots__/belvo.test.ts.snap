@@ -11422,97 +11422,6 @@ client.accounts.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "balance": {
-                      "available": 5621.12,
-                      "current": 5874.13,
-                    },
-                    "balance_type": "ASSET",
-                    "category": "CHECKING_ACCOUNT",
-                    "collected_at": "2019-09-27T13:01:41.941Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "credit_data": {
-                      "collected_at": "2019-09-27T13:01:41.941Z",
-                      "credit_limit": 192000,
-                      "cutting_date": "2019-12-11",
-                      "interest_rate": 4,
-                      "minimum_payment": 2400.3,
-                      "next_payment_date": "2019-12-13",
-                      "no_interest_payment": 2690.83,
-                    },
-                    "currency": "MXN",
-                    "funds_data": [
-                      {
-                        "balance": 88427.94,
-                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                        "name": "FIX X",
-                        "percentage": 100,
-                        "public_identifications": [
-                          {
-                            "name": "CNPJ",
-                            "value": "05.954.445/0221-68",
-                          },
-                        ],
-                        "type": "CNPJ",
-                      },
-                    ],
-                    "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
-                    "institution": {
-                      "name": "erebor_mx_retail",
-                      "type": "bank",
-                    },
-                    "last_accessed_at": "2021-03-09T10:28:40.000Z",
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "loan_data": {
-                      "collected_at": "2022-02-09T08:45:50.406032Z",
-                      "contract_amount": 202000,
-                      "contract_end_date": "2027-10-01",
-                      "contract_number": "890ASLDJF87SD00",
-                      "contract_start_date": "2020-03-01",
-                      "fees": [
-                        {
-                          "type": "OPERATION_FEE",
-                          "value": 5.6,
-                        },
-                      ],
-                      "interest_rates": [
-                        {
-                          "name": "jurosEfetivo",
-                          "type": "MONTHLY",
-                          "value": 7.85,
-                        },
-                      ],
-                      "loan_type": "Consignado",
-                      "monthly_payment": 1000,
-                      "number_of_installments_outstanding": 48,
-                      "number_of_installments_total": 60,
-                      "outstanding_balance": 182000,
-                      "outstanding_principal": 142023,
-                      "payment_day": "27",
-                      "principal": 192000,
-                    },
-                    "name": "Cuenta Perfiles- M.N. - MXN-666",
-                    "number": "4057068115181",
-                    "public_identification_name": "CLABE",
-                    "public_identification_value": "150194683119900273",
-                    "receivables_data": {
-                      "anticipated": 1393.46,
-                      "available": 800.37,
-                      "collected_at": "2022-02-09T08:45:50.406032Z",
-                      "current": 2193.83,
-                    },
-                    "type": "Cuentas de efectivo",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/accounts/{id}",
             "path-parameters": {
@@ -11552,7 +11461,46 @@ client.accounts.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "balance__available": "4000.00",
+                  "balance__available__gt": "2000.00",
+                  "balance__available__gte": "1999.00",
+                  "balance__available__lt": "6000.00",
+                  "balance__available__lte": "5999.00",
+                  "balance__available__range": "3000.00,4350.00",
+                  "balance__current": "4000.00",
+                  "balance__current__gt": "2000.00",
+                  "balance__current__gte": "1999.00",
+                  "balance__current__lt": "6000.00",
+                  "balance__current__lte": "5999.00",
+                  "balance__current__range": "3000.00,4350.00",
+                  "category": "CREDIT_ACCOUNT",
+                  "category__in": "CHECKING_ACCOUNT,SAVINGS_ACCOUNT",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "currency": "COP",
+                  "currency__in": "COP,MXN",
+                  "fields": "link,balance,account",
+                  "id": "24ccab1d-3a86-4136-a6eb-e04bf52b356f",
+                  "id__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "institution": "erebor_mx_retail",
+                  "institution__in": "erebor_mx_retail,gringotts_mx_retail",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "name": "Cuenta Perfiles- M.N. - MXN-666",
+                  "name__icontains": "Perfiles",
+                  "number": "4057068115181",
+                  "number__in": "4057068115181,7809346821648",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "public_identification_name": "CLABE",
+                  "public_identification_value": "150194683119900273",
+                  "type": "Cuentas de efectivo",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11882,7 +11830,10 @@ client.accounts.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -11947,7 +11898,10 @@ client.accounts.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -12098,102 +12052,6 @@ client.balances.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "account": {
-                      "balance": {
-                        "available": 5621.12,
-                        "current": 5874.13,
-                      },
-                      "balance_type": "ASSET",
-                      "category": "CHECKING_ACCOUNT",
-                      "collected_at": "2019-09-27T13:01:41.941Z",
-                      "created_at": "2022-02-09T08:45:50.406032Z",
-                      "credit_data": {
-                        "collected_at": "2019-09-27T13:01:41.941Z",
-                        "credit_limit": 192000,
-                        "cutting_date": "2019-12-11",
-                        "interest_rate": 4,
-                        "minimum_payment": 2400.3,
-                        "next_payment_date": "2019-12-13",
-                        "no_interest_payment": 2690.83,
-                      },
-                      "currency": "MXN",
-                      "funds_data": [
-                        {
-                          "balance": 88427.94,
-                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                          "name": "FIX X",
-                          "percentage": 100,
-                          "public_identifications": [
-                            {
-                              "name": "CNPJ",
-                              "value": "05.954.445/0221-68",
-                            },
-                          ],
-                          "type": "CNPJ",
-                        },
-                      ],
-                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
-                      "institution": {
-                        "name": "erebor_mx_retail",
-                        "type": "bank",
-                      },
-                      "last_accessed_at": "2021-03-09T10:28:40.000Z",
-                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                      "loan_data": {
-                        "collected_at": "2022-02-09T08:45:50.406032Z",
-                        "contract_amount": 202000,
-                        "contract_end_date": "2027-10-01",
-                        "contract_number": "890ASLDJF87SD00",
-                        "contract_start_date": "2020-03-01",
-                        "fees": [
-                          {
-                            "type": "OPERATION_FEE",
-                            "value": 5.6,
-                          },
-                        ],
-                        "interest_rates": [
-                          {
-                            "name": "jurosEfetivo",
-                            "type": "MONTHLY",
-                            "value": 7.85,
-                          },
-                        ],
-                        "loan_type": "Consignado",
-                        "monthly_payment": 1000,
-                        "number_of_installments_outstanding": 48,
-                        "number_of_installments_total": 60,
-                        "outstanding_balance": 182000,
-                        "outstanding_principal": 142023,
-                        "payment_day": "27",
-                        "principal": 192000,
-                      },
-                      "name": "Cuenta Perfiles- M.N. - MXN-666",
-                      "number": "4057068115181",
-                      "public_identification_name": "CLABE",
-                      "public_identification_value": "150194683119900273",
-                      "receivables_data": {
-                        "anticipated": 1393.46,
-                        "available": 800.37,
-                        "collected_at": "2022-02-09T08:45:50.406032Z",
-                        "current": 2193.83,
-                      },
-                      "type": "Cuentas de efectivo",
-                    },
-                    "balance": 50000,
-                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                    "value_date": "2019-10-23",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/balances/{id}",
             "path-parameters": {
@@ -12233,7 +12091,36 @@ client.balances.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "account__type": "Cuentas de efectivo",
+                  "account__type__in": "Cuentas de efectivo,Credito",
+                  "balance": "530.00",
+                  "balance__gt": "520.00",
+                  "balance__gte": "519.00",
+                  "balance__lt": "540.00",
+                  "balance__lte": "541.00",
+                  "balance__range": "519.00,541.00",
+                  "currency": "COP",
+                  "currency__in": "COP,MXN",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "institution": "erebor_mx_retail",
+                  "institution__in": "erebor_mx_retail,gringotts_mx_retail",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "value_date": "2022-05-05",
+                  "value_date__gt": "2022-05-06",
+                  "value_date__gte": "2022-05-04",
+                  "value_date__lt": "2022-03-02",
+                  "value_date__lte": "2022-03-01",
+                  "value_date__range": "2022-03-01,2022-05-06",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12507,7 +12394,10 @@ client.balances.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -12558,7 +12448,10 @@ client.balances.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2021-01-18",
@@ -12697,7 +12590,23 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at": "2022-09-15",
+                  "created_at__gt": "2022-09-15",
+                  "created_at__gte": "2022-09-15",
+                  "created_at__lt": "2022-09-15",
+                  "created_at__lte": "2022-09-15",
+                  "created_at__range": "2022-09-15,2022-09-20",
+                  "customer": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "holder__type": "INDIVIDUAL",
+                  "holder__type__in": "INDIVIDUAL,BUSINESS",
+                  "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "institution": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "number": "1231564526",
+                  "number__in": "1231564526,15648325",
+                  "page": 1,
+                  "providers": "payments_way",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12970,7 +12879,18 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at": "2022-09-15",
+                  "created_at__gt": "2022-09-15",
+                  "created_at__gte": "2022-09-15",
+                  "created_at__lt": "2022-09-15",
+                  "created_at__lte": "2022-09-15",
+                  "created_at__range": "2022-09-15,2022-09-20",
+                  "customer__type": "INDIVIDUAL",
+                  "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "page": 1,
+                  "search": "car",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13099,73 +13019,6 @@ At the moment, the employment records resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                    "created_at": "2020-04-23T21:32:55.336854+00:00",
-                    "employment_records": [
-                      {
-                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                        "currency": "MXN",
-                        "employer": "Batman Enterprises CDMX",
-                        "employer_id": "780-BAT-88769-CDMX",
-                        "employment_status_updates": [
-                          {
-                            "base_salary": 1033.09,
-                            "event": "DISMISSED_RESIGNED",
-                            "update_date": "2021-09-01",
-                          },
-                        ],
-                        "end_date": "2019-12-31",
-                        "most_recent_base_salary": 762.54,
-                        "start_date": "2019-10-10",
-                        "state": "DISTRITO FEDERAL",
-                        "weeks_employed": 12,
-                      },
-                    ],
-                    "files": [
-                      {
-                        "type": "ReporteSemanasCotizadas_190123",
-                        "value": "=PDF_BINARY=",
-                      },
-                    ],
-                    "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
-                    "internal_identification": "BLPM951331IONVGR54",
-                    "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
-                    "personal_data": {
-                      "birth_date": "2022-02-09",
-                      "document_ids": [
-                        {
-                          "document_number": "10277663582",
-                          "document_type": "NSS",
-                        },
-                      ],
-                      "email": "bruce.banner@avengers.com",
-                      "entitlements": {
-                        "entitled_to_company_benefits": true,
-                        "entitled_to_health_insurance": true,
-                        "status": "EMPLOYED",
-                      },
-                      "first_name": "Bruce",
-                      "last_name": "Banner del Torro",
-                      "official_name": "Bruce Banner del Torro",
-                    },
-                    "report_date": "2023-01-19",
-                    "social_security_summary": {
-                      "weeks_contributed": 188,
-                      "weeks_redeemed": 0,
-                      "weeks_reinstated": 0,
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/employment-records/{id}",
             "path-parameters": {
@@ -13205,7 +13058,12 @@ At the moment, the employment records resource is available for:
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13325,7 +13183,10 @@ At the moment, the employment records resource is available for:
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
                 },
@@ -13618,7 +13479,16 @@ client.incomes.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "fields": "link,balance,account",
+                  "link": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "link__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13728,7 +13598,10 @@ client.incomes.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -13779,7 +13652,10 @@ client.incomes.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "allowed_income_types": [
                     "SALARY",
@@ -13908,60 +13784,6 @@ You can see a complete list of institutions by either consulting our [Institutio
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "country_codes": [
-                      "MX",
-                    ],
-                    "display_name": "Erebor Mexico",
-                    "features": [
-                      {
-                        "description": "The institution may require a token during link creation or login",
-                        "name": "token_required",
-                      },
-                    ],
-                    "form_fields": [
-                      {
-                        "label": "Client number",
-                        "name": "username",
-                        "placeholder": "ABC333333A33",
-                        "type": "text",
-                        "validation": "^.{1,}$",
-                        "validation_message": "Invalid client number",
-                        "values": [
-                          {
-                            "code": "001",
-                            "label": "Cédula de Ciudadanía",
-                            "placeholder": "DEF4444908M22",
-                            "validation": "^.{1,}$",
-                            "validation_message": "Invalid document number",
-                          },
-                        ],
-                      },
-                    ],
-                    "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                    "id": 1003,
-                    "integration_type": "credentials",
-                    "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
-                    "name": "erebor_mx_retail",
-                    "primary_color": "#056dae",
-                    "resources": [
-                      "ACCOUNTS",
-                    ],
-                    "status": "healthy",
-                    "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                    "type": "bank",
-                    "website": "https://www.erebor.com/",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/institutions/{id}",
             "path-parameters": {
@@ -14001,7 +13823,22 @@ You can see a complete list of institutions by either consulting our [Institutio
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "country_code": "MX",
+                  "country_code__in": "CO,BR",
+                  "display_name": "Erebor Bank",
+                  "fields": "link,balance,account",
+                  "name__in": "erebor_br_retail,gotham_co_business",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "resources__allin": "ACCOUNTS,OWNERS,TRANSACTIONS",
+                  "status": "healthy",
+                  "status__in": "healthy,down",
+                  "type": "fiscal",
+                  "type__in": "fiscal,bank",
+                  "website": "https://www.erebor.mx",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -14230,66 +14067,6 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "balance_gross": 76000,
-                    "balance_net": 77370.69,
-                    "balance_type": "ASSET",
-                    "currency": "BRL",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "instruments": [
-                      {
-                        "average_acquisition_price": 10.01,
-                        "balance_gross": 100.09,
-                        "balance_net": 99.09,
-                        "currency": "USD",
-                        "fees": [
-                          {
-                            "type": "OPERATION_FEE",
-                            "value": 123.09,
-                          },
-                        ],
-                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                        "interest_rates": [
-                          {
-                            "index": "CDI",
-                            "type": "yearly",
-                            "value": 11.31,
-                          },
-                        ],
-                        "name": "CBD DIGITAL ESPECIAL",
-                        "open_date": "2021-08-10",
-                        "price": 10.41,
-                        "profit": 3.08,
-                        "public_id": [
-                          {
-                            "type": "isin",
-                            "value": "435-3354.3333",
-                          },
-                        ],
-                        "quantity": 27.46,
-                        "redemption_conditions": [
-                          {
-                            "type": "due_date",
-                            "value": "12-02-2023",
-                          },
-                        ],
-                        "subtype": "CBD",
-                        "type": "BOND",
-                      },
-                    ],
-                    "name": "Investimento",
-                    "type": "FIXED_INCOME",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/investments/portfolios/{id}",
             "path-parameters": {
@@ -14329,7 +14106,13 @@ client. investments_portfolio.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -14478,7 +14261,10 @@ client. investments_portfolio.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -14578,7 +14364,10 @@ client. investments_portfolio.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -14806,7 +14595,39 @@ client.invoices.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "invoice_date": "2022-05-05",
+                  "invoice_date__gt": "2022-05-06",
+                  "invoice_date__gte": "2022-05-04",
+                  "invoice_date__lt": "2022-03-02",
+                  "invoice_date__lte": "2022-03-01",
+                  "invoice_date__range": "2022-03-01,2022-05-06",
+                  "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
+                  "invoice_identification__in": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840,992B9918-3G6H-4E0B-DAI9-2BE2D833B833",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "status": "Vigente",
+                  "status__in": "Vigente,Cancelado",
+                  "total_amount": "1000.00",
+                  "total_amount__gt": "520.00",
+                  "total_amount__gte": "519.00",
+                  "total_amount__lt": "540.00",
+                  "total_amount__lte": "541.00",
+                  "total_amount__range": "519.00,541.00",
+                  "type": "OUTFLOW",
+                  "type__in": "OUTFLOW,INFLOW",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15004,7 +14825,10 @@ client.invoices.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -15056,7 +14880,10 @@ client.invoices.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
@@ -15183,8 +15010,13 @@ For single links, you have to perform POST calls to an institution **every time*
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "path-parameters": {
+                  "id": "e4bb1afb-4a4f-4dd6-8be0-e615d233185b",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "access_mode": "single",
                 },
@@ -15274,28 +15106,6 @@ To delete links in bulk, we recommend looping through the list of links you want
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "access_mode": "recurrent",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
-                    "refresh_rate": "7d",
-                    "status": "valid",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/links/{id}",
             "path-parameters": {
@@ -15335,7 +15145,31 @@ To delete links in bulk, we recommend looping through the list of links you want
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "access_mode": "single",
+                  "created_at": "2022-05-01",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "created_by__not_in": "578947e2-3c9a-4401-bbad-59b2f2d2b91b,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
+                  "external_id": "InternalUser4000",
+                  "external_id__in": "InternalUser4000,InternalUser4001",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "institution": "erebor_mx_retail",
+                  "institution__in": "erebor_mx_retail,gringotts_co_retail",
+                  "institution_user_id": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=",
+                  "institution_user_id__in": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=,YwuTM0uEEh1BbVgDZBcNpa_-Tm3l2q8ZkZNrlhp-pNA=",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "refresh_rate": "24h",
+                  "status": "invalid",
+                  "status__in": "invalid,unconfirmed",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15503,7 +15337,10 @@ To delete links in bulk, we recommend looping through the list of links you want
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -15570,7 +15407,10 @@ To delete links in bulk, we recommend looping through the list of links you want
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "access_mode": "single",
                   "certificate": "1234567890abcd=",
@@ -15770,35 +15610,6 @@ For a list of standards codes, see the table below.
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "certificate": "1234567890abcd=",
-                  "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
-                  "username_type": "001",
-                },
-                "response": {
-                  "body": {
-                    "access_mode": "recurrent",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
-                    "refresh_rate": "7d",
-                    "status": "valid",
-                  },
-                },
-              },
-            ],
             "method": "PUT",
             "path": "/api/links/{id}",
             "path-parameters": {
@@ -15990,31 +15801,6 @@ client.owners.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
-                    "collected_at": "2019-09-27T13:01:41.941Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "display_name": "John Doe",
-                    "document_id": {
-                      "document_number": "235578435-S",
-                      "document_type": "CPF",
-                    },
-                    "email": "johndoe@belvo.com",
-                    "id": "c749315b-eec2-435d-a458-06912878564f",
-                    "internal_identification": "7e5838e4",
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "phone_number": "+52-XXX-XXX-XXXX",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/owners/{id}",
             "path-parameters": {
@@ -16054,7 +15840,23 @@ client.owners.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "display_name__icontains": "Daniela",
+                  "email": "lopes.d@gmail.com",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16186,7 +15988,10 @@ client.owners.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -16237,7 +16042,10 @@ client.owners.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -16296,7 +16104,9 @@ client.owners.list(params: {
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
+                },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
@@ -16361,7 +16171,17 @@ client.owners.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "country": "COL",
+                  "country__in": "COL,BRA",
+                  "created_at": "2022-09-15",
+                  "created_at__gt": "2022-09-15",
+                  "created_at__gte": "2022-09-15",
+                  "created_at__lt": "2022-09-15",
+                  "created_at__lte": "2022-09-15",
+                  "created_at__range": "2022-09-15,2022-09-20",
+                  "page": 1,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16536,7 +16356,27 @@ A payment intent captures all payment information (such as the amount to be char
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "amount": "1000.00",
+                  "amount__gt": "1000.00",
+                  "amount__gte": "1000.00",
+                  "amount__lt": "1000.00",
+                  "amount__lte": "1000.00",
+                  "created_at": "2022-09-15",
+                  "created_at__gt": "2022-09-15",
+                  "created_at__gte": "2022-09-15",
+                  "created_at__lt": "2022-09-15",
+                  "created_at__lte": "2022-09-15",
+                  "created_at__range": "2022-09-15,2022-09-20",
+                  "customer": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "customer__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "page": 1,
+                  "payment_method_type": "pse",
+                  "provider": "payments_way",
+                  "status": "SUCCEEDED",
+                  "status__in": "PROCESSING,SUCCEEDED",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16666,7 +16506,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": undefined,
+                "path-parameters": {
+                  "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
+                },
                 "query-parameters": undefined,
                 "request": {
                   "confirm": true,
@@ -16786,7 +16628,19 @@ During the payment intent flow, you need to fill in the payment intent with requ
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at": "2022-09-15",
+                  "created_at__gt": "2022-09-15",
+                  "created_at__gte": "2022-09-15",
+                  "created_at__lt": "2022-09-15",
+                  "created_at__lte": "2022-09-15",
+                  "created_at__range": "2022-09-15,2022-09-20",
+                  "ordering": "created_at",
+                  "page": 1,
+                  "page_size": 100,
+                  "search": "trai",
+                  "status": "ACTIVE",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16922,7 +16776,31 @@ You can use the Payment Transactions resource in order to get useful information
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "amount": "1000.00",
+                  "amount__gt": "1000.00",
+                  "amount__gte": "1000.00",
+                  "amount__lt": "1000.00",
+                  "amount__lte": "1000.00",
+                  "amount__range": "1001.00,2000.00",
+                  "beneficiary": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "beneficiary__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "charge": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "charge__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "created_at": "2022-09-15",
+                  "created_at__gt": "2022-09-15",
+                  "created_at__gte": "2022-09-15",
+                  "created_at__lt": "2022-09-15",
+                  "created_at__lte": "2022-09-15",
+                  "created_at__range": "2022-09-15,2022-09-20",
+                  "currency": "COP",
+                  "description": "Training shoes",
+                  "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "page": 1,
+                  "payer": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "payer__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "transaction__type": "INFLOW",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17244,46 +17122,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "account": {
-                      "id": "a7a3104c-5a3c-4536-81e1-14523097f645",
-                      "institution": {
-                        "name": "erebor_mx_retail",
-                        "type": "bank",
-                      },
-                    },
-                    "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                    "created_at": "2020-04-23T21:30:20.336854+00:00",
-                    "currency": "BRL",
-                    "fees": [
-                      {
-                        "type": "TRANSACTION_FEE",
-                        "value": 2.21,
-                      },
-                    ],
-                    "gross_amount": 106.7,
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution_transaction_id": "134532345",
-                    "net_amount": 104.58,
-                    "number_of_installments": {
-                      "paid": 1,
-                      "total": 2,
-                    },
-                    "status": "APPROVED",
-                    "type": "MASTERCARD_CREDIT",
-                    "value_date": "2022-01-16",
-                    "value_hour": "19:47",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/receivables/transactions/{id}",
             "path-parameters": {
@@ -17323,7 +17161,27 @@ You can use the Payment Transactions resource in order to get useful information
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "value_date": "2022-05-05",
+                  "value_date__gt": "2022-05-06",
+                  "value_date__gte": "2022-05-04",
+                  "value_date__lt": "2022-03-02",
+                  "value_date__lte": "2022-03-01",
+                  "value_date__range": "2022-03-01,2022-05-06",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17495,7 +17353,10 @@ You can use the Payment Transactions resource in order to get useful information
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
@@ -17705,7 +17566,18 @@ client. recurring_expenses.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "account_in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17901,7 +17773,10 @@ client. recurring_expenses.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -17952,7 +17827,10 @@ client. recurring_expenses.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "date_from": "2022-08-01",
                   "date_to": "2022-12-30",
@@ -18134,7 +18012,16 @@ client. risk_insights.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -18294,7 +18181,10 @@ client. risk_insights.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -18347,7 +18237,10 @@ If you need to know the currency of the account, just do a GET Details to the ac
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -18575,25 +18468,6 @@ client.tax_compliance_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "collected_at": "2022-02-09T08:45:50.406032Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
-                    "internal_identification": "20NE1234567",
-                    "outcome": "POSITIVE",
-                    "pdf": "=PDF-STRING=",
-                    "rfc": "KDFC211118IS0",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/tax-compliance-status/{id}",
             "path-parameters": {
@@ -18633,7 +18507,21 @@ client.tax_compliance_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -18751,7 +18639,10 @@ client.tax_compliance_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "save_data": true,
@@ -19013,7 +18904,10 @@ At the moment, the Tax Declaration resource is available for:
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "attach_pdf": false,
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
@@ -19172,45 +19066,6 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "certified_at": "2019-01-03T21:10:41.000Z",
-                    "code": 25,
-                    "collected_at": "2022-02-09T08:45:50.406032Z",
-                    "created_at": "2022-02-09T08:46:20.406032Z",
-                    "id": "c749315b-eec2-435d-a458-06912878564f",
-                    "invoice_identification": "def404af-5eef-4112-aa99-d1ec8493b89a",
-                    "issued_at": "2019-01-03T21:10:40.000Z",
-                    "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
-                    "receiver_id": "GYGK3207809L1",
-                    "receiver_name": "ACME LTD",
-                    "receiver_nationality": "NATIONAL",
-                    "retention_breakdown": [
-                      {
-                        "base_amount": 0.03,
-                        "payment_status": "PAID",
-                        "retained_amount": 0,
-                        "tax_type": "01",
-                      },
-                    ],
-                    "sender_id": "JKUF980404P0",
-                    "sender_name": "Roberto Nunez Batman",
-                    "total_exempt_amount": 1000.8,
-                    "total_invoice_amount": 53249.8,
-                    "total_retained_amount": 1550.7,
-                    "total_taxable_amount": 43249,
-                    "version": "1.0",
-                    "xml": "=XML-STRING=",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/tax-retentions/{id}",
             "path-parameters": {
@@ -19250,7 +19105,19 @@ client.tax_retentions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -19378,7 +19245,10 @@ client.tax_retentions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
@@ -19852,7 +19722,21 @@ client.tax_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -19959,7 +19843,10 @@ client.tax_status.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "save_data": true,
@@ -20115,127 +20002,6 @@ client.transactions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "account": {
-                      "balance": {
-                        "available": 5621.12,
-                        "current": 5874.13,
-                      },
-                      "balance_type": "ASSET",
-                      "category": "CHECKING_ACCOUNT",
-                      "collected_at": "2019-09-27T13:01:41.941Z",
-                      "created_at": "2022-02-09T08:45:50.406032Z",
-                      "credit_data": {
-                        "collected_at": "2019-09-27T13:01:41.941Z",
-                        "credit_limit": 192000,
-                        "cutting_date": "2019-12-11",
-                        "interest_rate": 4,
-                        "minimum_payment": 2400.3,
-                        "next_payment_date": "2019-12-13",
-                        "no_interest_payment": 2690.83,
-                      },
-                      "currency": "MXN",
-                      "funds_data": [
-                        {
-                          "balance": 88427.94,
-                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                          "name": "FIX X",
-                          "percentage": 100,
-                          "public_identifications": [
-                            {
-                              "name": "CNPJ",
-                              "value": "05.954.445/0221-68",
-                            },
-                          ],
-                          "type": "CNPJ",
-                        },
-                      ],
-                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
-                      "institution": {
-                        "name": "erebor_mx_retail",
-                        "type": "bank",
-                      },
-                      "last_accessed_at": "2021-03-09T10:28:40.000Z",
-                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                      "loan_data": {
-                        "collected_at": "2022-02-09T08:45:50.406032Z",
-                        "contract_amount": 202000,
-                        "contract_end_date": "2027-10-01",
-                        "contract_number": "890ASLDJF87SD00",
-                        "contract_start_date": "2020-03-01",
-                        "fees": [
-                          {
-                            "type": "OPERATION_FEE",
-                            "value": 5.6,
-                          },
-                        ],
-                        "interest_rates": [
-                          {
-                            "name": "jurosEfetivo",
-                            "type": "MONTHLY",
-                            "value": 7.85,
-                          },
-                        ],
-                        "loan_type": "Consignado",
-                        "monthly_payment": 1000,
-                        "number_of_installments_outstanding": 48,
-                        "number_of_installments_total": 60,
-                        "outstanding_balance": 182000,
-                        "outstanding_principal": 142023,
-                        "payment_day": "27",
-                        "principal": 192000,
-                      },
-                      "name": "Cuenta Perfiles- M.N. - MXN-666",
-                      "number": "4057068115181",
-                      "public_identification_name": "CLABE",
-                      "public_identification_value": "150194683119900273",
-                      "receivables_data": {
-                        "anticipated": 1393.46,
-                        "available": 800.37,
-                        "collected_at": "2022-02-09T08:45:50.406032Z",
-                        "current": 2193.83,
-                      },
-                      "type": "Cuentas de efectivo",
-                    },
-                    "accounting_date": "2019-10-23T13:01:41.941Z",
-                    "amount": 2145.45,
-                    "balance": 16907.96,
-                    "category": "Income & Payments",
-                    "collected_at": "2019-11-28T10:27:44.813Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "credit_card_data": {
-                      "bill_amount": 300,
-                      "bill_name": "apr-2020",
-                      "bill_status": "PAID",
-                      "collected_at": "2019-09-27T13:01:41.941Z",
-                      "previous_bill_total": "9614.30",
-                    },
-                    "currency": "BRL",
-                    "description": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
-                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                    "internal_identification": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
-                    "merchant": {
-                      "logo": "https://logo.clearbit.com/asesor-contable.es",
-                      "merchant_name": "Merchants R Us Global",
-                      "website": "https://merchants-r-us.com",
-                    },
-                    "observations": "OPTIONAL OBSERVATIONS",
-                    "reference": "8703",
-                    "status": "PROCESSED",
-                    "subcategory": "Freelance",
-                    "type": "INFLOW",
-                    "value_date": "2019-10-23",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/transactions/{id}",
             "path-parameters": {
@@ -20275,7 +20041,66 @@ client.transactions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
+                  "account__balance__available": "4000.00",
+                  "account__balance__available__lt": "6000.00",
+                  "account__balance__available__lte": "5999.00",
+                  "account__balance__available__range": "3000.00,4350.00",
+                  "account__balance__current": "4000.00",
+                  "account__balance__current__gt": "4020.00",
+                  "account__balance__current__gte": "4019.00",
+                  "account__balance__current__lt": "3000.00",
+                  "account__balance__current__lte": "2999.00",
+                  "account__balance__current__range": "2999.00,4000.00",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "account_type": "Cuentas de efectivo",
+                  "account_type__in": "Cuentas de efectivo,Depositos Ahorro",
+                  "accounting_date": "2022-05-05",
+                  "accounting_date__gt": "2022-05-06",
+                  "accounting_date__gte": "2022-05-04",
+                  "accounting_date__lt": "2022-03-02",
+                  "accounting_date__lte": "2022-03-01",
+                  "accounting_date__range": "2022-03-01,2022-05-06",
+                  "amount": "1000.00",
+                  "amount__gt": "520.00",
+                  "amount__gte": "519.00",
+                  "amount__lt": "540.00",
+                  "amount__lte": "541.00",
+                  "amount__range": "519.00,541.00",
+                  "collected_at": "2022-05-01",
+                  "collected_at__gt": "2022-05-05",
+                  "collected_at__gte": "2022-05-04",
+                  "collected_at__lt": "2022-04-01",
+                  "collected_at__lte": "2022-03-30",
+                  "collected_at__range": "2022-03-03,2022-05-04",
+                  "created_at": "2022-05-01",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "credit_card_data__bill_name__in": "maio-2022,feb-2022",
+                  "currency": "COP",
+                  "currency__in": "COP,MXN",
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "reference": "085904452810319225",
+                  "reference__in": "085904452810319225,8703",
+                  "status": "PENDING",
+                  "status__in": "PENDING,PROCESSED",
+                  "type": "OUTFLOW",
+                  "type__in": "INFLOW,OUTFLOW",
+                  "value_date": "2022-05-05",
+                  "value_date__gt": "2022-05-06",
+                  "value_date__gte": "2022-05-04",
+                  "value_date__lt": "2022-03-02",
+                  "value_date__lte": "2022-03-01",
+                  "value_date__range": "2022-03-01,2022-05-06",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -20724,7 +20549,10 @@ client.transactions.list(params: {
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": true,
@@ -20778,7 +20606,10 @@ If you try to access older information than what we can access, we will return a
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
@@ -20831,9 +20662,14 @@ If you try to access older information than what we can access, we will return a
             ],
             "examples": [
               {
-                "headers": undefined,
+                "headers": {
+                  "X-Belvo-Request-Mode": "async",
+                },
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
                 "request": {
                   "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",

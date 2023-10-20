@@ -73,7 +73,39 @@ Transfers support recurring schedules, such as repeating every week or every mon
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "productType",
+              "value": {
+                "array": [
+                  {
+                    "enum": "savings",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "location",
+              "value": {
+                "enum": "internal",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "allows",
+              "value": {
+                "array": [
+                  {
+                    "enum": "billPay",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -128,7 +160,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "AccountsListAccountsRequestLocation",
               "nameOverride": undefined,
               "type": "enum",
@@ -177,7 +208,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 256,
                 "minLength": undefined,
                 "type": "string",
@@ -195,7 +225,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -348,7 +377,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -392,23 +420,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         403,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -472,7 +484,27 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "allows",
+              "value": {
+                "array": [
+                  {
+                    "enum": "billPay",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "secCode",
+              "value": {
+                "enum": "arc",
+                "type": "enum",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -550,7 +582,6 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 256,
                 "minLength": undefined,
                 "type": "string",
@@ -568,7 +599,6 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -648,7 +678,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 256,
                 "minLength": undefined,
                 "type": "string",
@@ -666,7 +695,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -770,18 +798,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -853,18 +870,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -948,7 +954,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": 36,
               "minLength": undefined,
               "type": "string",
@@ -973,7 +978,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the financial institution.",
             "schema": {
-              "example": undefined,
               "maxLength": 2,
               "minLength": 2,
               "type": "string",
@@ -990,7 +994,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1038,8 +1041,54 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "examples": [
         {
           "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": "institutionId",
+              "value": {
+                "primitive": {
+                  "string": "TIBURON",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "startsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "endsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "direction",
+              "value": {
+                "enum": "debit",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "frequency",
+              "value": {
+                "enum": "once",
+                "type": "enum",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1099,7 +1148,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "schema": {
             "description": undefined,
             "schema": {
-              "example": "2022-07-04",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1116,7 +1164,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2022-07-04",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1145,7 +1192,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1216,7 +1262,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 512,
                 "minLength": undefined,
                 "type": "string",
@@ -1303,8 +1348,54 @@ This information provides hints to clients, allowing bank customers to select tr
       "examples": [
         {
           "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
+          "pathParameters": [
+            {
+              "name": "institutionId",
+              "value": {
+                "primitive": {
+                  "string": "TIBURON",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "startsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "endsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "enum": "internal",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "risk",
+              "value": {
+                "enum": "early",
+                "type": "enum",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1378,7 +1469,6 @@ This information provides hints to clients, allowing bank customers to select tr
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2022-07-04",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1396,7 +1486,6 @@ This information provides hints to clients, allowing bank customers to select tr
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2022-07-04",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1479,28 +1568,7 @@ The default response lists only recent transactions. Normally, this is transacti
         429,
         504,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransactionsListTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1531,7 +1599,6 @@ The default response lists only recent transactions. Normally, this is transacti
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 256,
                 "minLength": undefined,
                 "type": "string",
@@ -1549,7 +1616,6 @@ The default response lists only recent transactions. Normally, this is transacti
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1565,7 +1631,6 @@ The default response lists only recent transactions. Normally, this is transacti
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1583,7 +1648,6 @@ The default response lists only recent transactions. Normally, this is transacti
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1716,7 +1780,6 @@ The default response lists only recent transactions. Normally, this is transacti
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1800,7 +1863,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 512,
                 "minLength": undefined,
                 "type": "string",
@@ -1931,7 +1993,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1947,7 +2008,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": 256,
                 "minLength": undefined,
                 "type": "string",
@@ -1965,7 +2025,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -2124,18 +2183,7 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersGetTransferRequest",
       "headers": [],
       "internal": undefined,
@@ -2196,49 +2244,7 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "amount": {
-                "primitive": {
-                  "string": "3456.78",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schedule": {
-                "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "frequency": {
-                    "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {

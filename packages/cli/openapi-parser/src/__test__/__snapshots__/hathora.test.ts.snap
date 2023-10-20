@@ -1253,7 +1253,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1305,7 +1304,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1354,7 +1352,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1406,7 +1403,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1452,7 +1448,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1489,7 +1484,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -1557,7 +1551,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1691,7 +1684,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1825,7 +1817,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1959,7 +1950,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2371,7 +2361,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2387,7 +2376,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -2472,7 +2460,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2488,7 +2475,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -2558,7 +2544,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -2574,7 +2559,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -2604,18 +2588,7 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMetricsRequest",
       "headers": [],
       "internal": undefined,
@@ -2677,7 +2650,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -2693,7 +2665,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -2709,7 +2680,6 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",

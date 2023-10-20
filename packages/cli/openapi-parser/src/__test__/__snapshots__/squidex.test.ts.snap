@@ -30,7 +30,6 @@ exports[`open api parser squidex parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -48,7 +47,6 @@ exports[`open api parser squidex parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -64,7 +62,6 @@ exports[`open api parser squidex parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -174,7 +171,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -234,7 +230,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -306,7 +301,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -357,7 +351,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -418,7 +411,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -538,7 +530,6 @@ exports[`open api parser squidex parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -600,7 +591,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -656,7 +646,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -694,23 +683,7 @@ exports[`open api parser squidex parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "result": {
-                "enum": "Translated",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TranslationsPostTranslationRequest",
       "headers": [],
       "internal": undefined,
@@ -724,7 +697,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -856,7 +828,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -915,7 +886,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -975,7 +945,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1046,7 +1015,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1106,7 +1074,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1121,7 +1088,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1283,7 +1249,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1343,7 +1308,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1399,18 +1363,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "StatisticsGetLogRequest",
       "headers": [],
       "internal": undefined,
@@ -1424,7 +1377,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1483,7 +1435,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1498,7 +1449,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1513,7 +1463,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1572,7 +1521,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1587,7 +1535,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1602,7 +1549,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1661,7 +1607,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1720,7 +1665,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1779,7 +1723,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1794,7 +1737,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1809,7 +1751,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1872,7 +1813,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1887,7 +1827,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1902,7 +1841,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1965,7 +1903,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1985,7 +1922,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2049,7 +1985,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2064,7 +1999,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2136,7 +2070,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2151,7 +2084,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2166,7 +2098,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2221,18 +2152,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutSchemaUiFieldsRequest",
       "headers": [],
       "internal": undefined,
@@ -2246,7 +2166,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2261,7 +2180,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2318,23 +2236,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "fieldIds": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutSchemaFieldOrderingRequest",
       "headers": [],
       "internal": undefined,
@@ -2348,7 +2250,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2363,7 +2264,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2420,23 +2320,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "fieldIds": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutNestedFieldOrderingRequest",
       "headers": [],
       "internal": undefined,
@@ -2450,7 +2334,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2465,7 +2348,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2480,7 +2362,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2549,7 +2430,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2564,7 +2444,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2579,7 +2458,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2648,7 +2526,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2663,7 +2540,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2678,7 +2554,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2736,7 +2611,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2751,7 +2625,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2766,7 +2639,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2779,7 +2651,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2848,7 +2719,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2863,7 +2733,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2878,7 +2747,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2891,7 +2759,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2949,7 +2816,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2964,7 +2830,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2979,7 +2844,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3037,7 +2901,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3052,7 +2915,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3067,7 +2929,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3080,7 +2941,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3138,7 +2998,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3153,7 +3012,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3168,7 +3026,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3226,7 +3083,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3241,7 +3097,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3256,7 +3111,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3269,7 +3123,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3327,7 +3180,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3342,7 +3194,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3357,7 +3208,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3415,7 +3265,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3430,7 +3279,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3445,7 +3293,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3458,7 +3305,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3516,7 +3362,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3531,7 +3376,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3546,7 +3390,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3604,7 +3447,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3619,7 +3461,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3634,7 +3475,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3647,7 +3487,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3705,7 +3544,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3720,7 +3558,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3735,7 +3572,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3793,7 +3629,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3808,7 +3643,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3823,7 +3657,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3836,7 +3669,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -3879,27 +3711,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasGetSchemasRequest",
       "headers": [],
       "internal": undefined,
@@ -3913,7 +3725,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3973,7 +3784,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4043,7 +3853,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4058,7 +3867,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4118,7 +3926,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4133,7 +3940,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4204,7 +4010,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4219,7 +4024,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4269,7 +4073,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4284,7 +4087,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4341,18 +4143,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutCategoryRequest",
       "headers": [],
       "internal": undefined,
@@ -4366,7 +4157,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4381,7 +4171,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4438,18 +4227,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "map": [],
-            "type": "map",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutPreviewUrlsRequest",
       "headers": [],
       "internal": undefined,
@@ -4463,7 +4241,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4478,7 +4255,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4535,18 +4311,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutScriptsRequest",
       "headers": [],
       "internal": undefined,
@@ -4560,7 +4325,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4575,7 +4339,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4632,18 +4395,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SchemasPutRulesRequest",
       "headers": [],
       "internal": undefined,
@@ -4657,7 +4409,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4672,7 +4423,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4743,7 +4493,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4758,7 +4507,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4818,7 +4566,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4833,7 +4580,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4933,27 +4679,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RulesGetRulesRequest",
       "headers": [],
       "internal": undefined,
@@ -4967,7 +4693,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5027,7 +4752,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5097,7 +4821,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5133,18 +4856,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RulesPutRuleRequest",
       "headers": [],
       "internal": undefined,
@@ -5158,7 +4870,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5173,7 +4884,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5244,7 +4954,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5259,7 +4968,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5309,7 +5017,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5324,7 +5031,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5384,7 +5090,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5399,7 +5104,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5459,7 +5163,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5474,7 +5177,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5523,7 +5225,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5538,7 +5239,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5558,7 +5258,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -5604,7 +5303,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5619,7 +5317,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5669,7 +5366,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5739,7 +5435,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5754,7 +5449,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5813,7 +5507,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5833,7 +5526,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5851,7 +5543,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -5867,7 +5558,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -5923,7 +5613,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5973,7 +5662,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5988,7 +5676,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6038,7 +5725,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6053,7 +5739,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6151,7 +5836,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6194,27 +5878,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "locked": {
-                "enum": "None",
-                "type": "enum",
-              },
-              "plans": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PlansGetPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -6228,7 +5892,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6274,18 +5937,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PlansPutPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -6299,7 +5951,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6355,27 +6006,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "locked": {
-                "enum": "None",
-                "type": "enum",
-              },
-              "plans": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PlansGetTeamPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -6389,7 +6020,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6435,18 +6065,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PlansPutTeamPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -6460,7 +6079,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6614,7 +6232,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6666,7 +6283,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -6768,7 +6384,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6788,7 +6403,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -6850,7 +6464,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6870,7 +6483,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -6995,7 +6607,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7055,7 +6666,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7115,7 +6725,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7240,7 +6849,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7255,7 +6863,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7275,7 +6882,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7293,7 +6899,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7338,18 +6943,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "map": [],
-            "type": "map",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsPostContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7363,7 +6957,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7378,7 +6971,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7398,7 +6990,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7416,7 +7007,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7434,7 +7024,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7488,18 +7077,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsGetContentsPostRequest",
       "headers": [],
       "internal": undefined,
@@ -7513,7 +7091,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7528,7 +7105,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7598,7 +7174,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7613,7 +7188,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7628,7 +7202,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7648,7 +7221,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -7691,18 +7263,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "map": [],
-            "type": "map",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsPostUpsertContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7716,7 +7277,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7731,7 +7291,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7746,7 +7305,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7766,7 +7324,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7784,7 +7341,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7800,7 +7356,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -7854,18 +7409,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "map": [],
-            "type": "map",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsPutContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7879,7 +7423,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7894,7 +7437,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7909,7 +7451,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7966,18 +7507,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "map": [],
-            "type": "map",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsPatchContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7991,7 +7521,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8006,7 +7535,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8021,7 +7549,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8092,7 +7619,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8107,7 +7633,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8122,7 +7647,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8142,7 +7666,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -8158,7 +7681,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -8205,7 +7727,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8220,7 +7741,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8235,7 +7755,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8284,7 +7803,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8299,7 +7817,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8314,7 +7831,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8334,7 +7850,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8392,7 +7907,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8407,7 +7921,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8422,7 +7935,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8442,7 +7954,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8497,7 +8008,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8512,7 +8022,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8527,7 +8036,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8542,7 +8050,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -8579,23 +8086,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "datas": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsPostContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -8609,7 +8100,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8624,7 +8114,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8685,33 +8174,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "jobs": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": "Upsert",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsBulkUpdateContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -8725,7 +8188,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8740,7 +8202,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8815,7 +8276,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8830,7 +8290,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8845,7 +8304,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8916,7 +8374,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8931,7 +8388,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8946,7 +8402,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9006,7 +8461,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9021,7 +8475,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9036,7 +8489,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9096,7 +8548,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9111,7 +8562,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9126,7 +8576,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9185,7 +8634,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9203,7 +8651,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -9270,7 +8717,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9285,7 +8731,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9305,7 +8750,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -9362,7 +8806,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9377,7 +8820,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9448,7 +8890,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9463,7 +8904,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9478,7 +8918,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9539,7 +8978,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9554,7 +8992,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9569,7 +9006,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9617,7 +9053,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9637,7 +9072,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -9694,7 +9128,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9709,7 +9142,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9755,7 +9187,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9770,7 +9201,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9823,7 +9253,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9838,7 +9267,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9884,7 +9312,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9904,7 +9331,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -9922,7 +9348,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -9959,27 +9384,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BackupsGetBackupsRequest",
       "headers": [],
       "internal": undefined,
@@ -9993,7 +9398,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10053,7 +9457,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10185,7 +9588,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10200,7 +9602,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10218,7 +9619,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10239,7 +9639,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10255,7 +9654,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10271,7 +9669,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10287,7 +9684,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10303,7 +9699,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10319,7 +9714,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10350,7 +9744,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10368,7 +9761,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "float",
               },
               "type": "primitive",
@@ -10384,7 +9776,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "float",
               },
               "type": "primitive",
@@ -10400,7 +9791,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10416,7 +9806,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10432,7 +9821,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10493,7 +9881,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10513,7 +9900,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10529,7 +9915,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10545,7 +9930,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10561,7 +9945,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10577,7 +9960,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10593,7 +9975,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -10624,7 +10005,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10642,7 +10022,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "float",
               },
               "type": "primitive",
@@ -10658,7 +10037,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "float",
               },
               "type": "primitive",
@@ -10674,7 +10052,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10690,7 +10067,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10706,7 +10082,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10770,7 +10145,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10790,7 +10164,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10864,7 +10237,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10935,7 +10307,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10950,7 +10321,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11021,7 +10391,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11036,7 +10405,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11072,18 +10440,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsPutAssetFolderParentRequest",
       "headers": [],
       "internal": undefined,
@@ -11097,7 +10454,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11112,7 +10468,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11182,7 +10537,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11256,7 +10610,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11271,7 +10624,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11355,7 +10707,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11375,7 +10726,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11393,7 +10743,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11411,7 +10760,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11429,7 +10777,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -11445,7 +10792,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "double",
               },
               "type": "primitive",
@@ -11461,7 +10807,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11479,7 +10824,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11539,7 +10883,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11559,7 +10902,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11577,7 +10919,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11595,7 +10936,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -11651,18 +10991,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsGetAssetsPostRequest",
       "headers": [],
       "internal": undefined,
@@ -11676,7 +11005,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11746,7 +11074,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11761,7 +11088,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11822,7 +11148,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11837,7 +11162,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11857,7 +11181,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11875,7 +11198,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -11931,18 +11253,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsPutAssetRequest",
       "headers": [],
       "internal": undefined,
@@ -11956,7 +11267,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11971,7 +11281,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12042,7 +11351,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12057,7 +11365,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12077,7 +11384,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -12093,7 +11399,6 @@ You will be assigned as owner of the new team automatically.",
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -12126,33 +11431,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "jobs": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": "Annotate",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsBulkUpdateAssetsRequest",
       "headers": [],
       "internal": undefined,
@@ -12166,7 +11445,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12242,7 +11520,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12257,7 +11534,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12316,18 +11592,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsPutAssetParentRequest",
       "headers": [],
       "internal": undefined,
@@ -12341,7 +11606,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12356,7 +11620,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12426,7 +11689,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12472,18 +11734,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutAssetScriptsRequest",
       "headers": [],
       "internal": undefined,
@@ -12497,7 +11748,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12553,27 +11803,7 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetClientsRequest",
       "headers": [],
       "internal": undefined,
@@ -12587,7 +11817,6 @@ You will be assigned as owner of the new team automatically.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12634,27 +11863,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPostClientRequest",
       "headers": [],
       "internal": undefined,
@@ -12668,7 +11877,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12725,30 +11933,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutClientRequest",
       "headers": [],
       "internal": undefined,
@@ -12762,7 +11947,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12777,7 +11961,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12834,27 +12017,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteClientRequest",
       "headers": [],
       "internal": undefined,
@@ -12868,7 +12031,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12883,7 +12045,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -12942,7 +12103,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13002,7 +12162,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13073,7 +12232,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13133,7 +12291,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13148,7 +12305,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13204,7 +12360,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13257,7 +12412,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13330,7 +12484,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13375,27 +12528,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetLanguagesRequest",
       "headers": [],
       "internal": undefined,
@@ -13409,7 +12542,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13455,27 +12587,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPostLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -13489,7 +12601,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13546,30 +12657,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -13583,7 +12671,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13598,7 +12685,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13655,27 +12741,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -13689,7 +12755,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13704,7 +12769,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13749,27 +12813,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetRolesRequest",
       "headers": [],
       "internal": undefined,
@@ -13783,7 +12827,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13829,27 +12872,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPostRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -13863,7 +12886,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13933,7 +12955,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -13986,35 +13007,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "permissions": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -14028,7 +13021,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14043,7 +13035,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14100,27 +13091,7 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -14134,7 +13105,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14149,7 +13119,6 @@ The client secret is auto generated on the server and returned. The client does 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14311,7 +13280,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14374,7 +13342,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14420,18 +13387,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutAppRequest",
       "headers": [],
       "internal": undefined,
@@ -14445,7 +13401,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14516,7 +13471,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14552,18 +13506,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutAppTeamRequest",
       "headers": [],
       "internal": undefined,
@@ -14577,7 +13520,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14647,7 +13589,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14693,27 +13634,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "editors": {
-                "array": [],
-                "type": "array",
-              },
-              "patterns": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutSettingsRequest",
       "headers": [],
       "internal": undefined,
@@ -14727,7 +13648,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14783,41 +13703,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "errors": {
-                "array": [],
-                "type": "array",
-              },
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "_links": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetWorkflowsRequest",
       "headers": [],
       "internal": undefined,
@@ -14831,7 +13717,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14877,41 +13762,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "errors": {
-                "array": [],
-                "type": "array",
-              },
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "_links": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPostWorkflowRequest",
       "headers": [],
       "internal": undefined,
@@ -14925,7 +13776,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14982,41 +13832,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "errors": {
-                "array": [],
-                "type": "array",
-              },
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "_links": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsPutWorkflowRequest",
       "headers": [],
       "internal": undefined,
@@ -15030,7 +13846,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -15045,7 +13860,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -15102,41 +13916,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "_links": {
-                "map": [],
-                "type": "map",
-              },
-              "errors": {
-                "array": [],
-                "type": "array",
-              },
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "_links": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsDeleteWorkflowRequest",
       "headers": [],
       "internal": undefined,
@@ -15150,7 +13930,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -15165,7 +13944,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",

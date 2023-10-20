@@ -2271,19 +2271,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
@@ -2392,7 +2379,15 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "allows": [
+                    "billPay",
+                  ],
+                  "location": "internal",
+                  "productType": [
+                    "savings",
+                  ],
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2455,7 +2450,12 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "allows": [
+                    "billPay",
+                  ],
+                  "secCode": "arc",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2572,8 +2572,15 @@ This information provides hints to clients, allowing bank customers to select tr
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "path-parameters": {
+                  "institutionId": "TIBURON",
+                },
+                "query-parameters": {
+                  "endsOn": "2022-07-04",
+                  "risk": "early",
+                  "startsOn": "2022-07-04",
+                  "type": "internal",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2641,8 +2648,15 @@ This information provides hints to clients, allowing bank customers to select tr
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "path-parameters": {
+                  "institutionId": "TIBURON",
+                },
+                "query-parameters": {
+                  "direction": "debit",
+                  "endsOn": "2022-07-04",
+                  "frequency": "once",
+                  "startsOn": "2022-07-04",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2765,15 +2779,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
@@ -2888,15 +2893,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
@@ -3005,21 +3001,6 @@ The default response lists only recent transactions. Normally, this is transacti
               "root.NotFoundError",
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [
-                      {},
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/accounts/{accountId}/transactions",
@@ -3198,17 +3179,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/transfers/{transferId}",
             "path-parameters": {
@@ -3299,24 +3269,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "amount": "3456.78",
-                  "schedule": {
-                    "amountLimit": "3456.78",
-                    "frequency": "once",
-                    "recurrenceType": "fixed",
-                  },
-                },
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "PATCH",
             "path": "/transfers/{transferId}",

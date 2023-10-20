@@ -1,4 +1,5 @@
-import { Endpoint, EndpointSdkName, HttpMethod, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { EndpointSdkName, HttpMethod, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { EndpointWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -23,7 +24,7 @@ interface FernAsyncConfig {
 }
 
 export interface ConvertedPathItems {
-    endpoints: Endpoint[];
+    endpoints: EndpointWithExample[];
     webhooks: Webhook[];
 }
 
@@ -33,7 +34,7 @@ export function convertPathItem(
     document: OpenAPIV3.Document,
     context: AbstractOpenAPIV3ParserContext
 ): ConvertedPathItems {
-    const endpoints: Endpoint[] = [];
+    const endpoints: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
 
     if (pathItemObject.get != null) {
@@ -209,13 +210,13 @@ function convertSyncAndAsyncEndpoints({
     pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
-}): Endpoint[] {
+}): EndpointWithExample[] {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
         return [];
     }
 
-    const endpoints: Endpoint[] = [];
+    const endpoints: EndpointWithExample[] = [];
     const sdkName = getSdkName({ operation });
     const parameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
 
@@ -365,7 +366,7 @@ function convertToEndpoint({
     suffix?: string;
     path: string;
     httpMethod: HttpMethod;
-}): Omit<Endpoint, "path" | "method"> {
+}): Omit<EndpointWithExample, "path" | "method"> {
     const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, suffix, httpMethod, path });
 
     const isStreaming = getExtension<boolean>(operation, FernOpenAPIExtension.STREAMING);
@@ -451,7 +452,6 @@ function convertToEndpoint({
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
         availability,
-        examples: [],
     };
 }
 

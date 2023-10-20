@@ -72,7 +72,6 @@ Here are some of the most used payload fields explained (you can find the full p
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -90,7 +89,6 @@ Here are some of the most used payload fields explained (you can find the full p
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -172,35 +170,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "deviceData": {
-                "properties": {},
-                "type": "object",
-              },
-              "executedRules": {
-                "array": [],
-                "type": "array",
-              },
-              "hitRules": {
-                "array": [],
-                "type": "array",
-              },
-              "transactionState": {
-                "enum": "CREATED",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConsumerTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -214,7 +184,6 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -639,216 +608,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "acquisitionChannel": {
-                "enum": "ORGANIC",
-                "type": "enum",
-              },
-              "contactDetails": {
-                "properties": {},
-                "type": "object",
-              },
-              "kycStatusDetails": {
-                "properties": {
-                  "status": {
-                    "enum": "SUCCESSFUL",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-              "riskLevel": {
-                "enum": "VERY_HIGH",
-                "type": "enum",
-              },
-              "transactionLimits": {
-                "properties": {
-                  "paymentMethodLimits": {
-                    "properties": {
-                      "ACH": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "CARD": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "CHECK": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "IBAN": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "MPESA": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "SWIFT": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "UPI": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "WALLET": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "userSegment": {
-                "enum": "RETAIL",
-                "type": "enum",
-              },
-              "userStateDetails": {
-                "properties": {
-                  "state": {
-                    "enum": "UNACCEPTABLE",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConsumerUserRequest",
       "headers": [],
       "internal": undefined,
@@ -862,7 +622,6 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1225,221 +984,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "acquisitionChannel": {
-                "enum": "ORGANIC",
-                "type": "enum",
-              },
-              "allowedPaymentMethods": {
-                "array": [
-                  {
-                    "enum": "ACH",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-              "kycStatusDetails": {
-                "properties": {
-                  "status": {
-                    "enum": "SUCCESSFUL",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-              "linkedEntities": {
-                "properties": {},
-                "type": "object",
-              },
-              "riskLevel": {
-                "enum": "VERY_HIGH",
-                "type": "enum",
-              },
-              "transactionLimits": {
-                "properties": {
-                  "paymentMethodLimits": {
-                    "properties": {
-                      "ACH": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "CARD": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "CHECK": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "IBAN": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "MPESA": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "SWIFT": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "UPI": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "WALLET": {
-                        "properties": {
-                          "averageTransactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionAmountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                          "transactionCountLimit": {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "userStateDetails": {
-                "properties": {
-                  "state": {
-                    "enum": "UNACCEPTABLE",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetBusinessUserUserIdRequest",
       "headers": [],
       "internal": undefined,
@@ -1453,7 +998,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",

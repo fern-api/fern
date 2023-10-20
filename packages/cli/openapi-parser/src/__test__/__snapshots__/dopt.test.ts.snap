@@ -29,7 +29,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -46,7 +45,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -58,7 +56,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -467,7 +464,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -487,7 +483,6 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -502,7 +497,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -514,7 +508,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -531,7 +524,6 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -576,7 +568,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -593,7 +584,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -618,7 +608,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -635,7 +624,6 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1185,7 +1173,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1199,7 +1186,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "intent",
           "schema": {
             "description": undefined,
-            "example": undefined,
             "generatedName": "FlowIntentRequestIntent",
             "nameOverride": undefined,
             "type": "enum",
@@ -1240,7 +1226,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -1252,7 +1237,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1269,7 +1253,6 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",

@@ -537,7 +537,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -553,7 +552,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -568,7 +566,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "BookingLineItemIndexRequestDirection",
               "nameOverride": undefined,
               "type": "enum",
@@ -598,7 +595,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 123,
                 "type": "int",
               },
               "type": "primitive",
@@ -614,7 +610,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 54321,
                 "type": "int",
               },
               "type": "primitive",
@@ -630,7 +625,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 54321,
                 "type": "int",
               },
               "type": "primitive",
@@ -997,7 +991,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -1126,7 +1119,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -1142,7 +1134,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -1157,7 +1148,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "BookingsIndexRequestSort",
               "nameOverride": undefined,
               "type": "enum",
@@ -1186,7 +1176,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "BookingsIndexRequestDirection",
               "nameOverride": undefined,
               "type": "enum",
@@ -1215,7 +1204,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "BookingsIndexRequestFStatus",
               "nameOverride": undefined,
               "type": "enum",
@@ -1245,7 +1233,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 123456,
                 "type": "int",
               },
               "type": "primitive",
@@ -1261,7 +1248,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": "amazon-us",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1279,7 +1265,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": "amazon-us",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1297,7 +1282,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1315,7 +1299,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1333,7 +1316,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1351,7 +1333,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1369,7 +1350,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1387,7 +1367,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1405,7 +1384,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1423,7 +1401,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1441,7 +1418,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1459,7 +1435,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1477,7 +1452,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1496,7 +1470,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2394,7 +2367,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -2852,7 +2824,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -2868,7 +2839,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -2884,7 +2854,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2902,7 +2871,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2920,7 +2888,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2938,7 +2905,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -3525,7 +3491,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3656,7 +3621,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -3672,7 +3636,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -3688,7 +3651,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -3902,7 +3864,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4033,7 +3994,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -4049,7 +4009,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -4065,7 +4024,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4083,7 +4041,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4101,7 +4058,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4119,7 +4075,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4137,7 +4092,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4155,7 +4109,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4173,7 +4126,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4580,7 +4532,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4705,7 +4656,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -4755,7 +4705,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4773,7 +4722,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4791,7 +4739,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -4809,7 +4756,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -4824,7 +4770,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "EventsIndexRequestFDataResourceObject",
               "nameOverride": undefined,
               "type": "enum",
@@ -5074,7 +5019,6 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -5203,7 +5147,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -5219,7 +5162,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -5247,7 +5189,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "InvoiceIndexRequestDirection",
               "nameOverride": undefined,
               "type": "enum",
@@ -5276,7 +5217,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "InvoiceIndexRequestFStatus",
               "nameOverride": undefined,
               "type": "enum",
@@ -5318,7 +5258,6 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "schema": {
-                "example": 12345,
                 "type": "int",
               },
               "type": "primitive",
@@ -5336,7 +5275,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -5352,7 +5290,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 12345,
                 "type": "int",
               },
               "type": "primitive",
@@ -5368,7 +5305,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "my-entity-ref",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5386,7 +5322,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "FLEX-123456-1",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5404,7 +5339,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2019-06-01",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5422,7 +5356,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2019-06-01T17:29:23.172Z",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5440,7 +5373,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2019-06-01",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5458,7 +5390,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2019-06-01T17:29:23.172Z",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5476,7 +5407,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 54321,
                 "type": "int",
               },
               "type": "primitive",
@@ -5492,7 +5422,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 12345,
                 "type": "int",
               },
               "type": "primitive",
@@ -5704,7 +5633,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -5835,7 +5763,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -5851,7 +5778,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -5867,7 +5793,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -5885,7 +5810,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -6262,7 +6186,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6375,33 +6298,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Updated Zoomit",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit_ref",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -6415,7 +6312,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6557,7 +6453,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -6573,7 +6468,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -6589,7 +6483,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -6607,7 +6500,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -6625,7 +6517,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7096,7 +6987,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7209,111 +7099,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "mailing_address": {
-                "properties": {
-                  "city": {
-                    "primitive": {
-                      "string": "Albany",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "country_code": {
-                    "primitive": {
-                      "string": "US",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "state": {
-                    "primitive": {
-                      "string": "MN",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "street_address": {
-                    "primitive": {
-                      "string": "1641 Settlers Lane",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "street_address2": {
-                    "primitive": {
-                      "string": "STE 2918",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "unlocode": {
-                    "primitive": {
-                      "string": "USAL2",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "zip": {
-                    "primitive": {
-                      "string": "56307",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "name": {
-                "primitive": {
-                  "string": "Zoomit V2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit-us",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "vat_numbers": {
-                "array": [
-                  {
-                    "properties": {
-                      "country_code": {
-                        "primitive": {
-                          "string": "GB",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "number": {
-                        "primitive": {
-                          "string": "GB 123456789",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyEntityUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -7327,7 +7113,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -7469,7 +7254,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -7485,7 +7269,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -7501,7 +7284,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7519,7 +7301,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7537,7 +7318,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -7930,7 +7710,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8043,40 +7822,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "john_new_email@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "John Smith",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "phone_number": {
-                "primitive": {
-                  "string": "861-555-7777",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkContactUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -8090,7 +7836,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8232,7 +7977,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -8248,7 +7992,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -8264,7 +8007,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8282,7 +8024,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8300,7 +8041,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8318,7 +8058,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8336,7 +8075,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -8776,7 +8514,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -8889,87 +8626,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "address": {
-                "properties": {
-                  "city": {
-                    "primitive": {
-                      "string": "Albany",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "country_code": {
-                    "primitive": {
-                      "string": "US",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "state": {
-                    "primitive": {
-                      "string": "MN",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "street_address": {
-                    "primitive": {
-                      "string": "1641 Settlers Lane",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "street_address2": {
-                    "primitive": {
-                      "string": "STE 2918",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "unlocode": {
-                    "primitive": {
-                      "string": "USAL2",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "zip": {
-                    "primitive": {
-                      "string": "56307",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "name": {
-                "primitive": {
-                  "string": "Zoomit V2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit-management-co",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "LocationUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -8983,7 +8640,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -9236,7 +8892,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -9252,7 +8907,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -9268,7 +8922,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -9284,7 +8937,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -9300,7 +8952,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -9514,7 +9165,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -9643,7 +9293,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -9659,7 +9308,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -9675,7 +9323,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -9691,7 +9338,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -9709,7 +9355,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -9923,7 +9568,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10054,7 +9698,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -10070,7 +9713,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -10085,7 +9727,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "PortsIndexRequestFPortType",
               "nameOverride": undefined,
               "type": "enum",
@@ -10127,7 +9768,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "CATOR",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10362,7 +10002,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10380,7 +10019,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -10396,7 +10034,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -10862,7 +10499,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -10975,137 +10611,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "classifications": {
-                "array": [
-                  {
-                    "properties": {
-                      "codes": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "region": {
-                        "primitive": {
-                          "string": "US",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "client_verified": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "country_of_origin": {
-                "primitive": {
-                  "string": "China",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "description": {
-                "primitive": {
-                  "string": "The best 12V AC Adapter on the market",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "AC Adapter 12V",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "product_category": {
-                "primitive": {
-                  "string": "Cosmetics",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "product_properties": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "primitive": {
-                          "string": "color",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "string": "blue",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "sku": {
-                "primitive": {
-                  "string": "WDVCDFD-RM00472",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "suppliers": {
-                "array": [
-                  {
-                    "properties": {
-                      "country_of_origin": {
-                        "primitive": {
-                          "string": "CN",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "int": 12345,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                      "ref": {
-                        "primitive": {
-                          "string": "FACTORY-123",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ProductUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -11119,7 +10625,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11261,7 +10766,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -11277,7 +10781,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -11292,7 +10795,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "PurchaseOrderLineItemIndexRequestDirection",
               "nameOverride": undefined,
               "type": "enum",
@@ -11322,7 +10824,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 123,
                 "type": "int",
               },
               "type": "primitive",
@@ -11338,7 +10839,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11356,7 +10856,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "item1",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11374,7 +10873,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -11578,7 +11076,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -11707,7 +11204,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -11723,7 +11219,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -11751,7 +11246,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "PurchaseOrderIndexRequestDirection",
               "nameOverride": undefined,
               "type": "enum",
@@ -11781,7 +11275,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -11796,7 +11289,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "PurchaseOrderIndexRequestFStatus",
               "nameOverride": undefined,
               "type": "enum",
@@ -11832,7 +11324,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "amazon-us",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11850,7 +11341,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "amazon-us",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11868,7 +11358,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "id-12345",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11886,7 +11375,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "id-54321",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -11906,7 +11394,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "array",
               "value": {
                 "description": undefined,
-                "example": undefined,
                 "generatedName": "PurchaseOrderIndexRequestFRolesItem",
                 "nameOverride": undefined,
                 "type": "enum",
@@ -11997,7 +11484,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 123456,
                 "type": "int",
               },
               "type": "primitive",
@@ -12013,7 +11499,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "PO-123456",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -12031,7 +11516,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2022-01-01 18:26:37 PST",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -12049,7 +11533,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "2022-01-01 18:26:37 PST",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -13539,7 +13022,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -13557,7 +13039,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -13667,1242 +13148,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "cargo_ready_date": {
-                "primitive": {
-                  "string": "2019-06-30",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "currency_code": {
-                "primitive": {
-                  "string": "USD",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "destination_port": {
-                "properties": {
-                  "code": {
-                    "primitive": {
-                      "string": "USFBN",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "code_type": {
-                    "enum": "unlocode",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-              "freight_payment_terms": {
-                "enum": "freight_collect",
-                "type": "enum",
-              },
-              "incoterm": {
-                "enum": "EXW",
-                "type": "enum",
-              },
-              "issue_date": {
-                "primitive": {
-                  "string": "2019-09-30",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "line_items": {
-                "array": [
-                  {
-                    "properties": {
-                      "assigned_party_ref": {
-                        "primitive": {
-                          "string": "id-12321",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "cargo_ready_date": {
-                        "primitive": {
-                          "string": "2019-06-30",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "destination_locations": {
-                        "array": [
-                          {
-                            "properties": {
-                              "location_ref": {
-                                "primitive": {
-                                  "string": "id-1234",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "units": {
-                                "primitive": {
-                                  "int": 1,
-                                  "type": "int",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "destination_port": {
-                        "properties": {
-                          "code": {
-                            "primitive": {
-                              "string": "USFBN",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "code_type": {
-                            "enum": "unlocode",
-                            "type": "enum",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "hs_codes": {
-                        "array": [
-                          {
-                            "properties": {
-                              "code": {
-                                "primitive": {
-                                  "string": "7608.20.00.00",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "country_code": {
-                                "primitive": {
-                                  "string": "CA",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "incoterm": {
-                        "enum": "EXW",
-                        "type": "enum",
-                      },
-                      "item_key": {
-                        "primitive": {
-                          "string": "item_key_1",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "line_item_number": {
-                        "primitive": {
-                          "int": 1,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                      "line_type": {
-                        "enum": "main_line",
-                        "type": "enum",
-                      },
-                      "measurements": {
-                        "array": [
-                          {
-                            "properties": {
-                              "measure_type": {
-                                "enum": "length",
-                                "type": "enum",
-                              },
-                              "unit_of_measure": {
-                                "primitive": {
-                                  "string": "EA",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "value": {
-                                "primitive": {
-                                  "string": "1.0",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "must_arrive_date": {
-                        "primitive": {
-                          "string": "2019-09-30",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "origin_location_ref": {
-                        "primitive": {
-                          "string": "id-123456",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "origin_port": {
-                        "properties": {
-                          "code": {
-                            "primitive": {
-                              "string": "USFBN",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "code_type": {
-                            "enum": "unlocode",
-                            "type": "enum",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "product": {
-                        "properties": {
-                          "color": {
-                            "primitive": {
-                              "string": "red",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "country_of_origin": {
-                            "primitive": {
-                              "string": "US",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "dangerous": {
-                            "primitive": {
-                              "boolean": false,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "ean_ucc_13": {
-                            "primitive": {
-                              "string": "0123456789012",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "ean_ucc_8": {
-                            "primitive": {
-                              "string": "01234567",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "lot_number": {
-                            "primitive": {
-                              "string": "123-456",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "name": {
-                            "primitive": {
-                              "string": "AC Adapter 12",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "product_category": {
-                            "primitive": {
-                              "string": "Cosmetics",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "size": {
-                            "primitive": {
-                              "string": "M",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "sku": {
-                            "primitive": {
-                              "string": "SKU-123",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "style": {
-                            "primitive": {
-                              "string": "classical",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "upc": {
-                            "primitive": {
-                              "string": "012345678912",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "transportation_mode": {
-                        "enum": "air",
-                        "type": "enum",
-                      },
-                      "unit_cost": {
-                        "properties": {
-                          "amount": {
-                            "primitive": {
-                              "string": "12.34",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "currency_code": {
-                            "primitive": {
-                              "string": "USD",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "unit_of_measure": {
-                        "enum": "BBL",
-                        "type": "enum",
-                      },
-                      "units": {
-                        "primitive": {
-                          "int": 100,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "memo": {
-                "primitive": {
-                  "string": "memo",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "must_arrive_date": {
-                "primitive": {
-                  "string": "2019-09-30",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "PO 123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "order_class": {
-                "enum": "purchase_order",
-                "type": "enum",
-              },
-              "order_type": {
-                "primitive": {
-                  "string": "Apparel",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "origin_location_ref": {
-                "primitive": {
-                  "string": "id-123456",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "origin_port": {
-                "properties": {
-                  "code": {
-                    "primitive": {
-                      "string": "USFBN",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "code_type": {
-                    "enum": "unlocode",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-              "parties": {
-                "array": [
-                  {
-                    "properties": {
-                      "contacts": {
-                        "array": [
-                          {
-                            "properties": {
-                              "department": {
-                                "primitive": {
-                                  "string": "marketing",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "email": {
-                                "primitive": {
-                                  "string": "John.Doe@example.com",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "fax": {
-                                "primitive": {
-                                  "string": "1 323 555 1234",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "John Doe",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "phone": {
-                                "primitive": {
-                                  "string": "767 878 8888",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "external_ref": {
-                        "primitive": {
-                          "string": "id-12344",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "location_ref": {
-                        "primitive": {
-                          "string": "id-12344",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "role": {
-                        "enum": "buyer",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "priority": {
-                "enum": "high",
-                "type": "enum",
-              },
-              "status": {
-                "enum": "open",
-                "type": "enum",
-              },
-              "transportation_mode": {
-                "enum": "air",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "_object": {
-                "primitive": {
-                  "string": "/booking",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "destination_addresses": {
-                "array": [
-                  {
-                    "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/address",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "city": {
-                        "primitive": {
-                          "string": "Albany",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country": {
-                        "primitive": {
-                          "string": "United States of America",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country_code": {
-                        "primitive": {
-                          "string": "US",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ref": {
-                        "primitive": {
-                          "string": "address_ref_x",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "primitive": {
-                          "string": "MN",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_address": {
-                        "primitive": {
-                          "string": "1641 Settlers Lane",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_address2": {
-                        "primitive": {
-                          "string": "STE 2918",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "timezone": {
-                        "primitive": {
-                          "string": "America/Los_Angeles",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "unlocode": {
-                        "primitive": {
-                          "string": "US AL2",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "zip": {
-                        "primitive": {
-                          "string": "56307",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "destination_port": {
-                "properties": {
-                  "_object": {
-                    "primitive": {
-                      "string": "/place",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "address": {
-                    "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/address",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "city": {
-                        "primitive": {
-                          "string": "Albany",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country": {
-                        "primitive": {
-                          "string": "United States of America",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country_code": {
-                        "primitive": {
-                          "string": "US",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ref": {
-                        "primitive": {
-                          "string": "address_ref_x",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "primitive": {
-                          "string": "MN",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_address": {
-                        "primitive": {
-                          "string": "1641 Settlers Lane",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_address2": {
-                        "primitive": {
-                          "string": "STE 2918",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "timezone": {
-                        "primitive": {
-                          "string": "America/Los_Angeles",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "unlocode": {
-                        "primitive": {
-                          "string": "US AL2",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "zip": {
-                        "primitive": {
-                          "string": "56307",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "name": {
-                    "primitive": {
-                      "string": "ORD - Chicago - IL",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "freight_paymnet_terms": {
-                "enum": "freight_collect",
-                "type": "enum",
-              },
-              "id": {
-                "primitive": {
-                  "int": 2983,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-              "incoterm": {
-                "enum": "EXW",
-                "type": "enum",
-              },
-              "line_items": {
-                "properties": {
-                  "_object": {
-                    "primitive": {
-                      "string": "/api/refs/collection",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "link": {
-                    "primitive": {
-                      "string": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "ref_type": {
-                    "primitive": {
-                      "string": "/purchase_orders/line_item",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "memo": {
-                "primitive": {
-                  "string": "This message is written in invisible ink",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "PO 12345 - "shipment"",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "order_class": {
-                "enum": "purchase_order",
-                "type": "enum",
-              },
-              "order_type": {
-                "primitive": {
-                  "string": "Apparel",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "origin_address": {
-                "properties": {
-                  "_object": {
-                    "primitive": {
-                      "string": "/address",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "city": {
-                    "primitive": {
-                      "string": "Albany",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "country": {
-                    "primitive": {
-                      "string": "United States of America",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "country_code": {
-                    "primitive": {
-                      "string": "US",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "ref": {
-                    "primitive": {
-                      "string": "address_ref_x",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "state": {
-                    "primitive": {
-                      "string": "MN",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "street_address": {
-                    "primitive": {
-                      "string": "1641 Settlers Lane",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "street_address2": {
-                    "primitive": {
-                      "string": "STE 2918",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "timezone": {
-                    "primitive": {
-                      "string": "America/Los_Angeles",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "unlocode": {
-                    "primitive": {
-                      "string": "US AL2",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "zip": {
-                    "primitive": {
-                      "string": "56307",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "origin_port": {
-                "properties": {
-                  "_object": {
-                    "primitive": {
-                      "string": "/place",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "address": {
-                    "properties": {
-                      "_object": {
-                        "primitive": {
-                          "string": "/address",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "city": {
-                        "primitive": {
-                          "string": "Albany",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country": {
-                        "primitive": {
-                          "string": "United States of America",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country_code": {
-                        "primitive": {
-                          "string": "US",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ref": {
-                        "primitive": {
-                          "string": "address_ref_x",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "primitive": {
-                          "string": "MN",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_address": {
-                        "primitive": {
-                          "string": "1641 Settlers Lane",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_address2": {
-                        "primitive": {
-                          "string": "STE 2918",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "timezone": {
-                        "primitive": {
-                          "string": "America/Los_Angeles",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "unlocode": {
-                        "primitive": {
-                          "string": "US AL2",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "zip": {
-                        "primitive": {
-                          "string": "56307",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "name": {
-                    "primitive": {
-                      "string": "ORD - Chicago - IL",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "parties": {
-                "array": [
-                  {
-                    "properties": {
-                      "company_entity": {
-                        "properties": {
-                          "_object": {
-                            "primitive": {
-                              "string": "/company_entity",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "id": {
-                            "primitive": {
-                              "int": 9281,
-                              "type": "int",
-                            },
-                            "type": "primitive",
-                          },
-                          "mailing_address": {
-                            "properties": {
-                              "_object": {
-                                "primitive": {
-                                  "string": "/address",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "city": {
-                                "primitive": {
-                                  "string": "Albany",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "country": {
-                                "primitive": {
-                                  "string": "United States of America",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "country_code": {
-                                "primitive": {
-                                  "string": "US",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "ref": {
-                                "primitive": {
-                                  "string": "address_ref_x",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "state": {
-                                "primitive": {
-                                  "string": "MN",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "street_address": {
-                                "primitive": {
-                                  "string": "1641 Settlers Lane",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "street_address2": {
-                                "primitive": {
-                                  "string": "STE 2918",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "timezone": {
-                                "primitive": {
-                                  "string": "America/Los_Angeles",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "unlocode": {
-                                "primitive": {
-                                  "string": "US AL2",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "zip": {
-                                "primitive": {
-                                  "string": "56307",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "name": {
-                            "primitive": {
-                              "string": "Zoomit",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "ref": {
-                            "primitive": {
-                              "string": "zoomit_ref",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "vat_numbers": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "_object": {
-                                    "primitive": {
-                                      "string": "/company_entity/vat_number",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "country_code": {
-                                    "primitive": {
-                                      "string": "GB",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "number": {
-                                    "primitive": {
-                                      "string": "GB 123456789",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "contacts": {
-                        "array": [
-                          {
-                            "properties": {
-                              "department": {
-                                "primitive": {
-                                  "string": "marketing",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "email": {
-                                "primitive": {
-                                  "string": "John.Doe@example.com",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "fax": {
-                                "primitive": {
-                                  "string": "1 323 555 1234",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "John Doe",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "phone": {
-                                "primitive": {
-                                  "string": "767 878 8888",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "location": {
-                        "properties": {
-                          "_object": {
-                            "primitive": {
-                              "string": "/address",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "city": {
-                            "primitive": {
-                              "string": "Albany",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "country": {
-                            "primitive": {
-                              "string": "United States of America",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "country_code": {
-                            "primitive": {
-                              "string": "US",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "ref": {
-                            "primitive": {
-                              "string": "address_ref_x",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "state": {
-                            "primitive": {
-                              "string": "MN",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "street_address": {
-                            "primitive": {
-                              "string": "1641 Settlers Lane",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "street_address2": {
-                            "primitive": {
-                              "string": "STE 2918",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "timezone": {
-                            "primitive": {
-                              "string": "America/Los_Angeles",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "unlocode": {
-                            "primitive": {
-                              "string": "US AL2",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "zip": {
-                            "primitive": {
-                              "string": "56307",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "role": {
-                        "enum": "buyer",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "priority": {
-                "enum": "standard",
-                "type": "enum",
-              },
-              "status": {
-                "enum": "open",
-                "type": "enum",
-              },
-              "transportation_mode": {
-                "enum": "ocean",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -14916,7 +13162,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -14982,7 +13227,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -14998,7 +13242,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -15014,7 +13257,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -15030,7 +13272,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -15046,7 +13287,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15258,7 +13498,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -15276,7 +13515,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15404,7 +13642,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 1,
                 "type": "int",
               },
               "type": "primitive",
@@ -15420,7 +13657,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": 20,
                 "type": "int",
               },
               "type": "primitive",
@@ -15435,7 +13671,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "ShipmentIndexRequestSort",
               "nameOverride": undefined,
               "type": "enum",
@@ -15482,7 +13717,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "type": "nullable",
             "value": {
               "description": undefined,
-              "example": undefined,
               "generatedName": "ShipmentIndexRequestDirection",
               "nameOverride": undefined,
               "type": "enum",
@@ -15557,7 +13791,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "BWSE3982156",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15575,7 +13808,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "PO002811",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15593,7 +13825,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": "ASA121",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15611,7 +13842,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15629,7 +13859,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15647,7 +13876,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15665,7 +13893,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15683,7 +13910,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15701,7 +13927,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15719,7 +13944,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15737,7 +13961,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15755,7 +13978,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15774,7 +13996,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -15792,7 +14013,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15808,7 +14028,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15824,7 +14043,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15840,7 +14058,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15856,7 +14073,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15872,7 +14088,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15888,7 +14103,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15904,7 +14118,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15920,7 +14133,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15936,7 +14148,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -15952,7 +14163,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "boolean",
               },
               "type": "primitive",
@@ -16165,7 +14375,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -16278,18 +14487,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -16303,7 +14501,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",

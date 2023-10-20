@@ -3,6 +3,58 @@ imports:
   finalIr: finalIr.yml
 
 types:
+  EndpointWithExample:
+    extends: commons.WithDescription
+    properties:
+      authed: boolean
+      internal: optional<boolean>
+      method: finalIr.HttpMethod
+      availability: optional<finalIr.EndpointAvailability>
+      audiences: list<string>
+      path:
+        type: string
+        docs: |
+          This string includes templated path parameters. 
+          For example, `/users/{userId}` is a valid value.
+      summary: optional<string>
+      operationId: optional<string>
+      tags: list<commons.TagId>
+      pathParameters: list<PathParameterWithExample>
+      queryParameters: list<QueryParameterWithExample>
+      headers: list<HeaderWithExample>
+      sdkName: optional<finalIr.EndpointSdkName>
+      generatedRequestName:
+        type: string
+        docs: |
+          Populated as ${operationId}Request
+      requestNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-request-name` on a path object.
+      request: optional<finalIr.Request>
+      response: optional<finalIr.Response>
+      errorStatusCode: list<commons.StatusCode>
+      server: list<commons.Server>
+
+  PathParameterWithExample:
+    extends: commons.WithDescription
+    properties:
+      name: string
+      schema: SchemaWithExample
+      variableReference: optional<string>
+
+  QueryParameterWithExample:
+    extends: commons.WithDescription
+    properties:
+      name: string
+      schema: SchemaWithExample
+
+  HeaderWithExample:
+    extends: commons.WithDescription
+    properties:
+      name: string
+      schema: SchemaWithExample
+
   SchemaWithExample:
     union:
       primitive: PrimitiveSchemaWithExample

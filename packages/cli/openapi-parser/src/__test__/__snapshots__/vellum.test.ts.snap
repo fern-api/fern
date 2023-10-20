@@ -56,7 +56,6 @@ Used to retrieve a deployment given its ID or name.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -196,7 +195,6 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -214,7 +212,6 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -230,7 +227,6 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -246,7 +242,6 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -534,7 +529,6 @@ Used to retrieve a model version given its ID.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -573,23 +567,7 @@ Used to retrieve a model version given its ID.
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "headers": [],
       "internal": undefined,
@@ -603,7 +581,6 @@ Compiles the prompt backing the model version using the provided input values.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -712,32 +689,7 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "inputs": {
-                "array": [],
-                "type": "array",
-              },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -751,7 +703,6 @@ or overwritten with default values.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -815,7 +766,6 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -830,7 +780,6 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1012,39 +961,7 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "evaluation_params": {
-                "properties": {},
-                "type": "object",
-              },
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "evaluation_params": {
-                "properties": {},
-                "type": "object",
-              },
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,
@@ -1058,7 +975,6 @@ or overwritten with default values.",
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1122,7 +1038,6 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1137,7 +1052,6 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",

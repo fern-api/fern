@@ -1,7 +1,7 @@
 import { TaskContext } from "@fern-api/task-context";
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
 import { Endpoint, OpenAPIIntermediateRepresentation, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -36,7 +36,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders });
     const variables = getVariableDefinitions(openApi);
 
-    const endpoints: Endpoint[] = [];
+    const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
     Object.entries(openApi.paths).forEach(([path, pathItem]) => {
         if (pathItem == null) {
@@ -45,7 +45,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         taskContext.logger.debug(`Converting path ${path}`);
         const pathWithoutTrailingSlash = path.replace(/\/$/, "");
         const convertedPathItem = convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
-        endpoints.push(...convertedPathItem.endpoints);
+        endpointsWithExample.push(...convertedPathItem.endpoints);
         webhooks.push(...convertedPathItem.webhooks);
     });
 
@@ -54,6 +54,36 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
             return [key, convertSchema(schema, false, context, [key])];
         })
     );
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample);
+    const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
+        const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
+        return {
+            ...endpointWithExample,
+            queryParameters: endpointWithExample.queryParameters.map((queryParameter) => {
+                return {
+                    description: queryParameter.description,
+                    name: queryParameter.name,
+                    schema: convertSchemaWithExampleToSchema(queryParameter.schema),
+                };
+            }),
+            pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
+                return {
+                    description: pathParameter.description,
+                    name: pathParameter.name,
+                    schema: convertSchemaWithExampleToSchema(pathParameter.schema),
+                    variableReference: pathParameter.variableReference,
+                };
+            }),
+            headers: endpointWithExample.headers.map((header) => {
+                return {
+                    description: header.description,
+                    name: header.name,
+                    schema: convertSchemaWithExampleToSchema(header.schema),
+                };
+            }),
+            examples: endpointExample == null ? [] : [endpointExample],
+        };
+    });
 
     const schemas: Record<string, Schema> = Object.fromEntries(
         Object.entries(schemasWithExample).map(([key, schemaWithExample]) => {
@@ -80,14 +110,6 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         variables,
     };
-
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample);
-    ir.endpoints.forEach((endpoint) => {
-        const endpointExample = exampleEndpointFactory.buildEndpointExample(endpoint);
-        if (endpointExample != null) {
-            endpoint.examples.push(endpointExample);
-        }
-    });
 
     return ir;
 }

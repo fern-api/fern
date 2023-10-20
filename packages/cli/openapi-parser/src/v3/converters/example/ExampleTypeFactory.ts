@@ -23,7 +23,7 @@ export class ExampleTypeFactory {
         return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set() });
     }
 
-    public buildExampleFromSchema({
+    private buildExampleFromSchema({
         schema,
         isOptional,
         visitedSchemaIds,

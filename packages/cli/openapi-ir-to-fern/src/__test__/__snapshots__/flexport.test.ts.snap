@@ -9872,18 +9872,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "name": "Updated Zoomit",
-                  "ref": "zoomit_ref",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/network/companies/{id}",
             "path-parameters": {
@@ -10074,33 +10062,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "mailing_address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "name": "Zoomit V2",
-                  "ref": "zoomit-us",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/network/company_entities/{id}",
             "path-parameters": {
@@ -10275,19 +10236,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "email": "john_new_email@example.com",
-                  "name": "John Smith",
-                  "phone_number": "861-555-7777",
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/network/contacts/{id}",
@@ -11069,27 +11017,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "name": "Zoomit V2",
-                  "ref": "zoomit-management-co",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/network/locations/{id}",
             "path-parameters": {
@@ -11351,41 +11278,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Update this product to represent the request payload",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "classifications": [
-                    {
-                      "codes": [],
-                      "region": "US",
-                    },
-                  ],
-                  "client_verified": true,
-                  "country_of_origin": "China",
-                  "description": "The best 12V AC Adapter on the market",
-                  "name": "AC Adapter 12V",
-                  "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
-                  "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 12345,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/products/{id}",
@@ -11852,248 +11744,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "cargo_ready_date": "2019-06-30",
-                  "currency_code": "USD",
-                  "destination_port": {
-                    "code": "USFBN",
-                    "code_type": "unlocode",
-                  },
-                  "freight_payment_terms": "freight_collect",
-                  "incoterm": "EXW",
-                  "issue_date": "2019-09-30",
-                  "line_items": [
-                    {
-                      "assigned_party_ref": "id-12321",
-                      "cargo_ready_date": "2019-06-30",
-                      "destination_locations": [
-                        {
-                          "location_ref": "id-1234",
-                          "units": 1,
-                        },
-                      ],
-                      "destination_port": {
-                        "code": "USFBN",
-                        "code_type": "unlocode",
-                      },
-                      "hs_codes": [
-                        {
-                          "code": "7608.20.00.00",
-                          "country_code": "CA",
-                        },
-                      ],
-                      "incoterm": "EXW",
-                      "item_key": "item_key_1",
-                      "line_item_number": 1,
-                      "line_type": "main_line",
-                      "measurements": [
-                        {
-                          "measure_type": "length",
-                          "unit_of_measure": "EA",
-                          "value": "1.0",
-                        },
-                      ],
-                      "must_arrive_date": "2019-09-30",
-                      "origin_location_ref": "id-123456",
-                      "origin_port": {
-                        "code": "USFBN",
-                        "code_type": "unlocode",
-                      },
-                      "product": {
-                        "color": "red",
-                        "country_of_origin": "US",
-                        "dangerous": false,
-                        "ean_ucc_13": "0123456789012",
-                        "ean_ucc_8": "01234567",
-                        "lot_number": "123-456",
-                        "name": "AC Adapter 12",
-                        "product_category": "Cosmetics",
-                        "size": "M",
-                        "sku": "SKU-123",
-                        "style": "classical",
-                        "upc": "012345678912",
-                      },
-                      "transportation_mode": "air",
-                      "unit_cost": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "unit_of_measure": "BBL",
-                      "units": 100,
-                    },
-                  ],
-                  "memo": "memo",
-                  "must_arrive_date": "2019-09-30",
-                  "name": "PO 123",
-                  "order_class": "purchase_order",
-                  "order_type": "Apparel",
-                  "origin_location_ref": "id-123456",
-                  "origin_port": {
-                    "code": "USFBN",
-                    "code_type": "unlocode",
-                  },
-                  "parties": [
-                    {
-                      "contacts": [
-                        {
-                          "department": "marketing",
-                          "email": "John.Doe@example.com",
-                          "fax": "1 323 555 1234",
-                          "name": "John Doe",
-                          "phone": "767 878 8888",
-                        },
-                      ],
-                      "external_ref": "id-12344",
-                      "location_ref": "id-12344",
-                      "role": "buyer",
-                    },
-                  ],
-                  "priority": "high",
-                  "status": "open",
-                  "transportation_mode": "air",
-                },
-                "response": {
-                  "body": {
-                    "_object": "/booking",
-                    "destination_addresses": [
-                      {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                    ],
-                    "destination_port": {
-                      "_object": "/place",
-                      "address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "name": "ORD - Chicago - IL",
-                    },
-                    "freight_paymnet_terms": "freight_collect",
-                    "id": 2983,
-                    "incoterm": "EXW",
-                    "line_items": {
-                      "_object": "/api/refs/collection",
-                      "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                      "ref_type": "/purchase_orders/line_item",
-                    },
-                    "memo": "This message is written in invisible ink",
-                    "name": "PO 12345 - "shipment"",
-                    "order_class": "purchase_order",
-                    "order_type": "Apparel",
-                    "origin_address": {
-                      "_object": "/address",
-                      "city": "Albany",
-                      "country": "United States of America",
-                      "country_code": "US",
-                      "ref": "address_ref_x",
-                      "state": "MN",
-                      "street_address": "1641 Settlers Lane",
-                      "street_address2": "STE 2918",
-                      "timezone": "America/Los_Angeles",
-                      "unlocode": "US AL2",
-                      "zip": "56307",
-                    },
-                    "origin_port": {
-                      "_object": "/place",
-                      "address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "name": "ORD - Chicago - IL",
-                    },
-                    "parties": [
-                      {
-                        "company_entity": {
-                          "_object": "/company_entity",
-                          "id": 9281,
-                          "mailing_address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "name": "Zoomit",
-                          "ref": "zoomit_ref",
-                          "vat_numbers": [
-                            {
-                              "_object": "/company_entity/vat_number",
-                              "country_code": "GB",
-                              "number": "GB 123456789",
-                            },
-                          ],
-                        },
-                        "contacts": [
-                          {
-                            "department": "marketing",
-                            "email": "John.Doe@example.com",
-                            "fax": "1 323 555 1234",
-                            "name": "John Doe",
-                            "phone": "767 878 8888",
-                          },
-                        ],
-                        "location": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "role": "buyer",
-                      },
-                    ],
-                    "priority": "standard",
-                    "status": "open",
-                    "transportation_mode": "ocean",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/purchase_orders/{id}",
             "path-parameters": {
@@ -12442,15 +12092,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/shipments/{id}",

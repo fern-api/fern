@@ -34,79 +34,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "acquisitionChannel": "ORGANIC",
-                    "allowedPaymentMethods": [
-                      "ACH",
-                    ],
-                    "kycStatusDetails": {
-                      "status": "SUCCESSFUL",
-                    },
-                    "linkedEntities": {},
-                    "riskLevel": "VERY_HIGH",
-                    "transactionLimits": {
-                      "paymentMethodLimits": {
-                        "ACH": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "CARD": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "CHECK": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "GENERIC_BANK_ACCOUNT": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "IBAN": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "MPESA": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "SWIFT": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "UPI": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "WALLET": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                      },
-                    },
-                    "userStateDetails": {
-                      "state": "UNACCEPTABLE",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/business/users/{userId}",
             "path-parameters": {
@@ -132,22 +59,6 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "deviceData": {},
-                    "executedRules": [],
-                    "hitRules": [],
-                    "transactionState": "CREATED",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/transactions/{transactionId}",
             "path-parameters": {
@@ -172,77 +83,6 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             "errors": [
               "UnauthorizedError",
               "TooManyRequestsError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "acquisitionChannel": "ORGANIC",
-                    "contactDetails": {},
-                    "kycStatusDetails": {
-                      "status": "SUCCESSFUL",
-                    },
-                    "riskLevel": "VERY_HIGH",
-                    "transactionLimits": {
-                      "paymentMethodLimits": {
-                        "ACH": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "CARD": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "CHECK": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "GENERIC_BANK_ACCOUNT": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "IBAN": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "MPESA": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "SWIFT": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "UPI": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                        "WALLET": {
-                          "averageTransactionAmountLimit": {},
-                          "transactionAmountLimit": {},
-                          "transactionCountLimit": {},
-                        },
-                      },
-                    },
-                    "userSegment": "RETAIL",
-                    "userStateDetails": {
-                      "state": "UNACCEPTABLE",
-                    },
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/consumer/users/{userId}",

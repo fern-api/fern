@@ -40,7 +40,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -56,7 +55,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -107,7 +105,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -179,18 +176,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -205,7 +191,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -268,7 +253,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -323,7 +307,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -339,7 +322,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -390,7 +372,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -442,7 +423,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -542,7 +522,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -627,7 +606,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -709,7 +687,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -725,7 +702,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -851,7 +827,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -941,7 +916,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -996,7 +970,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1012,7 +985,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1096,18 +1068,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -1122,7 +1083,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1185,7 +1145,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1274,7 +1233,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1290,7 +1248,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1423,7 +1380,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1520,7 +1476,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1575,7 +1530,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1591,7 +1545,6 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1675,18 +1628,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1701,7 +1643,6 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",

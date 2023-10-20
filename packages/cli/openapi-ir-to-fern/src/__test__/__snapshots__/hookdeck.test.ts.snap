@@ -5188,17 +5188,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
             "method": "POST",
             "path": "/bookmarks/{id}/trigger",
             "path-parameters": {
@@ -5345,7 +5334,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "query": {},
+                },
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -5371,7 +5362,11 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "query": {
+                    "include": "data",
+                  },
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -5540,7 +5535,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "query": {},
+                },
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -5566,7 +5563,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "query": {},
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -5735,7 +5734,11 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "query": {
+                    "status": "accepted",
+                  },
+                },
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -5761,7 +5764,12 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "query": {
+                    "include": "data",
+                    "status": "accepted",
+                  },
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6588,7 +6596,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "include": "data",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6905,17 +6915,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "PUT",
             "path": "/integrations/{id}/detach/{source_id}",
             "path-parameters": {
@@ -6965,7 +6964,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "provider": "twitter",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7188,7 +7189,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "type": "delivery",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7399,7 +7402,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "aggregation_keys": {},
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7502,7 +7507,9 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "aggregation_keys": {},
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7715,19 +7722,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "pagination": {},
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/requests/{id}/events",
             "path-parameters": {
@@ -7885,19 +7879,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "pagination": {},
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/requests/{id}/ignored_events",
             "path-parameters": {
@@ -7978,7 +7959,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "include": "data",
+                  "status": "accepted",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8755,19 +8739,6 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "pagination": {},
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/transformations/{id}/executions",

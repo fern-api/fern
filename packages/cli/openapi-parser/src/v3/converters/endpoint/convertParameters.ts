@@ -1,21 +1,22 @@
+import { HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
 import {
-    Header,
-    HttpMethod,
-    PathParameter,
-    PrimitiveSchemaValue,
-    QueryParameter,
-    Schema,
-} from "@fern-fern/openapi-ir-model/finalIr";
+    HeaderWithExample,
+    PathParameterWithExample,
+    PrimitiveSchemaValueWithExample,
+    QueryParameterWithExample,
+    SchemaWithExample,
+} from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getVariableReference } from "../../extensions/getVariableReference";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
+import { getExamplesString } from "../example/getExample";
 
 export interface ConvertedParameters {
-    pathParameters: PathParameter[];
-    queryParameters: QueryParameter[];
-    headers: Header[];
+    pathParameters: PathParameterWithExample[];
+    queryParameters: QueryParameterWithExample[];
+    headers: HeaderWithExample[];
 }
 
 export function convertParameters({
@@ -50,18 +51,20 @@ export function convertParameters({
                       resolvedParameter.name,
                   ])
                 : isRequired
-                ? Schema.primitive({
-                      schema: PrimitiveSchemaValue.string({
+                ? SchemaWithExample.primitive({
+                      schema: PrimitiveSchemaValueWithExample.string({
                           minLength: undefined,
                           maxLength: undefined,
+                          example: getExamplesString(resolvedParameter.example),
                       }),
                       description: undefined,
                   })
-                : Schema.optional({
-                      value: Schema.primitive({
-                          schema: PrimitiveSchemaValue.string({
+                : SchemaWithExample.optional({
+                      value: SchemaWithExample.primitive({
+                          schema: PrimitiveSchemaValueWithExample.string({
                               minLength: undefined,
                               maxLength: undefined,
+                              example: getExamplesString(resolvedParameter.example),
                           }),
                           description: undefined,
                       }),
@@ -77,7 +80,7 @@ export function convertParameters({
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const defaultValue = (resolvedParameter.schema as any).default;
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
-                schema = Schema.literal({
+                schema = SchemaWithExample.literal({
                     value: defaultValue,
                     description: undefined,
                 });

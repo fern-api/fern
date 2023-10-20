@@ -1,5 +1,13 @@
-import { Endpoint, EndpointExample, Request, Response } from "@fern-fern/openapi-ir-model/finalIr";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import {
+    EndpointExample,
+    HeaderExample,
+    PathParameterExample,
+    QueryParameterExample,
+    Request,
+    Response,
+} from "@fern-fern/openapi-ir-model/finalIr";
+import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { isSchemaRequired } from "../../utils/isSchemaRequrired";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
 export class ExampleEndpointFactory {
@@ -9,7 +17,7 @@ export class ExampleEndpointFactory {
         this.exampleTypeFactory = new ExampleTypeFactory(schemas);
     }
 
-    public buildEndpointExample(endpoint: Omit<Endpoint, "examples">): EndpointExample | undefined {
+    public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
         const requestSchemaIdResponse = getSchemaIdFromRequest(endpoint.request);
         const responseSchemaIdResponse = getSchemaIdFromResponse(endpoint.response);
 
@@ -29,10 +37,50 @@ export class ExampleEndpointFactory {
             return undefined;
         }
 
+        const pathParameters: PathParameterExample[] = [];
+        const headers: HeaderExample[] = [];
+        const queryParameters: QueryParameterExample[] = [];
+
+        for (const pathParameter of endpoint.pathParameters) {
+            const example = this.exampleTypeFactory.buildExample(pathParameter.schema);
+            if (example != null) {
+                pathParameters.push({
+                    name: pathParameter.name,
+                    value: example,
+                });
+            } else if (isSchemaRequired(pathParameter.schema)) {
+                return undefined;
+            }
+        }
+
+        for (const queryParameter of endpoint.queryParameters) {
+            const example = this.exampleTypeFactory.buildExample(queryParameter.schema);
+            if (example != null) {
+                queryParameters.push({
+                    name: queryParameter.name,
+                    value: example,
+                });
+            } else if (isSchemaRequired(queryParameter.schema)) {
+                return undefined;
+            }
+        }
+
+        for (const header of endpoint.headers) {
+            const example = this.exampleTypeFactory.buildExample(header.schema);
+            if (example != null) {
+                headers.push({
+                    name: header.name,
+                    value: example,
+                });
+            } else if (isSchemaRequired(header.schema)) {
+                return undefined;
+            }
+        }
+
         return {
-            pathParameters: [],
-            queryParameters: [],
-            headers: [],
+            pathParameters,
+            queryParameters,
+            headers,
             request: requestExample,
             response: responseExample,
         };

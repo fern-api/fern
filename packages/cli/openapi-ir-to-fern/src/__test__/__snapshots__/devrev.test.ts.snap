@@ -3460,22 +3460,6 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "token": {
-                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "status": "active",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
@@ -3512,7 +3496,9 @@ token type issued for a given subject.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -3684,7 +3670,12 @@ organization.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                  "state": [
+                    "active",
+                  ],
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -3906,7 +3897,12 @@ used.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                  "type": [
+                    "capability",
+                  ],
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -4136,7 +4132,9 @@ records.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -4181,7 +4179,9 @@ to access.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -4488,7 +4488,9 @@ permitted.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -4668,7 +4670,10 @@ tags.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                  "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -5078,7 +5083,17 @@ won't receive any object events until successfully verified.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "issue.priority": [
+                    "p0",
+                  ],
+                  "ticket.severity": [
+                    "blocker",
+                  ],
+                  "type": [
+                    "issue",
+                  ],
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -5198,7 +5213,18 @@ organizations.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "issue.priority": [
+                    "p0",
+                  ],
+                  "mode": "after",
+                  "ticket.severity": [
+                    "blocker",
+                  ],
+                  "type": [
+                    "issue",
+                  ],
+                },
                 "request": undefined,
                 "response": {
                   "body": {

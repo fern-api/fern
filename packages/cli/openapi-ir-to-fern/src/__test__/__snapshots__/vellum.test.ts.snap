@@ -2435,17 +2435,6 @@ Upload a document to be indexed and used for search.
 
 Compiles the prompt backing the model version using the provided input values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "input_values": [],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
@@ -2614,20 +2603,6 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "inputs": [],
-                  "metric_input_params": {
-                    "params": {},
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
@@ -2710,23 +2685,6 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "evaluation_params": {},
-                  "input_values": [],
-                },
-                "response": {
-                  "body": {
-                    "evaluation_params": {},
-                    "input_values": [],
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {
