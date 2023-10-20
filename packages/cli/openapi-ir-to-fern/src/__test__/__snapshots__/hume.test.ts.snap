@@ -14,6 +14,19 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "Get Job Predictions",
             "docs": "Get the JSON predictions of a completed job.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/predictions",
             "path-parameters": {

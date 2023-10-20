@@ -57,8 +57,24 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
+        const request = endpointWithExample.request;
+        const response = endpointWithExample.response;
         return {
             ...endpointWithExample,
+            request:
+                request?.type === "json"
+                    ? {
+                          ...request,
+                          schema: convertSchemaWithExampleToSchema(request.schema),
+                      }
+                    : request,
+            response:
+                response?.type === "json"
+                    ? {
+                          ...response,
+                          schema: convertSchemaWithExampleToSchema(response.schema),
+                      }
+                    : response,
             queryParameters: endpointWithExample.queryParameters.map((queryParameter) => {
                 return {
                     description: queryParameter.description,

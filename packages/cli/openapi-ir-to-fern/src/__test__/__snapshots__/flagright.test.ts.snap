@@ -184,6 +184,29 @@ Each consumer Business entity needs three mandatory fields:
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/business/users",
             "request": {
@@ -340,6 +363,27 @@ Each consumer User entity needs three mandatory fields:
               "BadRequestError",
               "UnauthorizedError",
               "TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "acquisitionChannel": "ORGANIC",
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/consumer/users",

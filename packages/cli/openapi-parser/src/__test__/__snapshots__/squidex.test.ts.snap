@@ -1151,7 +1151,18 @@ You will retrieve all teams, where you are assigned as a contributor.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "TeamsGetTeamsRequest",
       "headers": [],
       "internal": undefined,
@@ -1750,7 +1761,49 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fromDate",
+              "value": {
+                "primitive": {
+                  "string": "from-date",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "toDate",
+              "value": {
+                "primitive": {
+                  "string": "to-date",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "StatisticsGetStorageSizesRequest",
       "headers": [],
       "internal": undefined,
@@ -1840,7 +1893,49 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "team",
+              "value": {
+                "primitive": {
+                  "string": "team",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fromDate",
+              "value": {
+                "primitive": {
+                  "string": "from-date",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "toDate",
+              "value": {
+                "primitive": {
+                  "string": "to-date",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "StatisticsGetStorageSizesForTeamRequest",
       "headers": [],
       "internal": undefined,
@@ -4724,7 +4819,18 @@ You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
+        },
+      ],
       "generatedRequestName": "RulesGetActionsRequest",
       "headers": [],
       "internal": undefined,
@@ -4742,11 +4848,11 @@ You will be assigned as owner of the new team automatically.",
           "key": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
             },
+            "type": "primitive",
           },
           "type": "map",
           "value": {
@@ -6087,7 +6193,18 @@ You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "RulesGetEventTypesRequest",
       "headers": [],
       "internal": undefined,
@@ -6106,7 +6223,6 @@ You will be assigned as owner of the new team automatically.",
           "value": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -6166,8 +6282,6 @@ You will be assigned as owner of the new team automatically.",
       "response": {
         "description": "Rule event type found.",
         "schema": {
-          "description": undefined,
-          "example": undefined,
           "type": "unknown",
         },
         "type": "json",
@@ -6727,7 +6841,18 @@ You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "LanguagesGetLanguagesRequest",
       "headers": [],
       "internal": undefined,
@@ -8545,7 +8670,47 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "datas": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ContentsPostContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -8633,7 +8798,57 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "jobs": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": "Upsert",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ContentsBulkUpdateContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -9131,7 +9346,6 @@ You will be assigned as owner of the new team automatically.",
           "value": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -11158,7 +11372,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
+        },
+      ],
       "generatedRequestName": "AssetsGetTagsRequest",
       "headers": [],
       "internal": undefined,
@@ -11191,17 +11427,16 @@ You will be assigned as owner of the new team automatically.",
           "key": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
             },
+            "type": "primitive",
           },
           "type": "map",
           "value": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -11289,17 +11524,16 @@ You will be assigned as owner of the new team automatically.",
           "key": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
             },
+            "type": "primitive",
           },
           "type": "map",
           "value": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "type": "int",
             },
             "type": "primitive",
@@ -12066,7 +12300,47 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "jobs": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": "Annotate",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "AssetsBulkUpdateAssetsRequest",
       "headers": [],
       "internal": undefined,
@@ -13839,7 +14113,29 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetPermissionsRequest",
       "headers": [],
       "internal": undefined,
@@ -13873,7 +14169,6 @@ The client secret is auto generated on the server and returned. The client does 
           "value": {
             "description": undefined,
             "schema": {
-              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -14151,7 +14446,18 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetAppsRequest",
       "headers": [],
       "internal": undefined,
@@ -14254,7 +14560,29 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "team",
+              "value": {
+                "primitive": {
+                  "string": "team",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetTeamAppsRequest",
       "headers": [],
       "internal": undefined,

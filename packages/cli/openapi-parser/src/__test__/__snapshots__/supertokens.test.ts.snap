@@ -106,7 +106,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "My Authy App",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -121,7 +120,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": 0,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -134,7 +132,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": 30,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -182,7 +179,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "JBSWY3DPEHPK3PXP",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -310,7 +306,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "My Authy App",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -325,7 +320,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "A better name for my TOTP device",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -532,7 +526,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "example": undefined,
                                     "maxLength": undefined,
                                     "minLength": undefined,
                                     "type": "string",
@@ -551,7 +544,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "example": undefined,
                                     "type": "double",
                                   },
                                   "type": "primitive",
@@ -568,7 +560,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "example": undefined,
                                     "type": "double",
                                   },
                                   "type": "primitive",
@@ -585,7 +576,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "example": undefined,
                                     "type": "boolean",
                                   },
                                   "type": "primitive",
@@ -726,7 +716,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "My Authy App",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -767,7 +756,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": true,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -902,7 +890,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "123456",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -917,7 +904,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": false,
                   "type": "boolean",
                 },
                 "type": "primitive",
@@ -965,7 +951,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": 90000,
                           "type": "double",
                         },
                         "type": "primitive",
@@ -1109,7 +1094,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "My Authy App",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1124,7 +1108,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "123456",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1174,7 +1157,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": 90000,
                           "type": "double",
                         },
                         "type": "primitive",
@@ -1201,7 +1183,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": false,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -1402,7 +1383,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
-                        "example": "externalId",
                         "maxLength": undefined,
                         "minLength": undefined,
                         "type": "string",
@@ -1420,7 +1400,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "Info about external userId",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -1557,7 +1536,6 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": "externalId",
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1575,7 +1553,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "Info about external userId",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -1594,7 +1571,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -1652,7 +1628,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": undefined,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -1669,7 +1644,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": undefined,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -1797,7 +1771,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "example": undefined,
                   "generatedName": "UserIdMappingRemoveMappingRequestUserIdType",
                   "nameOverride": undefined,
                   "type": "enum",
@@ -1834,7 +1807,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -1882,7 +1854,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -2005,7 +1976,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "example": undefined,
                   "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserIdType",
                   "nameOverride": undefined,
                   "type": "enum",
@@ -2042,7 +2012,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "new external userId info",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -2310,7 +2279,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": true,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -2352,7 +2320,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "description": undefined,
-                        "example": undefined,
                         "generatedName": "PasswordlessTryUseCodeResponseFailedCodeInputAttemptCountStatus",
                         "nameOverride": undefined,
                         "type": "enum",
@@ -2383,7 +2350,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": 2,
                           "type": "double",
                         },
                         "type": "primitive",
@@ -2400,7 +2366,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": 5,
                           "type": "double",
                         },
                         "type": "primitive",
@@ -2815,7 +2780,6 @@ Passing the optional deviceId signifies a resend code flow.
                       "type": "optional",
                       "value": {
                         "description": undefined,
-                        "example": undefined,
                         "generatedName": "PasswordlessStartSignInResponseOneStatus",
                         "nameOverride": undefined,
                         "type": "enum",
@@ -3197,7 +3161,6 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": 2,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -3686,7 +3649,6 @@ Note that there is an invisible character at the end of the path, this was to av
                       "type": "optional",
                       "value": {
                         "description": undefined,
-                        "example": undefined,
                         "generatedName": "PasswordlessGetUserResponseOneStatus",
                         "nameOverride": undefined,
                         "type": "enum",
@@ -3902,7 +3864,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "example": undefined,
                   "generatedName": "PasswordlessPutUserResponseStatus",
                   "nameOverride": undefined,
                   "type": "enum",
@@ -4477,7 +4438,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "type": "optional",
                       "value": {
                         "description": undefined,
-                        "example": undefined,
                         "generatedName": "EmailPasswordGetUserResponseOneStatus",
                         "nameOverride": undefined,
                         "type": "enum",
@@ -4670,7 +4630,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "example": undefined,
                   "generatedName": "EmailPasswordPutUserResponseStatus",
                   "nameOverride": undefined,
                   "type": "enum",
@@ -5203,7 +5162,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "newpassword123",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -5387,7 +5345,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": 10,
                     "type": "double",
                   },
                   "type": "primitive",
@@ -5515,7 +5472,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "passwordHash",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -5533,7 +5489,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "example": undefined,
                   "generatedName": "UserImportRequestHashingAlgorithm",
                   "nameOverride": undefined,
                   "type": "enum",
@@ -5617,7 +5572,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -5808,7 +5762,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": true,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -6033,7 +5986,6 @@ Note that there is an invisible character at the end of the path, this was to av
                       "type": "optional",
                       "value": {
                         "description": undefined,
-                        "example": undefined,
                         "generatedName": "ThirdPartyGetUserResponseOneStatus",
                         "nameOverride": undefined,
                         "type": "enum",
@@ -6537,7 +6489,6 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": 10,
                     "type": "double",
                   },
                   "type": "primitive",
@@ -7906,7 +7857,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": true,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -8077,7 +8027,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": true,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -8512,7 +8461,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": "permission",
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -8563,7 +8511,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": true,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -8701,7 +8648,6 @@ e.g.:
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "example": "permission",
                             "maxLength": undefined,
                             "minLength": undefined,
                             "type": "string",
@@ -8843,7 +8789,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": "permission",
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -9026,7 +8971,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": "admin",
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -9184,7 +9128,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": true,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -9316,7 +9259,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": "admin",
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -9723,7 +9665,6 @@ e.g.:
                 "value": {
                   "description": "Decides if the token should be signed with a dynamic or static key, defaults to true",
                   "schema": {
-                    "example": false,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -10157,7 +10098,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": false,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -10174,7 +10114,6 @@ e.g.:
                 "value": {
                   "description": "Decides if we always check if the session exists in the DB or just do token validation, defaults to false.",
                   "schema": {
-                    "example": false,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -11400,7 +11339,6 @@ e.g.:
                 "value": {
                   "description": "Decides if the token should be signed with a dynamic or static key, defaults to true",
                   "schema": {
-                    "example": true,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -11440,7 +11378,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -11486,7 +11423,47 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "keys": {
+                "array": [
+                  {
+                    "properties": {
+                      "alg": {
+                        "literal": "RS256",
+                        "type": "literal",
+                      },
+                      "kty": {
+                        "primitive": {
+                          "string": "RSA",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "use": {
+                        "primitive": {
+                          "string": "sig",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RetrieveJwksRequest",
       "headers": [],
       "internal": undefined,
@@ -11939,7 +11916,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "test@example.com",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -11958,7 +11934,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "password@123",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -12032,7 +12007,6 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "example": "example-userid",
                                   "maxLength": undefined,
                                   "minLength": undefined,
                                   "type": "string",
@@ -12051,7 +12025,6 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "example": "test@example.com",
                                   "maxLength": undefined,
                                   "minLength": undefined,
                                   "type": "string",
@@ -12070,7 +12043,6 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "example": 1231321231,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -12102,7 +12074,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "Your password must have at least 8 characters",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12227,7 +12198,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "test@example.com",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12246,7 +12216,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "password@123",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12265,7 +12234,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "test2@example.com",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12294,7 +12262,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "ue21r-fw32r3-d121-d1",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12313,7 +12280,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "password@123",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12332,7 +12298,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "test2@example.com",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12411,7 +12376,6 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "example": "r23r-f235th54-g3413gf-r32dr2",
                                   "maxLength": undefined,
                                   "minLength": undefined,
                                   "type": "string",
@@ -12430,7 +12394,6 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "example": "test@example.com",
                                   "maxLength": undefined,
                                   "minLength": undefined,
                                   "type": "string",
@@ -12449,7 +12412,6 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "example": 391238234792,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -12481,7 +12443,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "Your password must have at least 8 characters",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -12661,7 +12622,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -12805,7 +12765,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": "test@example.com",
                               "maxLength": undefined,
                               "minLength": undefined,
                               "type": "string",
@@ -12824,7 +12783,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": "uf2323-f223r233-f23-f23-f2f32",
                               "maxLength": undefined,
                               "minLength": undefined,
                               "type": "string",
@@ -12843,7 +12801,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": 16382348324,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -12860,7 +12817,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": false,
                               "type": "boolean",
                             },
                             "type": "primitive",
@@ -12978,7 +12934,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "rf32f-f32342f-32f-323r2f3-23",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -13038,7 +12993,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "You have crossed the free dashboard user limit. Please purchase the dashboard feature or login with a valid user account",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -13287,7 +13241,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "test@example.com",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -13306,7 +13259,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "password@123",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -13357,7 +13309,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": undefined,
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -13386,7 +13337,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "You have crossed the free dashboard user limit. Please purchase the dashboard feature or login with a valid user account",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -13557,7 +13507,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": "fni29f-f23f23-f2fq32qt-h35evf",
                               "maxLength": undefined,
                               "minLength": undefined,
                               "type": "string",
@@ -13576,7 +13525,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": 16382348324,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -13593,7 +13541,6 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
-                              "example": 16382348324,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -13681,7 +13628,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": undefined,
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -13815,7 +13761,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "/usr/lib/supertokens/config.yaml",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -14169,7 +14114,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": undefined,
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -14188,7 +14132,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "99c87c72-1807-22d-9b39-7a88f95re56c",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -14217,7 +14160,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": undefined,
                           "type": "boolean",
                         },
                         "type": "primitive",
@@ -14352,7 +14294,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": 1000000,
                     "type": "double",
                   },
                   "type": "primitive",
@@ -14476,7 +14417,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": 100000,
                     "type": "double",
                   },
                   "type": "primitive",
@@ -14745,7 +14685,6 @@ e.g.:
                         "key": "recipeId",
                         "schema": {
                           "description": undefined,
-                          "example": undefined,
                           "generatedName": "GetUsersResponseUsersItemRecipeId",
                           "nameOverride": undefined,
                           "type": "enum",
@@ -15062,7 +15001,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": undefined,
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -15180,7 +15118,6 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "example": undefined,
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -15202,16 +15139,14 @@ e.g.:
                   "key": {
                     "description": undefined,
                     "schema": {
-                      "example": undefined,
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
                     },
+                    "type": "primitive",
                   },
                   "type": "map",
                   "value": {
-                    "description": undefined,
-                    "example": undefined,
                     "type": "unknown",
                   },
                 },
@@ -15322,7 +15257,6 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
-                          "example": "eyJhbGciOiJIUzI1NiIsIn...",
                           "maxLength": undefined,
                           "minLength": undefined,
                           "type": "string",
@@ -15423,7 +15357,6 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": "eyJhbGciOiJIUzI1NiIsIn...",
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",

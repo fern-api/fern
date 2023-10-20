@@ -3,14 +3,14 @@ import {
     HeaderExample,
     PathParameterExample,
     QueryParameterExample,
-    Request,
-    Response,
 } from "@fern-fern/openapi-ir-model/finalIr";
 import {
     EndpointWithExample,
     HeaderWithExample,
     PathParameterWithExample,
     QueryParameterWithExample,
+    RequestWithExample,
+    ResponseWithExample,
     SchemaWithExample,
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { isSchemaRequired } from "../../utils/isSchemaRequrired";
@@ -38,8 +38,8 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
-        const requestSchemaIdResponse = getSchemaIdFromRequest(endpoint.request);
-        const responseSchemaIdResponse = getSchemaIdFromResponse(endpoint.response);
+        const requestSchemaIdResponse = getRequestSchema(endpoint.request);
+        const responseSchemaIdResponse = getResponseSchema(endpoint.response);
 
         if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
             return undefined;
@@ -47,7 +47,7 @@ export class ExampleEndpointFactory {
 
         let requestExample = undefined;
         if (requestSchemaIdResponse != null) {
-            requestExample = this.exampleTypeFactory.buildExampleFromSchemaId(requestSchemaIdResponse.schemaId);
+            requestExample = this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schema);
             if (requestExample == null) {
                 return undefined;
             }
@@ -55,7 +55,7 @@ export class ExampleEndpointFactory {
 
         let responseExample = undefined;
         if (responseSchemaIdResponse != null) {
-            responseExample = this.exampleTypeFactory.buildExampleFromSchemaId(responseSchemaIdResponse.schemaId);
+            responseExample = this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schema);
             if (responseExample == null) {
                 return undefined;
             }
@@ -134,28 +134,24 @@ export class ExampleEndpointFactory {
     }
 }
 
-type SchemaIdResponse = { type: "present"; schemaId: string } | { type: "unsupported" };
+type SchemaIdResponse = { type: "present"; schema: SchemaWithExample } | { type: "unsupported" };
 
-function getSchemaIdFromRequest(request: Request | null | undefined): SchemaIdResponse | undefined {
+function getRequestSchema(request: RequestWithExample | null | undefined): SchemaIdResponse | undefined {
     if (request == null) {
         return undefined;
     }
     if (request.type !== "json") {
         return { type: "unsupported" };
     }
-    return request.schema.type === "reference"
-        ? { type: "present", schemaId: request.schema.schema }
-        : { type: "unsupported" };
+    return { type: "present", schema: request.schema };
 }
 
-function getSchemaIdFromResponse(response: Response | null | undefined): SchemaIdResponse | undefined {
+function getResponseSchema(response: ResponseWithExample | null | undefined): SchemaIdResponse | undefined {
     if (response == null) {
         return undefined;
     }
     if (response.type !== "json") {
         return { type: "unsupported" };
     }
-    return response.schema.type === "reference"
-        ? { type: "present", schemaId: response.schema.schema }
-        : { type: "unsupported" };
+    return { type: "present", schema: response.schema };
 }

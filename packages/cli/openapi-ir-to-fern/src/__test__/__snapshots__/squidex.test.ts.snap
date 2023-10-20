@@ -4579,6 +4579,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps",
             "response": {
@@ -4728,6 +4739,19 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/roles/permissions",
             "path-parameters": {
@@ -4806,6 +4830,19 @@ You will retrieve all apps, where you are assigned as a contributor.",
 You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "team": "team",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/apps",
@@ -5546,6 +5583,25 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "jobs": [
+                    {
+                      "type": "Annotate",
+                    },
+                  ],
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/bulk",
             "path-parameters": {
@@ -6006,6 +6062,19 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/tags",
@@ -6806,6 +6875,26 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "jobs": [
+                    {
+                      "type": "Upsert",
+                    },
+                  ],
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/bulk",
             "path-parameters": {
@@ -7344,6 +7433,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "datas": [],
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
@@ -7773,6 +7878,17 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": "Provide a list of supported language codes, following the ISO2Code standard.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/languages",
@@ -8341,6 +8457,17 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/rules/actions",
             "response": {
@@ -8375,6 +8502,17 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/rules/eventtypes",
@@ -9905,6 +10043,21 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "fromDate": "from-date",
+                  "toDate": "to-date",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
@@ -9933,6 +10086,21 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "fromDate": "from-date",
+                  "team": "team",
+                  "toDate": "to-date",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
@@ -10142,6 +10310,17 @@ The client secret is auto generated on the server and returned. The client does 
 You will retrieve all teams, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/teams",

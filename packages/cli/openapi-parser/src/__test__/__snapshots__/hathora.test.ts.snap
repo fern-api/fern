@@ -10,7 +10,18 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetAppsRequest",
       "headers": [],
       "internal": undefined,
@@ -103,7 +114,6 @@ exports[`open api parser hathora parse open api 1`] = `
                             "schema": {
                               "description": undefined,
                               "schema": {
-                                "example": undefined,
                                 "maxLength": undefined,
                                 "minLength": undefined,
                                 "type": "string",
@@ -159,7 +169,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -265,7 +274,6 @@ exports[`open api parser hathora parse open api 1`] = `
                             "schema": {
                               "description": undefined,
                               "schema": {
-                                "example": undefined,
                                 "maxLength": undefined,
                                 "minLength": undefined,
                                 "type": "string",
@@ -321,7 +329,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -492,7 +499,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -559,7 +565,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -589,7 +594,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -657,7 +661,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -687,7 +690,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1613,16 +1615,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
                   },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
-                  "description": undefined,
-                  "example": undefined,
                   "type": "unknown",
                 },
               },
@@ -1746,16 +1746,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
                   },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
-                  "description": undefined,
-                  "example": undefined,
                   "type": "unknown",
                 },
               },
@@ -1879,16 +1877,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
                   },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
-                  "description": undefined,
-                  "example": undefined,
                   "type": "unknown",
                 },
               },
@@ -2009,7 +2005,6 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "visibility",
               "schema": {
                 "description": undefined,
-                "example": undefined,
                 "generatedName": "CreateLobbyRequestVisibility",
                 "nameOverride": undefined,
                 "type": "enum",
@@ -2044,16 +2039,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
                   },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
-                  "description": undefined,
-                  "example": undefined,
                   "type": "unknown",
                 },
               },
@@ -2286,16 +2279,14 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
                   },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
-                  "description": undefined,
-                  "example": undefined,
                   "type": "unknown",
                 },
               },

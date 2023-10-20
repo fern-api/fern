@@ -118,7 +118,6 @@ Here are some of the most used payload fields explained (you can find the full p
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -317,7 +316,52 @@ Each consumer User entity needs three mandatory fields:
         401,
         429,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "acquisitionChannel": {
+                "enum": "ORGANIC",
+                "type": "enum",
+              },
+              "kycStatusDetails": {
+                "properties": {
+                  "status": {
+                    "enum": "SUCCESSFUL",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "riskLevel": {
+                "enum": "VERY_HIGH",
+                "type": "enum",
+              },
+              "userSegment": {
+                "enum": "RETAIL",
+                "type": "enum",
+              },
+              "userStateDetails": {
+                "properties": {
+                  "state": {
+                    "enum": "UNACCEPTABLE",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PostConsumerUserRequest",
       "headers": [],
       "internal": undefined,
@@ -382,7 +426,6 @@ Each consumer User entity needs three mandatory fields:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -532,7 +575,57 @@ Each consumer Business entity needs three mandatory fields:
         401,
         429,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "acquisitionChannel": {
+                "enum": "ORGANIC",
+                "type": "enum",
+              },
+              "allowedPaymentMethods": {
+                "array": [
+                  {
+                    "enum": "ACH",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+              "kycStatusDetails": {
+                "properties": {
+                  "status": {
+                    "enum": "SUCCESSFUL",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "riskLevel": {
+                "enum": "VERY_HIGH",
+                "type": "enum",
+              },
+              "userStateDetails": {
+                "properties": {
+                  "state": {
+                    "enum": "UNACCEPTABLE",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PostBusinessUserRequest",
       "headers": [],
       "internal": undefined,
@@ -597,7 +690,6 @@ Each consumer Business entity needs three mandatory fields:
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",

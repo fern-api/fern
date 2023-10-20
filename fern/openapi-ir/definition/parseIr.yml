@@ -31,10 +31,37 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-request-name` on a path object.
-      request: optional<finalIr.Request>
-      response: optional<finalIr.Response>
+      request: optional<RequestWithExample>
+      response: optional<ResponseWithExample>
       errorStatusCode: list<commons.StatusCode>
       server: list<commons.Server>
+
+  RequestWithExample:
+    union:
+      octetStream: finalIr.OctetStremRequest
+      multipart: finalIr.MultipartRequest
+      json: JsonRequestWithExample
+
+  JsonRequestWithExample:
+    extends: commons.WithDescription
+    properties:
+      schema: SchemaWithExample
+      contentType: optional<string>
+
+  ResponseWithExample:
+    union:
+      file: finalIr.FileResponse
+      json: JsonResponseWithExample
+      text: finalIr.TextResponse
+      streamingText: finalIr.TextResponse
+      streamingJson:
+        type: finalIr.JsonResponse
+        docs: Checks if `x-fern-streaming` is present and is true.
+
+  JsonResponseWithExample:
+    extends: commons.WithDescription
+    properties:
+      schema: SchemaWithExample
 
   PathParameterWithExample:
     extends: commons.WithDescription

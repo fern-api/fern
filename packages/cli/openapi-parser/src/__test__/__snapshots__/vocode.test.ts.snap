@@ -535,8 +535,6 @@ exports[`open api parser vocode parse open api 1`] = `
       "response": {
         "description": "Successful Response",
         "schema": {
-          "description": undefined,
-          "example": undefined,
           "type": "unknown",
         },
         "type": "json",

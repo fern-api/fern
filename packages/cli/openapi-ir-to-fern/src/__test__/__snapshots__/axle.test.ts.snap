@@ -504,6 +504,22 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Get Carrier",
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/carriers/{id}",
             "path-parameters": {
@@ -522,6 +538,20 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Get Carriers",
             "docs": "The Get Carriers method returns an array of Carrier objects.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/carriers",
             "response": {

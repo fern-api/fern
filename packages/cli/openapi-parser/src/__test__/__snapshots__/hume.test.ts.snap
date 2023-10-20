@@ -190,7 +190,29 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Get the JSON predictions of a completed job.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetJobPredictionsRequest",
       "headers": [],
       "internal": undefined,

@@ -9257,7 +9257,29 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get a linked account's selective syncs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "x-account-token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
       "headers": [
         {
@@ -9310,7 +9332,47 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Replace a linked account's selective syncs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "x-account-token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "sync_configurations": {
+                "array": [
+                  {
+                    "properties": {
+                      "linked_account_conditions": {
+                        "array": [],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "SelectiveSyncConfigurationsUpdateRequest",
       "headers": [
         {
@@ -9555,7 +9617,78 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "x-account-token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [
+              {
+                "properties": {
+                  "is_initial_sync": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "last_sync_start": {
+                    "primitive": {
+                      "datetime": "2021-03-30T19:44:18.695973Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "model_id": {
+                    "primitive": {
+                      "string": "hris.Employee",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "model_name": {
+                    "primitive": {
+                      "string": "Employee",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "next_sync_start": {
+                    "primitive": {
+                      "datetime": "2021-03-30T20:44:18.662942Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "selective_sync_configurations_usage": {
+                    "enum": "IN_NEXT_SYNC",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "SYNCING",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            ],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "SyncStatusResyncCreateRequest",
       "headers": [
         {
@@ -11197,7 +11330,29 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`WebhookReceiver\` objects.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "primitive": {
+                  "string": "x-account-token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "WebhookReceiversListRequest",
       "headers": [
         {

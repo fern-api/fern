@@ -784,6 +784,17 @@ exports[`open api parser hathora simple 1`] = `
             "auth": true,
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/apps/v1/list",
             "response": {

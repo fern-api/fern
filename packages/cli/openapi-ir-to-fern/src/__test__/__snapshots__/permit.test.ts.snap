@@ -5079,6 +5079,20 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                },
+                "query-parameters": undefined,
+                "request": [],
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v2/facts/{proj_id}/{env_id}/role_assignments/bulk",
             "path-parameters": {
@@ -5108,6 +5122,20 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "docs": undefined,
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                },
+                "query-parameters": undefined,
+                "request": [],
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/role_assignments/bulk",
