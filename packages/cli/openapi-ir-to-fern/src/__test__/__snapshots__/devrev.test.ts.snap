@@ -3845,7 +3845,7 @@ used.
                   "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
                 "response": {
-                  "body": [],
+                  "body": {},
                 },
               },
             ],
@@ -4110,7 +4110,7 @@ records.
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
                 "response": {
-                  "body": [],
+                  "body": {},
                 },
               },
             ],
@@ -4438,7 +4438,7 @@ permitted.
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
                 "response": {
-                  "body": [],
+                  "body": {},
                 },
               },
             ],
@@ -4839,7 +4839,7 @@ response.
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": {
-                  "body": [],
+                  "body": {},
                 },
               },
             ],
@@ -5062,7 +5062,7 @@ won't receive any object events until successfully verified.
                   "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 },
                 "response": {
-                  "body": [],
+                  "body": {},
                 },
               },
             ],

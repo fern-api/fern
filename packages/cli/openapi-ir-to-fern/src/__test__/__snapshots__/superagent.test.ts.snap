@@ -188,7 +188,7 @@ exports[`open api parser superagent simple 1`] = `
                 },
                 "query-parameters": undefined,
                 "request": {
-                  "input": [],
+                  "input": {},
                 },
                 "response": undefined,
               },

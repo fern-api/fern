@@ -97,7 +97,7 @@ Generate a completion using a previously defined deployment.
                   },
                   "requests": [
                     {
-                      "input_values": [],
+                      "input_values": {},
                     },
                   ],
                 },
@@ -2443,7 +2443,7 @@ Compiles the prompt backing the model version using the provided input values.",
                 },
                 "query-parameters": undefined,
                 "request": {
-                  "input_values": [],
+                  "input_values": {},
                 },
                 "response": undefined,
               },
@@ -2723,12 +2723,12 @@ or overwritten with default values.",
                 "query-parameters": undefined,
                 "request": {
                   "evaluation_params": {},
-                  "input_values": [],
+                  "input_values": {},
                 },
                 "response": {
                   "body": {
                     "evaluation_params": {},
-                    "input_values": [],
+                    "input_values": {},
                   },
                 },
               },

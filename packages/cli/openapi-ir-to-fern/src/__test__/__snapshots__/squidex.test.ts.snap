@@ -4312,7 +4312,7 @@ exports[`open api parser squidex simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4403,7 +4403,7 @@ exports[`open api parser squidex simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4468,7 +4468,7 @@ exports[`open api parser squidex simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4511,11 +4511,11 @@ exports[`open api parser squidex simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "errors": [],
                     "items": [
                       {
-                        "_links": [],
+                        "_links": {},
                       },
                     ],
                   },
@@ -4614,7 +4614,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4690,7 +4690,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4748,7 +4748,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4827,11 +4827,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "errors": [],
                     "items": [
                       {
-                        "_links": [],
+                        "_links": {},
                       },
                     ],
                   },
@@ -4905,7 +4905,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -4984,7 +4984,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -5035,7 +5035,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -5086,11 +5086,11 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "errors": [],
                     "items": [
                       {
-                        "_links": [],
+                        "_links": {},
                       },
                     ],
                   },
@@ -5309,7 +5309,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": {},
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -5381,7 +5381,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": {},
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -5447,7 +5447,7 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -5568,11 +5568,11 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "errors": [],
                     "items": [
                       {
-                        "_links": [],
+                        "_links": {},
                       },
                     ],
                   },
@@ -6689,7 +6689,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -7427,7 +7427,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": [],
+                "request": {},
                 "response": undefined,
               },
             ],
@@ -7475,7 +7475,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": [],
+                "request": {},
                 "response": undefined,
               },
             ],
@@ -7603,7 +7603,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": [],
+                "request": {},
                 "response": undefined,
               },
             ],
@@ -7670,7 +7670,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": [],
+                "request": {},
                 "response": undefined,
               },
             ],
@@ -7811,7 +7811,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -8127,7 +8127,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": {},
                 },
               },
             ],
@@ -8585,7 +8585,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -9091,7 +9091,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -9575,7 +9575,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": [],
+                "request": {},
                 "response": undefined,
               },
             ],
@@ -10498,7 +10498,7 @@ You will be assigned as owner of the new team automatically.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                     "items": [],
                   },
                 },
@@ -10862,7 +10862,7 @@ You will be assigned as owner of the new team automatically.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "_links": [],
+                    "_links": {},
                   },
                 },
               },
