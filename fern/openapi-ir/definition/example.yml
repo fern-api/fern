@@ -1,32 +1,8 @@
 types:
-  SchemaInstanceId:
-    docs: |
-      Uniquely identifies an instance of a schema. For nested instances,
-      the id will be a dot-delimited path, e.g. foo.bar.baz.
-    type: string
-
   PropertyKey:
     docs: |
       Represents the name of a property defined in an object.
     type: string
-
-  Example:
-    docs: |
-      An OpenAPI example, which is either fully specified, partially
-      specified, or a reference to another schema instance's example.
-    union:
-      full: FullExample
-      partial: PartialExample
-      reference: ReferencedExample
-
-  FullOrPartialExample:
-    docs: |
-      Specifically designed for the PartialObjectExample.
-      The included properties can either be full or partial
-      examples, but not references.
-    union:
-      full: FullExample
-      partial: PartialExample
 
   FullExample:
     union:
@@ -65,26 +41,3 @@ types:
       discriminated: map<PropertyKey, FullExample>
       undisciminated: FullExample
 
-  ReferencedExample:
-    properties:
-      reference: SchemaInstanceId
-
-  PartialExample:
-    union:
-      object: PartialObjectExample
-      oneOf: PartialOneOfExample
-
-  PartialObjectExample:
-    properties:
-      includedProperties: map<PropertyKey, Example>
-      excludedProperties: map<PropertyKey, SchemaInstanceId>
-
-  PartialOneOfExample:
-    union:
-      discriminated: PartialDiscriminatedOneOfExample
-      undisciminated: PartialExample
-
-  PartialDiscriminatedOneOfExample:
-    properties:
-      discriminant: string
-      value: PartialExample

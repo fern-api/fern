@@ -113,7 +113,6 @@ Creates a new document index.",
           "schema": "DocumentIndexCreateRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "document_indexes_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -153,6 +152,13 @@ Used to list documents. Optionally filter on supported fields.
           "request": undefined,
           "response": {
             "properties": {
+              "count": {
+                "primitive": {
+                  "int": 123,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
               "next": {
                 "primitive": {
                   "string": "http://api.example.org/accounts/?offset=400&limit=100",
@@ -292,7 +298,6 @@ Executes a deployed Workflow and streams back its results.",
           "schema": "ExecuteWorkflowStreamRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "execute_workflow_stream_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -335,7 +340,65 @@ Generate a completion using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "options": {
+                "properties": {
+                  "logprobs": {
+                    "enum": "ALL",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "requests": {
+                "array": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "data": {
+                        "properties": {
+                          "completions": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateRequest",
       "headers": [],
       "internal": undefined,
@@ -354,7 +417,6 @@ Generate a completion using a previously defined deployment.
           "schema": "GenerateBodyRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "generate_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -416,7 +478,6 @@ Generate a stream of completions using a previously defined deployment.
           "schema": "GenerateStreamBodyRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "generate_stream_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -540,7 +601,6 @@ Compiles the prompt backing the model version using the provided input values.",
           "schema": "ModelVersionCompilePromptRequestRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "model_version_compile_prompt_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -594,7 +654,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "schema": "RegisterPromptRequestRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "register_prompt_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -664,7 +723,6 @@ or overwritten with default values.",
           "schema": "UpsertSandboxScenarioRequestRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "upsert_sandbox_scenario_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -694,7 +752,36 @@ or overwritten with default values.",
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "scenario_id",
+              "value": {
+                "primitive": {
+                  "string": "scenario-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -775,7 +862,6 @@ Perform a search against a document index.
           "schema": "SearchRequestBodyRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "search_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -817,7 +903,23 @@ Used to submit feedback regarding the quality of previously generated completion
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "actuals": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SubmitCompletionActualsRequest",
       "headers": [],
       "internal": undefined,
@@ -836,7 +938,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "schema": "SubmitCompletionActualsRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "submit_completion_actuals_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -868,7 +969,50 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,
@@ -902,7 +1046,6 @@ or overwritten with default values.",
           "schema": "TestSuiteTestCaseRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "upsert_test_suite_test_case_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -932,7 +1075,36 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "test_case_id",
+              "value": {
+                "primitive": {
+                  "string": "test-case-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,
@@ -1959,9 +2131,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Configuration representing how documents should be indexed",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -2097,9 +2273,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Configuration representing how documents should be indexed",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -2644,9 +2824,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -3163,9 +3347,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -3402,9 +3590,13 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -3807,9 +3999,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -4327,9 +4523,13 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -4508,9 +4708,13 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -4848,9 +5052,13 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -5067,9 +5275,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": "Optionally include additional metadata to store along with the prompt.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -5821,9 +6033,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -6659,9 +6875,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -6842,9 +7062,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -6921,9 +7145,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -7669,9 +7897,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -8005,9 +8237,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {

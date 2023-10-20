@@ -10,7 +10,18 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetAppsRequest",
       "headers": [],
       "internal": undefined,
@@ -168,7 +179,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "CreateApp_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -329,7 +339,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "UpdateApp_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -566,7 +575,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "LoginNickname_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -663,7 +671,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "LoginGoogle_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1160,7 +1167,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": "DeploymentConfig",
           "type": "reference",
         },
-        "schemaInstanceId": "CreateDeployment_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1188,7 +1194,18 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetPingServiceEndpointsRequest",
       "headers": [],
       "internal": undefined,
@@ -1596,9 +1613,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -1621,7 +1642,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "CreatePrivateLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1724,9 +1744,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -1749,7 +1773,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "CreatePublicLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1852,9 +1875,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -1877,7 +1904,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "CreateLocalLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2011,9 +2037,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -2036,7 +2066,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "CreateLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2248,9 +2277,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -2261,7 +2294,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "SetLobbyState_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2877,18 +2909,7 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateRoomRequest",
       "headers": [],
       "internal": undefined,
@@ -2935,7 +2956,6 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "CreateRoom_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3330,6 +3350,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "schema": {
         "description": undefined,
         "schema": {
+          "example": undefined,
           "maxLength": undefined,
           "minLength": undefined,
           "type": "string",
@@ -3344,6 +3365,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "schema": {
         "description": undefined,
         "schema": {
+          "example": undefined,
           "maxLength": undefined,
           "minLength": undefined,
           "type": "string",
@@ -3358,6 +3380,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "schema": {
         "description": undefined,
         "schema": {
+          "example": undefined,
           "maxLength": undefined,
           "minLength": undefined,
           "type": "string",
@@ -3372,6 +3395,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "schema": {
         "description": undefined,
         "schema": {
+          "example": undefined,
           "maxLength": undefined,
           "minLength": undefined,
           "type": "string",
@@ -3386,6 +3410,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "schema": {
         "description": undefined,
         "schema": {
+          "example": undefined,
           "maxLength": undefined,
           "minLength": undefined,
           "type": "string",
@@ -4253,9 +4278,13 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -4271,9 +4300,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {

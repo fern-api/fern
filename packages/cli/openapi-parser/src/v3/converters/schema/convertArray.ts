@@ -1,4 +1,4 @@
-import { Schema } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
@@ -15,8 +15,11 @@ export function convertArray({
     description: string | undefined;
     wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
-}): Schema {
-    const itemSchema = item == null ? Schema.unknown() : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
+}): SchemaWithExample {
+    const itemSchema =
+        item == null
+            ? SchemaWithExample.unknown({ description: undefined, example: undefined })
+            : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
     return wrapArray({
         itemSchema,
         wrapAsNullable,
@@ -29,20 +32,20 @@ export function wrapArray({
     wrapAsNullable,
     description,
 }: {
-    itemSchema: Schema;
+    itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.array({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.array({
                 value: itemSchema,
                 description,
             }),
             description,
         });
     }
-    return Schema.array({
+    return SchemaWithExample.array({
         value: itemSchema,
         description,
     });

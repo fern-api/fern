@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Header, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
+import { Header, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { ROOT_PREFIX } from "../convertPackage";
 import { convertToTypeReference } from "./convertToTypeReference";

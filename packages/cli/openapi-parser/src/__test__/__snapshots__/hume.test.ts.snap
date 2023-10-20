@@ -10,7 +10,52 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Sort and filter jobs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "array": [
+                  {
+                    "enum": "QUEUED",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "when",
+              "value": {
+                "enum": "created_before",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "sort_by",
+              "value": {
+                "enum": "created",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "direction",
+              "value": {
+                "enum": "asc",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ListJobsRequest",
       "headers": [],
       "internal": undefined,
@@ -163,7 +208,6 @@ exports[`open api parser hume parse open api 1`] = `
           "schema": "BaseRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "start_job_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -191,7 +235,29 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Get the JSON predictions of a completed job.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetJobPredictionsRequest",
       "headers": [],
       "internal": undefined,
@@ -959,9 +1025,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Empty": {
       "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -2427,9 +2497,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
     "Null": {
       "description": "No associated metadata for this model. Value will be \`null\`.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {

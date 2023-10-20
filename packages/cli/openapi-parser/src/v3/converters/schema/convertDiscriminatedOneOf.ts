@@ -1,4 +1,4 @@
-import { CommonProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { CommonPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
@@ -24,7 +24,7 @@ export function convertDiscriminatedOneOf({
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: AbstractOpenAPIV3ParserContext;
-}): Schema {
+}): SchemaWithExample {
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
@@ -90,7 +90,7 @@ export function convertDiscriminatedOneOfWithVariants({
     discriminant: string;
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
     context: AbstractOpenAPIV3ParserContext;
-}): Schema {
+}): SchemaWithExample {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
             if (isReferenceObject(schema)) {
@@ -144,14 +144,14 @@ export function wrapDiscriminantedOneOf({
     nameOverride: string | undefined;
     generatedName: string;
     wrapAsNullable: boolean;
-    properties: CommonProperty[];
+    properties: CommonPropertyWithExample[];
     description: string | undefined;
     discriminant: string;
-    subtypes: Record<string, Schema>;
-}): Schema {
+    subtypes: Record<string, SchemaWithExample>;
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.oneOf({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.oneOf({
                 type: "discriminated",
                 description,
                 discriminantProperty: discriminant,
@@ -163,7 +163,7 @@ export function wrapDiscriminantedOneOf({
             description,
         });
     }
-    return Schema.oneOf({
+    return SchemaWithExample.oneOf({
         type: "discriminated",
         description,
         discriminantProperty: discriminant,

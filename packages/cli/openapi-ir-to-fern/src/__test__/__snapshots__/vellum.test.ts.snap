@@ -86,6 +86,34 @@ Generate a completion using a previously defined deployment.
               "NotFoundError",
               "InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "options": {
+                    "logprobs": "ALL",
+                  },
+                  "requests": [
+                    {
+                      "input_values": {},
+                    },
+                  ],
+                },
+                "response": {
+                  "body": {
+                    "results": [
+                      {
+                        "data": {
+                          "completions": [],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/generate",
             "request": {
@@ -221,6 +249,17 @@ Used to submit feedback regarding the quality of previously generated completion
               "BadRequestError",
               "NotFoundError",
               "InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "actuals": [],
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/v1/submit-completion-actuals",
@@ -2278,6 +2317,7 @@ Used to list documents. Optionally filter on supported fields.
                 "request": undefined,
                 "response": {
                   "body": {
+                    "count": 123,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
                   },
@@ -2522,6 +2562,18 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                  "scenario_id": "scenario-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
@@ -2604,6 +2656,18 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                  "test_case_id": "test-case-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
@@ -2630,6 +2694,25 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "evaluation_params": {},
+                  "input_values": {},
+                },
+                "response": {
+                  "body": {
+                    "evaluation_params": {},
+                    "input_values": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {

@@ -1,4 +1,4 @@
-import { Server } from "@fern-fern/openapi-ir-model/ir";
+import { Server } from "@fern-fern/openapi-ir-model/commons";
 import { OpenAPIV3 } from "openapi-types";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getExtension } from "../extensions/getExtension";

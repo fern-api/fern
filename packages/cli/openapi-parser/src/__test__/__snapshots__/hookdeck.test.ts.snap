@@ -13,7 +13,26 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "enum": "delivery",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIssueTriggersRequest",
       "headers": [],
       "internal": undefined,
@@ -395,18 +414,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -511,7 +519,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createIssueTrigger_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -643,7 +650,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "upsertIssueTrigger_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -858,7 +864,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateIssueTrigger_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1045,7 +1050,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetAttemptsRequest",
       "headers": [],
       "internal": undefined,
@@ -1322,7 +1338,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetBookmarksRequest",
       "headers": [],
       "internal": undefined,
@@ -1929,7 +1956,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createBookmark_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2122,7 +2148,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateBookmark_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2206,7 +2231,37 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "target": {
+                "enum": "http",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "TriggerBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2272,7 +2327,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "triggerBookmark_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2303,7 +2357,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetDestinationsRequest",
       "headers": [],
       "internal": undefined,
@@ -3082,7 +3147,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createDestination_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3264,7 +3328,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "upsertDestination_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3534,7 +3597,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateDestination_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3669,7 +3731,26 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "include",
+              "value": {
+                "literal": "data",
+                "type": "literal",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -5235,18 +5316,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetryEventRequest",
       "headers": [],
       "internal": undefined,
@@ -5351,7 +5421,31 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "properties": {
+                  "include": {
+                    "literal": "data",
+                    "type": "literal",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetEventBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -8807,7 +8901,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createEventBulkRetry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8838,7 +8931,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateEventBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -10263,7 +10367,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIgnoredEventBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -11189,7 +11304,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createIgnoredEventBulkRetry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11220,7 +11334,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateIgnoredEventBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -11483,7 +11608,26 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "provider",
+              "value": {
+                "enum": "twitter",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIntegrationsRequest",
       "headers": [],
       "internal": undefined,
@@ -11669,7 +11813,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createIntegration_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11899,7 +12042,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateIntegration_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12049,7 +12191,39 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "source_id",
+              "value": {
+                "primitive": {
+                  "string": "source-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetachIntegrationToSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -12116,7 +12290,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIssuesRequest",
       "headers": [],
       "internal": undefined,
@@ -13330,7 +13515,26 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "count": {
+                "primitive": {
+                  "int": 5,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIssueCountRequest",
       "headers": [],
       "internal": undefined,
@@ -14671,7 +14875,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateIssue_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14754,7 +14957,33 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "enum": "accepted",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "include",
+              "value": {
+                "literal": "data",
+                "type": "literal",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRequestsRequest",
       "headers": [],
       "internal": undefined,
@@ -16041,18 +16270,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetryRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -16107,7 +16325,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "retryRequest_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -16139,7 +16356,37 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "include",
+              "value": {
+                "literal": "data",
+                "type": "literal",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRequestEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -17618,7 +17865,29 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRequestIgnoredEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -17858,7 +18127,35 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "properties": {
+                  "include": {
+                    "literal": "data",
+                    "type": "literal",
+                  },
+                  "status": {
+                    "enum": "accepted",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRequestBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -20720,7 +21017,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createRequestBulkRetry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20751,7 +21047,31 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "properties": {
+                  "status": {
+                    "enum": "accepted",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateRequestBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -21885,7 +22205,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRulesetsRequest",
       "headers": [],
       "internal": undefined,
@@ -22669,7 +23000,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createRuleset_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -22772,7 +23102,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "upsertRuleset_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -22967,7 +23296,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateRuleset_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -23102,7 +23430,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetSourcesRequest",
       "headers": [],
       "internal": undefined,
@@ -23716,7 +24055,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createSource_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -23783,7 +24121,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "upsertSource_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -23942,7 +24279,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateSource_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -24150,7 +24486,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "toggleWebhookNotifications_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -24181,7 +24516,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTransformationsRequest",
       "headers": [],
       "internal": undefined,
@@ -24512,9 +24858,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "value": {
                   "description": "Key-value environment variables to be passed to the transformation",
                   "key": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "description": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "type": "map",
                   "value": {
@@ -24550,7 +24900,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createTransformation_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -24638,9 +24987,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "value": {
                   "description": "Key-value environment variables to be passed to the transformation",
                   "key": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "description": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "type": "map",
                   "value": {
@@ -24676,7 +25029,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "upsertTransformation_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -24840,9 +25192,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "value": {
                   "description": "Key-value environment variables to be passed to the transformation",
                   "key": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "description": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "type": "map",
                   "value": {
@@ -24878,7 +25234,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateTransformation_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -24914,9 +25269,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "request": {
+                "properties": {
+                  "headers": {
+                    "map": [],
+                    "type": "map",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
           "response": {
-            "properties": {},
+            "properties": {
+              "log_level": {
+                "enum": "debug",
+                "type": "enum",
+              },
+            },
             "type": "object",
           },
         },
@@ -25032,9 +25405,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "schema": {
                         "description": "Headers of the request",
                         "key": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "description": undefined,
+                          "schema": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                         "type": "map",
                         "value": {
@@ -25174,7 +25551,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "testTransformation_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -25205,7 +25581,29 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTransformationExecutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -25775,7 +26173,18 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetConnectionsRequest",
       "headers": [],
       "internal": undefined,
@@ -26902,7 +27311,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "createConnection_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -27305,7 +27713,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "upsertConnection_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -27555,7 +27962,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "type": "object",
         },
-        "schemaInstanceId": "updateConnection_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -28440,9 +28846,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     {
                       "description": undefined,
                       "key": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "description": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "type": "map",
                       "value": {
@@ -30678,9 +31088,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "key": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "description": undefined,
+                                  "schema": {
+                                    "maxLength": undefined,
+                                    "minLength": undefined,
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
                                 },
                                 "type": "map",
                                 "value": {
@@ -33644,9 +34058,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "key": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "description": undefined,
+                                  "schema": {
+                                    "maxLength": undefined,
+                                    "minLength": undefined,
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
                                 },
                                 "type": "map",
                                 "value": {
@@ -34710,9 +35128,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "key": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "description": undefined,
+                          "schema": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                         "type": "map",
                         "value": {
@@ -35269,9 +35691,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "value": {
                         "description": "A key-value object of environment variables to encrypt and expose to your transformation code",
                         "key": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "description": undefined,
+                          "schema": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "type": "string",
+                          },
+                          "type": "primitive",
                         },
                         "type": "map",
                         "value": {
@@ -35478,9 +35904,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "value": {
                 "description": "Key-value environment variables to be passed to the transformation",
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -35957,9 +36387,13 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "key": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "description": undefined,
+                                  "schema": {
+                                    "maxLength": undefined,
+                                    "minLength": undefined,
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
                                 },
                                 "type": "map",
                                 "value": {

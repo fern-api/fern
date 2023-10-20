@@ -1,71 +1,196 @@
 import { Logger } from "@fern-api/logger";
-import { Endpoint, EndpointExample, Request, Response } from "@fern-fern/openapi-ir-model/ir";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import {
+    EndpointExample,
+    HeaderExample,
+    PathParameterExample,
+    QueryParameterExample,
+} from "@fern-fern/openapi-ir-model/finalIr";
+import {
+    EndpointWithExample,
+    HeaderWithExample,
+    PathParameterWithExample,
+    QueryParameterWithExample,
+    RequestWithExample,
+    ResponseWithExample,
+    SchemaWithExample,
+} from "@fern-fern/openapi-ir-model/parseIr";
+import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
+import { isSchemaPrimitive } from "../../utils/isSchemaPrmitive";
+import { isSchemaRequired } from "../../utils/isSchemaRequired";
+import { DummyExampleFactory } from "./DummyExampleFactory";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
-export class ExampleEndpointFactory {
-    private logger: Logger;
-    private exampleTypeFactory: ExampleTypeFactory;
+type GeneratedParamterExample = SuccessfullyGeneratedParamterExample | FailedGeneratedParamterExample;
 
-    constructor(context: AbstractOpenAPIV3ParserContext) {
-        this.logger = context.logger;
-        this.exampleTypeFactory = new ExampleTypeFactory(context);
+interface SuccessfullyGeneratedParamterExample {
+    type: "success";
+    value: QueryParameterExample | HeaderExample | PathParameterExample | undefined;
+}
+
+interface FailedGeneratedParamterExample {
+    type: "failed";
+}
+
+export class ExampleEndpointFactory {
+    private exampleTypeFactory: ExampleTypeFactory;
+    private dummyExampleFactory: DummyExampleFactory;
+    private logger: Logger;
+
+    constructor(schemas: Record<string, SchemaWithExample>, logger: Logger) {
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas);
+        this.dummyExampleFactory = new DummyExampleFactory(schemas);
+        this.logger = logger;
     }
 
-    public buildEndpointExample(endpoint: Omit<Endpoint, "examples">): EndpointExample | undefined {
-        this.logger.info(`Constructing example for endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}`);
+    public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
+        this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
 
-        const requestSchemaIdResponse = getSchemaIdFromRequest(endpoint.request);
-        const responseSchemaIdResponse = getSchemaIdFromResponse(endpoint.response);
+        const requestSchemaIdResponse = getRequestSchema(endpoint.request);
+        const responseSchemaIdResponse = getResponseSchema(endpoint.response);
 
         if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
-            this.logger.info("The request or response is unsupported!");
             return undefined;
         }
 
-        const requestExample =
-            requestSchemaIdResponse != null
-                ? this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schemaInstanceId)
-                : undefined;
-        const responseExample =
-            responseSchemaIdResponse != null
-                ? this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schemaInstanceId)
-                : undefined;
-        if (requestExample === undefined && responseExample === undefined) {
-            return undefined;
+        let requestExample = undefined;
+        if (requestSchemaIdResponse != null) {
+            requestExample = this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schema);
+            if (requestExample == null) {
+                this.logger.debug(
+                    `Not enough information to generate request example for ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }. Skipping example.`
+                );
+                return undefined;
+            }
         }
 
-        return {
-            pathParameters: [],
-            queryParameters: [],
-            headers: [],
+        let responseExample = undefined;
+        if (responseSchemaIdResponse != null) {
+            responseExample = this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schema);
+            if (responseExample == null) {
+                this.logger.debug(
+                    `Not enough information to generate response example for ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }. Skipping example.`
+                );
+                return undefined;
+            }
+        }
+
+        const pathParameters: PathParameterExample[] = [];
+        for (const pathParameter of endpoint.pathParameters) {
+            const example = this.buildParameterExample(pathParameter);
+            if (example.type === "failed") {
+                this.logger.debug(
+                    `Failed to generate example for path parameter ${
+                        pathParameter.name
+                    } in ${endpoint.method.toUpperCase()} ${endpoint.path}. Skipping example.`
+                );
+                return;
+            } else if (example.value != null) {
+                pathParameters.push(example.value);
+            }
+        }
+
+        const queryParameters: QueryParameterExample[] = [];
+        for (const queryParameter of endpoint.queryParameters) {
+            const example = this.buildParameterExample(queryParameter);
+            if (example.type === "failed") {
+                this.logger.debug(
+                    `Failed to generate example for query parameter ${
+                        queryParameter.name
+                    } in ${endpoint.method.toUpperCase()} ${endpoint.path}. Skipping example.`
+                );
+                return;
+            } else if (example.value != null) {
+                queryParameters.push(example.value);
+            }
+        }
+
+        const headers: HeaderExample[] = [];
+        for (const header of endpoint.headers) {
+            const example = this.buildParameterExample(header);
+            if (example.type === "failed") {
+                this.logger.debug(
+                    `Failed to generate example for header ${header.name} in ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }. Skipping example.`
+                );
+                return;
+            } else if (example.value != null) {
+                headers.push(example.value);
+            }
+        }
+
+        const example = {
+            pathParameters,
+            queryParameters,
+            headers,
             request: requestExample,
             response: responseExample,
         };
+
+        return example;
+    }
+
+    private buildParameterExample(
+        parameter: QueryParameterWithExample | PathParameterWithExample | HeaderWithExample
+    ): GeneratedParamterExample {
+        const example = this.exampleTypeFactory.buildExample(parameter.schema);
+        if (example != null) {
+            return {
+                type: "success",
+                value: {
+                    name: parameter.name,
+                    value: example,
+                },
+            };
+        }
+        const required = isSchemaRequired(parameter.schema);
+        if (required && isSchemaPrimitive(convertSchemaWithExampleToSchema(parameter.schema))) {
+            const dummyExample = this.dummyExampleFactory.generateExample({
+                schema: parameter.schema,
+                name: parameter.name,
+            });
+            if (dummyExample == null) {
+                return { type: "failed" };
+            }
+            return {
+                type: "success",
+                value: {
+                    name: parameter.name,
+                    value: dummyExample,
+                },
+            };
+        } else if (!required) {
+            return {
+                type: "success",
+                value: undefined,
+            };
+        }
+        return { type: "failed" };
     }
 }
 
-type SchemaIdResponse = { type: "present"; schemaInstanceId: string } | { type: "unsupported" };
+type SchemaIdResponse = { type: "present"; schema: SchemaWithExample } | { type: "unsupported" };
 
-function getSchemaIdFromRequest(request: Request | null | undefined): SchemaIdResponse | undefined {
+function getRequestSchema(request: RequestWithExample | null | undefined): SchemaIdResponse | undefined {
     if (request == null) {
         return undefined;
     }
     if (request.type !== "json") {
         return { type: "unsupported" };
     }
-    const schemaInstanceId = request.schema.type === "reference" ? request.schema.schema : request.schemaInstanceId;
-    return { type: "present", schemaInstanceId };
+    return { type: "present", schema: request.schema };
 }
 
-function getSchemaIdFromResponse(response: Response | null | undefined): SchemaIdResponse | undefined {
+function getResponseSchema(response: ResponseWithExample | null | undefined): SchemaIdResponse | undefined {
     if (response == null) {
         return undefined;
     }
     if (response.type !== "json") {
         return { type: "unsupported" };
     }
-    return response.schema.type === "reference"
-        ? { type: "present", schemaInstanceId: response.schema.schema }
-        : undefined;
+    return { type: "present", schema: response.schema };
 }

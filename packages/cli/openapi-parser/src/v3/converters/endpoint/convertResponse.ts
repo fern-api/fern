@@ -1,7 +1,9 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Response, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { StatusCode } from "@fern-fern/openapi-ir-model/commons";
+import { ResponseWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
@@ -17,7 +19,7 @@ const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
 
 export interface ConvertedResponse {
-    value: Response | undefined;
+    value: ResponseWithExample | undefined;
     errorStatusCodes: StatusCode[];
 }
 
@@ -49,6 +51,10 @@ export function convertResponse({
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
                 case "json":
+                    return {
+                        value: convertedResponse,
+                        errorStatusCodes,
+                    };
                 case "streamingJson":
                     return {
                         value: convertedResponse,
@@ -83,7 +89,7 @@ function convertResolvedResponse({
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
-}): Response | undefined {
+}): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
     const responseSchema =
         resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
@@ -94,7 +100,9 @@ function convertResolvedResponse({
             return {
                 type: "streamingJson",
                 description: resolvedResponse.description,
-                schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
+                schema: convertSchemaWithExampleToSchema(
+                    convertSchema(responseSchema, false, context, responseBreadcrumbs)
+                ),
             };
         }
         return {

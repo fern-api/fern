@@ -3126,17 +3126,6 @@ enterprise connections can be created by an organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.create",
             "request": {
@@ -3194,17 +3183,6 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/dev-orgs.auth-connections.get",
             "request": {
@@ -3236,6 +3214,19 @@ created by the user.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auth_connections": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/dev-orgs.auth-connections.list",
@@ -3292,17 +3283,6 @@ disabled.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.update",
@@ -3425,6 +3405,15 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/auth-tokens.delete",
             "request": {
@@ -3462,10 +3451,17 @@ given Dev organization.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "token_id": "token-id",
+                },
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "token": {
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "status": "active",
+                    },
+                  },
                 },
               },
             ],
@@ -3500,6 +3496,26 @@ token type issued for a given subject.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "tokens": [
+                      {
+                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                        "status": "active",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/auth-tokens.list",
@@ -3549,6 +3565,17 @@ authenticated user.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",
             "request": {
@@ -3578,17 +3605,6 @@ organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/auth-tokens.update",
@@ -3638,6 +3654,28 @@ organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                  "state": [
+                    "active",
+                  ],
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "dev_users": [
+                      {
+                        "state": "active",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/dev-users.list",
@@ -3705,7 +3743,11 @@ used.
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "dev_user": {
+                      "state": "active",
+                    },
+                  },
                 },
               },
             ],
@@ -3740,17 +3782,6 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/parts.create",
             "request": {
@@ -3784,7 +3815,9 @@ used.
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
-                "response": undefined,
+                "response": {
+                  "body": {},
+                },
               },
             ],
             "method": "POST",
@@ -3820,17 +3853,6 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/parts.get",
             "request": {
@@ -3859,6 +3881,24 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                  "type": [
+                    "capability",
+                  ],
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "parts": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/parts.list",
@@ -3925,17 +3965,6 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/parts.update",
             "request": {
@@ -3974,17 +4003,6 @@ organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/rev-orgs.create",
@@ -4049,7 +4067,9 @@ records.
                 "request": {
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
-                "response": undefined,
+                "response": {
+                  "body": {},
+                },
               },
             ],
             "method": "POST",
@@ -4088,10 +4108,14 @@ records.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "rev_org": {},
+                  },
                 },
               },
             ],
@@ -4126,6 +4150,21 @@ to access.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "rev_orgs": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/rev-orgs.list",
@@ -4220,10 +4259,13 @@ them.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "environment": "production",
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "rev_org": {},
+                  },
                 },
               },
             ],
@@ -4300,17 +4342,6 @@ and a logical concept denoted by the tag's name.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/tags.create",
             "request": {
@@ -4362,7 +4393,9 @@ permitted.
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
-                "response": undefined,
+                "response": {
+                  "body": {},
+                },
               },
             ],
             "method": "POST",
@@ -4397,17 +4430,6 @@ permitted.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/tags.get",
             "request": {
@@ -4435,6 +4457,21 @@ permitted.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "tags": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/tags.list",
@@ -4478,19 +4515,6 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                },
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/tags.update",
@@ -4550,17 +4574,6 @@ tags.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/timeline-entries.create",
             "request": {
@@ -4585,17 +4598,6 @@ tags.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "GET",
             "path": "/timeline-entries.get",
@@ -4625,6 +4627,22 @@ tags.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "mode": "after",
+                  "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "timeline_entries": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/timeline-entries.list",
@@ -4675,17 +4693,6 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/timeline-entries.update",
             "request": {
@@ -4722,17 +4729,6 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/webhooks.create",
@@ -4786,7 +4782,9 @@ response.
                 "request": {
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
-                "response": undefined,
+                "response": {
+                  "body": {},
+                },
               },
             ],
             "method": "POST",
@@ -4821,17 +4819,6 @@ response.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/webhooks.get",
             "request": {
@@ -4860,6 +4847,19 @@ response.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "webhooks": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/webhooks.list",
             "response": {
@@ -4878,19 +4878,6 @@ response.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                },
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/webhooks.update",
@@ -4962,17 +4949,6 @@ won't receive any object events until successfully verified.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/works.create",
             "request": {
@@ -5006,7 +4982,9 @@ won't receive any object events until successfully verified.
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 },
-                "response": undefined,
+                "response": {
+                  "body": {},
+                },
               },
             ],
             "method": "POST",
@@ -5039,6 +5017,29 @@ won't receive any object events until successfully verified.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "issue.priority": [
+                    "p0",
+                  ],
+                  "ticket.severity": [
+                    "blocker",
+                  ],
+                  "type": [
+                    "issue",
+                  ],
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "works": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/works.export",
@@ -5119,17 +5120,6 @@ organizations.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/works.get",
             "request": {
@@ -5157,6 +5147,30 @@ organizations.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "issue.priority": [
+                    "p0",
+                  ],
+                  "mode": "after",
+                  "ticket.severity": [
+                    "blocker",
+                  ],
+                  "type": [
+                    "issue",
+                  ],
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "works": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/works.list",
@@ -5249,17 +5263,6 @@ organizations.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "POST",
             "path": "/works.update",

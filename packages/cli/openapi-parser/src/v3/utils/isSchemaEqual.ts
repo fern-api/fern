@@ -1,5 +1,18 @@
-import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import {
+    EnumValue,
+    ObjectSchema,
+    OneOfSchema,
+    PrimitiveSchemaValue,
+    Schema,
+} from "@fern-fern/openapi-ir-model/finalIr";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
+import { convertSchemaWithExampleToSchema } from "./convertSchemaWithExampleToSchema";
+
+// only diffs the schema, not the example
+export function isSchemaWithExampleEqual(a: SchemaWithExample, b: SchemaWithExample): boolean {
+    return isSchemaEqual(convertSchemaWithExampleToSchema(a), convertSchemaWithExampleToSchema(b));
+}
 
 export function isSchemaEqual(a: Schema, b: Schema): boolean {
     if (a.type === "primitive" && b.type === "primitive") {
@@ -19,7 +32,7 @@ export function isSchemaEqual(a: Schema, b: Schema): boolean {
     } else if (a.type === "object" && b.type === "object") {
         return isObjectEqual(a, b);
     } else if (a.type === "map" && b.type === "map") {
-        return isPrimitiveSchemaValueEqual(a.key, b.key) && isSchemaEqual(a.value, b.value);
+        return isPrimitiveSchemaValueEqual(a.key.schema, b.key.schema) && isSchemaEqual(a.value, b.value);
     } else if (a.type === "literal" && b.type === "literal") {
         return a.value === b.value;
     }

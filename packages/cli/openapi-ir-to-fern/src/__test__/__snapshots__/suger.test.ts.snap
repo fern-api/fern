@@ -6519,6 +6519,32 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "buyerId": "buyer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "gcpBuyer": {
+                        "approvals": [
+                          {
+                            "state": "STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "state": "ACCOUNT_STATE_UNSPECIFIED",
+                      },
+                    },
+                    "partner": "AWS",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
@@ -6543,6 +6569,33 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "gcpBuyer": {
+                          "approvals": [
+                            {
+                              "state": "STATE_UNSPECIFIED",
+                            },
+                          ],
+                          "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        },
+                      },
+                      "partner": "AWS",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer",
             "path-parameters": {
@@ -6562,6 +6615,32 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "update buyer name and description by the given organization and buyer id",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "buyerId": "buyer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "info": {
+                      "gcpBuyer": {
+                        "approvals": [
+                          {
+                            "state": "STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "state": "ACCOUNT_STATE_UNSPECIFIED",
+                      },
+                    },
+                    "partner": "AWS",
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/buyer/{buyerId}",
@@ -6663,6 +6742,77 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureSubscriptions": [
+                        {
+                          "allowedCustomerOperations": [
+                            "Read",
+                          ],
+                          "saasSubscriptionStatus": "NotStarted",
+                          "sandboxType": "None",
+                          "sessionMode": "None",
+                        },
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpEntitlements": [
+                        {
+                          "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACTIVE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
@@ -6687,6 +6837,78 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement",
             "path-parameters": {
@@ -6706,6 +6928,79 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all entitlements of the given buyer",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "buyerId": "buyer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
@@ -6731,6 +7026,79 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "offerId": "offer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}/entitlement",
             "path-parameters": {
@@ -6754,6 +7122,79 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all entitlements under the given partner",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/entitlement",
@@ -6779,6 +7220,79 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACTIVE",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/entitlement",
             "path-parameters": {
@@ -6802,6 +7316,77 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "Update the name of the given Entitlement",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureSubscriptions": [
+                        {
+                          "allowedCustomerOperations": [
+                            "Read",
+                          ],
+                          "saasSubscriptionStatus": "NotStarted",
+                          "sandboxType": "None",
+                          "sessionMode": "None",
+                        },
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpEntitlements": [
+                        {
+                          "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACTIVE",
+                  },
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
@@ -6859,6 +7444,80 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "entitlementTermId": "entitlement-term-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "entitlementInfo": {
+                      "azureSubscriptions": [
+                        {
+                          "allowedCustomerOperations": [
+                            "Read",
+                          ],
+                          "saasSubscriptionStatus": "NotStarted",
+                          "sandboxType": "None",
+                          "sessionMode": "None",
+                        },
+                      ],
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpEntitlements": [
+                        {
+                          "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                    },
+                    "info": {
+                      "type": "",
+                    },
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
@@ -6886,6 +7545,81 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all Entitlement Terms of the given Entitlement",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "entitlementInfo": {
+                        "azureSubscriptions": [
+                          {
+                            "allowedCustomerOperations": [
+                              "Read",
+                            ],
+                            "saasSubscriptionStatus": "NotStarted",
+                            "sandboxType": "None",
+                            "sessionMode": "None",
+                          },
+                        ],
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpEntitlements": [
+                          {
+                            "state": "ENTITLEMENT_STATE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                      },
+                      "info": {
+                        "type": "",
+                      },
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
@@ -6995,6 +7729,25 @@ the same customer, dimension, and time, but a different quantity.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "CREATED",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -7022,6 +7775,25 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all integrations for the given organization.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "CREATED",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/integration",
@@ -7135,6 +7907,20 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "usageRecordGroupId": "usage-record-group-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
@@ -7158,6 +7944,44 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "get the usageRecordReport for a given organization and usageRecordReport ID.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "usageRecordReportId": "usage-record-report-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsMeteringResponse": {
+                        "results": [
+                          {
+                            "status": "Success",
+                          },
+                        ],
+                      },
+                      "azureMeteringResponse": {
+                        "result": [
+                          {
+                            "error": {
+                              "additionalInfo": {
+                                "acceptedMessage": {
+                                  "status": "Accepted",
+                                },
+                              },
+                            },
+                            "status": "Accepted",
+                          },
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
@@ -7183,6 +8007,20 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -7234,6 +8072,19 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
@@ -7279,6 +8130,20 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
@@ -7329,6 +8194,48 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
@@ -7385,6 +8292,47 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
@@ -7430,6 +8378,48 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
@@ -7566,6 +8556,431 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "info": {
+                    "azureOriginalPlan": {
+                      "pricing": {
+                        "customMeters": {
+                          "priceInputOption": "perMarket",
+                        },
+                        "recurrentPrice": {
+                          "priceInputOption": "perMarket",
+                          "prices": [
+                            {
+                              "billingTerm": {
+                                "type": "day",
+                              },
+                              "paymentOption": {
+                                "type": "day",
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azurePrivateOffer": {
+                      "beneficiaries": [
+                        {
+                          "beneficiaryRecipients": [
+                            {
+                              "recipientType": "cspCustomer",
+                            },
+                          ],
+                        },
+                      ],
+                      "pricing": [
+                        {
+                          "discountType": "percentage",
+                          "originalPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                          "planType": "FLAT_RATE",
+                          "privateOfferPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      "privateOfferType": "customerPromotion",
+                      "state": "draft",
+                      "subState": "pendingAcceptance",
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azureProductVariant": {
+                      "featureAvailabilities": [
+                        {
+                          "customMeters": [
+                            {
+                              "includedBaseQuantities": [
+                                {
+                                  "recurringUnit": "Monthly",
+                                },
+                              ],
+                            },
+                          ],
+                          "marketStates": [
+                            {
+                              "state": "Disabled",
+                            },
+                          ],
+                          "priceSchedules": [
+                            {
+                              "schedules": [
+                                {
+                                  "priceCadence": {
+                                    "type": "Month",
+                                  },
+                                  "pricingModel": "Flat",
+                                  "pricingUnits": [
+                                    {
+                                      "name": "sharedcore",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                          "trial": {
+                            "durationType": "Minute",
+                            "type": "NoTrial",
+                          },
+                          "visibility": "Public",
+                        },
+                      ],
+                      "resourceType": "AzureSkuVariant",
+                      "state": "InActive",
+                    },
+                    "commits": [
+                      {
+                        "timeUnit": "DAY",
+                        "type": "FLAT_RATE",
+                      },
+                    ],
+                    "dimensions": [
+                      {
+                        "includedBaseQuantities": [
+                          {
+                            "recurringUnit": "Monthly",
+                          },
+                        ],
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "eulaType": "",
+                    "gcpMetrics": [
+                      {
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "gcpPlans": [
+                      {
+                        "priceInfo": {
+                          "priceModel": "FREE",
+                          "subscriptionPlans": [
+                            {
+                              "period": "ONE_YEAR",
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                          "usageFees": [
+                            {
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                      },
+                    ],
+                    "visibility": "PRIVATE",
+                  },
+                  "metaInfo": {
+                    "notifications": [
+                      {
+                        "action": "ACCEPT",
+                        "entityType": "ORGANIZATION",
+                        "eventStatus": "",
+                      },
+                    ],
+                  },
+                  "offerType": "DEFAULT",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                  "status": "ACCEPTED",
+                },
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureOriginalPlan": {
+                        "pricing": {
+                          "customMeters": {
+                            "priceInputOption": "perMarket",
+                          },
+                          "recurrentPrice": {
+                            "priceInputOption": "perMarket",
+                            "prices": [
+                              {
+                                "billingTerm": {
+                                  "type": "day",
+                                },
+                                "paymentOption": {
+                                  "type": "day",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azurePrivateOffer": {
+                        "beneficiaries": [
+                          {
+                            "beneficiaryRecipients": [
+                              {
+                                "recipientType": "cspCustomer",
+                              },
+                            ],
+                          },
+                        ],
+                        "pricing": [
+                          {
+                            "discountType": "percentage",
+                            "originalPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                            "planType": "FLAT_RATE",
+                            "privateOfferPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "privateOfferType": "customerPromotion",
+                        "state": "draft",
+                        "subState": "pendingAcceptance",
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azureProductVariant": {
+                        "featureAvailabilities": [
+                          {
+                            "customMeters": [
+                              {
+                                "includedBaseQuantities": [
+                                  {
+                                    "recurringUnit": "Monthly",
+                                  },
+                                ],
+                              },
+                            ],
+                            "marketStates": [
+                              {
+                                "state": "Disabled",
+                              },
+                            ],
+                            "priceSchedules": [
+                              {
+                                "schedules": [
+                                  {
+                                    "priceCadence": {
+                                      "type": "Month",
+                                    },
+                                    "pricingModel": "Flat",
+                                    "pricingUnits": [
+                                      {
+                                        "name": "sharedcore",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                            "trial": {
+                              "durationType": "Minute",
+                              "type": "NoTrial",
+                            },
+                            "visibility": "Public",
+                          },
+                        ],
+                        "resourceType": "AzureSkuVariant",
+                        "state": "InActive",
+                      },
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpMetrics": [
+                        {
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "visibility": "PRIVATE",
+                    },
+                    "metaInfo": {
+                      "notifications": [
+                        {
+                          "action": "ACCEPT",
+                          "entityType": "ORGANIZATION",
+                          "eventStatus": "",
+                        },
+                      ],
+                    },
+                    "offerType": "DEFAULT",
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACCEPTED",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
@@ -7592,6 +9007,431 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "info": {
+                    "azureOriginalPlan": {
+                      "pricing": {
+                        "customMeters": {
+                          "priceInputOption": "perMarket",
+                        },
+                        "recurrentPrice": {
+                          "priceInputOption": "perMarket",
+                          "prices": [
+                            {
+                              "billingTerm": {
+                                "type": "day",
+                              },
+                              "paymentOption": {
+                                "type": "day",
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azurePrivateOffer": {
+                      "beneficiaries": [
+                        {
+                          "beneficiaryRecipients": [
+                            {
+                              "recipientType": "cspCustomer",
+                            },
+                          ],
+                        },
+                      ],
+                      "pricing": [
+                        {
+                          "discountType": "percentage",
+                          "originalPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                          "planType": "FLAT_RATE",
+                          "privateOfferPlan": {
+                            "pricing": {
+                              "customMeters": {
+                                "priceInputOption": "perMarket",
+                              },
+                              "recurrentPrice": {
+                                "priceInputOption": "perMarket",
+                                "prices": [
+                                  {
+                                    "billingTerm": {
+                                      "type": "day",
+                                    },
+                                    "paymentOption": {
+                                      "type": "day",
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            "validations": [
+                              {
+                                "code": "businessValidationError",
+                                "level": "informational",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      "privateOfferType": "customerPromotion",
+                      "state": "draft",
+                      "subState": "pendingAcceptance",
+                      "validations": [
+                        {
+                          "code": "businessValidationError",
+                          "level": "informational",
+                        },
+                      ],
+                    },
+                    "azureProductVariant": {
+                      "featureAvailabilities": [
+                        {
+                          "customMeters": [
+                            {
+                              "includedBaseQuantities": [
+                                {
+                                  "recurringUnit": "Monthly",
+                                },
+                              ],
+                            },
+                          ],
+                          "marketStates": [
+                            {
+                              "state": "Disabled",
+                            },
+                          ],
+                          "priceSchedules": [
+                            {
+                              "schedules": [
+                                {
+                                  "priceCadence": {
+                                    "type": "Month",
+                                  },
+                                  "pricingModel": "Flat",
+                                  "pricingUnits": [
+                                    {
+                                      "name": "sharedcore",
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                          "trial": {
+                            "durationType": "Minute",
+                            "type": "NoTrial",
+                          },
+                          "visibility": "Public",
+                        },
+                      ],
+                      "resourceType": "AzureSkuVariant",
+                      "state": "InActive",
+                    },
+                    "commits": [
+                      {
+                        "timeUnit": "DAY",
+                        "type": "FLAT_RATE",
+                      },
+                    ],
+                    "dimensions": [
+                      {
+                        "includedBaseQuantities": [
+                          {
+                            "recurringUnit": "Monthly",
+                          },
+                        ],
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "eulaType": "",
+                    "gcpMetrics": [
+                      {
+                        "valueType": "VALUE_TYPE_UNSPECIFIED",
+                      },
+                    ],
+                    "gcpPlans": [
+                      {
+                        "priceInfo": {
+                          "priceModel": "FREE",
+                          "subscriptionPlans": [
+                            {
+                              "period": "ONE_YEAR",
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                          "usageFees": [
+                            {
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                      },
+                    ],
+                    "visibility": "PRIVATE",
+                  },
+                  "metaInfo": {
+                    "notifications": [
+                      {
+                        "action": "ACCEPT",
+                        "entityType": "ORGANIZATION",
+                        "eventStatus": "",
+                      },
+                    ],
+                  },
+                  "offerType": "DEFAULT",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                  "status": "ACCEPTED",
+                },
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureOriginalPlan": {
+                        "pricing": {
+                          "customMeters": {
+                            "priceInputOption": "perMarket",
+                          },
+                          "recurrentPrice": {
+                            "priceInputOption": "perMarket",
+                            "prices": [
+                              {
+                                "billingTerm": {
+                                  "type": "day",
+                                },
+                                "paymentOption": {
+                                  "type": "day",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azurePrivateOffer": {
+                        "beneficiaries": [
+                          {
+                            "beneficiaryRecipients": [
+                              {
+                                "recipientType": "cspCustomer",
+                              },
+                            ],
+                          },
+                        ],
+                        "pricing": [
+                          {
+                            "discountType": "percentage",
+                            "originalPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                            "planType": "FLAT_RATE",
+                            "privateOfferPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "privateOfferType": "customerPromotion",
+                        "state": "draft",
+                        "subState": "pendingAcceptance",
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azureProductVariant": {
+                        "featureAvailabilities": [
+                          {
+                            "customMeters": [
+                              {
+                                "includedBaseQuantities": [
+                                  {
+                                    "recurringUnit": "Monthly",
+                                  },
+                                ],
+                              },
+                            ],
+                            "marketStates": [
+                              {
+                                "state": "Disabled",
+                              },
+                            ],
+                            "priceSchedules": [
+                              {
+                                "schedules": [
+                                  {
+                                    "priceCadence": {
+                                      "type": "Month",
+                                    },
+                                    "pricingModel": "Flat",
+                                    "pricingUnits": [
+                                      {
+                                        "name": "sharedcore",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                            "trial": {
+                              "durationType": "Minute",
+                              "type": "NoTrial",
+                            },
+                            "visibility": "Public",
+                          },
+                        ],
+                        "resourceType": "AzureSkuVariant",
+                        "state": "InActive",
+                      },
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpMetrics": [
+                        {
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "visibility": "PRIVATE",
+                    },
+                    "metaInfo": {
+                      "notifications": [
+                        {
+                          "action": "ACCEPT",
+                          "entityType": "ORGANIZATION",
+                          "eventStatus": "",
+                        },
+                      ],
+                    },
+                    "offerType": "DEFAULT",
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACCEPTED",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/draftOffer",
@@ -7643,6 +9483,226 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "offerId": "offer-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "azureOriginalPlan": {
+                        "pricing": {
+                          "customMeters": {
+                            "priceInputOption": "perMarket",
+                          },
+                          "recurrentPrice": {
+                            "priceInputOption": "perMarket",
+                            "prices": [
+                              {
+                                "billingTerm": {
+                                  "type": "day",
+                                },
+                                "paymentOption": {
+                                  "type": "day",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azurePrivateOffer": {
+                        "beneficiaries": [
+                          {
+                            "beneficiaryRecipients": [
+                              {
+                                "recipientType": "cspCustomer",
+                              },
+                            ],
+                          },
+                        ],
+                        "pricing": [
+                          {
+                            "discountType": "percentage",
+                            "originalPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                            "planType": "FLAT_RATE",
+                            "privateOfferPlan": {
+                              "pricing": {
+                                "customMeters": {
+                                  "priceInputOption": "perMarket",
+                                },
+                                "recurrentPrice": {
+                                  "priceInputOption": "perMarket",
+                                  "prices": [
+                                    {
+                                      "billingTerm": {
+                                        "type": "day",
+                                      },
+                                      "paymentOption": {
+                                        "type": "day",
+                                      },
+                                    },
+                                  ],
+                                },
+                              },
+                              "validations": [
+                                {
+                                  "code": "businessValidationError",
+                                  "level": "informational",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "privateOfferType": "customerPromotion",
+                        "state": "draft",
+                        "subState": "pendingAcceptance",
+                        "validations": [
+                          {
+                            "code": "businessValidationError",
+                            "level": "informational",
+                          },
+                        ],
+                      },
+                      "azureProductVariant": {
+                        "featureAvailabilities": [
+                          {
+                            "customMeters": [
+                              {
+                                "includedBaseQuantities": [
+                                  {
+                                    "recurringUnit": "Monthly",
+                                  },
+                                ],
+                              },
+                            ],
+                            "marketStates": [
+                              {
+                                "state": "Disabled",
+                              },
+                            ],
+                            "priceSchedules": [
+                              {
+                                "schedules": [
+                                  {
+                                    "priceCadence": {
+                                      "type": "Month",
+                                    },
+                                    "pricingModel": "Flat",
+                                    "pricingUnits": [
+                                      {
+                                        "name": "sharedcore",
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                            "trial": {
+                              "durationType": "Minute",
+                              "type": "NoTrial",
+                            },
+                            "visibility": "Public",
+                          },
+                        ],
+                        "resourceType": "AzureSkuVariant",
+                        "state": "InActive",
+                      },
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "eulaType": "",
+                      "gcpMetrics": [
+                        {
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpPlans": [
+                        {
+                          "priceInfo": {
+                            "priceModel": "FREE",
+                            "subscriptionPlans": [
+                              {
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                            "usageFees": [
+                              {
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                        },
+                      ],
+                      "visibility": "PRIVATE",
+                    },
+                    "metaInfo": {
+                      "notifications": [
+                        {
+                          "action": "ACCEPT",
+                          "entityType": "ORGANIZATION",
+                          "eventStatus": "",
+                        },
+                      ],
+                    },
+                    "offerType": "DEFAULT",
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "ACCEPTED",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
@@ -7667,6 +9727,227 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureOriginalPlan": {
+                          "pricing": {
+                            "customMeters": {
+                              "priceInputOption": "perMarket",
+                            },
+                            "recurrentPrice": {
+                              "priceInputOption": "perMarket",
+                              "prices": [
+                                {
+                                  "billingTerm": {
+                                    "type": "day",
+                                  },
+                                  "paymentOption": {
+                                    "type": "day",
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azurePrivateOffer": {
+                          "beneficiaries": [
+                            {
+                              "beneficiaryRecipients": [
+                                {
+                                  "recipientType": "cspCustomer",
+                                },
+                              ],
+                            },
+                          ],
+                          "pricing": [
+                            {
+                              "discountType": "percentage",
+                              "originalPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                              "planType": "FLAT_RATE",
+                              "privateOfferPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "privateOfferType": "customerPromotion",
+                          "state": "draft",
+                          "subState": "pendingAcceptance",
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azureProductVariant": {
+                          "featureAvailabilities": [
+                            {
+                              "customMeters": [
+                                {
+                                  "includedBaseQuantities": [
+                                    {
+                                      "recurringUnit": "Monthly",
+                                    },
+                                  ],
+                                },
+                              ],
+                              "marketStates": [
+                                {
+                                  "state": "Disabled",
+                                },
+                              ],
+                              "priceSchedules": [
+                                {
+                                  "schedules": [
+                                    {
+                                      "priceCadence": {
+                                        "type": "Month",
+                                      },
+                                      "pricingModel": "Flat",
+                                      "pricingUnits": [
+                                        {
+                                          "name": "sharedcore",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                              "trial": {
+                                "durationType": "Minute",
+                                "type": "NoTrial",
+                              },
+                              "visibility": "Public",
+                            },
+                          ],
+                          "resourceType": "AzureSkuVariant",
+                          "state": "InActive",
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpMetrics": [
+                          {
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "visibility": "PRIVATE",
+                      },
+                      "metaInfo": {
+                        "notifications": [
+                          {
+                            "action": "ACCEPT",
+                            "entityType": "ORGANIZATION",
+                            "eventStatus": "",
+                          },
+                        ],
+                      },
+                      "offerType": "DEFAULT",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
@@ -7686,6 +9967,230 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all offers under the given organization & cloud partner.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "authorization",
+                },
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureOriginalPlan": {
+                          "pricing": {
+                            "customMeters": {
+                              "priceInputOption": "perMarket",
+                            },
+                            "recurrentPrice": {
+                              "priceInputOption": "perMarket",
+                              "prices": [
+                                {
+                                  "billingTerm": {
+                                    "type": "day",
+                                  },
+                                  "paymentOption": {
+                                    "type": "day",
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azurePrivateOffer": {
+                          "beneficiaries": [
+                            {
+                              "beneficiaryRecipients": [
+                                {
+                                  "recipientType": "cspCustomer",
+                                },
+                              ],
+                            },
+                          ],
+                          "pricing": [
+                            {
+                              "discountType": "percentage",
+                              "originalPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                              "planType": "FLAT_RATE",
+                              "privateOfferPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "privateOfferType": "customerPromotion",
+                          "state": "draft",
+                          "subState": "pendingAcceptance",
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azureProductVariant": {
+                          "featureAvailabilities": [
+                            {
+                              "customMeters": [
+                                {
+                                  "includedBaseQuantities": [
+                                    {
+                                      "recurringUnit": "Monthly",
+                                    },
+                                  ],
+                                },
+                              ],
+                              "marketStates": [
+                                {
+                                  "state": "Disabled",
+                                },
+                              ],
+                              "priceSchedules": [
+                                {
+                                  "schedules": [
+                                    {
+                                      "priceCadence": {
+                                        "type": "Month",
+                                      },
+                                      "pricingModel": "Flat",
+                                      "pricingUnits": [
+                                        {
+                                          "name": "sharedcore",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                              "trial": {
+                                "durationType": "Minute",
+                                "type": "NoTrial",
+                              },
+                              "visibility": "Public",
+                            },
+                          ],
+                          "resourceType": "AzureSkuVariant",
+                          "state": "InActive",
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpMetrics": [
+                          {
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "visibility": "PRIVATE",
+                      },
+                      "metaInfo": {
+                        "notifications": [
+                          {
+                            "action": "ACCEPT",
+                            "entityType": "ORGANIZATION",
+                            "eventStatus": "",
+                          },
+                        ],
+                      },
+                      "offerType": "DEFAULT",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/offer",
@@ -7721,6 +10226,228 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "azureOriginalPlan": {
+                          "pricing": {
+                            "customMeters": {
+                              "priceInputOption": "perMarket",
+                            },
+                            "recurrentPrice": {
+                              "priceInputOption": "perMarket",
+                              "prices": [
+                                {
+                                  "billingTerm": {
+                                    "type": "day",
+                                  },
+                                  "paymentOption": {
+                                    "type": "day",
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azurePrivateOffer": {
+                          "beneficiaries": [
+                            {
+                              "beneficiaryRecipients": [
+                                {
+                                  "recipientType": "cspCustomer",
+                                },
+                              ],
+                            },
+                          ],
+                          "pricing": [
+                            {
+                              "discountType": "percentage",
+                              "originalPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                              "planType": "FLAT_RATE",
+                              "privateOfferPlan": {
+                                "pricing": {
+                                  "customMeters": {
+                                    "priceInputOption": "perMarket",
+                                  },
+                                  "recurrentPrice": {
+                                    "priceInputOption": "perMarket",
+                                    "prices": [
+                                      {
+                                        "billingTerm": {
+                                          "type": "day",
+                                        },
+                                        "paymentOption": {
+                                          "type": "day",
+                                        },
+                                      },
+                                    ],
+                                  },
+                                },
+                                "validations": [
+                                  {
+                                    "code": "businessValidationError",
+                                    "level": "informational",
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                          "privateOfferType": "customerPromotion",
+                          "state": "draft",
+                          "subState": "pendingAcceptance",
+                          "validations": [
+                            {
+                              "code": "businessValidationError",
+                              "level": "informational",
+                            },
+                          ],
+                        },
+                        "azureProductVariant": {
+                          "featureAvailabilities": [
+                            {
+                              "customMeters": [
+                                {
+                                  "includedBaseQuantities": [
+                                    {
+                                      "recurringUnit": "Monthly",
+                                    },
+                                  ],
+                                },
+                              ],
+                              "marketStates": [
+                                {
+                                  "state": "Disabled",
+                                },
+                              ],
+                              "priceSchedules": [
+                                {
+                                  "schedules": [
+                                    {
+                                      "priceCadence": {
+                                        "type": "Month",
+                                      },
+                                      "pricingModel": "Flat",
+                                      "pricingUnits": [
+                                        {
+                                          "name": "sharedcore",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                              "trial": {
+                                "durationType": "Minute",
+                                "type": "NoTrial",
+                              },
+                              "visibility": "Public",
+                            },
+                          ],
+                          "resourceType": "AzureSkuVariant",
+                          "state": "InActive",
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "eulaType": "",
+                        "gcpMetrics": [
+                          {
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpPlans": [
+                          {
+                            "priceInfo": {
+                              "priceModel": "FREE",
+                              "subscriptionPlans": [
+                                {
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                              "usageFees": [
+                                {
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                },
+                              ],
+                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                          },
+                        ],
+                        "visibility": "PRIVATE",
+                      },
+                      "metaInfo": {
+                        "notifications": [
+                          {
+                            "action": "ACCEPT",
+                            "entityType": "ORGANIZATION",
+                            "eventStatus": "",
+                          },
+                        ],
+                      },
+                      "offerType": "DEFAULT",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/offer",
             "path-parameters": {
@@ -7755,6 +10482,23 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "type": "TemporalWorkflow",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/operation",
@@ -7836,6 +10580,167 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsSnsSubscriptions": [
+                        {
+                          "Status": "UNKNOWN",
+                        },
+                      ],
+                      "azureProduct": {
+                        "listings": [
+                          {
+                            "assets": [
+                              {
+                                "resourceType": "ListingAsset",
+                                "state": "PendingUpload",
+                              },
+                            ],
+                            "listingContacts": [
+                              {
+                                "type": "CustomerSupport",
+                              },
+                            ],
+                            "resourceType": "AzureListing",
+                          },
+                        ],
+                        "packageConfigurations": [
+                          {
+                            "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                          },
+                        ],
+                        "setup": {
+                          "callToAction": "free",
+                          "resourceType": "AzureProductSetup",
+                          "sellingOption": "ListingOnly",
+                        },
+                        "submissions": [
+                          {
+                            "resourceType": "Submission",
+                            "state": "Inprogress",
+                            "subState": "InDraft",
+                          },
+                        ],
+                        "variants": [
+                          {
+                            "featureAvailabilities": [
+                              {
+                                "customMeters": [
+                                  {
+                                    "includedBaseQuantities": [
+                                      {
+                                        "recurringUnit": "Monthly",
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "marketStates": [
+                                  {
+                                    "state": "Disabled",
+                                  },
+                                ],
+                                "priceSchedules": [
+                                  {
+                                    "schedules": [
+                                      {
+                                        "priceCadence": {
+                                          "type": "Month",
+                                        },
+                                        "pricingModel": "Flat",
+                                        "pricingUnits": [
+                                          {
+                                            "name": "sharedcore",
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "trial": {
+                                  "durationType": "Minute",
+                                  "type": "NoTrial",
+                                },
+                                "visibility": "Public",
+                              },
+                            ],
+                            "resourceType": "AzureSkuVariant",
+                            "state": "InActive",
+                          },
+                        ],
+                      },
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpProduct": {
+                        "listingSpec": {
+                          "listingType": "BillingIntegratedManagedService",
+                          "purchaseSpec": {
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                            "purchaseOptionSpecs": [
+                              {
+                                "priceInfo": {
+                                  "priceModel": "FREE",
+                                  "subscriptionPlans": [
+                                    {
+                                      "period": "ONE_YEAR",
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                    },
+                                  ],
+                                  "usageFees": [
+                                    {
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                    },
+                                  ],
+                                },
+                                "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                              },
+                            ],
+                          },
+                        },
+                        "marketplace": "marketplaces/google-cloud",
+                        "serviceConfig": {
+                          "metrics": [
+                            {
+                              "valueType": "VALUE_TYPE_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                      },
+                    },
+                    "partner": "AWS",
+                    "productType": "UNKNOWN",
+                    "service": "MARKETPLACE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -7859,6 +10764,20 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "list all metering dimensions of the given product",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/dimension",
@@ -7884,6 +10803,168 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "awsSnsSubscriptions": [
+                          {
+                            "Status": "UNKNOWN",
+                          },
+                        ],
+                        "azureProduct": {
+                          "listings": [
+                            {
+                              "assets": [
+                                {
+                                  "resourceType": "ListingAsset",
+                                  "state": "PendingUpload",
+                                },
+                              ],
+                              "listingContacts": [
+                                {
+                                  "type": "CustomerSupport",
+                                },
+                              ],
+                              "resourceType": "AzureListing",
+                            },
+                          ],
+                          "packageConfigurations": [
+                            {
+                              "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                            },
+                          ],
+                          "setup": {
+                            "callToAction": "free",
+                            "resourceType": "AzureProductSetup",
+                            "sellingOption": "ListingOnly",
+                          },
+                          "submissions": [
+                            {
+                              "resourceType": "Submission",
+                              "state": "Inprogress",
+                              "subState": "InDraft",
+                            },
+                          ],
+                          "variants": [
+                            {
+                              "featureAvailabilities": [
+                                {
+                                  "customMeters": [
+                                    {
+                                      "includedBaseQuantities": [
+                                        {
+                                          "recurringUnit": "Monthly",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "marketStates": [
+                                    {
+                                      "state": "Disabled",
+                                    },
+                                  ],
+                                  "priceSchedules": [
+                                    {
+                                      "schedules": [
+                                        {
+                                          "priceCadence": {
+                                            "type": "Month",
+                                          },
+                                          "pricingModel": "Flat",
+                                          "pricingUnits": [
+                                            {
+                                              "name": "sharedcore",
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "trial": {
+                                    "durationType": "Minute",
+                                    "type": "NoTrial",
+                                  },
+                                  "visibility": "Public",
+                                },
+                              ],
+                              "resourceType": "AzureSkuVariant",
+                              "state": "InActive",
+                            },
+                          ],
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpProduct": {
+                          "listingSpec": {
+                            "listingType": "BillingIntegratedManagedService",
+                            "purchaseSpec": {
+                              "metrics": [
+                                {
+                                  "valueType": "VALUE_TYPE_UNSPECIFIED",
+                                },
+                              ],
+                              "purchaseOptionSpecs": [
+                                {
+                                  "priceInfo": {
+                                    "priceModel": "FREE",
+                                    "subscriptionPlans": [
+                                      {
+                                        "period": "ONE_YEAR",
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                    "usageFees": [
+                                      {
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                  },
+                                  "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                                },
+                              ],
+                            },
+                          },
+                          "marketplace": "marketplaces/google-cloud",
+                          "serviceConfig": {
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                      "partner": "AWS",
+                      "productType": "UNKNOWN",
+                      "service": "MARKETPLACE",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product",
             "path-parameters": {
@@ -7903,6 +10984,169 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "list all products under the given organization and cloud partner",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "info": {
+                        "awsSnsSubscriptions": [
+                          {
+                            "Status": "UNKNOWN",
+                          },
+                        ],
+                        "azureProduct": {
+                          "listings": [
+                            {
+                              "assets": [
+                                {
+                                  "resourceType": "ListingAsset",
+                                  "state": "PendingUpload",
+                                },
+                              ],
+                              "listingContacts": [
+                                {
+                                  "type": "CustomerSupport",
+                                },
+                              ],
+                              "resourceType": "AzureListing",
+                            },
+                          ],
+                          "packageConfigurations": [
+                            {
+                              "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                            },
+                          ],
+                          "setup": {
+                            "callToAction": "free",
+                            "resourceType": "AzureProductSetup",
+                            "sellingOption": "ListingOnly",
+                          },
+                          "submissions": [
+                            {
+                              "resourceType": "Submission",
+                              "state": "Inprogress",
+                              "subState": "InDraft",
+                            },
+                          ],
+                          "variants": [
+                            {
+                              "featureAvailabilities": [
+                                {
+                                  "customMeters": [
+                                    {
+                                      "includedBaseQuantities": [
+                                        {
+                                          "recurringUnit": "Monthly",
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "marketStates": [
+                                    {
+                                      "state": "Disabled",
+                                    },
+                                  ],
+                                  "priceSchedules": [
+                                    {
+                                      "schedules": [
+                                        {
+                                          "priceCadence": {
+                                            "type": "Month",
+                                          },
+                                          "pricingModel": "Flat",
+                                          "pricingUnits": [
+                                            {
+                                              "name": "sharedcore",
+                                            },
+                                          ],
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                  "trial": {
+                                    "durationType": "Minute",
+                                    "type": "NoTrial",
+                                  },
+                                  "visibility": "Public",
+                                },
+                              ],
+                              "resourceType": "AzureSkuVariant",
+                              "state": "InActive",
+                            },
+                          ],
+                        },
+                        "commits": [
+                          {
+                            "timeUnit": "DAY",
+                            "type": "FLAT_RATE",
+                          },
+                        ],
+                        "dimensions": [
+                          {
+                            "includedBaseQuantities": [
+                              {
+                                "recurringUnit": "Monthly",
+                              },
+                            ],
+                            "valueType": "VALUE_TYPE_UNSPECIFIED",
+                          },
+                        ],
+                        "gcpProduct": {
+                          "listingSpec": {
+                            "listingType": "BillingIntegratedManagedService",
+                            "purchaseSpec": {
+                              "metrics": [
+                                {
+                                  "valueType": "VALUE_TYPE_UNSPECIFIED",
+                                },
+                              ],
+                              "purchaseOptionSpecs": [
+                                {
+                                  "priceInfo": {
+                                    "priceModel": "FREE",
+                                    "subscriptionPlans": [
+                                      {
+                                        "period": "ONE_YEAR",
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                    "usageFees": [
+                                      {
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                      },
+                                    ],
+                                  },
+                                  "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                                },
+                              ],
+                            },
+                          },
+                          "marketplace": "marketplaces/google-cloud",
+                          "serviceConfig": {
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                      "partner": "AWS",
+                      "productType": "UNKNOWN",
+                      "service": "MARKETPLACE",
+                    },
+                  ],
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/product",
@@ -8063,6 +11307,20 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
@@ -8127,6 +11385,20 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",

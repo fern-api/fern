@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { SecurityScheme, SecuritySchemeId } from "@fern-fern/openapi-ir-model/ir";
+import { SecurityScheme, SecuritySchemeId } from "@fern-fern/openapi-ir-model/commons";
 
 export interface FernAuth {
     auth: string | undefined;

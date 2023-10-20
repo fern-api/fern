@@ -65,6 +65,9 @@ service:
         docs: A paged array of pets
         type: root.Pets
       errors: []
+      examples:
+        - response:
+            body: []
 
     createPets:
       path: /pets
@@ -72,6 +75,8 @@ service:
       auth: false
       display-name: Create a pet
       errors: []
+      examples:
+        - {}
 
     showPetById:
       path: /pets/{petId}

@@ -94,7 +94,6 @@ exports[`open api parser devrev parse open api 1`] = `
           "schema": "artifacts-prepare-request",
           "type": "reference",
         },
-        "schemaInstanceId": "artifacts-prepare_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -150,7 +149,6 @@ authenticated user.
           "schema": "auth-tokens-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -188,7 +186,18 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -207,7 +216,6 @@ given Dev organization.
           "schema": "auth-tokens-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -239,10 +247,35 @@ given Dev organization.
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "token_id",
+              "value": {
+                "primitive": {
+                  "string": "token-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "token": {
+                "properties": {
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -306,7 +339,45 @@ token type issued for a given subject.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "requested_token_type",
+              "value": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tokens": {
+                "array": [
+                  {
+                    "properties": {
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
       "internal": undefined,
@@ -408,7 +479,23 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "requested_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -427,7 +514,6 @@ authenticated user.
           "schema": "auth-tokens-self-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-self-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -455,18 +541,7 @@ organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -485,7 +560,6 @@ organization.
           "schema": "auth-tokens-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -526,18 +600,7 @@ enterprise connections can be created by an organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -556,7 +619,6 @@ enterprise connections can be created by an organization.
           "schema": "dev-org-auth-connections-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -615,7 +677,6 @@ connections can not be deleted using this method.
           "schema": "dev-org-auth-connections-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -642,18 +703,7 @@ connections can not be deleted using this method.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -714,7 +764,23 @@ created by the user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "auth_connections": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsListRequest",
       "headers": [],
       "internal": undefined,
@@ -782,7 +848,6 @@ disabled.
           "schema": "dev-org-auth-connections-toggle-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-toggle_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -809,18 +874,7 @@ disabled.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -839,7 +893,6 @@ disabled.
           "schema": "dev-org-auth-connections-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -875,7 +928,53 @@ disabled.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "state",
+              "value": {
+                "array": [
+                  {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "dev_users": {
+                "array": [
+                  {
+                    "properties": {
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
       "internal": undefined,
@@ -1039,7 +1138,17 @@ used.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "dev_user": {
+                "properties": {
+                  "state": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -1085,18 +1194,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1115,7 +1213,6 @@ used.
           "schema": "parts-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "parts-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1168,7 +1265,10 @@ used.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
         },
       ],
       "generatedRequestName": "PartsDeleteRequest",
@@ -1189,7 +1289,6 @@ used.
           "schema": "parts-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "parts-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1226,18 +1325,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -1294,7 +1382,43 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "capability",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "parts": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1473,18 +1597,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -1503,7 +1616,6 @@ used.
           "schema": "parts-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "parts-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1540,18 +1652,7 @@ organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevOrgsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1570,7 +1671,6 @@ organization.
           "schema": "rev-orgs-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "rev-orgs-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1623,7 +1723,10 @@ organization.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
         },
       ],
       "generatedRequestName": "RevOrgsDeleteRequest",
@@ -1644,7 +1747,6 @@ organization.
           "schema": "rev-orgs-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "rev-orgs-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1684,10 +1786,26 @@ organization.
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -1751,7 +1869,31 @@ to access.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_orgs": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1985,6 +2127,10 @@ them.
           "queryParameters": [],
           "request": {
             "properties": {
+              "environment": {
+                "enum": "production",
+                "type": "enum",
+              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
@@ -1996,7 +2142,12 @@ them.
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -2019,7 +2170,6 @@ them.
           "schema": "rev-orgs-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "rev-orgs-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2056,18 +2206,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2086,7 +2225,6 @@ and a logical concept denoted by the tag's name.
           "schema": "tags-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "tags-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2139,7 +2277,10 @@ and a logical concept denoted by the tag's name.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
         },
       ],
       "generatedRequestName": "TagsDeleteRequest",
@@ -2160,7 +2301,6 @@ and a logical concept denoted by the tag's name.
           "schema": "tags-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "tags-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2196,18 +2336,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2263,7 +2392,31 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tags": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2358,29 +2511,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2399,7 +2530,6 @@ used.
           "schema": "tags-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "tags-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2434,18 +2564,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2464,7 +2583,6 @@ used.
           "schema": "timeline-entries-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "timeline-entries-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2500,18 +2618,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2568,7 +2675,41 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "object",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "timeline_entries": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
       "internal": undefined,
@@ -2677,18 +2818,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2707,7 +2837,6 @@ used.
           "schema": "timeline-entries-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "timeline-entries-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2742,18 +2871,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2772,7 +2890,6 @@ used.
           "schema": "webhooks-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "webhooks-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2825,7 +2942,10 @@ used.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
         },
       ],
       "generatedRequestName": "WebhooksDeleteRequest",
@@ -2846,7 +2966,6 @@ used.
           "schema": "webhooks-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "webhooks-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2882,18 +3001,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2949,7 +3057,23 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "webhooks": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksListRequest",
       "headers": [],
       "internal": undefined,
@@ -2992,29 +3116,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3033,7 +3135,6 @@ used.
           "schema": "webhooks-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "webhooks-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3070,18 +3171,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -3100,7 +3190,6 @@ used.
           "schema": "works-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "works-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3153,7 +3242,10 @@ used.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
+          },
         },
       ],
       "generatedRequestName": "WorksDeleteRequest",
@@ -3174,7 +3266,6 @@ used.
           "schema": "works-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "works-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3209,7 +3300,60 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "issue.priority",
+              "value": {
+                "array": [
+                  {
+                    "enum": "p0",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "ticket.severity",
+              "value": {
+                "array": [
+                  {
+                    "enum": "blocker",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "issue",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "works": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
       "internal": undefined,
@@ -3456,18 +3600,7 @@ organizations.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksGetRequest",
       "headers": [],
       "internal": undefined,
@@ -3523,7 +3656,67 @@ organizations.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "issue.priority",
+              "value": {
+                "array": [
+                  {
+                    "enum": "p0",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "ticket.severity",
+              "value": {
+                "array": [
+                  {
+                    "enum": "blocker",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "issue",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "works": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
       "internal": undefined,
@@ -3805,18 +3998,7 @@ organizations.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3835,7 +4017,6 @@ organizations.
           "schema": "works-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "works-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4755,9 +4936,13 @@ authentication connection.
     "auth-connection-options-social": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6381,9 +6566,13 @@ sort order. If not set, then no prior elements exist.
     "empty": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6464,9 +6653,13 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-bad-request": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6556,9 +6749,13 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-parse-error": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6706,9 +6903,13 @@ sort order. If not set, then no prior elements exist.
     "error-forbidden-forbidden": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6773,9 +6974,13 @@ inquiry.
     "error-internal-server-error-internal-error": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6820,9 +7025,13 @@ inquiry.
     "error-not-found-not-found": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6867,9 +7076,13 @@ inquiry.
     "error-service-unavailable-service-unavailable": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6931,9 +7144,13 @@ inquiry.
     "error-too-many-requests-too-many-requests": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6983,9 +7200,13 @@ inquiry.
     "error-unauthorized-unauthenticated": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -7403,9 +7624,13 @@ inquiry.
     "external-identity": {
       "description": "External identity of a user.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8091,9 +8316,13 @@ always be returned in the specified sort-by order.
     "parts-create-request-product": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8149,9 +8378,13 @@ always be returned in the specified sort-by order.
     "parts-delete-response": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8356,9 +8589,13 @@ sort order. If not set, then no prior elements exist.
     "parts-update-request-capability": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8394,9 +8631,13 @@ sort order. If not set, then no prior elements exist.
     "parts-update-request-feature": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8440,9 +8681,13 @@ empty.
     "parts-update-request-product": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8735,9 +8980,13 @@ records.
     "rev-orgs-delete-response": {
       "description": "The response to deleting a Rev organization.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -9449,9 +9698,13 @@ permitted.
     "tags-delete-response": {
       "description": "The response for deleting a tag.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -9857,9 +10110,13 @@ will appear in the response.
             "value": {
               "description": "The SnapKit Body of the comment.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -10011,9 +10268,13 @@ will appear in the response.
             "value": {
               "description": "The SnapKit body of the comment.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -10240,9 +10501,13 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": "The SnapKit body of the comment.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -11505,9 +11770,13 @@ response.
     "webhooks-delete-response": {
       "description": "The response to deleting the webhook.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -12334,9 +12603,13 @@ issues.
     "works-delete-response": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {

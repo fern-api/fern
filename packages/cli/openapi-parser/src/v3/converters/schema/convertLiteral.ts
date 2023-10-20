@@ -1,4 +1,4 @@
-import { Schema } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 
 export function convertLiteral({
     wrapAsNullable,
@@ -8,17 +8,17 @@ export function convertLiteral({
     value: string;
     wrapAsNullable: boolean;
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.literal({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.literal({
                 value,
                 description,
             }),
             description,
         });
     }
-    return Schema.literal({
+    return SchemaWithExample.literal({
         value,
         description,
     });

@@ -201,9 +201,13 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -431,7 +435,54 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "uid",
+              "value": {
+                "primitive": {
+                  "string": "uid",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "transitions",
+              "value": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            {
+              "name": "version",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "primitive": {
+                  "string": "user-identifier",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "BlockTransitionsRequest",
       "headers": [],
       "internal": undefined,
@@ -879,9 +930,13 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "key": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "description": undefined,
+                            "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "type": "map",
                           "value": {
@@ -1115,7 +1170,54 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "uid",
+              "value": {
+                "primitive": {
+                  "string": "uid",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "intent",
+              "value": {
+                "enum": "finish",
+                "type": "enum",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "primitive": {
+                  "string": "user-identifier",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "FlowIntentRequest",
       "headers": [],
       "internal": undefined,

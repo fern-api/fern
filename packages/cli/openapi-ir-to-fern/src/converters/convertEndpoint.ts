@@ -1,6 +1,5 @@
-import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
+import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
 import {
     Endpoint,
     EndpointAvailability,
@@ -9,11 +8,10 @@ import {
     Request,
     Response,
     Schema,
-    SchemaId,
-    StatusCode,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environments } from "../getEnvironments";
+import { convertEndpointExample } from "./convertEndpointExample";
 import { convertHeader } from "./convertHeader";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -240,122 +238,10 @@ export function convertEndpoint({
     };
 }
 
-interface NamedFullExample {
-    name: string;
-    value: FullExample;
-}
-
 function convertEndpointExamples(endpointExamples: EndpointExample[]): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
         return convertEndpointExample(endpointExample);
     });
-}
-
-function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.ExampleEndpointCallSchema {
-    return {
-        "path-parameters":
-            endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
-                ? convertNamedFullExamplesToFerns(endpointExample.pathParameters)
-                : undefined,
-        "query-parameters":
-            endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0
-                ? convertNamedFullExamplesToFerns(endpointExample.queryParameters)
-                : undefined,
-        headers:
-            endpointExample.headers != null && endpointExample.headers.length > 0
-                ? convertNamedFullExamplesToFerns(endpointExample.headers)
-                : undefined,
-        request: endpointExample.request != null ? convertFullExampleToFern(endpointExample.request) : undefined,
-        response:
-            endpointExample.response != null ? { body: convertFullExampleToFern(endpointExample.response) } : undefined,
-    };
-}
-
-function convertNamedFullExamplesToFerns(
-    namedFullExamples: NamedFullExample[]
-): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
-    const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
-    namedFullExamples.map(
-        (namedFullExample) => (result[namedFullExample.name] = convertFullExampleToFern(namedFullExample.value))
-    );
-    return result;
-}
-
-function convertFullExampleToFern(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
-    switch (fullExample.type) {
-        case "primitive":
-            return convertPrimitiveExampleToFern(fullExample.primitive);
-        case "object":
-            return convertFullExamplePropertiesToFern(fullExample.properties);
-        case "array":
-            return convertFullArrayExampleToFern(fullExample.array);
-        case "map":
-            return convertFullMapExampleToFern(fullExample.map);
-        case "oneOf":
-            return convertFullOneOfExampleToFern(fullExample.oneOf);
-        case "enum":
-            return fullExample.enum;
-        case "literal":
-            return fullExample.literal;
-        case "unknown":
-            return convertFullExampleToFern(fullExample.unknown);
-        default:
-            assertNever(fullExample);
-    }
-}
-
-function convertPrimitiveExampleToFern(primitiveExample: PrimitiveExample): RawSchemas.ExampleTypeReferenceSchema {
-    switch (primitiveExample.type) {
-        case "int":
-            return primitiveExample.int;
-        case "int64":
-            return primitiveExample.int64;
-        case "float":
-            return primitiveExample.float;
-        case "double":
-            return primitiveExample.double;
-        case "string":
-            return primitiveExample.string;
-        case "datetime":
-            return primitiveExample.datetime;
-        case "date":
-            return primitiveExample.date;
-        case "base64":
-            return primitiveExample.base64;
-        case "boolean":
-            return primitiveExample.boolean;
-        default:
-            assertNever(primitiveExample);
-    }
-}
-
-function convertFullExamplePropertiesToFern(
-    fullExampleProperties: Record<PropertyKey, FullExample>
-): RawSchemas.ExampleTypeReferenceSchema {
-    const properties: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
-    Object.entries(fullExampleProperties).forEach(
-        ([propertyKey, fullExample]) => (properties[propertyKey] = convertFullExampleToFern(fullExample))
-    );
-    return properties;
-}
-
-function convertFullArrayExampleToFern(fullExamples: FullExample[]): RawSchemas.ExampleTypeReferenceSchema {
-    return fullExamples.map((fullExample) => {
-        return convertFullExampleToFern(fullExample);
-    });
-}
-
-function convertFullMapExampleToFern(pairs: KeyValuePair[]): RawSchemas.ExampleTypeReferenceSchema {
-    return pairs.map((pair) => {
-        return [convertPrimitiveExampleToFern(pair.key), convertFullExampleToFern(pair.value)];
-    });
-}
-
-function convertFullOneOfExampleToFern(oneOf: FullOneOfExample): RawSchemas.ExampleTypeReferenceSchema {
-    if (oneOf.type === "discriminated") {
-        return convertFullExamplePropertiesToFern(oneOf.discriminated);
-    }
-    return convertFullExampleToFern(oneOf.undisciminated);
 }
 
 interface ConvertedRequest {

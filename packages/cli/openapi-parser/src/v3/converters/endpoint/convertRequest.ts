@@ -1,7 +1,8 @@
-import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/ir";
+import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/finalIr";
+import { RequestWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { getSchemaInstanceIdFromBreadcrumbs } from "../../getSchemaInstanceIdFromBreadcrumbs";
+import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
@@ -90,7 +91,7 @@ export function convertRequest({
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
-}): Request | undefined {
+}): RequestWithExample | undefined {
     const resolvedRequestBody = isReferenceObject(requestBody)
         ? context.resolveRequestBodyReference(requestBody)
         : requestBody;
@@ -132,9 +133,10 @@ export function convertRequest({
                         description: undefined,
                     };
                 }
+                const schemaWithExample = convertSchema(definition, false, context, []);
                 return {
                     key,
-                    schema: MultipartSchema.json(convertSchema(definition, false, context, [])),
+                    schema: MultipartSchema.json(convertSchemaWithExampleToSchema(schemaWithExample)),
                     description: undefined,
                 };
             }),
@@ -146,8 +148,7 @@ export function convertRequest({
         return undefined;
     }
     const requestSchema = convertSchema(jsonSchema.schema, false, context, requestBreadcrumbs, true);
-    return Request.json({
-        schemaInstanceId: getSchemaInstanceIdFromBreadcrumbs(requestBreadcrumbs),
+    return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
         contentType: jsonSchema.overridenContentType,

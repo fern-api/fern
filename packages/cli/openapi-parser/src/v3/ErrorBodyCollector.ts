@@ -1,4 +1,4 @@
-import { Schema } from "@fern-fern/openapi-ir-model/ir";
+import { Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "./converters/convertSchemas";
