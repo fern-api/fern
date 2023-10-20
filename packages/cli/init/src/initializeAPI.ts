@@ -1,9 +1,10 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, basename} from "@fern-api/fs-utils";
 import {
     APIS_DIRECTORY,
     DEFAULT_API_WORSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
+    OPENAPI_DIRECTORY
 } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -66,8 +67,12 @@ async function getDirectoryOfNewAPIWorkspace({
         return newApiDirectory;
     }
 
-    const inlinedApiDefinition = await hasInlinedAPIDefinitions({ absolutePathToFernDirectory });
-    if (inlinedApiDefinition) {
+    const inlinedApiCheckResult = await hasInlinedAPIDefinitions({ absolutePathToFernDirectory });
+    if (inlinedApiCheckResult.type !== "none") {
+        const inlinedApiDirectoryPath =
+            inlinedApiCheckResult.type === "fern"
+                ? inlinedApiCheckResult.fernDefDirectoryPath
+                : inlinedApiCheckResult.openApiDirectoryPath;
         taskContext.logger.info("Creating workspaces to support multiple API Definitions.");
 
         const apiWorkspaceDirectory = join(
@@ -76,16 +81,14 @@ async function getDirectoryOfNewAPIWorkspace({
             RelativeFilePath.of("api")
         );
 
-        const inlinedDefinitionDirectory: AbsoluteFilePath = join(
-            absolutePathToFernDirectory,
-            RelativeFilePath.of(DEFINITION_DIRECTORY)
-        );
+        const directoryOfInlinedApiDefinition = basename(inlinedApiDirectoryPath);
+
         const workspaceDefinitionDirectory: AbsoluteFilePath = join(
             apiWorkspaceDirectory,
-            RelativeFilePath.of(DEFINITION_DIRECTORY)
+            RelativeFilePath.of(directoryOfInlinedApiDefinition)
         );
         await mkdir(apiWorkspaceDirectory, { recursive: true });
-        await fs.move(inlinedDefinitionDirectory, workspaceDefinitionDirectory);
+        await fs.move(inlinedApiDirectoryPath, workspaceDefinitionDirectory);
 
         const inlinedGeneratorsYml: AbsoluteFilePath = join(
             absolutePathToFernDirectory,
@@ -122,14 +125,49 @@ async function hasWorkspaces({
     return await doesPathExist(pathToApisDirectory);
 }
 
+type InlinedAPICheckResult = NoInlinedApis | InlinedOpenAPI | InlinedFernDef;
+interface NoInlinedApis {
+    type: "none";
+}
+
+interface InlinedOpenAPI {
+    type: "openapi";
+    openApiDirectoryPath: string;
+}
+
+interface InlinedFernDef {
+    type: "fern";
+    fernDefDirectoryPath: string;
+}
+
 async function hasInlinedAPIDefinitions({
     absolutePathToFernDirectory,
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
-}): Promise<boolean> {
+}): Promise<InlinedAPICheckResult> {
     const pathToSingleWorkspaceDefinition: AbsoluteFilePath = join(
         absolutePathToFernDirectory,
         RelativeFilePath.of(DEFINITION_DIRECTORY)
     );
-    return await doesPathExist(pathToSingleWorkspaceDefinition);
+
+    const pathToSingleOpenAPIWorkspace: AbsoluteFilePath = join(
+        absolutePathToFernDirectory,
+        RelativeFilePath.of(OPENAPI_DIRECTORY)
+    );
+
+    if (await doesPathExist(pathToSingleWorkspaceDefinition)) {
+        return {
+            type: "fern",
+            fernDefDirectoryPath: pathToSingleWorkspaceDefinition,
+        };
+    }
+
+    if (await doesPathExist(pathToSingleOpenAPIWorkspace)) {
+        return {
+            type: "openapi",
+            openApiDirectoryPath: pathToSingleOpenAPIWorkspace,
+        };
+    }
+
+    return { type: "none" };
 }

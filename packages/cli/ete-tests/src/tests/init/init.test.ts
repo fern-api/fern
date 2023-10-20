@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, OPENAPI_DIRECTORY, DEFINITION_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -60,4 +60,65 @@ describe("fern init", () => {
 
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
+
+    it("init openapi with existing openapi workspace", async () => {
+        const openApiPath = join(
+            FIXTURES_DIR,
+            RelativeFilePath.of("openapi"),
+            RelativeFilePath.of("petstore-openapi.yml")
+        );
+        const pathOfDirectory = await init({ openApiArg: openApiPath });
+
+        const command = await runFernCli(["init", "--openapi", openApiPath], {
+            cwd: pathOfDirectory,
+        });
+
+        expect(command.exitCode).toBe(0);
+
+        expect(await doesPathExist(join(
+            pathOfDirectory,
+            RelativeFilePath.of(FERN_DIRECTORY),
+            RelativeFilePath.of(APIS_DIRECTORY),
+            RelativeFilePath.of("api1"),
+            RelativeFilePath.of(OPENAPI_DIRECTORY)
+        )) && await doesPathExist(
+            join(
+                pathOfDirectory,
+                RelativeFilePath.of(FERN_DIRECTORY),
+                RelativeFilePath.of(APIS_DIRECTORY),
+                RelativeFilePath.of("api"),
+                RelativeFilePath.of(OPENAPI_DIRECTORY)
+            )
+        )).toBe(true);
+    });
+    it("init openapi with existing fern def workspace", async () => {
+        const openApiPath = join(
+            FIXTURES_DIR,
+            RelativeFilePath.of("openapi"),
+            RelativeFilePath.of("petstore-openapi.yml")
+        );
+        const pathOfDirectory = await init({});
+
+        const command = await runFernCli(["init", "--openapi", openApiPath], {
+            cwd: pathOfDirectory,
+        });
+
+        expect(command.exitCode).toBe(0);
+
+        expect(await doesPathExist(join(
+            pathOfDirectory,
+            RelativeFilePath.of(FERN_DIRECTORY),
+            RelativeFilePath.of(APIS_DIRECTORY),
+            RelativeFilePath.of("api1"),
+            RelativeFilePath.of(OPENAPI_DIRECTORY)
+        )) && await doesPathExist(
+            join(
+                pathOfDirectory,
+                RelativeFilePath.of(FERN_DIRECTORY),
+                RelativeFilePath.of(APIS_DIRECTORY),
+                RelativeFilePath.of("api"),
+                RelativeFilePath.of(DEFINITION_DIRECTORY)
+            )
+        )).toBe(true);
+    });
 });
