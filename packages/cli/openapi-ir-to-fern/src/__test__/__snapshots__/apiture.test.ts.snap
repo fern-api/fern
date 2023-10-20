@@ -2271,6 +2271,21 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "account-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
@@ -2380,13 +2395,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "allows": [
-                    "billPay",
-                  ],
+                  "allows": "billPay",
                   "location": "internal",
-                  "productType": [
-                    "savings",
-                  ],
+                  "productType": "savings",
                 },
                 "request": undefined,
                 "response": {
@@ -2451,9 +2462,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "allows": [
-                    "billPay",
-                  ],
+                  "allows": "billPay",
                   "secCode": "arc",
                 },
                 "request": undefined,
@@ -3002,6 +3011,24 @@ The default response lists only recent transactions. Normally, this is transacti
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "account-id",
+                },
+                "query-parameters": {
+                  "subtype": "check",
+                  "type": "balance",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/accounts/{accountId}/transactions",
             "path-parameters": {
@@ -3161,6 +3188,17 @@ Note: This operation requires an identity challenge if the financial institution
               "root.NotFoundError",
               "root.ConflictError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transferId": "transfer-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/transfers/{transferId}",
             "path-parameters": {
@@ -3178,6 +3216,19 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transferId": "transfer-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/transfers/{transferId}",
@@ -3269,6 +3320,26 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transferId": "transfer-id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "amount": "3456.78",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "recurrenceType": "fixed",
+                  },
+                },
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/transfers/{transferId}",

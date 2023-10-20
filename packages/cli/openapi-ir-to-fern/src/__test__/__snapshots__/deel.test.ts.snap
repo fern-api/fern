@@ -7161,12 +7161,8 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "entities": [
-                    "individual",
-                  ],
-                  "statuses": [
-                    "pending",
-                  ],
+                  "entities": "individual",
+                  "statuses": "pending",
                 },
                 "request": undefined,
                 "response": {
@@ -7255,17 +7251,11 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "currencies": [
-                    "USD",
-                  ],
+                  "currencies": "USD",
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
-                  "entities": [
-                    "individual",
-                  ],
-                  "statuses": [
-                    "paid",
-                  ],
+                  "entities": "individual",
+                  "statuses": "paid",
                 },
                 "request": undefined,
                 "response": {
