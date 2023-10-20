@@ -227,8 +227,8 @@ export function convertTypeReferenceExample({
                 )
             );
         },
-        literal: () => {
-            throw new Error("Examples are not supported for literals");
+        literal: (literalValue) => {
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(literalValue));
         },
         named: (named) => {
             const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
