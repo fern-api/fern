@@ -3460,6 +3460,24 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "token_id": "token-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "token": {
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "status": "active",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {

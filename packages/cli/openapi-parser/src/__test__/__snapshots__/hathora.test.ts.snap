@@ -2588,7 +2588,52 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "processId",
+              "value": {
+                "primitive": {
+                  "string": "process-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "metrics",
+              "value": {
+                "array": [
+                  {
+                    "enum": "cpu",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetMetricsRequest",
       "headers": [],
       "internal": undefined,

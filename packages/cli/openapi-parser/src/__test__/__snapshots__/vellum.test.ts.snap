@@ -567,7 +567,34 @@ Used to retrieve a model version given its ID.
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "headers": [],
       "internal": undefined,
@@ -689,7 +716,43 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "array": [],
+                "type": "array",
+              },
+              "metric_input_params": {
+                "properties": {
+                  "params": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -961,7 +1024,50 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,

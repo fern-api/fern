@@ -267,7 +267,43 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "token_id",
+              "value": {
+                "primitive": {
+                  "string": "token-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensGetRequest",
       "headers": [],
       "internal": undefined,

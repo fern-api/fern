@@ -683,7 +683,34 @@ exports[`open api parser squidex parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "result": {
+                "enum": "Translated",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranslationsPostTranslationRequest",
       "headers": [],
       "internal": undefined,
@@ -1363,7 +1390,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "StatisticsGetLogRequest",
       "headers": [],
       "internal": undefined,
@@ -2152,7 +2201,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutSchemaUiFieldsRequest",
       "headers": [],
       "internal": undefined,
@@ -2236,7 +2317,44 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "fieldIds": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutSchemaFieldOrderingRequest",
       "headers": [],
       "internal": undefined,
@@ -2320,7 +2438,54 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "parentId",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "fieldIds": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutNestedFieldOrderingRequest",
       "headers": [],
       "internal": undefined,
@@ -3711,7 +3876,38 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SchemasGetSchemasRequest",
       "headers": [],
       "internal": undefined,
@@ -4143,7 +4339,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutCategoryRequest",
       "headers": [],
       "internal": undefined,
@@ -4227,7 +4455,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "map": [],
+            "type": "map",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutPreviewUrlsRequest",
       "headers": [],
       "internal": undefined,
@@ -4311,7 +4571,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutScriptsRequest",
       "headers": [],
       "internal": undefined,
@@ -4395,7 +4687,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SchemasPutRulesRequest",
       "headers": [],
       "internal": undefined,
@@ -4679,7 +5003,38 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RulesGetRulesRequest",
       "headers": [],
       "internal": undefined,
@@ -4856,7 +5211,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RulesPutRuleRequest",
       "headers": [],
       "internal": undefined,
@@ -5878,7 +6265,38 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "locked": {
+                "enum": "None",
+                "type": "enum",
+              },
+              "plans": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PlansGetPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -5937,7 +6355,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PlansPutPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -6006,7 +6446,38 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "team",
+              "value": {
+                "primitive": {
+                  "string": "team",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "locked": {
+                "enum": "None",
+                "type": "enum",
+              },
+              "plans": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PlansGetTeamPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -6065,7 +6536,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "team",
+              "value": {
+                "primitive": {
+                  "string": "team",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PlansPutTeamPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -6943,7 +7436,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "map": [],
+            "type": "map",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsPostContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7077,7 +7602,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsGetContentsPostRequest",
       "headers": [],
       "internal": undefined,
@@ -7263,7 +7820,49 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "map": [],
+            "type": "map",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsPostUpsertContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7409,7 +8008,49 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "map": [],
+            "type": "map",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsPutContentRequest",
       "headers": [],
       "internal": undefined,
@@ -7507,7 +8148,49 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "map": [],
+            "type": "map",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsPatchContentRequest",
       "headers": [],
       "internal": undefined,
@@ -8086,7 +8769,44 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "datas": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsPostContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -8174,7 +8894,54 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "jobs": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": "Upsert",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsBulkUpdateContentsRequest",
       "headers": [],
       "internal": undefined,
@@ -9384,7 +10151,38 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "BackupsGetBackupsRequest",
       "headers": [],
       "internal": undefined,
@@ -10440,7 +11238,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AssetsPutAssetFolderParentRequest",
       "headers": [],
       "internal": undefined,
@@ -10991,7 +11821,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AssetsGetAssetsPostRequest",
       "headers": [],
       "internal": undefined,
@@ -11253,7 +12105,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AssetsPutAssetRequest",
       "headers": [],
       "internal": undefined,
@@ -11431,7 +12315,44 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "jobs": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": "Annotate",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AssetsBulkUpdateAssetsRequest",
       "headers": [],
       "internal": undefined,
@@ -11592,7 +12513,39 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AssetsPutAssetParentRequest",
       "headers": [],
       "internal": undefined,
@@ -11734,7 +12687,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AppsPutAssetScriptsRequest",
       "headers": [],
       "internal": undefined,
@@ -11803,7 +12778,38 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetClientsRequest",
       "headers": [],
       "internal": undefined,
@@ -11863,7 +12869,38 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPostClientRequest",
       "headers": [],
       "internal": undefined,
@@ -11933,7 +12970,51 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPutClientRequest",
       "headers": [],
       "internal": undefined,
@@ -12017,7 +13098,48 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsDeleteClientRequest",
       "headers": [],
       "internal": undefined,
@@ -12528,7 +13650,38 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetLanguagesRequest",
       "headers": [],
       "internal": undefined,
@@ -12587,7 +13740,38 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPostLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -12657,7 +13841,51 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "language",
+              "value": {
+                "primitive": {
+                  "string": "language",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPutLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -12741,7 +13969,48 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "language",
+              "value": {
+                "primitive": {
+                  "string": "language",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsDeleteLanguageRequest",
       "headers": [],
       "internal": undefined,
@@ -12813,7 +14082,38 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetRolesRequest",
       "headers": [],
       "internal": undefined,
@@ -12872,7 +14172,38 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPostRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -13007,7 +14338,56 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roleName",
+              "value": {
+                "primitive": {
+                  "string": "role-name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "permissions": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPutRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -13091,7 +14471,48 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roleName",
+              "value": {
+                "primitive": {
+                  "string": "role-name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsDeleteRoleRequest",
       "headers": [],
       "internal": undefined,
@@ -13387,7 +14808,29 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AppsPutAppRequest",
       "headers": [],
       "internal": undefined,
@@ -13506,7 +14949,29 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AppsPutAppTeamRequest",
       "headers": [],
       "internal": undefined,
@@ -13634,7 +15099,38 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "editors": {
+                "array": [],
+                "type": "array",
+              },
+              "patterns": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AppsPutSettingsRequest",
       "headers": [],
       "internal": undefined,
@@ -13703,7 +15199,52 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "errors": {
+                "array": [],
+                "type": "array",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsGetWorkflowsRequest",
       "headers": [],
       "internal": undefined,
@@ -13762,7 +15303,52 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "errors": {
+                "array": [],
+                "type": "array",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPostWorkflowRequest",
       "headers": [],
       "internal": undefined,
@@ -13832,7 +15418,62 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "errors": {
+                "array": [],
+                "type": "array",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsPutWorkflowRequest",
       "headers": [],
       "internal": undefined,
@@ -13916,7 +15557,62 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_links": {
+                "map": [],
+                "type": "map",
+              },
+              "errors": {
+                "array": [],
+                "type": "array",
+              },
+              "items": {
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsDeleteWorkflowRequest",
       "headers": [],
       "internal": undefined,

@@ -8,13 +8,16 @@ import {
 } from "@fern-fern/openapi-ir-model/finalIr";
 import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isSchemaRequired } from "../../utils/isSchemaRequrired";
+import { DummyExampleFactory } from "./DummyExampleFactory";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
+    private dummyExampleFactory: DummyExampleFactory;
 
     constructor(schemas: Record<string, SchemaWithExample>) {
         this.exampleTypeFactory = new ExampleTypeFactory(schemas);
+        this.dummyExampleFactory = new DummyExampleFactory(schemas);
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
@@ -49,7 +52,17 @@ export class ExampleEndpointFactory {
                     value: example,
                 });
             } else if (isSchemaRequired(pathParameter.schema)) {
-                return undefined;
+                const dummyExample = this.dummyExampleFactory.generateExample({
+                    schema: pathParameter.schema,
+                    name: pathParameter.name,
+                });
+                if (dummyExample == null) {
+                    return;
+                }
+                pathParameters.push({
+                    name: pathParameter.name,
+                    value: dummyExample,
+                });
             }
         }
 
@@ -61,7 +74,17 @@ export class ExampleEndpointFactory {
                     value: example,
                 });
             } else if (isSchemaRequired(queryParameter.schema)) {
-                return undefined;
+                const dummyExample = this.dummyExampleFactory.generateExample({
+                    schema: queryParameter.schema,
+                    name: queryParameter.name,
+                });
+                if (dummyExample == null) {
+                    return;
+                }
+                pathParameters.push({
+                    name: queryParameter.name,
+                    value: dummyExample,
+                });
             }
         }
 
@@ -73,7 +96,17 @@ export class ExampleEndpointFactory {
                     value: example,
                 });
             } else if (isSchemaRequired(header.schema)) {
-                return undefined;
+                const dummyExample = this.dummyExampleFactory.generateExample({
+                    schema: header.schema,
+                    name: header.name,
+                });
+                if (dummyExample == null) {
+                    return;
+                }
+                pathParameters.push({
+                    name: header.name,
+                    value: dummyExample,
+                });
             }
         }
 

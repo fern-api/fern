@@ -2258,7 +2258,29 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "TriggerBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -12322,7 +12344,39 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "source_id",
+              "value": {
+                "primitive": {
+                  "string": "source-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetachIntegrationToSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -16483,7 +16537,42 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "include",
+              "value": {
+                "literal": "data",
+                "type": "literal",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRequestEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -17962,7 +18051,34 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRequestIgnoredEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -25737,7 +25853,34 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "pagination": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTransformationExecutionsRequest",
       "headers": [],
       "internal": undefined,

@@ -420,7 +420,34 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         403,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "account-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -798,7 +825,29 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "account-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -870,7 +919,29 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "account-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -1568,7 +1639,64 @@ The default response lists only recent transactions. Normally, this is transacti
         429,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "primitive": {
+                  "string": "account-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "balance",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "subtype",
+              "value": {
+                "array": [
+                  {
+                    "enum": "check",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "items": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransactionsListTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -2183,7 +2311,29 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transferId",
+              "value": {
+                "primitive": {
+                  "string": "transfer-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersGetTransferRequest",
       "headers": [],
       "internal": undefined,
@@ -2244,7 +2394,60 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transferId",
+              "value": {
+                "primitive": {
+                  "string": "transfer-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "schedule": {
+                "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "frequency": {
+                    "enum": "once",
+                    "type": "enum",
+                  },
+                  "recurrenceType": {
+                    "enum": "fixed",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {
