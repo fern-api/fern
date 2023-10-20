@@ -180,6 +180,17 @@ exports[`open api parser superagent simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "input": [],
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/api/v1/agents/{agentId}/predict",
             "path-parameters": {

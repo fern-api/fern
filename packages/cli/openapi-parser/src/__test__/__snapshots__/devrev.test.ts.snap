@@ -33,6 +33,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -94,7 +95,6 @@ exports[`open api parser devrev parse open api 1`] = `
           "schema": "artifacts-prepare-request",
           "type": "reference",
         },
-        "schemaInstanceId": "artifacts-prepare_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -131,7 +131,31 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "grant_type": {
+                "enum": "urn:devrev:params:oauth:grant-type:token-issue",
+                "type": "enum",
+              },
+              "requested_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+              "subject_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:jwt:auth0",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -150,7 +174,6 @@ authenticated user.
           "schema": "auth-tokens-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -188,7 +211,18 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -207,7 +241,6 @@ given Dev organization.
           "schema": "auth-tokens-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -242,7 +275,21 @@ given Dev organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "token": {
+                "properties": {
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -262,6 +309,7 @@ given Dev organization.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -306,7 +354,37 @@ token type issued for a given subject.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tokens": {
+                "array": [
+                  {
+                    "properties": {
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
       "internal": undefined,
@@ -326,6 +404,7 @@ token. Only relevant for application access tokens.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -363,6 +442,7 @@ subject.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -408,7 +488,23 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "requested_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -427,7 +523,6 @@ authenticated user.
           "schema": "auth-tokens-self-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-self-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -462,7 +557,21 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "token": {
+                "properties": {
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -485,7 +594,6 @@ organization.
           "schema": "auth-tokens-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "auth-tokens-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -526,18 +634,7 @@ enterprise connections can be created by an organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -556,7 +653,6 @@ enterprise connections can be created by an organization.
           "schema": "dev-org-auth-connections-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -615,7 +711,6 @@ connections can not be deleted using this method.
           "schema": "dev-org-auth-connections-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -642,18 +737,7 @@ connections can not be deleted using this method.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -668,6 +752,7 @@ connections can not be deleted using this method.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -714,7 +799,23 @@ created by the user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "auth_connections": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsListRequest",
       "headers": [],
       "internal": undefined,
@@ -782,7 +883,6 @@ disabled.
           "schema": "dev-org-auth-connections-toggle-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-toggle_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -809,18 +909,7 @@ disabled.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -839,7 +928,6 @@ disabled.
           "schema": "dev-org-auth-connections-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "dev-org-auth-connections-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -875,7 +963,33 @@ disabled.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "dev_users": {
+                "array": [
+                  {
+                    "properties": {
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
       "internal": undefined,
@@ -895,6 +1009,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -915,6 +1030,7 @@ starts from the beginning.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -934,6 +1050,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -970,6 +1087,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1039,7 +1157,17 @@ used.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "dev_user": {
+                "properties": {
+                  "state": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -1085,18 +1213,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1115,7 +1232,6 @@ used.
           "schema": "parts-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "parts-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1156,19 +1272,11 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
           },
-          "response": undefined,
         },
       ],
       "generatedRequestName": "PartsDeleteRequest",
@@ -1189,7 +1297,6 @@ used.
           "schema": "parts-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "parts-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1226,18 +1333,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -1252,6 +1348,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1294,7 +1391,23 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "parts": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1315,6 +1428,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1335,6 +1449,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1353,6 +1468,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1388,6 +1504,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1409,6 +1526,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1473,18 +1591,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -1503,7 +1610,6 @@ used.
           "schema": "parts-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "parts-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1547,7 +1653,12 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -1570,7 +1681,6 @@ organization.
           "schema": "rev-orgs-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "rev-orgs-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1611,19 +1721,11 @@ organization.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
           },
-          "response": undefined,
         },
       ],
       "generatedRequestName": "RevOrgsDeleteRequest",
@@ -1644,7 +1746,6 @@ organization.
           "schema": "rev-orgs-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "rev-orgs-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1687,7 +1788,12 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
         },
@@ -1706,6 +1812,7 @@ organization.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1751,7 +1858,28 @@ to access.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_orgs": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1772,6 +1900,7 @@ to access.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1791,6 +1920,7 @@ to access.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "datetime",
               },
               "type": "primitive",
@@ -1808,6 +1938,7 @@ to access.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "datetime",
               },
               "type": "primitive",
@@ -1825,6 +1956,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1845,6 +1977,7 @@ starts from the beginning.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1864,6 +1997,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -1897,6 +2031,7 @@ used.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "datetime",
               },
               "type": "primitive",
@@ -1914,6 +2049,7 @@ used.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "datetime",
               },
               "type": "primitive",
@@ -1934,6 +2070,7 @@ them.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -1983,20 +2120,14 @@ them.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
+          "request": undefined,
+          "response": {
             "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
+              "rev_org": {
+                "properties": {},
+                "type": "object",
               },
             },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
             "type": "object",
           },
         },
@@ -2019,7 +2150,6 @@ them.
           "schema": "rev-orgs-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "rev-orgs-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2056,18 +2186,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2086,7 +2205,6 @@ and a logical concept denoted by the tag's name.
           "schema": "tags-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "tags-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2127,19 +2245,11 @@ and a logical concept denoted by the tag's name.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
           },
-          "response": undefined,
         },
       ],
       "generatedRequestName": "TagsDeleteRequest",
@@ -2160,7 +2270,6 @@ and a logical concept denoted by the tag's name.
           "schema": "tags-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "tags-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2196,18 +2305,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2222,6 +2320,7 @@ and a logical concept denoted by the tag's name.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2263,7 +2362,23 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tags": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2283,6 +2398,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2300,6 +2416,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -2358,29 +2475,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2399,7 +2494,6 @@ used.
           "schema": "tags-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "tags-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2434,18 +2528,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2464,7 +2547,6 @@ used.
           "schema": "timeline-entries-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "timeline-entries-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2500,18 +2582,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2526,6 +2597,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2568,7 +2640,23 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "timeline_entries": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
       "internal": undefined,
@@ -2583,6 +2671,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2601,6 +2690,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -2620,6 +2710,7 @@ defaults to \`50\`.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -2677,18 +2768,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2707,7 +2787,6 @@ used.
           "schema": "timeline-entries-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "timeline-entries-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2742,18 +2821,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2772,7 +2840,6 @@ used.
           "schema": "webhooks-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "webhooks-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2813,19 +2880,11 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
           },
-          "response": undefined,
         },
       ],
       "generatedRequestName": "WebhooksDeleteRequest",
@@ -2846,7 +2905,6 @@ used.
           "schema": "webhooks-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "webhooks-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2882,18 +2940,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2908,6 +2955,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2949,7 +2997,23 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "webhooks": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksListRequest",
       "headers": [],
       "internal": undefined,
@@ -2992,29 +3056,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3033,7 +3075,6 @@ used.
           "schema": "webhooks-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "webhooks-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3070,18 +3111,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -3100,7 +3130,6 @@ used.
           "schema": "works-create-request",
           "type": "reference",
         },
-        "schemaInstanceId": "works-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3141,19 +3170,11 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
+          "request": undefined,
+          "response": {
+            "map": [],
+            "type": "map",
           },
-          "response": undefined,
         },
       ],
       "generatedRequestName": "WorksDeleteRequest",
@@ -3174,7 +3195,6 @@ used.
           "schema": "works-delete-request",
           "type": "reference",
         },
-        "schemaInstanceId": "works-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3209,7 +3229,23 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "works": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
       "internal": undefined,
@@ -3230,6 +3266,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3251,6 +3288,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3271,6 +3309,7 @@ is '5000'.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -3309,6 +3348,7 @@ is '5000'.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3330,6 +3370,7 @@ is '5000'.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3351,6 +3392,7 @@ is '5000'.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3374,6 +3416,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3456,18 +3499,7 @@ organizations.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksGetRequest",
       "headers": [],
       "internal": undefined,
@@ -3482,6 +3514,7 @@ organizations.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3523,7 +3556,23 @@ organizations.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "works": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
       "internal": undefined,
@@ -3544,6 +3593,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3565,6 +3615,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3585,6 +3636,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -3625,6 +3677,7 @@ starts from the beginning.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3644,6 +3697,7 @@ starts from the beginning.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -3679,6 +3733,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3700,6 +3755,7 @@ used.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3723,6 +3779,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -3805,18 +3862,7 @@ organizations.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3835,7 +3881,6 @@ organizations.
           "schema": "works-update-request",
           "type": "reference",
         },
-        "schemaInstanceId": "works-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4105,7 +4150,7 @@ organizations.
           "key": "expires_at",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The expiration timestamp of the URL.",
               "schema": {
@@ -4261,7 +4306,7 @@ organizations.
           "key": "created_by",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AtomBaseCreatedBy",
@@ -4277,7 +4322,7 @@ organizations.
           "key": "created_date",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Timestamp when the object was created.",
               "schema": {
@@ -4293,7 +4338,7 @@ organizations.
           "key": "display_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Human-readable object ID unique to the Dev organization.",
               "schema": {
@@ -4325,7 +4370,7 @@ organizations.
           "key": "modified_by",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AtomBaseModifiedBy",
@@ -4341,7 +4386,7 @@ organizations.
           "key": "modified_date",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Timestamp when the object was last modified.",
               "schema": {
@@ -4367,7 +4412,7 @@ organizations.
           "key": "display_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Human-readable object ID unique to the Dev organization.",
               "schema": {
@@ -4518,7 +4563,7 @@ authentication connection.
           "key": "client_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Client ID for the Azure authentication connection.",
               "schema": {
@@ -4536,7 +4581,7 @@ authentication connection.
           "key": "client_secret",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Client secret for the Azure authentication connection.",
               "schema": {
@@ -4554,7 +4599,7 @@ authentication connection.
           "key": "domain",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Domain URL of the Azure authentication connection.",
               "schema": {
@@ -4584,7 +4629,7 @@ authentication connection.
           "key": "client_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Client ID for the Google Apps authentication connection.",
               "schema": {
@@ -4602,7 +4647,7 @@ authentication connection.
           "key": "client_secret",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Client secret for the Google Apps authentication connection.
 ",
@@ -4621,7 +4666,7 @@ authentication connection.
           "key": "tenant_domain",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Tenant domain URL of the Google Apps authentication connection.
 ",
@@ -4652,7 +4697,7 @@ authentication connection.
           "key": "client_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Client ID for the OIDC authentication connection.",
               "schema": {
@@ -4670,7 +4715,7 @@ authentication connection.
           "key": "client_secret",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Client secret for the OIDC authentication connection.",
               "schema": {
@@ -4688,7 +4733,7 @@ authentication connection.
           "key": "issuer",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Issuer URL of the OIDC authentication connection.",
               "schema": {
@@ -4718,7 +4763,7 @@ authentication connection.
           "key": "sign_in_endpoint",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sign In endpoint for the SAML authentication connection.",
               "schema": {
@@ -4736,7 +4781,7 @@ authentication connection.
           "key": "signing_cert",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Signing certificate for the SAML authentication connection.
 ",
@@ -4755,9 +4800,13 @@ authentication connection.
     "auth-connection-options-social": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -4845,7 +4894,7 @@ for each authentication connection will depend on the type value.
           "key": "client_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An identifier that represents the application that requested the
 token. Only applicable for application access tokens.
@@ -4865,7 +4914,7 @@ token. Only applicable for application access tokens.
           "key": "expires_at",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The time at which the token expires.",
               "schema": {
@@ -4881,7 +4930,7 @@ token. Only applicable for application access tokens.
           "key": "issued_at",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The time at which the token was issued.",
               "schema": {
@@ -4897,7 +4946,7 @@ token. Only applicable for application access tokens.
           "key": "requested_token_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokenRequestedTokenType",
@@ -4913,7 +4962,7 @@ token. Only applicable for application access tokens.
           "key": "scopes",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The scopes associated with the issued token.",
               "type": "array",
@@ -4935,7 +4984,7 @@ token. Only applicable for application access tokens.
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokenStatus",
@@ -4951,7 +5000,7 @@ token. Only applicable for application access tokens.
           "key": "subject",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The subject of the token.",
               "schema": {
@@ -4969,7 +5018,7 @@ token. Only applicable for application access tokens.
           "key": "token_hint",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A hint that identifies the token.",
               "schema": {
@@ -5163,7 +5212,7 @@ type.
           "key": "aud",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The expected audience values with respect to the token.",
               "type": "array",
@@ -5185,7 +5234,7 @@ type.
           "key": "client_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An identifier that represents the application which is requesting
 the token. If no client_id is present in the request to generate an
@@ -5207,7 +5256,7 @@ This client_id is only associated with an AAT.
           "key": "expires_in",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The expected validity lifetime of the token in number of days.
 ",
@@ -5224,7 +5273,7 @@ This client_id is only associated with an AAT.
           "key": "grant_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestGrantType",
@@ -5240,7 +5289,7 @@ This client_id is only associated with an AAT.
           "key": "requested_token_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestRequestedTokenType",
@@ -5256,7 +5305,7 @@ This client_id is only associated with an AAT.
           "key": "rev_info",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestRevInfo",
@@ -5272,7 +5321,7 @@ This client_id is only associated with an AAT.
           "key": "scope",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
@@ -5293,7 +5342,7 @@ not matter.
           "key": "subject_token",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Represents the entity that requests the token. Not required when
 requesting an application access token (AAT).
@@ -5313,7 +5362,7 @@ requesting an application access token (AAT).
           "key": "subject_token_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestSubjectTokenType",
@@ -5329,7 +5378,7 @@ requesting an application access token (AAT).
           "key": "token_hint",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A hint that identifies the token.",
               "schema": {
@@ -5375,7 +5424,7 @@ token type.
           "key": "client_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An identifier that represents the application which is requesting
 the token. Only present in a response corresponding to an
@@ -5410,7 +5459,7 @@ epoch.
           "key": "refresh_token",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A token to refresh the issued token.",
               "schema": {
@@ -5428,7 +5477,7 @@ epoch.
           "key": "scope",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The scopes associated with the issued token. A space-delimited list
 of values in which the order of values does not matter.
@@ -5470,7 +5519,7 @@ of values in which the order of values does not matter.
           "key": "token_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The unique identifier for the token under a given Dev organization.
 If no token ID is provided, then the token ID will be set from the
@@ -5549,7 +5598,7 @@ JTI claim of the token in the authorization header.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The display name of the Rev org.",
               "schema": {
@@ -5567,7 +5616,7 @@ JTI claim of the token in the authorization header.
           "key": "domain",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The domain of the Rev org.",
               "schema": {
@@ -5597,7 +5646,7 @@ issue a Rev session token.
           "key": "org_ref",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An identifier which uniquely identifies a Rev org.",
               "schema": {
@@ -5615,7 +5664,7 @@ issue a Rev session token.
           "key": "org_traits",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensRevInfoOrgTraits",
@@ -5631,7 +5680,7 @@ issue a Rev session token.
           "key": "rev_user_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The unique ID of the Rev user.",
               "schema": {
@@ -5663,7 +5712,7 @@ issue a Rev session token.
           "key": "user_traits",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensRevInfoUserTraits",
@@ -5691,7 +5740,7 @@ that match with the provided token type.
           "key": "requested_token_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensSelfDeleteRequestRequestedTokenType",
@@ -5778,7 +5827,7 @@ that match with the provided token type.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The display name of the Rev user.",
               "schema": {
@@ -5796,7 +5845,7 @@ that match with the provided token type.
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The email address of the Rev user.",
               "schema": {
@@ -5814,7 +5863,7 @@ that match with the provided token type.
           "key": "full_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The full name of the Rev user.",
               "schema": {
@@ -6078,7 +6127,7 @@ organization.
           "key": "toggle",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "DevOrgAuthConnectionsToggleRequestToggle",
@@ -6265,7 +6314,7 @@ connection.
           "key": "external_identities",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "IDs of the Dev User outside the DevRev SOR.",
               "type": "array",
@@ -6318,7 +6367,7 @@ connection.
           "key": "next_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
@@ -6338,7 +6387,7 @@ sort order. If not set, then no later elements exist.
           "key": "prev_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
@@ -6381,9 +6430,13 @@ sort order. If not set, then no prior elements exist.
     "empty": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6411,7 +6464,7 @@ sort order. If not set, then no prior elements exist.
           "key": "target_close_date",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Timestamp when the enhancement is expected to be closed.",
               "schema": {
@@ -6464,9 +6517,13 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-bad-request": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6556,9 +6613,13 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-parse-error": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6630,7 +6691,7 @@ sort order. If not set, then no prior elements exist.
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The reason the value isn't permitted.",
               "schema": {
@@ -6658,7 +6719,7 @@ sort order. If not set, then no prior elements exist.
           "key": "message",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The message associated with the error.",
               "schema": {
@@ -6706,9 +6767,13 @@ sort order. If not set, then no prior elements exist.
     "error-forbidden-forbidden": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6741,7 +6806,7 @@ sort order. If not set, then no prior elements exist.
           "key": "reference_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A unique ID that's generated for the error that can be used for
 inquiry.
@@ -6773,9 +6838,13 @@ inquiry.
     "error-internal-server-error-internal-error": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6820,9 +6889,13 @@ inquiry.
     "error-not-found-not-found": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6867,9 +6940,13 @@ inquiry.
     "error-service-unavailable-service-unavailable": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6902,7 +6979,7 @@ inquiry.
           "key": "retry_after",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The number of seconds after which the client should retry.
 ",
@@ -6931,9 +7008,13 @@ inquiry.
     "error-too-many-requests-too-many-requests": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -6983,9 +7064,13 @@ inquiry.
     "error-unauthorized-unauthenticated": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -7403,9 +7488,13 @@ inquiry.
     "external-identity": {
       "description": "External identity of a user.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -7454,7 +7543,7 @@ inquiry.
           "key": "priority",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "IssuePriority",
@@ -7545,7 +7634,7 @@ always be returned in the specified sort-by order.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Name of the Organization.",
               "schema": {
@@ -7581,7 +7670,7 @@ always be returned in the specified sort-by order.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Name of the Organization.",
               "schema": {
@@ -7710,7 +7799,7 @@ always be returned in the specified sort-by order.
           "key": "artifacts",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The attached artifacts.",
               "type": "array",
@@ -7730,7 +7819,7 @@ always be returned in the specified sort-by order.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Description of the part.",
               "schema": {
@@ -7778,7 +7867,7 @@ always be returned in the specified sort-by order.
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Tags associated with the object.",
               "type": "array",
@@ -8046,7 +8135,7 @@ always be returned in the specified sort-by order.
           "key": "target_close_date",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Target close date by which enhancement is expected to be closed.
 ",
@@ -8091,9 +8180,13 @@ always be returned in the specified sort-by order.
     "parts-create-request-product": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8149,9 +8242,13 @@ always be returned in the specified sort-by order.
     "parts-delete-response": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8193,7 +8290,7 @@ always be returned in the specified sort-by order.
           "key": "next_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
@@ -8229,7 +8326,7 @@ sort order. If not set, then no later elements exist.
           "key": "prev_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
@@ -8356,9 +8453,13 @@ sort order. If not set, then no prior elements exist.
     "parts-update-request-capability": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8378,7 +8479,7 @@ sort order. If not set, then no prior elements exist.
           "key": "target_close_date",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Updates the target close date of the enhancement.",
               "schema": {
@@ -8394,9 +8495,13 @@ sort order. If not set, then no prior elements exist.
     "parts-update-request-feature": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8416,7 +8521,7 @@ sort order. If not set, then no prior elements exist.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the owner IDs to the provided user IDs. This must not be
 empty.
@@ -8440,9 +8545,13 @@ empty.
     "parts-update-request-product": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8506,7 +8615,7 @@ empty.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Description of the Rev organization.",
               "schema": {
@@ -8524,7 +8633,7 @@ empty.
           "key": "domain",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Company's domain name. Example - 'devrev.ai'.",
               "schema": {
@@ -8542,7 +8651,7 @@ empty.
           "key": "external_ref",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "External ref is a unique identifier for the Rev (customer)
 organization from your primary customer system of records. If none
@@ -8583,7 +8692,7 @@ organization.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Description of the Rev organization.",
               "schema": {
@@ -8615,7 +8724,7 @@ organization.
           "key": "domain",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Company's domain name. Example - 'devrev.ai'.",
               "schema": {
@@ -8633,7 +8742,7 @@ organization.
           "key": "environment",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "RevOrgsCreateRequestEnvironment",
@@ -8649,7 +8758,7 @@ organization.
           "key": "external_ref",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
@@ -8670,7 +8779,7 @@ records.
           "key": "tier",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The tier of the RevOrg.",
               "schema": {
@@ -8735,9 +8844,13 @@ records.
     "rev-orgs-delete-response": {
       "description": "The response to deleting a Rev organization.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -8780,7 +8893,7 @@ records.
           "key": "next_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
@@ -8800,7 +8913,7 @@ sort order. If not set, then no later elements exist.
           "key": "prev_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
@@ -8847,7 +8960,7 @@ sort order. If not set, then no prior elements exist.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Description of the Rev organization.",
               "schema": {
@@ -8865,7 +8978,7 @@ sort order. If not set, then no prior elements exist.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Customer chosen name for the Rev organization.",
               "schema": {
@@ -8883,7 +8996,7 @@ sort order. If not set, then no prior elements exist.
           "key": "domain",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Company's domain name. Example - 'devrev.ai'.",
               "schema": {
@@ -8901,7 +9014,7 @@ sort order. If not set, then no prior elements exist.
           "key": "environment",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "RevOrgsUpdateRequestEnvironment",
@@ -8917,7 +9030,7 @@ sort order. If not set, then no prior elements exist.
           "key": "external_ref",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
@@ -8952,7 +9065,7 @@ records.
           "key": "tier",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The tier of the RevOrg.",
               "schema": {
@@ -9010,7 +9123,7 @@ records.
           "key": "external_ref",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "External ref is a mutable unique identifier for a user within the
 Rev organization from your primary customer record. If none is
@@ -9033,7 +9146,7 @@ system-generated identifier will be assigned to the user.
           "key": "rev_org",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "RevUserSummaryRevOrg",
@@ -9073,7 +9186,7 @@ system-generated identifier will be assigned to the user.
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The value for the object's association with the tag. If specified,
 the value must be one that's specified in the tag's allowed values.
@@ -9127,7 +9240,7 @@ the value must be one that's specified in the tag's allowed values.
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The name of the stage.",
               "schema": {
@@ -9155,7 +9268,7 @@ the value must be one that's specified in the tag's allowed values.
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The updated name of the stage, otherwise unchanged if not set.
 ",
@@ -9199,7 +9312,7 @@ the value must be one that's specified in the tag's allowed values.
           "key": "allowed_values",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The allowed values for the tag, where a value is provided when a
 tag is associated with an object. If empty, then no value should be
@@ -9224,7 +9337,7 @@ provided when the association is made.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An informative description for the tag that should provide context
 on the tag's purpose and usage.
@@ -9318,7 +9431,7 @@ unique.
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The value for the object's association with the tag.",
               "schema": {
@@ -9346,7 +9459,7 @@ unique.
           "key": "allowed_values",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The allowed values for the tag, or empty if no values are
 permitted.
@@ -9370,7 +9483,7 @@ permitted.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The description for the tag.",
               "schema": {
@@ -9449,9 +9562,13 @@ permitted.
     "tags-delete-response": {
       "description": "The response for deleting a tag.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -9493,7 +9610,7 @@ permitted.
           "key": "next_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
@@ -9513,7 +9630,7 @@ sort order. If not set, then no later elements exist.
           "key": "prev_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
@@ -9559,7 +9676,7 @@ sort order. If not set, then no prior elements exist.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the allowed values for the tag.",
               "type": "array",
@@ -9591,7 +9708,7 @@ sort order. If not set, then no prior elements exist.
           "key": "allowed_values",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TagsUpdateRequestAllowedValues",
@@ -9607,7 +9724,7 @@ sort order. If not set, then no prior elements exist.
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The updated description of the tag.",
               "schema": {
@@ -9639,7 +9756,7 @@ sort order. If not set, then no prior elements exist.
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The updated name of the tag. The name must be unique across all
 tags.
@@ -9699,7 +9816,7 @@ tags.
           "key": "group",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TicketGroup",
@@ -9715,7 +9832,7 @@ tags.
           "key": "rev_org",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TicketRevOrg",
@@ -9731,7 +9848,7 @@ tags.
           "key": "severity",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TicketSeverity",
@@ -9797,7 +9914,7 @@ tags.
           "key": "artifacts",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The artifacts for the comment.",
               "type": "array",
@@ -9817,7 +9934,7 @@ tags.
           "key": "body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The comment's body. If the comment has been deleted, then no body
 will appear in the response.
@@ -9837,7 +9954,7 @@ will appear in the response.
           "key": "body_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TimelineCommentBodyType",
@@ -9853,13 +9970,17 @@ will appear in the response.
           "key": "snap_kit_body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The SnapKit Body of the comment.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -9951,7 +10072,7 @@ will appear in the response.
           "key": "artifacts",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The IDs of the artifacts attached to the comment.",
               "type": "array",
@@ -9973,7 +10094,7 @@ will appear in the response.
           "key": "body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The comment's body.",
               "schema": {
@@ -9991,7 +10112,7 @@ will appear in the response.
           "key": "body_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesCreateRequestTimelineCommentBodyType",
@@ -10007,13 +10128,17 @@ will appear in the response.
           "key": "snap_kit_body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The SnapKit body of the comment.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -10087,7 +10212,7 @@ will appear in the response.
           "key": "next_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
@@ -10107,7 +10232,7 @@ sort order. If not set, then no later elements exist.
           "key": "prev_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
@@ -10186,7 +10311,7 @@ sort order. If not set, then no prior elements exist.
           "key": "artifacts",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
@@ -10202,7 +10327,7 @@ sort order. If not set, then no prior elements exist.
           "key": "body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The updated comment's body.",
               "schema": {
@@ -10220,7 +10345,7 @@ sort order. If not set, then no prior elements exist.
           "key": "body_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesUpdateRequestTimelineCommentBodyType",
@@ -10236,13 +10361,17 @@ sort order. If not set, then no prior elements exist.
           "key": "snap_kit_body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The SnapKit body of the comment.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -10267,7 +10396,7 @@ sort order. If not set, then no prior elements exist.
           "key": "add",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Adds the provided artifacts to the comment. An artifact cannot be
 added more than once, i.e. nothing is done if the artifact is
@@ -10292,7 +10421,7 @@ already attached. Mutually exclusive with \`set\`.
           "key": "remove",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Removes the provided artifacts from the comment. If an artifact is
 not present, then it's ignored. Mututally exclusive with \`set\`.
@@ -10316,7 +10445,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the field to the provided artifacts.",
               "type": "array",
@@ -10423,7 +10552,7 @@ default visibility.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The user's display name. The name is non-unique and mutable.
 ",
@@ -10442,7 +10571,7 @@ default visibility.
           "key": "display_picture",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "UserBaseDisplayPicture",
@@ -10458,7 +10587,7 @@ default visibility.
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Email address of the user.",
               "schema": {
@@ -10476,7 +10605,7 @@ default visibility.
           "key": "full_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Full name of the user.",
               "schema": {
@@ -10494,7 +10623,7 @@ default visibility.
           "key": "phone_numbers",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Phone numbers of the user.",
               "type": "array",
@@ -10516,7 +10645,7 @@ default visibility.
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "UserBaseState",
@@ -10550,7 +10679,7 @@ default visibility.
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The user's display name. The name is non-unique and mutable.
 ",
@@ -10569,7 +10698,7 @@ default visibility.
           "key": "display_picture",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "UserBaseSummaryDisplayPicture",
@@ -10585,7 +10714,7 @@ default visibility.
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Email address of the user.",
               "schema": {
@@ -10603,7 +10732,7 @@ default visibility.
           "key": "full_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Full name of the user.",
               "schema": {
@@ -10621,7 +10750,7 @@ default visibility.
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "UserBaseSummaryState",
@@ -10753,7 +10882,7 @@ default visibility.
           "key": "event_types",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The event types that the webhook will receive.",
               "type": "array",
@@ -10837,7 +10966,7 @@ default visibility.
           "key": "part_created",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestPartCreated",
@@ -10853,7 +10982,7 @@ default visibility.
           "key": "part_deleted",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestPartDeleted",
@@ -10869,7 +10998,7 @@ default visibility.
           "key": "part_updated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestPartUpdated",
@@ -10885,7 +11014,7 @@ default visibility.
           "key": "rev_org_created",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestRevOrgCreated",
@@ -10901,7 +11030,7 @@ default visibility.
           "key": "rev_org_deleted",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestRevOrgDeleted",
@@ -10917,7 +11046,7 @@ default visibility.
           "key": "rev_org_updated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestRevOrgUpdated",
@@ -10933,7 +11062,7 @@ default visibility.
           "key": "tag_created",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTagCreated",
@@ -10949,7 +11078,7 @@ default visibility.
           "key": "tag_deleted",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTagDeleted",
@@ -10965,7 +11094,7 @@ default visibility.
           "key": "tag_updated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTagUpdated",
@@ -10981,7 +11110,7 @@ default visibility.
           "key": "timeline_entry_created",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTimelineEntryCreated",
@@ -10997,7 +11126,7 @@ default visibility.
           "key": "timeline_entry_deleted",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTimelineEntryDeleted",
@@ -11013,7 +11142,7 @@ default visibility.
           "key": "timeline_entry_updated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTimelineEntryUpdated",
@@ -11029,7 +11158,7 @@ default visibility.
           "key": "timestamp",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
@@ -11049,7 +11178,7 @@ seconds.
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestType",
@@ -11065,7 +11194,7 @@ seconds.
           "key": "verify",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestVerify",
@@ -11081,7 +11210,7 @@ seconds.
           "key": "webhook_created",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWebhookCreated",
@@ -11097,7 +11226,7 @@ seconds.
           "key": "webhook_deleted",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWebhookDeleted",
@@ -11127,7 +11256,7 @@ seconds.
           "key": "webhook_updated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWebhookUpdated",
@@ -11143,7 +11272,7 @@ seconds.
           "key": "work_created",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWorkCreated",
@@ -11159,7 +11288,7 @@ seconds.
           "key": "work_deleted",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWorkDeleted",
@@ -11175,7 +11304,7 @@ seconds.
           "key": "work_updated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWorkUpdated",
@@ -11201,7 +11330,7 @@ seconds.
           "key": "challenge",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The challenge from the "verify" request, otherwise this should not
 be set for other request types.
@@ -11403,7 +11532,7 @@ be set for other request types.
           "key": "event_types",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The event types that the webhook endpoint will receive.",
               "type": "array",
@@ -11423,7 +11552,7 @@ be set for other request types.
           "key": "secret",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The secret to use when verifying webhook events. If provided, the
 secret must be between 8 and 32 bytes (inclusive). If not set, a
@@ -11505,9 +11634,13 @@ response.
     "webhooks-delete-response": {
       "description": "The response to deleting the webhook.",
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -11595,7 +11728,7 @@ response.
           "key": "action",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhooksUpdateRequestAction",
@@ -11611,7 +11744,7 @@ response.
           "key": "event_types",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WebhooksUpdateRequestEventTypes",
@@ -11641,7 +11774,7 @@ response.
           "key": "secret",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "If provided, updates the secret that's used when verifying webhook
 events, which must be between 8 and 32 bytes (inclusive). Otherwise
@@ -11664,7 +11797,7 @@ won't receive any object events until successfully verified.
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The webhook's updated URL. If the webhook is active, then the
 webhook's status will transition to the 'unverified' state and it
@@ -11695,7 +11828,7 @@ won't receive any object events until successfully verified.
           "key": "add",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The event types to add. If a provided event type is already set for
 the webhook, then nothing is done. Note this is mutually exclusive
@@ -11718,7 +11851,7 @@ with 'set'.
           "key": "remove",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The event types to remove. If a provided event type isn't set for
 the webhook, then nothing is done. Note this is mutually exclusive
@@ -11741,7 +11874,7 @@ with 'set'.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The updated event types, which will replace the webhook's current
 event types. Note this is mutually exclusive with 'add' and
@@ -11831,7 +11964,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "applies_to_part",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WorkBaseAppliesToPart",
@@ -11847,7 +11980,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "artifacts",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The artifacts attached to the work item.",
               "type": "array",
@@ -11867,7 +12000,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "body",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Body of the work object.",
               "schema": {
@@ -11901,7 +12034,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "reported_by",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Users that reported the work.",
               "type": "array",
@@ -11921,7 +12054,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "stage",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WorkBaseStage",
@@ -11937,7 +12070,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Tags associated with the object.",
               "type": "array",
@@ -11957,7 +12090,7 @@ event types. Note this is mutually exclusive with 'add' and
           "key": "target_close_date",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Timestamp when the work is expected to be complete.",
               "schema": {
@@ -12192,7 +12325,7 @@ issues.
           "key": "priority",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WorksCreateRequestIssuePriority",
@@ -12208,7 +12341,7 @@ issues.
           "key": "sprint",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The sprint that the issue belongs to.",
               "schema": {
@@ -12236,7 +12369,7 @@ issues.
           "key": "group",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The group that the ticket is associated with.",
               "schema": {
@@ -12254,7 +12387,7 @@ issues.
           "key": "rev_org",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The Rev organization that the ticket is associated with.",
               "schema": {
@@ -12272,7 +12405,7 @@ issues.
           "key": "severity",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WorksCreateRequestTicketSeverity",
@@ -12334,9 +12467,13 @@ issues.
     "works-delete-response": {
       "description": undefined,
       "key": {
-        "maxLength": undefined,
-        "minLength": undefined,
-        "type": "string",
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
       },
       "type": "map",
       "value": {
@@ -12404,7 +12541,7 @@ issues.
           "key": "next_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
@@ -12424,7 +12561,7 @@ sort order. If not set, then no later elements exist.
           "key": "prev_cursor",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
@@ -12655,7 +12792,7 @@ sort order. If not set, then no prior elements exist.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the IDs to the provided artifact IDs.",
               "type": "array",
@@ -12687,7 +12824,7 @@ sort order. If not set, then no prior elements exist.
           "key": "priority",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WorksUpdateRequestIssuePriority",
@@ -12703,7 +12840,7 @@ sort order. If not set, then no prior elements exist.
           "key": "sprint",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Updates the sprint that the issue belongs to.",
               "type": "nullable",
@@ -12735,7 +12872,7 @@ sort order. If not set, then no prior elements exist.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the owner IDs to the provided user IDs. This must not be
 empty.
@@ -12769,7 +12906,7 @@ empty.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the users that reported the work to the provided user IDs.
 ",
@@ -12802,7 +12939,7 @@ empty.
           "key": "set",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Sets the provided tags on the work item.",
               "type": "array",
@@ -12832,7 +12969,7 @@ empty.
           "key": "group",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The group that the ticket is associated with.",
               "schema": {
@@ -12850,7 +12987,7 @@ empty.
           "key": "rev_org",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Updates the Rev organization that the ticket is associated with.
 ",
@@ -12874,7 +13011,7 @@ empty.
           "key": "severity",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "WorksUpdateRequestTicketSeverity",

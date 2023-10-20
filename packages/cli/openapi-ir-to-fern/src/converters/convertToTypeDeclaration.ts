@@ -1,4 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     EnumSchema,
@@ -10,8 +11,7 @@ import {
     PrimitiveSchema,
     ReferencedSchema,
     Schema,
-    SchemaId,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import {
     convertArrayToTypeReference,
     convertLiteralToTypeReference,

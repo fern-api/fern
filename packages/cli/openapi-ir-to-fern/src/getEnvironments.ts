@@ -1,4 +1,4 @@
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { mapValues } from "lodash-es";
 
 export type Environments = SingleUrlEnvironments | MultiUrlEnvironments;

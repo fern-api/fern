@@ -1131,6 +1131,17 @@ exports[`open api parser hathora simple 1`] = `
             "auth": true,
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/discovery/v1/ping",
             "response": {
@@ -1729,6 +1740,17 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
@@ -1880,15 +1902,6 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/create",

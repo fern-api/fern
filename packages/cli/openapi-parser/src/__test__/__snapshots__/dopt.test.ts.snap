@@ -29,6 +29,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -45,6 +46,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -56,6 +58,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -92,6 +95,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -106,6 +110,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -120,6 +125,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -143,6 +149,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
+                        "example": undefined,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -155,6 +162,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
+                        "example": undefined,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -167,6 +175,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
+                        "example": undefined,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -186,6 +195,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "example": undefined,
                     "maxLength": undefined,
                     "minLength": undefined,
                     "type": "string",
@@ -201,14 +211,19 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "example": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
                 },
                 "type": "map",
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "example": undefined,
                     "type": "boolean",
                   },
                   "type": "primitive",
@@ -221,6 +236,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
+                "example": undefined,
                 "generatedName": "FindBlocksResponseType",
                 "nameOverride": undefined,
                 "type": "enum",
@@ -293,6 +309,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "schema": {
                               "description": undefined,
                               "schema": {
+                                "example": undefined,
                                 "maxLength": undefined,
                                 "minLength": undefined,
                                 "type": "string",
@@ -310,6 +327,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
+                                  "example": undefined,
                                   "type": "boolean",
                                 },
                                 "type": "primitive",
@@ -333,6 +351,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "schema": {
                               "description": undefined,
                               "schema": {
+                                "example": undefined,
                                 "maxLength": undefined,
                                 "minLength": undefined,
                                 "type": "string",
@@ -350,6 +369,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
+                                  "example": undefined,
                                   "type": "double",
                                 },
                                 "type": "primitive",
@@ -373,6 +393,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "schema": {
                               "description": undefined,
                               "schema": {
+                                "example": undefined,
                                 "maxLength": undefined,
                                 "minLength": undefined,
                                 "type": "string",
@@ -390,6 +411,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
+                                  "example": undefined,
                                   "maxLength": undefined,
                                   "minLength": undefined,
                                   "type": "string",
@@ -445,6 +467,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -464,6 +487,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -478,6 +502,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -489,6 +514,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -505,6 +531,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -549,6 +576,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -565,6 +593,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -589,6 +618,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -605,6 +635,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -652,6 +683,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -666,6 +698,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "maxLength": undefined,
                   "minLength": undefined,
                   "type": "string",
@@ -680,6 +713,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "example": undefined,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -703,6 +737,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
+                        "example": undefined,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -715,6 +750,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
+                        "example": undefined,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -727,6 +763,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "schema": {
+                        "example": undefined,
                         "type": "boolean",
                       },
                       "type": "primitive",
@@ -770,6 +807,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "schema": {
+                            "example": undefined,
                             "maxLength": undefined,
                             "minLength": undefined,
                             "type": "string",
@@ -784,6 +822,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "schema": {
+                            "example": undefined,
                             "maxLength": undefined,
                             "minLength": undefined,
                             "type": "string",
@@ -798,6 +837,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "schema": {
+                            "example": undefined,
                             "type": "double",
                           },
                           "type": "primitive",
@@ -821,6 +861,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "schema": {
                                 "description": undefined,
                                 "schema": {
+                                  "example": undefined,
                                   "type": "boolean",
                                 },
                                 "type": "primitive",
@@ -833,6 +874,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "schema": {
                                 "description": undefined,
                                 "schema": {
+                                  "example": undefined,
                                   "type": "boolean",
                                 },
                                 "type": "primitive",
@@ -845,6 +887,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "schema": {
                                 "description": undefined,
                                 "schema": {
+                                  "example": undefined,
                                   "type": "boolean",
                                 },
                                 "type": "primitive",
@@ -864,6 +907,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "example": undefined,
                               "maxLength": undefined,
                               "minLength": undefined,
                               "type": "string",
@@ -879,14 +923,19 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "key": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "description": undefined,
+                            "schema": {
+                              "example": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "type": "string",
+                            },
                           },
                           "type": "map",
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "example": undefined,
                               "type": "boolean",
                             },
                             "type": "primitive",
@@ -899,6 +948,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "type",
                         "schema": {
                           "description": undefined,
+                          "example": undefined,
                           "generatedName": "GetFlowResponseBlocksItemType",
                           "nameOverride": undefined,
                           "type": "enum",
@@ -971,6 +1021,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "schema": {
                                         "description": undefined,
                                         "schema": {
+                                          "example": undefined,
                                           "maxLength": undefined,
                                           "minLength": undefined,
                                           "type": "string",
@@ -988,6 +1039,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
+                                            "example": undefined,
                                             "type": "boolean",
                                           },
                                           "type": "primitive",
@@ -1011,6 +1063,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "schema": {
                                         "description": undefined,
                                         "schema": {
+                                          "example": undefined,
                                           "maxLength": undefined,
                                           "minLength": undefined,
                                           "type": "string",
@@ -1028,6 +1081,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
+                                            "example": undefined,
                                             "type": "double",
                                           },
                                           "type": "primitive",
@@ -1051,6 +1105,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "schema": {
                                         "description": undefined,
                                         "schema": {
+                                          "example": undefined,
                                           "maxLength": undefined,
                                           "minLength": undefined,
                                           "type": "string",
@@ -1068,6 +1123,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
+                                            "example": undefined,
                                             "maxLength": undefined,
                                             "minLength": undefined,
                                             "type": "string",
@@ -1129,6 +1185,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1142,6 +1199,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "intent",
           "schema": {
             "description": undefined,
+            "example": undefined,
             "generatedName": "FlowIntentRequestIntent",
             "nameOverride": undefined,
             "type": "enum",
@@ -1182,6 +1240,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "type": "double",
             },
             "type": "primitive",
@@ -1193,6 +1252,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1209,6 +1269,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1372,7 +1433,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -1450,7 +1511,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -1611,7 +1672,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "include",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "literal",
@@ -1639,7 +1700,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {

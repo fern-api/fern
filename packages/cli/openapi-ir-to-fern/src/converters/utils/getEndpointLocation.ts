@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase, compact, isEqual } from "lodash-es";
 
 export interface EndpointLocation {

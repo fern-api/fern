@@ -1,4 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     EnumSchema,
@@ -11,8 +12,7 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
-    SchemaId,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import {
     convertEnumToTypeDeclaration,
     convertObjectToTypeDeclaration,
@@ -143,12 +143,7 @@ export function convertMapToTypeReference({
     prefix?: string;
     schemas: Record<SchemaId, Schema>;
 }): TypeReference {
-    const keyTypeReference = convertPrimitiveToTypeReference(
-        Schema.primitive({
-            schema: schema.key,
-            description: undefined,
-        })
-    );
+    const keyTypeReference = convertPrimitiveToTypeReference(schema.key);
     const valueTypeReference = convertToTypeReference({
         schema: schema.value,
         prefix,

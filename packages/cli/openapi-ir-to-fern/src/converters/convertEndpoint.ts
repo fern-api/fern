@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
 import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import {
     Endpoint,
@@ -9,9 +10,7 @@ import {
     Request,
     Response,
     Schema,
-    SchemaId,
-    StatusCode,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environments } from "../getEnvironments";
 import { convertHeader } from "./convertHeader";

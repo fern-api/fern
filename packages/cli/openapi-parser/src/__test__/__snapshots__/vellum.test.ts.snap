@@ -56,6 +56,7 @@ Used to retrieve a deployment given its ID or name.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -113,7 +114,6 @@ Creates a new document index.",
           "schema": "DocumentIndexCreateRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "document_indexes_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -152,22 +152,7 @@ Used to list documents. Optionally filter on supported fields.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "next": {
-                "primitive": {
-                  "string": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "previous": {
-                "primitive": {
-                  "string": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -189,6 +174,7 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -206,6 +192,7 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -221,6 +208,7 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "type": "int",
               },
               "type": "primitive",
@@ -236,6 +224,7 @@ Used to list documents. Optionally filter on supported fields.
             "value": {
               "description": undefined,
               "schema": {
+                "example": undefined,
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -292,7 +281,6 @@ Executes a deployed Workflow and streams back its results.",
           "schema": "ExecuteWorkflowStreamRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "execute_workflow_stream_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -335,7 +323,65 @@ Generate a completion using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "options": {
+                "properties": {
+                  "logprobs": {
+                    "enum": "ALL",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+              "requests": {
+                "array": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "data": {
+                        "properties": {
+                          "completions": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateRequest",
       "headers": [],
       "internal": undefined,
@@ -354,7 +400,6 @@ Generate a completion using a previously defined deployment.
           "schema": "GenerateBodyRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "generate_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -416,7 +461,6 @@ Generate a stream of completions using a previously defined deployment.
           "schema": "GenerateStreamBodyRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "generate_stream_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -468,6 +512,7 @@ Used to retrieve a model version given its ID.
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -506,7 +551,23 @@ Used to retrieve a model version given its ID.
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "headers": [],
       "internal": undefined,
@@ -520,6 +581,7 @@ Compiles the prompt backing the model version using the provided input values.",
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -540,7 +602,6 @@ Compiles the prompt backing the model version using the provided input values.",
           "schema": "ModelVersionCompilePromptRequestRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "model_version_compile_prompt_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -594,7 +655,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "schema": "RegisterPromptRequestRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "register_prompt_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -630,7 +690,32 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "array": [],
+                "type": "array",
+              },
+              "metric_input_params": {
+                "properties": {
+                  "params": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -644,6 +729,7 @@ or overwritten with default values.",
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -664,7 +750,6 @@ or overwritten with default values.",
           "schema": "UpsertSandboxScenarioRequestRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "upsert_sandbox_scenario_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -708,6 +793,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -722,6 +808,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -756,7 +843,23 @@ Perform a search against a document index.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "results": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SearchRequest",
       "headers": [],
       "internal": undefined,
@@ -775,7 +878,6 @@ Perform a search against a document index.
           "schema": "SearchRequestBodyRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "search_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -817,7 +919,28 @@ Used to submit feedback regarding the quality of previously generated completion
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "actuals": {
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SubmitCompletionActualsRequest",
       "headers": [],
       "internal": undefined,
@@ -836,7 +959,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "schema": "SubmitCompletionActualsRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "submit_completion_actuals_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -868,7 +990,39 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "evaluation_params": {
+                "properties": {},
+                "type": "object",
+              },
+              "input_values": {
+                "map": [],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,
@@ -882,6 +1036,7 @@ or overwritten with default values.",
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -902,7 +1057,6 @@ or overwritten with default values.",
           "schema": "TestSuiteTestCaseRequest",
           "type": "reference",
         },
-        "schemaInstanceId": "upsert_test_suite_test_case_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -946,6 +1100,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -960,6 +1115,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "schema": {
             "description": undefined,
             "schema": {
+              "example": undefined,
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1451,7 +1607,7 @@ Upload a document to be indexed and used for search.
           "key": "source_handle_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -1540,7 +1696,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -1562,7 +1718,7 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -1648,7 +1804,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The current status of the deployment
 
@@ -1668,7 +1824,7 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The environment this deployment is used in
 
@@ -1799,7 +1955,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
               "type": "nullable",
@@ -1859,7 +2015,7 @@ Upload a document to be indexed and used for search.
           "key": "indexing_state",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An enum value representing where this document is along its indexing lifecycle for this index.
 
@@ -1919,7 +2075,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The current status of the document index
 
@@ -1938,7 +2094,7 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The environment this document index is used in
 
@@ -1959,9 +2115,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Configuration representing how documents should be indexed",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -1975,7 +2135,7 @@ Upload a document to be indexed and used for search.
           "key": "copy_documents_from_index_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
               "schema": {
@@ -2057,7 +2217,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The current status of the document index
 
@@ -2076,7 +2236,7 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The environment this document index is used in
 
@@ -2097,9 +2257,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Configuration representing how documents should be indexed",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -2158,7 +2322,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
               "type": "nullable",
@@ -2214,7 +2378,7 @@ Upload a document to be indexed and used for search.
           "key": "logprobs",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The logprobs of the completion. Only present if specified in the original request options.",
               "type": "nullable",
@@ -2248,7 +2412,7 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "EnrichedNormalizedCompletionType",
@@ -2302,7 +2466,7 @@ Upload a document to be indexed and used for search.
           "key": "target",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
               "schema": {
@@ -2330,7 +2494,7 @@ Upload a document to be indexed and used for search.
           "key": "target",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
               "schema": {
@@ -2358,7 +2522,7 @@ Upload a document to be indexed and used for search.
           "key": "workflow_deployment_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
               "type": "nullable",
@@ -2380,7 +2544,7 @@ Upload a document to be indexed and used for search.
           "key": "workflow_deployment_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
               "type": "nullable",
@@ -2402,7 +2566,7 @@ Upload a document to be indexed and used for search.
           "key": "release_tag",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
               "type": "nullable",
@@ -2440,7 +2604,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally include a unique identifier for tracking purposes.",
               "type": "nullable",
@@ -2500,7 +2664,7 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
               "type": "nullable",
@@ -2522,7 +2686,7 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
               "type": "nullable",
@@ -2560,7 +2724,7 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Additional configuration that can be used to control what's included in the response.",
               "type": "nullable",
@@ -2614,7 +2778,7 @@ Upload a document to be indexed and used for search.
           "key": "logprobs",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Which logprobs to include, if any. Defaults to NONE.
 
@@ -2644,9 +2808,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -2660,7 +2828,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
               "type": "array",
@@ -2680,7 +2848,7 @@ Upload a document to be indexed and used for search.
           "key": "external_ids",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
               "type": "nullable",
@@ -2742,7 +2910,7 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
               "generatedName": "GenerateResultData",
@@ -2758,7 +2926,7 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
               "generatedName": "GenerateResultError",
@@ -2834,7 +3002,7 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
               "type": "nullable",
@@ -2856,7 +3024,7 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
               "type": "nullable",
@@ -2894,7 +3062,7 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Additional configuration that can be used to control what's included in the response.",
               "type": "nullable",
@@ -2958,7 +3126,7 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "GenerateStreamResultData",
@@ -2974,7 +3142,7 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "GenerateStreamResultError",
@@ -3132,7 +3300,7 @@ Upload a document to be indexed and used for search.
           "key": "sandbox_snapshot",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
               "type": "nullable",
@@ -3163,9 +3331,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -3275,7 +3447,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_template",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The template used to generate prompts for this model version.",
               "schema": {
@@ -3293,7 +3465,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_block_data",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "ModelVersionExecConfigPromptBlockData",
@@ -3309,7 +3481,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_syntax_version",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -3395,16 +3567,20 @@ Upload a document to be indexed and used for search.
           "key": "logit_bias",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -3428,7 +3604,7 @@ Upload a document to be indexed and used for search.
           "key": "stop",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -3454,7 +3630,7 @@ Upload a document to be indexed and used for search.
           "key": "top_k",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -3594,7 +3770,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "ModelVersionReadStatus",
@@ -3669,7 +3845,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_index",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The index of the prompt in the sandbox snapshot.",
               "schema": {
@@ -3685,7 +3861,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The id of the prompt in the sandbox snapshot.",
               "schema": {
@@ -3807,9 +3983,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -3854,7 +4034,7 @@ Upload a document to be indexed and used for search.
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -3870,7 +4050,7 @@ Upload a document to be indexed and used for search.
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -3892,7 +4072,7 @@ Upload a document to be indexed and used for search.
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -3914,7 +4094,7 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "array",
@@ -4020,7 +4200,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4042,7 +4222,7 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4198,7 +4378,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_role",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4218,7 +4398,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_message_unterminated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -4234,7 +4414,7 @@ Upload a document to be indexed and used for search.
           "key": "template",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4256,7 +4436,7 @@ Upload a document to be indexed and used for search.
           "key": "template_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4276,7 +4456,7 @@ Upload a document to be indexed and used for search.
           "key": "function_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4298,7 +4478,7 @@ Upload a document to be indexed and used for search.
           "key": "function_description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4320,16 +4500,20 @@ Upload a document to be indexed and used for search.
           "key": "function_parameters",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -4345,7 +4529,7 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4379,7 +4563,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_role",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4399,7 +4583,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_message_unterminated",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -4415,7 +4599,7 @@ Upload a document to be indexed and used for search.
           "key": "template",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4437,7 +4621,7 @@ Upload a document to be indexed and used for search.
           "key": "template_type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4457,7 +4641,7 @@ Upload a document to be indexed and used for search.
           "key": "function_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4479,7 +4663,7 @@ Upload a document to be indexed and used for search.
           "key": "function_description",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4501,16 +4685,20 @@ Upload a document to be indexed and used for search.
           "key": "function_parameters",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -4526,7 +4714,7 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -4801,7 +4989,7 @@ Upload a document to be indexed and used for search.
           "key": "top_k",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -4841,16 +5029,20 @@ Upload a document to be indexed and used for search.
           "key": "logit_bias",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
                 "key": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
                 },
                 "type": "map",
                 "value": {
@@ -4922,7 +5114,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_syntax_version",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -5063,13 +5255,17 @@ Upload a document to be indexed and used for search.
           "key": "meta",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally include additional metadata to store along with the prompt.",
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -5316,7 +5512,7 @@ Upload a document to be indexed and used for search.
           "key": "params",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5346,7 +5542,7 @@ Upload a document to be indexed and used for search.
           "key": "params",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5412,7 +5608,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5434,7 +5630,7 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5466,7 +5662,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -5550,7 +5746,7 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5570,7 +5766,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -5588,7 +5784,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "array",
@@ -5632,7 +5828,7 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5652,7 +5848,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -5670,7 +5866,7 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "array",
@@ -5745,7 +5941,7 @@ Upload a document to be indexed and used for search.
           "key": "external_ids",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The document external IDs to filter by",
               "type": "nullable",
@@ -5821,9 +6017,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {
@@ -5838,7 +6038,7 @@ Upload a document to be indexed and used for search.
           "key": "text_output_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5860,7 +6060,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -5892,7 +6092,7 @@ Upload a document to be indexed and used for search.
           "key": "index_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The ID of the index to search against. Must provide either this or index_name.",
               "type": "nullable",
@@ -5914,7 +6114,7 @@ Upload a document to be indexed and used for search.
           "key": "index_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The name of the index to search against. Must provide either this or index_id.",
               "type": "nullable",
@@ -5950,7 +6150,7 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Configuration options for the search.",
               "type": "nullable",
@@ -5980,7 +6180,7 @@ Upload a document to be indexed and used for search.
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The maximum number of results to return.",
               "type": "nullable",
@@ -6000,7 +6200,7 @@ Upload a document to be indexed and used for search.
           "key": "weights",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The weights to use for the search. Must add up to 1.0.",
               "type": "nullable",
@@ -6020,7 +6220,7 @@ Upload a document to be indexed and used for search.
           "key": "result_merging",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The configuration for merging results.",
               "type": "nullable",
@@ -6040,7 +6240,7 @@ Upload a document to be indexed and used for search.
           "key": "filters",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The filters to apply to the search.",
               "type": "nullable",
@@ -6232,7 +6432,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The external ID that was originally provided when uploading the document.",
               "type": "nullable",
@@ -6280,7 +6480,7 @@ Upload a document to be indexed and used for search.
           "key": "processing_state",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
 
@@ -6301,7 +6501,7 @@ Upload a document to be indexed and used for search.
           "key": "processing_failure_reason",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
 
@@ -6323,7 +6523,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The document's current status.
 
@@ -6341,7 +6541,7 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
               "type": "array",
@@ -6394,7 +6594,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
               "type": "nullable",
@@ -6416,7 +6616,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
               "type": "nullable",
@@ -6438,7 +6638,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Text representing what the completion _should_ have been.",
               "type": "nullable",
@@ -6460,7 +6660,7 @@ Upload a document to be indexed and used for search.
           "key": "quality",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
               "type": "nullable",
@@ -6480,7 +6680,7 @@ Upload a document to be indexed and used for search.
           "key": "timestamp",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
               "type": "nullable",
@@ -6534,7 +6734,7 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
               "type": "nullable",
@@ -6556,7 +6756,7 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
               "type": "nullable",
@@ -6659,9 +6859,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -6801,7 +7005,7 @@ Upload a document to be indexed and used for search.
           "key": "test_case_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
               "schema": {
@@ -6819,7 +7023,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A human-friendly label for the test case.",
               "type": "nullable",
@@ -6842,9 +7046,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -6880,7 +7088,7 @@ Upload a document to be indexed and used for search.
           "key": "test_case_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
               "schema": {
@@ -6898,7 +7106,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "A human-friendly label for the test case.",
               "type": "nullable",
@@ -6921,9 +7129,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -6959,7 +7171,7 @@ Upload a document to be indexed and used for search.
           "key": "add_to_index_names",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally include the names of all indexes that you'd like this document to be included in",
               "type": "nullable",
@@ -6985,7 +7197,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
               "type": "nullable",
@@ -7035,7 +7247,7 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
               "type": "nullable",
@@ -7119,7 +7331,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "schema": {
@@ -7153,7 +7365,7 @@ Upload a document to be indexed and used for search.
           "key": "scenario_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
               "schema": {
@@ -7171,7 +7383,7 @@ Upload a document to be indexed and used for search.
           "key": "metric_input_params",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "UpsertSandboxScenarioRequestRequestMetricInputParams",
@@ -7268,7 +7480,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -7326,7 +7538,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -7479,7 +7691,7 @@ Upload a document to be indexed and used for search.
           "key": "ts",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -7515,7 +7727,7 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -7669,9 +7881,13 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "key": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
             },
             "type": "map",
             "value": {
@@ -7787,7 +8003,7 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -7909,7 +8125,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "optional",
+            "type": "nullable",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -8005,9 +8221,13 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "key": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "type": "map",
               "value": {

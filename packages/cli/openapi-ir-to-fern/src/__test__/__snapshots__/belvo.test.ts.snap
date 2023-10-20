@@ -11422,30 +11422,6 @@ client.accounts.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "balance_type": "ASSET",
-                    "collected_at": "2019-09-27T13:01:41.941Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "currency": "MXN",
-                    "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
-                    "last_accessed_at": "2021-03-09T10:28:40.000Z",
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "name": "Cuenta Perfiles- M.N. - MXN-666",
-                    "number": "4057068115181",
-                    "public_identification_name": "CLABE",
-                    "public_identification_value": "150194683119900273",
-                    "type": "Cuentas de efectivo",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/accounts/{id}",
             "path-parameters": {
@@ -11488,9 +11464,7 @@ client.accounts.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -11727,20 +11701,6 @@ client.accounts.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/accounts",
             "request": {
@@ -11791,18 +11751,6 @@ client.accounts.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/accounts",
@@ -11954,10 +11902,7 @@ client.balances.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                    "value_date": "2019-10-23",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -12004,7 +11949,9 @@ client.balances.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {},
+                    ],
                   },
                 },
               },
@@ -12181,20 +12128,6 @@ client.balances.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/balances",
             "request": {
@@ -12231,21 +12164,6 @@ client.balances.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "date_from": "2021-01-18",
-                  "date_to": "2021-02-15",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/balances",
@@ -12378,9 +12296,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -12500,6 +12416,17 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.ForbiddenError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/categorization",
             "request": {
@@ -12597,9 +12524,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -12730,12 +12655,29 @@ At the moment, the employment records resource is available for:
                 "request": undefined,
                 "response": {
                   "body": {
-                    "collected_at": "2020-04-23T21:32:55.336854+00:00",
-                    "created_at": "2020-04-23T21:32:55.336854+00:00",
-                    "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
-                    "internal_identification": "BLPM951331IONVGR54",
-                    "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
-                    "report_date": "2023-01-19",
+                    "employment_records": [
+                      {
+                        "employment_status_updates": [
+                          {
+                            "event": "DISMISSED_RESIGNED",
+                          },
+                        ],
+                      },
+                    ],
+                    "files": [
+                      {},
+                    ],
+                    "personal_data": {
+                      "document_ids": [
+                        {
+                          "document_type": "NSS",
+                        },
+                      ],
+                      "entitlements": {
+                        "status": "EMPLOYED",
+                      },
+                    },
+                    "social_security_summary": {},
                   },
                 },
               },
@@ -12783,7 +12725,33 @@ At the moment, the employment records resource is available for:
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "employment_records": [
+                          {
+                            "employment_status_updates": [
+                              {
+                                "event": "DISMISSED_RESIGNED",
+                              },
+                            ],
+                          },
+                        ],
+                        "files": [
+                          {},
+                        ],
+                        "personal_data": {
+                          "document_ids": [
+                            {
+                              "document_type": "NSS",
+                            },
+                          ],
+                          "entitlements": {
+                            "status": "EMPLOYED",
+                          },
+                        },
+                        "social_security_summary": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -12834,17 +12802,6 @@ At the moment, the employment records resource is available for:
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/employment-records",
@@ -13103,9 +13060,7 @@ client.incomes.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -13181,20 +13136,6 @@ client.incomes.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/incomes",
             "request": {
@@ -13231,20 +13172,6 @@ client.incomes.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "date_from": "2020-08-01",
-                  "date_to": "2020-12-30",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/incomes",
@@ -13346,13 +13273,19 @@ You can see a complete list of institutions by either consulting our [Institutio
                 "request": undefined,
                 "response": {
                   "body": {
-                    "display_name": "Erebor Mexico",
-                    "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                    "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
-                    "name": "erebor_mx_retail",
-                    "primary_color": "#056dae",
-                    "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                    "website": "https://www.erebor.com/",
+                    "features": [
+                      {},
+                    ],
+                    "form_fields": [
+                      {
+                        "values": [
+                          {},
+                        ],
+                      },
+                    ],
+                    "integration_type": "credentials",
+                    "status": "healthy",
+                    "type": "bank",
                   },
                 },
               },
@@ -13400,7 +13333,23 @@ You can see a complete list of institutions by either consulting our [Institutio
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "features": [
+                          {},
+                        ],
+                        "form_fields": [
+                          {
+                            "values": [
+                              {},
+                            ],
+                          },
+                        ],
+                        "integration_type": "credentials",
+                        "status": "healthy",
+                        "type": "bank",
+                      },
+                    ],
                   },
                 },
               },
@@ -13620,9 +13569,7 @@ client. investments_portfolio.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -13709,19 +13656,6 @@ client. investments_portfolio.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/investments/portfolios",
             "request": {
@@ -13757,18 +13691,6 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/investments/portfolios",
@@ -13942,9 +13864,7 @@ client.invoices.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -14132,20 +14052,6 @@ client.invoices.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/invoices",
             "request": {
@@ -14183,20 +14089,6 @@ client.invoices.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "date_from": "2020-01-01",
-                  "date_to": "2020-02-01",
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/invoices",
@@ -14316,16 +14208,12 @@ For single links, you have to perform POST calls to an institution **every time*
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "access_mode": "single",
+                },
                 "response": {
                   "body": {
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "status": "valid",
                   },
                 },
               },
@@ -14408,13 +14296,7 @@ To delete links in bulk, we recommend looping through the list of links you want
                 "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "status": "valid",
                   },
                 },
               },
@@ -14462,7 +14344,11 @@ To delete links in bulk, we recommend looping through the list of links you want
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "status": "valid",
+                      },
+                    ],
                   },
                 },
               },
@@ -14612,20 +14498,10 @@ To delete links in bulk, we recommend looping through the list of links you want
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
+                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "status": "valid",
                   },
                 },
               },
@@ -14676,30 +14552,10 @@ To delete links in bulk, we recommend looping through the list of links you want
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "certificate": "1234567890abcd=",
-                  "credentials_storage": "store",
-                  "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                  "fetch_historical": true,
-                  "institution": "erebor_mx_retail",
-                  "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
-                  "username": "username",
-                  "username2": "secondusername",
-                  "username3": "thirdusername",
-                  "username_type": "001",
-                },
+                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "status": "valid",
                   },
                 },
               },
@@ -14876,23 +14732,10 @@ For a list of standards codes, see the table below.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "certificate": "1234567890abcd=",
-                  "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
-                  "username_type": "001",
-                },
+                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "institution": "erebor_mx_retail",
-                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
-                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "status": "valid",
                   },
                 },
               },
@@ -15096,15 +14939,7 @@ client.owners.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
-                    "collected_at": "2019-09-27T13:01:41.941Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "display_name": "John Doe",
-                    "email": "johndoe@belvo.com",
-                    "id": "c749315b-eec2-435d-a458-06912878564f",
-                    "internal_identification": "7e5838e4",
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                    "phone_number": "+52-XXX-XXX-XXXX",
+                    "document_id": {},
                   },
                 },
               },
@@ -15152,7 +14987,11 @@ client.owners.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "document_id": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -15258,20 +15097,6 @@ client.owners.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/owners",
             "request": {
@@ -15308,18 +15133,6 @@ client.owners.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/owners",
@@ -15377,16 +15190,14 @@ client.owners.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "active": true,
-                    "display_name": "Wakanda National Bank",
-                    "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
-                    "id": "bbaceead-7b96-46d8-9354-38dec9707004",
-                    "legal_entity_name": "Wakanda Bank, National Association",
-                    "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
-                    "name": "wakanda_national",
-                    "primary_color": "#fdbc24",
-                    "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
-                    "website": "https://www.wakandanational.com",
+                    "country": "BRA",
+                    "form_fields": [
+                      {
+                        "values": [
+                          {},
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -15419,7 +15230,18 @@ client.owners.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://belvo.com/payments/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "country": "BRA",
+                        "form_fields": [
+                          {
+                            "values": [
+                              {},
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -15556,9 +15378,7 @@ A payment intent captures all payment information (such as the amount to be char
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -15679,6 +15499,19 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.BadRequestError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "payment_method_details": {
+                    "pse": {},
+                  },
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/payments/payment-intents/{id}",
             "path-parameters": {
@@ -15785,9 +15618,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -15920,9 +15751,7 @@ You can use the Payment Transactions resource in order to get useful information
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -16120,9 +15949,7 @@ You can use the Payment Transactions resource in order to get useful information
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -16143,20 +15970,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "auth_header": "Authorization",
-                  "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
-                  "name": "Your webhook name",
-                  "url": "https://mycompany.com/security/webhook",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/payments/webhooks",
@@ -16279,9 +16092,7 @@ You can use the Payment Transactions resource in order to get useful information
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -16410,20 +16221,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "date_from": "2020-08-05",
-                  "date_to": "2020-10-05",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/receivables/transactions",
@@ -16597,9 +16394,7 @@ client. recurring_expenses.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -16685,20 +16480,6 @@ client. recurring_expenses.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/recurring-expenses",
             "request": {
@@ -16735,20 +16516,6 @@ client. recurring_expenses.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/recurring-expenses",
@@ -16925,9 +16692,7 @@ client. risk_insights.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -17000,20 +16765,6 @@ client. risk_insights.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/risk-insights",
             "request": {
@@ -17052,18 +16803,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/risk-insights",
@@ -17172,9 +16911,7 @@ For example:
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -17284,12 +17021,7 @@ client.tax_compliance_status.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "collected_at": "2022-02-09T08:45:50.406032Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
-                    "internal_identification": "20NE1234567",
-                    "pdf": "=PDF-STRING=",
-                    "rfc": "KDFC211118IS0",
+                    "outcome": "POSITIVE",
                   },
                 },
               },
@@ -17337,7 +17069,11 @@ client.tax_compliance_status.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "outcome": "POSITIVE",
+                      },
+                    ],
                   },
                 },
               },
@@ -17440,18 +17176,10 @@ client.tax_compliance_status.list(params: {
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                },
+                "request": undefined,
                 "response": {
                   "body": {
-                    "collected_at": "2022-02-09T08:45:50.406032Z",
-                    "created_at": "2022-02-09T08:45:50.406032Z",
-                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
-                    "internal_identification": "20NE1234567",
-                    "pdf": "=PDF-STRING=",
-                    "rfc": "KDFC211118IS0",
+                    "outcome": "POSITIVE",
                   },
                 },
               },
@@ -17696,21 +17424,6 @@ At the moment, the Tax Declaration resource is available for:
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "attach_pdf": false,
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "year_from": "2018",
-                  "year_to": "2019",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/tax-declarations",
             "request": {
@@ -17859,6 +17572,24 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "receiver_nationality": "NATIONAL",
+                    "retention_breakdown": [
+                      {
+                        "payment_status": "PAID",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/tax-retentions/{id}",
             "path-parameters": {
@@ -17902,7 +17633,16 @@ client.tax_retentions.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "receiver_nationality": "NATIONAL",
+                        "retention_breakdown": [
+                          {
+                            "payment_status": "PAID",
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -17989,19 +17729,6 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "date_from": "2020-01-01",
-                  "date_to": "2020-02-01",
-                  "link": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/tax-retentions",
@@ -18470,9 +18197,7 @@ client.tax_status.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -18568,18 +18293,6 @@ client.tax_status.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/tax-status",
@@ -18771,9 +18484,7 @@ client.transactions.list(params: {
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -19099,20 +18810,6 @@ client.transactions.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/transactions",
             "request": {
@@ -19152,21 +18849,6 @@ If you try to access older information than what we can access, we will return a
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "date_from": "2020-08-05",
-                  "date_to": "2020-10-05",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/transactions",
@@ -19213,17 +18895,9 @@ If you try to access older information than what we can access, we will return a
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "date_from": "2020-08-05",
-                  "date_to": "2020-10-05",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
+                "request": undefined,
                 "response": {
-                  "body": {
-                    "request_id": "b5d0106ac9cc43d5b36199fe831f6bbe",
-                  },
+                  "body": {},
                 },
               },
             ],
