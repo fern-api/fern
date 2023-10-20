@@ -228,7 +228,10 @@ export function convertEndpoint({
     convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
 
     if (endpoint.examples.length > 0) {
-        convertedEndpoint.examples = convertEndpointExamples(endpoint.examples);
+        convertedEndpoint.examples = convertEndpointExamples({
+            endpointExamples: endpoint.examples,
+            globalHeaderNames,
+        });
     }
 
     return {
@@ -238,9 +241,15 @@ export function convertEndpoint({
     };
 }
 
-function convertEndpointExamples(endpointExamples: EndpointExample[]): RawSchemas.ExampleEndpointCallSchema[] {
+function convertEndpointExamples({
+    endpointExamples,
+    globalHeaderNames,
+}: {
+    endpointExamples: EndpointExample[];
+    globalHeaderNames: Set<string>;
+}): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
-        return convertEndpointExample(endpointExample);
+        return convertEndpointExample({ endpointExample, globalHeaderNames });
     });
 }
 

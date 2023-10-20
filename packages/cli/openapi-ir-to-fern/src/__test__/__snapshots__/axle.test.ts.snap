@@ -467,10 +467,7 @@ exports[`open api parser axle simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": {
                   "id": "id",
                 },
@@ -522,10 +519,7 @@ exports[`open api parser axle simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": {
                   "id": "id",
                 },
@@ -556,10 +550,7 @@ exports[`open api parser axle simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": undefined,
@@ -641,10 +632,7 @@ exports[`open api parser axle simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": {
                   "id": "id",
                 },
