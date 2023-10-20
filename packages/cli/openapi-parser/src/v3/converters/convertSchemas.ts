@@ -9,6 +9,7 @@ import { getExtension } from "../extensions/getExtension";
 import { getFernEnum } from "../extensions/getFernEnum";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
+import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./example/getExample";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./schema/convertDiscriminatedOneOf";
@@ -81,7 +82,7 @@ export function convertSchemaObject(
                 primitive: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
-                    example: undefined,
+                    example: getExamplesString(schema),
                 }),
                 wrapAsNullable,
                 description,
@@ -146,19 +147,24 @@ export function convertSchemaObject(
     if (schema === "boolean" || schema.type === "boolean") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.boolean({
-                example: undefined,
+                example: getExampleAsBoolean(schema),
             }),
             wrapAsNullable,
             description,
         });
     }
     if (schema === "number" || schema.type === "number") {
-        return convertNumber({ format: schema.format, description, wrapAsNullable });
+        return convertNumber({
+            format: schema.format,
+            description,
+            wrapAsNullable,
+            example: getExampleAsNumber(schema),
+        });
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.int({
-                example: undefined,
+                example: getExampleAsNumber(schema),
             }),
             wrapAsNullable,
             description,
@@ -168,7 +174,7 @@ export function convertSchemaObject(
         if (schema.format === "date-time") {
             return wrapPrimitive({
                 primitive: PrimitiveSchemaValueWithExample.datetime({
-                    example: undefined,
+                    example: getExamplesString(schema),
                 }),
                 wrapAsNullable,
                 description,
@@ -188,7 +194,7 @@ export function convertSchemaObject(
             primitive: PrimitiveSchemaValueWithExample.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
-                example: undefined,
+                example: getExamplesString(schema),
             }),
             wrapAsNullable,
             description,

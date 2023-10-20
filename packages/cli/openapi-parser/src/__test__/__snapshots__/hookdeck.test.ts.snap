@@ -12740,7 +12740,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "schema": {
-                      "example": undefined,
+                      "example": "iss_YXKv5OdJXCiVwkPhGy",
                       "maxLength": 255,
                       "minLength": undefined,
                       "type": "string",
@@ -12753,7 +12753,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "schema": {
-                        "example": undefined,
+                        "example": "iss_YXKv5OdJXCiVwkPhGy",
                         "maxLength": 255,
                         "minLength": undefined,
                         "type": "string",
@@ -12783,7 +12783,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": "Issue trigger ID",
                     "schema": {
-                      "example": undefined,
+                      "example": "it_BXKv5OdJXCiVwkPhGy",
                       "maxLength": 255,
                       "minLength": undefined,
                       "type": "string",
@@ -12796,7 +12796,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Issue trigger ID",
                       "schema": {
-                        "example": undefined,
+                        "example": "it_BXKv5OdJXCiVwkPhGy",
                         "maxLength": 255,
                         "minLength": undefined,
                         "type": "string",
@@ -12992,7 +12992,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": "Issue ID",
                     "schema": {
-                      "example": undefined,
+                      "example": "iss_AXKv3OdJXCiKlkPhDz",
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -13005,7 +13005,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Issue ID",
                       "schema": {
-                        "example": undefined,
+                        "example": "iss_AXKv3OdJXCiKlkPhDz",
                         "maxLength": undefined,
                         "minLength": undefined,
                         "type": "string",
@@ -13975,7 +13975,26 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "count": {
+                "primitive": {
+                  "int": 5,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetIssueCountRequest",
       "headers": [],
       "internal": undefined,
@@ -13999,7 +14018,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "schema": {
-                      "example": undefined,
+                      "example": "iss_YXKv5OdJXCiVwkPhGy",
                       "maxLength": 255,
                       "minLength": undefined,
                       "type": "string",
@@ -14012,7 +14031,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "schema": {
-                        "example": undefined,
+                        "example": "iss_YXKv5OdJXCiVwkPhGy",
                         "maxLength": 255,
                         "minLength": undefined,
                         "type": "string",
@@ -14042,7 +14061,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": "Issue trigger ID",
                     "schema": {
-                      "example": undefined,
+                      "example": "it_BXKv5OdJXCiVwkPhGy",
                       "maxLength": 255,
                       "minLength": undefined,
                       "type": "string",
@@ -14055,7 +14074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Issue trigger ID",
                       "schema": {
-                        "example": undefined,
+                        "example": "it_BXKv5OdJXCiVwkPhGy",
                         "maxLength": 255,
                         "minLength": undefined,
                         "type": "string",
@@ -14251,7 +14270,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": "Issue ID",
                     "schema": {
-                      "example": undefined,
+                      "example": "iss_AXKv3OdJXCiKlkPhDz",
                       "maxLength": undefined,
                       "minLength": undefined,
                       "type": "string",
@@ -14264,7 +14283,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Issue ID",
                       "schema": {
-                        "example": undefined,
+                        "example": "iss_AXKv3OdJXCiKlkPhDz",
                         "maxLength": undefined,
                         "minLength": undefined,
                         "type": "string",

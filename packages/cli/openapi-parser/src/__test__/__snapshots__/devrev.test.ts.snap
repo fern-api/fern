@@ -33,7 +33,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1272,7 +1272,18 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "map": [],
             "type": "map",
@@ -1348,7 +1359,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1721,7 +1732,18 @@ organization.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "map": [],
             "type": "map",
@@ -1812,7 +1834,7 @@ organization.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2120,7 +2142,22 @@ them.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "environment": {
+                "enum": "production",
+                "type": "enum",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "properties": {
               "rev_org": {
@@ -2245,7 +2282,18 @@ and a logical concept denoted by the tag's name.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "map": [],
             "type": "map",
@@ -2320,7 +2368,7 @@ and a logical concept denoted by the tag's name.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2475,7 +2523,30 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "allowed_values": {
+                "properties": {},
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2671,7 +2742,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -2880,7 +2951,18 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "map": [],
             "type": "map",
@@ -2955,7 +3037,7 @@ used.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -3056,7 +3138,62 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "action": {
+                "enum": "activate",
+                "type": "enum",
+              },
+              "event_types": {
+                "properties": {
+                  "add": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "remove": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "set": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3170,7 +3307,18 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": undefined,
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
           "response": {
             "map": [],
             "type": "map",
@@ -3514,7 +3662,7 @@ organizations.
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",

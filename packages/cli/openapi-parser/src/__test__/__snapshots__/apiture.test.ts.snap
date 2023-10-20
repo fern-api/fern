@@ -81,6 +81,13 @@ Transfers support recurring schedules, such as repeating every week or every mon
                 "array": [],
                 "type": "array",
               },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
             },
             "type": "object",
           },
@@ -472,6 +479,13 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "items": {
                 "array": [],
                 "type": "array",
+              },
+              "nextPage_url": {
+                "primitive": {
+                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -1030,7 +1044,27 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "effectiveOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "scheduledOn": {
+                        "primitive": {
+                          "string": "2022-07-04",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -1065,7 +1099,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "schema": {
             "description": undefined,
             "schema": {
-              "example": undefined,
+              "example": "2022-07-04",
               "maxLength": undefined,
               "minLength": undefined,
               "type": "string",
@@ -1082,7 +1116,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
+                "example": "2022-07-04",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1273,7 +1307,43 @@ This information provides hints to clients, allowing bank customers to select tr
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "restrictedDates": {
+                "array": [
+                  {
+                    "properties": {
+                      "creditOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "debitOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "occursOn": {
+                        "primitive": {
+                          "string": "2019-04-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reason": {
+                        "enum": "pastDate",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -1308,7 +1378,7 @@ This information provides hints to clients, allowing bank customers to select tr
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
+                "example": "2022-07-04",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1326,7 +1396,7 @@ This information provides hints to clients, allowing bank customers to select tr
             "value": {
               "description": undefined,
               "schema": {
-                "example": undefined,
+                "example": "2022-07-04",
                 "maxLength": undefined,
                 "minLength": undefined,
                 "type": "string",
@@ -1948,8 +2018,22 @@ Note: This operation requires an identity challenge if the financial institution
           "queryParameters": [],
           "request": {
             "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "frequency": {
                     "enum": "once",
                     "type": "enum",
@@ -2119,8 +2203,22 @@ Note: This operation requires an identity challenge if the financial institution
           "queryParameters": [],
           "request": {
             "properties": {
+              "amount": {
+                "primitive": {
+                  "string": "3456.78",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "frequency": {
                     "enum": "once",
                     "type": "enum",
