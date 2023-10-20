@@ -1,5 +1,5 @@
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV2 } from "openapi-types";
 import { convertObj } from "swagger2openapi";
 import { generateIr as generateIrFromV3 } from "../v3/generateIr";

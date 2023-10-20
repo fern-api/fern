@@ -1,16 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Logger } from "@fern-api/logger";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import { FullExample, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { isSchemaRequired } from "../../utils/isSchemaRequrired";
 
 export class ExampleTypeFactory {
-    private logger: Logger;
     private schemas: Record<SchemaId, SchemaWithExample>;
 
-    constructor(context: AbstractOpenAPIV3ParserContext, schemas: Record<SchemaId, SchemaWithExample>) {
-        this.logger = context.logger;
+    constructor(schemas: Record<SchemaId, SchemaWithExample>) {
         this.schemas = schemas;
     }
 
@@ -77,18 +74,45 @@ export class ExampleTypeFactory {
                 return isOptional ? undefined : FullExample.map([]);
             }
             case "object": {
-                const propertyExamples: Record<PropertyKey, FullExample> = {};
+                let properties: Record<PropertyKey, FullExample> = {};
+                for (const referencedAllOf of schema.allOf) {
+                    const allOfSchemaWithExample = this.schemas[referencedAllOf.schema];
+                    if (allOfSchemaWithExample == null) {
+                        return undefined;
+                    }
+                    const allOfExample = this.buildExampleFromSchema({
+                        schema: allOfSchemaWithExample,
+                        isOptional: false,
+                    });
+                    if (allOfExample?.type === "object") {
+                        properties = {
+                            ...properties,
+                            ...allOfExample.properties,
+                        };
+                    }
+                }
+                for (const objPropertyWithExample of schema.properties) {
+                    const propertyExample = this.buildExampleFromSchema({
+                        schema: objPropertyWithExample.schema,
+                        isOptional: false,
+                    });
+                    if (isSchemaRequired(objPropertyWithExample.schema) && propertyExample == null) {
+                        return undefined;
+                    } else if (propertyExample != null) {
+                        properties[objPropertyWithExample.key] = propertyExample;
+                    }
+                }
                 schema.properties.forEach((objPropertyWithExample) => {
                     const propertyExample = this.buildExampleFromSchema({
                         schema: objPropertyWithExample.schema,
                         isOptional: false,
                     });
                     if (propertyExample != null) {
-                        propertyExamples[objPropertyWithExample.key] = propertyExample;
+                        properties[objPropertyWithExample.key] = propertyExample;
                     }
                 });
                 return FullExample.object({
-                    properties: propertyExamples,
+                    properties,
                 });
             }
             default:

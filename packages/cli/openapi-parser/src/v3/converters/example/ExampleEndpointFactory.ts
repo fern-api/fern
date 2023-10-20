@@ -1,35 +1,29 @@
-import { Logger } from "@fern-api/logger";
-import { Endpoint, EndpointExample, Request, Response } from "@fern-fern/openapi-ir-model/ir";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { Endpoint, EndpointExample, Request, Response } from "@fern-fern/openapi-ir-model/finalIr";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
 export class ExampleEndpointFactory {
-    private logger: Logger;
     private exampleTypeFactory: ExampleTypeFactory;
 
-    constructor(context: AbstractOpenAPIV3ParserContext) {
-        this.logger = context.logger;
-        this.exampleTypeFactory = new ExampleTypeFactory(context);
+    constructor(schemas: Record<string, SchemaWithExample>) {
+        this.exampleTypeFactory = new ExampleTypeFactory(schemas);
     }
 
     public buildEndpointExample(endpoint: Omit<Endpoint, "examples">): EndpointExample | undefined {
-        this.logger.info(`Constructing example for endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}`);
-
         const requestSchemaIdResponse = getSchemaIdFromRequest(endpoint.request);
         const responseSchemaIdResponse = getSchemaIdFromResponse(endpoint.response);
 
         if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
-            this.logger.info("The request or response is unsupported!");
             return undefined;
         }
 
         const requestExample =
             requestSchemaIdResponse != null
-                ? this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schemaInstanceId)
+                ? this.exampleTypeFactory.buildExampleFromSchemaId(requestSchemaIdResponse.schemaId)
                 : undefined;
         const responseExample =
             responseSchemaIdResponse != null
-                ? this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schemaInstanceId)
+                ? this.exampleTypeFactory.buildExampleFromSchemaId(responseSchemaIdResponse.schemaId)
                 : undefined;
         return {
             pathParameters: [],
@@ -41,7 +35,7 @@ export class ExampleEndpointFactory {
     }
 }
 
-type SchemaIdResponse = { type: "present"; schemaInstanceId: string } | { type: "unsupported" };
+type SchemaIdResponse = { type: "present"; schemaId: string } | { type: "unsupported" };
 
 function getSchemaIdFromRequest(request: Request | null | undefined): SchemaIdResponse | undefined {
     if (request == null) {
@@ -50,8 +44,7 @@ function getSchemaIdFromRequest(request: Request | null | undefined): SchemaIdRe
     if (request.type !== "json") {
         return { type: "unsupported" };
     }
-    const schemaInstanceId = request.schema.type === "reference" ? request.schema.schema : request.schemaInstanceId;
-    return { type: "present", schemaInstanceId };
+    return request.schema.type === "reference" ? { type: "present", schemaId: request.schema.schema } : undefined;
 }
 
 function getSchemaIdFromResponse(response: Response | null | undefined): SchemaIdResponse | undefined {
@@ -61,7 +54,5 @@ function getSchemaIdFromResponse(response: Response | null | undefined): SchemaI
     if (response.type !== "json") {
         return { type: "unsupported" };
     }
-    return response.schema.type === "reference"
-        ? { type: "present", schemaInstanceId: response.schema.schema }
-        : undefined;
+    return response.schema.type === "reference" ? { type: "present", schemaId: response.schema.schema } : undefined;
 }

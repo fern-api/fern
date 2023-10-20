@@ -1,11 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
-import {
-    Endpoint,
-    OpenAPIIntermediateRepresentation,
-    Schema,
-    SecurityScheme,
-    Webhook,
-} from "@fern-fern/openapi-ir-model/ir/_types";
+import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
+import { Endpoint, OpenAPIIntermediateRepresentation, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -78,7 +73,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         variables,
     };
 
-    const exampleEndpointFactory = new ExampleEndpointFactory(context);
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemas);
     ir.endpoints.forEach((endpoint) => {
         const endpointExample = exampleEndpointFactory.buildEndpointExample(endpoint);
         if (endpointExample != null) {

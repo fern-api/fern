@@ -1,7 +1,8 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIIntermediateRepresentation, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
+import { OpenAPIIntermediateRepresentation, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { AsyncAPI } from "./asyncapi";
