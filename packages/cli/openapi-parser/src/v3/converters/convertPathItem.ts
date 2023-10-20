@@ -1,4 +1,4 @@
-import { Endpoint, EndpointSdkName, HttpMethod, Schema, Webhook } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, EndpointSdkName, HttpMethod, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";

@@ -1,82 +1,123 @@
 import { assertNever } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
-import {
-    FullExample,
-    PartialExample,
-    PartialObjectExample,
-    ReferencedExample,
-    SchemaInstanceId,
-} from "@fern-fern/openapi-ir-model/example";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
+import { FullExample, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
+import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { ExampleCollector } from "../../ExampleCollector";
 
 export class ExampleTypeFactory {
     private logger: Logger;
-    private exampleCollector: ExampleCollector;
+    private schemas: Record<SchemaId, SchemaWithExample>;
 
-    constructor(context: AbstractOpenAPIV3ParserContext) {
+    constructor(context: AbstractOpenAPIV3ParserContext, schemas: Record<SchemaId, SchemaWithExample>) {
         this.logger = context.logger;
-        this.exampleCollector = context.exampleCollector;
+        this.schemas = schemas;
     }
 
-    public buildExample(schemaInstanceId: SchemaInstanceId): FullExample | undefined {
-        const example = this.exampleCollector.get(schemaInstanceId);
-        if (example == null) {
-            return undefined;
+    public buildExampleFromSchemaId(schemaId: SchemaId): FullExample | undefined {
+        const schema = this.schemas[schemaId];
+        if (schema != null) {
+            return this.buildExampleFromSchema({ schema, isOptional: false });
         }
-        switch (example.type) {
-            case "full":
-                return example.full;
-            case "partial":
-                return this.buildFromPartialExample(example.partial);
-            case "reference":
-                return this.buildFromReference(example);
-            default:
-                assertNever(example);
-        }
+        return undefined;
     }
 
-    private buildFromPartialExample(partialExample: PartialExample): FullExample | undefined {
-        switch (partialExample.type) {
-            case "object":
-                return this.buildFromPartialObjectExample(partialExample);
-            case "oneOf":
-                this.logger.error("Skipping nested oneOf example");
-                return undefined;
-            default:
-                assertNever(partialExample);
-        }
+    public buildExample(schema: SchemaWithExample): FullExample | undefined {
+        return this.buildExampleFromSchema({ schema, isOptional: false });
     }
 
-    private buildFromPartialObjectExample(partialObjectExample: PartialObjectExample): FullExample | undefined {
-        const fullExample: Record<PropertyKey, FullExample> = {};
-        for (const [propertyKey, propertyExample] of Object.entries(partialObjectExample.includedProperties)) {
-            switch (propertyExample.type) {
-                case "full":
-                    fullExample[propertyKey] = propertyExample.full;
-                    break;
-                case "partial": {
-                    const partialExample = this.buildFromPartialExample(propertyExample.partial);
-                    if (partialExample != null) {
-                        fullExample[propertyKey] = partialExample;
-                    }
-                    break;
-                }
-                case "reference": {
-                    const referencedExample = this.buildFromReference(propertyExample);
-                    if (referencedExample != null) {
-                        fullExample[propertyKey] = referencedExample;
-                    }
-                    break;
-                }
-                default:
-                    assertNever(propertyExample);
+    public buildExampleFromSchema({
+        schema,
+        isOptional,
+    }: {
+        schema: SchemaWithExample;
+        isOptional: boolean;
+    }): FullExample | undefined {
+        switch (schema.type) {
+            case "enum":
+                return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
+            case "literal":
+                return FullExample.literal(schema.value);
+            case "nullable":
+                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+            case "optional":
+                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+            case "primitive": {
+                const primitiveExample = this.buildExampleFromPrimitive(schema.schema);
+                return primitiveExample != null ? FullExample.primitive(primitiveExample) : undefined;
             }
+            case "reference": {
+                const referencedSchemaWithExample = this.schemas[schema.schema];
+                return referencedSchemaWithExample != null
+                    ? this.buildExampleFromSchema({ schema: referencedSchemaWithExample, isOptional })
+                    : undefined;
+            }
+            case "oneOf":
+                return undefined;
+            case "unknown":
+                return undefined;
+            case "array": {
+                const itemExample = this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+                if (isOptional) {
+                    return itemExample != null ? FullExample.array([itemExample]) : undefined;
+                }
+                return itemExample != null ? FullExample.array([itemExample]) : FullExample.array([]);
+            }
+            case "map": {
+                const keyExample = this.buildExampleFromPrimitive(schema.key.schema);
+                const valueExample = this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+                if (keyExample != null && valueExample != null) {
+                    return FullExample.map([
+                        {
+                            key: keyExample,
+                            value: valueExample,
+                        },
+                    ]);
+                }
+                return isOptional ? undefined : FullExample.map([]);
+            }
+            case "object": {
+                const propertyExamples: Record<PropertyKey, FullExample> = {};
+                schema.properties.forEach((objPropertyWithExample) => {
+                    const propertyExample = this.buildExampleFromSchema({
+                        schema: objPropertyWithExample.schema,
+                        isOptional: false,
+                    });
+                    if (propertyExample != null) {
+                        propertyExamples[objPropertyWithExample.key] = propertyExample;
+                    }
+                });
+                return FullExample.object({
+                    properties: propertyExamples,
+                });
+            }
+            default:
+                assertNever(schema);
         }
-        return FullExample.object({ properties: fullExample });
     }
 
-    private buildFromReference(referenceExample: ReferencedExample): FullExample | undefined {
-        return this.buildExample(referenceExample.reference);
+    private buildExampleFromPrimitive(primitiveSchema: PrimitiveSchemaValueWithExample): PrimitiveExample | undefined {
+        switch (primitiveSchema.type) {
+            case "string":
+                return primitiveSchema.example != null ? PrimitiveExample.string(primitiveSchema.example) : undefined;
+            case "base64":
+                return primitiveSchema.example != null ? PrimitiveExample.base64(primitiveSchema.example) : undefined;
+            case "boolean":
+                return primitiveSchema.example != null ? PrimitiveExample.boolean(primitiveSchema.example) : undefined;
+            case "date":
+                return primitiveSchema.example != null ? PrimitiveExample.date(primitiveSchema.example) : undefined;
+            case "datetime":
+                return primitiveSchema.example != null ? PrimitiveExample.datetime(primitiveSchema.example) : undefined;
+            case "double":
+                return primitiveSchema.example != null ? PrimitiveExample.double(primitiveSchema.example) : undefined;
+            case "float":
+                return primitiveSchema.example != null ? PrimitiveExample.float(primitiveSchema.example) : undefined;
+            case "int":
+                return primitiveSchema.example != null ? PrimitiveExample.int(primitiveSchema.example) : undefined;
+            case "int64":
+                return primitiveSchema.example != null ? PrimitiveExample.int64(primitiveSchema.example) : undefined;
+            default:
+                assertNever(primitiveSchema);
+        }
     }
 }

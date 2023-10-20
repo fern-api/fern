@@ -1,4 +1,4 @@
-import { EndpointAvailability } from "@fern-fern/openapi-ir-model/ir";
+import { EndpointAvailability } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { FernOpenAPIExtension } from "./fernExtensions";
 import { getExtension } from "./getExtension";

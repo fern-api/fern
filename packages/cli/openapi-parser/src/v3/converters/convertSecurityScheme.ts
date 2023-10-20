@@ -1,4 +1,4 @@
-import { SecurityScheme } from "@fern-fern/openapi-ir-model/ir";
+import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
