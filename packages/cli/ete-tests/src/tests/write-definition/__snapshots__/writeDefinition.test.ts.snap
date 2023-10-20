@@ -75,6 +75,8 @@ service:
       auth: false
       display-name: Create a pet
       errors: []
+      examples:
+        - {}
 
     showPetById:
       path: /pets/{petId}

@@ -13,31 +13,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "type",
-              "value": {
-                "enum": "delivery",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssueTriggersRequest",
       "headers": [],
       "internal": undefined,
@@ -1059,23 +1035,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAttemptsRequest",
       "headers": [],
       "internal": undefined,
@@ -1352,23 +1312,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetBookmarksRequest",
       "headers": [],
       "internal": undefined,
@@ -2258,29 +2202,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "array": [],
-            "type": "array",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TriggerBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2377,23 +2299,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetDestinationsRequest",
       "headers": [],
       "internal": undefined,
@@ -3775,31 +3681,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "include",
-              "value": {
-                "literal": "data",
-                "type": "literal",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -5470,36 +5352,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {
-                  "include": {
-                    "literal": "data",
-                    "type": "literal",
-                  },
-                },
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEventBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -9043,26 +8896,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateEventBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -10487,31 +10321,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIgnoredEventBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -11472,26 +11282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateIgnoredEventBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -11754,31 +11545,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "provider",
-              "value": {
-                "enum": "twitter",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIntegrationsRequest",
       "headers": [],
       "internal": undefined,
@@ -12443,31 +12210,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "aggregation_keys",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssuesRequest",
       "headers": [],
       "internal": undefined,
@@ -13681,34 +13424,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "aggregation_keys",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "int": 5,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssueCountRequest",
       "headers": [],
       "internal": undefined,
@@ -15132,38 +14848,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "status",
-              "value": {
-                "enum": "accepted",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "include",
-              "value": {
-                "literal": "data",
-                "type": "literal",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestsRequest",
       "headers": [],
       "internal": undefined,
@@ -16537,42 +16222,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "include",
-              "value": {
-                "literal": "data",
-                "type": "literal",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -18051,34 +17701,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestIgnoredEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -18318,40 +17941,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {
-                  "include": {
-                    "literal": "data",
-                    "type": "literal",
-                  },
-                  "status": {
-                    "enum": "accepted",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -22442,23 +22032,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRulesetsRequest",
       "headers": [],
       "internal": undefined,
@@ -23679,23 +23253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetSourcesRequest",
       "headers": [],
       "internal": undefined,
@@ -24776,23 +24334,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransformationsRequest",
       "headers": [],
       "internal": undefined,
@@ -25541,23 +25083,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "log_level": {
-                "enum": "debug",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TestTransformationRequest",
       "headers": [],
       "internal": undefined,
@@ -25853,34 +25379,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransformationExecutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -26450,23 +25949,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "pagination": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConnectionsRequest",
       "headers": [],
       "internal": undefined,

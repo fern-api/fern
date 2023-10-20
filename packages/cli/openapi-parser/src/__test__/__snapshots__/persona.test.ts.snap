@@ -33091,7 +33091,26 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Prints an inquiry as PDF.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "primitive": {
+                  "string": "inquiry-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PrintAnInquiryPdfRequest",
       "headers": [],
       "internal": undefined,
@@ -33129,7 +33148,26 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Prints a verification in PDF format.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "verification-id",
+              "value": {
+                "primitive": {
+                  "string": "verification-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PrintAVerificationAsPdfRequest",
       "headers": [],
       "internal": undefined,
@@ -33167,7 +33205,26 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Prints a report in PDF format.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "report-id",
+              "value": {
+                "primitive": {
+                  "string": "report-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PrintReportPdfRequest",
       "headers": [],
       "internal": undefined,
@@ -53437,7 +53494,26 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "availability": undefined,
       "description": "Retrieve a Graph Query",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "graph-query-id",
+              "value": {
+                "primitive": {
+                  "string": "graph-query-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveAGraphQueryRequest",
       "headers": [],
       "internal": undefined,

@@ -132,9 +132,20 @@ export class ExampleTypeFactory {
                         properties[objPropertyWithExample.key] = propertyExample;
                     }
                 });
-                return FullExample.object({
-                    properties,
-                });
+                if (isOptional) {
+                    return Object.keys(properties).length > 0
+                        ? FullExample.object({
+                              properties,
+                          })
+                        : undefined;
+                }
+                return Object.keys(properties).length > 0
+                    ? FullExample.object({
+                          properties,
+                      })
+                    : FullExample.object({
+                          properties: {},
+                      });
             }
             default:
                 assertNever(schema);

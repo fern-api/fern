@@ -8800,124 +8800,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "air_booking": {
-                    "incoterm": "EXW",
-                    "origin_port_iata_code": "HKG",
-                    "origin_port_icao_code": "VHHH",
-                    "origin_port_loc_code": "HKHKG",
-                    "product_descriptions": [
-                      {
-                        "description": "Wristwatches",
-                        "description_for_export_customs": "手表",
-                        "description_for_export_customs_locale": "zh_CN",
-                        "hs_code": "9101.01",
-                      },
-                    ],
-                    "wants_delivery_service": true,
-                    "wants_pickup_service": true,
-                  },
-                  "cargo": {
-                    "contains_hazmat": false,
-                    "contains_li_ion": false,
-                    "contains_magnets": false,
-                    "contains_non_li_ion_battery": false,
-                    "contains_other_dangerous_goods": false,
-                    "lithium_batteries_packing_types": [
-                      "packed_loose",
-                    ],
-                    "marks_and_numbers": "Fragile",
-                    "shipping_units": [
-                      {
-                        "atomic_count": 9,
-                        "count": 9,
-                        "height": {
-                          "unit": "cm",
-                          "value": 100,
-                        },
-                        "length": {
-                          "unit": "cm",
-                          "value": 100,
-                        },
-                        "name": "Cellular phones",
-                        "unit_type": "pallet",
-                        "volume": {
-                          "unit": "cbm",
-                          "value": 472.62,
-                        },
-                        "weight": {
-                          "unit": "kg",
-                          "value": 2300.4,
-                        },
-                        "width": {
-                          "unit": "cm",
-                          "value": 100,
-                        },
-                      },
-                    ],
-                    "volume": {
-                      "unit": "cbm",
-                      "value": 472.62,
-                    },
-                    "weight": {
-                      "unit": "kg",
-                      "value": 2300.4,
-                    },
-                  },
-                  "cargo_ready_date": "2019-06-30",
-                  "consignee_entity_ref": "consignee_company_name_llc",
-                  "declared_as_strategy": "yes",
-                  "delivery_date": "2019-07-23",
-                  "destination_address_ref": "id-123456",
-                  "eccn_codes": "3A001, 5A002",
-                  "flow_direct": true,
-                  "name": "PO 123",
-                  "notify_party": "John Doe, doe@example.com",
-                  "ocean_booking": {
-                    "container_counts": {
-                      "forty_five_ft_hc": 4,
-                      "forty_ft": 2,
-                      "forty_ft_hc": 3,
-                      "twenty_ft": 1,
-                    },
-                    "destination_port_loc_code": "USLAX",
-                    "destination_port_us_cbp_port_code": "2704",
-                    "incoterm": "EXW",
-                    "is_lcl": false,
-                    "origin_port_loc_code": "CNYTN",
-                    "origin_port_us_cbp_port_code": "57078",
-                    "product_descriptions": [
-                      {
-                        "description": "Wristwatches",
-                        "description_for_export_customs": "手表",
-                        "description_for_export_customs_locale": "zh_CN",
-                        "hs_code": "9101.01",
-                      },
-                    ],
-                    "wants_delivery_service": true,
-                    "wants_pickup_service": true,
-                  },
-                  "origin_address_ref": "id-123456",
-                  "shipper_entity_ref": "shipper_company_name_ltd",
-                  "special_instructions": "Please book 40ft reefer container.",
-                  "trucking_booking": {
-                    "description_of_products": "watches",
-                    "is_ltl": true,
-                    "payment_terms": "collect",
-                  },
-                  "wants_bco": false,
-                  "wants_export_customs_service": false,
-                  "wants_flexport_freight": false,
-                  "wants_import_customs_service": false,
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/bookings",
             "request": {
@@ -9059,90 +8941,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "amendment_note": "This is an amendment note with useful context to changes made to the booking",
-                  "booking_id": 12345,
-                  "new_cargo": {
-                    "contains_hazmat": false,
-                    "contains_li_ion": false,
-                    "contains_magnets": false,
-                    "contains_non_li_ion_battery": false,
-                    "contains_other_dangerous_goods": false,
-                    "lithium_batteries_packing_types": [
-                      "packed_loose",
-                    ],
-                    "marks_and_numbers": "Fragile",
-                    "shipping_units": [
-                      {
-                        "atomic_count": 9,
-                        "count": 9,
-                        "height": {
-                          "unit": "cm",
-                          "value": 100,
-                        },
-                        "length": {
-                          "unit": "cm",
-                          "value": 100,
-                        },
-                        "name": "Cellular phones",
-                        "unit_type": "pallet",
-                        "volume": {
-                          "unit": "cbm",
-                          "value": 472.62,
-                        },
-                        "weight": {
-                          "unit": "kg",
-                          "value": 2300.4,
-                        },
-                        "width": {
-                          "unit": "cm",
-                          "value": 100,
-                        },
-                      },
-                    ],
-                    "volume": {
-                      "unit": "cbm",
-                      "value": 472.62,
-                    },
-                    "weight": {
-                      "unit": "kg",
-                      "value": 2300.4,
-                    },
-                  },
-                  "new_cargo_ready_date": "2019-06-30",
-                  "new_container_counts": {
-                    "forty_five_ft_hc": 4,
-                    "forty_ft": 2,
-                    "forty_ft_hc": 3,
-                    "twenty_ft": 1,
-                  },
-                  "new_destination_address_ref": "id-123456",
-                  "new_destination_port_loc_code": "CNYTN",
-                  "new_destination_port_us_cbp_port_code": "57078",
-                  "new_name": "Valentine's Day - 2020",
-                  "new_origin_address_ref": "id-123456",
-                  "new_origin_port_loc_code": "CNYTN",
-                  "new_origin_port_us_cbp_port_code": "57078",
-                  "new_product_descriptions": [
-                    {
-                      "description": "Wristwatches",
-                      "description_for_export_customs": "手表",
-                      "hs_code": "9101.01",
-                    },
-                  ],
-                  "new_wants_bco": true,
-                  "new_wants_flexport_freight": true,
-                  "new_wants_import_customs_service": true,
-                  "new_wants_pickup_service": true,
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/booking_amendments",
             "request": {
@@ -9251,19 +9049,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Creates and returns a booking line item",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "booking_id": 4321,
-                  "purchase_order_line_item_id": 1234,
-                  "units": 234,
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/booking_line_items",
@@ -9382,54 +9167,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "destination_address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "destination_coordinates": {
-                    "latitude": "76.003",
-                    "longitude": "-122.092",
-                  },
-                  "distance": {
-                    "unit": "km",
-                    "value": 100,
-                  },
-                  "flight_type": "freighter",
-                  "origin_address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "origin_coordinates": {
-                    "latitude": "76.003",
-                    "longitude": "-122.092",
-                  },
-                  "teus": "2",
-                  "transportation_mode": "air",
-                  "trucking_service_type": "ftl",
-                  "weight": {
-                    "unit": "kg",
-                    "value": 2300.4,
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/carbon_calculation",
             "request": {
@@ -9525,26 +9262,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "currency_code": "USD",
-                  "invoice_number": "INVOICE-04-05-2020",
-                  "is_related_parties": false,
-                  "line_items": [],
-                  "proration_amount": {
-                    "amount": "12.34",
-                    "currency_code": "USD",
-                  },
-                  "shipment_id": 79683,
-                  "shipment_ref": "PO-123",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/commercial_invoices",
@@ -9676,24 +9393,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "currency_code": "USD",
-                  "invoice_number": "INVOICE-04-05-2020",
-                  "is_related_parties": false,
-                  "proration_amount": {
-                    "_object": "/money",
-                    "amount": "12.34",
-                    "currency_code": "USD",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/commercial_invoices",
             "request": {
@@ -9757,18 +9456,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "name": "Zoomit",
-                  "ref": "zoomit-ref",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/network/companies",
@@ -9872,20 +9559,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "name": "Updated Zoomit",
-                  "ref": "zoomit_ref",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/network/companies/{id}",
             "path-parameters": {
@@ -9980,35 +9653,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
-                  "company_ref": "Zoomit",
-                  "mailing_address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "name": "Zoomit",
-                  "ref": "my-zoomit-ref",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/network/company_entities",
             "request": {
@@ -10076,35 +9720,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "mailing_address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "name": "Zoomit V2",
-                  "ref": "zoomit-us",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/network/company_entities/{id}",
             "path-parameters": {
@@ -10162,20 +9777,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
-                  "email": "john@example.com",
-                  "name": "John Smith",
-                  "phone_number": "861-555-5555",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/network/contacts",
@@ -10279,21 +9880,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "email": "john_new_email@example.com",
-                  "name": "John Smith",
-                  "phone_number": "861-555-7777",
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/network/contacts/{id}",
@@ -10569,22 +10155,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Create a new document for this client using the request payload",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "document": "SGVsbG8sIFdvcmxkIQ==",
-                  "document_type": "packing_list",
-                  "file_name": "Flexport-Booking.pdf",
-                  "mime_type": "application/pdf",
-                  "shipment_id": 1234567,
-                  "user_email": "johndoe@flexport.com",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/documents",
@@ -10986,28 +10556,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "company_id": "xyz_123_ABC",
-                  "name": "Zoomit",
-                  "ref": "zoomit-management-co",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/network/locations",
             "request": {
@@ -11074,29 +10622,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
-                  "name": "Zoomit V2",
-                  "ref": "zoomit-management-co",
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/network/locations/{id}",
@@ -11212,41 +10737,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "classifications": [
-                    {
-                      "codes": [],
-                      "region": "US",
-                    },
-                  ],
-                  "client_verified": true,
-                  "country_of_origin": "China",
-                  "description": "The best 12V AC Adapter on the market",
-                  "name": "AC Adapter 12V",
-                  "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
-                  "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 12345,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/products",
             "request": {
@@ -11359,43 +10849,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Update this product to represent the request payload",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "classifications": [
-                    {
-                      "codes": [],
-                      "region": "US",
-                    },
-                  ],
-                  "client_verified": true,
-                  "country_of_origin": "China",
-                  "description": "The best 12V AC Adapter on the market",
-                  "name": "AC Adapter 12V",
-                  "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
-                  "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 12345,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/products/{id}",
@@ -12454,17 +11907,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": 1,
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/shipments/{id}",

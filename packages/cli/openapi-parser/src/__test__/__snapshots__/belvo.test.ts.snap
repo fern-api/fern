@@ -2111,7 +2111,26 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -3701,54 +3720,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -3853,68 +3825,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -4575,7 +4486,26 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -6876,75 +6806,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "account": {
-                "primitive": {
-                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_from": {
-                "primitive": {
-                  "string": "2020-08-05",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2020-10-05",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -7222,68 +7084,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -8113,7 +7914,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -9448,75 +9268,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "account": {
-                "primitive": {
-                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_from": {
-                "primitive": {
-                  "string": "2021-01-18",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2021-02-15",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -9607,68 +9359,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -10341,7 +10032,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyBalanceRequest",
       "headers": [],
       "internal": undefined,
@@ -10383,397 +10093,7 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "primitive": {
-                  "int": 1,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "primitive": {
-                  "int": 100,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "country_code",
-              "value": {
-                "primitive": {
-                  "string": "MX",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "country_code__in",
-              "value": {
-                "primitive": {
-                  "string": "CO,BR",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "display_name",
-              "value": {
-                "primitive": {
-                  "string": "Erebor Bank",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "name__in",
-              "value": {
-                "primitive": {
-                  "string": "erebor_br_retail,gotham_co_business",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "resources__allin",
-              "value": {
-                "primitive": {
-                  "string": "ACCOUNTS,OWNERS,TRANSACTIONS",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "status",
-              "value": {
-                "primitive": {
-                  "string": "healthy",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "status__in",
-              "value": {
-                "primitive": {
-                  "string": "healthy,down",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "primitive": {
-                  "string": "fiscal",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "type__in",
-              "value": {
-                "primitive": {
-                  "string": "fiscal,bank",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "website",
-              "value": {
-                "primitive": {
-                  "string": "https://www.erebor.mx",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "int": 130,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-              "next": {
-                "primitive": {
-                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "country_codes": {
-                        "array": [
-                          {
-                            "primitive": {
-                              "string": "MX",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "display_name": {
-                        "primitive": {
-                          "string": "Erebor Mexico",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "features": {
-                        "array": [
-                          {
-                            "properties": {
-                              "description": {
-                                "primitive": {
-                                  "string": "The institution may require a token during link creation or login",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "token_required",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "form_fields": {
-                        "array": [
-                          {
-                            "properties": {
-                              "label": {
-                                "primitive": {
-                                  "string": "Client number",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "username",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "placeholder": {
-                                "primitive": {
-                                  "string": "ABC333333A33",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "type": {
-                                "primitive": {
-                                  "string": "text",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "validation": {
-                                "primitive": {
-                                  "string": "^.{1,}$",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "validation_message": {
-                                "primitive": {
-                                  "string": "Invalid client number",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "values": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "code": {
-                                        "primitive": {
-                                          "string": "001",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "label": {
-                                        "primitive": {
-                                          "string": "Cédula de Ciudadanía",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "placeholder": {
-                                        "primitive": {
-                                          "string": "DEF4444908M22",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "validation": {
-                                        "primitive": {
-                                          "string": "^.{1,}$",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "validation_message": {
-                                        "primitive": {
-                                          "string": "Invalid document number",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "icon_logo": {
-                        "primitive": {
-                          "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "int": 1003,
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                      "integration_type": {
-                        "enum": "credentials",
-                        "type": "enum",
-                      },
-                      "logo": {
-                        "primitive": {
-                          "string": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "erebor_mx_retail",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "primary_color": {
-                        "primitive": {
-                          "string": "#056dae",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "resources": {
-                        "array": [
-                          {
-                            "primitive": {
-                              "string": "ACCOUNTS",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "status": {
-                        "enum": "healthy",
-                        "type": "enum",
-                      },
-                      "text_logo": {
-                        "primitive": {
-                          "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "enum": "bank",
-                        "type": "enum",
-                      },
-                      "website": {
-                        "primitive": {
-                          "string": "https://www.erebor.com/",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListInstitutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -11975,54 +11295,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -12113,68 +11386,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -12476,7 +11688,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyOwnerRequest",
       "headers": [],
       "internal": undefined,
@@ -13427,75 +12658,7 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "date_from": {
-                "primitive": {
-                  "string": "2020-01-01",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2020-02-01",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "type": {
-                "primitive": {
-                  "string": "INFLOW",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveInvoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -13604,68 +12767,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchInvoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -13877,7 +12979,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyInvoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -14609,7 +13730,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxReturnRequest",
       "headers": [],
       "internal": undefined,
@@ -15072,54 +14212,7 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -15327,7 +14420,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -16205,7 +15317,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -16980,68 +16111,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchIncomesRequest",
       "headers": [],
       "internal": undefined,
@@ -17221,7 +16291,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyIncomesRequest",
       "headers": [],
       "internal": undefined,
@@ -18127,68 +17216,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "date_from": {
-                "primitive": {
-                  "string": "2022-08-01",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2022-12-30",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveRecurringExpensesRequest",
       "headers": [],
       "internal": undefined,
@@ -18279,68 +17307,7 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchRecurringExpensesRequest",
       "headers": [],
       "internal": undefined,
@@ -18520,7 +17487,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyRecurringExpenseRequest",
       "headers": [],
       "internal": undefined,
@@ -18562,334 +17548,7 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "page",
-              "value": {
-                "primitive": {
-                  "int": 1,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "page_size",
-              "value": {
-                "primitive": {
-                  "int": 100,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "link",
-              "value": {
-                "primitive": {
-                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "int": 130,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-              "next": {
-                "primitive": {
-                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "balance_gross": {
-                        "primitive": {
-                          "float": 76000,
-                          "type": "float",
-                        },
-                        "type": "primitive",
-                      },
-                      "balance_net": {
-                        "primitive": {
-                          "float": 77370.69,
-                          "type": "float",
-                        },
-                        "type": "primitive",
-                      },
-                      "balance_type": {
-                        "primitive": {
-                          "string": "ASSET",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "currency": {
-                        "primitive": {
-                          "string": "BRL",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "instruments": {
-                        "array": [
-                          {
-                            "properties": {
-                              "average_acquisition_price": {
-                                "primitive": {
-                                  "float": 10.01,
-                                  "type": "float",
-                                },
-                                "type": "primitive",
-                              },
-                              "balance_gross": {
-                                "primitive": {
-                                  "float": 100.09,
-                                  "type": "float",
-                                },
-                                "type": "primitive",
-                              },
-                              "balance_net": {
-                                "primitive": {
-                                  "float": 99.09,
-                                  "type": "float",
-                                },
-                                "type": "primitive",
-                              },
-                              "currency": {
-                                "primitive": {
-                                  "string": "USD",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "fees": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "type": {
-                                        "primitive": {
-                                          "string": "OPERATION_FEE",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "value": {
-                                        "primitive": {
-                                          "float": 123.09,
-                                          "type": "float",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "interest_rates": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "index": {
-                                        "primitive": {
-                                          "string": "CDI",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "type": {
-                                        "primitive": {
-                                          "string": "yearly",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "value": {
-                                        "primitive": {
-                                          "float": 11.31,
-                                          "type": "float",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "CBD DIGITAL ESPECIAL",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "open_date": {
-                                "primitive": {
-                                  "string": "2021-08-10",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "price": {
-                                "primitive": {
-                                  "float": 10.41,
-                                  "type": "float",
-                                },
-                                "type": "primitive",
-                              },
-                              "profit": {
-                                "primitive": {
-                                  "float": 3.08,
-                                  "type": "float",
-                                },
-                                "type": "primitive",
-                              },
-                              "public_id": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "type": {
-                                        "primitive": {
-                                          "string": "isin",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "value": {
-                                        "primitive": {
-                                          "string": "435-3354.3333",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "quantity": {
-                                "primitive": {
-                                  "float": 27.46,
-                                  "type": "float",
-                                },
-                                "type": "primitive",
-                              },
-                              "redemption_conditions": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "type": {
-                                        "primitive": {
-                                          "string": "due_date",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                      "value": {
-                                        "primitive": {
-                                          "string": "12-02-2023",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "subtype": {
-                                "primitive": {
-                                  "string": "CBD",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "type": {
-                                "enum": "BOND",
-                                "type": "enum",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "Investimento",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "enum": "FIXED_INCOME",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -20250,7 +18909,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -21595,7 +20273,26 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyReceivableTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -22393,54 +21090,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -22531,68 +21181,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "session": {
-                "primitive": {
-                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -22772,7 +21361,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -23356,65 +21964,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         408,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "date_from": {
-                "primitive": {
-                  "string": "2020-01-01",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2020-02-01",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "type": {
-                "enum": "OUTFLOW",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveTaxRetentionsRequest",
       "headers": [],
       "internal": undefined,
@@ -23799,7 +22349,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxRetentionRequest",
       "headers": [],
       "internal": undefined,
@@ -24225,75 +22794,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         408,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "attach_pdf": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "save_data": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "year_from": {
-                "primitive": {
-                  "string": "2018",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "year_to": {
-                "primitive": {
-                  "string": "2019",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveTaxDeclarationsRequest",
       "headers": [],
       "internal": undefined,
@@ -24505,7 +23006,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxDeclarationRequest",
       "headers": [],
       "internal": undefined,
@@ -25011,47 +23531,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "link": {
-                "primitive": {
-                  "string": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveEmploymentRecordDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -25548,7 +24028,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyEmploymentRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -25597,131 +24096,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         403,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "allowed_income_types": {
-                "array": [
-                  {
-                    "enum": "SALARY",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-              "date_from": {
-                "primitive": {
-                  "string": "2022-08-01",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2022-12-30",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "language": {
-                "primitive": {
-                  "string": "pt",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "minimum_confidence_level": {
-                "enum": "HIGH",
-                "type": "enum",
-              },
-              "transactions": {
-                "array": [
-                  {
-                    "properties": {
-                      "account_category": {
-                        "enum": "CHECKING_ACCOUNT",
-                        "type": "enum",
-                      },
-                      "account_holder_id": {
-                        "primitive": {
-                          "string": "a61bc801-9fa5-457b-88ad-850c96eaca30",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "account_holder_type": {
-                        "literal": "INDIVIDUAL",
-                        "type": "literal",
-                      },
-                      "account_id": {
-                        "primitive": {
-                          "string": "EBACA-89077589",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "amount": {
-                        "primitive": {
-                          "float": 650.89,
-                          "type": "float",
-                        },
-                        "type": "primitive",
-                      },
-                      "currency": {
-                        "primitive": {
-                          "string": "BRL",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "description": {
-                        "primitive": {
-                          "string": "SALÁRIO MENSAL",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "institution": {
-                        "primitive": {
-                          "string": "Erebor Retail Brasil",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "transaction_id": {
-                        "primitive": {
-                          "string": "3CWE4927CF15355",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "literal": "INFLOW",
-                        "type": "literal",
-                      },
-                      "value_date": {
-                        "primitive": {
-                          "string": "2022-11-18",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "VerifyIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -26284,47 +24659,7 @@ For example:
         408,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "auth_header": {
-                "primitive": {
-                  "string": "Authorization",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "auth_token": {
-                "primitive": {
-                  "string": "Bearer hv7alD71j0dzXf09iKfg7u",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "Your webhook name",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "url": {
-                "primitive": {
-                  "string": "https://mycompany.com/security/webhook",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RegisterPaymentWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -26430,7 +24765,26 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeletePaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -29584,82 +27938,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         400,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "a3b92311-1888-449f-acaa-49ae28d68fcd",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "confirm": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "payment_method_details": {
-                "properties": {
-                  "pse": {
-                    "properties": {
-                      "password": {
-                        "primitive": {
-                          "string": "123456",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "payer_bank_account": {
-                        "primitive": {
-                          "string": "db201c6a-e0ee-4caa-92d6-72b480d6d86f",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "payer_institution": {
-                        "primitive": {
-                          "string": "db201c6a-e0ee-4caa-92d6-72b480d6d86f",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "payer_token": {
-                        "primitive": {
-                          "string": "123456",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "username": {
-                        "primitive": {
-                          "string": "username",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PatchPaymentIntentRequest",
       "headers": [],
       "internal": undefined,

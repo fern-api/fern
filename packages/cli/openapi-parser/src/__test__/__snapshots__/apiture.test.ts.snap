@@ -69,62 +69,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "productType",
-              "value": {
-                "array": [
-                  {
-                    "enum": "savings",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "location",
-              "value": {
-                "enum": "internal",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "allows",
-              "value": {
-                "array": [
-                  {
-                    "enum": "billPay",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-              "nextPage_url": {
-                "primitive": {
-                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountsListAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -328,23 +273,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         429,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountsListAccountBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -420,34 +349,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         403,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "accountId",
-              "value": {
-                "primitive": {
-                  "string": "account-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -507,50 +409,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "allows",
-              "value": {
-                "array": [
-                  {
-                    "enum": "billPay",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "secCode",
-              "value": {
-                "enum": "arc",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-              "nextPage_url": {
-                "primitive": {
-                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountsListEligibleAchAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -825,29 +684,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "accountId",
-              "value": {
-                "primitive": {
-                  "string": "account-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -919,29 +756,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "accountId",
-              "value": {
-                "primitive": {
-                  "string": "account-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -1109,89 +924,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "institutionId",
-              "value": {
-                "primitive": {
-                  "string": "TIBURON",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "startsOn",
-              "value": {
-                "primitive": {
-                  "string": "2022-07-04",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "endsOn",
-              "value": {
-                "primitive": {
-                  "string": "2022-07-04",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "direction",
-              "value": {
-                "enum": "debit",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "frequency",
-              "value": {
-                "enum": "once",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "effectiveOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledOn": {
-                        "primitive": {
-                          "string": "2022-07-04",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "InstitutionsListTransferScheduleRequest",
       "headers": [],
       "internal": undefined,
@@ -1639,64 +1372,7 @@ The default response lists only recent transactions. Normally, this is transacti
         429,
         504,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "accountId",
-              "value": {
-                "primitive": {
-                  "string": "account-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "balance",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "subtype",
-              "value": {
-                "array": [
-                  {
-                    "enum": "check",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransactionsListTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1953,33 +1629,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": "credit",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
       "headers": [
         {
@@ -2042,23 +1692,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersListTransfersRequest",
       "headers": [],
       "internal": undefined,
@@ -2198,49 +1832,7 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "amount": {
-                "primitive": {
-                  "string": "3456.78",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schedule": {
-                "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "frequency": {
-                    "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersCreateTransferRequest",
       "headers": [
         {
@@ -2311,29 +1903,7 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "transferId",
-              "value": {
-                "primitive": {
-                  "string": "transfer-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersGetTransferRequest",
       "headers": [],
       "internal": undefined,
@@ -2394,60 +1964,7 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "transferId",
-              "value": {
-                "primitive": {
-                  "string": "transfer-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "amount": {
-                "primitive": {
-                  "string": "3456.78",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schedule": {
-                "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "frequency": {
-                    "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {

@@ -205,19 +205,6 @@ Perform a search against a document index.
               "NotFoundError",
               "InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [],
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/v1/search",
             "request": {
@@ -269,9 +256,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "actuals": [
-                    {},
-                  ],
+                  "actuals": [],
                 },
                 "response": undefined,
               },
@@ -2324,21 +2309,6 @@ Creates a new document index.",
 Used to list documents. Optionally filter on supported fields.
 ",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "count": 123,
-                    "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                    "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/v1/documents",
             "request": {
@@ -2435,19 +2405,6 @@ Upload a document to be indexed and used for search.
 
 Compiles the prompt backing the model version using the provided input values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "input_values": {},
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
@@ -2590,6 +2547,18 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                  "scenario_id": "scenario-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
@@ -2616,22 +2585,6 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "inputs": [],
-                  "metric_input_params": {
-                    "params": {},
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
@@ -2688,6 +2641,18 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                  "test_case_id": "test-case-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {

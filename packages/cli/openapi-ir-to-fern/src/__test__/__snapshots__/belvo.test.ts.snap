@@ -11391,6 +11391,17 @@ client.accounts.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/accounts/{id}",
             "path-parameters": {
@@ -11922,23 +11933,6 @@ client.accounts.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/accounts",
             "request": {
@@ -11989,21 +11983,6 @@ client.accounts.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/accounts",
@@ -12130,6 +12109,17 @@ client.balances.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/balances/{id}",
@@ -12587,23 +12577,6 @@ client.balances.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/balances",
             "request": {
@@ -12640,24 +12613,6 @@ client.balances.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "date_from": "2021-01-18",
-                  "date_to": "2021-02-15",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/balances",
@@ -13199,6 +13154,17 @@ At the moment, the employment records resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/employment-records/{id}",
             "path-parameters": {
@@ -13448,20 +13414,6 @@ At the moment, the employment records resource is available for:
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/employment-records",
             "request": {
@@ -13532,38 +13484,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "allowed_income_types": [
-                    "SALARY",
-                  ],
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
-                  "language": "pt",
-                  "minimum_confidence_level": "HIGH",
-                  "transactions": [
-                    {
-                      "account_category": "CHECKING_ACCOUNT",
-                      "account_holder_id": "a61bc801-9fa5-457b-88ad-850c96eaca30",
-                      "account_holder_type": "INDIVIDUAL",
-                      "account_id": "EBACA-89077589",
-                      "amount": 650.89,
-                      "currency": "BRL",
-                      "description": "SALÁRIO MENSAL",
-                      "institution": "Erebor Retail Brasil",
-                      "transaction_id": "3CWE4927CF15355",
-                      "type": "INFLOW",
-                      "value_date": "2022-11-18",
-                    },
-                  ],
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/enrich/incomes",
@@ -13691,6 +13611,17 @@ client.incomes.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/incomes/{id}",
@@ -13862,23 +13793,6 @@ client.incomes.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/api/incomes",
@@ -14147,81 +14061,6 @@ You can see a complete list of institutions by either consulting our [Institutio
             "errors": [
               "root.UnauthorizedError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "country_code": "MX",
-                  "country_code__in": "CO,BR",
-                  "display_name": "Erebor Bank",
-                  "fields": "link,balance,account",
-                  "name__in": "erebor_br_retail,gotham_co_business",
-                  "omit": "link,balance",
-                  "page": 1,
-                  "page_size": 100,
-                  "resources__allin": "ACCOUNTS,OWNERS,TRANSACTIONS",
-                  "status": "healthy",
-                  "status__in": "healthy,down",
-                  "type": "fiscal",
-                  "type__in": "fiscal,bank",
-                  "website": "https://www.erebor.mx",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "count": 130,
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                    "results": [
-                      {
-                        "country_codes": [
-                          "MX",
-                        ],
-                        "display_name": "Erebor Mexico",
-                        "features": [
-                          {
-                            "description": "The institution may require a token during link creation or login",
-                            "name": "token_required",
-                          },
-                        ],
-                        "form_fields": [
-                          {
-                            "label": "Client number",
-                            "name": "username",
-                            "placeholder": "ABC333333A33",
-                            "type": "text",
-                            "validation": "^.{1,}$",
-                            "validation_message": "Invalid client number",
-                            "values": [
-                              {
-                                "code": "001",
-                                "label": "Cédula de Ciudadanía",
-                                "placeholder": "DEF4444908M22",
-                                "validation": "^.{1,}$",
-                                "validation_message": "Invalid document number",
-                              },
-                            ],
-                          },
-                        ],
-                        "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                        "id": 1003,
-                        "integration_type": "credentials",
-                        "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
-                        "name": "erebor_mx_retail",
-                        "primary_color": "#056dae",
-                        "resources": [
-                          "ACCOUNTS",
-                        ],
-                        "status": "healthy",
-                        "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
-                        "type": "bank",
-                        "website": "https://www.erebor.com/",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/institutions",
             "request": {
@@ -14378,6 +14217,17 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/investments/portfolios/{id}",
             "path-parameters": {
@@ -14494,78 +14344,6 @@ client. investments_portfolio.list(params: {
             "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                  "omit": "link,balance",
-                  "page": 1,
-                  "page_size": 100,
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "count": 130,
-                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
-                    "results": [
-                      {
-                        "balance_gross": 76000,
-                        "balance_net": 77370.69,
-                        "balance_type": "ASSET",
-                        "currency": "BRL",
-                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                        "instruments": [
-                          {
-                            "average_acquisition_price": 10.01,
-                            "balance_gross": 100.09,
-                            "balance_net": 99.09,
-                            "currency": "USD",
-                            "fees": [
-                              {
-                                "type": "OPERATION_FEE",
-                                "value": 123.09,
-                              },
-                            ],
-                            "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "interest_rates": [
-                              {
-                                "index": "CDI",
-                                "type": "yearly",
-                                "value": 11.31,
-                              },
-                            ],
-                            "name": "CBD DIGITAL ESPECIAL",
-                            "open_date": "2021-08-10",
-                            "price": 10.41,
-                            "profit": 3.08,
-                            "public_id": [
-                              {
-                                "type": "isin",
-                                "value": "435-3354.3333",
-                              },
-                            ],
-                            "quantity": 27.46,
-                            "redemption_conditions": [
-                              {
-                                "type": "due_date",
-                                "value": "12-02-2023",
-                              },
-                            ],
-                            "subtype": "CBD",
-                            "type": "BOND",
-                          },
-                        ],
-                        "name": "Investimento",
-                        "type": "FIXED_INCOME",
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/investments/portfolios",
@@ -14932,6 +14710,17 @@ client.invoices.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/invoices/{id}",
             "path-parameters": {
@@ -15214,23 +15003,6 @@ client.invoices.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/invoices",
             "request": {
@@ -15268,24 +15040,6 @@ client.invoices.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "date_from": "2020-01-01",
-                  "date_to": "2020-02-01",
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/invoices",
@@ -15481,6 +15235,17 @@ To delete links in bulk, we recommend looping through the list of links you want
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/links/{id}",
@@ -16238,6 +16003,17 @@ client.owners.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/owners/{id}",
             "path-parameters": {
@@ -16468,23 +16244,6 @@ client.owners.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/owners",
             "request": {
@@ -16521,21 +16280,6 @@ client.owners.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/owners",
@@ -16987,28 +16731,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.BadRequestError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "confirm": true,
-                  "payment_method_details": {
-                    "pse": {
-                      "password": "123456",
-                      "payer_bank_account": "db201c6a-e0ee-4caa-92d6-72b480d6d86f",
-                      "payer_institution": "db201c6a-e0ee-4caa-92d6-72b480d6d86f",
-                      "payer_token": "123456",
-                      "username": "username",
-                    },
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/payments/payment-intents/{id}",
             "path-parameters": {
@@ -17444,6 +17166,17 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/payments/webhooks/{id}",
             "path-parameters": {
@@ -17513,20 +17246,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "auth_header": "Authorization",
-                  "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
-                  "name": "Your webhook name",
-                  "url": "https://mycompany.com/security/webhook",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/payments/webhooks",
             "request": {
@@ -17588,6 +17307,17 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/receivables/transactions/{id}",
@@ -18039,6 +17769,17 @@ client. recurring_expenses.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/recurring-expenses/{id}",
             "path-parameters": {
@@ -18298,23 +18039,6 @@ client. recurring_expenses.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/recurring-expenses",
             "request": {
@@ -18351,23 +18075,6 @@ client. recurring_expenses.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/recurring-expenses",
@@ -18484,6 +18191,17 @@ client. risk_insights.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/risk-insights/{id}",
@@ -18706,23 +18424,6 @@ client. risk_insights.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/risk-insights",
             "request": {
@@ -18761,21 +18462,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/risk-insights",
@@ -18979,6 +18665,17 @@ client.tax_compliance_status.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/tax-compliance-status/{id}",
@@ -19278,6 +18975,17 @@ At the moment, the Tax Declaration resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-declarations/{id}",
             "path-parameters": {
@@ -19453,24 +19161,6 @@ At the moment, the Tax Declaration resource is available for:
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "attach_pdf": false,
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "year_from": "2018",
-                  "year_to": "2019",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/tax-declarations",
             "request": {
@@ -19601,6 +19291,17 @@ client.tax_retentions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/tax-retentions/{id}",
@@ -19838,23 +19539,6 @@ client.tax_retentions.list(params: {
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "date_from": "2020-01-01",
-                  "date_to": "2020-02-01",
-                  "link": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
-                  "type": "OUTFLOW",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/tax-retentions",
             "request": {
@@ -19991,6 +19675,17 @@ client.tax_returns.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/tax-returns/{id}",
@@ -20263,6 +19958,17 @@ client.tax_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-status/{id}",
             "path-parameters": {
@@ -20436,21 +20142,6 @@ client.tax_status.list(params: {
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/tax-status",
             "request": {
@@ -20581,6 +20272,17 @@ client.transactions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/transactions/{id}",
@@ -21268,23 +20970,6 @@ client.transactions.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
-                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/transactions",
             "request": {
@@ -21324,24 +21009,6 @@ If you try to access older information than what we can access, we will return a
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "date_from": "2020-08-05",
-                  "date_to": "2020-10-05",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/transactions",

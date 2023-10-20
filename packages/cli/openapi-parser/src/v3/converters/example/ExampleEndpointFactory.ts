@@ -6,10 +6,27 @@ import {
     Request,
     Response,
 } from "@fern-fern/openapi-ir-model/finalIr";
-import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import {
+    EndpointWithExample,
+    HeaderWithExample,
+    PathParameterWithExample,
+    QueryParameterWithExample,
+    SchemaWithExample,
+} from "@fern-fern/openapi-ir-model/parseIr";
 import { isSchemaRequired } from "../../utils/isSchemaRequrired";
 import { DummyExampleFactory } from "./DummyExampleFactory";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
+
+type GeneratedParamterExample = SuccessfullyGeneratedParamterExample | FailedGeneratedParamterExample;
+
+interface SuccessfullyGeneratedParamterExample {
+    type: "success";
+    value: QueryParameterExample | HeaderExample | PathParameterExample | undefined;
+}
+
+interface FailedGeneratedParamterExample {
+    type: "failed";
+}
 
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
@@ -28,95 +45,92 @@ export class ExampleEndpointFactory {
             return undefined;
         }
 
-        const requestExample =
-            requestSchemaIdResponse != null
-                ? this.exampleTypeFactory.buildExampleFromSchemaId(requestSchemaIdResponse.schemaId)
-                : undefined;
-        const responseExample =
-            responseSchemaIdResponse != null
-                ? this.exampleTypeFactory.buildExampleFromSchemaId(responseSchemaIdResponse.schemaId)
-                : undefined;
-        if (requestExample === undefined && responseExample === undefined) {
-            return undefined;
+        let requestExample = undefined;
+        if (requestSchemaIdResponse != null) {
+            requestExample = this.exampleTypeFactory.buildExampleFromSchemaId(requestSchemaIdResponse.schemaId);
+            if (requestExample == null) {
+                return undefined;
+            }
+        }
+
+        let responseExample = undefined;
+        if (responseSchemaIdResponse != null) {
+            responseExample = this.exampleTypeFactory.buildExampleFromSchemaId(responseSchemaIdResponse.schemaId);
+            if (responseExample == null) {
+                return undefined;
+            }
         }
 
         const pathParameters: PathParameterExample[] = [];
-        const headers: HeaderExample[] = [];
-        const queryParameters: QueryParameterExample[] = [];
-
         for (const pathParameter of endpoint.pathParameters) {
-            const example = this.exampleTypeFactory.buildExample(pathParameter.schema);
-            if (example != null) {
-                pathParameters.push({
-                    name: pathParameter.name,
-                    value: example,
-                });
-            } else if (isSchemaRequired(pathParameter.schema)) {
-                const dummyExample = this.dummyExampleFactory.generateExample({
-                    schema: pathParameter.schema,
-                    name: pathParameter.name,
-                });
-                if (dummyExample == null) {
-                    return;
-                }
-                pathParameters.push({
-                    name: pathParameter.name,
-                    value: dummyExample,
-                });
+            const example = this.buildParameterExample(pathParameter);
+            if (example.type === "failed") {
+                return;
+            } else if (example.value != null) {
+                pathParameters.push(example.value);
             }
         }
 
+        const queryParameters: QueryParameterExample[] = [];
         for (const queryParameter of endpoint.queryParameters) {
-            const example = this.exampleTypeFactory.buildExample(queryParameter.schema);
-            if (example != null) {
-                queryParameters.push({
-                    name: queryParameter.name,
-                    value: example,
-                });
-            } else if (isSchemaRequired(queryParameter.schema)) {
-                const dummyExample = this.dummyExampleFactory.generateExample({
-                    schema: queryParameter.schema,
-                    name: queryParameter.name,
-                });
-                if (dummyExample == null) {
-                    return;
-                }
-                pathParameters.push({
-                    name: queryParameter.name,
-                    value: dummyExample,
-                });
+            const example = this.buildParameterExample(queryParameter);
+            if (example.type === "failed") {
+                return;
+            } else if (example.value != null) {
+                queryParameters.push(example.value);
             }
         }
 
+        const headers: HeaderExample[] = [];
         for (const header of endpoint.headers) {
-            const example = this.exampleTypeFactory.buildExample(header.schema);
-            if (example != null) {
-                headers.push({
-                    name: header.name,
-                    value: example,
-                });
-            } else if (isSchemaRequired(header.schema)) {
-                const dummyExample = this.dummyExampleFactory.generateExample({
-                    schema: header.schema,
-                    name: header.name,
-                });
-                if (dummyExample == null) {
-                    return;
-                }
-                pathParameters.push({
-                    name: header.name,
-                    value: dummyExample,
-                });
+            const example = this.buildParameterExample(header);
+            if (example.type === "failed") {
+                return;
+            } else if (example.value != null) {
+                headers.push(example.value);
             }
         }
 
-        return {
+        const example = {
             pathParameters,
             queryParameters,
             headers,
             request: requestExample,
             response: responseExample,
         };
+
+        return example;
+    }
+
+    private buildParameterExample(
+        parameter: QueryParameterWithExample | PathParameterWithExample | HeaderWithExample
+    ): GeneratedParamterExample {
+        const example = this.exampleTypeFactory.buildExample(parameter.schema);
+        if (example != null) {
+            return {
+                type: "success",
+                value: {
+                    name: parameter.name,
+                    value: example,
+                },
+            };
+        } else if (isSchemaRequired(parameter.schema) && parameter.schema.type === "primitive") {
+            const dummyExample = this.dummyExampleFactory.generateExample({
+                schema: parameter.schema,
+                name: parameter.name,
+            });
+            if (dummyExample == null) {
+                return { type: "failed" };
+            }
+            return {
+                type: "success",
+                value: {
+                    name: parameter.name,
+                    value: dummyExample,
+                },
+            };
+        }
+        return { type: "failed" };
     }
 }
 
@@ -129,7 +143,9 @@ function getSchemaIdFromRequest(request: Request | null | undefined): SchemaIdRe
     if (request.type !== "json") {
         return { type: "unsupported" };
     }
-    return request.schema.type === "reference" ? { type: "present", schemaId: request.schema.schema } : undefined;
+    return request.schema.type === "reference"
+        ? { type: "present", schemaId: request.schema.schema }
+        : { type: "unsupported" };
 }
 
 function getSchemaIdFromResponse(response: Response | null | undefined): SchemaIdResponse | undefined {
@@ -139,5 +155,7 @@ function getSchemaIdFromResponse(response: Response | null | undefined): SchemaI
     if (response.type !== "json") {
         return { type: "unsupported" };
     }
-    return response.schema.type === "reference" ? { type: "present", schemaId: response.schema.schema } : undefined;
+    return response.schema.type === "reference"
+        ? { type: "present", schemaId: response.schema.schema }
+        : { type: "unsupported" };
 }

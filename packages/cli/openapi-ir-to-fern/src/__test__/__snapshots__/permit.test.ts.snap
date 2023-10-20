@@ -2463,6 +2463,19 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "condition_set_id": "condition-set-id",
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}",
             "path-parameters": {
@@ -2656,19 +2669,6 @@ Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "condition_set_id": "condition-set-id",
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}",
             "path-parameters": {
@@ -2759,27 +2759,6 @@ allowed.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "conflict_strategy": "fail",
-                  "scope": {
-                    "resource_sets": {},
-                    "resources": {},
-                    "roles": {},
-                    "user_sets": {},
-                  },
-                  "target_env": {},
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v2/projects/{proj_id}/envs/{env_id}/copy",
             "path-parameters": {
@@ -2850,6 +2829,18 @@ allowed.",
             "docs": "Deletes an environment and all its related data.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/v2/projects/{proj_id}/envs/{env_id}",
@@ -2953,22 +2944,6 @@ allowed.",
             "docs": "Updates the environment.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "jwks": {
-                    "keys": [],
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/projects/{proj_id}/envs/{env_id}",
@@ -3078,6 +3053,17 @@ authenticated actor (i.e: human team member or api key).",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "org_id": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/orgs/{org_id}",
             "path-parameters": {
@@ -3159,17 +3145,6 @@ authenticated actor (i.e: human team member or api key).",
             "docs": "Updates the organization's profile.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "org_id": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/orgs/{org_id}",
@@ -3273,6 +3248,17 @@ Every project is a separate silo, and has its own unique set of environments and
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "proj_id": "proj-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/projects/{proj_id}",
             "path-parameters": {
@@ -3337,17 +3323,6 @@ Every project is a separate silo, and has its own unique set of environments and
             "docs": "Updates the project.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/projects/{proj_id}",
@@ -3468,6 +3443,20 @@ This includes any permissions granted to perform the action.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "action_group_id": "action-group-id",
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "resource_id": "resource-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}",
             "path-parameters": {
@@ -3571,20 +3560,6 @@ This includes any permissions granted to perform the action.",
 Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "action_group_id": "action-group-id",
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}",
@@ -3713,6 +3688,20 @@ This includes any permissions granted to perform the action.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "action_id": "action-id",
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "resource_id": "resource-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}",
             "path-parameters": {
@@ -3816,20 +3805,6 @@ This includes any permissions granted to perform the action.",
 Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "action_id": "action-id",
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}",
@@ -4062,22 +4037,6 @@ Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "attribute_id": "attribute-id",
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "type": "bool",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}",
             "path-parameters": {
@@ -4186,6 +4145,19 @@ and will return the existing instance object in the response body.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "instance_id": "instance-id",
+                  "proj_id": "proj-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}",
             "path-parameters": {
@@ -4278,19 +4250,6 @@ Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "instance_id": "instance-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}",
             "path-parameters": {
@@ -4355,22 +4314,6 @@ define hierarchy (inheritance) between two roles or define relationships between
 If some of the permissions specified are already assigned, will skip them.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                  "role_id": "role-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "permissions": [],
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/permissions",
@@ -4471,6 +4414,20 @@ If some of the permissions specified are already assigned, will skip them.",
 This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "resource_id": "resource-id",
+                  "role_id": "role-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}",
@@ -4641,22 +4598,6 @@ If some of the permissions specified are already unassigned, will skip them.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                  "role_id": "role-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "permissions": [],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/permissions",
             "path-parameters": {
@@ -4695,20 +4636,6 @@ If some of the permissions specified are already unassigned, will skip them.",
 Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                  "role_id": "role-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}",
@@ -4855,6 +4782,19 @@ A resource may also contain:
             "docs": "Deletes the resource and all its related data.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "resource_id": "resource-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}",
@@ -5029,19 +4969,6 @@ Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "resource_id": "resource-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}",
             "path-parameters": {
@@ -5152,20 +5079,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/v2/facts/{proj_id}/{env_id}/role_assignments/bulk",
             "path-parameters": {
@@ -5195,20 +5108,6 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "docs": undefined,
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/role_assignments/bulk",
@@ -5351,21 +5250,6 @@ If some of the permissions specified are already assigned, will skip them.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "role_id": "role-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "permissions": [],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}/permissions",
             "path-parameters": {
@@ -5457,6 +5341,19 @@ If some of the permissions specified are already assigned, will skip them.",
 This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "role_id": "role-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}",
@@ -5617,21 +5514,6 @@ If some of the permissions specified are already unassigned, will skip them.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "role_id": "role-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "permissions": [],
-                },
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}/permissions",
             "path-parameters": {
@@ -5666,19 +5548,6 @@ If some of the permissions specified are already unassigned, will skip them.",
 Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "role_id": "role-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}",
@@ -5793,6 +5662,19 @@ and will return the existing tenant object in the response body.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "tenant_id": "tenant-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}",
             "path-parameters": {
@@ -5816,6 +5698,20 @@ and will return the existing tenant object in the response body.",
             "docs": "Deletes a user under a tenant.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "tenant_id": "tenant-id",
+                  "user_id": "user-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users/{user_id}",
@@ -5975,19 +5871,6 @@ and will return the existing tenant object in the response body.",
 Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "tenant_id": "tenant-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}",
@@ -6230,21 +6113,6 @@ Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "attribute_id": "attribute-id",
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "type": "bool",
-                },
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}",
             "path-parameters": {
@@ -6388,6 +6256,19 @@ and will return the existing user object in the response body.",
             "docs": "Deletes the user and all its related data.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "env_id": "env-id",
+                  "proj_id": "proj-id",
+                  "user_id": "user-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/users/{user_id}",
@@ -6569,19 +6450,6 @@ If the role is not actually assigned, will return 404.",
 Fields that will be provided will be completely overwritten.",
             "errors": [
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "env_id": "env-id",
-                  "proj_id": "proj-id",
-                  "user_id": "user-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/v2/facts/{proj_id}/{env_id}/users/{user_id}",

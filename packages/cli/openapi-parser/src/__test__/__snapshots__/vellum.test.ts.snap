@@ -144,40 +144,7 @@ Creates a new document index.",
 Used to list documents. Optionally filter on supported fields.
 ",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "count": {
-                "primitive": {
-                  "int": 123,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-              "next": {
-                "primitive": {
-                  "string": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "previous": {
-                "primitive": {
-                  "string": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentsListRequest",
       "headers": [],
       "internal": undefined,
@@ -567,34 +534,7 @@ Used to retrieve a model version given its ID.
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "headers": [],
       "internal": undefined,
@@ -716,43 +656,7 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "inputs": {
-                "array": [],
-                "type": "array",
-              },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -815,7 +719,36 @@ or overwritten with default values.",
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "scenario_id",
+              "value": {
+                "primitive": {
+                  "string": "scenario-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -877,23 +810,7 @@ Perform a search against a document index.
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "results": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SearchRequest",
       "headers": [],
       "internal": undefined,
@@ -961,12 +878,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "request": {
             "properties": {
               "actuals": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1130,7 +1042,36 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "test_case_id",
+              "value": {
+                "primitive": {
+                  "string": "test-case-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,

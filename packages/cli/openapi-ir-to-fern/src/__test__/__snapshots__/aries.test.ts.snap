@@ -14,37 +14,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For Endorser to endorse a particular transaction record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "tran_id": "tran-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "_type": "101",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
-                    "state": "active",
-                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
-                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/transactions/{tran_id}/endorse",
             "path-parameters": {
@@ -6788,38 +6757,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/accept-invitation",
             "path-parameters": {
@@ -6858,38 +6795,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection request",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/accept-request",
             "path-parameters": {
@@ -6918,45 +6823,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a new connection invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "metadata": {},
-                  "my_label": "Bob",
-                  "recipient_keys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "routing_keys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "service_endpoint": "http://192.168.56.102:8020",
-                },
-                "response": {
-                  "body": {
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "did": "WgWxqztrNooG92RXvxSTWv",
-                      "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                      "label": "Bob",
-                      "recipientKeys": [
-                        "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                      ],
-                      "routingKeys": [
-                        "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                      ],
-                      "serviceEndpoint": "http://192.168.56.101:8020",
-                    },
-                    "invitation_url": "http://192.168.56.101:8020/invite?c_i=eyJAdHlwZSI6Li4ufQ==",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/create-invitation",
             "request": {
@@ -7182,21 +7048,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch connection metadata",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": {},
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
@@ -7275,44 +7126,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query agent-to-agent connections",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "connection_protocol": "connections/1.0",
-                  "state": "start",
-                  "their_role": "invitee",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "accept": "manual",
-                        "alias": "Bob, providing quotes",
-                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "connection_protocol": "connections/1.0",
-                        "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                        "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        "invitation_mode": "once",
-                        "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "my_did": "WgWxqztrNooG92RXvxSTWv",
-                        "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "rfc23_state": "invitation-sent",
-                        "routing_state": "none",
-                        "state": "active",
-                        "their_did": "WgWxqztrNooG92RXvxSTWv",
-                        "their_label": "Bob",
-                        "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                        "their_role": "invitee",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/connections",
             "request": {
@@ -7375,49 +7188,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Receive a new connection invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "did": "WgWxqztrNooG92RXvxSTWv",
-                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                  "label": "Bob",
-                  "recipientKeys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "routingKeys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "serviceEndpoint": "http://192.168.56.101:8020",
-                },
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/receive-invitation",
             "request": {
@@ -7498,9 +7268,7 @@ exports[`open api parser aries simple 1`] = `
                   "metadata": {},
                 },
                 "response": {
-                  "body": {
-                    "results": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7584,21 +7352,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Search for matching credential definitions that agent originated",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "credential_definition_ids": [
-                      "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credential-definitions/created",
             "request": {
@@ -7710,44 +7463,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a credential definition to the ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "revocation_registry_size": 1000,
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "tag": "default",
-                },
-                "response": {
-                  "body": {
-                    "sent": {
-                      "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                    },
-                    "txn": {
-                      "_type": "101",
-                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "endorser_write_txn": true,
-                      "messages_attach": [
-                        {},
-                      ],
-                      "meta_data": {},
-                      "signature_request": [
-                        {},
-                      ],
-                      "signature_response": [
-                        {},
-                      ],
-                      "state": "active",
-                      "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
-                      "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/credential-definitions",
             "request": {
@@ -8003,27 +7718,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch credentials from wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "cred_rev_id": "12345",
-                        "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credentials",
             "request": {
@@ -8056,19 +7750,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query credential revocation status by id",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "credential_id": "credential-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credential/revoked/{credential_id}",
             "path-parameters": {
@@ -8115,7 +7796,6 @@ exports[`open api parser aries simple 1`] = `
                     "contexts": [
                       "https://myhost:8021",
                     ],
-                    "cred_value": {},
                     "expanded_types": [
                       "https://w3id.org/citizenship#PermanentResidentCard",
                     ],
@@ -8153,54 +7833,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch W3C credentials from wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "contexts": [
-                    "https://myhost:8021",
-                  ],
-                  "proof_types": [
-                    "Ed25519Signature2018",
-                  ],
-                  "schema_ids": [
-                    "https://myhost:8021",
-                  ],
-                  "types": [
-                    "https://myhost:8021",
-                  ],
-                },
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "contexts": [
-                          "https://myhost:8021",
-                        ],
-                        "cred_value": {},
-                        "expanded_types": [
-                          "https://w3id.org/citizenship#PermanentResidentCard",
-                        ],
-                        "given_id": "http://example.edu/credentials/3732",
-                        "issuer_id": "https://example.edu/issuers/14",
-                        "proof_types": [
-                          "Ed25519Signature2018",
-                        ],
-                        "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "schema_ids": [
-                          "https://example.org/examples/degree.json",
-                        ],
-                        "subject_ids": [
-                          "did:example:ebfeb1f712ebc6f1c276e12ec21",
-                        ],
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/credentials/w3c",
             "request": {
@@ -8287,38 +7919,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/didexchange/{conn_id}/accept-invitation",
             "path-parameters": {
@@ -8352,38 +7952,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection request",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/didexchange/{conn_id}/accept-request",
             "path-parameters": {
@@ -8417,38 +7985,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create and send a request against public DID's implicit invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "their_public_did": "their-public-did",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/didexchange/create-request",
             "request": {
@@ -8496,71 +8032,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Receive request against public DID's implicit invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "did": "WgWxqztrNooG92RXvxSTWv",
-                  "did_doc~attach": {
-                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "byte_count": 1234,
-                    "data": {
-                      "base64": "ey4uLn0=",
-                      "jws": {
-                        "header": {
-                          "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                        },
-                        "protected": "ey4uLn0",
-                        "signature": "ey4uLn0",
-                        "signatures": [
-                          {
-                            "header": {
-                              "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                            },
-                            "protected": "ey4uLn0",
-                            "signature": "ey4uLn0",
-                          },
-                        ],
-                      },
-                      "links": [
-                        "https://link.to/data",
-                      ],
-                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                    },
-                    "description": "view from doorway, facing east, with lights off",
-                    "filename": "IMG1092348.png",
-                    "mime-type": "image/png",
-                  },
-                  "label": "Request to connect with Bob",
-                },
-                "response": {
-                  "body": {
-                    "accept": "manual",
-                    "alias": "Bob, providing quotes",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_protocol": "connections/1.0",
-                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
-                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "invitation_mode": "once",
-                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "my_did": "WgWxqztrNooG92RXvxSTWv",
-                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "rfc23_state": "invitation-sent",
-                    "routing_state": "none",
-                    "state": "active",
-                    "their_did": "WgWxqztrNooG92RXvxSTWv",
-                    "their_label": "Bob",
-                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
-                    "their_role": "invitee",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/didexchange/receive-request",
             "request": {
@@ -8636,31 +8107,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Discover Features records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "disclose": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "protocols": [],
-                        },
-                        "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "state": "active",
-                        "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features/records",
             "request": {
@@ -8683,27 +8129,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query supported features",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "disclose": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "protocols": [],
-                    },
-                    "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "state": "active",
-                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features/query",
             "request": {
@@ -8749,35 +8174,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Discover Features v2.0 records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "disclosures": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "disclosures": [],
-                        },
-                        "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "queries_msg": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        },
-                        "state": "active",
-                        "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features-2.0/records",
             "request": {
@@ -8800,33 +8196,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query supported features",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": {
-                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "disclosures": {
-                        "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "disclosures": [],
-                      },
-                      "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "queries_msg": {
-                        "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      },
-                      "state": "active",
-                      "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features-2.0/queries",
             "request": {
@@ -8885,19 +8254,8 @@ exports[`open api parser aries simple 1`] = `
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
                 },
@@ -8921,37 +8279,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For author to send a transaction request",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "tran_id": "tran-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "_type": "101",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
-                    "state": "active",
-                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
-                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/transactions/create-request",
             "request": {
@@ -9001,19 +8328,8 @@ exports[`open api parser aries simple 1`] = `
                         "_type": "101",
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "endorser_write_txn": true,
-                        "messages_attach": [
-                          {},
-                        ],
-                        "meta_data": {},
-                        "signature_request": [
-                          {},
-                        ],
-                        "signature_response": [
-                          {},
-                        ],
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "timing": {},
                         "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       },
                     ],
@@ -9046,19 +8362,8 @@ exports[`open api parser aries simple 1`] = `
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
                 },
@@ -9095,19 +8400,8 @@ exports[`open api parser aries simple 1`] = `
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
                 },
@@ -9144,19 +8438,8 @@ exports[`open api parser aries simple 1`] = `
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
                 },
@@ -9193,19 +8476,8 @@ exports[`open api parser aries simple 1`] = `
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "endorser_write_txn": true,
-                    "messages_attach": [
-                      {},
-                    ],
-                    "meta_data": {},
-                    "signature_request": [
-                      {},
-                    ],
-                    "signature_response": [
-                      {},
-                    ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
                 },
@@ -9321,20 +8593,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Start an introduction between two connections",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                  "target_connection_id": "target-connection-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/start-introduction",
             "path-parameters": {
@@ -9502,19 +8760,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -9701,19 +8956,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -9905,19 +9157,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -9945,139 +9194,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all credential exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "role": "issuer",
-                  "state": "proposal_sent",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "auto_issue": false,
-                        "auto_offer": false,
-                        "auto_remove": false,
-                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "credential": {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "cred_rev_id": "12345",
-                          "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                        "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "credential_offer": {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "key_correctness_proof": {
-                            "c": "0",
-                            "xr_cap": [],
-                            "xz_cap": "0",
-                          },
-                          "nonce": "0",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                        "credential_offer_dict": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "credential_preview": {
-                            "@type": "issue-credential/1.0/credential-preview",
-                            "attributes": [
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                            ],
-                          },
-                          "offers~attach": [
-                            {
-                              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
-                              "data": {
-                                "base64": "ey4uLn0=",
-                                "jws": {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                  "signatures": [
-                                    {
-                                      "header": {
-                                        "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                      },
-                                      "protected": "ey4uLn0",
-                                      "signature": "ey4uLn0",
-                                    },
-                                  ],
-                                },
-                                "links": [
-                                  "https://link.to/data",
-                                ],
-                                "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                              },
-                              "description": "view from doorway, facing east, with lights off",
-                              "filename": "IMG1092348.png",
-                              "mime-type": "image/png",
-                            },
-                          ],
-                        },
-                        "credential_proposal_dict": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "credential_proposal": {
-                            "@type": "issue-credential/1.0/credential-preview",
-                            "attributes": [
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                            ],
-                          },
-                          "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                          "schema_version": "1.0",
-                        },
-                        "credential_request": {
-                          "blinded_ms": {},
-                          "blinded_ms_correctness_proof": {},
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "nonce": "0",
-                          "prover_did": "WgWxqztrNooG92RXvxSTWv",
-                        },
-                        "credential_request_metadata": {},
-                        "error_msg": "Credential definition identifier is not set in proposal",
-                        "initiator": "self",
-                        "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "raw_credential": {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "rev_reg": {},
-                          "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "signature": {},
-                          "signature_correctness_proof": {},
-                          "values": {},
-                          "witness": {},
-                        },
-                        "role": "holder",
-                        "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        "state": "credential_acked",
-                        "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/issue-credential/records",
             "request": {
@@ -10221,19 +9337,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -10274,19 +9387,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/problem-report",
             "path-parameters": {
@@ -10441,19 +9541,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -10600,19 +9697,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -10762,19 +9856,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -10966,19 +10057,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -11159,19 +10247,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -11352,19 +10437,16 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
                       "values": {},
-                      "witness": {},
                     },
                     "role": "holder",
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -11450,12 +10532,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -11741,12 +10817,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -12049,12 +11119,6 @@ exports[`open api parser aries simple 1`] = `
                       "auto_issue": false,
                       "auto_offer": false,
                       "auto_remove": false,
-                      "by_format": {
-                        "cred_issue": {},
-                        "cred_offer": {},
-                        "cred_proposal": {},
-                        "cred_request": {},
-                      },
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_issue": {
@@ -12268,7 +11332,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_request_metadata": {},
                       "cred_rev_id": "12345",
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
@@ -12301,259 +11364,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all credential exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "role": "issuer",
-                  "state": "proposal-sent",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "cred_ex_record": {
-                          "auto_issue": false,
-                          "auto_offer": false,
-                          "auto_remove": false,
-                          "by_format": {
-                            "cred_issue": {},
-                            "cred_offer": {},
-                            "cred_proposal": {},
-                            "cred_request": {},
-                          },
-                          "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_issue": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                            "credentials~attach": [
-                              {
-                                "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
-                                "data": {
-                                  "base64": "ey4uLn0=",
-                                  "jws": {
-                                    "header": {
-                                      "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                    },
-                                    "protected": "ey4uLn0",
-                                    "signature": "ey4uLn0",
-                                    "signatures": [
-                                      {
-                                        "header": {
-                                          "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                        },
-                                        "protected": "ey4uLn0",
-                                        "signature": "ey4uLn0",
-                                      },
-                                    ],
-                                  },
-                                  "links": [
-                                    "https://link.to/data",
-                                  ],
-                                  "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                                },
-                                "description": "view from doorway, facing east, with lights off",
-                                "filename": "IMG1092348.png",
-                                "mime-type": "image/png",
-                              },
-                            ],
-                            "formats": [
-                              {
-                                "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "format": "aries/ld-proof-vc-detail@v1.0",
-                              },
-                            ],
-                            "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          },
-                          "cred_offer": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                            "credential_preview": {
-                              "@type": "issue-credential/2.0/credential-preview",
-                              "attributes": [
-                                {
-                                  "mime-type": "image/jpeg",
-                                  "name": "favourite_drink",
-                                  "value": "martini",
-                                },
-                              ],
-                            },
-                            "formats": [
-                              {
-                                "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "format": "aries/ld-proof-vc-detail@v1.0",
-                              },
-                            ],
-                            "offers~attach": [
-                              {
-                                "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
-                                "data": {
-                                  "base64": "ey4uLn0=",
-                                  "jws": {
-                                    "header": {
-                                      "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                    },
-                                    "protected": "ey4uLn0",
-                                    "signature": "ey4uLn0",
-                                    "signatures": [
-                                      {
-                                        "header": {
-                                          "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                        },
-                                        "protected": "ey4uLn0",
-                                        "signature": "ey4uLn0",
-                                      },
-                                    ],
-                                  },
-                                  "links": [
-                                    "https://link.to/data",
-                                  ],
-                                  "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                                },
-                                "description": "view from doorway, facing east, with lights off",
-                                "filename": "IMG1092348.png",
-                                "mime-type": "image/png",
-                              },
-                            ],
-                            "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          },
-                          "cred_preview": {
-                            "@type": "issue-credential/2.0/credential-preview",
-                            "attributes": [
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                            ],
-                          },
-                          "cred_proposal": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                            "credential_preview": {
-                              "@type": "issue-credential/2.0/credential-preview",
-                              "attributes": [
-                                {
-                                  "mime-type": "image/jpeg",
-                                  "name": "favourite_drink",
-                                  "value": "martini",
-                                },
-                              ],
-                            },
-                            "filters~attach": [
-                              {
-                                "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
-                                "data": {
-                                  "base64": "ey4uLn0=",
-                                  "jws": {
-                                    "header": {
-                                      "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                    },
-                                    "protected": "ey4uLn0",
-                                    "signature": "ey4uLn0",
-                                    "signatures": [
-                                      {
-                                        "header": {
-                                          "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                        },
-                                        "protected": "ey4uLn0",
-                                        "signature": "ey4uLn0",
-                                      },
-                                    ],
-                                  },
-                                  "links": [
-                                    "https://link.to/data",
-                                  ],
-                                  "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                                },
-                                "description": "view from doorway, facing east, with lights off",
-                                "filename": "IMG1092348.png",
-                                "mime-type": "image/png",
-                              },
-                            ],
-                            "formats": [
-                              {
-                                "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "format": "aries/ld-proof-vc-detail@v1.0",
-                              },
-                            ],
-                          },
-                          "cred_request": {
-                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                            "formats": [
-                              {
-                                "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "format": "aries/ld-proof-vc-detail@v1.0",
-                              },
-                            ],
-                            "requests~attach": [
-                              {
-                                "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                "byte_count": 1234,
-                                "data": {
-                                  "base64": "ey4uLn0=",
-                                  "jws": {
-                                    "header": {
-                                      "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                    },
-                                    "protected": "ey4uLn0",
-                                    "signature": "ey4uLn0",
-                                    "signatures": [
-                                      {
-                                        "header": {
-                                          "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                        },
-                                        "protected": "ey4uLn0",
-                                        "signature": "ey4uLn0",
-                                      },
-                                    ],
-                                  },
-                                  "links": [
-                                    "https://link.to/data",
-                                  ],
-                                  "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                                },
-                                "description": "view from doorway, facing east, with lights off",
-                                "filename": "IMG1092348.png",
-                                "mime-type": "image/png",
-                              },
-                            ],
-                          },
-                          "error_msg": "The front fell off",
-                          "initiator": "self",
-                          "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "role": "issuer",
-                          "state": "proposal-sent",
-                          "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        },
-                        "indy": {
-                          "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_request_metadata": {},
-                          "cred_rev_id": "12345",
-                          "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                          "state": "active",
-                        },
-                        "ld_proof": {
-                          "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_ex_ld_proof_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "state": "active",
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/issue-credential-2.0/records",
             "request": {
@@ -12605,12 +11415,6 @@ exports[`open api parser aries simple 1`] = `
                       "auto_issue": false,
                       "auto_offer": false,
                       "auto_remove": false,
-                      "by_format": {
-                        "cred_issue": {},
-                        "cred_offer": {},
-                        "cred_proposal": {},
-                        "cred_request": {},
-                      },
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_issue": {
@@ -12824,7 +11628,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_request_metadata": {},
                       "cred_rev_id": "12345",
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
@@ -12870,19 +11673,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "cred_ex_id": "cred-ex-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
             "path-parameters": {
@@ -12945,12 +11735,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -13213,12 +11997,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -13495,12 +12273,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -13764,12 +12536,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -14064,12 +12830,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_issue": {
@@ -14300,235 +13060,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send issuer a credential request not bound to an existing thread. Indy credentials cannot start at a request",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "auto_issue": false,
-                    "auto_offer": false,
-                    "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "cred_issue": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "credentials~attach": [
-                        {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
-                          "data": {
-                            "base64": "ey4uLn0=",
-                            "jws": {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                              "signatures": [
-                                {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                },
-                              ],
-                            },
-                            "links": [
-                              "https://link.to/data",
-                            ],
-                            "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                          },
-                          "description": "view from doorway, facing east, with lights off",
-                          "filename": "IMG1092348.png",
-                          "mime-type": "image/png",
-                        },
-                      ],
-                      "formats": [
-                        {
-                          "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "format": "aries/ld-proof-vc-detail@v1.0",
-                        },
-                      ],
-                      "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                    "cred_offer": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "credential_preview": {
-                        "@type": "issue-credential/2.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "formats": [
-                        {
-                          "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "format": "aries/ld-proof-vc-detail@v1.0",
-                        },
-                      ],
-                      "offers~attach": [
-                        {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
-                          "data": {
-                            "base64": "ey4uLn0=",
-                            "jws": {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                              "signatures": [
-                                {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                },
-                              ],
-                            },
-                            "links": [
-                              "https://link.to/data",
-                            ],
-                            "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                          },
-                          "description": "view from doorway, facing east, with lights off",
-                          "filename": "IMG1092348.png",
-                          "mime-type": "image/png",
-                        },
-                      ],
-                      "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                    "cred_preview": {
-                      "@type": "issue-credential/2.0/credential-preview",
-                      "attributes": [
-                        {
-                          "mime-type": "image/jpeg",
-                          "name": "favourite_drink",
-                          "value": "martini",
-                        },
-                      ],
-                    },
-                    "cred_proposal": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "credential_preview": {
-                        "@type": "issue-credential/2.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "filters~attach": [
-                        {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
-                          "data": {
-                            "base64": "ey4uLn0=",
-                            "jws": {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                              "signatures": [
-                                {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                },
-                              ],
-                            },
-                            "links": [
-                              "https://link.to/data",
-                            ],
-                            "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                          },
-                          "description": "view from doorway, facing east, with lights off",
-                          "filename": "IMG1092348.png",
-                          "mime-type": "image/png",
-                        },
-                      ],
-                      "formats": [
-                        {
-                          "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "format": "aries/ld-proof-vc-detail@v1.0",
-                        },
-                      ],
-                    },
-                    "cred_request": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "formats": [
-                        {
-                          "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "format": "aries/ld-proof-vc-detail@v1.0",
-                        },
-                      ],
-                      "requests~attach": [
-                        {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
-                          "data": {
-                            "base64": "ey4uLn0=",
-                            "jws": {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                              "signatures": [
-                                {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                },
-                              ],
-                            },
-                            "links": [
-                              "https://link.to/data",
-                            ],
-                            "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                          },
-                          "description": "view from doorway, facing east, with lights off",
-                          "filename": "IMG1092348.png",
-                          "mime-type": "image/png",
-                        },
-                      ],
-                    },
-                    "error_msg": "The front fell off",
-                    "initiator": "self",
-                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "role": "issuer",
-                    "state": "proposal-sent",
-                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential-2.0/send-request",
             "request": {
@@ -14588,12 +13119,6 @@ exports[`open api parser aries simple 1`] = `
                       "auto_issue": false,
                       "auto_offer": false,
                       "auto_remove": false,
-                      "by_format": {
-                        "cred_issue": {},
-                        "cred_offer": {},
-                        "cred_proposal": {},
-                        "cred_request": {},
-                      },
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_issue": {
@@ -14807,7 +13332,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_request_metadata": {},
                       "cred_rev_id": "12345",
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
@@ -14866,19 +13390,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sign a JSON-LD structure and return it",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "signed_doc": {},
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/jsonld/sign",
             "request": {
@@ -14997,10 +13508,10 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": {
+                "path-parameters": undefined,
+                "query-parameters": {
                   "did": "did",
                 },
-                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15034,10 +13545,10 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": {
+                "path-parameters": undefined,
+                "query-parameters": {
                   "did": "did",
                 },
-                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15076,9 +13587,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "ledger_config_list": [
-                      {},
-                    ],
+                    "ledger_config_list": [],
                   },
                 },
               },
@@ -15098,10 +13607,9 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": {
-                  "did": "did",
-                },
+                "path-parameters": undefined,
                 "query-parameters": {
+                  "did": "did",
                   "endpoint_type": "Endpoint",
                 },
                 "request": undefined,
@@ -15148,11 +13656,9 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "result": {
-                      "aml_record": {},
                       "taa_accepted": {
                         "time": 1640995199,
                       },
-                      "taa_record": {},
                     },
                   },
                 },
@@ -15193,43 +13699,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a NYM registration to the ledger.",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "did": "did",
-                  "verkey": "verkey",
-                },
-                "query-parameters": {
-                  "role": "STEWARD",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "success": true,
-                    "txn": {
-                      "_type": "101",
-                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "endorser_write_txn": true,
-                      "messages_attach": [
-                        {},
-                      ],
-                      "meta_data": {},
-                      "signature_request": [
-                        {},
-                      ],
-                      "signature_response": [
-                        {},
-                      ],
-                      "state": "active",
-                      "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
-                      "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/ledger/register-nym",
             "request": {
@@ -15406,19 +13875,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Retrieve keylists by connection or role",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "role": "client",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/mediation/keylists",
             "request": {
@@ -15446,19 +13902,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query mediation requests, returns list of all mediation records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "state": "request",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/mediation/requests",
             "request": {
@@ -15549,17 +13992,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Request mediation from connection",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "conn_id": "conn-id",
-                },
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/mediation/request/{conn_id}",
             "path-parameters": {
@@ -15595,29 +14027,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send keylist query to mediator",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "mediation_id": "mediation-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "filter": {},
-                },
-                "response": {
-                  "body": {
-                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                    "filter": {},
-                    "paginate": {
-                      "limit": 30,
-                      "offset": 0,
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
             "path-parameters": {
@@ -15827,7 +14236,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "key_management_mode": "managed",
-                    "settings": {},
                     "state": "active",
                     "token": "eyJhbGciOiJFZERTQSJ9.eyJhIjogIjAifQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
                     "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -15986,26 +14394,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query subwallets",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "key_management_mode": "managed",
-                        "settings": {},
-                        "state": "active",
-                        "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/multitenancy/wallets",
             "request": {
@@ -16039,7 +14427,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "key_management_mode": "managed",
-                    "settings": {},
                     "state": "active",
                     "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
@@ -16082,7 +14469,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "key_management_mode": "managed",
-                    "settings": {},
                     "state": "active",
                     "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   },
@@ -16145,80 +14531,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a new connection invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "alias": "Barry",
-                  "attachments": [
-                    {
-                      "id": "attachment-0",
-                      "type": "credential-offer",
-                    },
-                  ],
-                  "handshake_protocols": [
-                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                  ],
-                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "metadata": {},
-                  "my_label": "Invitation to Barry",
-                  "protocol_version": "1.1",
-                  "use_public_did": false,
-                },
-                "response": {
-                  "body": {
-                    "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "handshake_protocols": [
-                        "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                      ],
-                      "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                      "label": "Bob",
-                      "requests~attach": [
-                        {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
-                          "data": {
-                            "base64": "ey4uLn0=",
-                            "jws": {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                              "signatures": [
-                                {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                },
-                              ],
-                            },
-                            "links": [
-                              "https://link.to/data",
-                            ],
-                            "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                          },
-                          "description": "view from doorway, facing east, with lights off",
-                          "filename": "IMG1092348.png",
-                          "mime-type": "image/png",
-                        },
-                      ],
-                    },
-                    "invitation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation_url": "https://example.com/endpoint?c_i=eyJAdHlwZSI6ICIuLi4iLCAiLi4uIjogIi4uLiJ9XX0=",
-                    "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "state": "await_response",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/out-of-band/create-invitation",
             "request": {
@@ -16287,115 +14599,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Receive a new connection invitation",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "handshake_protocols": [
-                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                  ],
-                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                  "label": "Bob",
-                  "requests~attach": [
-                    {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "byte_count": 1234,
-                      "data": {
-                        "base64": "ey4uLn0=",
-                        "jws": {
-                          "header": {
-                            "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                          },
-                          "protected": "ey4uLn0",
-                          "signature": "ey4uLn0",
-                          "signatures": [
-                            {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                            },
-                          ],
-                        },
-                        "links": [
-                          "https://link.to/data",
-                        ],
-                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                      },
-                      "description": "view from doorway, facing east, with lights off",
-                      "filename": "IMG1092348.png",
-                      "mime-type": "image/png",
-                    },
-                  ],
-                },
-                "response": {
-                  "body": {
-                    "attach_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "invitation": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "handshake_protocols": [
-                        "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                      ],
-                      "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                      "label": "Bob",
-                      "requests~attach": [
-                        {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "byte_count": 1234,
-                          "data": {
-                            "base64": "ey4uLn0=",
-                            "jws": {
-                              "header": {
-                                "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                              },
-                              "protected": "ey4uLn0",
-                              "signature": "ey4uLn0",
-                              "signatures": [
-                                {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                },
-                              ],
-                            },
-                            "links": [
-                              "https://link.to/data",
-                            ],
-                            "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                          },
-                          "description": "view from doorway, facing east, with lights off",
-                          "filename": "IMG1092348.png",
-                          "mime-type": "image/png",
-                        },
-                      ],
-                    },
-                    "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "our_recipient_key": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "role": "sender",
-                    "state": "initial",
-                    "their_service": {
-                      "recipientKeys": [
-                        "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                      ],
-                      "routingKeys": [
-                        "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                      ],
-                      "serviceEndpoint": "http://192.168.56.101:8020",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/out-of-band/receive-invitation",
             "request": {
@@ -16486,10 +14689,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -16509,10 +14710,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -16656,137 +14853,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all present-proof exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "role": "prover",
-                  "state": "proposal_sent",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "auto_present": false,
-                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "error_msg": "Invalid structure",
-                        "initiator": "self",
-                        "presentation": {
-                          "identifiers": [
-                            {
-                              "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                              "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                              "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                              "timestamp": 1640995199,
-                            },
-                          ],
-                          "proof": {
-                            "aggregated_proof": {},
-                            "proofs": [
-                              {
-                                "non_revoc_proof": {},
-                                "primary_proof": {
-                                  "eq_proof": {
-                                    "a_prime": "0",
-                                    "e": "0",
-                                    "m2": "0",
-                                    "v": "0",
-                                  },
-                                  "ge_proofs": [
-                                    {
-                                      "alpha": "0",
-                                      "mj": "0",
-                                      "predicate": {
-                                        "p_type": "LT",
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                          "requested_proof": {
-                            "self_attested_attrs": {},
-                            "unrevealed_attrs": {},
-                          },
-                        },
-                        "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "presentation_proposal_dict": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "presentation_proposal": {
-                            "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
-                            "attributes": [
-                              {
-                                "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "referent": "0",
-                                "value": "martini",
-                              },
-                            ],
-                            "predicates": [],
-                          },
-                        },
-                        "presentation_request": {
-                          "name": "Proof request",
-                          "non_revoked": {
-                            "from": 1640995199,
-                            "to": 1640995199,
-                          },
-                          "nonce": "1",
-                          "requested_attributes": {},
-                          "requested_predicates": {},
-                          "version": "1.0",
-                        },
-                        "presentation_request_dict": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "request_presentations~attach": [
-                            {
-                              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
-                              "data": {
-                                "base64": "ey4uLn0=",
-                                "jws": {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                  "signatures": [
-                                    {
-                                      "header": {
-                                        "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                      },
-                                      "protected": "ey4uLn0",
-                                      "signature": "ey4uLn0",
-                                    },
-                                  ],
-                                },
-                                "links": [
-                                  "https://link.to/data",
-                                ],
-                                "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                              },
-                              "description": "view from doorway, facing east, with lights off",
-                              "filename": "IMG1092348.png",
-                              "mime-type": "image/png",
-                            },
-                          ],
-                        },
-                        "role": "prover",
-                        "state": "verified",
-                        "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "verified": "true",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/present-proof/records",
             "request": {
@@ -16891,10 +14957,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -16914,10 +14978,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17011,19 +15071,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/present-proof/records/{pres_ex_id}/problem-report",
             "path-parameters": {
@@ -17089,10 +15136,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -17112,10 +15157,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17270,10 +15311,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -17293,10 +15332,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17442,10 +15477,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -17465,10 +15498,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17595,10 +15624,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -17618,10 +15645,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17756,10 +15779,8 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                       "proof": {
-                        "aggregated_proof": {},
                         "proofs": [
                           {
-                            "non_revoc_proof": {},
                             "primary_proof": {
                               "eq_proof": {
                                 "a_prime": "0",
@@ -17779,10 +15800,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           },
                         ],
-                      },
-                      "requested_proof": {
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17903,14 +15920,6 @@ exports[`open api parser aries simple 1`] = `
                         "domain": "4jt78h47fh47",
                       },
                       "presentation_definition": {
-                        "format": {
-                          "jwt": {},
-                          "jwt_vc": {},
-                          "jwt_vp": {},
-                          "ldp": {},
-                          "ldp_vc": {},
-                          "ldp_vp": {},
-                        },
                         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "input_descriptors": [
                           {
@@ -17937,14 +15946,6 @@ exports[`open api parser aries simple 1`] = `
                               "status_revoked": "required",
                               "status_suspended": "required",
                               "subject_is_issuer": "required",
-                            },
-                            "metadata": {},
-                            "schema": {
-                              "uri_groups": [
-                                [
-                                  {},
-                                ],
-                              ],
                             },
                           },
                         ],
@@ -17975,11 +15976,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -18186,165 +16182,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all present-proof exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "role": "prover",
-                  "state": "proposal-sent",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "auto_present": false,
-                        "by_format": {
-                          "pres": {},
-                          "pres_proposal": {},
-                          "pres_request": {},
-                        },
-                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "error_msg": "Invalid structure",
-                        "initiator": "self",
-                        "pres": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "formats": [
-                            {
-                              "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "format": "dif/presentation-exchange/submission@v1.0",
-                            },
-                          ],
-                          "presentations~attach": [
-                            {
-                              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
-                              "data": {
-                                "base64": "ey4uLn0=",
-                                "jws": {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                  "signatures": [
-                                    {
-                                      "header": {
-                                        "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                      },
-                                      "protected": "ey4uLn0",
-                                      "signature": "ey4uLn0",
-                                    },
-                                  ],
-                                },
-                                "links": [
-                                  "https://link.to/data",
-                                ],
-                                "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                              },
-                              "description": "view from doorway, facing east, with lights off",
-                              "filename": "IMG1092348.png",
-                              "mime-type": "image/png",
-                            },
-                          ],
-                        },
-                        "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "pres_proposal": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "formats": [
-                            {
-                              "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "format": "dif/presentation-exchange/submission@v1.0",
-                            },
-                          ],
-                          "proposals~attach": [
-                            {
-                              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
-                              "data": {
-                                "base64": "ey4uLn0=",
-                                "jws": {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                  "signatures": [
-                                    {
-                                      "header": {
-                                        "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                      },
-                                      "protected": "ey4uLn0",
-                                      "signature": "ey4uLn0",
-                                    },
-                                  ],
-                                },
-                                "links": [
-                                  "https://link.to/data",
-                                ],
-                                "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                              },
-                              "description": "view from doorway, facing east, with lights off",
-                              "filename": "IMG1092348.png",
-                              "mime-type": "image/png",
-                            },
-                          ],
-                        },
-                        "pres_request": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "formats": [
-                            {
-                              "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "format": "dif/presentation-exchange/submission@v1.0",
-                            },
-                          ],
-                          "request_presentations~attach": [
-                            {
-                              "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                              "byte_count": 1234,
-                              "data": {
-                                "base64": "ey4uLn0=",
-                                "jws": {
-                                  "header": {
-                                    "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                  },
-                                  "protected": "ey4uLn0",
-                                  "signature": "ey4uLn0",
-                                  "signatures": [
-                                    {
-                                      "header": {
-                                        "kid": "did:sov:LjgpST2rjsoxYegQDRm7EL#keys-4",
-                                      },
-                                      "protected": "ey4uLn0",
-                                      "signature": "ey4uLn0",
-                                    },
-                                  ],
-                                },
-                                "links": [
-                                  "https://link.to/data",
-                                ],
-                                "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                              },
-                              "description": "view from doorway, facing east, with lights off",
-                              "filename": "IMG1092348.png",
-                              "mime-type": "image/png",
-                            },
-                          ],
-                        },
-                        "role": "prover",
-                        "state": "proposal-sent",
-                        "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "verified": "true",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/present-proof-2.0/records",
             "request": {
@@ -18436,11 +16273,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -18597,19 +16429,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "pres_ex_id": "pres-ex-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
             "path-parameters": {
@@ -18653,14 +16472,6 @@ exports[`open api parser aries simple 1`] = `
                         "domain": "4jt78h47fh47",
                       },
                       "presentation_definition": {
-                        "format": {
-                          "jwt": {},
-                          "jwt_vc": {},
-                          "jwt_vp": {},
-                          "ldp": {},
-                          "ldp_vc": {},
-                          "ldp_vp": {},
-                        },
                         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "input_descriptors": [
                           {
@@ -18687,14 +16498,6 @@ exports[`open api parser aries simple 1`] = `
                               "status_revoked": "required",
                               "status_suspended": "required",
                               "subject_is_issuer": "required",
-                            },
-                            "metadata": {},
-                            "schema": {
-                              "uri_groups": [
-                                [
-                                  {},
-                                ],
-                              ],
                             },
                           },
                         ],
@@ -18725,11 +16528,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -18944,14 +16742,6 @@ exports[`open api parser aries simple 1`] = `
                             "status_suspended": "required",
                             "subject_is_issuer": "required",
                           },
-                          "metadata": {},
-                          "schema": {
-                            "uri_groups": [
-                              [
-                                {},
-                              ],
-                            ],
-                          },
                         },
                       ],
                       "options": {
@@ -18976,11 +16766,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -19170,14 +16955,6 @@ exports[`open api parser aries simple 1`] = `
                 "request": {
                   "dif": {
                     "presentation_definition": {
-                      "format": {
-                        "jwt": {},
-                        "jwt_vc": {},
-                        "jwt_vp": {},
-                        "ldp": {},
-                        "ldp_vc": {},
-                        "ldp_vp": {},
-                      },
                       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "input_descriptors": [
                         {
@@ -19205,14 +16982,6 @@ exports[`open api parser aries simple 1`] = `
                             "status_suspended": "required",
                             "subject_is_issuer": "required",
                           },
-                          "metadata": {},
-                          "schema": {
-                            "uri_groups": [
-                              [
-                                {},
-                              ],
-                            ],
-                          },
                         },
                       ],
                       "submission_requirements": [
@@ -19224,8 +16993,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "record_ids": {},
-                    "reveal_doc": {},
                   },
                   "indy": {
                     "requested_attributes": {},
@@ -19237,11 +17004,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -19433,11 +17195,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -19622,11 +17379,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "auto_present": false,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -19960,17 +17712,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Delete the tail files",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "DELETE",
             "path": "/revocation/registry/delete-tails-file",
             "request": {
@@ -20085,23 +17826,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Search for matching revocation registries that current agent created",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "state": "init",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "rev_reg_ids": [
-                      "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registries/created",
             "request": {
@@ -20129,26 +17853,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get credential revocation status",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "result": {
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_rev_id": "12345",
-                      "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                      "state": "issued",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/credential-record",
             "request": {
@@ -20265,9 +17969,7 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "rev_reg_delta": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -20358,78 +18060,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send revocation registry definition to ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "sent": {
-                      "result": {
-                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "error_msg": "Revocation registry undefined",
-                        "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                        "max_cred_num": 1000,
-                        "pending_pub": [
-                          "23",
-                        ],
-                        "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "revoc_def_type": "CL_ACCUM",
-                        "revoc_reg_def": {
-                          "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                          "revocDefType": "CL_ACCUM",
-                          "value": {
-                            "issuanceType": "ISSUANCE_ON_DEMAND",
-                            "maxCredNum": 10,
-                            "publicKeys": {
-                              "accumKey": {
-                                "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
-                              },
-                            },
-                            "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                          },
-                          "ver": "1.0",
-                        },
-                        "revoc_reg_entry": {
-                          "value": {
-                            "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                            "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                          },
-                          "ver": "1.0",
-                        },
-                        "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "state": "active",
-                        "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                      },
-                    },
-                    "txn": {
-                      "_type": "101",
-                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "endorser_write_txn": true,
-                      "messages_attach": [
-                        {},
-                      ],
-                      "meta_data": {},
-                      "signature_request": [
-                        {},
-                      ],
-                      "signature_response": [
-                        {},
-                      ],
-                      "state": "active",
-                      "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
-                      "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/revocation/registry/{rev_reg_id}/definition",
             "path-parameters": {
@@ -20463,57 +18093,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send revocation registry entry to ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "rev_reg_id": "rev-reg-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "result": {
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "error_msg": "Revocation registry undefined",
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "max_cred_num": 1000,
-                      "pending_pub": [
-                        "23",
-                      ],
-                      "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "value": {
-                          "issuanceType": "ISSUANCE_ON_DEMAND",
-                          "maxCredNum": 10,
-                          "publicKeys": {
-                            "accumKey": {
-                              "z": "1 120F522F81E6B7 1 09F7A59005C4939854",
-                            },
-                          },
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                      "state": "active",
-                      "tails_hash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/revocation/registry/{rev_reg_id}/entry",
             "path-parameters": {
@@ -20555,24 +18134,12 @@ exports[`open api parser aries simple 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "sent": {},
                     "txn": {
                       "_type": "101",
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "endorser_write_txn": true,
-                      "messages_attach": [
-                        {},
-                      ],
-                      "meta_data": {},
-                      "signature_request": [
-                        {},
-                      ],
-                      "signature_response": [
-                        {},
-                      ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     },
                   },
@@ -20756,17 +18323,14 @@ exports[`open api parser aries simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "apply_ledger_update": true,
                   "rev_reg_id": "rev-reg-id",
                 },
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "apply_ledger_update": true,
+                },
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "accum_calculated": {},
-                    "accum_fixed": {},
-                    "rev_reg_delta": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -20926,21 +18490,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Search for matching schema that agent originated",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "schema_ids": [
-                      "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/schemas/created",
             "request": {
@@ -21020,56 +18569,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a schema to the ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "attributes": [
-                    "score",
-                  ],
-                  "schema_name": "prefs",
-                  "schema_version": "1.0",
-                },
-                "response": {
-                  "body": {
-                    "sent": {
-                      "schema": {
-                        "attrNames": [
-                          "score",
-                        ],
-                        "id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        "name": "schema_name",
-                        "seqNo": 10,
-                        "ver": "1.0",
-                        "version": "1.0",
-                      },
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                    },
-                    "txn": {
-                      "_type": "101",
-                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "endorser_write_txn": true,
-                      "messages_attach": [
-                        {},
-                      ],
-                      "meta_data": {},
-                      "signature_request": [
-                        {},
-                      ],
-                      "signature_response": [
-                        {},
-                      ],
-                      "state": "active",
-                      "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
-                      "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/schemas",
             "request": {
@@ -21174,9 +18673,7 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "config": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -21272,10 +18769,7 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "conductor": {},
-                    "timing": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -21469,10 +18963,10 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": {
+                "path-parameters": undefined,
+                "query-parameters": {
                   "did": "did",
                 },
-                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -21504,31 +18998,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "List wallet DIDs",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "key_type": "ed25519",
-                  "method": "key",
-                  "posture": "public",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "did": "did:peer:WgWxqztrNooG92RXvxSTWv",
-                        "key_type": "ed25519",
-                        "method": "sov",
-                        "posture": "public",
-                        "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/wallet/did",
             "request": {
@@ -21605,10 +19074,10 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "headers": undefined,
-                "path-parameters": {
+                "path-parameters": undefined,
+                "query-parameters": {
                   "did": "did",
                 },
-                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -21637,21 +19106,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Update endpoint in wallet and on ledger if posted to it",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "did": "WgWxqztrNooG92RXvxSTWv",
-                  "endpoint": "https://myhost:8021",
-                  "endpoint_type": "Endpoint",
-                },
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/wallet/set-did-endpoint",
             "request": {
@@ -21696,27 +19150,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Assign the current public DID",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "did": "did",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "result": {
-                      "did": "did:peer:WgWxqztrNooG92RXvxSTWv",
-                      "key_type": "ed25519",
-                      "method": "sov",
-                      "posture": "public",
-                      "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/wallet/did/public",
             "request": {

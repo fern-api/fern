@@ -7156,54 +7156,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "entities": [
-                    "individual",
-                  ],
-                  "statuses": [
-                    "pending",
-                  ],
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": {
-                      "rows": [
-                        {
-                          "amount": 1000,
-                          "contract": {
-                            "contract_type": "pay_as_you_go_time_based",
-                            "id": "rhCTiRd9Mad41RwjsFWw-",
-                            "name": "Lisandro Shanahan-Dynamic Web Specialist",
-                          },
-                          "created_at": "2022-05-24T09:38:46.235Z",
-                          "currency": "USD",
-                          "fee": 10,
-                          "id": 5586317,
-                          "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
-                          "is_offcycle": true,
-                          "is_overdue": true,
-                          "label": "INVOICE-2022-11",
-                          "money_received_at": "2022-05-24T09:38:46.235Z",
-                          "paid_at": "2022-05-24T09:38:46.235Z",
-                          "payment_currency": "USD",
-                          "payment_method": "stripe_bacs_debit",
-                          "payment_processed_at": "2022-05-24T09:38:46.235Z",
-                          "status": "pending",
-                          "total": 1000,
-                          "vat_percentage": 21,
-                          "vat_total": 210,
-                        },
-                      ],
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/invoices",
             "request": {
@@ -7334,19 +7286,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "content_type": "application/pdf",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/attachments",
             "request": {
@@ -7430,31 +7369,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": [
-                      {
-                        "client_legal_entity": {},
-                        "employments": [
-                          {
-                            "client_legal_entity": {},
-                            "payment": {},
-                            "team": {},
-                          },
-                        ],
-                        "monthly_payment": {},
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/people",
             "request": {
@@ -7503,27 +7417,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": {
-                      "calculated_premium": 50,
-                      "id": "d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb",
-                      "misclassification_guarantee": {},
-                      "penalties": {},
-                      "third_party_liabilities": {},
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
@@ -7564,31 +7457,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "amount": 100,
-                    "currency_code": "USD",
-                    "cycle_end_type": "DAY_OF_WEEK",
-                    "effective_date": "1999-12-31",
-                    "first_payment_date": "1999-12-31",
-                    "frequency": "weekly",
-                    "job_title_id": 123,
-                    "job_title_name": "3D Designer",
-                    "payment_due_type": "REGULAR",
-                    "scale": "hourly",
-                    "seniority_id": 1,
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/amendments",
@@ -7663,32 +7531,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                    },
-                    "type": "ongoing_time_based",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/contracts/fixed-rate",
             "request": {
@@ -7720,32 +7562,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                    },
-                    "type": "payg_milestones",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/contracts/milestone-based",
@@ -7779,32 +7595,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                    },
-                    "type": "payg_tasks",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/contracts/task-based",
             "request": {
@@ -7836,32 +7626,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                    },
-                    "type": "pay_as_you_go_time_based",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/contracts/time-based",
@@ -8630,10 +8394,7 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "data": {
-                    "client": {
-                      "legal_entity": {},
-                      "team": {},
-                    },
+                    "client": {},
                     "compensation_details": {},
                     "employee": {
                       "address": {
@@ -8664,18 +8425,12 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "client": {
-                        "legal_entity": {},
-                      },
-                      "compensation_details": {},
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "employee": {},
                       "employment": {
                         "end_date": "1999-12-31",
                         "scope_of_work": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
                         "start_date": "1999-12-31",
                       },
-                      "health_plan": {},
                       "job_title": "Designer",
                       "seniority": {
                         "id": 2,
@@ -8843,21 +8598,6 @@ exports[`open api parser deel simple 1`] = `
               "root.ConflictError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": {
-                      "id": "6733c95b-df52-419e-906d-6904d3117dab",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/hris/direct-employees",
             "request": {
@@ -8934,21 +8674,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "invoice_adjustment_id": 1.1,
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "status": "approved",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
             "path-parameters": {
@@ -8989,20 +8714,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "ids": [],
-                    "status": "approved",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/invoice-adjustments/many/reviews",
@@ -9361,27 +9072,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": [
-                      {
-                        "id": 1,
-                        "name": "3D Artist",
-                      },
-                    ],
-                    "page": {
-                      "cursor": "eyJvZmZzZXQiOjEwMCwibGltaXQiOjEwMCwiZmlsdGVyVHlwZSI6ImFsbCJ9",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/lookups/job-titles",
             "request": {
@@ -9418,25 +9108,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": [
-                      {
-                        "id": 2,
-                        "level": 2,
-                        "name": "Mid (Individual Contributor Level 2)",
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/lookups/seniorities",
@@ -9518,23 +9189,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "amount": "900.00",
-                    "description": "Sprint #2",
-                    "title": "Sprint 2",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
@@ -9575,22 +9229,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                  "milestone_id": "milestone-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "status": "approved",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
@@ -9636,22 +9274,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "ids": [],
-                    "status": "approved",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/milestones/many/reviews",
@@ -9864,22 +9486,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "amount": 2500,
-                    "date_submitted": "1999-12-31",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
@@ -10004,19 +9610,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": [],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/agreements",
@@ -10175,23 +9768,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "amount": "123.45",
-                    "date_submitted": "1999-12-31",
-                    "description": "Make the button pop.",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/tasks",
@@ -10482,106 +10058,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": {
-                      "applied_changes": [
-                        {
-                          "attachments": [
-                            {},
-                          ],
-                          "days_used_end_year": "2.00",
-                          "days_used_start_year": "2.00",
-                          "denial_reason": "No time off available",
-                          "other_timeoff_name": "This is time off for a doctor's appointment",
-                          "reason": "I have a doctors appointment",
-                          "requested_at": "2022-05-24T09:38:46.235Z",
-                          "requester": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "reviewed_at": "2022-05-24T09:38:46.235Z",
-                          "reviewer": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "single_date": "2022-05-24T09:38:46.235Z",
-                          "status": "REQUESTED",
-                          "total_days_used": "4.00",
-                          "type": "VACATION",
-                        },
-                      ],
-                      "attachments": [
-                        {},
-                      ],
-                      "change_request": {
-                        "attachments": [
-                          {},
-                        ],
-                        "days_used_end_year": "2.00",
-                        "days_used_start_year": "2.00",
-                        "denial_reason": "No time off available",
-                        "other_timeoff_name": "This is time off for a doctor's appointment",
-                        "reason": "I have a doctors appointment",
-                        "requested_at": "2022-05-24T09:38:46.235Z",
-                        "requester": {
-                          "id": 409222,
-                          "name": "Mr. Rogers",
-                          "profile_type": "client",
-                        },
-                        "reviewed_at": "2022-05-24T09:38:46.235Z",
-                        "reviewer": {
-                          "id": 409222,
-                          "name": "Mr. Rogers",
-                          "profile_type": "client",
-                        },
-                        "single_date": "2022-05-24T09:38:46.235Z",
-                        "status": "REQUESTED",
-                        "total_days_used": "4.00",
-                        "type": "VACATION",
-                      },
-                      "contract_id": "abc123",
-                      "created_at": "2022-05-24T09:38:46.235Z",
-                      "days_used_end_year": "2.00",
-                      "days_used_start_year": "2.00",
-                      "denial_reason": "No time off available",
-                      "end_date": "2022-05-24T09:38:46.235Z",
-                      "id": 6938,
-                      "other_timeoff_name": "This is time off for a doctor's appointment",
-                      "reason": "I have a doctors appointment",
-                      "requested_at": "2022-05-24T09:38:46.235Z",
-                      "requester": {
-                        "id": 409222,
-                        "name": "Mr. Rogers",
-                        "profile_type": "client",
-                      },
-                      "reviewed_at": "2022-05-24T09:38:46.235Z",
-                      "reviewer": {
-                        "id": 409222,
-                        "name": "Mr. Rogers",
-                        "profile_type": "client",
-                      },
-                      "single_date": "2022-05-24T09:38:46.235Z",
-                      "start_date": "2022-05-24T09:38:46.235Z",
-                      "status": "REQUESTED",
-                      "total_days_used": "4.00",
-                      "type": "VACATION",
-                      "updated_at": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
@@ -10643,107 +10119,6 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "contract_id": "contract-id",
-                  "timeoff_id": "timeoff-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": {
-                      "applied_changes": [
-                        {
-                          "attachments": [
-                            {},
-                          ],
-                          "days_used_end_year": "2.00",
-                          "days_used_start_year": "2.00",
-                          "denial_reason": "No time off available",
-                          "other_timeoff_name": "This is time off for a doctor's appointment",
-                          "reason": "I have a doctors appointment",
-                          "requested_at": "2022-05-24T09:38:46.235Z",
-                          "requester": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "reviewed_at": "2022-05-24T09:38:46.235Z",
-                          "reviewer": {
-                            "id": 409222,
-                            "name": "Mr. Rogers",
-                            "profile_type": "client",
-                          },
-                          "single_date": "2022-05-24T09:38:46.235Z",
-                          "status": "REQUESTED",
-                          "total_days_used": "4.00",
-                          "type": "VACATION",
-                        },
-                      ],
-                      "attachments": [
-                        {},
-                      ],
-                      "change_request": {
-                        "attachments": [
-                          {},
-                        ],
-                        "days_used_end_year": "2.00",
-                        "days_used_start_year": "2.00",
-                        "denial_reason": "No time off available",
-                        "other_timeoff_name": "This is time off for a doctor's appointment",
-                        "reason": "I have a doctors appointment",
-                        "requested_at": "2022-05-24T09:38:46.235Z",
-                        "requester": {
-                          "id": 409222,
-                          "name": "Mr. Rogers",
-                          "profile_type": "client",
-                        },
-                        "reviewed_at": "2022-05-24T09:38:46.235Z",
-                        "reviewer": {
-                          "id": 409222,
-                          "name": "Mr. Rogers",
-                          "profile_type": "client",
-                        },
-                        "single_date": "2022-05-24T09:38:46.235Z",
-                        "status": "REQUESTED",
-                        "total_days_used": "4.00",
-                        "type": "VACATION",
-                      },
-                      "contract_id": "abc123",
-                      "created_at": "2022-05-24T09:38:46.235Z",
-                      "days_used_end_year": "2.00",
-                      "days_used_start_year": "2.00",
-                      "denial_reason": "No time off available",
-                      "end_date": "2022-05-24T09:38:46.235Z",
-                      "id": 6938,
-                      "other_timeoff_name": "This is time off for a doctor's appointment",
-                      "reason": "I have a doctors appointment",
-                      "requested_at": "2022-05-24T09:38:46.235Z",
-                      "requester": {
-                        "id": 409222,
-                        "name": "Mr. Rogers",
-                        "profile_type": "client",
-                      },
-                      "reviewed_at": "2022-05-24T09:38:46.235Z",
-                      "reviewer": {
-                        "id": 409222,
-                        "name": "Mr. Rogers",
-                        "profile_type": "client",
-                      },
-                      "single_date": "2022-05-24T09:38:46.235Z",
-                      "start_date": "2022-05-24T09:38:46.235Z",
-                      "status": "REQUESTED",
-                      "total_days_used": "4.00",
-                      "type": "VACATION",
-                      "updated_at": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                },
-              },
             ],
             "method": "PUT",
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
@@ -10878,9 +10253,6 @@ exports[`open api parser deel simple 1`] = `
                       {
                         "applied_changes": [
                           {
-                            "attachments": [
-                              {},
-                            ],
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
                             "denial_reason": "No time off available",
@@ -10904,13 +10276,7 @@ exports[`open api parser deel simple 1`] = `
                             "type": "VACATION",
                           },
                         ],
-                        "attachments": [
-                          {},
-                        ],
                         "change_request": {
-                          "attachments": [
-                            {},
-                          ],
                           "days_used_end_year": "2.00",
                           "days_used_start_year": "2.00",
                           "denial_reason": "No time off available",
@@ -10993,22 +10359,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "timeoff_id": "timeoff-id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "denial_reason": "Not allowed for this day.",
-                    "is_approved": true,
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/time-offs/{timeoff_id}/review",
@@ -11099,21 +10449,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "timesheet_id": 1,
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "status": "approved",
-                  },
-                },
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/timesheets/{timesheet_id}/reviews",
             "path-parameters": {
@@ -11154,20 +10489,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "ids": [],
-                    "status": "approved",
-                  },
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/timesheets/many/reviews",
@@ -11474,6 +10795,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/webhooks/{id}",
             "path-parameters": {
@@ -11497,23 +10829,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": {
-                  "description": "My first webhook",
-                  "events": [],
-                  "name": "Demo webhook",
-                  "status": "enabled",
-                  "url": "https://mywebhook.com/listening",
-                },
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/webhooks/{id}",
@@ -11603,22 +10918,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "api_version": "v1",
-                  "description": "I like it very much.",
-                  "events": [],
-                  "name": "My first webhook.",
-                  "status": "enabled",
-                  "url": "https://mywebhook.com",
-                },
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/webhooks",

@@ -6476,17 +6476,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/public/apiClient/accessToken",
             "request": {
@@ -6542,13 +6531,6 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "info": {
-                      "awsBuyer": {
-                        "companyInfo": {},
-                      },
-                      "azureBuyer": {
-                        "buyerInfo": {},
-                        "companyInfo": {},
-                      },
                       "gcpBuyer": {
                         "approvals": [
                           {
@@ -6556,7 +6538,6 @@ the same customer, dimension, and time, but a different quantity.",
                           },
                         ],
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
-                        "userInfo": {},
                       },
                     },
                     "partner": "AWS",
@@ -6620,13 +6601,6 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "info": {
-                      "awsBuyer": {
-                        "companyInfo": {},
-                      },
-                      "azureBuyer": {
-                        "buyerInfo": {},
-                        "companyInfo": {},
-                      },
                       "gcpBuyer": {
                         "approvals": [
                           {
@@ -6634,7 +6608,6 @@ the same customer, dimension, and time, but a different quantity.",
                           },
                         ],
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
-                        "userInfo": {},
                       },
                     },
                     "partner": "AWS",
@@ -6703,20 +6676,6 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "entitlementId": "entitlement-id",
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
@@ -6768,26 +6727,14 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "info": {
-                      "awsEntitlements": [
-                        {},
-                      ],
                       "azureSubscriptions": [
                         {
                           "allowedCustomerOperations": [
                             "Read",
                           ],
-                          "beneficiary": {
-                            "buyerInfo": {},
-                            "companyInfo": {},
-                          },
-                          "purchaser": {
-                            "buyerInfo": {},
-                            "companyInfo": {},
-                          },
                           "saasSubscriptionStatus": "NotStarted",
                           "sandboxType": "None",
                           "sessionMode": "None",
-                          "term": {},
                         },
                       ],
                       "commits": [
@@ -6803,16 +6750,12 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "eulaType": "",
                       "gcpEntitlements": [
                         {
-                          "consumers": [
-                            {},
-                          ],
                           "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                         },
                       ],
@@ -6823,26 +6766,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
-                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "priceTiers": [
-                                  {
-                                    "price": {},
-                                  },
-                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
-                      ],
-                      "paymentInstallments": [
-                        {},
                       ],
                     },
                     "partner": "AWS",
@@ -7004,26 +6938,14 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "info": {
-                      "awsEntitlements": [
-                        {},
-                      ],
                       "azureSubscriptions": [
                         {
                           "allowedCustomerOperations": [
                             "Read",
                           ],
-                          "beneficiary": {
-                            "buyerInfo": {},
-                            "companyInfo": {},
-                          },
-                          "purchaser": {
-                            "buyerInfo": {},
-                            "companyInfo": {},
-                          },
                           "saasSubscriptionStatus": "NotStarted",
                           "sandboxType": "None",
                           "sessionMode": "None",
-                          "term": {},
                         },
                       ],
                       "commits": [
@@ -7039,16 +6961,12 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "eulaType": "",
                       "gcpEntitlements": [
                         {
-                          "consumers": [
-                            {},
-                          ],
                           "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                         },
                       ],
@@ -7059,26 +6977,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
-                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "priceTiers": [
-                                  {
-                                    "price": {},
-                                  },
-                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
-                      ],
-                      "paymentInstallments": [
-                        {},
                       ],
                     },
                     "partner": "AWS",
@@ -7157,26 +7066,14 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "entitlementInfo": {
-                      "awsEntitlements": [
-                        {},
-                      ],
                       "azureSubscriptions": [
                         {
                           "allowedCustomerOperations": [
                             "Read",
                           ],
-                          "beneficiary": {
-                            "buyerInfo": {},
-                            "companyInfo": {},
-                          },
-                          "purchaser": {
-                            "buyerInfo": {},
-                            "companyInfo": {},
-                          },
                           "saasSubscriptionStatus": "NotStarted",
                           "sandboxType": "None",
                           "sessionMode": "None",
-                          "term": {},
                         },
                       ],
                       "commits": [
@@ -7192,16 +7089,12 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "eulaType": "",
                       "gcpEntitlements": [
                         {
-                          "consumers": [
-                            {},
-                          ],
                           "state": "ENTITLEMENT_STATE_UNSPECIFIED",
                         },
                       ],
@@ -7212,26 +7105,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
-                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "priceTiers": [
-                                  {
-                                    "price": {},
-                                  },
-                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
-                      ],
-                      "paymentInstallments": [
-                        {},
                       ],
                     },
                     "info": {
@@ -7306,48 +7190,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "info": {
-                      "awsAceIntegration": {
-                        "credential": {},
-                      },
-                      "awsIntegration": {},
-                      "azureIntegration": {
-                        "credential": {},
-                      },
-                      "gcpIntegration": {},
-                      "hubspotCrmIntegration": {
-                        "credential": {},
-                      },
-                      "salesforceCrmIntegration": {
-                        "credential": {},
-                        "filters": [
-                          {},
-                        ],
-                      },
-                      "slackIntegration": {
-                        "authedUser": {},
-                        "enterprise": {},
-                        "incomingWebhook": {},
-                        "team": {},
-                      },
-                    },
-                    "partner": "AWS",
-                    "service": "MARKETPLACE",
-                    "status": "CREATED",
-                  },
-                },
-              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/integration",
@@ -7433,31 +7275,6 @@ the same customer, dimension, and time, but a different quantity.",
                 "request": undefined,
                 "response": {
                   "body": {
-                    "info": {
-                      "awsAceIntegration": {
-                        "credential": {},
-                      },
-                      "awsIntegration": {},
-                      "azureIntegration": {
-                        "credential": {},
-                      },
-                      "gcpIntegration": {},
-                      "hubspotCrmIntegration": {
-                        "credential": {},
-                      },
-                      "salesforceCrmIntegration": {
-                        "credential": {},
-                        "filters": [
-                          {},
-                        ],
-                      },
-                      "slackIntegration": {
-                        "authedUser": {},
-                        "enterprise": {},
-                        "incomingWebhook": {},
-                        "team": {},
-                      },
-                    },
                     "partner": "AWS",
                     "service": "MARKETPLACE",
                     "status": "CREATED",
@@ -7513,50 +7330,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                  "partner": "AWS",
-                  "service": "MARKETPLACE",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "info": {
-                      "awsAceIntegration": {
-                        "credential": {},
-                      },
-                      "awsIntegration": {},
-                      "azureIntegration": {
-                        "credential": {},
-                      },
-                      "gcpIntegration": {},
-                      "hubspotCrmIntegration": {
-                        "credential": {},
-                      },
-                      "salesforceCrmIntegration": {
-                        "credential": {},
-                        "filters": [
-                          {},
-                        ],
-                      },
-                      "slackIntegration": {
-                        "authedUser": {},
-                        "enterprise": {},
-                        "incomingWebhook": {},
-                        "team": {},
-                      },
-                    },
-                    "partner": "AWS",
-                    "service": "MARKETPLACE",
-                    "status": "CREATED",
-                  },
-                },
-              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/integration/{partner}/{service}",
@@ -7659,9 +7432,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "metaInfo": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7705,26 +7476,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "results": [
                           {
                             "status": "Success",
-                            "usageRecord": {
-                              "usageAllocations": [
-                                {
-                                  "tags": [
-                                    {},
-                                  ],
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                        "unprocessedRecords": [
-                          {
-                            "usageAllocations": [
-                              {
-                                "tags": [
-                                  {},
-                                ],
-                              },
-                            ],
                           },
                         ],
                       },
@@ -7739,13 +7490,6 @@ the same customer, dimension, and time, but a different quantity.",
                               },
                             },
                             "status": "Accepted",
-                          },
-                        ],
-                      },
-                      "gcpMeteringResponse": {
-                        "reportErrors": [
-                          {
-                            "status": {},
                           },
                         ],
                       },
@@ -7778,26 +7522,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "entitlementId": "entitlement-id",
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecordGroups": [
-                      {
-                        "metaInfo": {},
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -7849,25 +7573,6 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecordGroups": [
-                      {
-                        "metaInfo": {},
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
@@ -7913,26 +7618,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                  "productId": "product-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecordGroups": [
-                      {
-                        "metaInfo": {},
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
@@ -7983,75 +7668,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "entitlementId": "entitlement-id",
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecordReports": [
-                      {
-                        "info": {
-                          "awsMeteringResponse": {
-                            "results": [
-                              {
-                                "status": "Success",
-                                "usageRecord": {
-                                  "usageAllocations": [
-                                    {
-                                      "tags": [
-                                        {},
-                                      ],
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                            "unprocessedRecords": [
-                              {
-                                "usageAllocations": [
-                                  {
-                                    "tags": [
-                                      {},
-                                    ],
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                          "azureMeteringResponse": {
-                            "result": [
-                              {
-                                "error": {
-                                  "additionalInfo": {
-                                    "acceptedMessage": {
-                                      "status": "Accepted",
-                                    },
-                                  },
-                                },
-                                "status": "Accepted",
-                              },
-                            ],
-                          },
-                          "gcpMeteringResponse": {
-                            "reportErrors": [
-                              {
-                                "status": {},
-                              },
-                            ],
-                          },
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
@@ -8108,74 +7724,6 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecordReports": [
-                      {
-                        "info": {
-                          "awsMeteringResponse": {
-                            "results": [
-                              {
-                                "status": "Success",
-                                "usageRecord": {
-                                  "usageAllocations": [
-                                    {
-                                      "tags": [
-                                        {},
-                                      ],
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                            "unprocessedRecords": [
-                              {
-                                "usageAllocations": [
-                                  {
-                                    "tags": [
-                                      {},
-                                    ],
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                          "azureMeteringResponse": {
-                            "result": [
-                              {
-                                "error": {
-                                  "additionalInfo": {
-                                    "acceptedMessage": {
-                                      "status": "Accepted",
-                                    },
-                                  },
-                                },
-                                "status": "Accepted",
-                              },
-                            ],
-                          },
-                          "gcpMeteringResponse": {
-                            "reportErrors": [
-                              {
-                                "status": {},
-                              },
-                            ],
-                          },
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
@@ -8221,75 +7769,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                  "productId": "product-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecordReports": [
-                      {
-                        "info": {
-                          "awsMeteringResponse": {
-                            "results": [
-                              {
-                                "status": "Success",
-                                "usageRecord": {
-                                  "usageAllocations": [
-                                    {
-                                      "tags": [
-                                        {},
-                                      ],
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                            "unprocessedRecords": [
-                              {
-                                "usageAllocations": [
-                                  {
-                                    "tags": [
-                                      {},
-                                    ],
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                          "azureMeteringResponse": {
-                            "result": [
-                              {
-                                "error": {
-                                  "additionalInfo": {
-                                    "acceptedMessage": {
-                                      "status": "Accepted",
-                                    },
-                                  },
-                                },
-                                "status": "Accepted",
-                              },
-                            ],
-                          },
-                          "gcpMeteringResponse": {
-                            "reportErrors": [
-                              {
-                                "status": {},
-                              },
-                            ],
-                          },
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
@@ -8341,22 +7820,6 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.ConflictError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "entitlementId": "entitlement-id",
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "metaInfo": {},
-                  },
-                },
-              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -8466,9 +7929,6 @@ the same customer, dimension, and time, but a different quantity.",
                               "paymentOption": {
                                 "type": "day",
                               },
-                              "prices": [
-                                {},
-                              ],
                             },
                           ],
                         },
@@ -8481,9 +7941,6 @@ the same customer, dimension, and time, but a different quantity.",
                       ],
                     },
                     "azurePrivateOffer": {
-                      "acceptanceLinks": [
-                        {},
-                      ],
                       "beneficiaries": [
                         {
                           "beneficiaryRecipients": [
@@ -8511,9 +7968,6 @@ the same customer, dimension, and time, but a different quantity.",
                                     "paymentOption": {
                                       "type": "day",
                                     },
-                                    "prices": [
-                                      {},
-                                    ],
                                   },
                                 ],
                               },
@@ -8541,9 +7995,6 @@ the same customer, dimension, and time, but a different quantity.",
                                     "paymentOption": {
                                       "type": "day",
                                     },
-                                    "prices": [
-                                      {},
-                                    ],
                                   },
                                 ],
                               },
@@ -8560,7 +8011,6 @@ the same customer, dimension, and time, but a different quantity.",
                       "privateOfferType": "customerPromotion",
                       "state": "draft",
                       "subState": "pendingAcceptance",
-                      "upgradedFrom": {},
                       "validations": [
                         {
                           "code": "businessValidationError",
@@ -8569,16 +8019,6 @@ the same customer, dimension, and time, but a different quantity.",
                       ],
                     },
                     "azureProductVariant": {
-                      "azureGovernmentCertifications": [
-                        {
-                          "validationResults": [
-                            {},
-                          ],
-                        },
-                      ],
-                      "extendedProperties": [
-                        {},
-                      ],
                       "featureAvailabilities": [
                         {
                           "customMeters": [
@@ -8595,15 +8035,8 @@ the same customer, dimension, and time, but a different quantity.",
                               "state": "Disabled",
                             },
                           ],
-                          "markets": [
-                            {},
-                          ],
                           "priceSchedules": [
                             {
-                              "dateTimeRange": {
-                                "endAt": {},
-                                "startAt": {},
-                              },
                               "schedules": [
                                 {
                                   "priceCadence": {
@@ -8615,25 +8048,11 @@ the same customer, dimension, and time, but a different quantity.",
                                       "name": "sharedcore",
                                     },
                                   ],
-                                  "retailPrice": {},
                                 },
                               ],
                             },
                           ],
-                          "properties": [
-                            {},
-                          ],
-                          "subscriptionAudiences": [
-                            {},
-                          ],
-                          "tenantAudiences": [
-                            {},
-                          ],
                           "trial": {
-                            "dateTimeRange": {
-                              "endAt": {},
-                              "startAt": {},
-                            },
                             "durationType": "Minute",
                             "type": "NoTrial",
                           },
@@ -8643,9 +8062,6 @@ the same customer, dimension, and time, but a different quantity.",
                       "resourceType": "AzureSkuVariant",
                       "state": "InActive",
                     },
-                    "buyerAzureTenants": [
-                      {},
-                    ],
                     "commits": [
                       {
                         "timeUnit": "DAY",
@@ -8659,7 +8075,6 @@ the same customer, dimension, and time, but a different quantity.",
                             "recurringUnit": "Monthly",
                           },
                         ],
-                        "usageCount": {},
                         "valueType": "VALUE_TYPE_UNSPECIFIED",
                       },
                     ],
@@ -8676,17 +8091,11 @@ the same customer, dimension, and time, but a different quantity.",
                           "subscriptionPlans": [
                             {
                               "period": "ONE_YEAR",
-                              "price": {},
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                           "usageFees": [
                             {
-                              "priceTiers": [
-                                {
-                                  "price": {},
-                                },
-                              ],
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
@@ -8694,15 +8103,9 @@ the same customer, dimension, and time, but a different quantity.",
                         "purchaseMode": "PURCHASE_MODE_PUBLIC",
                       },
                     ],
-                    "paymentInstallments": [
-                      {},
-                    ],
                     "visibility": "PRIVATE",
                   },
                   "metaInfo": {
-                    "contacts": [
-                      {},
-                    ],
                     "notifications": [
                       {
                         "action": "ACCEPT",
@@ -8734,9 +8137,6 @@ the same customer, dimension, and time, but a different quantity.",
                                 "paymentOption": {
                                   "type": "day",
                                 },
-                                "prices": [
-                                  {},
-                                ],
                               },
                             ],
                           },
@@ -8749,9 +8149,6 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                       },
                       "azurePrivateOffer": {
-                        "acceptanceLinks": [
-                          {},
-                        ],
                         "beneficiaries": [
                           {
                             "beneficiaryRecipients": [
@@ -8779,9 +8176,6 @@ the same customer, dimension, and time, but a different quantity.",
                                       "paymentOption": {
                                         "type": "day",
                                       },
-                                      "prices": [
-                                        {},
-                                      ],
                                     },
                                   ],
                                 },
@@ -8809,9 +8203,6 @@ the same customer, dimension, and time, but a different quantity.",
                                       "paymentOption": {
                                         "type": "day",
                                       },
-                                      "prices": [
-                                        {},
-                                      ],
                                     },
                                   ],
                                 },
@@ -8828,7 +8219,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "privateOfferType": "customerPromotion",
                         "state": "draft",
                         "subState": "pendingAcceptance",
-                        "upgradedFrom": {},
                         "validations": [
                           {
                             "code": "businessValidationError",
@@ -8837,16 +8227,6 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                       },
                       "azureProductVariant": {
-                        "azureGovernmentCertifications": [
-                          {
-                            "validationResults": [
-                              {},
-                            ],
-                          },
-                        ],
-                        "extendedProperties": [
-                          {},
-                        ],
                         "featureAvailabilities": [
                           {
                             "customMeters": [
@@ -8863,15 +8243,8 @@ the same customer, dimension, and time, but a different quantity.",
                                 "state": "Disabled",
                               },
                             ],
-                            "markets": [
-                              {},
-                            ],
                             "priceSchedules": [
                               {
-                                "dateTimeRange": {
-                                  "endAt": {},
-                                  "startAt": {},
-                                },
                                 "schedules": [
                                   {
                                     "priceCadence": {
@@ -8883,25 +8256,11 @@ the same customer, dimension, and time, but a different quantity.",
                                         "name": "sharedcore",
                                       },
                                     ],
-                                    "retailPrice": {},
                                   },
                                 ],
                               },
                             ],
-                            "properties": [
-                              {},
-                            ],
-                            "subscriptionAudiences": [
-                              {},
-                            ],
-                            "tenantAudiences": [
-                              {},
-                            ],
                             "trial": {
-                              "dateTimeRange": {
-                                "endAt": {},
-                                "startAt": {},
-                              },
                               "durationType": "Minute",
                               "type": "NoTrial",
                             },
@@ -8911,9 +8270,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
-                      "buyerAzureTenants": [
-                        {},
-                      ],
                       "commits": [
                         {
                           "timeUnit": "DAY",
@@ -8927,7 +8283,6 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
@@ -8944,17 +8299,11 @@ the same customer, dimension, and time, but a different quantity.",
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
-                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "priceTiers": [
-                                  {
-                                    "price": {},
-                                  },
-                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
@@ -8962,15 +8311,9 @@ the same customer, dimension, and time, but a different quantity.",
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
-                      "paymentInstallments": [
-                        {},
-                      ],
                       "visibility": "PRIVATE",
                     },
                     "metaInfo": {
-                      "contacts": [
-                        {},
-                      ],
                       "notifications": [
                         {
                           "action": "ACCEPT",
@@ -9038,9 +8381,6 @@ the same customer, dimension, and time, but a different quantity.",
                               "paymentOption": {
                                 "type": "day",
                               },
-                              "prices": [
-                                {},
-                              ],
                             },
                           ],
                         },
@@ -9053,9 +8393,6 @@ the same customer, dimension, and time, but a different quantity.",
                       ],
                     },
                     "azurePrivateOffer": {
-                      "acceptanceLinks": [
-                        {},
-                      ],
                       "beneficiaries": [
                         {
                           "beneficiaryRecipients": [
@@ -9083,9 +8420,6 @@ the same customer, dimension, and time, but a different quantity.",
                                     "paymentOption": {
                                       "type": "day",
                                     },
-                                    "prices": [
-                                      {},
-                                    ],
                                   },
                                 ],
                               },
@@ -9113,9 +8447,6 @@ the same customer, dimension, and time, but a different quantity.",
                                     "paymentOption": {
                                       "type": "day",
                                     },
-                                    "prices": [
-                                      {},
-                                    ],
                                   },
                                 ],
                               },
@@ -9132,7 +8463,6 @@ the same customer, dimension, and time, but a different quantity.",
                       "privateOfferType": "customerPromotion",
                       "state": "draft",
                       "subState": "pendingAcceptance",
-                      "upgradedFrom": {},
                       "validations": [
                         {
                           "code": "businessValidationError",
@@ -9141,16 +8471,6 @@ the same customer, dimension, and time, but a different quantity.",
                       ],
                     },
                     "azureProductVariant": {
-                      "azureGovernmentCertifications": [
-                        {
-                          "validationResults": [
-                            {},
-                          ],
-                        },
-                      ],
-                      "extendedProperties": [
-                        {},
-                      ],
                       "featureAvailabilities": [
                         {
                           "customMeters": [
@@ -9167,15 +8487,8 @@ the same customer, dimension, and time, but a different quantity.",
                               "state": "Disabled",
                             },
                           ],
-                          "markets": [
-                            {},
-                          ],
                           "priceSchedules": [
                             {
-                              "dateTimeRange": {
-                                "endAt": {},
-                                "startAt": {},
-                              },
                               "schedules": [
                                 {
                                   "priceCadence": {
@@ -9187,25 +8500,11 @@ the same customer, dimension, and time, but a different quantity.",
                                       "name": "sharedcore",
                                     },
                                   ],
-                                  "retailPrice": {},
                                 },
                               ],
                             },
                           ],
-                          "properties": [
-                            {},
-                          ],
-                          "subscriptionAudiences": [
-                            {},
-                          ],
-                          "tenantAudiences": [
-                            {},
-                          ],
                           "trial": {
-                            "dateTimeRange": {
-                              "endAt": {},
-                              "startAt": {},
-                            },
                             "durationType": "Minute",
                             "type": "NoTrial",
                           },
@@ -9215,9 +8514,6 @@ the same customer, dimension, and time, but a different quantity.",
                       "resourceType": "AzureSkuVariant",
                       "state": "InActive",
                     },
-                    "buyerAzureTenants": [
-                      {},
-                    ],
                     "commits": [
                       {
                         "timeUnit": "DAY",
@@ -9231,7 +8527,6 @@ the same customer, dimension, and time, but a different quantity.",
                             "recurringUnit": "Monthly",
                           },
                         ],
-                        "usageCount": {},
                         "valueType": "VALUE_TYPE_UNSPECIFIED",
                       },
                     ],
@@ -9248,17 +8543,11 @@ the same customer, dimension, and time, but a different quantity.",
                           "subscriptionPlans": [
                             {
                               "period": "ONE_YEAR",
-                              "price": {},
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                           "usageFees": [
                             {
-                              "priceTiers": [
-                                {
-                                  "price": {},
-                                },
-                              ],
                               "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
@@ -9266,15 +8555,9 @@ the same customer, dimension, and time, but a different quantity.",
                         "purchaseMode": "PURCHASE_MODE_PUBLIC",
                       },
                     ],
-                    "paymentInstallments": [
-                      {},
-                    ],
                     "visibility": "PRIVATE",
                   },
                   "metaInfo": {
-                    "contacts": [
-                      {},
-                    ],
                     "notifications": [
                       {
                         "action": "ACCEPT",
@@ -9306,9 +8589,6 @@ the same customer, dimension, and time, but a different quantity.",
                                 "paymentOption": {
                                   "type": "day",
                                 },
-                                "prices": [
-                                  {},
-                                ],
                               },
                             ],
                           },
@@ -9321,9 +8601,6 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                       },
                       "azurePrivateOffer": {
-                        "acceptanceLinks": [
-                          {},
-                        ],
                         "beneficiaries": [
                           {
                             "beneficiaryRecipients": [
@@ -9351,9 +8628,6 @@ the same customer, dimension, and time, but a different quantity.",
                                       "paymentOption": {
                                         "type": "day",
                                       },
-                                      "prices": [
-                                        {},
-                                      ],
                                     },
                                   ],
                                 },
@@ -9381,9 +8655,6 @@ the same customer, dimension, and time, but a different quantity.",
                                       "paymentOption": {
                                         "type": "day",
                                       },
-                                      "prices": [
-                                        {},
-                                      ],
                                     },
                                   ],
                                 },
@@ -9400,7 +8671,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "privateOfferType": "customerPromotion",
                         "state": "draft",
                         "subState": "pendingAcceptance",
-                        "upgradedFrom": {},
                         "validations": [
                           {
                             "code": "businessValidationError",
@@ -9409,16 +8679,6 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                       },
                       "azureProductVariant": {
-                        "azureGovernmentCertifications": [
-                          {
-                            "validationResults": [
-                              {},
-                            ],
-                          },
-                        ],
-                        "extendedProperties": [
-                          {},
-                        ],
                         "featureAvailabilities": [
                           {
                             "customMeters": [
@@ -9435,15 +8695,8 @@ the same customer, dimension, and time, but a different quantity.",
                                 "state": "Disabled",
                               },
                             ],
-                            "markets": [
-                              {},
-                            ],
                             "priceSchedules": [
                               {
-                                "dateTimeRange": {
-                                  "endAt": {},
-                                  "startAt": {},
-                                },
                                 "schedules": [
                                   {
                                     "priceCadence": {
@@ -9455,25 +8708,11 @@ the same customer, dimension, and time, but a different quantity.",
                                         "name": "sharedcore",
                                       },
                                     ],
-                                    "retailPrice": {},
                                   },
                                 ],
                               },
                             ],
-                            "properties": [
-                              {},
-                            ],
-                            "subscriptionAudiences": [
-                              {},
-                            ],
-                            "tenantAudiences": [
-                              {},
-                            ],
                             "trial": {
-                              "dateTimeRange": {
-                                "endAt": {},
-                                "startAt": {},
-                              },
                               "durationType": "Minute",
                               "type": "NoTrial",
                             },
@@ -9483,9 +8722,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
-                      "buyerAzureTenants": [
-                        {},
-                      ],
                       "commits": [
                         {
                           "timeUnit": "DAY",
@@ -9499,7 +8735,6 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
@@ -9516,17 +8751,11 @@ the same customer, dimension, and time, but a different quantity.",
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
-                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "priceTiers": [
-                                  {
-                                    "price": {},
-                                  },
-                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
@@ -9534,15 +8763,9 @@ the same customer, dimension, and time, but a different quantity.",
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
-                      "paymentInstallments": [
-                        {},
-                      ],
                       "visibility": "PRIVATE",
                     },
                     "metaInfo": {
-                      "contacts": [
-                        {},
-                      ],
                       "notifications": [
                         {
                           "action": "ACCEPT",
@@ -9636,9 +8859,6 @@ the same customer, dimension, and time, but a different quantity.",
                                 "paymentOption": {
                                   "type": "day",
                                 },
-                                "prices": [
-                                  {},
-                                ],
                               },
                             ],
                           },
@@ -9651,9 +8871,6 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                       },
                       "azurePrivateOffer": {
-                        "acceptanceLinks": [
-                          {},
-                        ],
                         "beneficiaries": [
                           {
                             "beneficiaryRecipients": [
@@ -9681,9 +8898,6 @@ the same customer, dimension, and time, but a different quantity.",
                                       "paymentOption": {
                                         "type": "day",
                                       },
-                                      "prices": [
-                                        {},
-                                      ],
                                     },
                                   ],
                                 },
@@ -9711,9 +8925,6 @@ the same customer, dimension, and time, but a different quantity.",
                                       "paymentOption": {
                                         "type": "day",
                                       },
-                                      "prices": [
-                                        {},
-                                      ],
                                     },
                                   ],
                                 },
@@ -9730,7 +8941,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "privateOfferType": "customerPromotion",
                         "state": "draft",
                         "subState": "pendingAcceptance",
-                        "upgradedFrom": {},
                         "validations": [
                           {
                             "code": "businessValidationError",
@@ -9739,16 +8949,6 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                       },
                       "azureProductVariant": {
-                        "azureGovernmentCertifications": [
-                          {
-                            "validationResults": [
-                              {},
-                            ],
-                          },
-                        ],
-                        "extendedProperties": [
-                          {},
-                        ],
                         "featureAvailabilities": [
                           {
                             "customMeters": [
@@ -9765,15 +8965,8 @@ the same customer, dimension, and time, but a different quantity.",
                                 "state": "Disabled",
                               },
                             ],
-                            "markets": [
-                              {},
-                            ],
                             "priceSchedules": [
                               {
-                                "dateTimeRange": {
-                                  "endAt": {},
-                                  "startAt": {},
-                                },
                                 "schedules": [
                                   {
                                     "priceCadence": {
@@ -9785,25 +8978,11 @@ the same customer, dimension, and time, but a different quantity.",
                                         "name": "sharedcore",
                                       },
                                     ],
-                                    "retailPrice": {},
                                   },
                                 ],
                               },
                             ],
-                            "properties": [
-                              {},
-                            ],
-                            "subscriptionAudiences": [
-                              {},
-                            ],
-                            "tenantAudiences": [
-                              {},
-                            ],
                             "trial": {
-                              "dateTimeRange": {
-                                "endAt": {},
-                                "startAt": {},
-                              },
                               "durationType": "Minute",
                               "type": "NoTrial",
                             },
@@ -9813,9 +8992,6 @@ the same customer, dimension, and time, but a different quantity.",
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
-                      "buyerAzureTenants": [
-                        {},
-                      ],
                       "commits": [
                         {
                           "timeUnit": "DAY",
@@ -9829,7 +9005,6 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
@@ -9846,17 +9021,11 @@ the same customer, dimension, and time, but a different quantity.",
                             "subscriptionPlans": [
                               {
                                 "period": "ONE_YEAR",
-                                "price": {},
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "priceTiers": [
-                                  {
-                                    "price": {},
-                                  },
-                                ],
                                 "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
@@ -9864,15 +9033,9 @@ the same customer, dimension, and time, but a different quantity.",
                           "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
-                      "paymentInstallments": [
-                        {},
-                      ],
                       "visibility": "PRIVATE",
                     },
                     "metaInfo": {
-                      "contacts": [
-                        {},
-                      ],
                       "notifications": [
                         {
                           "action": "ACCEPT",
@@ -10094,47 +9257,12 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "info": {
-                      "awsSaasProduct": {
-                        "Description": {},
-                        "Dimensions": [
-                          {},
-                        ],
-                        "PromotionalResources": {
-                          "AdditionalResources": [
-                            {},
-                          ],
-                        },
-                        "SupportInformation": {},
-                        "Versions": [
-                          {
-                            "DeliveryOptions": [
-                              {},
-                            ],
-                          },
-                        ],
-                      },
                       "awsSnsSubscriptions": [
                         {
                           "Status": "UNKNOWN",
                         },
                       ],
                       "azureProduct": {
-                        "availabilities": [
-                          {
-                            "emailAudiences": [
-                              {},
-                            ],
-                            "subscriptionAudiences": [
-                              {},
-                            ],
-                          },
-                        ],
-                        "branches": [
-                          {},
-                        ],
-                        "externalIDs": [
-                          {},
-                        ],
                         "listings": [
                           {
                             "assets": [
@@ -10148,9 +9276,6 @@ the same customer, dimension, and time, but a different quantity.",
                                 "type": "CustomerSupport",
                               },
                             ],
-                            "listingUris": [
-                              {},
-                            ],
                             "resourceType": "AzureListing",
                           },
                         ],
@@ -10159,50 +9284,20 @@ the same customer, dimension, and time, but a different quantity.",
                             "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                           },
                         ],
-                        "properties": [
-                          {},
-                        ],
                         "setup": {
                           "callToAction": "free",
-                          "channelStates": [
-                            {},
-                          ],
                           "resourceType": "AzureProductSetup",
                           "sellingOption": "ListingOnly",
                         },
                         "submissions": [
                           {
-                            "pendingUpdateInfo": {},
                             "resourceType": "Submission",
-                            "resources": [
-                              {},
-                            ],
                             "state": "Inprogress",
                             "subState": "InDraft",
-                            "targets": [
-                              {},
-                            ],
-                            "variantResources": [
-                              {
-                                "resources": [
-                                  {},
-                                ],
-                              },
-                            ],
                           },
                         ],
                         "variants": [
                           {
-                            "azureGovernmentCertifications": [
-                              {
-                                "validationResults": [
-                                  {},
-                                ],
-                              },
-                            ],
-                            "extendedProperties": [
-                              {},
-                            ],
                             "featureAvailabilities": [
                               {
                                 "customMeters": [
@@ -10219,15 +9314,8 @@ the same customer, dimension, and time, but a different quantity.",
                                     "state": "Disabled",
                                   },
                                 ],
-                                "markets": [
-                                  {},
-                                ],
                                 "priceSchedules": [
                                   {
-                                    "dateTimeRange": {
-                                      "endAt": {},
-                                      "startAt": {},
-                                    },
                                     "schedules": [
                                       {
                                         "priceCadence": {
@@ -10239,25 +9327,11 @@ the same customer, dimension, and time, but a different quantity.",
                                             "name": "sharedcore",
                                           },
                                         ],
-                                        "retailPrice": {},
                                       },
                                     ],
                                   },
                                 ],
-                                "properties": [
-                                  {},
-                                ],
-                                "subscriptionAudiences": [
-                                  {},
-                                ],
-                                "tenantAudiences": [
-                                  {},
-                                ],
                                 "trial": {
-                                  "dateTimeRange": {
-                                    "endAt": {},
-                                    "startAt": {},
-                                  },
                                   "durationType": "Minute",
                                   "type": "NoTrial",
                                 },
@@ -10282,17 +9356,12 @@ the same customer, dimension, and time, but a different quantity.",
                               "recurringUnit": "Monthly",
                             },
                           ],
-                          "usageCount": {},
                           "valueType": "VALUE_TYPE_UNSPECIFIED",
                         },
                       ],
                       "gcpProduct": {
                         "listingSpec": {
-                          "externalAccountSpec": {},
                           "listingType": "BillingIntegratedManagedService",
-                          "marketingSpec": {
-                            "supportSpec": {},
-                          },
                           "purchaseSpec": {
                             "metrics": [
                               {
@@ -10306,17 +9375,11 @@ the same customer, dimension, and time, but a different quantity.",
                                   "subscriptionPlans": [
                                     {
                                       "period": "ONE_YEAR",
-                                      "price": {},
                                       "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                     },
                                   ],
                                   "usageFees": [
                                     {
-                                      "priceTiers": [
-                                        {
-                                          "price": {},
-                                        },
-                                      ],
                                       "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                     },
                                   ],
@@ -10328,7 +9391,6 @@ the same customer, dimension, and time, but a different quantity.",
                         },
                         "marketplace": "marketplaces/google-cloud",
                         "serviceConfig": {
-                          "billing": {},
                           "metrics": [
                             {
                               "valueType": "VALUE_TYPE_UNSPECIFIED",
@@ -10436,268 +9498,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                  "productId": "product-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "info": {
-                      "awsSaasProduct": {
-                        "Description": {},
-                        "Dimensions": [
-                          {},
-                        ],
-                        "PromotionalResources": {
-                          "AdditionalResources": [
-                            {},
-                          ],
-                        },
-                        "SupportInformation": {},
-                        "Versions": [
-                          {
-                            "DeliveryOptions": [
-                              {},
-                            ],
-                          },
-                        ],
-                      },
-                      "awsSnsSubscriptions": [
-                        {
-                          "Status": "UNKNOWN",
-                        },
-                      ],
-                      "azureProduct": {
-                        "availabilities": [
-                          {
-                            "emailAudiences": [
-                              {},
-                            ],
-                            "subscriptionAudiences": [
-                              {},
-                            ],
-                          },
-                        ],
-                        "branches": [
-                          {},
-                        ],
-                        "externalIDs": [
-                          {},
-                        ],
-                        "listings": [
-                          {
-                            "assets": [
-                              {
-                                "resourceType": "ListingAsset",
-                                "state": "PendingUpload",
-                              },
-                            ],
-                            "listingContacts": [
-                              {
-                                "type": "CustomerSupport",
-                              },
-                            ],
-                            "listingUris": [
-                              {},
-                            ],
-                            "resourceType": "AzureListing",
-                          },
-                        ],
-                        "packageConfigurations": [
-                          {
-                            "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
-                          },
-                        ],
-                        "properties": [
-                          {},
-                        ],
-                        "setup": {
-                          "callToAction": "free",
-                          "channelStates": [
-                            {},
-                          ],
-                          "resourceType": "AzureProductSetup",
-                          "sellingOption": "ListingOnly",
-                        },
-                        "submissions": [
-                          {
-                            "pendingUpdateInfo": {},
-                            "resourceType": "Submission",
-                            "resources": [
-                              {},
-                            ],
-                            "state": "Inprogress",
-                            "subState": "InDraft",
-                            "targets": [
-                              {},
-                            ],
-                            "variantResources": [
-                              {
-                                "resources": [
-                                  {},
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                        "variants": [
-                          {
-                            "azureGovernmentCertifications": [
-                              {
-                                "validationResults": [
-                                  {},
-                                ],
-                              },
-                            ],
-                            "extendedProperties": [
-                              {},
-                            ],
-                            "featureAvailabilities": [
-                              {
-                                "customMeters": [
-                                  {
-                                    "includedBaseQuantities": [
-                                      {
-                                        "recurringUnit": "Monthly",
-                                      },
-                                    ],
-                                  },
-                                ],
-                                "marketStates": [
-                                  {
-                                    "state": "Disabled",
-                                  },
-                                ],
-                                "markets": [
-                                  {},
-                                ],
-                                "priceSchedules": [
-                                  {
-                                    "dateTimeRange": {
-                                      "endAt": {},
-                                      "startAt": {},
-                                    },
-                                    "schedules": [
-                                      {
-                                        "priceCadence": {
-                                          "type": "Month",
-                                        },
-                                        "pricingModel": "Flat",
-                                        "pricingUnits": [
-                                          {
-                                            "name": "sharedcore",
-                                          },
-                                        ],
-                                        "retailPrice": {},
-                                      },
-                                    ],
-                                  },
-                                ],
-                                "properties": [
-                                  {},
-                                ],
-                                "subscriptionAudiences": [
-                                  {},
-                                ],
-                                "tenantAudiences": [
-                                  {},
-                                ],
-                                "trial": {
-                                  "dateTimeRange": {
-                                    "endAt": {},
-                                    "startAt": {},
-                                  },
-                                  "durationType": "Minute",
-                                  "type": "NoTrial",
-                                },
-                                "visibility": "Public",
-                              },
-                            ],
-                            "resourceType": "AzureSkuVariant",
-                            "state": "InActive",
-                          },
-                        ],
-                      },
-                      "commits": [
-                        {
-                          "timeUnit": "DAY",
-                          "type": "FLAT_RATE",
-                        },
-                      ],
-                      "dimensions": [
-                        {
-                          "includedBaseQuantities": [
-                            {
-                              "recurringUnit": "Monthly",
-                            },
-                          ],
-                          "usageCount": {},
-                          "valueType": "VALUE_TYPE_UNSPECIFIED",
-                        },
-                      ],
-                      "gcpProduct": {
-                        "listingSpec": {
-                          "externalAccountSpec": {},
-                          "listingType": "BillingIntegratedManagedService",
-                          "marketingSpec": {
-                            "supportSpec": {},
-                          },
-                          "purchaseSpec": {
-                            "metrics": [
-                              {
-                                "valueType": "VALUE_TYPE_UNSPECIFIED",
-                              },
-                            ],
-                            "purchaseOptionSpecs": [
-                              {
-                                "priceInfo": {
-                                  "priceModel": "FREE",
-                                  "subscriptionPlans": [
-                                    {
-                                      "period": "ONE_YEAR",
-                                      "price": {},
-                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
-                                    },
-                                  ],
-                                  "usageFees": [
-                                    {
-                                      "priceTiers": [
-                                        {
-                                          "price": {},
-                                        },
-                                      ],
-                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
-                                    },
-                                  ],
-                                },
-                                "purchaseMode": "PURCHASE_MODE_PUBLIC",
-                              },
-                            ],
-                          },
-                        },
-                        "marketplace": "marketplaces/google-cloud",
-                        "serviceConfig": {
-                          "billing": {},
-                          "metrics": [
-                            {
-                              "valueType": "VALUE_TYPE_UNSPECIFIED",
-                            },
-                          ],
-                        },
-                      },
-                    },
-                    "partner": "AWS",
-                    "productType": "UNKNOWN",
-                    "service": "MARKETPLACE",
-                  },
-                },
-              },
-            ],
             "method": "PATCH",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -10745,42 +9545,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "reportType": "InvoicedAmount",
-                    "revenueRecords": [
-                      {
-                        "info": {
-                          "awsRevenueRecords": [
-                            {
-                              "insertDate": {},
-                              "invoiceDate": {},
-                              "paymentDueDate": {},
-                              "usagePeriodEndDate": {},
-                              "usagePeriodStartDate": {},
-                            },
-                          ],
-                          "azureRevenueRecords": [
-                            {},
-                          ],
-                          "gcpRevenueRecords": [
-                            {},
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/revenueReport",
@@ -10837,23 +9601,6 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "usageRecords": [
-                      {},
-                    ],
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
@@ -10885,34 +9632,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                  "partner": "AWS",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "revenueRecordDetails": [
-                      {
-                        "awsRevenueRecordDetail": {
-                          "insertDate": {},
-                          "invoiceDate": {},
-                          "paymentDueDate": {},
-                          "usagePeriodEndDate": {},
-                          "usagePeriodStartDate": {},
-                        },
-                        "azureRevenueRecordDetail": {},
-                        "gcpRevenueRecordDetail": {},
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
@@ -10978,42 +9697,6 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "orgId": "org-id",
-                  "partner": "AWS",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "revenueRecords": [
-                      {
-                        "info": {
-                          "awsRevenueRecords": [
-                            {
-                              "insertDate": {},
-                              "invoiceDate": {},
-                              "paymentDueDate": {},
-                              "usagePeriodEndDate": {},
-                              "usagePeriodStartDate": {},
-                            },
-                          ],
-                          "azureRevenueRecords": [
-                            {},
-                          ],
-                          "gcpRevenueRecords": [
-                            {},
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",
