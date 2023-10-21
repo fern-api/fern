@@ -11,10 +11,11 @@ export function convertObjectTypeDeclaration({
     object: RawSchemas.ObjectSchema;
     file: FernFileContext;
 }): Type {
-    return Type.object({
+    return {
+        _type: "object",
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         properties: getObjectPropertiesFromRawObjectSchema(object, file),
-    });
+    };
 }
 
 export function getObjectPropertiesFromRawObjectSchema(

@@ -10,11 +10,14 @@ export function convertErrorDiscriminationStrategy(
     file: FernFileContext
 ): ErrorDiscriminationStrategy {
     if (rawStrategy == null || rawStrategy.strategy === "status-code") {
-        return ErrorDiscriminationStrategy.statusCode();
+        return {
+            type: "statusCode",
+        };
     }
     switch (rawStrategy.strategy) {
         case "property":
-            return ErrorDiscriminationStrategy.property({
+            return {
+                type: "property",
                 discriminant: file.casingsGenerator.generateNameAndWireValue({
                     name: rawStrategy["property-name"],
                     wireValue: rawStrategy["property-name"],
@@ -23,7 +26,7 @@ export function convertErrorDiscriminationStrategy(
                     name: ERROR_CONTENT_PROPERTY_NAME,
                     wireValue: ERROR_CONTENT_PROPERTY_NAME,
                 }),
-            });
+            };
         default:
             assertNever(rawStrategy);
     }

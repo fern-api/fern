@@ -27,16 +27,22 @@ export function convertEnvironments({
     return {
         defaultEnvironment: defaultEnvironment ?? undefined,
         environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
-            singleBaseUrl: () =>
-                Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),
-            multipleBaseUrls: (firstMultipleBaseUrlsEnvironment) =>
-                Environments.multipleBaseUrls(
-                    convertMultipleBaseUrlEnvironments({
+            singleBaseUrl: () => {
+                return {
+                    type: "singleBaseUrl",
+                    ...convertSingleBaseUrlEnvironments({ environments, casingsGenerator }),
+                };
+            },
+            multipleBaseUrls: (firstMultipleBaseUrlsEnvironment) => {
+                return {
+                    type: "multipleBaseUrls",
+                    ...convertMultipleBaseUrlEnvironments({
                         baseUrls: Object.keys(firstMultipleBaseUrlsEnvironment.urls),
                         environments,
                         casingsGenerator,
-                    })
-                ),
+                    }),
+                };
+            },
         }),
     };
 }

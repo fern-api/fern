@@ -7,9 +7,7 @@ import {
 } from "@fern-api/yaml-schema";
 import {
     DeclaredTypeName,
-    ExampleContainer,
     ExampleObjectProperty,
-    ExamplePrimitive,
     ExampleSingleUnionTypeProperties,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
@@ -40,7 +38,8 @@ export function convertTypeExample({
 }): ExampleTypeShape {
     return visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
-            return ExampleTypeShape.alias({
+            return {
+                type: "alias",
                 value: convertTypeReferenceExample({
                     example,
                     rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
@@ -49,7 +48,7 @@ export function convertTypeExample({
                     typeResolver,
                     exampleResolver,
                 }),
-            });
+            };
         },
         object: (rawObject) => {
             return convertObject({
@@ -87,7 +86,8 @@ export function convertTypeExample({
                     ? rawSingleUnionType.type
                     : undefined;
 
-            return ExampleTypeShape.union({
+            return {
+                type: "union",
                 wireDiscriminantValue: discriminantValueForExample,
                 properties: convertUnionProperties({
                     rawValueType,
@@ -99,15 +99,16 @@ export function convertTypeExample({
                     example,
                     discriminant,
                 }),
-            });
+            };
         },
         enum: () => {
             if (typeof example !== "string") {
                 throw new Error("Enum example is not a string");
             }
-            return ExampleTypeShape.enum({
+            return {
+                type: "enum",
                 wireValue: example,
-            });
+            };
         },
         undiscriminatedUnion: () => {
             throw new Error("Examples are not supported for undiscriminated unions");
@@ -150,9 +151,11 @@ export function convertTypeReferenceExample({
             if (!isPlainObject(resolvedExample)) {
                 throw new Error("Example is not an object");
             }
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.map(
-                    Object.entries(resolvedExample).map(([key, value]) => ({
+            return {
+                _type: "container",
+                container: {
+                    _type: "map",
+                    map: Object.entries(resolvedExample).map(([key, value]) => ({
                         key: convertTypeReferenceExample({
                             example: key,
                             fileContainingExample: fileContainingResolvedExample,
@@ -169,17 +172,19 @@ export function convertTypeReferenceExample({
                             typeResolver,
                             exampleResolver,
                         }),
-                    }))
-                )
-            );
+                    })),
+                },
+            };
         },
         list: (itemType) => {
             if (!Array.isArray(resolvedExample)) {
                 throw new Error("Example is not a list");
             }
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.list(
-                    resolvedExample.map((exampleItem) =>
+            return {
+                type: "container",
+                container: {
+                    type: "list",
+                    list: resolvedExample.map((exampleItem) =>
                         convertTypeReferenceExample({
                             example: exampleItem,
                             fileContainingExample: fileContainingResolvedExample,
@@ -188,17 +193,19 @@ export function convertTypeReferenceExample({
                             typeResolver,
                             exampleResolver,
                         })
-                    )
-                )
-            );
+                    ),
+                },
+            };
         },
         set: (itemType) => {
             if (!Array.isArray(resolvedExample)) {
                 throw new Error("Example is not a list");
             }
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.set(
-                    resolvedExample.map((exampleItem) =>
+            return {
+                type: "container",
+                container: {
+                    type: "set",
+                    set: resolvedExample.map((exampleItem) =>
                         convertTypeReferenceExample({
                             example: exampleItem,
                             fileContainingExample: fileContainingResolvedExample,
@@ -207,9 +214,9 @@ export function convertTypeReferenceExample({
                             typeResolver,
                             exampleResolver,
                         })
-                    )
-                )
-            );
+                    ),
+                },
+            };
         },
         optional: (itemType) => {
             return ExampleTypeReferenceShape.container(

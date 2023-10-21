@@ -1,6 +1,5 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
-import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-sdk/api";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -102,9 +101,12 @@ export class TypeResolverImpl implements TypeResolver {
             primitive: (primitive) => ({
                 _type: "primitive",
                 primitive,
-                originalTypeReference: TypeReference.primitive(primitive),
+                originalTypeReference: {
+                    _type: "primitive",
+                    primitive,
+                },
             }),
-            unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
+            unknown: () => ({ _type: "unknown", originalTypeReference: { _type: "unknown" } }),
             map: ({ keyType, valueType }) =>
                 keyType != null && valueType != null
                     ? {
@@ -114,12 +116,14 @@ export class TypeResolverImpl implements TypeResolver {
                               keyType,
                               valueType,
                           },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.map({
+                          originalTypeReference: {
+                              _type: "container",
+                              container: {
+                                  _type: "map",
                                   keyType: keyType.originalTypeReference,
                                   valueType: valueType.originalTypeReference,
-                              })
-                          ),
+                              },
+                          },
                       }
                     : undefined,
             list: (itemType) =>
@@ -130,9 +134,13 @@ export class TypeResolverImpl implements TypeResolver {
                               _type: "list",
                               itemType,
                           },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.list(itemType.originalTypeReference)
-                          ),
+                          originalTypeReference: {
+                              _type: "container",
+                              container: {
+                                  _type: "list",
+                                  list: itemType.originalTypeReference,
+                              },
+                          },
                       }
                     : undefined,
             optional: (itemType) =>
@@ -143,9 +151,13 @@ export class TypeResolverImpl implements TypeResolver {
                               _type: "optional",
                               itemType,
                           },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.optional(itemType.originalTypeReference)
-                          ),
+                          originalTypeReference: {
+                              _type: "container",
+                              container: {
+                                  _type: "optional",
+                                  optional: itemType.originalTypeReference,
+                              },
+                          },
                       }
                     : undefined,
             set: (itemType) =>
@@ -156,18 +168,34 @@ export class TypeResolverImpl implements TypeResolver {
                               _type: "set",
                               itemType,
                           },
-                          originalTypeReference: TypeReference.container(
-                              ContainerType.set(itemType.originalTypeReference)
-                          ),
+                          originalTypeReference: {
+                              _type: "container",
+                              container: {
+                                  _type: "set",
+                                  set: itemType.originalTypeReference,
+                              },
+                          },
                       }
                     : undefined,
             literal: (literalValue) => ({
                 _type: "container",
                 container: {
                     _type: "literal",
-                    literal: Literal.string(literalValue),
+                    literal: {
+                        type: "string",
+                        string: literalValue,
+                    },
                 },
-                originalTypeReference: TypeReference.container(ContainerType.literal(Literal.string(literalValue))),
+                originalTypeReference: {
+                    _type: "container",
+                    container: {
+                        _type: "literal",
+                        literal: {
+                            type: "string",
+                            string: literalValue,
+                        },
+                    },
+                },
             }),
             named: (referenceToNamedType) => {
                 const maybeDeclaration = this.getDeclarationOfNamedType({
@@ -261,7 +289,7 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         const parsedTypeReference = parseInlineType({ type: referenceToNamedType, file: referencedIn });
-        if (parsedTypeReference.type !== "named") {
+        if (parsedTypeReference._type !== "named") {
             return undefined;
         }
 

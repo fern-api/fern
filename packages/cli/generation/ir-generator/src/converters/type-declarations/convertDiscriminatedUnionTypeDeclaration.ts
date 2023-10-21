@@ -19,7 +19,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
     typeResolver: TypeResolver;
 }): Type {
     const discriminant = getUnionDiscriminant(union);
-    return Type.union({
+    return {
+        _type: "union",
         discriminant: file.casingsGenerator.generateNameAndWireValue({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name,
@@ -55,7 +56,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 return {
                     discriminantValue,
                     docs,
-                    shape: SingleUnionTypeProperties.noProperties(),
+                    shape: {
+                        _type: "noProperties",
+                    },
                 };
             }
 
@@ -73,7 +76,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 docs: getDocs(rawSingleUnionType),
             };
         }),
-    });
+    };
 }
 
 export function getUnionDiscriminant(union: RawSchemas.DiscriminatedUnionSchema): string {
@@ -146,15 +149,19 @@ export function getSingleUnionTypeProperties({
         isRawObjectDefinition(resolvedType.declaration) &&
         singlePropertyKey == null
     ) {
-        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
+        return {
+            _type: "samePropertiesAsObject",
+            ...resolvedType.name,
+        };
     }
-    return SingleUnionTypeProperties.singleProperty({
+    return {
+        _type: "singleProperty",
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: getSinglePropertyKeyValue(singlePropertyKey),
             name: getSinglePropertyKeyName(singlePropertyKey),
         }),
         type: parsedValueType,
-    });
+    };
 }
 
 function getSinglePropertyKeyName(
