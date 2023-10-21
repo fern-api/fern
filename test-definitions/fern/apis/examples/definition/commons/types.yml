@@ -1,0 +1,6 @@
+types:
+  Tag:
+    type: string
+    examples:
+      - name: One
+        value: tag-wf9as23d

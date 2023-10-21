@@ -1,3 +1,6 @@
+imports:
+  commons: commons/types.yml
+
 errors:
   NotFoundError:
     status-code: 404
@@ -19,6 +22,7 @@ types:
         type: double
         docs: The rating scale is one to five stars
       type: literal<"movie">
+      tag: commons.Tag
     examples:
       - name: One
         value:
@@ -27,6 +31,7 @@ types:
           from: Hayao Miyazaki
           rating: 8.0
           type: movie
+          tag: $commons.Tag.One
 
   ExtendedMovie:
     extends: Movie
@@ -39,6 +44,7 @@ types:
           from: Quentin Tarantino
           rating: 8.5
           type: movie
+          tag: tag-12efs9dv
           cast:
             - John Travolta
             - Samuel L. Jackson
