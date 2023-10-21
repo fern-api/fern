@@ -38,7 +38,7 @@ code .
 yarn
 ```
 
-**Step 4: Use the "workspace" vesion of Typescript**
+**Step 4: Use the "workspace" version of Typescript**
 
 1. Open any TypeScript file in VSCode
 2. Open the Command Palette (Cmd+Shift+P on Mac) and select `Typescript: Select TypeScript Version...`
