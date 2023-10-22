@@ -30,7 +30,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
-    "@fern-fern/ir-sdk": "0.0.2930",
+    "@fern-fern/ir-sdk": "0.0.2934",
     "js-yaml": "^4.1.0",
     "zod": "^3.22.3"
   },
