@@ -10,7 +10,6 @@ export type SubpackageId = string;
 export interface TypeNode {
     typeId: TypeId;
     descendants: Set<TypeId>;
-    referencedSubpackages: Set<FernFilepath>;
 }
 
 export interface ErrorNode {

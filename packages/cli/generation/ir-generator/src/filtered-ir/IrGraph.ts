@@ -43,12 +43,11 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
+    public addType(declaredTypeName: DeclaredTypeName, descendants: Set<string>): void {
         const typeId = IdGenerator.generateTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
-            descendants: new Set(descendants.map((declaredTypeName) => IdGenerator.generateTypeId(declaredTypeName))),
-            referencedSubpackages: new Set(descendants.map((declaredTypeName) => declaredTypeName.fernFilepath)),
+            descendants,
         };
         this.types[typeId] = typeNode;
         if (this.typesReferencedByService[typeId] == null) {
@@ -61,9 +60,6 @@ export class IrGraph {
         if (this.hasAudience(audiences)) {
             this.typesNeededForAudience.add(typeId);
             this.addSubpackages(declaredTypeName.fernFilepath);
-            this.types[typeId]?.referencedSubpackages.forEach((fernFilePath) => {
-                this.addSubpackages(fernFilePath);
-            });
         }
     }
 

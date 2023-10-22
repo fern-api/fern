@@ -35,7 +35,11 @@ export function convertTypeDeclaration({
         ...declaration,
         name: declaredTypeName,
         shape: convertType({ typeDeclaration, file, typeResolver }),
-        referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
+        referencedTypes: new Set(
+            getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }).map(
+                (referencedType) => referencedType.typeId
+            )
+        ),
         examples:
             typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                 ? typeDeclaration.examples.map(
