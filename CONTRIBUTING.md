@@ -99,3 +99,13 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 # uncomment the next line when targeting the dev cloud environment
 # NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
 ```
+
+### Creating a new IR version
+
+1. Copy the most recent `ir-types-vXXX` folder and bump the version.
+2. In the new folder, make changes to the IR definition.
+3. `fern generate --api ir-types-vXXX`
+4. Update all `package.json` files to use new `ir-sdk` npm version
+5. `yarn compile`
+6. Fix compile issues
+7. `yarn workspace @fern-api/ir-generator test -u`
