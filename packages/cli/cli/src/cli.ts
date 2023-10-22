@@ -200,6 +200,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 let docsUrl: ReadMeDocsWebsite;
                 if (argv.url != null) {
                     docsUrl = new ReadMeDocsWebsite(argv.url, cliContext.logger);
+                    if (! await docsUrl.isApiReferencePage(docsUrl.url)) {
+                        return cliContext.failAndThrow("--url must be a valid API Reference page. It must contain a reference to an endpoint. An example of a valid api reference url is https://docs.oneschema.co/reference/import-template");
+                    }
                     if (!docsUrl.isUrlValid()) {
                         return cliContext.failWithoutThrowing("--url must be a valid url");
                     }

@@ -80,12 +80,7 @@ export async function loadOpenAPIFromUrl({
         if (endpointToDocsTagsMap) {
             jsonData = injectTags(JSON.stringify(jsonData), endpointToDocsTagsMap, logger);
         }
-        const yamlData = yaml.dump(jsonopenApiJsonData);
-        const tmpDir = await tmp.dir();
-        const filePath = join(tmpDir.path, "openapi.yml");
-        logger.debug("tmpDir", tmpDir.path);
-        logger.debug("filePath", filePath);
-        await writeFile(filePath, yamlData);
+        const filePath = await writeOpenApiToTmpFile(jsonData);
         return {
             status: LoadOpenAPIStatus.Success,
             filePath,
@@ -99,3 +94,61 @@ export async function loadOpenAPIFromUrl({
         };
     }
 }
+
+export async function writeOpenApiToTmpFile(openApiObj: Record<string, unknown>): Promise<string> {
+    console.log("yaml dumping");
+    const yamlData = yaml.dump(openApiObj);
+    console.log("yaml dump success");
+    const tmpDir = await tmp.dir();
+    const filePath = join(tmpDir.path, "openapi.yml");
+    await writeFile(filePath, yamlData);
+    return filePath;
+}
+
+// import {} from "@fern-api/"
+// export function injectTagsIntoOpenApi(openApiObj: unknown, tagsToInject: string[]): unknown  {
+//     if (tagsToInject.length === 0 || openApiObj == null || typeof openApiObj !== "object") {
+//         return openApiObj;
+//     }
+
+//     try {
+//         const paths = openApiObj["paths"] != null && typeof openApiObj["paths"] === "object" ? openApiObj["paths"] : {};
+        
+//         for (const path in paths) {
+//             for (const method in paths[path]) {
+//                 const containsOperationId = Object.keys(paths[path][method]).includes("operationId");
+//                 if (containsOperationId) {
+//                     const containsTags = Object.keys(paths[path][method]).includes("tags");
+//                     const opId = paths[path][method]["operationId"];
+//                     const newTag = _endpointToDocsTagsMap.has(opId) ? _endpointToDocsTagsMap.get(opId) : null;
+
+//                     if (!containsTags) { 
+//                         if (newTag != null) {
+//                             const existingMethodObj = paths[path][method];
+//                             paths[path][method] = {
+//                                 ...existingMethodObj,
+//                                 tags: [newTag],
+//                             };
+//                             // actually inject method object back into openApiObj
+//                             openApiObj = {
+//                                 ...openApiObj,
+//                                 paths: {
+//                                     ...openApiObj["paths"],
+//                                     [path]: {
+//                                         ...openApiObj["paths"][path],
+//                                         [method]: paths[path][method],
+//                                     },
+//                                 },
+//                             };
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         return openApiObj;
+//     } catch (error) {
+//         logger.error(`Encountered an error while injecting tags: ${JSON.stringify(error)}`);
+//         return {};
+//     }
+// }

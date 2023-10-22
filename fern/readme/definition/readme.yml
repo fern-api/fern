@@ -1,0 +1,32 @@
+types: 
+  ReadmeApiReferenceEndpointResponse: 
+    properties: 
+      doc: ReadmeApiReferenceDoc
+      oasDefinition: optional<ReadMeOpenAPIDocument>
+  
+  ReadmeApiReferenceDoc: 
+    properties:
+      isApi: boolean
+
+  ReadMeOpenAPIDocument: 
+    discriminated: false
+    union:
+      - string 
+      - ReadMeOpenAPIDocumentObject
+
+  ReadMeOpenAPIDocumentObject:
+    properties:
+      paths: optional<map<string, optional<PathValue>>>
+    
+  PathValue:
+    discriminated: false
+    union:
+      - string 
+      - OpenAPIOperationObject
+      - list<unknown>
+
+  OpenAPIOperationObject:
+    properties:
+      operationId: optional<string>
+      tags: optional<list<string>>
+

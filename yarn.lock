@@ -2156,6 +2156,7 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
+    "@fern-fern/readme": 0.0.5
     "@types/cheerio": ^0.22.32
     "@types/fs-extra": ^11.0.1
     "@types/jest": ^29.0.3
@@ -2172,8 +2173,10 @@ __metadata:
     jest: ^29.4.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
+    openapi-types: ^12.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    swagger2openapi: 7.0.8
     tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
@@ -3102,6 +3105,13 @@ __metadata:
   version: 0.0.127
   resolution: "@fern-fern/openapi-ir-model@npm:0.0.127"
   checksum: 9d5c73f5633ad1fc4d74d6437901bb7ecd1d949c061edeff929c0f906c8f07aa22912f0005fe266eb1e8dcca965e92f58bc192233ade2db54735e6b4bd35536f
+  languageName: node
+  linkType: hard
+
+"@fern-fern/readme@npm:0.0.5":
+  version: 0.0.5
+  resolution: "@fern-fern/readme@npm:0.0.5"
+  checksum: 492282ba23a0ce8482158f5695a433929b6d84e8361714eca5e321c0616d859d001d4f92bb3b85059d0dcc9a264e97f5512251de88cc84c6eae868272f9c2248
   languageName: node
   linkType: hard
 

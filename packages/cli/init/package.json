@@ -41,12 +41,15 @@
     "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
+    "@fern-fern/readme": "0.0.5",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "cheerio": "1.0.0-rc.12",
     "fs-extra": "^11.1.1",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
+    "openapi-types": "^12.0.0",
+    "swagger2openapi": "7.0.8",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {

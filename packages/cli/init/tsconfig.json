@@ -8,8 +8,11 @@
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
     { "path": "../login" },
+    { "path": "../openapi-parser" },
+    { "path": "../project-loader" },
     { "path": "../services" },
     { "path": "../task-context" },
+    { "path": "../workspace-loader" },
     { "path": "../yaml/formatter" },
     { "path": "../yaml/yaml-schema" }
   ]
