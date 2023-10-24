@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "axios": "0.27.2",
-    "axios-retry": "3.2.0",
     "qs": "^6.11.2"
   },
   "devDependencies": {
@@ -36,7 +35,7 @@
     "@types/node": "^18.7.18",
     "@types/qs": "^6.9.8",
     "depcheck": "^1.4.3",
-    "eslint": "^8.50.0",
+    "eslint": "^8.52.0",
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
     "typescript": "4.6.4"

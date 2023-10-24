@@ -1,5 +1,4 @@
-import axios, { AxiosAdapter, AxiosError } from "axios";
-import axiosRetry from "axios-retry";
+import axios, { AxiosAdapter, AxiosError, AxiosResponse } from "axios";
 import qs from "qs";
 import { APIResponse } from "./APIResponse";
 
@@ -49,8 +48,6 @@ const INITIAL_RETRY_DELAY = 1;
 const MAX_RETRY_DELAY = 60;
 const DEFAULT_MAX_RETRIES = 2;
 
-const AXIOS = axios.create();
-
 async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
@@ -65,22 +62,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         }
     }
 
-    axiosRetry(AXIOS, {
-        retries: args.maxRetries ?? DEFAULT_MAX_RETRIES,
-        retryCondition: (error) => {
-            return error.response != null && [500, 502, 429].includes(error.response.status);
-        },
-        retryDelay: (count) => {
-            if (count == 0) {
-                return INITIAL_RETRY_DELAY;
-            }
-            // Apply exponential backoff, but not more than the max.
-            return Math.min(INITIAL_RETRY_DELAY * Math.pow(count - 1, 2), MAX_RETRY_DELAY);
-        },
-    });
-
-    try {
-        const response = await AXIOS.request({
+    const makeRequest = async (): Promise<AxiosResponse> =>
+        await axios({
             url: args.url,
             params: args.queryParameters,
             paramsSerializer: (params) => {
@@ -102,6 +85,23 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             maxContentLength: Infinity,
             responseType: args.responseType ?? "json",
         });
+
+    try {
+        let response = await makeRequest();
+
+        for (let i = 0; i < (args.maxRetries ?? DEFAULT_MAX_RETRIES); ++i) {
+            if (
+                response.status === 408 ||
+                response.status === 409 ||
+                response.status === 429 ||
+                response.status >= 500
+            ) {
+                const delay = Math.min(INITIAL_RETRY_DELAY * Math.pow(i, 2), MAX_RETRY_DELAY);
+                response = await new Promise((resolve) => setTimeout(resolve, delay));
+            } else {
+                break;
+            }
+        }
 
         let body: unknown;
         if (args.responseType === "blob") {
