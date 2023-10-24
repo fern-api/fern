@@ -248,6 +248,7 @@ exports[`generate IR 1`] = `
     "navigationConfig": null,
     "service": "service_",
     "subpackages": [
+      "subpackage_commons",
       "subpackage_file",
       "subpackage_health",
       "subpackage_service",
@@ -268,6 +269,7 @@ exports[`generate IR 1`] = `
   },
   "serviceTypeReferenceInfo": {
     "sharedTypes": [
+      "type_commons/types:Tag",
       "type_types:Exception",
       "type_types:File",
       "type_types:MovieId",
@@ -2265,6 +2267,7 @@ exports[`generate IR 1`] = `
                     "from": "Hayao Miyazaki",
                     "id": "movie-c06a4ad7",
                     "rating": 8,
+                    "tag": "tag-wf9as23d",
                     "title": "The Boy and the Heron",
                     "type": "movie",
                   },
@@ -2735,6 +2738,197 @@ exports[`generate IR 1`] = `
                           },
                           "wireKey": "type",
                         },
+                        {
+                          "originalTypeDeclaration": {
+                            "fernFilepath": {
+                              "allParts": [
+                                {
+                                  "camelCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                  "originalName": "types",
+                                  "pascalCase": {
+                                    "safeName": "Types",
+                                    "unsafeName": "Types",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "TYPES",
+                                    "unsafeName": "TYPES",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                },
+                              ],
+                              "file": {
+                                "camelCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                                "originalName": "types",
+                                "pascalCase": {
+                                  "safeName": "Types",
+                                  "unsafeName": "Types",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TYPES",
+                                  "unsafeName": "TYPES",
+                                },
+                                "snakeCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                              },
+                              "packagePath": [],
+                            },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "movie",
+                                "unsafeName": "movie",
+                              },
+                              "originalName": "Movie",
+                              "pascalCase": {
+                                "safeName": "Movie",
+                                "unsafeName": "Movie",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "MOVIE",
+                                "unsafeName": "MOVIE",
+                              },
+                              "snakeCase": {
+                                "safeName": "movie",
+                                "unsafeName": "movie",
+                              },
+                            },
+                            "typeId": "type_types:Movie",
+                          },
+                          "value": {
+                            "jsonExample": "tag-wf9as23d",
+                            "shape": {
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "jsonExample": "tag-wf9as23d",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": "tag-wf9as23d",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                              },
+                              "type": "named",
+                              "typeName": {
+                                "fernFilepath": {
+                                  "allParts": [
+                                    {
+                                      "camelCase": {
+                                        "safeName": "commons",
+                                        "unsafeName": "commons",
+                                      },
+                                      "originalName": "commons",
+                                      "pascalCase": {
+                                        "safeName": "Commons",
+                                        "unsafeName": "Commons",
+                                      },
+                                      "screamingSnakeCase": {
+                                        "safeName": "COMMONS",
+                                        "unsafeName": "COMMONS",
+                                      },
+                                      "snakeCase": {
+                                        "safeName": "commons",
+                                        "unsafeName": "commons",
+                                      },
+                                    },
+                                    {
+                                      "camelCase": {
+                                        "safeName": "types",
+                                        "unsafeName": "types",
+                                      },
+                                      "originalName": "types",
+                                      "pascalCase": {
+                                        "safeName": "Types",
+                                        "unsafeName": "Types",
+                                      },
+                                      "screamingSnakeCase": {
+                                        "safeName": "TYPES",
+                                        "unsafeName": "TYPES",
+                                      },
+                                      "snakeCase": {
+                                        "safeName": "types",
+                                        "unsafeName": "types",
+                                      },
+                                    },
+                                  ],
+                                  "file": {
+                                    "camelCase": {
+                                      "safeName": "types",
+                                      "unsafeName": "types",
+                                    },
+                                    "originalName": "types",
+                                    "pascalCase": {
+                                      "safeName": "Types",
+                                      "unsafeName": "Types",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "TYPES",
+                                      "unsafeName": "TYPES",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "types",
+                                      "unsafeName": "types",
+                                    },
+                                  },
+                                  "packagePath": [
+                                    {
+                                      "camelCase": {
+                                        "safeName": "commons",
+                                        "unsafeName": "commons",
+                                      },
+                                      "originalName": "commons",
+                                      "pascalCase": {
+                                        "safeName": "Commons",
+                                        "unsafeName": "Commons",
+                                      },
+                                      "screamingSnakeCase": {
+                                        "safeName": "COMMONS",
+                                        "unsafeName": "COMMONS",
+                                      },
+                                      "snakeCase": {
+                                        "safeName": "commons",
+                                        "unsafeName": "commons",
+                                      },
+                                    },
+                                  ],
+                                },
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "tag",
+                                    "unsafeName": "tag",
+                                  },
+                                  "originalName": "Tag",
+                                  "pascalCase": {
+                                    "safeName": "Tag",
+                                    "unsafeName": "Tag",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "TAG",
+                                    "unsafeName": "TAG",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "tag",
+                                    "unsafeName": "tag",
+                                  },
+                                },
+                                "typeId": "type_commons/types:Tag",
+                              },
+                            },
+                          },
+                          "wireKey": "tag",
+                        },
                       ],
                       "type": "object",
                     },
@@ -3043,6 +3237,7 @@ exports[`generate IR 1`] = `
                   "from": "Hayao Miyazaki",
                   "id": "movie-c06a4ad7",
                   "rating": 8,
+                  "tag": "tag-wf9as23d",
                   "title": "The Boy and the Heron",
                   "type": "movie",
                 },
@@ -3512,6 +3707,197 @@ exports[`generate IR 1`] = `
                           },
                         },
                         "wireKey": "type",
+                      },
+                      {
+                        "originalTypeDeclaration": {
+                          "fernFilepath": {
+                            "allParts": [
+                              {
+                                "camelCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                                "originalName": "types",
+                                "pascalCase": {
+                                  "safeName": "Types",
+                                  "unsafeName": "Types",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TYPES",
+                                  "unsafeName": "TYPES",
+                                },
+                                "snakeCase": {
+                                  "safeName": "types",
+                                  "unsafeName": "types",
+                                },
+                              },
+                            ],
+                            "file": {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                            "packagePath": [],
+                          },
+                          "name": {
+                            "camelCase": {
+                              "safeName": "movie",
+                              "unsafeName": "movie",
+                            },
+                            "originalName": "Movie",
+                            "pascalCase": {
+                              "safeName": "Movie",
+                              "unsafeName": "Movie",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "MOVIE",
+                              "unsafeName": "MOVIE",
+                            },
+                            "snakeCase": {
+                              "safeName": "movie",
+                              "unsafeName": "movie",
+                            },
+                          },
+                          "typeId": "type_types:Movie",
+                        },
+                        "value": {
+                          "jsonExample": "tag-wf9as23d",
+                          "shape": {
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "jsonExample": "tag-wf9as23d",
+                                "shape": {
+                                  "primitive": {
+                                    "string": "tag-wf9as23d",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            },
+                            "type": "named",
+                            "typeName": {
+                              "fernFilepath": {
+                                "allParts": [
+                                  {
+                                    "camelCase": {
+                                      "safeName": "commons",
+                                      "unsafeName": "commons",
+                                    },
+                                    "originalName": "commons",
+                                    "pascalCase": {
+                                      "safeName": "Commons",
+                                      "unsafeName": "Commons",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "COMMONS",
+                                      "unsafeName": "COMMONS",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "commons",
+                                      "unsafeName": "commons",
+                                    },
+                                  },
+                                  {
+                                    "camelCase": {
+                                      "safeName": "types",
+                                      "unsafeName": "types",
+                                    },
+                                    "originalName": "types",
+                                    "pascalCase": {
+                                      "safeName": "Types",
+                                      "unsafeName": "Types",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "TYPES",
+                                      "unsafeName": "TYPES",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "types",
+                                      "unsafeName": "types",
+                                    },
+                                  },
+                                ],
+                                "file": {
+                                  "camelCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                  "originalName": "types",
+                                  "pascalCase": {
+                                    "safeName": "Types",
+                                    "unsafeName": "Types",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "TYPES",
+                                    "unsafeName": "TYPES",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "types",
+                                    "unsafeName": "types",
+                                  },
+                                },
+                                "packagePath": [
+                                  {
+                                    "camelCase": {
+                                      "safeName": "commons",
+                                      "unsafeName": "commons",
+                                    },
+                                    "originalName": "commons",
+                                    "pascalCase": {
+                                      "safeName": "Commons",
+                                      "unsafeName": "Commons",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "COMMONS",
+                                      "unsafeName": "COMMONS",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "commons",
+                                      "unsafeName": "commons",
+                                    },
+                                  },
+                                ],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "tag",
+                                  "unsafeName": "tag",
+                                },
+                                "originalName": "Tag",
+                                "pascalCase": {
+                                  "safeName": "Tag",
+                                  "unsafeName": "Tag",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TAG",
+                                  "unsafeName": "TAG",
+                                },
+                                "snakeCase": {
+                                  "safeName": "tag",
+                                  "unsafeName": "tag",
+                                },
+                              },
+                              "typeId": "type_commons/types:Tag",
+                            },
+                          },
+                        },
+                        "wireKey": "tag",
                       },
                     ],
                     "type": "object",
@@ -4457,6 +4843,195 @@ exports[`generate IR 1`] = `
     },
   },
   "subpackages": {
+    "subpackage_commons": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+        "file": null,
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+      },
+      "hasEndpointsInTree": false,
+      "name": {
+        "camelCase": {
+          "safeName": "commons",
+          "unsafeName": "commons",
+        },
+        "originalName": "commons",
+        "pascalCase": {
+          "safeName": "Commons",
+          "unsafeName": "Commons",
+        },
+        "screamingSnakeCase": {
+          "safeName": "COMMONS",
+          "unsafeName": "COMMONS",
+        },
+        "snakeCase": {
+          "safeName": "commons",
+          "unsafeName": "commons",
+        },
+      },
+      "navigationConfig": null,
+      "service": null,
+      "subpackages": [
+        "subpackage_commons/types",
+      ],
+      "types": [],
+      "webhooks": null,
+    },
+    "subpackage_commons/types": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+          {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "types",
+            "unsafeName": "types",
+          },
+          "originalName": "types",
+          "pascalCase": {
+            "safeName": "Types",
+            "unsafeName": "Types",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TYPES",
+            "unsafeName": "TYPES",
+          },
+          "snakeCase": {
+            "safeName": "types",
+            "unsafeName": "types",
+          },
+        },
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+      },
+      "hasEndpointsInTree": false,
+      "name": {
+        "camelCase": {
+          "safeName": "types",
+          "unsafeName": "types",
+        },
+        "originalName": "types",
+        "pascalCase": {
+          "safeName": "Types",
+          "unsafeName": "Types",
+        },
+        "screamingSnakeCase": {
+          "safeName": "TYPES",
+          "unsafeName": "TYPES",
+        },
+        "snakeCase": {
+          "safeName": "types",
+          "unsafeName": "types",
+        },
+      },
+      "navigationConfig": null,
+      "service": null,
+      "subpackages": [],
+      "types": [
+        "type_commons/types:Tag",
+      ],
+      "webhooks": null,
+    },
     "subpackage_file": {
       "docs": null,
       "errors": [],
@@ -5260,6 +5835,164 @@ exports[`generate IR 1`] = `
     },
   },
   "types": {
+    "type_commons/types:Tag": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": "tag-wf9as23d",
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "type": "alias",
+            "value": {
+              "jsonExample": "tag-wf9as23d",
+              "shape": {
+                "primitive": {
+                  "string": "tag-wf9as23d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "tag",
+            "unsafeName": "tag",
+          },
+          "originalName": "Tag",
+          "pascalCase": {
+            "safeName": "Tag",
+            "unsafeName": "Tag",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TAG",
+            "unsafeName": "TAG",
+          },
+          "snakeCase": {
+            "safeName": "tag",
+            "unsafeName": "tag",
+          },
+        },
+        "typeId": "type_commons/types:Tag",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
     "type_types:Directory": {
       "availability": null,
       "docs": null,
@@ -7843,6 +8576,7 @@ exports[`generate IR 1`] = `
             "from": "Quentin Tarantino",
             "id": "movie-sda231x",
             "rating": 8.5,
+            "tag": "tag-12efs9dv",
             "title": "Pulp Fiction",
             "type": "movie",
           },
@@ -8360,6 +9094,197 @@ exports[`generate IR 1`] = `
                   },
                   "name": {
                     "camelCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                    "originalName": "Movie",
+                    "pascalCase": {
+                      "safeName": "Movie",
+                      "unsafeName": "Movie",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MOVIE",
+                      "unsafeName": "MOVIE",
+                    },
+                    "snakeCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                  },
+                  "typeId": "type_types:Movie",
+                },
+                "value": {
+                  "jsonExample": "tag-12efs9dv",
+                  "shape": {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "jsonExample": "tag-12efs9dv",
+                        "shape": {
+                          "primitive": {
+                            "string": "tag-12efs9dv",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                        ],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "tag",
+                          "unsafeName": "tag",
+                        },
+                        "originalName": "Tag",
+                        "pascalCase": {
+                          "safeName": "Tag",
+                          "unsafeName": "Tag",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TAG",
+                          "unsafeName": "TAG",
+                        },
+                        "snakeCase": {
+                          "safeName": "tag",
+                          "unsafeName": "tag",
+                        },
+                      },
+                      "typeId": "type_commons/types:Tag",
+                    },
+                  },
+                },
+                "wireKey": "tag",
+              },
+              {
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
                       "safeName": "extendedMovie",
                       "unsafeName": "extendedMovie",
                     },
@@ -8637,6 +9562,110 @@ exports[`generate IR 1`] = `
             },
           },
           "typeId": "type_types:MovieId",
+        },
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+              {
+                "camelCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+                "originalName": "types",
+                "pascalCase": {
+                  "safeName": "Types",
+                  "unsafeName": "Types",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPES",
+                  "unsafeName": "TYPES",
+                },
+                "snakeCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+            "packagePath": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "tag",
+              "unsafeName": "tag",
+            },
+            "originalName": "Tag",
+            "pascalCase": {
+              "safeName": "Tag",
+              "unsafeName": "Tag",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TAG",
+              "unsafeName": "TAG",
+            },
+            "snakeCase": {
+              "safeName": "tag",
+              "unsafeName": "tag",
+            },
+          },
+          "typeId": "type_commons/types:Tag",
         },
       ],
       "shape": {
@@ -10730,6 +11759,7 @@ exports[`generate IR 1`] = `
             "from": "Hayao Miyazaki",
             "id": "movie-c06a4ad7",
             "rating": 8,
+            "tag": "tag-wf9as23d",
             "title": "The Boy and the Heron",
             "type": "movie",
           },
@@ -11218,6 +12248,197 @@ exports[`generate IR 1`] = `
                 },
                 "wireKey": "type",
               },
+              {
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                    "originalName": "Movie",
+                    "pascalCase": {
+                      "safeName": "Movie",
+                      "unsafeName": "Movie",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MOVIE",
+                      "unsafeName": "MOVIE",
+                    },
+                    "snakeCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                  },
+                  "typeId": "type_types:Movie",
+                },
+                "value": {
+                  "jsonExample": "tag-wf9as23d",
+                  "shape": {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "jsonExample": "tag-wf9as23d",
+                        "shape": {
+                          "primitive": {
+                            "string": "tag-wf9as23d",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                        ],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "tag",
+                          "unsafeName": "tag",
+                        },
+                        "originalName": "Tag",
+                        "pascalCase": {
+                          "safeName": "Tag",
+                          "unsafeName": "Tag",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TAG",
+                          "unsafeName": "TAG",
+                        },
+                        "snakeCase": {
+                          "safeName": "tag",
+                          "unsafeName": "tag",
+                        },
+                      },
+                      "typeId": "type_commons/types:Tag",
+                    },
+                  },
+                },
+                "wireKey": "tag",
+              },
             ],
             "type": "object",
           },
@@ -11353,6 +12574,110 @@ exports[`generate IR 1`] = `
             },
           },
           "typeId": "type_types:MovieId",
+        },
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+              {
+                "camelCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+                "originalName": "types",
+                "pascalCase": {
+                  "safeName": "Types",
+                  "unsafeName": "Types",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPES",
+                  "unsafeName": "TYPES",
+                },
+                "snakeCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+            "packagePath": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "tag",
+              "unsafeName": "tag",
+            },
+            "originalName": "Tag",
+            "pascalCase": {
+              "safeName": "Tag",
+              "unsafeName": "Tag",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TAG",
+              "unsafeName": "TAG",
+            },
+            "snakeCase": {
+              "safeName": "tag",
+              "unsafeName": "tag",
+            },
+          },
+          "typeId": "type_commons/types:Tag",
         },
       ],
       "shape": {
@@ -11575,6 +12900,137 @@ exports[`generate IR 1`] = `
                   "type": "string",
                 },
               },
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tag",
+                  "unsafeName": "tag",
+                },
+                "originalName": "tag",
+                "pascalCase": {
+                  "safeName": "Tag",
+                  "unsafeName": "Tag",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAG",
+                  "unsafeName": "TAG",
+                },
+                "snakeCase": {
+                  "safeName": "tag",
+                  "unsafeName": "tag",
+                },
+              },
+              "wireValue": "tag",
+            },
+            "valueType": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                    "originalName": "commons",
+                    "pascalCase": {
+                      "safeName": "Commons",
+                      "unsafeName": "Commons",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "COMMONS",
+                      "unsafeName": "COMMONS",
+                    },
+                    "snakeCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                  },
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [
+                  {
+                    "camelCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                    "originalName": "commons",
+                    "pascalCase": {
+                      "safeName": "Commons",
+                      "unsafeName": "Commons",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "COMMONS",
+                      "unsafeName": "COMMONS",
+                    },
+                    "snakeCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                  },
+                ],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "tag",
+                  "unsafeName": "tag",
+                },
+                "originalName": "Tag",
+                "pascalCase": {
+                  "safeName": "Tag",
+                  "unsafeName": "Tag",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAG",
+                  "unsafeName": "TAG",
+                },
+                "snakeCase": {
+                  "safeName": "tag",
+                  "unsafeName": "tag",
+                },
+              },
+              "typeId": "type_commons/types:Tag",
             },
           },
         ],
