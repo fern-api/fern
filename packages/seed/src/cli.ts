@@ -1,7 +1,9 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { FIXTURES, testWorkspace } from "./commands/test/testWorkspace";
+import { testCustomFixture } from "./commands/test/testCustomFixture";
+import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
 import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
 
 void tryRunCli();
@@ -28,6 +30,10 @@ function addTestCommand(cli: Argv) {
                 .option("parallel", {
                     type: "number",
                     default: 4,
+                })
+                .option("custom-fixture", {
+                    type: "string",
+                    demandOption: false,
                 })
                 .option("fixture", {
                     type: "string",
@@ -59,18 +65,35 @@ function addTestCommand(cli: Argv) {
             const workspace = filteredWorkspace[0];
 
             const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
-            await testWorkspace({
-                workspace,
-                fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
-                irVersion: workspace.workspaceConfig.irVersion,
-                language: workspace.workspaceConfig.language,
-                generatorType: workspace.workspaceConfig.generatorType,
-                docker: parsedDockerImage,
-                dockerCommand: workspace.workspaceConfig.dockerCommand,
-                compileCommand: undefined,
-                logLevel: argv["log-level"],
-                numDockers: argv.parallel,
-            });
+
+            if (argv.customFixture != null) {
+                await testCustomFixture({
+                    pathToFixture: argv.customFixture.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.customFixture)
+                        : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
+                    workspace,
+                    irVersion: workspace.workspaceConfig.irVersion,
+                    language: workspace.workspaceConfig.language,
+                    generatorType: workspace.workspaceConfig.generatorType,
+                    docker: parsedDockerImage,
+                    compileCommand: undefined,
+                    logLevel: argv["log-level"],
+                    numDockers: argv.parallel,
+                });
+            } else {
+                await testWorkspaceFixtures({
+                    workspace,
+                    fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
+                    irVersion: workspace.workspaceConfig.irVersion,
+                    language: workspace.workspaceConfig.language,
+                    generatorType: workspace.workspaceConfig.generatorType,
+                    docker: parsedDockerImage,
+                    dockerCommand: workspace.workspaceConfig.dockerCommand,
+                    compileCommand: undefined,
+                    logLevel: argv["log-level"],
+                    numDockers: argv.parallel,
+                });
+            }
         }
     );
 }
