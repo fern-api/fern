@@ -56,7 +56,7 @@ interface TestFailure {
     fixture: string;
 }
 
-export async function testWorkspace({
+export async function testWorkspaceFixtures({
     generatorType,
     workspace,
     irVersion,
@@ -99,10 +99,14 @@ export async function testWorkspace({
     const testCases = [];
     for (const fixture of fixtures) {
         const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
+        const absolutePathToWorkspace = AbsoluteFilePath.of(
+            path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+        );
         if (fixtureConfig != null) {
             for (const fixtureConfigInstance of fixtureConfig) {
                 testCases.push(
                     acquireLocksAndRunTest({
+                        absolutePathToWorkspace,
                         lock,
                         generatorType,
                         irVersion,
@@ -125,6 +129,7 @@ export async function testWorkspace({
         } else {
             testCases.push(
                 acquireLocksAndRunTest({
+                    absolutePathToWorkspace,
                     lock,
                     irVersion,
                     generatorType,
@@ -163,6 +168,7 @@ export async function acquireLocksAndRunTest({
     compileCommand,
     taskContext,
     outputDir,
+    absolutePathToWorkspace,
 }: {
     lock: Semaphore;
     generatorType: GeneratorType;
@@ -174,6 +180,7 @@ export async function acquireLocksAndRunTest({
     compileCommand: string | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
+    absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -188,6 +195,7 @@ export async function acquireLocksAndRunTest({
         compileCommand,
         taskContext,
         outputDir,
+        absolutePathToWorkspace,
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -204,6 +212,7 @@ async function testWithWriteToDisk({
     compileCommand,
     taskContext,
     outputDir,
+    absolutePathToWorkspace,
 }: {
     fixture: string;
     irVersion: string | undefined;
@@ -214,11 +223,9 @@ async function testWithWriteToDisk({
     compileCommand: string | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
+    absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<TestResult> {
     try {
-        const absolutePathToWorkspace = AbsoluteFilePath.of(
-            path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
-        );
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace,
             context: taskContext,
