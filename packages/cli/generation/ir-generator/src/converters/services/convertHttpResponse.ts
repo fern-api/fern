@@ -1,12 +1,7 @@
 import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
-import {
-    HttpResponse,
-    JsonResponse,
-    ObjectProperty,
-    StreamingResponseChunkType,
-    TypeReference,
-} from "@fern-fern/ir-sdk/api";
+import { HttpResponse, JsonResponse, ObjectProperty, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
+import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration";
 
@@ -68,18 +63,17 @@ function convertJsonResponse(
     typeResolver: TypeResolver
 ): HttpResponse {
     const responseBodyType = file.parseTypeReference(response);
+    const resolvedType = typeResolver.resolveTypeOrThrow({
+        type: typeof response !== "string" ? response.type : response,
+        file,
+    });
     const responseProperty = typeof response !== "string" ? response.property : undefined;
     if (responseProperty != null) {
         return HttpResponse.json(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty: getObjectPropertyFromTypeReference(
-                    responseBodyType,
-                    responseProperty,
-                    file,
-                    typeResolver
-                ),
+                responseProperty: getObjectPropertyFromResolvedType(resolvedType, responseProperty, file, typeResolver),
             })
         );
     }
@@ -91,38 +85,25 @@ function convertJsonResponse(
     );
 }
 
-function getObjectPropertyFromTypeReference(
-    typeReference: TypeReference,
+function getObjectPropertyFromResolvedType(
+    resolvedType: ResolvedType,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
 ): ObjectProperty {
-    if (typeReference.type === "container" && typeReference.container.type === "optional") {
-        return getObjectPropertyFromTypeReference(typeReference.container.optional, property, file, typeResolver);
+    switch (resolvedType._type) {
+        case "container":
+            if (resolvedType.container._type === "optional") {
+                return getObjectPropertyFromResolvedType(resolvedType.container.itemType, property, file, typeResolver);
+            }
+            break;
+        case "named":
+            if (isRawObjectDefinition(resolvedType.declaration)) {
+                return getObjectPropertyFromObjectSchema(resolvedType.declaration, property, file, typeResolver);
+            }
+            break;
     }
-    if (typeReference.type === "named") {
-        const resolvedType = typeResolver.resolveNamedTypeOrThrow({
-            referenceToNamedType: typeReference.name.originalName,
-            file,
-        });
-        switch (resolvedType._type) {
-            case "container":
-                return getObjectPropertyFromTypeReference(
-                    resolvedType.originalTypeReference,
-                    property,
-                    file,
-                    typeResolver
-                );
-            case "named":
-                if (isRawObjectDefinition(resolvedType.declaration)) {
-                    return getObjectPropertyFromObjectSchema(resolvedType.declaration, property, file, typeResolver);
-                }
-                throw new Error(
-                    "Internal error; response must be an object in order to return a property as a response"
-                );
-        }
-    }
-    throw new Error(`Response does not have a property named ${property}.`);
+    throw new Error("Internal error; response must be an object in order to return a property as a response");
 }
 
 function getObjectPropertyFromObjectSchema(
