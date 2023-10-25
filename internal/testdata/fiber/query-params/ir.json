@@ -18,18 +18,19 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {},
     "errors": {},
     "services": {
         "service_user": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -75,6 +76,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -83,9 +85,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.getAllUsers",
                     "name": {
                         "originalName": "getAllUsers",
                         "camelCase": {
@@ -105,7 +105,9 @@
                             "safeName": "GetAllUsers"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "GET",
                     "path": {
                         "head": "/all",
@@ -119,9 +121,6 @@
                     "allPathParameters": [],
                     "queryParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "limit",
@@ -145,21 +144,20 @@
                                 "wireValue": "limit"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "optional",
                                     "optional": {
-                                        "primitive": "INTEGER",
-                                        "_type": "primitive"
-                                    },
-                                    "_type": "optional"
-                                },
-                                "_type": "container"
+                                        "_type": "primitive",
+                                        "primitive": "INTEGER"
+                                    }
+                                }
                             },
-                            "allowMultiple": false
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "key",
@@ -183,23 +181,22 @@
                                 "wireValue": "key"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "literal",
                                     "literal": {
-                                        "string": "fern",
-                                        "type": "string"
-                                    },
-                                    "_type": "literal"
-                                },
-                                "_type": "container"
+                                        "type": "string",
+                                        "string": "fern"
+                                    }
+                                }
                             },
-                            "allowMultiple": false
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": null
                         }
                     ],
                     "headers": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Header",
@@ -223,13 +220,17 @@
                                 "wireValue": "X-Endpoint-Header"
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "availability": null,
+                            "docs": null
                         }
                     ],
+                    "requestBody": null,
                     "sdkRequest": {
                         "shape": {
+                            "type": "wrapper",
                             "wrapperName": {
                                 "originalName": "GetAllUsersRequest",
                                 "camelCase": {
@@ -267,8 +268,7 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -291,14 +291,20 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -327,17 +333,39 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -381,43 +409,32 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
             "service": "service_user",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_user"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

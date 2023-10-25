@@ -18,17 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_user:User": {
-            "docs": "A user.",
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "User",
@@ -95,12 +94,10 @@
                 "typeId": "type_user:User"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -124,15 +121,18 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": "A user."
         }
     },
     "errors": {
@@ -224,9 +224,9 @@
                 },
                 "wireValue": "UserNotFoundError"
             },
-            "docs": "The user could not be found.",
             "statusCode": 404,
             "type": {
+                "_type": "named",
                 "name": {
                     "originalName": "User",
                     "camelCase": {
@@ -289,16 +289,14 @@
                         }
                     }
                 },
-                "typeId": "type_user:User",
-                "_type": "named"
-            }
+                "typeId": "type_user:User"
+            },
+            "docs": "The user could not be found."
         }
     },
     "services": {
         "service_user": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -344,6 +342,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -352,10 +351,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "docs": "Returns the username associated with the given userId.",
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.getName",
                     "name": {
                         "originalName": "getName",
                         "camelCase": {
@@ -375,7 +371,9 @@
                             "safeName": "GetName"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "GET",
                     "path": {
                         "head": "/",
@@ -397,10 +395,6 @@
                     },
                     "pathParameters": [
                         {
-                            "docs": "userId uniquely identifies a user.",
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
@@ -421,18 +415,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": "userId uniquely identifies a user."
                         }
                     ],
                     "allPathParameters": [
                         {
-                            "docs": "userId uniquely identifies a user.",
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
@@ -453,18 +445,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": "userId uniquely identifies a user."
                         }
                     ],
                     "queryParameters": [
                         {
-                            "docs": "Filters the username.",
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "filter",
@@ -488,18 +478,16 @@
                                 "wireValue": "filter"
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "allowMultiple": false
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": "Filters the username."
                         }
                     ],
                     "headers": [
                         {
-                            "docs": "Specifies the endpoint key.",
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Header",
@@ -523,13 +511,17 @@
                                 "wireValue": "X-Endpoint-Header"
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "availability": null,
+                            "docs": "Specifies the endpoint key."
                         }
                     ],
+                    "requestBody": null,
                     "sdkRequest": {
                         "shape": {
+                            "type": "wrapper",
                             "wrapperName": {
                                 "originalName": "GetNameRequest",
                                 "camelCase": {
@@ -567,8 +559,7 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -591,14 +582,20 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": "Returns the username associated with the given userId."
                 }
             ]
         }
@@ -627,9 +624,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -638,8 +637,28 @@
             "type_user:User"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -683,25 +702,6 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
             "service": "service_user",
             "types": [
                 "type_user:User"
@@ -710,20 +710,28 @@
                 "error_user:UserNotFoundError"
             ],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_user"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

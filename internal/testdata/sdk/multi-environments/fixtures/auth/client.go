@@ -45,7 +45,7 @@ func (c *Client) GetAuth(ctx context.Context) (string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -69,7 +69,7 @@ func (c *Client) ListAuth(ctx context.Context) ([]string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -93,7 +93,7 @@ func (c *Client) ListPlants(ctx context.Context) ([]string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

@@ -47,7 +47,7 @@ func (c *Client) List(ctx context.Context, userId string) ([]*notification.Notif
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

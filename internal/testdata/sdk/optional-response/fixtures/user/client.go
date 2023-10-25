@@ -47,7 +47,7 @@ func (c *Client) GetName(ctx context.Context, userId string) (*string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -71,7 +71,7 @@ func (c *Client) GetUser(ctx context.Context, userId string) (*fixtures.User, er
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_imdb:Integer": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Integer",
@@ -94,23 +94,22 @@
                 "typeId": "type_imdb:Integer"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "INTEGER",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "INTEGER"
                 },
                 "resolvedType": {
-                    "primitive": "INTEGER",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "INTEGER"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Double": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Double",
@@ -177,23 +176,22 @@
                 "typeId": "type_imdb:Double"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "DOUBLE",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "DOUBLE"
                 },
                 "resolvedType": {
-                    "primitive": "DOUBLE",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "DOUBLE"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:String": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "String",
@@ -260,23 +258,22 @@
                 "typeId": "type_imdb:String"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "STRING"
                 },
                 "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "STRING"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Boolean": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Boolean",
@@ -343,23 +340,22 @@
                 "typeId": "type_imdb:Boolean"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "BOOLEAN",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "BOOLEAN"
                 },
                 "resolvedType": {
-                    "primitive": "BOOLEAN",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "BOOLEAN"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Long": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Long",
@@ -426,23 +422,22 @@
                 "typeId": "type_imdb:Long"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "LONG",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "LONG"
                 },
                 "resolvedType": {
-                    "primitive": "LONG",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "LONG"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:DateTime": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "DateTime",
@@ -509,23 +504,22 @@
                 "typeId": "type_imdb:DateTime"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "DATE_TIME",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "DATE_TIME"
                 },
                 "resolvedType": {
-                    "primitive": "DATE_TIME",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "DATE_TIME"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Date": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Date",
@@ -592,23 +586,22 @@
                 "typeId": "type_imdb:Date"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "DATE",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "DATE"
                 },
                 "resolvedType": {
-                    "primitive": "DATE",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "DATE"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Uuid": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Uuid",
@@ -675,23 +668,22 @@
                 "typeId": "type_imdb:Uuid"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "UUID",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "UUID"
                 },
                 "resolvedType": {
-                    "primitive": "UUID",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "UUID"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Base64": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Base64",
@@ -758,23 +750,22 @@
                 "typeId": "type_imdb:Base64"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "BASE_64",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "BASE_64"
                 },
                 "resolvedType": {
-                    "primitive": "BASE_64",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "BASE_64"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:IntegerList": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "IntegerList",
@@ -841,35 +832,34 @@
                 "typeId": "type_imdb:IntegerList"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
-                            "primitive": "INTEGER",
-                            "_type": "primitive"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
+                            "_type": "primitive",
+                            "primitive": "INTEGER"
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
-                            "primitive": "INTEGER",
-                            "_type": "primitive"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                            "_type": "primitive",
+                            "primitive": "INTEGER"
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:DoubleSet": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "DoubleSet",
@@ -936,35 +926,34 @@
                 "typeId": "type_imdb:DoubleSet"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "set",
                         "set": {
-                            "primitive": "DOUBLE",
-                            "_type": "primitive"
-                        },
-                        "_type": "set"
-                    },
-                    "_type": "container"
+                            "_type": "primitive",
+                            "primitive": "DOUBLE"
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "set",
                         "set": {
-                            "primitive": "DOUBLE",
-                            "_type": "primitive"
-                        },
-                        "_type": "set"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                            "_type": "primitive",
+                            "primitive": "DOUBLE"
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:StringBooleanMap": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "StringBooleanMap",
@@ -1031,43 +1020,42 @@
                 "typeId": "type_imdb:StringBooleanMap"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "map",
                         "keyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
+                            "_type": "primitive",
+                            "primitive": "STRING"
                         },
                         "valueType": {
-                            "primitive": "BOOLEAN",
-                            "_type": "primitive"
-                        },
-                        "_type": "map"
-                    },
-                    "_type": "container"
+                            "_type": "primitive",
+                            "primitive": "BOOLEAN"
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "map",
                         "keyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
+                            "_type": "primitive",
+                            "primitive": "STRING"
                         },
                         "valueType": {
-                            "primitive": "BOOLEAN",
-                            "_type": "primitive"
-                        },
-                        "_type": "map"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                            "_type": "primitive",
+                            "primitive": "BOOLEAN"
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:OptionalLong": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "OptionalLong",
@@ -1134,35 +1122,34 @@
                 "typeId": "type_imdb:OptionalLong"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "optional",
                         "optional": {
-                            "primitive": "LONG",
-                            "_type": "primitive"
-                        },
-                        "_type": "optional"
-                    },
-                    "_type": "container"
+                            "_type": "primitive",
+                            "primitive": "LONG"
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "optional",
                         "optional": {
-                            "primitive": "LONG",
-                            "_type": "primitive"
-                        },
-                        "_type": "optional"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                            "_type": "primitive",
+                            "primitive": "LONG"
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Unknown": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Unknown",
@@ -1229,21 +1216,20 @@
                 "typeId": "type_imdb:Unknown"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
                     "_type": "unknown"
                 },
                 "resolvedType": {
                     "_type": "unknown"
-                },
-                "_type": "alias"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:ListListInteger": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "ListListInteger",
@@ -1310,47 +1296,46 @@
                 "typeId": "type_imdb:ListListInteger"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
+                            "_type": "container",
                             "container": {
+                                "_type": "list",
                                 "list": {
-                                    "primitive": "INTEGER",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
+                                    "_type": "primitive",
+                                    "primitive": "INTEGER"
+                                }
+                            }
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
+                            "_type": "container",
                             "container": {
+                                "_type": "list",
                                 "list": {
-                                    "primitive": "INTEGER",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                                    "_type": "primitive",
+                                    "primitive": "INTEGER"
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:ListStringIntegerMap": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "ListStringIntegerMap",
@@ -1417,55 +1402,54 @@
                 "typeId": "type_imdb:ListStringIntegerMap"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
+                            "_type": "container",
                             "container": {
+                                "_type": "map",
                                 "keyType": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
                                 },
                                 "valueType": {
-                                    "primitive": "INTEGER",
-                                    "_type": "primitive"
-                                },
-                                "_type": "map"
-                            },
-                            "_type": "container"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
+                                    "_type": "primitive",
+                                    "primitive": "INTEGER"
+                                }
+                            }
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
+                            "_type": "container",
                             "container": {
+                                "_type": "map",
                                 "keyType": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
                                 },
                                 "valueType": {
-                                    "primitive": "INTEGER",
-                                    "_type": "primitive"
-                                },
-                                "_type": "map"
-                            },
-                            "_type": "container"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                                    "_type": "primitive",
+                                    "primitive": "INTEGER"
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:ListOptionalUUID": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "ListOptionalUUID",
@@ -1532,47 +1516,46 @@
                 "typeId": "type_imdb:ListOptionalUUID"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
+                            "_type": "container",
                             "container": {
+                                "_type": "optional",
                                 "optional": {
-                                    "primitive": "UUID",
-                                    "_type": "primitive"
-                                },
-                                "_type": "optional"
-                            },
-                            "_type": "container"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
+                                    "_type": "primitive",
+                                    "primitive": "UUID"
+                                }
+                            }
+                        }
+                    }
                 },
                 "resolvedType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "list",
                         "list": {
+                            "_type": "container",
                             "container": {
+                                "_type": "optional",
                                 "optional": {
-                                    "primitive": "UUID",
-                                    "_type": "primitive"
-                                },
-                                "_type": "optional"
-                            },
-                            "_type": "container"
-                        },
-                        "_type": "list"
-                    },
-                    "_type": "container"
-                },
-                "_type": "alias"
+                                    "_type": "primitive",
+                                    "primitive": "UUID"
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:FooAlias": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "FooAlias",
@@ -1639,7 +1622,9 @@
                 "typeId": "type_imdb:FooAlias"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "named",
                     "name": {
                         "originalName": "Foo",
                         "camelCase": {
@@ -1702,10 +1687,10 @@
                             }
                         }
                     },
-                    "typeId": "type_imdb:Foo",
-                    "_type": "named"
+                    "typeId": "type_imdb:Foo"
                 },
                 "resolvedType": {
+                    "_type": "named",
                     "name": {
                         "name": {
                             "originalName": "Foo",
@@ -1769,13 +1754,10 @@
                                 }
                             }
                         },
-                        "typeId": "type_imdb:Foo",
-                        "_type": "named"
+                        "typeId": "type_imdb:Foo"
                     },
-                    "shape": "OBJECT",
-                    "_type": "named"
-                },
-                "_type": "alias"
+                    "shape": "OBJECT"
+                }
             },
             "referencedTypes": [
                 {
@@ -1909,12 +1891,11 @@
                     "typeId": "type_imdb:String"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:BarAlias": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "BarAlias",
@@ -1981,7 +1962,9 @@
                 "typeId": "type_imdb:BarAlias"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
+                    "_type": "named",
                     "name": {
                         "originalName": "Bar",
                         "camelCase": {
@@ -2044,10 +2027,10 @@
                             }
                         }
                     },
-                    "typeId": "type_imdb:Bar",
-                    "_type": "named"
+                    "typeId": "type_imdb:Bar"
                 },
                 "resolvedType": {
+                    "_type": "named",
                     "name": {
                         "name": {
                             "originalName": "Bar",
@@ -2111,13 +2094,10 @@
                                 }
                             }
                         },
-                        "typeId": "type_imdb:Bar",
-                        "_type": "named"
+                        "typeId": "type_imdb:Bar"
                     },
-                    "shape": "OBJECT",
-                    "_type": "named"
-                },
-                "_type": "alias"
+                    "shape": "OBJECT"
+                }
             },
             "referencedTypes": [
                 {
@@ -2316,12 +2296,11 @@
                     "typeId": "type_imdb:String"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Foo": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -2388,12 +2367,10 @@
                 "typeId": "type_imdb:Foo"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "id",
@@ -2417,14 +2394,13 @@
                             "wireValue": "id"
                         },
                         "valueType": {
-                            "primitive": "UUID",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "UUID"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -2448,14 +2424,13 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "stringAlias",
@@ -2479,6 +2454,7 @@
                             "wireValue": "stringAlias"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "String",
                                 "camelCase": {
@@ -2541,12 +2517,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:String",
-                            "_type": "named"
-                        }
+                            "typeId": "type_imdb:String"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -2615,12 +2591,11 @@
                     "typeId": "type_imdb:String"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Bar": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Bar",
@@ -2687,12 +2662,10 @@
                 "typeId": "type_imdb:Bar"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "foo",
@@ -2716,6 +2689,7 @@
                             "wireValue": "foo"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Foo",
                                 "camelCase": {
@@ -2778,12 +2752,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Foo",
-                            "_type": "named"
-                        }
+                            "typeId": "type_imdb:Foo"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -2917,12 +2891,11 @@
                     "typeId": "type_imdb:String"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Union": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Union",
@@ -2989,6 +2962,7 @@
                 "typeId": "type_imdb:Union"
             },
             "shape": {
+                "_type": "union",
                 "discriminant": {
                     "name": {
                         "originalName": "type",
@@ -3038,6 +3012,7 @@
                             "wireValue": "fooAlias"
                         },
                         "shape": {
+                            "_type": "samePropertiesAsObject",
                             "name": {
                                 "originalName": "Foo",
                                 "camelCase": {
@@ -3100,9 +3075,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Foo",
-                            "_type": "samePropertiesAsObject"
-                        }
+                            "typeId": "type_imdb:Foo"
+                        },
+                        "docs": null
                     },
                     {
                         "discriminantValue": {
@@ -3128,6 +3103,7 @@
                             "wireValue": "barAlias"
                         },
                         "shape": {
+                            "_type": "singleProperty",
                             "name": {
                                 "name": {
                                     "originalName": "barAlias",
@@ -3151,6 +3127,7 @@
                                 "wireValue": "barAlias"
                             },
                             "type": {
+                                "_type": "named",
                                 "name": {
                                     "originalName": "BarAlias",
                                     "camelCase": {
@@ -3213,11 +3190,10 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_imdb:BarAlias",
-                                "_type": "named"
-                            },
-                            "_type": "singleProperty"
-                        }
+                                "typeId": "type_imdb:BarAlias"
+                            }
+                        },
+                        "docs": null
                     },
                     {
                         "discriminantValue": {
@@ -3243,6 +3219,7 @@
                             "wireValue": "doubleAlias"
                         },
                         "shape": {
+                            "_type": "singleProperty",
                             "name": {
                                 "name": {
                                     "originalName": "doubleAlias",
@@ -3266,6 +3243,7 @@
                                 "wireValue": "doubleAlias"
                             },
                             "type": {
+                                "_type": "named",
                                 "name": {
                                     "originalName": "Double",
                                     "camelCase": {
@@ -3328,14 +3306,12 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_imdb:Double",
-                                "_type": "named"
-                            },
-                            "_type": "singleProperty"
-                        }
+                                "typeId": "type_imdb:Double"
+                            }
+                        },
+                        "docs": null
                     }
-                ],
-                "_type": "union"
+                ]
             },
             "referencedTypes": [
                 {
@@ -3729,7 +3705,9 @@
                     "typeId": "type_imdb:Double"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -3758,9 +3736,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -3790,8 +3770,28 @@
             "type_imdb:Union"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_imdb": {
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3835,25 +3835,7 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "imdb",
-                "camelCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "snakeCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMDB",
-                    "safeName": "IMDB"
-                },
-                "pascalCase": {
-                    "unsafeName": "Imdb",
-                    "safeName": "Imdb"
-                }
-            },
+            "service": null,
             "types": [
                 "type_imdb:Integer",
                 "type_imdb:Double",
@@ -3880,20 +3862,28 @@
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_imdb"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_user:UserNotFoundErrorBody": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "UserNotFoundErrorBody",
@@ -94,12 +94,10 @@
                 "typeId": "type_user:UserNotFoundErrorBody"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "requestedUserId",
@@ -123,15 +121,18 @@
                             "wireValue": "requestedUserId"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {
@@ -225,6 +226,7 @@
             },
             "statusCode": 404,
             "type": {
+                "_type": "named",
                 "name": {
                     "originalName": "UserNotFoundErrorBody",
                     "camelCase": {
@@ -287,9 +289,9 @@
                         }
                     }
                 },
-                "typeId": "type_user:UserNotFoundErrorBody",
-                "_type": "named"
-            }
+                "typeId": "type_user:UserNotFoundErrorBody"
+            },
+            "docs": null
         },
         "error_user:NotImplementedError": {
             "name": {
@@ -381,9 +383,10 @@
             },
             "statusCode": 501,
             "type": {
-                "primitive": "STRING",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "STRING"
+            },
+            "docs": null
         },
         "error_user:TeapotError": {
             "name": {
@@ -475,15 +478,16 @@
             },
             "statusCode": 418,
             "type": {
+                "_type": "container",
                 "container": {
+                    "_type": "list",
                     "list": {
-                        "primitive": "STRING",
-                        "_type": "primitive"
-                    },
-                    "_type": "list"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    }
+                }
+            },
+            "docs": null
         },
         "error_user:UpgradeError": {
             "name": {
@@ -575,15 +579,16 @@
             },
             "statusCode": 426,
             "type": {
+                "_type": "container",
                 "container": {
+                    "_type": "literal",
                     "literal": {
-                        "string": "upgrade",
-                        "type": "string"
-                    },
-                    "_type": "literal"
-                },
-                "_type": "container"
-            }
+                        "type": "string",
+                        "string": "upgrade"
+                    }
+                }
+            },
+            "docs": null
         },
         "error_user:UntypedError": {
             "name": {
@@ -673,7 +678,9 @@
                 },
                 "wireValue": "UntypedError"
             },
-            "statusCode": 400
+            "statusCode": 400,
+            "type": null,
+            "docs": null
         },
         "error_user:OptionalStringError": {
             "name": {
@@ -765,22 +772,21 @@
             },
             "statusCode": 500,
             "type": {
+                "_type": "container",
                 "container": {
+                    "_type": "optional",
                     "optional": {
-                        "primitive": "STRING",
-                        "_type": "primitive"
-                    },
-                    "_type": "optional"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    }
+                }
+            },
+            "docs": null
         }
     },
     "services": {
         "service_user": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -826,6 +832,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -834,9 +841,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.get",
                     "name": {
                         "originalName": "get",
                         "camelCase": {
@@ -856,7 +861,9 @@
                             "safeName": "Get"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "GET",
                     "path": {
                         "head": "/",
@@ -878,9 +885,6 @@
                     },
                     "pathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -901,17 +905,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "allPathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -932,20 +935,28 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -1013,7 +1024,8 @@
                                     }
                                 },
                                 "errorId": "error_user:UserNotFoundError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1080,7 +1092,8 @@
                                     }
                                 },
                                 "errorId": "error_user:NotImplementedError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1147,7 +1160,8 @@
                                     }
                                 },
                                 "errorId": "error_user:TeapotError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1214,7 +1228,8 @@
                                     }
                                 },
                                 "errorId": "error_user:UpgradeError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1281,15 +1296,16 @@
                                     }
                                 },
                                 "errorId": "error_user:UntypedError"
-                            }
+                            },
+                            "docs": null
                         }
                     ],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 },
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.update",
                     "name": {
                         "originalName": "update",
                         "camelCase": {
@@ -1309,7 +1325,9 @@
                             "safeName": "Update"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "POST",
                     "path": {
                         "head": "/",
@@ -1331,9 +1349,6 @@
                     },
                     "pathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -1354,17 +1369,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "allPathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -1385,28 +1399,37 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
+                        "type": "reference",
                         "requestBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
+                            "_type": "primitive",
+                            "primitive": "STRING"
                         },
-                        "type": "reference"
+                        "contentType": null,
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
-                            "requestBodyType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
-                            },
-                            "type": "justRequestBody"
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "contentType": null,
+                                "docs": null
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -1429,11 +1452,15 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -1501,7 +1528,8 @@
                                     }
                                 },
                                 "errorId": "error_user:UpgradeError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1568,10 +1596,13 @@
                                     }
                                 },
                                 "errorId": "error_user:UntypedError"
-                            }
+                            },
+                            "docs": null
                         }
                     ],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -1600,9 +1631,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -1611,8 +1644,28 @@
             "type_user:UserNotFoundErrorBody"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1656,25 +1709,6 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
             "service": "service_user",
             "types": [
                 "type_user:UserNotFoundErrorBody"
@@ -1688,20 +1722,28 @@
                 "error_user:OptionalStringError"
             ],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_user"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

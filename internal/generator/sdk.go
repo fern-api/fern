@@ -2,6 +2,7 @@ package generator
 
 import (
 	_ "embed"
+	"errors"
 	"fmt"
 	"path"
 	"sort"
@@ -796,7 +797,7 @@ func (f *fileWriter) endpointFromIR(
 		if needsRequestParameter(irEndpoint) {
 			var requestType string
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
-				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+				requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
 				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
@@ -828,22 +829,44 @@ func (f *fileWriter) endpointFromIR(
 	)
 	var responseIsOptionalParameter bool
 	if irEndpoint.Response != nil {
-		if irEndpoint.Response.Json != nil {
-			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+		switch irEndpoint.Response.Type {
+		case "json":
+			typeReference := typeReferenceFromJsonResponse(irEndpoint.Response.Json)
+			if typeReference == nil {
+				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Json.Type)
+			}
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
 			responseInitializerFormat = "var response %s"
-			responseIsOptionalParameter = irEndpoint.Response.Json.ResponseBodyType.Container != nil && irEndpoint.Response.Json.ResponseBodyType.Container.Optional != nil
+			responseIsOptionalParameter = typeReference.Container != nil && typeReference.Container.Optional != nil
 			responseParameterName = "&response"
 			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
 			successfulReturnValues = "response, nil"
-			errorReturnValues = "response, err"
-		}
-		if irEndpoint.Response.FileDownload != nil {
+			errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(typeReference, f.types))
+
+			if irEndpoint.Response.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Json.NestedPropertyAsResponse.ResponseProperty != nil {
+				responseProperty := irEndpoint.Response.Json.NestedPropertyAsResponse.ResponseProperty
+				responsePropertyTypeReference := responseProperty.ValueType
+				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
+				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
+				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
+			}
+		case "fileDownload":
 			responseType = "bytes.NewBuffer(nil)"
 			responseInitializerFormat = "response := %s"
 			responseParameterName = "response"
 			signatureReturnValues = "(io.Reader, error)"
 			successfulReturnValues = "response, nil"
 			errorReturnValues = "nil, err"
+		case "text":
+			responseType = "string"
+			responseInitializerFormat = "var response %s"
+			responseParameterName = "response"
+			signatureReturnValues = "(string, error)"
+			successfulReturnValues = "response, nil"
+			errorReturnValues = `"", err`
+		default:
+			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Type)
 		}
 	} else {
 		responseParameterName = "nil"
@@ -1444,6 +1467,10 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 	return nil
 }
 
+func (r *requestBodyVisitor) VisitBytes(bytes *ir.BytesRequest) error {
+	return errors.New("bytes requests are not supported yet")
+}
+
 // inlinedRequestBodyToObjectTypeDeclaration maps the given inlined request body
 // into an object type declaration so that we can reuse the functionality required
 // to write object properties for a generated object.
@@ -1514,7 +1541,7 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 		prefix = "*"
 		isOptional = true
 	}
-	if primitive := maybePrimitive(typeReference); primitive != 0 {
+	if primitive := maybePrimitive(typeReference); primitive != "" {
 		// Several of the primitive types require special handling for query parameter serialization.
 		switch primitive {
 		case ir.PrimitiveTypeDateTime:
@@ -1535,6 +1562,21 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 	}
 }
 
+func typeReferenceFromJsonResponse(
+	jsonResponse *ir.JsonResponse,
+) *ir.TypeReference {
+	if jsonResponse == nil {
+		return nil
+	}
+	switch jsonResponse.Type {
+	case "response":
+		return jsonResponse.Response.ResponseBodyType
+	case "nestedPropertyAsResponse":
+		return jsonResponse.NestedPropertyAsResponse.ResponseBodyType
+	}
+	return nil
+}
+
 // needsRequestParameter returns true if the endpoint needs a request parameter in its
 // function signature.
 func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
@@ -1551,11 +1593,11 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
 // value, if any. Note that this only recurses through nested optional containers; all
 // other container types are ignored.
 func maybePrimitive(typeReference *ir.TypeReference) ir.PrimitiveType {
-	if typeReference.Primitive != 0 {
+	if typeReference.Primitive != "" {
 		return typeReference.Primitive
 	}
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		return maybePrimitive(typeReference.Container.Optional)
 	}
-	return 0
+	return ""
 }

@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_imdb:ExampleType": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "ExampleType",
@@ -94,6 +94,7 @@
                 "typeId": "type_imdb:ExampleType"
             },
             "shape": {
+                "_type": "object",
                 "extends": [
                     {
                         "name": {
@@ -163,9 +164,6 @@
                 ],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -189,12 +187,13 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -263,12 +262,11 @@
                     "typeId": "type_imdb:Docs"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:NestedType": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "NestedType",
@@ -335,6 +333,7 @@
                 "typeId": "type_imdb:NestedType"
             },
             "shape": {
+                "_type": "object",
                 "extends": [
                     {
                         "name": {
@@ -404,9 +403,6 @@
                 ],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -430,12 +426,13 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -569,12 +566,11 @@
                     "typeId": "type_imdb:Docs"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Union": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Union",
@@ -641,6 +637,7 @@
                 "typeId": "type_imdb:Union"
             },
             "shape": {
+                "_type": "union",
                 "discriminant": {
                     "name": {
                         "originalName": "type",
@@ -756,6 +753,7 @@
                             "wireValue": "one"
                         },
                         "shape": {
+                            "_type": "samePropertiesAsObject",
                             "name": {
                                 "originalName": "ExampleType",
                                 "camelCase": {
@@ -818,12 +816,11 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:ExampleType",
-                            "_type": "samePropertiesAsObject"
-                        }
+                            "typeId": "type_imdb:ExampleType"
+                        },
+                        "docs": null
                     }
-                ],
-                "_type": "union"
+                ]
             },
             "referencedTypes": [
                 {
@@ -957,12 +954,11 @@
                     "typeId": "type_imdb:Docs"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:NestedUnion": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "NestedUnion",
@@ -1029,6 +1025,7 @@
                 "typeId": "type_imdb:NestedUnion"
             },
             "shape": {
+                "_type": "union",
                 "discriminant": {
                     "name": {
                         "originalName": "type",
@@ -1144,6 +1141,7 @@
                             "wireValue": "one"
                         },
                         "shape": {
+                            "_type": "samePropertiesAsObject",
                             "name": {
                                 "originalName": "ExampleType",
                                 "camelCase": {
@@ -1206,12 +1204,11 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:ExampleType",
-                            "_type": "samePropertiesAsObject"
-                        }
+                            "typeId": "type_imdb:ExampleType"
+                        },
+                        "docs": null
                     }
-                ],
-                "_type": "union"
+                ]
             },
             "referencedTypes": [
                 {
@@ -1345,12 +1342,11 @@
                     "typeId": "type_imdb:Docs"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Docs": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Docs",
@@ -1417,12 +1413,10 @@
                 "typeId": "type_imdb:Docs"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "docs",
@@ -1446,20 +1440,20 @@
                             "wireValue": "docs"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:JSON": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "JSON",
@@ -1526,6 +1520,7 @@
                 "typeId": "type_imdb:JSON"
             },
             "shape": {
+                "_type": "object",
                 "extends": [
                     {
                         "name": {
@@ -1595,9 +1590,6 @@
                 ],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "raw",
@@ -1621,12 +1613,13 @@
                             "wireValue": "raw"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -1695,7 +1688,9 @@
                     "typeId": "type_imdb:Docs"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -1724,9 +1719,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -1740,8 +1737,28 @@
             "type_imdb:JSON"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_imdb": {
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1785,25 +1802,7 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "imdb",
-                "camelCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "snakeCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMDB",
-                    "safeName": "IMDB"
-                },
-                "pascalCase": {
-                    "unsafeName": "Imdb",
-                    "safeName": "Imdb"
-                }
-            },
+            "service": null,
             "types": [
                 "type_imdb:ExampleType",
                 "type_imdb:NestedType",
@@ -1814,20 +1813,28 @@
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_imdb"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

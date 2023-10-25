@@ -51,7 +51,7 @@ func (c *Client) GetTasks(ctx context.Context) ([]*fixtures.Task, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -101,7 +101,7 @@ func (c *Client) PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fix
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -145,7 +145,7 @@ func (c *Client) GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtu
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -203,7 +203,7 @@ func (c *Client) PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, reque
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -299,7 +299,7 @@ func (c *Client) PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*f
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -367,7 +367,7 @@ func (c *Client) PostTasksBatchCreate(ctx context.Context, request []*fixtures.T
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -444,7 +444,7 @@ func (c *Client) GetSchedules(ctx context.Context) ([]*fixtures.Schedule, error)
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -487,7 +487,7 @@ func (c *Client) PostSchedules(ctx context.Context, request *fixtures.ScheduleNe
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -531,7 +531,7 @@ func (c *Client) GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -582,7 +582,7 @@ func (c *Client) PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtur
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -669,7 +669,7 @@ func (c *Client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId fix
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

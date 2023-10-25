@@ -51,7 +51,7 @@ func (c *Client) GetUserNotification(ctx context.Context, userId string, notific
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

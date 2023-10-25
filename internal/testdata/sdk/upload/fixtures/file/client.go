@@ -47,19 +47,19 @@ func (c *Client) Upload(ctx context.Context, file io.Reader, request *fixtures.U
 	}
 	filePart, err := writer.CreateFormFile("file", fileFilename)
 	if err != nil {
-		return response, err
+		return "", err
 	}
 	if _, err := io.Copy(filePart, file); err != nil {
-		return response, err
+		return "", err
 	}
 	if err := writer.WriteField("fern", fmt.Sprintf("%v", "fern")); err != nil {
-		return response, err
+		return "", err
 	}
 	if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {
-		return response, err
+		return "", err
 	}
 	if err := writer.Close(); err != nil {
-		return response, err
+		return "", err
 	}
 	c.header.Set("Content-Type", writer.FormDataContentType())
 
@@ -74,7 +74,7 @@ func (c *Client) Upload(ctx context.Context, file io.Reader, request *fixtures.U
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -95,13 +95,13 @@ func (c *Client) UploadSimple(ctx context.Context, file io.Reader) (string, erro
 	}
 	filePart, err := writer.CreateFormFile("file", fileFilename)
 	if err != nil {
-		return response, err
+		return "", err
 	}
 	if _, err := io.Copy(filePart, file); err != nil {
-		return response, err
+		return "", err
 	}
 	if err := writer.Close(); err != nil {
-		return response, err
+		return "", err
 	}
 	c.header.Set("Content-Type", writer.FormDataContentType())
 
@@ -116,7 +116,7 @@ func (c *Client) UploadSimple(ctx context.Context, file io.Reader) (string, erro
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -137,10 +137,10 @@ func (c *Client) UploadMultiple(ctx context.Context, file io.Reader, optionalFil
 	}
 	filePart, err := writer.CreateFormFile("file", fileFilename)
 	if err != nil {
-		return response, err
+		return "", err
 	}
 	if _, err := io.Copy(filePart, file); err != nil {
-		return response, err
+		return "", err
 	}
 	if optionalFile != nil {
 		optionalFileFilename := "optionalFile_filename"
@@ -149,17 +149,17 @@ func (c *Client) UploadMultiple(ctx context.Context, file io.Reader, optionalFil
 		}
 		optionalFilePart, err := writer.CreateFormFile("optionalFile", optionalFileFilename)
 		if err != nil {
-			return response, err
+			return "", err
 		}
 		if _, err := io.Copy(optionalFilePart, optionalFile); err != nil {
-			return response, err
+			return "", err
 		}
 	}
 	if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {
-		return response, err
+		return "", err
 	}
 	if err := writer.Close(); err != nil {
-		return response, err
+		return "", err
 	}
 	c.header.Set("Content-Type", writer.FormDataContentType())
 
@@ -174,7 +174,7 @@ func (c *Client) UploadMultiple(ctx context.Context, file io.Reader, optionalFil
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

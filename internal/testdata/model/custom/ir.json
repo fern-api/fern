@@ -18,17 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_imdb:Foo": {
-            "docs": "This is a Foo.",
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -95,12 +94,10 @@
                 "typeId": "type_imdb:Foo"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "id",
@@ -124,14 +121,13 @@
                             "wireValue": "id"
                         },
                         "valueType": {
-                            "primitive": "UUID",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "UUID"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -155,20 +151,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": "This is a Foo."
         },
         "type_imdb:Bar": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Bar",
@@ -235,13 +231,10 @@
                 "typeId": "type_imdb:Bar"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "docs": "This is a Foo field.",
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "foo",
@@ -265,6 +258,7 @@
                             "wireValue": "foo"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Foo",
                                 "camelCase": {
@@ -327,12 +321,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_imdb:Foo",
-                            "_type": "named"
-                        }
+                            "typeId": "type_imdb:Foo"
+                        },
+                        "availability": null,
+                        "docs": "This is a Foo field."
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -401,7 +395,9 @@
                     "typeId": "type_imdb:Foo"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -430,9 +426,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -442,8 +440,28 @@
             "type_imdb:Bar"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_imdb": {
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -487,45 +505,35 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "imdb",
-                "camelCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "snakeCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMDB",
-                    "safeName": "IMDB"
-                },
-                "pascalCase": {
-                    "unsafeName": "Imdb",
-                    "safeName": "Imdb"
-                }
-            },
+            "service": null,
             "types": [
                 "type_imdb:Foo",
                 "type_imdb:Bar"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_imdb"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

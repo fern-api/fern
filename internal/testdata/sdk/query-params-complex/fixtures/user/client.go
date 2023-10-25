@@ -71,7 +71,7 @@ func (c *Client) GetUsername(ctx context.Context, request *fixtures.GetUsersRequ
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

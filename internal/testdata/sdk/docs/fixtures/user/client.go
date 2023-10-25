@@ -60,7 +60,7 @@ func (c *Client) GetName(ctx context.Context, userId string, request *fixtures.G
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

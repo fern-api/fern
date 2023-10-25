@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_bar/bar:Bar": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Bar",
@@ -133,12 +133,10 @@
                 "typeId": "type_bar/bar:Bar"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -162,20 +160,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_foo:Foo": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -242,12 +240,10 @@
                 "typeId": "type_foo:Foo"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -271,14 +267,13 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "bar",
@@ -302,6 +297,7 @@
                             "wireValue": "bar"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Bar",
                                 "camelCase": {
@@ -403,12 +399,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_bar/bar:Bar",
-                            "_type": "named"
-                        }
+                            "typeId": "type_bar/bar:Bar"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -516,7 +512,9 @@
                     "typeId": "type_bar/bar:Bar"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -545,9 +543,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -557,8 +557,28 @@
             "type_foo:Foo"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_bar": {
+            "name": {
+                "originalName": "bar",
+                "camelCase": {
+                    "unsafeName": "bar",
+                    "safeName": "bar"
+                },
+                "snakeCase": {
+                    "unsafeName": "bar",
+                    "safeName": "bar"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "BAR",
+                    "safeName": "BAR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Bar",
+                    "safeName": "Bar"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -601,8 +621,21 @@
                             "safeName": "Bar"
                         }
                     }
-                ]
+                ],
+                "file": null
             },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_bar/bar"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_bar/bar": {
             "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -622,14 +655,6 @@
                     "safeName": "Bar"
                 }
             },
-            "types": [],
-            "errors": [],
-            "subpackages": [
-                "subpackage_bar/bar"
-            ],
-            "hasEndpointsInTree": false
-        },
-        "subpackage_bar/bar": {
             "fernFilepath": {
                 "allParts": [
                     {
@@ -712,33 +737,37 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "bar",
-                "camelCase": {
-                    "unsafeName": "bar",
-                    "safeName": "bar"
-                },
-                "snakeCase": {
-                    "unsafeName": "bar",
-                    "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "BAR",
-                    "safeName": "BAR"
-                },
-                "pascalCase": {
-                    "unsafeName": "Bar",
-                    "safeName": "Bar"
-                }
-            },
+            "service": null,
             "types": [
                 "type_bar/bar:Bar"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_foo": {
+            "name": {
+                "originalName": "foo",
+                "camelCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                },
+                "snakeCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "FOO",
+                    "safeName": "FOO"
+                },
+                "pascalCase": {
+                    "unsafeName": "Foo",
+                    "safeName": "Foo"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -782,45 +811,35 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "foo",
-                "camelCase": {
-                    "unsafeName": "foo",
-                    "safeName": "foo"
-                },
-                "snakeCase": {
-                    "unsafeName": "foo",
-                    "safeName": "foo"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "FOO",
-                    "safeName": "FOO"
-                },
-                "pascalCase": {
-                    "unsafeName": "Foo",
-                    "safeName": "Foo"
-                }
-            },
+            "service": null,
             "types": [
                 "type_foo:Foo"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_bar",
             "subpackage_foo"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

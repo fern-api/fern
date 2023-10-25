@@ -18,10 +18,13 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
         "schemes": [
             {
+                "_type": "bearer",
                 "token": {
                     "originalName": "token",
                     "camelCase": {
@@ -41,30 +44,29 @@
                         "safeName": "Token"
                     }
                 },
-                "_type": "bearer"
+                "tokenEnvVar": null,
+                "docs": null
             }
-        ]
+        ],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_types:WithAuthToken": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "WithAuthToken",
                     "camelCase": {
-                        "unsafeName": "clientWithAuthToken",
-                        "safeName": "clientWithAuthToken"
+                        "unsafeName": "withAuthToken",
+                        "safeName": "withAuthToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_with_auth_token",
-                        "safeName": "client_with_auth_token"
+                        "unsafeName": "with_auth_token",
+                        "safeName": "with_auth_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_WITH_AUTH_TOKEN",
-                        "safeName": "CLIENT_WITH_AUTH_TOKEN"
+                        "unsafeName": "WITH_AUTH_TOKEN",
+                        "safeName": "WITH_AUTH_TOKEN"
                     },
                     "pascalCase": {
                         "unsafeName": "WithAuthToken",
@@ -117,12 +119,10 @@
                 "typeId": "type_types:WithAuthToken"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "value",
@@ -146,15 +146,18 @@
                             "wireValue": "value"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -183,9 +186,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -194,8 +199,28 @@
             "type_types:WithAuthToken"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_types": {
+            "name": {
+                "originalName": "types",
+                "camelCase": {
+                    "unsafeName": "types",
+                    "safeName": "types"
+                },
+                "snakeCase": {
+                    "unsafeName": "types",
+                    "safeName": "types"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "TYPES",
+                    "safeName": "TYPES"
+                },
+                "pascalCase": {
+                    "unsafeName": "Types",
+                    "safeName": "Types"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -239,44 +264,34 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "types",
-                "camelCase": {
-                    "unsafeName": "types",
-                    "safeName": "types"
-                },
-                "snakeCase": {
-                    "unsafeName": "types",
-                    "safeName": "types"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "TYPES",
-                    "safeName": "TYPES"
-                },
-                "pascalCase": {
-                    "unsafeName": "Types",
-                    "safeName": "Types"
-                }
-            },
+            "service": null,
             "types": [
                 "type_types:WithAuthToken"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_types"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": true,

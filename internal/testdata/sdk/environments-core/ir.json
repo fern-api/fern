@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_environments:Environments": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Environments",
@@ -94,11 +94,9 @@
                 "typeId": "type_environments:Environments"
             },
             "shape": {
+                "_type": "enum",
                 "values": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "Inside",
@@ -120,12 +118,11 @@
                                 }
                             },
                             "wireValue": "Inside"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "Outside",
@@ -147,13 +144,16 @@
                                 }
                             },
                             "wireValue": "Outside"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "enum"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -185,6 +185,7 @@
     "environments": {
         "defaultEnvironment": null,
         "environments": {
+            "type": "singleBaseUrl",
             "environments": [
                 {
                     "id": "Production",
@@ -207,7 +208,8 @@
                             "safeName": "Production"
                         }
                     },
-                    "url": "https://yoursite.com"
+                    "url": "https://yoursite.com",
+                    "docs": null
                 },
                 {
                     "id": "Staging",
@@ -230,15 +232,16 @@
                             "safeName": "Staging"
                         }
                     },
-                    "url": "https://staging.yoursite.com"
+                    "url": "https://staging.yoursite.com",
+                    "docs": null
                 }
-            ],
-            "type": "singleBaseUrl"
+            ]
         }
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -247,8 +250,28 @@
             "type_environments:Environments"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_environments": {
+            "name": {
+                "originalName": "environments",
+                "camelCase": {
+                    "unsafeName": "environments",
+                    "safeName": "environments"
+                },
+                "snakeCase": {
+                    "unsafeName": "environments",
+                    "safeName": "environments"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ENVIRONMENTS",
+                    "safeName": "ENVIRONMENTS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Environments",
+                    "safeName": "Environments"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -292,44 +315,34 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "environments",
-                "camelCase": {
-                    "unsafeName": "environments",
-                    "safeName": "environments"
-                },
-                "snakeCase": {
-                    "unsafeName": "environments",
-                    "safeName": "environments"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ENVIRONMENTS",
-                    "safeName": "ENVIRONMENTS"
-                },
-                "pascalCase": {
-                    "unsafeName": "Environments",
-                    "safeName": "Environments"
-                }
-            },
+            "service": null,
             "types": [
                 "type_environments:Environments"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_environments"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

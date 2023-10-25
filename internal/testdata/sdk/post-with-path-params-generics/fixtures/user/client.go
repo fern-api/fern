@@ -48,7 +48,7 @@ func (c *Client) SetName(ctx context.Context, userId string, request string) (st
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -72,7 +72,7 @@ func (c *Client) SetNameV2(ctx context.Context, userId string, request *sdk.SetN
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -99,7 +99,7 @@ func (c *Client) SetNameV3(ctx context.Context, userId string, request *sdk.SetN
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -126,7 +126,7 @@ func (c *Client) SetNameV3Optional(ctx context.Context, userId string, request *
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -153,7 +153,7 @@ func (c *Client) SetNameV4(ctx context.Context, userId string, request *sdk.SetN
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -180,7 +180,7 @@ func (c *Client) SetNameV5(ctx context.Context, userId string, request *sdk.SetN
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -213,7 +213,7 @@ func (c *Client) Update(ctx context.Context, userId string, request *sdk.UpdateR
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

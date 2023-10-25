@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_imdb:Enum": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Enum",
@@ -94,12 +94,9 @@
                 "typeId": "type_imdb:Enum"
             },
             "shape": {
+                "_type": "enum",
                 "values": [
                     {
-                        "docs": "The first enum value.",
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "ONE",
@@ -121,12 +118,11 @@
                                 }
                             },
                             "wireValue": "ONE"
-                        }
+                        },
+                        "availability": null,
+                        "docs": "The first enum value."
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "TWO",
@@ -148,12 +144,11 @@
                                 }
                             },
                             "wireValue": "TWO"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "THREE",
@@ -175,18 +170,18 @@
                                 }
                             },
                             "wireValue": "THREE"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "enum"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_imdb:Something": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Something",
@@ -253,11 +248,9 @@
                 "typeId": "type_imdb:Something"
             },
             "shape": {
+                "_type": "enum",
                 "values": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "one",
@@ -279,12 +272,11 @@
                                 }
                             },
                             "wireValue": "one"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "One",
@@ -306,12 +298,11 @@
                                 }
                             },
                             "wireValue": "One"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "ONe",
@@ -333,12 +324,11 @@
                                 }
                             },
                             "wireValue": "ONe"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "ONE",
@@ -360,13 +350,16 @@
                                 }
                             },
                             "wireValue": "ONE"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "enum"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -395,9 +388,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -407,8 +402,28 @@
             "type_imdb:Something"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_imdb": {
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -452,45 +467,35 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "imdb",
-                "camelCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "snakeCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMDB",
-                    "safeName": "IMDB"
-                },
-                "pascalCase": {
-                    "unsafeName": "Imdb",
-                    "safeName": "Imdb"
-                }
-            },
+            "service": null,
             "types": [
                 "type_imdb:Enum",
                 "type_imdb:Something"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_imdb"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

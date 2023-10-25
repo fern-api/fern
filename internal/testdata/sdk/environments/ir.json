@@ -18,9 +18,12 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {},
@@ -53,6 +56,7 @@
     "environments": {
         "defaultEnvironment": null,
         "environments": {
+            "type": "singleBaseUrl",
             "environments": [
                 {
                     "id": "Production",
@@ -75,7 +79,8 @@
                             "safeName": "Production"
                         }
                     },
-                    "url": "https://yoursite.com"
+                    "url": "https://yoursite.com",
+                    "docs": null
                 },
                 {
                     "id": "Staging",
@@ -98,31 +103,38 @@
                             "safeName": "Staging"
                         }
                     },
-                    "url": "https://staging.yoursite.com"
+                    "url": "https://staging.yoursite.com",
+                    "docs": null
                 }
-            ],
-            "type": "singleBaseUrl"
+            ]
         }
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

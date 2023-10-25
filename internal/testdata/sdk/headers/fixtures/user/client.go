@@ -72,7 +72,7 @@ func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.S
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

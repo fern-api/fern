@@ -18,10 +18,13 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
         "schemes": [
             {
+                "_type": "bearer",
                 "token": {
                     "originalName": "token",
                     "camelCase": {
@@ -41,18 +44,18 @@
                         "safeName": "Token"
                     }
                 },
-                "_type": "bearer"
+                "tokenEnvVar": null,
+                "docs": null
             }
-        ]
+        ],
+        "docs": null
     },
     "headers": [],
     "types": {},
     "errors": {},
     "services": {
         "service_file": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -98,6 +101,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/file",
                 "parts": []
@@ -106,9 +110,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_file.download",
                     "name": {
                         "originalName": "download",
                         "camelCase": {
@@ -128,6 +130,7 @@
                             "safeName": "Download"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
                     "baseUrl": "Core",
                     "method": "GET",
@@ -151,9 +154,6 @@
                     },
                     "pathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "filename",
                                 "camelCase": {
@@ -174,17 +174,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "allPathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "filename",
                                 "camelCase": {
@@ -205,19 +204,26 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "type": "fileDownload"
+                        "type": "fileDownload",
+                        "docs": null
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -249,6 +255,7 @@
     "environments": {
         "defaultEnvironment": null,
         "environments": {
+            "type": "multipleBaseUrls",
             "baseUrls": [
                 {
                     "id": "Auth",
@@ -320,7 +327,8 @@
                     "urls": {
                         "Auth": "https://auth.yoursite.com",
                         "Core": "https://core.yoursite.com"
-                    }
+                    },
+                    "docs": null
                 },
                 {
                     "id": "Staging",
@@ -346,23 +354,44 @@
                     "urls": {
                         "Auth": "https://auth.staging.yoursite.com",
                         "Core": "https://core.staging.yoursite.com"
-                    }
+                    },
+                    "docs": null
                 }
-            ],
-            "type": "multipleBaseUrls"
+            ]
         }
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_file": {
+            "name": {
+                "originalName": "file",
+                "camelCase": {
+                    "unsafeName": "file",
+                    "safeName": "file"
+                },
+                "snakeCase": {
+                    "unsafeName": "file",
+                    "safeName": "file"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "FILE",
+                    "safeName": "FILE"
+                },
+                "pascalCase": {
+                    "unsafeName": "File",
+                    "safeName": "File"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -406,43 +435,32 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "file",
-                "camelCase": {
-                    "unsafeName": "file",
-                    "safeName": "file"
-                },
-                "snakeCase": {
-                    "unsafeName": "file",
-                    "safeName": "file"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "FILE",
-                    "safeName": "FILE"
-                },
-                "pascalCase": {
-                    "unsafeName": "File",
-                    "safeName": "File"
-                }
-            },
             "service": "service_file",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_file"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

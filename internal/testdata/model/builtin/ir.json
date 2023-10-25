@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_imdb:Type": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Type",
@@ -94,12 +94,10 @@
                 "typeId": "type_imdb:Type"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "one",
@@ -123,14 +121,13 @@
                             "wireValue": "one"
                         },
                         "valueType": {
-                            "primitive": "INTEGER",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "INTEGER"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "two",
@@ -154,14 +151,13 @@
                             "wireValue": "two"
                         },
                         "valueType": {
-                            "primitive": "DOUBLE",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "DOUBLE"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "three",
@@ -185,14 +181,13 @@
                             "wireValue": "three"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "four",
@@ -216,14 +211,13 @@
                             "wireValue": "four"
                         },
                         "valueType": {
-                            "primitive": "BOOLEAN",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "BOOLEAN"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "five",
@@ -247,14 +241,13 @@
                             "wireValue": "five"
                         },
                         "valueType": {
-                            "primitive": "LONG",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "LONG"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "six",
@@ -278,14 +271,13 @@
                             "wireValue": "six"
                         },
                         "valueType": {
-                            "primitive": "DATE_TIME",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "DATE_TIME"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "seven",
@@ -309,14 +301,13 @@
                             "wireValue": "seven"
                         },
                         "valueType": {
-                            "primitive": "DATE",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "DATE"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "eight",
@@ -340,14 +331,13 @@
                             "wireValue": "eight"
                         },
                         "valueType": {
-                            "primitive": "UUID",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "UUID"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "nine",
@@ -371,14 +361,13 @@
                             "wireValue": "nine"
                         },
                         "valueType": {
-                            "primitive": "BASE_64",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "BASE_64"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "ten",
@@ -402,20 +391,19 @@
                             "wireValue": "ten"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "list",
                                 "list": {
-                                    "primitive": "INTEGER",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        }
+                                    "_type": "primitive",
+                                    "primitive": "INTEGER"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "eleven",
@@ -439,20 +427,19 @@
                             "wireValue": "eleven"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "set",
                                 "set": {
-                                    "primitive": "DOUBLE",
-                                    "_type": "primitive"
-                                },
-                                "_type": "set"
-                            },
-                            "_type": "container"
-                        }
+                                    "_type": "primitive",
+                                    "primitive": "DOUBLE"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "twelve",
@@ -476,24 +463,23 @@
                             "wireValue": "twelve"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "map",
                                 "keyType": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
                                 },
                                 "valueType": {
-                                    "primitive": "BOOLEAN",
-                                    "_type": "primitive"
-                                },
-                                "_type": "map"
-                            },
-                            "_type": "container"
-                        }
+                                    "_type": "primitive",
+                                    "primitive": "BOOLEAN"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "thirteen",
@@ -517,20 +503,19 @@
                             "wireValue": "thirteen"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "optional",
                                 "optional": {
-                                    "primitive": "LONG",
-                                    "_type": "primitive"
-                                },
-                                "_type": "optional"
-                            },
-                            "_type": "container"
-                        }
+                                    "_type": "primitive",
+                                    "primitive": "LONG"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "fourteen",
@@ -555,12 +540,11 @@
                         },
                         "valueType": {
                             "_type": "unknown"
-                        }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "fifteen",
@@ -584,26 +568,25 @@
                             "wireValue": "fifteen"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "list",
                                 "list": {
+                                    "_type": "container",
                                     "container": {
+                                        "_type": "list",
                                         "list": {
-                                            "primitive": "INTEGER",
-                                            "_type": "primitive"
-                                        },
-                                        "_type": "list"
-                                    },
-                                    "_type": "container"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        }
+                                            "_type": "primitive",
+                                            "primitive": "INTEGER"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "sixteen",
@@ -627,30 +610,29 @@
                             "wireValue": "sixteen"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "list",
                                 "list": {
+                                    "_type": "container",
                                     "container": {
+                                        "_type": "map",
                                         "keyType": {
-                                            "primitive": "STRING",
-                                            "_type": "primitive"
+                                            "_type": "primitive",
+                                            "primitive": "STRING"
                                         },
                                         "valueType": {
-                                            "primitive": "INTEGER",
-                                            "_type": "primitive"
-                                        },
-                                        "_type": "map"
-                                    },
-                                    "_type": "container"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        }
+                                            "_type": "primitive",
+                                            "primitive": "INTEGER"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "seventeen",
@@ -674,26 +656,25 @@
                             "wireValue": "seventeen"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "list",
                                 "list": {
+                                    "_type": "container",
                                     "container": {
+                                        "_type": "optional",
                                         "optional": {
-                                            "primitive": "UUID",
-                                            "_type": "primitive"
-                                        },
-                                        "_type": "optional"
-                                    },
-                                    "_type": "container"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        }
+                                            "_type": "primitive",
+                                            "primitive": "UUID"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "eighteen",
@@ -717,21 +698,24 @@
                             "wireValue": "eighteen"
                         },
                         "valueType": {
+                            "_type": "container",
                             "container": {
+                                "_type": "literal",
                                 "literal": {
-                                    "string": "fern",
-                                    "type": "string"
-                                },
-                                "_type": "literal"
-                            },
-                            "_type": "container"
-                        }
+                                    "type": "string",
+                                    "string": "fern"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -760,9 +744,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -771,8 +757,28 @@
             "type_imdb:Type"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_imdb": {
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -816,44 +822,34 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "imdb",
-                "camelCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "snakeCase": {
-                    "unsafeName": "imdb",
-                    "safeName": "imdb"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMDB",
-                    "safeName": "IMDB"
-                },
-                "pascalCase": {
-                    "unsafeName": "Imdb",
-                    "safeName": "Imdb"
-                }
-            },
+            "service": null,
             "types": [
                 "type_imdb:Type"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_imdb"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

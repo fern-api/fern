@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_:Base": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Base",
@@ -50,17 +50,16 @@
                 },
                 "fernFilepath": {
                     "allParts": [],
-                    "packagePath": []
+                    "packagePath": [],
+                    "file": null
                 },
                 "typeId": "type_:Base"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -84,20 +83,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_bar/bar:Bar": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Bar",
@@ -203,12 +202,10 @@
                 "typeId": "type_bar/bar:Bar"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -232,20 +229,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_baz/v1/baz:Baz": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Baz",
@@ -389,12 +386,10 @@
                 "typeId": "type_baz/v1/baz:Baz"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -418,20 +413,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_baz/v2/baz:Baz": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Baz",
@@ -575,12 +570,10 @@
                 "typeId": "type_baz/v2/baz:Baz"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -604,20 +597,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_extra:Value": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Value",
@@ -684,12 +677,10 @@
                 "typeId": "type_extra:Value"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -713,20 +704,20 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_foo:Foo": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -793,12 +784,10 @@
                 "typeId": "type_foo:Foo"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -822,14 +811,13 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "value",
@@ -853,6 +841,7 @@
                             "wireValue": "value"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Value",
                                 "camelCase": {
@@ -915,14 +904,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_extra:Value",
-                            "_type": "named"
-                        }
+                            "typeId": "type_extra:Value"
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "bar",
@@ -946,6 +933,7 @@
                             "wireValue": "bar"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Bar",
                                 "camelCase": {
@@ -1047,12 +1035,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_bar/bar:Bar",
-                            "_type": "named"
-                        }
+                            "typeId": "type_bar/bar:Bar"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -1225,12 +1213,11 @@
                     "typeId": "type_bar/bar:Bar"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_foo/foo:Foo": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Foo",
@@ -1336,12 +1323,10 @@
                 "typeId": "type_foo/foo:Foo"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "foo",
@@ -1365,6 +1350,7 @@
                             "wireValue": "foo"
                         },
                         "valueType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Foo",
                                 "camelCase": {
@@ -1427,12 +1413,12 @@
                                     }
                                 }
                             },
-                            "typeId": "type_foo:Foo",
-                            "_type": "named"
-                        }
+                            "typeId": "type_foo:Foo"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [
                 {
@@ -1670,12 +1656,11 @@
                     "typeId": "type_bar/bar:Bar"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_union:Union": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Union",
@@ -1742,6 +1727,7 @@
                 "typeId": "type_union:Union"
             },
             "shape": {
+                "_type": "union",
                 "discriminant": {
                     "name": {
                         "originalName": "type",
@@ -1791,6 +1777,7 @@
                             "wireValue": "value"
                         },
                         "shape": {
+                            "_type": "samePropertiesAsObject",
                             "name": {
                                 "originalName": "Value",
                                 "camelCase": {
@@ -1853,9 +1840,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_extra:Value",
-                            "_type": "samePropertiesAsObject"
-                        }
+                            "typeId": "type_extra:Value"
+                        },
+                        "docs": null
                     },
                     {
                         "discriminantValue": {
@@ -1881,6 +1868,7 @@
                             "wireValue": "anotherValue"
                         },
                         "shape": {
+                            "_type": "singleProperty",
                             "name": {
                                 "name": {
                                     "originalName": "anotherValue",
@@ -1904,6 +1892,7 @@
                                 "wireValue": "anotherValue"
                             },
                             "type": {
+                                "_type": "named",
                                 "name": {
                                     "originalName": "Value",
                                     "camelCase": {
@@ -1966,11 +1955,10 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_extra:Value",
-                                "_type": "named"
-                            },
-                            "_type": "singleProperty"
-                        }
+                                "typeId": "type_extra:Value"
+                            }
+                        },
+                        "docs": null
                     },
                     {
                         "discriminantValue": {
@@ -1996,6 +1984,7 @@
                             "wireValue": "bar"
                         },
                         "shape": {
+                            "_type": "samePropertiesAsObject",
                             "name": {
                                 "originalName": "Bar",
                                 "camelCase": {
@@ -2097,9 +2086,9 @@
                                     }
                                 }
                             },
-                            "typeId": "type_bar/bar:Bar",
-                            "_type": "samePropertiesAsObject"
-                        }
+                            "typeId": "type_bar/bar:Bar"
+                        },
+                        "docs": null
                     },
                     {
                         "discriminantValue": {
@@ -2125,6 +2114,7 @@
                             "wireValue": "anotherBar"
                         },
                         "shape": {
+                            "_type": "singleProperty",
                             "name": {
                                 "name": {
                                     "originalName": "anotherBar",
@@ -2148,6 +2138,7 @@
                                 "wireValue": "anotherBar"
                             },
                             "type": {
+                                "_type": "named",
                                 "name": {
                                     "originalName": "Bar",
                                     "camelCase": {
@@ -2249,14 +2240,12 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_bar/bar:Bar",
-                                "_type": "named"
-                            },
-                            "_type": "singleProperty"
-                        }
+                                "typeId": "type_bar/bar:Bar"
+                            }
+                        },
+                        "docs": null
                     }
-                ],
-                "_type": "union"
+                ]
             },
             "referencedTypes": [
                 {
@@ -2429,7 +2418,9 @@
                     "typeId": "type_bar/bar:Bar"
                 }
             ],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -2458,9 +2449,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -2476,52 +2469,9 @@
             "type_union:Union"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_baz": {
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "baz",
-                        "camelCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BAZ",
-                            "safeName": "BAZ"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Baz",
-                            "safeName": "Baz"
-                        }
-                    }
-                ],
-                "packagePath": [
-                    {
-                        "originalName": "baz",
-                        "camelCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BAZ",
-                            "safeName": "BAZ"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Baz",
-                            "safeName": "Baz"
-                        }
-                    }
-                ]
-            },
             "name": {
                 "originalName": "baz",
                 "camelCase": {
@@ -2541,16 +2491,6 @@
                     "safeName": "Baz"
                 }
             },
-            "types": [],
-            "errors": [],
-            "subpackages": [
-                "subpackage_baz/v1",
-                "subpackage_baz/v2"
-            ],
-            "hasEndpointsInTree": false
-        },
-        "subpackage_baz/v1": {
-            "docs": "This is the baz/v1 package.",
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2570,25 +2510,6 @@
                         "pascalCase": {
                             "unsafeName": "Baz",
                             "safeName": "Baz"
-                        }
-                    },
-                    {
-                        "originalName": "v1",
-                        "camelCase": {
-                            "unsafeName": "v1",
-                            "safeName": "v1"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "v_1",
-                            "safeName": "v_1"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "V_1",
-                            "safeName": "V_1"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "V1",
-                            "safeName": "V1"
                         }
                     }
                 ],
@@ -2611,28 +2532,23 @@
                             "unsafeName": "Baz",
                             "safeName": "Baz"
                         }
-                    },
-                    {
-                        "originalName": "v1",
-                        "camelCase": {
-                            "unsafeName": "v1",
-                            "safeName": "v1"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "v_1",
-                            "safeName": "v_1"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "V_1",
-                            "safeName": "V_1"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "V1",
-                            "safeName": "V1"
-                        }
                     }
-                ]
+                ],
+                "file": null
             },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_baz/v1",
+                "subpackage_baz/v2"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_baz/v1": {
             "name": {
                 "originalName": "v1",
                 "camelCase": {
@@ -2652,14 +2568,120 @@
                     "safeName": "V1"
                 }
             },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "baz",
+                        "camelCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BAZ",
+                            "safeName": "BAZ"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Baz",
+                            "safeName": "Baz"
+                        }
+                    },
+                    {
+                        "originalName": "v1",
+                        "camelCase": {
+                            "unsafeName": "v1",
+                            "safeName": "v1"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "v_1",
+                            "safeName": "v_1"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "V_1",
+                            "safeName": "V_1"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "V1",
+                            "safeName": "V1"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "baz",
+                        "camelCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BAZ",
+                            "safeName": "BAZ"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Baz",
+                            "safeName": "Baz"
+                        }
+                    },
+                    {
+                        "originalName": "v1",
+                        "camelCase": {
+                            "unsafeName": "v1",
+                            "safeName": "v1"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "v_1",
+                            "safeName": "v_1"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "V_1",
+                            "safeName": "V_1"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "V1",
+                            "safeName": "V1"
+                        }
+                    }
+                ],
+                "file": null
+            },
+            "service": null,
             "types": [],
             "errors": [],
             "subpackages": [
                 "subpackage_baz/v1/baz"
             ],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": "This is the baz/v1 package."
         },
         "subpackage_bar": {
+            "name": {
+                "originalName": "bar",
+                "camelCase": {
+                    "unsafeName": "bar",
+                    "safeName": "bar"
+                },
+                "snakeCase": {
+                    "unsafeName": "bar",
+                    "safeName": "bar"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "BAR",
+                    "safeName": "BAR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Bar",
+                    "safeName": "Bar"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2702,8 +2724,21 @@
                             "safeName": "Bar"
                         }
                     }
-                ]
+                ],
+                "file": null
             },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_bar/bar"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_bar/bar": {
             "name": {
                 "originalName": "bar",
                 "camelCase": {
@@ -2723,14 +2758,6 @@
                     "safeName": "Bar"
                 }
             },
-            "types": [],
-            "errors": [],
-            "subpackages": [
-                "subpackage_bar/bar"
-            ],
-            "hasEndpointsInTree": false
-        },
-        "subpackage_bar/bar": {
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2813,33 +2840,37 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "bar",
-                "camelCase": {
-                    "unsafeName": "bar",
-                    "safeName": "bar"
-                },
-                "snakeCase": {
-                    "unsafeName": "bar",
-                    "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "BAR",
-                    "safeName": "BAR"
-                },
-                "pascalCase": {
-                    "unsafeName": "Bar",
-                    "safeName": "Bar"
-                }
-            },
+            "service": null,
             "types": [
                 "type_bar/bar:Bar"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_baz/v1/baz": {
+            "name": {
+                "originalName": "baz",
+                "camelCase": {
+                    "unsafeName": "baz",
+                    "safeName": "baz"
+                },
+                "snakeCase": {
+                    "unsafeName": "baz",
+                    "safeName": "baz"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "BAZ",
+                    "safeName": "BAZ"
+                },
+                "pascalCase": {
+                    "unsafeName": "Baz",
+                    "safeName": "Baz"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2960,115 +2991,18 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "baz",
-                "camelCase": {
-                    "unsafeName": "baz",
-                    "safeName": "baz"
-                },
-                "snakeCase": {
-                    "unsafeName": "baz",
-                    "safeName": "baz"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "BAZ",
-                    "safeName": "BAZ"
-                },
-                "pascalCase": {
-                    "unsafeName": "Baz",
-                    "safeName": "Baz"
-                }
-            },
+            "service": null,
             "types": [
                 "type_baz/v1/baz:Baz"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_baz/v2": {
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "baz",
-                        "camelCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BAZ",
-                            "safeName": "BAZ"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Baz",
-                            "safeName": "Baz"
-                        }
-                    },
-                    {
-                        "originalName": "v2",
-                        "camelCase": {
-                            "unsafeName": "v2",
-                            "safeName": "v2"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "v_2",
-                            "safeName": "v_2"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "V_2",
-                            "safeName": "V_2"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "V2",
-                            "safeName": "V2"
-                        }
-                    }
-                ],
-                "packagePath": [
-                    {
-                        "originalName": "baz",
-                        "camelCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "baz",
-                            "safeName": "baz"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BAZ",
-                            "safeName": "BAZ"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Baz",
-                            "safeName": "Baz"
-                        }
-                    },
-                    {
-                        "originalName": "v2",
-                        "camelCase": {
-                            "unsafeName": "v2",
-                            "safeName": "v2"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "v_2",
-                            "safeName": "v_2"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "V_2",
-                            "safeName": "V_2"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "V2",
-                            "safeName": "V2"
-                        }
-                    }
-                ]
-            },
             "name": {
                 "originalName": "v2",
                 "camelCase": {
@@ -3088,14 +3022,120 @@
                     "safeName": "V2"
                 }
             },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "baz",
+                        "camelCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BAZ",
+                            "safeName": "BAZ"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Baz",
+                            "safeName": "Baz"
+                        }
+                    },
+                    {
+                        "originalName": "v2",
+                        "camelCase": {
+                            "unsafeName": "v2",
+                            "safeName": "v2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "v_2",
+                            "safeName": "v_2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "V_2",
+                            "safeName": "V_2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "V2",
+                            "safeName": "V2"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "baz",
+                        "camelCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "baz",
+                            "safeName": "baz"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BAZ",
+                            "safeName": "BAZ"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Baz",
+                            "safeName": "Baz"
+                        }
+                    },
+                    {
+                        "originalName": "v2",
+                        "camelCase": {
+                            "unsafeName": "v2",
+                            "safeName": "v2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "v_2",
+                            "safeName": "v_2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "V_2",
+                            "safeName": "V_2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "V2",
+                            "safeName": "V2"
+                        }
+                    }
+                ],
+                "file": null
+            },
+            "service": null,
             "types": [],
             "errors": [],
             "subpackages": [
                 "subpackage_baz/v2/baz"
             ],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_baz/v2/baz": {
+            "name": {
+                "originalName": "baz",
+                "camelCase": {
+                    "unsafeName": "baz",
+                    "safeName": "baz"
+                },
+                "snakeCase": {
+                    "unsafeName": "baz",
+                    "safeName": "baz"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "BAZ",
+                    "safeName": "BAZ"
+                },
+                "pascalCase": {
+                    "unsafeName": "Baz",
+                    "safeName": "Baz"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3216,33 +3256,37 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "baz",
-                "camelCase": {
-                    "unsafeName": "baz",
-                    "safeName": "baz"
-                },
-                "snakeCase": {
-                    "unsafeName": "baz",
-                    "safeName": "baz"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "BAZ",
-                    "safeName": "BAZ"
-                },
-                "pascalCase": {
-                    "unsafeName": "Baz",
-                    "safeName": "Baz"
-                }
-            },
+            "service": null,
             "types": [
                 "type_baz/v2/baz:Baz"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_extra": {
+            "name": {
+                "originalName": "extra",
+                "camelCase": {
+                    "unsafeName": "extra",
+                    "safeName": "extra"
+                },
+                "snakeCase": {
+                    "unsafeName": "extra",
+                    "safeName": "extra"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "EXTRA",
+                    "safeName": "EXTRA"
+                },
+                "pascalCase": {
+                    "unsafeName": "Extra",
+                    "safeName": "Extra"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3286,33 +3330,37 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "extra",
-                "camelCase": {
-                    "unsafeName": "extra",
-                    "safeName": "extra"
-                },
-                "snakeCase": {
-                    "unsafeName": "extra",
-                    "safeName": "extra"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "EXTRA",
-                    "safeName": "EXTRA"
-                },
-                "pascalCase": {
-                    "unsafeName": "Extra",
-                    "safeName": "Extra"
-                }
-            },
+            "service": null,
             "types": [
                 "type_extra:Value"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_foo": {
+            "name": {
+                "originalName": "foo",
+                "camelCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                },
+                "snakeCase": {
+                    "unsafeName": "foo",
+                    "safeName": "foo"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "FOO",
+                    "safeName": "FOO"
+                },
+                "pascalCase": {
+                    "unsafeName": "Foo",
+                    "safeName": "Foo"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3356,6 +3404,20 @@
                     }
                 }
             },
+            "service": null,
+            "types": [
+                "type_foo:Foo"
+            ],
+            "errors": [],
+            "subpackages": [
+                "subpackage_foo/foo"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_foo/foo": {
             "name": {
                 "originalName": "foo",
                 "camelCase": {
@@ -3375,16 +3437,6 @@
                     "safeName": "Foo"
                 }
             },
-            "types": [
-                "type_foo:Foo"
-            ],
-            "errors": [],
-            "subpackages": [
-                "subpackage_foo/foo"
-            ],
-            "hasEndpointsInTree": false
-        },
-        "subpackage_foo/foo": {
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3467,33 +3519,37 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "foo",
-                "camelCase": {
-                    "unsafeName": "foo",
-                    "safeName": "foo"
-                },
-                "snakeCase": {
-                    "unsafeName": "foo",
-                    "safeName": "foo"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "FOO",
-                    "safeName": "FOO"
-                },
-                "pascalCase": {
-                    "unsafeName": "Foo",
-                    "safeName": "Foo"
-                }
-            },
+            "service": null,
             "types": [
                 "type_foo/foo:Foo"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_union": {
+            "name": {
+                "originalName": "union",
+                "camelCase": {
+                    "unsafeName": "union",
+                    "safeName": "union"
+                },
+                "snakeCase": {
+                    "unsafeName": "union",
+                    "safeName": "union"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "UNION",
+                    "safeName": "UNION"
+                },
+                "pascalCase": {
+                    "unsafeName": "Union",
+                    "safeName": "Union"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -3537,39 +3593,25 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "union",
-                "camelCase": {
-                    "unsafeName": "union",
-                    "safeName": "union"
-                },
-                "snakeCase": {
-                    "unsafeName": "union",
-                    "safeName": "union"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "UNION",
-                    "safeName": "UNION"
-                },
-                "pascalCase": {
-                    "unsafeName": "Union",
-                    "safeName": "Union"
-                }
-            },
+            "service": null,
             "types": [
                 "type_union:Union"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
-        "docs": "This is the top-level package.",
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [
             "type_:Base"
         ],
@@ -3581,7 +3623,10 @@
             "subpackage_foo",
             "subpackage_union"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": "This is the top-level package."
     },
     "sdkConfig": {
         "isAuthMandatory": false,

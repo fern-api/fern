@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_optional:Request": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Request",
@@ -94,12 +94,10 @@
                 "typeId": "type_optional:Request"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "value",
@@ -123,23 +121,24 @@
                             "wireValue": "value"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
     "services": {
         "service_optional": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -185,6 +184,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -193,9 +193,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_optional.get",
                     "name": {
                         "originalName": "get",
                         "camelCase": {
@@ -215,7 +213,9 @@
                             "safeName": "Get"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "POST",
                     "path": {
                         "head": "/post",
@@ -230,7 +230,9 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
+                        "type": "reference",
                         "requestBodyType": {
+                            "_type": "named",
                             "name": {
                                 "originalName": "Request",
                                 "camelCase": {
@@ -293,36 +295,61 @@
                                     }
                                 }
                             },
-                            "typeId": "type_optional:Request",
-                            "_type": "named"
+                            "typeId": "type_optional:Request"
                         },
-                        "type": "reference"
+                        "contentType": null,
+                        "docs": null
                     },
                     "sdkRequest": {
                         "shape": {
-                            "requestBodyType": {
-                                "name": {
-                                    "originalName": "Request",
-                                    "camelCase": {
-                                        "unsafeName": "request",
-                                        "safeName": "request"
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Request",
+                                        "camelCase": {
+                                            "unsafeName": "request",
+                                            "safeName": "request"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "request",
+                                            "safeName": "request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REQUEST",
+                                            "safeName": "REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Request",
+                                            "safeName": "Request"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "request",
-                                        "safeName": "request"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "REQUEST",
-                                        "safeName": "REQUEST"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Request",
-                                        "safeName": "Request"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "optional",
+                                                "camelCase": {
+                                                    "unsafeName": "optional",
+                                                    "safeName": "optional"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "optional",
+                                                    "safeName": "optional"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "OPTIONAL",
+                                                    "safeName": "OPTIONAL"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Optional",
+                                                    "safeName": "Optional"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "optional",
                                             "camelCase": {
                                                 "unsafeName": "optional",
@@ -341,32 +368,12 @@
                                                 "safeName": "Optional"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "optional",
-                                        "camelCase": {
-                                            "unsafeName": "optional",
-                                            "safeName": "optional"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "optional",
-                                            "safeName": "optional"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "OPTIONAL",
-                                            "safeName": "OPTIONAL"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Optional",
-                                            "safeName": "Optional"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_optional:Request"
                                 },
-                                "typeId": "type_optional:Request",
-                                "_type": "named"
-                            },
-                            "type": "justRequestBody"
+                                "contentType": null,
+                                "docs": null
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -389,14 +396,20 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -425,9 +438,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -438,8 +453,28 @@
         },
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_optional": {
+            "name": {
+                "originalName": "optional",
+                "camelCase": {
+                    "unsafeName": "optional",
+                    "safeName": "optional"
+                },
+                "snakeCase": {
+                    "unsafeName": "optional",
+                    "safeName": "optional"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "OPTIONAL",
+                    "safeName": "OPTIONAL"
+                },
+                "pascalCase": {
+                    "unsafeName": "Optional",
+                    "safeName": "Optional"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -483,45 +518,34 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "optional",
-                "camelCase": {
-                    "unsafeName": "optional",
-                    "safeName": "optional"
-                },
-                "snakeCase": {
-                    "unsafeName": "optional",
-                    "safeName": "optional"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "OPTIONAL",
-                    "safeName": "OPTIONAL"
-                },
-                "pascalCase": {
-                    "unsafeName": "Optional",
-                    "safeName": "Optional"
-                }
-            },
             "service": "service_optional",
             "types": [
                 "type_optional:Request"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_optional"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

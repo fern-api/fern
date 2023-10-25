@@ -60,7 +60,7 @@ func (c *Client) GetAllUsers(ctx context.Context, request *fixtures.GetAllUsersR
 		headers,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

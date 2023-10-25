@@ -1066,7 +1066,7 @@ func jsonTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.
 				primitive = typeDeclaration.Shape.Alias.AliasOf.Primitive
 			}
 		}
-		if primitive != 0 {
+		if primitive != "" {
 			return fmt.Sprintf(" `json:%q`", wireValue)
 		}
 	}
@@ -1149,4 +1149,57 @@ func typeNameToFieldName(typeName string) string {
 		return split[len(split)-1]
 	}
 	return strings.TrimLeft(typeName, "*")
+}
+
+// defaultValueForTypeReference returns the default value associated with the given *ir.TypeReference.
+// For named types and built-ins, this will just be nil, otherwise it will be the associated primitive
+// value.
+func defaultValueForTypeReference(typeReference *ir.TypeReference, types map[string]*ir.TypeDeclaration) string {
+	if typeReference.Container != nil {
+		if typeReference.Container.Literal != nil {
+			return ""
+		}
+		return "nil"
+	}
+	if typeReference.Named != nil {
+		return defaultValueForTypeDeclaration(types[typeReference.Named.TypeId], types)
+	}
+	if typeReference.Primitive != "" {
+		return defaultValueForPrimitiveType(typeReference.Primitive)
+	}
+	return "nil"
+}
+
+func defaultValueForTypeDeclaration(typeDeclaration *ir.TypeDeclaration, types map[string]*ir.TypeDeclaration) string {
+	if typeDeclaration.Shape.Alias != nil {
+		return defaultValueForTypeReference(typeDeclaration.Shape.Alias.AliasOf, types)
+	}
+	if typeDeclaration.Shape.Enum != nil {
+		return ""
+	}
+	return "nil"
+}
+
+func defaultValueForPrimitiveType(primitiveType ir.PrimitiveType) string {
+	switch primitiveType {
+	case ir.PrimitiveTypeInteger:
+		return "0"
+	case ir.PrimitiveTypeDouble:
+		return "0"
+	case ir.PrimitiveTypeString:
+		return `""`
+	case ir.PrimitiveTypeBoolean:
+		return "false"
+	case ir.PrimitiveTypeLong:
+		return "0"
+	case ir.PrimitiveTypeDateTime:
+		return "time.Time{}"
+	case ir.PrimitiveTypeDate:
+		return "time.Time{}"
+	case ir.PrimitiveTypeUuid:
+		return "uuid.Nil"
+	case ir.PrimitiveTypeBase64:
+		return "nil"
+	}
+	return "nil"
 }

@@ -363,7 +363,7 @@ func replaceFilepathForTypeInIR(
 				replaceFilepathForTypeInHttpRequestBody(irEndpoint.RequestBody, typeId, fernFilepath)
 			}
 			if irEndpoint.SdkRequest != nil && irEndpoint.SdkRequest.Shape != nil && irEndpoint.SdkRequest.Shape.JustRequestBody != nil {
-				replaceFilepathForTypeInTypeReference(irEndpoint.SdkRequest.Shape.JustRequestBody.RequestBodyType, typeId, fernFilepath)
+				replaceFilepathForTypeInTypeReference(irEndpoint.SdkRequest.Shape.JustRequestBody.TypeReference.RequestBodyType, typeId, fernFilepath)
 			}
 			if irEndpoint.Response != nil {
 				replaceFilepathForTypeInHttpResponse(irEndpoint.Response, typeId, fernFilepath)
@@ -412,7 +412,9 @@ func replaceFilepathForTypeInHttpResponse(
 	fernFilepath *fernir.FernFilepath,
 ) {
 	if httpResponse.Json != nil {
-		replaceFilepathForTypeInTypeReference(httpResponse.Json.ResponseBodyType, typeId, fernFilepath)
+		if typeReference := typeReferenceFromJsonResponse(httpResponse.Json); typeReference != nil {
+			replaceFilepathForTypeInTypeReference(typeReference, typeId, fernFilepath)
+		}
 	}
 	if httpResponse.Streaming != nil && httpResponse.Streaming.DataEventType != nil {
 		replaceFilepathForTypeInTypeReference(httpResponse.Streaming.DataEventType.Json, typeId, fernFilepath)

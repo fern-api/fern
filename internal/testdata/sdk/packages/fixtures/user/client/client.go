@@ -54,7 +54,7 @@ func (c *Client) GetUser(ctx context.Context, user string) (*fixturesuser.User, 
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_types:Pointer": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "Pointer",
@@ -94,12 +94,10 @@
                 "typeId": "type_types:Pointer"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "name",
@@ -123,15 +121,18 @@
                             "wireValue": "name"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -160,9 +161,11 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -171,8 +174,28 @@
             "type_types:Pointer"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_types": {
+            "name": {
+                "originalName": "types",
+                "camelCase": {
+                    "unsafeName": "types",
+                    "safeName": "types"
+                },
+                "snakeCase": {
+                    "unsafeName": "types",
+                    "safeName": "types"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "TYPES",
+                    "safeName": "TYPES"
+                },
+                "pascalCase": {
+                    "unsafeName": "Types",
+                    "safeName": "Types"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -216,44 +239,34 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "types",
-                "camelCase": {
-                    "unsafeName": "types",
-                    "safeName": "types"
-                },
-                "snakeCase": {
-                    "unsafeName": "types",
-                    "safeName": "types"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "TYPES",
-                    "safeName": "TYPES"
-                },
-                "pascalCase": {
-                    "unsafeName": "Types",
-                    "safeName": "Types"
-                }
-            },
+            "service": null,
             "types": [
                 "type_types:Pointer"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_types"
         ],
-        "hasEndpointsInTree": false
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

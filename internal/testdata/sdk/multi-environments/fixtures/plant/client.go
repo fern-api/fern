@@ -45,7 +45,7 @@ func (c *Client) GetPlant(ctx context.Context) (string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

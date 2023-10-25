@@ -46,7 +46,7 @@ func (c *Client) Get(ctx context.Context, request *fixtures.Request) (string, er
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

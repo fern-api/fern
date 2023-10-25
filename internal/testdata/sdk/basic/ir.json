@@ -18,10 +18,13 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
         "schemes": [
             {
+                "_type": "basic",
                 "username": {
                     "originalName": "username",
                     "camelCase": {
@@ -41,6 +44,7 @@
                         "safeName": "Username"
                     }
                 },
+                "usernameEnvVar": null,
                 "password": {
                     "originalName": "password",
                     "camelCase": {
@@ -60,18 +64,18 @@
                         "safeName": "Password"
                     }
                 },
-                "_type": "basic"
+                "passwordEnvVar": null,
+                "docs": null
             }
-        ]
+        ],
+        "docs": null
     },
     "headers": [],
     "types": {},
     "errors": {},
     "services": {
         "service_user": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -117,6 +121,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -125,9 +130,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.get",
                     "name": {
                         "originalName": "get",
                         "camelCase": {
@@ -147,7 +150,9 @@
                             "safeName": "Get"
                         }
                     },
+                    "displayName": null,
                     "auth": true,
+                    "baseUrl": null,
                     "method": "GET",
                     "path": {
                         "head": "",
@@ -161,15 +166,23 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -198,17 +211,39 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -252,43 +287,32 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
             "service": "service_user",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_user"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": true,

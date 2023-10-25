@@ -51,7 +51,7 @@ func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -101,7 +101,7 @@ func (c *Client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -144,7 +144,7 @@ func (c *Client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -201,7 +201,7 @@ func (c *Client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -293,7 +293,7 @@ func (c *Client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtu
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -357,7 +357,7 @@ func (c *Client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

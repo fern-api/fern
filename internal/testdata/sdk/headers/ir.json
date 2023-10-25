@@ -18,10 +18,13 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
         "schemes": [
             {
+                "_type": "header",
                 "name": {
                     "name": {
                         "originalName": "custom",
@@ -45,24 +48,24 @@
                     "wireValue": "X-API-Custom-Key"
                 },
                 "valueType": {
+                    "_type": "container",
                     "container": {
+                        "_type": "optional",
                         "optional": {
-                            "primitive": "BASE_64",
-                            "_type": "primitive"
-                        },
-                        "_type": "optional"
-                    },
-                    "_type": "container"
+                            "_type": "primitive",
+                            "primitive": "BASE_64"
+                        }
+                    }
                 },
-                "_type": "header"
+                "prefix": null,
+                "headerEnvVar": null,
+                "docs": null
             }
-        ]
+        ],
+        "docs": null
     },
     "headers": [
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Name",
@@ -86,14 +89,13 @@
                 "wireValue": "X-API-Name"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "STRING"
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-ID",
@@ -117,14 +119,13 @@
                 "wireValue": "X-API-ID"
             },
             "valueType": {
-                "primitive": "UUID",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "UUID"
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Datetime",
@@ -148,14 +149,13 @@
                 "wireValue": "X-API-Datetime"
             },
             "valueType": {
-                "primitive": "DATE_TIME",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "DATE_TIME"
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Date",
@@ -179,14 +179,13 @@
                 "wireValue": "X-API-Date"
             },
             "valueType": {
-                "primitive": "DATE",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "DATE"
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Bytes",
@@ -210,14 +209,13 @@
                 "wireValue": "X-API-Bytes"
             },
             "valueType": {
-                "primitive": "BASE_64",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "BASE_64"
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Optional-Name",
@@ -241,20 +239,19 @@
                 "wireValue": "X-API-Optional-Name"
             },
             "valueType": {
+                "_type": "container",
                 "container": {
+                    "_type": "optional",
                     "optional": {
-                        "primitive": "STRING",
-                        "_type": "primitive"
-                    },
-                    "_type": "optional"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    }
+                }
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Optional-ID",
@@ -278,20 +275,19 @@
                 "wireValue": "X-API-Optional-ID"
             },
             "valueType": {
+                "_type": "container",
                 "container": {
+                    "_type": "optional",
                     "optional": {
-                        "primitive": "UUID",
-                        "_type": "primitive"
-                    },
-                    "_type": "optional"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "UUID"
+                    }
+                }
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Optional-Datetime",
@@ -315,20 +311,19 @@
                 "wireValue": "X-API-Optional-Datetime"
             },
             "valueType": {
+                "_type": "container",
                 "container": {
+                    "_type": "optional",
                     "optional": {
-                        "primitive": "DATE_TIME",
-                        "_type": "primitive"
-                    },
-                    "_type": "optional"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "DATE_TIME"
+                    }
+                }
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Optional-Date",
@@ -352,20 +347,19 @@
                 "wireValue": "X-API-Optional-Date"
             },
             "valueType": {
+                "_type": "container",
                 "container": {
+                    "_type": "optional",
                     "optional": {
-                        "primitive": "DATE",
-                        "_type": "primitive"
-                    },
-                    "_type": "optional"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "DATE"
+                    }
+                }
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Optional-Bytes",
@@ -389,20 +383,19 @@
                 "wireValue": "X-API-Optional-Bytes"
             },
             "valueType": {
+                "_type": "container",
                 "container": {
+                    "_type": "optional",
                     "optional": {
-                        "primitive": "BASE_64",
-                        "_type": "primitive"
-                    },
-                    "_type": "optional"
-                },
-                "_type": "container"
-            }
+                        "_type": "primitive",
+                        "primitive": "BASE_64"
+                    }
+                }
+            },
+            "availability": null,
+            "docs": null
         },
         {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "X-API-Fern-Header",
@@ -426,24 +419,24 @@
                 "wireValue": "X-API-Fern-Header"
             },
             "valueType": {
+                "_type": "container",
                 "container": {
+                    "_type": "literal",
                     "literal": {
-                        "string": "fern",
-                        "type": "string"
-                    },
-                    "_type": "literal"
-                },
-                "_type": "container"
-            }
+                        "type": "string",
+                        "string": "fern"
+                    }
+                }
+            },
+            "availability": null,
+            "docs": null
         }
     ],
     "types": {},
     "errors": {},
     "services": {
         "service_user": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -489,6 +482,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -497,9 +491,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.setName",
                     "name": {
                         "originalName": "setName",
                         "camelCase": {
@@ -519,7 +511,9 @@
                             "safeName": "SetName"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "POST",
                     "path": {
                         "head": "/",
@@ -541,9 +535,6 @@
                     },
                     "pathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
@@ -564,17 +555,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "allPathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
@@ -595,18 +585,17 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "queryParameters": [],
                     "headers": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Header",
@@ -630,14 +619,13 @@
                                 "wireValue": "X-Endpoint-Header"
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-ID-Header",
@@ -661,14 +649,13 @@
                                 "wireValue": "X-Endpoint-ID-Header"
                             },
                             "valueType": {
-                                "primitive": "UUID",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "UUID"
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Date-Header",
@@ -692,14 +679,13 @@
                                 "wireValue": "X-Endpoint-Date-Header"
                             },
                             "valueType": {
-                                "primitive": "DATE",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "DATE"
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Datetime-Header",
@@ -723,14 +709,13 @@
                                 "wireValue": "X-Endpoint-Datetime-Header"
                             },
                             "valueType": {
-                                "primitive": "DATE_TIME",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "DATE_TIME"
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Bytes-Header",
@@ -754,14 +739,13 @@
                                 "wireValue": "X-Endpoint-Bytes-Header"
                             },
                             "valueType": {
-                                "primitive": "BASE_64",
-                                "_type": "primitive"
-                            }
+                                "_type": "primitive",
+                                "primitive": "BASE_64"
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Optional-Header",
@@ -785,20 +769,19 @@
                                 "wireValue": "X-Endpoint-Optional-Header"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "optional",
                                     "optional": {
-                                        "primitive": "STRING",
-                                        "_type": "primitive"
-                                    },
-                                    "_type": "optional"
-                                },
-                                "_type": "container"
-                            }
+                                        "_type": "primitive",
+                                        "primitive": "STRING"
+                                    }
+                                }
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Optional-ID-Header",
@@ -822,20 +805,19 @@
                                 "wireValue": "X-Endpoint-Optional-ID-Header"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "optional",
                                     "optional": {
-                                        "primitive": "UUID",
-                                        "_type": "primitive"
-                                    },
-                                    "_type": "optional"
-                                },
-                                "_type": "container"
-                            }
+                                        "_type": "primitive",
+                                        "primitive": "UUID"
+                                    }
+                                }
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Optional-Date-Header",
@@ -859,20 +841,19 @@
                                 "wireValue": "X-Endpoint-Optional-Date-Header"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "optional",
                                     "optional": {
-                                        "primitive": "DATE",
-                                        "_type": "primitive"
-                                    },
-                                    "_type": "optional"
-                                },
-                                "_type": "container"
-                            }
+                                        "_type": "primitive",
+                                        "primitive": "DATE"
+                                    }
+                                }
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Optional-Datetime-Header",
@@ -896,20 +877,19 @@
                                 "wireValue": "X-Endpoint-Optional-Datetime-Header"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "optional",
                                     "optional": {
-                                        "primitive": "DATE_TIME",
-                                        "_type": "primitive"
-                                    },
-                                    "_type": "optional"
-                                },
-                                "_type": "container"
-                            }
+                                        "_type": "primitive",
+                                        "primitive": "DATE_TIME"
+                                    }
+                                }
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Optional-Bytes-Header",
@@ -933,20 +913,19 @@
                                 "wireValue": "X-Endpoint-Optional-Bytes-Header"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "optional",
                                     "optional": {
-                                        "primitive": "BASE_64",
-                                        "_type": "primitive"
-                                    },
-                                    "_type": "optional"
-                                },
-                                "_type": "container"
-                            }
+                                        "_type": "primitive",
+                                        "primitive": "BASE_64"
+                                    }
+                                }
+                            },
+                            "availability": null,
+                            "docs": null
                         },
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "name": {
                                     "originalName": "X-Endpoint-Fern-Header",
@@ -970,19 +949,23 @@
                                 "wireValue": "X-Endpoint-Fern-Header"
                             },
                             "valueType": {
+                                "_type": "container",
                                 "container": {
+                                    "_type": "literal",
                                     "literal": {
-                                        "string": "fern",
-                                        "type": "string"
-                                    },
-                                    "_type": "literal"
-                                },
-                                "_type": "container"
-                            }
+                                        "type": "string",
+                                        "string": "fern"
+                                    }
+                                }
+                            },
+                            "availability": null,
+                            "docs": null
                         }
                     ],
+                    "requestBody": null,
                     "sdkRequest": {
                         "shape": {
+                            "type": "wrapper",
                             "wrapperName": {
                                 "originalName": "SetNameRequest",
                                 "camelCase": {
@@ -1020,8 +1003,7 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -1044,14 +1026,20 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -1080,17 +1068,39 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1134,43 +1144,32 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
             "service": "service_user",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_user"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

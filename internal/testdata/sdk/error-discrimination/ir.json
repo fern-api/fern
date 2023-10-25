@@ -18,16 +18,16 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_user:UserNotFoundErrorBody": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "UserNotFoundErrorBody",
@@ -94,12 +94,10 @@
                 "typeId": "type_user:UserNotFoundErrorBody"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "requestedUserId",
@@ -123,20 +121,20 @@
                             "wireValue": "requestedUserId"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         },
         "type_user:OrganizationNotFoundErrorBody": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "OrganizationNotFoundErrorBody",
@@ -203,12 +201,10 @@
                 "typeId": "type_user:OrganizationNotFoundErrorBody"
             },
             "shape": {
+                "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY"
-                        },
                         "name": {
                             "name": {
                                 "originalName": "requestedOrganizationId",
@@ -232,15 +228,18 @@
                             "wireValue": "requestedOrganizationId"
                         },
                         "valueType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        }
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
                     }
-                ],
-                "_type": "object"
+                ]
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {
@@ -334,6 +333,7 @@
             },
             "statusCode": 404,
             "type": {
+                "_type": "named",
                 "name": {
                     "originalName": "OrganizationNotFoundErrorBody",
                     "camelCase": {
@@ -396,9 +396,9 @@
                         }
                     }
                 },
-                "typeId": "type_user:OrganizationNotFoundErrorBody",
-                "_type": "named"
-            }
+                "typeId": "type_user:OrganizationNotFoundErrorBody"
+            },
+            "docs": null
         },
         "error_user:UserNotFoundError": {
             "name": {
@@ -490,6 +490,7 @@
             },
             "statusCode": 404,
             "type": {
+                "_type": "named",
                 "name": {
                     "originalName": "UserNotFoundErrorBody",
                     "camelCase": {
@@ -552,9 +553,9 @@
                         }
                     }
                 },
-                "typeId": "type_user:UserNotFoundErrorBody",
-                "_type": "named"
-            }
+                "typeId": "type_user:UserNotFoundErrorBody"
+            },
+            "docs": null
         },
         "error_user:NotFoundError": {
             "name": {
@@ -646,9 +647,10 @@
             },
             "statusCode": 404,
             "type": {
-                "primitive": "STRING",
-                "_type": "primitive"
-            }
+                "_type": "primitive",
+                "primitive": "STRING"
+            },
+            "docs": null
         },
         "error_user:UntypedNotFoundError": {
             "name": {
@@ -738,14 +740,14 @@
                 },
                 "wireValue": "UntypedNotFoundError"
             },
-            "statusCode": 404
+            "statusCode": 404,
+            "type": null,
+            "docs": null
         }
     },
     "services": {
         "service_user": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -791,6 +793,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -799,9 +802,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_user.get",
                     "name": {
                         "originalName": "get",
                         "camelCase": {
@@ -821,7 +822,9 @@
                             "safeName": "Get"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "GET",
                     "path": {
                         "head": "/",
@@ -843,9 +846,6 @@
                     },
                     "pathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -866,17 +866,16 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "allPathParameters": [
                         {
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY"
-                            },
                             "name": {
                                 "originalName": "id",
                                 "camelCase": {
@@ -897,20 +896,28 @@
                                 }
                             },
                             "valueType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "_type": "primitive",
+                                "primitive": "STRING"
                             },
-                            "location": "ENDPOINT"
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
                         }
                     ],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -978,7 +985,8 @@
                                     }
                                 },
                                 "errorId": "error_user:OrganizationNotFoundError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1045,7 +1053,8 @@
                                     }
                                 },
                                 "errorId": "error_user:UserNotFoundError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1112,7 +1121,8 @@
                                     }
                                 },
                                 "errorId": "error_user:NotFoundError"
-                            }
+                            },
+                            "docs": null
                         },
                         {
                             "error": {
@@ -1179,10 +1189,13 @@
                                     }
                                 },
                                 "errorId": "error_user:UntypedNotFoundError"
-                            }
+                            },
+                            "docs": null
                         }
                     ],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -1211,7 +1224,9 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
+        "type": "property",
         "discriminant": {
             "name": {
                 "originalName": "errorName",
@@ -1255,9 +1270,9 @@
                 }
             },
             "wireValue": "content"
-        },
-        "type": "property"
+        }
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -1267,8 +1282,28 @@
             "type_user:OrganizationNotFoundErrorBody"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_user": {
+            "name": {
+                "originalName": "user",
+                "camelCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "snakeCase": {
+                    "unsafeName": "user",
+                    "safeName": "user"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "USER",
+                    "safeName": "USER"
+                },
+                "pascalCase": {
+                    "unsafeName": "User",
+                    "safeName": "User"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -1312,25 +1347,6 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
             "service": "service_user",
             "types": [
                 "type_user:UserNotFoundErrorBody",
@@ -1343,20 +1359,28 @@
                 "error_user:UntypedNotFoundError"
             ],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_user"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

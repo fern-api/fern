@@ -18,18 +18,19 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {},
     "errors": {},
     "services": {
         "service_file": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -75,6 +76,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/file",
                 "parts": []
@@ -83,9 +85,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_file.upload",
                     "name": {
                         "originalName": "upload",
                         "camelCase": {
@@ -105,7 +105,9 @@
                             "safeName": "Upload"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "POST",
                     "path": {
                         "head": "/upload",
@@ -120,6 +122,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
+                        "type": "fileUpload",
                         "name": {
                             "originalName": "UploadRequest",
                             "camelCase": {
@@ -141,6 +144,7 @@
                         },
                         "properties": [
                             {
+                                "type": "bodyProperty",
                                 "name": {
                                     "name": {
                                         "originalName": "fern",
@@ -164,18 +168,19 @@
                                     "wireValue": "fern"
                                 },
                                 "valueType": {
+                                    "_type": "container",
                                     "container": {
+                                        "_type": "literal",
                                         "literal": {
-                                            "string": "fern",
-                                            "type": "string"
-                                        },
-                                        "_type": "literal"
-                                    },
-                                    "_type": "container"
+                                            "type": "string",
+                                            "string": "fern"
+                                        }
+                                    }
                                 },
-                                "type": "bodyProperty"
+                                "docs": null
                             },
                             {
+                                "type": "bodyProperty",
                                 "name": {
                                     "name": {
                                         "originalName": "status",
@@ -199,12 +204,13 @@
                                     "wireValue": "status"
                                 },
                                 "valueType": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
                                 },
-                                "type": "bodyProperty"
+                                "docs": null
                             },
                             {
+                                "type": "file",
                                 "key": {
                                     "name": {
                                         "originalName": "file",
@@ -227,14 +233,13 @@
                                     },
                                     "wireValue": "file"
                                 },
-                                "isOptional": false,
-                                "type": "file"
+                                "isOptional": false
                             }
-                        ],
-                        "type": "fileUpload"
+                        ]
                     },
                     "sdkRequest": {
                         "shape": {
+                            "type": "wrapper",
                             "wrapperName": {
                                 "originalName": "UploadRequest",
                                 "camelCase": {
@@ -272,8 +277,7 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -296,19 +300,23 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 },
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_file.uploadSimple",
                     "name": {
                         "originalName": "uploadSimple",
                         "camelCase": {
@@ -328,7 +336,9 @@
                             "safeName": "UploadSimple"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "POST",
                     "path": {
                         "head": "/upload-simple",
@@ -343,6 +353,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
+                        "type": "fileUpload",
                         "name": {
                             "originalName": "UploadSimpleRequest",
                             "camelCase": {
@@ -364,6 +375,7 @@
                         },
                         "properties": [
                             {
+                                "type": "file",
                                 "key": {
                                     "name": {
                                         "originalName": "file",
@@ -386,14 +398,13 @@
                                     },
                                     "wireValue": "file"
                                 },
-                                "isOptional": false,
-                                "type": "file"
+                                "isOptional": false
                             }
-                        ],
-                        "type": "fileUpload"
+                        ]
                     },
                     "sdkRequest": {
                         "shape": {
+                            "type": "wrapper",
                             "wrapperName": {
                                 "originalName": "UploadSimpleRequest",
                                 "camelCase": {
@@ -431,8 +442,7 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -455,19 +465,23 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 },
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_file.uploadMultiple",
                     "name": {
                         "originalName": "uploadMultiple",
                         "camelCase": {
@@ -487,7 +501,9 @@
                             "safeName": "UploadMultiple"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "POST",
                     "path": {
                         "head": "/upload-multi",
@@ -502,6 +518,7 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
+                        "type": "fileUpload",
                         "name": {
                             "originalName": "UploadMultiRequest",
                             "camelCase": {
@@ -523,6 +540,7 @@
                         },
                         "properties": [
                             {
+                                "type": "bodyProperty",
                                 "name": {
                                     "name": {
                                         "originalName": "status",
@@ -546,12 +564,13 @@
                                     "wireValue": "status"
                                 },
                                 "valueType": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
                                 },
-                                "type": "bodyProperty"
+                                "docs": null
                             },
                             {
+                                "type": "file",
                                 "key": {
                                     "name": {
                                         "originalName": "file",
@@ -574,10 +593,10 @@
                                     },
                                     "wireValue": "file"
                                 },
-                                "isOptional": false,
-                                "type": "file"
+                                "isOptional": false
                             },
                             {
+                                "type": "file",
                                 "key": {
                                     "name": {
                                         "originalName": "optionalFile",
@@ -600,14 +619,13 @@
                                     },
                                     "wireValue": "optionalFile"
                                 },
-                                "isOptional": true,
-                                "type": "file"
+                                "isOptional": true
                             }
-                        ],
-                        "type": "fileUpload"
+                        ]
                     },
                     "sdkRequest": {
                         "shape": {
+                            "type": "wrapper",
                             "wrapperName": {
                                 "originalName": "UploadMultiRequest",
                                 "camelCase": {
@@ -645,8 +663,7 @@
                                     "unsafeName": "Body",
                                     "safeName": "Body"
                                 }
-                            },
-                            "type": "wrapper"
+                            }
                         },
                         "requestParameterName": {
                             "originalName": "request",
@@ -669,14 +686,20 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -705,17 +728,39 @@
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_file": {
+            "name": {
+                "originalName": "file",
+                "camelCase": {
+                    "unsafeName": "file",
+                    "safeName": "file"
+                },
+                "snakeCase": {
+                    "unsafeName": "file",
+                    "safeName": "file"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "FILE",
+                    "safeName": "FILE"
+                },
+                "pascalCase": {
+                    "unsafeName": "File",
+                    "safeName": "File"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -759,43 +804,32 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "file",
-                "camelCase": {
-                    "unsafeName": "file",
-                    "safeName": "file"
-                },
-                "snakeCase": {
-                    "unsafeName": "file",
-                    "safeName": "file"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "FILE",
-                    "safeName": "FILE"
-                },
-                "pascalCase": {
-                    "unsafeName": "File",
-                    "safeName": "File"
-                }
-            },
             "service": "service_file",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_file"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,

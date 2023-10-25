@@ -46,7 +46,7 @@ func (c *Client) List(ctx context.Context) ([]*user.User, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

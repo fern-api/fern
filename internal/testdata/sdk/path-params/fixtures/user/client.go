@@ -46,7 +46,7 @@ func (c *Client) GetUser(ctx context.Context, userId string) (string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -70,7 +70,7 @@ func (c *Client) GetUserV2(ctx context.Context, userId string) (string, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -94,7 +94,7 @@ func (c *Client) GetUserV3(ctx context.Context, userId string, infoId string) (s
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

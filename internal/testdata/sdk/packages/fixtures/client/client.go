@@ -54,7 +54,7 @@ func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 		c.header,
 		nil,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }
@@ -104,7 +104,7 @@ func (c *Client) PostFoo(ctx context.Context, request *fixtures.Foo) (*fixtures.
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return nil, err
 	}
 	return response, nil
 }

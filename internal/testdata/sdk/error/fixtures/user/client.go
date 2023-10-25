@@ -98,7 +98,7 @@ func (c *Client) Get(ctx context.Context, id string) (string, error) {
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }
@@ -148,7 +148,7 @@ func (c *Client) Update(ctx context.Context, id string, request string) (string,
 		c.header,
 		errorDecoder,
 	); err != nil {
-		return response, err
+		return "", err
 	}
 	return response, nil
 }

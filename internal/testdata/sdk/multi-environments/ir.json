@@ -18,18 +18,19 @@
             "safeName": "Api"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {},
     "errors": {},
     "services": {
         "service_auth": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -75,6 +76,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/auth",
                 "parts": []
@@ -83,9 +85,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_auth.getAuth",
                     "name": {
                         "originalName": "getAuth",
                         "camelCase": {
@@ -105,6 +105,7 @@
                             "safeName": "GetAuth"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
                     "baseUrl": "Auth",
                     "method": "GET",
@@ -120,20 +121,26 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 },
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_auth.listAuth",
                     "name": {
                         "originalName": "listAuth",
                         "camelCase": {
@@ -153,6 +160,7 @@
                             "safeName": "ListAuth"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
                     "baseUrl": "Auth",
                     "method": "GET",
@@ -168,26 +176,32 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "container",
+                                "container": {
+                                    "_type": "list",
+                                    "list": {
+                                        "_type": "primitive",
+                                        "primitive": "STRING"
+                                    }
+                                }
                             },
-                            "_type": "container"
-                        },
-                        "type": "json"
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 },
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_auth.listPlants",
                     "name": {
                         "originalName": "listPlants",
                         "camelCase": {
@@ -207,6 +221,7 @@
                             "safeName": "ListPlants"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
                     "baseUrl": "Plants",
                     "method": "GET",
@@ -222,28 +237,34 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "container",
+                                "container": {
+                                    "_type": "list",
+                                    "list": {
+                                        "_type": "primitive",
+                                        "primitive": "STRING"
+                                    }
+                                }
                             },
-                            "_type": "container"
-                        },
-                        "type": "json"
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         },
         "service_plant": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -289,6 +310,7 @@
                     }
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/plants",
                 "parts": []
@@ -297,9 +319,7 @@
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
+                    "id": "endpoint_plant.getPlant",
                     "name": {
                         "originalName": "getPlant",
                         "camelCase": {
@@ -319,6 +339,7 @@
                             "safeName": "GetPlant"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
                     "baseUrl": "Plants",
                     "method": "GET",
@@ -334,15 +355,23 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -374,6 +403,7 @@
     "environments": {
         "defaultEnvironment": "Production",
         "environments": {
+            "type": "multipleBaseUrls",
             "baseUrls": [
                 {
                     "id": "Auth",
@@ -445,7 +475,8 @@
                     "urls": {
                         "Auth": "https://auth.yoursite.com",
                         "Plants": "https://plants.yoursite.com"
-                    }
+                    },
+                    "docs": null
                 },
                 {
                     "id": "Staging",
@@ -471,23 +502,44 @@
                     "urls": {
                         "Auth": "https://auth.staging.yoursite.com",
                         "Plants": "https://plants.staging.yoursite.com"
-                    }
+                    },
+                    "docs": null
                 }
-            ],
-            "type": "multipleBaseUrls"
+            ]
         }
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_auth": {
+            "name": {
+                "originalName": "auth",
+                "camelCase": {
+                    "unsafeName": "auth",
+                    "safeName": "auth"
+                },
+                "snakeCase": {
+                    "unsafeName": "auth",
+                    "safeName": "auth"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "AUTH",
+                    "safeName": "AUTH"
+                },
+                "pascalCase": {
+                    "unsafeName": "Auth",
+                    "safeName": "Auth"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -531,32 +583,35 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "auth",
-                "camelCase": {
-                    "unsafeName": "auth",
-                    "safeName": "auth"
-                },
-                "snakeCase": {
-                    "unsafeName": "auth",
-                    "safeName": "auth"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "AUTH",
-                    "safeName": "AUTH"
-                },
-                "pascalCase": {
-                    "unsafeName": "Auth",
-                    "safeName": "Auth"
-                }
-            },
             "service": "service_auth",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         },
         "subpackage_plant": {
+            "name": {
+                "originalName": "plant",
+                "camelCase": {
+                    "unsafeName": "plant",
+                    "safeName": "plant"
+                },
+                "snakeCase": {
+                    "unsafeName": "plant",
+                    "safeName": "plant"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PLANT",
+                    "safeName": "PLANT"
+                },
+                "pascalCase": {
+                    "unsafeName": "Plant",
+                    "safeName": "Plant"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -600,44 +655,33 @@
                     }
                 }
             },
-            "name": {
-                "originalName": "plant",
-                "camelCase": {
-                    "unsafeName": "plant",
-                    "safeName": "plant"
-                },
-                "snakeCase": {
-                    "unsafeName": "plant",
-                    "safeName": "plant"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "PLANT",
-                    "safeName": "PLANT"
-                },
-                "pascalCase": {
-                    "unsafeName": "Plant",
-                    "safeName": "Plant"
-                }
-            },
             "service": "service_plant",
             "types": [],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_auth",
             "subpackage_plant"
         ],
-        "hasEndpointsInTree": true
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,
