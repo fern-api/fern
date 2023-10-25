@@ -25,7 +25,30 @@ describe("convertToOpenApi", () => {
                     publish: undefined,
                     workspaceName: "fern",
                     organization: "fern",
-                    customConfig: undefined,
+                    customConfig: {
+                        customOverrides: {
+                            components: {
+                                securitySchemes: {
+                                    foo: {
+                                        type: "oauth2",
+                                        flows: {
+                                            implicit: {
+                                                authorizationUrl: "https://foo.bar",
+                                                scopes: {
+                                                    read: "Grants read access",
+                                                    write: "Grants write access",
+                                                },
+                                                "x-google-audiences": "foo-bar",
+                                                "x-google-issuer": "https://securetoken.google.com/foo-bar",
+                                                "x-google-jwks_uri":
+                                                    "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
                     environment: GeneratorEnvironment.local(),
                 };
 
@@ -42,7 +65,7 @@ describe("convertToOpenApi", () => {
 
                 expect(openApi).toMatchSnapshot();
             },
-            90_000
+            90_000,
         );
     }
 });

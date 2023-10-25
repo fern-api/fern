@@ -3,6 +3,7 @@ import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-cli
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
+import merge from "lodash-es/merge";
 import yaml from "js-yaml";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
@@ -26,7 +27,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.init({
                     packagesToPublish: [],
-                })
+                }),
             );
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
@@ -35,13 +36,19 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 ir,
                 mode,
             });
+
+            const openApiDefinitionWithCustomOverrides = merge(customConfig.customOverrides, openApiDefinition);
+
             if (customConfig.format === "json") {
                 await writeFile(
                     path.join(config.output.path, OPENAPI_JSON_FILENAME),
-                    JSON.stringify(openApiDefinition, undefined, 2)
+                    JSON.stringify(openApiDefinitionWithCustomOverrides, undefined, 2),
                 );
             } else {
-                await writeFile(path.join(config.output.path, OPENAPI_YML_FILENAME), yaml.dump(openApiDefinition));
+                await writeFile(
+                    path.join(config.output.path, OPENAPI_YML_FILENAME),
+                    yaml.dump(openApiDefinitionWithCustomOverrides),
+                );
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful()));
         } catch (e) {
@@ -50,8 +57,8 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error",
-                    })
-                )
+                    }),
+                ),
             );
         }
     } catch (e) {

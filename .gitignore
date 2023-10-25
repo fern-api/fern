@@ -8,6 +8,7 @@ build
 tsconfig.tsbuildinfo
 
 # misc
+.idea
 .DS_Store
 
 # logs

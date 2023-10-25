@@ -1,7 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`convertToOpenApi any-auth 1`] = `
-"openapi: 3.0.1
+"components:
+  securitySchemes:
+    foo:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://foo.bar
+          scopes:
+            read: Grants read access
+            write: Grants write access
+          x-google-audiences: foo-bar
+          x-google-issuer: https://securetoken.google.com/foo-bar
+          x-google-jwks_uri: >-
+            https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com
+    BearerAuth:
+      type: http
+      scheme: bearer
+    BasicAuth:
+      type: http
+      scheme: basic
+    HeaderAuthAuth:
+      type: apiKey
+      in: header
+      name: My-Header
+  schemas:
+    PostId:
+      title: PostId
+      type: string
+    Author:
+      title: Author
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    BlogPost:
+      title: BlogPost
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PostId'
+        title:
+          type: string
+          example: My Post
+        author:
+          $ref: '#/components/schemas/Author'
+        content:
+          type: string
+          example: This is my post.
+      required:
+        - id
+        - title
+        - author
+        - content
+openapi: 3.0.1
 info:
   title: fern
   version: ''
@@ -59,59 +114,24 @@ paths:
                     author:
                       name: Fernie
                     content: This is my post.
-components:
-  schemas:
-    PostId:
-      title: PostId
-      type: string
-    Author:
-      title: Author
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-        - name
-    BlogPost:
-      title: BlogPost
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/PostId'
-        title:
-          type: string
-          example: My Post
-        author:
-          $ref: '#/components/schemas/Author'
-        content:
-          type: string
-          example: This is my post.
-      required:
-        - id
-        - title
-        - author
-        - content
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-    BasicAuth:
-      type: http
-      scheme: basic
-    HeaderAuthAuth:
-      type: apiKey
-      in: header
-      name: My-Header
 "
 `;
 
 exports[`convertToOpenApi base-properties 1`] = `
-"openapi: 3.0.1
-info:
-  title: fern
-  version: ''
-paths: {}
-components:
+"components:
+  securitySchemes:
+    foo:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://foo.bar
+          scopes:
+            read: Grants read access
+            write: Grants write access
+          x-google-audiences: foo-bar
+          x-google-issuer: https://securetoken.google.com/foo-bar
+          x-google-jwks_uri: >-
+            https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com
   schemas:
     MyObject:
       title: MyObject
@@ -150,12 +170,31 @@ components:
       properties:
         base:
           type: integer
-  securitySchemes: {}
+openapi: 3.0.1
+info:
+  title: fern
+  version: ''
+paths: {}
 "
 `;
 
 exports[`convertToOpenApi file-upload 1`] = `
-"openapi: 3.0.1
+"components:
+  securitySchemes:
+    foo:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://foo.bar
+          scopes:
+            read: Grants read access
+            write: Grants write access
+          x-google-audiences: foo-bar
+          x-google-issuer: https://securetoken.google.com/foo-bar
+          x-google-jwks_uri: >-
+            https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com
+  schemas: {}
+openapi: 3.0.1
 info:
   title: fern
   version: ''
@@ -182,14 +221,26 @@ paths:
                 heroImage:
                   type: string
                   format: binary
-components:
-  schemas: {}
-  securitySchemes: {}
 "
 `;
 
 exports[`convertToOpenApi multiple-environment-urls 1`] = `
-"openapi: 3.0.1
+"components:
+  securitySchemes:
+    foo:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://foo.bar
+          scopes:
+            read: Grants read access
+            write: Grants write access
+          x-google-audiences: foo-bar
+          x-google-issuer: https://securetoken.google.com/foo-bar
+          x-google-jwks_uri: >-
+            https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com
+  schemas: {}
+openapi: 3.0.1
 info:
   title: fern
   version: ''
@@ -207,14 +258,127 @@ paths:
         - url: https://foo.buildwithfern.com
         - url: https://foo-dev.buildwithfern.com
           description: i'm dev!
-components:
-  schemas: {}
-  securitySchemes: {}
 "
 `;
 
 exports[`convertToOpenApi test-api 1`] = `
-"openapi: 3.0.1
+"components:
+  securitySchemes:
+    foo:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://foo.bar
+          scopes:
+            read: Grants read access
+            write: Grants write access
+          x-google-audiences: foo-bar
+          x-google-issuer: https://securetoken.google.com/foo-bar
+          x-google-jwks_uri: >-
+            https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com
+  schemas:
+    folderNestedType:
+      title: folderNestedType
+      type: string
+    OptionalString:
+      title: OptionalString
+      type: string
+      nullable: true
+    AliasOfNestedType:
+      title: AliasOfNestedType
+      $ref: '#/components/schemas/folderNestedType'
+    PostId:
+      title: PostId
+      type: string
+    BlogPost:
+      title: BlogPost
+      type: object
+      description: A blog post
+      properties:
+        id:
+          $ref: '#/components/schemas/PostId'
+        type:
+          $ref: '#/components/schemas/PostType'
+        title:
+          type: string
+          example: My blog post
+        author:
+          $ref: '#/components/schemas/Author'
+        content:
+          type: string
+          example: This is my short post!
+      required:
+        - id
+        - type
+        - title
+        - author
+        - content
+    PostType:
+      title: PostType
+      type: string
+      enum:
+        - LONG
+        - SHORT
+    Author:
+      title: Author
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - anonymous
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - name
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - type
+            value:
+              $ref: '#/components/schemas/PostType'
+          required:
+            - type
+    PostNotFoundErrorBody:
+      title: PostNotFoundErrorBody
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PostId'
+      required:
+        - id
+    CreatePostRequest:
+      title: CreatePostRequest
+      type: object
+      properties:
+        title:
+          type: string
+          example: My Blog
+        author:
+          $ref: '#/components/schemas/Author'
+          description: Author is the writer.
+        content:
+          type: string
+          example: I'm a post
+        postType:
+          $ref: '#/components/schemas/PostType'
+      required:
+        - title
+        - author
+        - content
+        - postType
+openapi: 3.0.1
 info:
   title: fern
   version: ''
@@ -334,110 +498,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreatePostRequest'
-components:
-  schemas:
-    folderNestedType:
-      title: folderNestedType
-      type: string
-    OptionalString:
-      title: OptionalString
-      type: string
-      nullable: true
-    AliasOfNestedType:
-      title: AliasOfNestedType
-      $ref: '#/components/schemas/folderNestedType'
-    PostId:
-      title: PostId
-      type: string
-    BlogPost:
-      title: BlogPost
-      type: object
-      description: A blog post
-      properties:
-        id:
-          $ref: '#/components/schemas/PostId'
-        type:
-          $ref: '#/components/schemas/PostType'
-        title:
-          type: string
-          example: My blog post
-        author:
-          $ref: '#/components/schemas/Author'
-        content:
-          type: string
-          example: This is my short post!
-      required:
-        - id
-        - type
-        - title
-        - author
-        - content
-    PostType:
-      title: PostType
-      type: string
-      enum:
-        - LONG
-        - SHORT
-    Author:
-      title: Author
-      oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - anonymous
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - name
-            value:
-              type: string
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - type
-            value:
-              $ref: '#/components/schemas/PostType'
-          required:
-            - type
-    PostNotFoundErrorBody:
-      title: PostNotFoundErrorBody
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/PostId'
-      required:
-        - id
-    CreatePostRequest:
-      title: CreatePostRequest
-      type: object
-      properties:
-        title:
-          type: string
-          example: My Blog
-        author:
-          $ref: '#/components/schemas/Author'
-          description: Author is the writer.
-        content:
-          type: string
-          example: I'm a post
-        postType:
-          $ref: '#/components/schemas/PostType'
-      required:
-        - title
-        - author
-        - content
-        - postType
-  securitySchemes: {}
 servers:
   - url: https://buildwithfern.com
     description: prod

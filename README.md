@@ -46,6 +46,37 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern) by d
 
 By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
 
+## Configuration
+
+You can customize the behavior of generators in `generators.yml`:
+
+```yml
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-openapi
+        version: 0.0.27
+        config: # <--
+          format: json
+```
+
+#### ✨ `format`
+
+**Type:** enum<string>: 'json' | 'yaml'
+
+**Default:** `yaml`
+
+When configured, the generator outputs OAS files in the specified format.
+
+#### ✨ `customOverrides`
+
+**Type:** object
+
+**Default:** {}
+
+When configured, the object is merged into the generated OAS file. This allows you to add custom fields to the specification.
+
 ## Releases
 
 All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-openapi/releases). You can directly use these version numbers in your generator configuration files.
