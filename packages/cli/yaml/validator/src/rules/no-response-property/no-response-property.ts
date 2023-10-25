@@ -1,6 +1,12 @@
-import { constructFernFileContext, FernFileContext, TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
+import { assertNever } from "@fern-api/core-utils";
+import {
+    constructFernFileContext,
+    FernFileContext,
+    ResolvedType,
+    TypeResolver,
+    TypeResolverImpl,
+} from "@fern-api/ir-generator";
 import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
-import { TypeReference } from "@fern-fern/ir-sdk/api";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -21,18 +27,21 @@ export const NoResponsePropertyRule: Rule = {
                     } else if (parseRawTextType(responseType) != null) {
                         return [];
                     }
+                    const responseProperty = typeof response !== "string" ? response.property : undefined;
+                    if (responseProperty == null) {
+                        return [];
+                    }
                     const file = constructFernFileContext({
                         relativeFilepath,
                         definitionFile: contents,
                         rootApiFile: workspace.definition.rootApiFile.contents,
                         casingsGenerator: CASINGS_GENERATOR,
                     });
-                    const responseBodyType = file.parseTypeReference(response);
-                    const responseProperty = typeof response !== "string" ? response.property : undefined;
-                    if (responseProperty == null) {
-                        return [];
-                    }
-                    const result = typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver);
+                    const resolvedType = typeResolver.resolveTypeOrThrow({
+                        type: typeof response !== "string" ? response.type : response,
+                        file,
+                    });
+                    const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);
                     return resultToRuleViolations(result, responseProperty);
                 },
             },
@@ -67,33 +76,32 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
     }
 }
 
-function typeReferenceHasProperty(
-    typeReference: TypeReference,
+function resolvedTypeHasProperty(
+    resolvedType: ResolvedType,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
 ): Result {
-    if (typeReference.type === "container" && typeReference.container.type === "optional") {
-        return typeReferenceHasProperty(typeReference.container.optional, property, file, typeResolver);
+    switch (resolvedType._type) {
+        case "container":
+            if (resolvedType.container._type !== "optional") {
+                return Result.IsNotObject;
+            }
+            return resolvedTypeHasProperty(resolvedType.container.itemType, property, file, typeResolver);
+        case "named":
+            if (!isRawObjectDefinition(resolvedType.declaration)) {
+                return Result.IsNotObject;
+            }
+            if (rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
+                return Result.ContainsProperty;
+            }
+            return Result.DoesNotContainProperty;
+        case "primitive":
+        case "unknown":
+            return Result.IsNotObject;
+        default:
+            assertNever(resolvedType);
     }
-    if (typeReference.type === "named") {
-        const resolvedType = typeResolver.resolveNamedTypeOrThrow({
-            referenceToNamedType: typeReference.name.originalName,
-            file,
-        });
-        switch (resolvedType._type) {
-            case "container":
-                return typeReferenceHasProperty(resolvedType.originalTypeReference, property, file, typeResolver);
-            case "named":
-                if (!isRawObjectDefinition(resolvedType.declaration)) {
-                    return Result.IsNotObject;
-                }
-                if (rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
-                    return Result.ContainsProperty;
-                }
-        }
-    }
-    return Result.DoesNotContainProperty;
 }
 
 function rawObjectSchemaHasProperty(
