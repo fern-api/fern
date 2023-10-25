@@ -122,6 +122,7 @@ export class LocalTaskHandler {
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<void> {
         await loggingExeca(this.context.logger, "git", options, {
             cwd,
+            doNotPipeOutput: true,
         });
     }
 }
@@ -139,6 +140,6 @@ async function getFernIgnorePaths({
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
-            .filter((line) => !line.startsWith("#")),
+            .filter((line) => !line.startsWith("#") && line.length > 0),
     ];
 }
