@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import {
     constructFernFileContext,
     FernFileContext,
@@ -94,8 +95,13 @@ function resolvedTypeHasProperty(
             if (rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
                 return Result.ContainsProperty;
             }
+            return Result.DoesNotContainProperty;
+        case "primitive":
+        case "unknown":
+            return Result.IsNotObject;
+        default:
+            assertNever(resolvedType);
     }
-    return Result.DoesNotContainProperty;
 }
 
 function rawObjectSchemaHasProperty(

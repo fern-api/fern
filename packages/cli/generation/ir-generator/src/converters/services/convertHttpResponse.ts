@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
 import { HttpResponse, JsonResponse, ObjectProperty, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
@@ -102,6 +103,11 @@ function getObjectPropertyFromResolvedType(
                 return getObjectPropertyFromObjectSchema(resolvedType.declaration, property, file, typeResolver);
             }
             break;
+        case "primitive":
+        case "unknown":
+            break;
+        default:
+            assertNever(resolvedType);
     }
     throw new Error("Internal error; response must be an object in order to return a property as a response");
 }
