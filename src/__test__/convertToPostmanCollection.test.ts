@@ -8,8 +8,9 @@ import {
 import { execa } from "execa";
 import { readFile, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
+import { PostmanGeneratorConfigSchema } from "src/config/schemas/PostmanGeneratorConfigSchema";
 import tmp from "tmp-promise";
-import { COLLECTION_OUTPUT_FILENAME, writePostmanCollection } from "../writePostmanCollection";
+import { getCollectionOutputFilename, writePostmanCollection } from "../writePostmanCollection";
 
 const FIXTURES = ["loop-test-api", "test-api", "any-auth"];
 
@@ -22,7 +23,9 @@ describe("convertToPostman", () => {
             async () => {
                 const tmpDir = await tmp.dir();
 
-                const collectionPath = path.join(tmpDir.path, COLLECTION_OUTPUT_FILENAME);
+                const customConfig: PostmanGeneratorConfigSchema | undefined = undefined;
+
+                const collectionPath = path.join(tmpDir.path, getCollectionOutputFilename(customConfig));
                 const configPath = path.join(tmpDir.path, "config.json");
                 const irPath = path.join(tmpDir.path, "ir.json");
 
@@ -48,7 +51,7 @@ describe("convertToPostman", () => {
                     publish: undefined,
                     workspaceName: "fern",
                     organization: "fern",
-                    customConfig: undefined,
+                    customConfig,
                     environment: GeneratorEnvironment.local(),
                 };
 

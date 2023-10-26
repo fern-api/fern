@@ -8,13 +8,17 @@ import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { Collection, CollectionDefinition } from "postman-collection";
+import { GeneratorNotificationService } from "./GeneratorNotificationService";
 import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorConfigSchema";
 import { PublishConfigSchema } from "./config/schemas/PublishConfigSchema";
 import { convertToPostmanCollection } from "./convertToPostmanCollection";
-import { GeneratorNotificationService } from "./GeneratorNotificationService";
 import { writePostmanGithubWorkflows } from "./writePostmanGithubWorkflows";
 
-export const COLLECTION_OUTPUT_FILENAME = "collection.json";
+const DEFAULT_COLLECTION_OUTPUT_FILENAME = "collection.json";
+
+export const getCollectionOutputFilename = (postmanGeneratorConfig?: PostmanGeneratorConfigSchema): string => {
+    return postmanGeneratorConfig?.filename ?? DEFAULT_COLLECTION_OUTPUT_FILENAME;
+};
 
 export async function writePostmanCollection(pathToConfig: string): Promise<void> {
     try {
@@ -26,6 +30,8 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
 
         const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
         console.log("Validated custom config");
+
+        const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
 
         const generatorLoggingClient = new GeneratorNotificationService(config);
         console.log("Initialized generator logging client");
@@ -43,7 +49,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.log({
                     level: LogLevel.Debug,
-                    message: "Generating collection.json",
+                    message: `Generating ${collectionOutputFilename}`,
                 })
             );
             const _collectionDefinition = convertToPostmanCollection(ir);
@@ -53,14 +59,14 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
             console.log("Converted ir to postman collection");
 
             await writeFile(
-                path.join(config.output.path, COLLECTION_OUTPUT_FILENAME),
+                path.join(config.output.path, collectionOutputFilename),
                 JSON.stringify(rawCollectionDefinition, undefined, 2)
             );
-            console.log(`Wrote postman collection to ${COLLECTION_OUTPUT_FILENAME}`);
+            console.log(`Wrote postman collection to ${collectionOutputFilename}`);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.log({
                     level: LogLevel.Debug,
-                    message: "Generated collection.json",
+                    message: `Generated ${collectionOutputFilename}`,
                 })
             );
 

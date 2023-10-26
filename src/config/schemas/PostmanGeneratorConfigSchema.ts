@@ -6,6 +6,7 @@ export const PostmanGeneratorConfigSchema = z.union([
     z.undefined(),
     z.strictObject({
         publishing: PublishConfigSchema.optional(),
+        filename: z.string().optional(),
     }),
 ]);
 
