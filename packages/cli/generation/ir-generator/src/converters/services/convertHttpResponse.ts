@@ -100,7 +100,12 @@ function getObjectPropertyFromResolvedType(
             break;
         case "named":
             if (isRawObjectDefinition(resolvedType.declaration)) {
-                return getObjectPropertyFromObjectSchema(resolvedType.declaration, property, file, typeResolver);
+                return getObjectPropertyFromObjectSchema(
+                    resolvedType.declaration,
+                    property,
+                    resolvedType.file,
+                    typeResolver
+                );
             }
             break;
         case "primitive":
