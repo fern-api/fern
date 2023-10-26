@@ -3708,6 +3708,235 @@
                     "docs": null
                 }
             ]
+        },
+        "service_nested": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "id": "endpoint_nested.createNested",
+                    "name": {
+                        "originalName": "createNested",
+                        "camelCase": {
+                            "unsafeName": "createNested",
+                            "safeName": "createNested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_nested",
+                            "safeName": "create_nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_NESTED",
+                            "safeName": "CREATE_NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateNested",
+                            "safeName": "CreateNested"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "/nested",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "nested",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "GetNestedRequest",
+                            "camelCase": {
+                                "unsafeName": "getNestedRequest",
+                                "safeName": "getNestedRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "get_nested_request",
+                                "safeName": "get_nested_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GET_NESTED_REQUEST",
+                                "safeName": "GET_NESTED_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GetNestedRequest",
+                                "safeName": "GetNestedRequest"
+                            }
+                        },
+                        "extends": [],
+                        "contentType": null,
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "name",
+                                        "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                        }
+                                    },
+                                    "wireValue": "name"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "docs": null
+                            }
+                        ]
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "GetNestedRequest",
+                                "camelCase": {
+                                    "unsafeName": "getNestedRequest",
+                                    "safeName": "getNestedRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "get_nested_request",
+                                    "safeName": "get_nested_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "GET_NESTED_REQUEST",
+                                    "safeName": "GET_NESTED_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "GetNestedRequest",
+                                    "safeName": "GetNestedRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
+                    },
+                    "errors": [],
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ]
         }
     },
     "constants": {
@@ -3788,7 +4017,82 @@
         ]
     },
     "webhookGroups": {},
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_nested": {
+            "name": {
+                "originalName": "nested",
+                "camelCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED",
+                    "safeName": "NESTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Nested",
+                    "safeName": "Nested"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "file": null
+            },
+            "service": "service_nested",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -3811,7 +4115,9 @@
             "error_:ContentTooLargeError",
             "error_:UnprocessableEntityError"
         ],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_nested"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

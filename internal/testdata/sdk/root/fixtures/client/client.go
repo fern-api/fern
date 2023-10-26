@@ -10,6 +10,7 @@ import (
 	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
+	nestedclient "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/nested/client"
 	io "io"
 	http "net/http"
 )
@@ -18,6 +19,8 @@ type Client struct {
 	baseURL    string
 	httpClient core.HTTPClient
 	header     http.Header
+
+	Nested *nestedclient.Client
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -29,6 +32,7 @@ func NewClient(opts ...core.ClientOption) *Client {
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
+		Nested:     nestedclient.NewClient(opts...),
 	}
 }
 

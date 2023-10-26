@@ -8,7 +8,9 @@ import (
 	json "encoding/json"
 	errors "errors"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures"
+	configclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/config/client"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	organizationclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization/client"
 	userclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/client"
 	io "io"
 	http "net/http"
@@ -19,7 +21,9 @@ type Client struct {
 	httpClient core.HTTPClient
 	header     http.Header
 
-	User *userclient.Client
+	User         *userclient.Client
+	Config       *configclient.Client
+	Organization *organizationclient.Client
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -28,10 +32,12 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
-		User:       userclient.NewClient(opts...),
+		baseURL:      options.BaseURL,
+		httpClient:   options.HTTPClient,
+		header:       options.ToHeader(),
+		User:         userclient.NewClient(opts...),
+		Config:       configclient.NewClient(opts...),
+		Organization: organizationclient.NewClient(opts...),
 	}
 }
 

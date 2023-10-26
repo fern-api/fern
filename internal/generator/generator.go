@@ -41,6 +41,54 @@ type File struct {
 	Content []byte
 }
 
+// SubpackageToGenerate represents a subpackage that needs to be generated. It contains
+// a reference to a (potentially) modified HttpService, and its original FernFilepath.
+//
+// A service's FernFilepath is modified whenever it it represents an implicit root package
+// (e.g. a config.yml adjacent to a config/ directory is treated as if the config.yml is
+// defined at config/__package__.yml). However, the scope for any in-lined requests
+// must maintain their original definition, so we persist that here.
+type SubpackageToGenerate struct {
+	Subpackage           *fernir.Subpackage
+	OriginalFernFilepath *fernir.FernFilepath
+}
+
+// NewSubpackagesToGenerate returns a slice of subpackages to generate from the given IR.
+func NewSubpackagesToGenerate(ir *fernir.IntermediateRepresentation) []*SubpackageToGenerate {
+	var subpackagesToGenerate []*SubpackageToGenerate
+	for _, irSubpackage := range ir.Subpackages {
+		originalFernFilepath := irSubpackage.FernFilepath
+		if len(irSubpackage.Subpackages) > 0 && irSubpackage.FernFilepath.File != nil {
+			// This represents a nested root package, so we need to deposit
+			// the client in client subpackage (e.g. user/client).
+			//
+			// We do this by updating the FernFilepath for the subpackage
+			// and service (if any).
+			irSubpackage.FernFilepath = &fernir.FernFilepath{
+				AllParts:    irSubpackage.FernFilepath.AllParts,
+				PackagePath: append(irSubpackage.FernFilepath.PackagePath, irSubpackage.FernFilepath.File),
+				File:        nil,
+			}
+			if irSubpackage.Service != nil {
+				irService := ir.Services[*irSubpackage.Service]
+				irService.Name.FernFilepath = &fernir.FernFilepath{
+					AllParts:    irService.Name.FernFilepath.AllParts,
+					PackagePath: append(irService.Name.FernFilepath.PackagePath, irService.Name.FernFilepath.File),
+					File:        nil,
+				}
+			}
+		}
+		subpackagesToGenerate = append(
+			subpackagesToGenerate,
+			&SubpackageToGenerate{
+				Subpackage:           irSubpackage,
+				OriginalFernFilepath: originalFernFilepath,
+			},
+		)
+	}
+	return subpackagesToGenerate
+}
+
 // NewFile returns a new *File with the given content, and send a log to the coordinator.
 func NewFile(coordinator *coordinator.Client, filename string, content []byte) *File {
 	// It's OK if we fail to send an update to the coordinator - we shouldn't fail
@@ -313,6 +361,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 		// First generate the client at the root package, if any.
+		subpackagesToGenerate := NewSubpackagesToGenerate(ir)
 		if ir.RootPackage != nil {
 			var rootSubpackages []*fernir.Subpackage
 			for _, subpackageID := range ir.RootPackage.Subpackages {
@@ -330,6 +379,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					rootSubpackages,
 					generatedAuth,
 					generatedEnvironment,
+					ir.RootPackage.FernFilepath,
 				)
 				if err != nil {
 					return nil, err
@@ -350,7 +400,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 		// Then generate the client for all of the subpackages.
-		for _, irSubpackage := range ir.Subpackages {
+		for _, subpackageToGenerate := range subpackagesToGenerate {
+			irSubpackage := subpackageToGenerate.Subpackage
 			var subpackages []*fernir.Subpackage
 			for _, subpackageID := range irSubpackage.Subpackages {
 				subpackage := ir.Subpackages[subpackageID]
@@ -375,6 +426,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					subpackages,
 					generatedAuth,
 					generatedEnvironment,
+					subpackageToGenerate.OriginalFernFilepath,
 				)
 				if err != nil {
 					return nil, err
@@ -389,6 +441,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				subpackages,
 				generatedAuth,
 				generatedEnvironment,
+				subpackageToGenerate.OriginalFernFilepath,
 			)
 			if err != nil {
 				return nil, err
@@ -468,6 +521,7 @@ func (g *Generator) generateService(
 	irSubpackages []*fernir.Subpackage,
 	generatedAuth *GeneratedAuth,
 	generatedEnvironment *GeneratedEnvironment,
+	originalFernFilepath *fernir.FernFilepath,
 ) (*File, *GeneratedClient, error) {
 	fileInfo := fileInfoForService(irService.Name.FernFilepath)
 	writer := newFileWriter(
@@ -483,7 +537,7 @@ func (g *Generator) generateService(
 		irSubpackages,
 		ir.Environments,
 		ir.ErrorDiscriminationStrategy,
-		irService.Name.FernFilepath,
+		originalFernFilepath,
 		generatedAuth,
 		generatedEnvironment,
 	)
@@ -506,6 +560,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	irSubpackages []*fernir.Subpackage,
 	generatedAuth *GeneratedAuth,
 	generatedEnvironment *GeneratedEnvironment,
+	originalFernFilepath *fernir.FernFilepath,
 ) (*File, error) {
 	fileInfo := fileInfoForService(irSubpackage.FernFilepath)
 	writer := newFileWriter(
@@ -521,7 +576,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		irSubpackages,
 		nil,
 		ir.ErrorDiscriminationStrategy,
-		irSubpackage.FernFilepath,
+		originalFernFilepath,
 		generatedAuth,
 		generatedEnvironment,
 	); err != nil {
