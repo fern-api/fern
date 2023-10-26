@@ -8,8 +8,8 @@ import {
 import { execa } from "execa";
 import { readFile, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
-import { PostmanGeneratorConfigSchema } from "src/config/schemas/PostmanGeneratorConfigSchema";
 import tmp from "tmp-promise";
+import { PostmanGeneratorConfigSchema } from "../config/schemas/PostmanGeneratorConfigSchema";
 import { getCollectionOutputFilename, writePostmanCollection } from "../writePostmanCollection";
 
 const FIXTURES = ["loop-test-api", "test-api", "any-auth"];
