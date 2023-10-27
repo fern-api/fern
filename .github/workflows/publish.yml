@@ -11,6 +11,7 @@ jobs:
   check:
     uses: ./.github/workflows/check.yml
   publish: 
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -28,7 +29,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: fernapi
-          password: ${{ secrets.FERNAPI_DOCKER_HUB_PASSWORD }}
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
       
       - name: Compile
         run: yarn compile
