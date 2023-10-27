@@ -229,7 +229,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.30.5"],\
             ["@typescript-eslint/parser", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.30.5"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["eslint-plugin-deprecation", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:1.3.2"],\
@@ -3661,7 +3661,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ansi-escapes", "npm:5.0.0"],\
             ["axios", "npm:0.27.2"],\
             ["boxen", "npm:7.0.0"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
@@ -3940,7 +3940,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["axios", "npm:0.27.2"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["fs-extra", "npm:11.1.1"],\
@@ -4102,7 +4102,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.4"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
@@ -4123,7 +4123,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -4170,7 +4170,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/qs", "npm:6.9.7"],\
             ["axios", "npm:0.27.2"],\
             ["boxen", "npm:7.0.0"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["inquirer", "npm:9.2.11"],\
@@ -4320,7 +4320,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -4390,7 +4390,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/terminal-link", "npm:1.2.0"],\
             ["axios", "npm:0.27.2"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
@@ -4422,7 +4422,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
@@ -4462,7 +4462,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
@@ -4552,7 +4552,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -4632,7 +4632,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/prettier", "npm:2.7.2"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -4657,7 +4657,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["find-up", "npm:6.3.0"],\
@@ -10163,7 +10163,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.30.5"],\
             ["@typescript-eslint/parser", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.30.5"],\
-            ["chalk", "npm:5.0.1"],\
+            ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["eslint-plugin-deprecation", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:1.3.2"],\

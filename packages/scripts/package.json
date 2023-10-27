@@ -34,7 +34,7 @@
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/json-schema": "workspace:*",
-    "chalk": "^5.0.1",
+    "chalk": "^5.3.0",
     "execa": "^5.1.1",
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",

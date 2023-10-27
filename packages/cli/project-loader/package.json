@@ -33,7 +33,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "chalk": "^5.0.1",
+    "chalk": "^5.3.0",
     "js-yaml": "^4.1.0",
     "zod": "^3.22.3"
   },

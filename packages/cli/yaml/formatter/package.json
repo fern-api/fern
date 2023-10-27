@@ -32,7 +32,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "chalk": "^5.0.1"
+    "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

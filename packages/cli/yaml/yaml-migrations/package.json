@@ -32,7 +32,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "chalk": "^5.0.1",
+    "chalk": "^5.3.0",
     "find-up": "^6.3.0",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
