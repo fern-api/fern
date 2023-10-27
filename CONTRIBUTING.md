@@ -41,3 +41,25 @@ yarn
 ### Compiling
 
 To compile the packages in this monorepo, run `yarn compile`.
+
+### Unit Testing
+
+You can run jest unit tests by running `yarn test`. Some of 
+our tests are snapshot tests; if you need to update the
+snapshots run `yarn test -u`. 
+
+### Integration Testing
+
+For integration testing we use a testing tool called seed. Seed 
+is a CLI that will dockerize the generator, run the generator with 
+[test definitions](https://github.com/fern-api/fern/tree/main/test-definitions/fern/apis)
+and write out the output to [disk](./seed/openapi/). 
+
+After you make a change, run seed by doing the following
+```bash
+# The seed version can be found in .github/workflows/check.yml
+npm install -g @fern-api/seed-cli@0.15.0-rc51 
+
+# Running seed requires the docker daemon to be running
+seed test --workspace openapi --parallel 10 
+```
