@@ -342,14 +342,17 @@ function convertSnippetsConfiguration({
 }
 
 function isRawPageConfig(item: RawDocs.NavigationItem): item is RawDocs.PageConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as RawDocs.PageConfiguration).page != null;
 }
 
 function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.SectionConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as RawDocs.SectionConfiguration).section != null;
 }
 
 function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiSectionConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as RawDocs.ApiSectionConfiguration).api != null;
 }
 
@@ -488,6 +491,7 @@ function isTabbedNavigationConfig(
     return (
         Array.isArray(navigationConfig) &&
         navigationConfig.length > 0 &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as RawDocs.TabbedNavigationItem).tab != null
     );
 }

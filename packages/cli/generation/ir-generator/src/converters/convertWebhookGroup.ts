@@ -95,5 +95,8 @@ function convertInlinedRequestProperty({
 export function isReferencedWebhookPayloadSchema(
     payload: RawSchemas.WebhookPayloadSchema
 ): payload is RawSchemas.WebhookReferencedPayloadSchema {
-    return (payload as RawSchemas.WebhookReferencedPayloadSchema).type != null;
+    return (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (payload as RawSchemas.WebhookReferencedPayloadSchema).type != null
+    );
 }

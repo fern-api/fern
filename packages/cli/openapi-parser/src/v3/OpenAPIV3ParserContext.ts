@@ -7,10 +7,10 @@ import { convertToError } from "./converters/convertToHttpError";
 import { ErrorBodyCollector } from "./ErrorBodyCollector";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    private nonRequestReferencedSchemas = new Set<SchemaId>();
+    private nonRequestReferencedSchemas: Set<SchemaId> = new Set();
 
-    private twoOrMoreRequestsReferencedSchemas = new Set<SchemaId>();
-    private singleRequestReferencedSchemas = new Set<SchemaId>();
+    private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
+    private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
 
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
 
