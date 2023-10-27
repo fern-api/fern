@@ -339,7 +339,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ajv", "npm:8.12.0"],\
             ["ajv-draft-04", "virtual:a01a7aca611211ff82a03c5bee6185e53f837adbba8875721424e2edcb5609b9ee50acd4e9db9547f36dcfc4f7dbcea4b832ef88083a005e328ccdbc9d1cfbec#npm:1.0.0"],\
             ["call-me-maybe", "npm:1.0.2"],\
-            ["openapi-types", "npm:12.1.0"]\
+            ["openapi-types", "npm:12.1.3"]\
           ],\
           "packagePeers": [\
             "@types/openapi-types",\
@@ -4252,7 +4252,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["openapi-types", "npm:12.1.0"],\
+            ["openapi-types", "npm:12.1.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["swagger2openapi", "npm:7.0.8"],\
@@ -14492,6 +14492,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/openapi-types-npm-12.1.0-806d0d925c-d8f3e2bae5.zip/node_modules/openapi-types/",\
           "packageDependencies": [\
             ["openapi-types", "npm:12.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:12.1.3", {\
+          "packageLocation": "./.yarn/cache/openapi-types-npm-12.1.3-1b8ae4a632-7fa5547f87.zip/node_modules/openapi-types/",\
+          "packageDependencies": [\
+            ["openapi-types", "npm:12.1.3"]\
           ],\
           "linkType": "HARD"\
         }]\
