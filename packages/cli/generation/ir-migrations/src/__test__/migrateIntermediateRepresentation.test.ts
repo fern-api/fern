@@ -56,6 +56,7 @@ describe("migrateIntermediateRepresentation", () => {
             },
         });
         expect(
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             (migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue
         ).toBeUndefined();
     });
@@ -69,7 +70,7 @@ describe("migrateIntermediateRepresentation", () => {
                 version: "0.0.245-1-ga1ce47f",
             },
         });
-
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
@@ -89,7 +90,7 @@ describe("migrateIntermediateRepresentation", () => {
                 version: "0.0.245",
             },
         });
-
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",

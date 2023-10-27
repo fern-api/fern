@@ -18,6 +18,7 @@ export function visitRawApiAuth<R>(apiAuth: ApiAuthSchema, visitor: RawApiAuthVi
 }
 
 export function isSingleAuthScheme(apiAuth: ApiAuthSchema): apiAuth is AuthSchemeReferenceSchema | string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return typeof apiAuth === "string" || (apiAuth as AuthSchemeReferenceSchema).scheme != null;
 }
 

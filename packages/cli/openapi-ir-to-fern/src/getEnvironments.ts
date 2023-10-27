@@ -95,7 +95,7 @@ function getPathname(url: string): string {
 function getSharedSuffix(strings: string[]): string {
     let suffix = "";
 
-    // eslint-disable-next-line no-constant-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
     while (true) {
         const chars = strings.map((s) => s[s.length - suffix.length - 1]);
         const char = chars[0];

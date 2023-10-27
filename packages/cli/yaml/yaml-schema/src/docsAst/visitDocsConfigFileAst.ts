@@ -232,10 +232,12 @@ async function visitNavigationItem({
 }
 
 function navigationItemIsPage(item: NavigationItem): item is PageConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as PageConfiguration).page != null;
 }
 
 function navigationItemIsSection(item: NavigationItem): item is SectionConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as SectionConfiguration).section != null;
 }
 
