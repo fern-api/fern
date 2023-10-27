@@ -4088,7 +4088,7 @@ __metadata:
     js-yaml: ^4.1.0
     lint-staged: ^12.4.1
     lodash-es: ^4.17.21
-    openapi-types: ^12.0.0
+    openapi-types: ^12.1.3
     prettier: ^3.0.3
     simple-progress-webpack-plugin: ^2.0.0
     tmp-promise: ^3.0.3
@@ -5889,10 +5889,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openapi-types@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "openapi-types@npm:12.0.0"
-  checksum: 8d22cb3727e892ad8f9782210360627f6cde92a53c229407d897f0252543a937aed59bfd7a4bee291b50547d7a4e836290ee35eaebc3978c873c601de9ace5b6
+"openapi-types@npm:^12.1.3":
+  version: 12.1.3
+  resolution: "openapi-types@npm:12.1.3"
+  checksum: 7fa5547f87a58d2aa0eba6e91d396f42d7d31bc3ae140e61b5d60b47d2fd068b48776f42407d5a8da7280cf31195aa128c2fc285e8bb871d1105edee5647a0bb
   languageName: node
   linkType: hard
 
