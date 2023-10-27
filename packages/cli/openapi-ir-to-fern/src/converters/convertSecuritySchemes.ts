@@ -4,6 +4,7 @@ import { SecurityScheme, SecuritySchemeId } from "@fern-fern/openapi-ir-model/co
 export interface FernAuth {
     auth: string | undefined;
     authSchemes: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
+    globalHeaders: Record<string, RawSchemas.HttpHeaderSchema>;
 }
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
@@ -12,7 +13,8 @@ const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId, SecurityScheme>): FernAuth {
     let auth: string | undefined = undefined;
     const authSchemes: Record<string, RawSchemas.AuthSchemeDeclarationSchema> = {};
-
+    const globalHeaders: Record<string, RawSchemas.HttpHeaderSchema> = {};
+    let headerSchemeAlreadyPresent = false;
     for (const [id, securityScheme] of Object.entries(securitySchemes)) {
         if (securityScheme.type === "basic" && auth == null) {
             auth = "basic";
@@ -66,11 +68,19 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
             if (auth == null) {
                 auth = id;
             }
+            if (!headerSchemeAlreadyPresent) {
+                headerSchemeAlreadyPresent = true;
+            } else {
+                globalHeaders[securityScheme.headerName] = {
+                    type: "string",
+                };
+            }
         }
     }
 
     return {
         auth,
         authSchemes: Object.keys(authSchemes).length === 0 ? undefined : authSchemes,
+        globalHeaders,
     };
 }
