@@ -38,7 +38,6 @@ jobs:
         run: |
           projectVersion="$(./scripts/git-version.sh)"
           yarn openapi:dockerTagVersion "$projectVersion"
-          echo ${{ secrets.FERNAPI_DOCKER_HUB_PASSWORD }} | docker login --username fernapi --password-stdin
           docker tag fern-openapi:"$projectVersion" fernapi/fern-openapi:"$projectVersion"
           docker push fernapi/fern-openapi:"$projectVersion"
       
