@@ -1,0 +1,76 @@
+openapi: 3.0.1
+info:
+  title: Audiences API
+  version: ''
+paths:
+  /:
+    get:
+      operationId: folderA_service_getDirectThread
+      tags:
+        - FolderAService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/folder-aResponse'
+    post:
+      operationId: foo_find
+      tags:
+        - Foo
+      parameters:
+        - name: optionalString
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/OptionalString'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportingType'
+components:
+  schemas:
+    Imported:
+      title: Imported
+      type: string
+    folder-aResponse:
+      title: folder-aResponse
+      type: object
+      properties:
+        foo:
+          $ref: '#/components/schemas/folder-bFoo'
+          nullable: true
+    folder-bFoo:
+      title: folder-bFoo
+      type: object
+      properties:
+        foo:
+          $ref: '#/components/schemas/folder-cFoo'
+          nullable: true
+    folder-cFoo:
+      title: folder-cFoo
+      type: object
+      properties:
+        bar_property:
+          type: string
+          format: uuid
+      required:
+        - bar_property
+    ImportingType:
+      title: ImportingType
+      type: object
+      properties:
+        imported:
+          $ref: '#/components/schemas/Imported'
+      required:
+        - imported
+    OptionalString:
+      title: OptionalString
+      type: string
+      nullable: true
+  securitySchemes: {}

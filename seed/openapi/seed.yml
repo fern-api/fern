@@ -1,0 +1,13 @@
+irVersion: v23
+docker: fern-openapi:local
+dockerCommand: yarn openapi:dockerTagLocal
+generatorType: documentation
+fixtures:
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customOverrides:
+          info: 
+            license: MIT
+      outputFolder: custom-overrides

@@ -1,0 +1,516 @@
+openapi: 3.0.1
+info:
+  title: examples
+  version: ''
+paths:
+  /:
+    post:
+      operationId: echo
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Hello world!
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            examples:
+              Example1:
+                value: Hello world!
+  /file/notification/{notificationId}:
+    get:
+      operationId: file_notification_service_getException
+      tags:
+        - FileNotificationService
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: notification-hsy129x
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exception'
+              examples:
+                Example1:
+                  value:
+                    type: generic
+                    exceptionType: Unavailable
+                    exceptionMessage: This component is unavailable!
+                    exceptionStacktrace: <logs>
+      security:
+        - BearerAuth: []
+  /file/{filename}:
+    get:
+      operationId: file_service_getFile
+      tags:
+        - FileService
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: file.txt
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: A file with that name was not found!
+      security:
+        - BearerAuth: []
+  /check/{id}:
+    get:
+      operationId: health_service_check
+      tags:
+        - HealthService
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: id-2sdx82h
+      responses:
+        '204':
+          description: ''
+      security:
+        - BearerAuth: []
+  /ping:
+    get:
+      operationId: health_service_ping
+      tags:
+        - HealthService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+              examples:
+                Example1:
+                  value: true
+      security:
+        - BearerAuth: []
+  /movie/{movieId}:
+    get:
+      operationId: service_getMovie
+      tags:
+        - Service
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/MovieId'
+          examples:
+            Example1:
+              value: movie-c06a4ad7
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+              examples:
+                Example1:
+                  value:
+                    id: movie-c06a4ad7
+                    title: The Boy and the Heron
+                    from: Hayao Miyazaki
+                    rating: 8
+                    type: movie
+                    tag: tag-wf9as23d
+  /movie:
+    post:
+      operationId: service_createMovie
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieId'
+              examples:
+                Example1:
+                  value: movie-c06a4ad7
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+            examples:
+              Example1:
+                value:
+                  id: movie-c06a4ad7
+                  title: The Boy and the Heron
+                  from: Hayao Miyazaki
+                  rating: 8
+                  type: movie
+                  tag: tag-wf9as23d
+  /metadata:
+    get:
+      operationId: service_getMetadata
+      tags:
+        - Service
+      parameters:
+        - name: shallow
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+          examples:
+            Example1:
+              value: false
+        - name: tag
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              nullable: true
+          examples:
+            Example1:
+              value: development
+        - name: X-API-Version
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: 0.0.1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
+              examples:
+                Example1:
+                  value:
+                    type: html
+                    extra:
+                      version: 0.0.1
+                      tenancy: test
+                    tags:
+                      - development
+                      - public
+                    value: <head>...</head>
+components:
+  schemas:
+    commonsTag:
+      title: commonsTag
+      type: string
+    MovieId:
+      title: MovieId
+      type: string
+    Movie:
+      title: Movie
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MovieId'
+        title:
+          type: string
+          example: The Boy and the Heron
+        from:
+          type: string
+          example: Hayao Miyazaki
+        rating:
+          type: number
+          format: double
+          description: The rating scale is one to five stars
+          example: 8
+        type:
+          type: string
+          enum:
+            - movie
+        tag:
+          $ref: '#/components/schemas/commonsTag'
+      required:
+        - id
+        - title
+        - from
+        - rating
+        - type
+        - tag
+    ExtendedMovie:
+      title: ExtendedMovie
+      type: object
+      properties:
+        cast:
+          type: array
+          items:
+            type: string
+          example:
+            - John Travolta
+            - Samuel L. Jackson
+            - Uma Thurman
+            - Bruce Willis
+      required:
+        - cast
+      allOf:
+        - $ref: '#/components/schemas/Movie'
+    Moment:
+      title: Moment
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 656f12d6-f592-444c-a1d3-a3cfd46d5b39
+        date:
+          type: string
+          format: date
+          example: '1994-01-01'
+        datetime:
+          type: string
+          format: date-time
+          example: '1994-01-01T01:01:01Z'
+      required:
+        - id
+        - date
+        - datetime
+    File:
+      title: File
+      type: object
+      properties:
+        name:
+          type: string
+          example: file.txt
+        contents:
+          type: string
+          example: ...
+      required:
+        - name
+        - contents
+    Directory:
+      title: Directory
+      type: object
+      properties:
+        name:
+          type: string
+          example: root
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+          nullable: true
+        directories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Directory'
+          nullable: true
+      required:
+        - name
+    Node:
+      title: Node
+      type: object
+      properties:
+        name:
+          type: string
+          example: root
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+          nullable: true
+        trees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tree'
+          nullable: true
+      required:
+        - name
+    Tree:
+      title: Tree
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+          nullable: true
+    Metadata:
+      title: Metadata
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - html
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - markdown
+            value:
+              type: string
+          required:
+            - type
+      required:
+        - extra
+        - tags
+      properties:
+        extra:
+          type: object
+          additionalProperties:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+    Exception:
+      title: Exception
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - generic
+            - $ref: '#/components/schemas/ExceptionInfo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - timeout
+          required:
+            - type
+    ExceptionInfo:
+      title: ExceptionInfo
+      type: object
+      properties:
+        exceptionType:
+          type: string
+          example: Unavailable
+        exceptionMessage:
+          type: string
+          example: This component is unavailable!
+        exceptionStacktrace:
+          type: string
+          example: <logs>
+      required:
+        - exceptionType
+        - exceptionMessage
+        - exceptionStacktrace
+    MigrationStatus:
+      title: MigrationStatus
+      type: string
+      enum:
+        - RUNNING
+        - FAILED
+        - FINISHED
+    Migration:
+      title: Migration
+      type: object
+      properties:
+        name:
+          type: string
+          example: 001_init
+        status:
+          $ref: '#/components/schemas/MigrationStatus'
+      required:
+        - name
+        - status
+    Request:
+      title: Request
+      type: object
+      properties:
+        request: {}
+      required:
+        - request
+    Response:
+      title: Response
+      type: object
+      properties:
+        response: {}
+      required:
+        - response
+    Test:
+      title: Test
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - and
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - or
+            value:
+              type: boolean
+          required:
+            - type
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://production.com/api
+    description: Production
+  - url: https://staging.com/api
+    description: Staging
