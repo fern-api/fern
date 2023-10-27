@@ -71,7 +71,7 @@ export async function testWorkspaceFixtures({
     workspace: SeedWorkspace;
     generatorType: GeneratorType;
     irVersion: string | undefined;
-    language: GenerationLanguage;
+    language: GenerationLanguage | undefined;
     fixtures: string[];
     docker: ParsedDockerName;
     dockerCommand: string | undefined;
@@ -173,7 +173,7 @@ export async function acquireLocksAndRunTest({
     lock: Semaphore;
     generatorType: GeneratorType;
     irVersion: string | undefined;
-    language: GenerationLanguage;
+    language: GenerationLanguage | undefined;
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
@@ -216,7 +216,7 @@ async function testWithWriteToDisk({
 }: {
     fixture: string;
     irVersion: string | undefined;
-    language: GenerationLanguage;
+    language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     generatorType: GeneratorType;
     customConfig: unknown;
