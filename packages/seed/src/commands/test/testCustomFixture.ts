@@ -25,7 +25,7 @@ export async function testCustomFixture({
     workspace: SeedWorkspace;
     generatorType: GeneratorType;
     irVersion: string | undefined;
-    language: GenerationLanguage;
+    language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     logLevel: LogLevel;

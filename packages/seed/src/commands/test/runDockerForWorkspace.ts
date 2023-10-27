@@ -26,13 +26,13 @@ export async function runDockerForWorkspace({
     generatorType: GeneratorType;
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
-    language: GenerationLanguage;
+    language: GenerationLanguage | undefined;
     workspace: FernWorkspace;
     taskContext: TaskContext;
     customConfig: unknown;
     irVersion?: string;
 }): Promise<void> {
-    const publishInfo = getPublishInfo(language);
+    const publishInfo = language != null ? getPublishInfo(language) : undefined;
 
     const generatorGroup: GeneratorGroup = {
         groupName: "DUMMY",

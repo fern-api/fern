@@ -2,7 +2,7 @@ types:
   SeedWorkspaceConfiguration:
     properties:
       irVersion: string
-      language: Language
+      language: optional<Language>
       generatorType: GeneratorType
       docker: string
       dockerCommand: optional<string>
@@ -22,6 +22,7 @@ types:
       - SDK
       - Model
       - Server
+      - Documentation
 
   FixtureConfigurations:
     properties:
