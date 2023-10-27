@@ -14,11 +14,11 @@ export interface FilteredIr {
 }
 
 export class FilteredIrImpl implements FilteredIr {
-    private types: Set<TypeId> = new Set();
-    private errors: Set<ErrorId> = new Set();
-    private services: Set<ServiceId> = new Set();
-    private endpoints: Set<EndpointId> = new Set();
-    private subpackages: Set<SubpackageId> = new Set();
+    private types = new Set<TypeId>();
+    private errors = new Set<ErrorId>();
+    private services = new Set<ServiceId>();
+    private endpoints = new Set<EndpointId>();
+    private subpackages = new Set<SubpackageId>();
 
     public constructor({
         types,

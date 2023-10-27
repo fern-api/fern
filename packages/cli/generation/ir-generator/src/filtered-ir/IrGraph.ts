@@ -34,10 +34,10 @@ export class IrGraph {
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
-    private typesNeededForAudience: Set<TypeId> = new Set();
-    private servicesNeededForAudience: Set<ServiceId> = new Set();
-    private endpointsNeededForAudience: Set<EndpointId> = new Set();
-    private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
+    private typesNeededForAudience = new Set<TypeId>();
+    private servicesNeededForAudience = new Set<ServiceId>();
+    private endpointsNeededForAudience = new Set<EndpointId>();
+    private subpackagesNeededForAudience = new Set<SubpackageId>();
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);

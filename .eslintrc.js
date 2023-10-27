@@ -93,6 +93,7 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/prefer-optional-chain": "off",
         "deprecation/deprecation": "error",
+        "@typescript-eslint/no-unnecessary-condition": "off",
         "import/no-internal-modules": [
             "error",
             {

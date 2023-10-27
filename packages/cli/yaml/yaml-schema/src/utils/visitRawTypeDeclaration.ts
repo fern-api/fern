@@ -35,7 +35,6 @@ export function visitRawTypeDeclaration<R>(
 export function isRawAliasDefinition(
     rawTypeDeclaration: TypeDeclarationSchema
 ): rawTypeDeclaration is string | AliasSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return typeof rawTypeDeclaration === "string" || (rawTypeDeclaration as AliasSchema).type != null;
 }
 
@@ -49,7 +48,6 @@ export function isRawDiscriminatedUnionDefinition(
     rawTypeDeclaration: TypeDeclarationSchema
 ): rawTypeDeclaration is DiscriminatedUnionSchema {
     return (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (rawTypeDeclaration as DiscriminatedUnionSchema).union != null &&
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (rawTypeDeclaration as any).discriminated == null
@@ -60,11 +58,10 @@ export function isRawUndiscriminatedUnionDefinition(
     rawTypeDeclaration: TypeDeclarationSchema
 ): rawTypeDeclaration is UndiscriminatedUnionSchema {
     const undiscriminatedUnionSchema = rawTypeDeclaration as UndiscriminatedUnionSchema;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
     return undiscriminatedUnionSchema.union != null && undiscriminatedUnionSchema.discriminated != null;
 }
 
 export function isRawEnumDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is EnumSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawTypeDeclaration as EnumSchema).enum != null;
 }

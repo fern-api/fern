@@ -20,4 +20,4 @@ export const GeneratorName = {
     OPENAPI_PYTHON_CLIENT: "fernapi/openapi-python-client",
 } as const;
 
-export type GeneratorName = typeof GeneratorName[keyof typeof GeneratorName];
+export type GeneratorName = (typeof GeneratorName)[keyof typeof GeneratorName];

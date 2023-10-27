@@ -54,7 +54,6 @@ export function convertToTypeReference({
         return convertLiteralToTypeReference(schema.value);
     } else if (schema.type === "object") {
         return convertObjectToTypeReference({ schema, prefix, schemas });
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (schema.type === "oneOf") {
         return convertOneOfToTypeReference({ schema: schema.oneOf, prefix, schemas });
     }

@@ -27,7 +27,7 @@ export function convertSchema(
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
     referencedAsRequest = false,
-    propertiesToExclude: Set<string> = new Set()
+    propertiesToExclude = new Set<string>()
 ): SchemaWithExample {
     if (isReferenceObject(schema)) {
         if (!referencedAsRequest) {
@@ -62,7 +62,7 @@ export function convertSchemaObject(
     wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
-    propertiesToExclude: Set<string> = new Set()
+    propertiesToExclude = new Set<string>()
 ): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);

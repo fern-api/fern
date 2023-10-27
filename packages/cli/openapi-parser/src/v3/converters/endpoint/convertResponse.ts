@@ -36,7 +36,6 @@ export function convertResponse({
     responseBreadcrumbs: string[];
     responseStatusCode?: number;
 }): ConvertedResponse {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (responses == null) {
         return { value: undefined, errorStatusCodes: [] };
     }

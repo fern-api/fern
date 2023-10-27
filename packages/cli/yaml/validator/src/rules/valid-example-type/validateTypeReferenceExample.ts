@@ -278,7 +278,6 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (expected._type === "named") {
         return actual._type === "named" && actual.filepath === expected.filepath && actual.rawName === expected.rawName;
     }

@@ -5,9 +5,7 @@ export function isInlineRequestBody(requestBody: HttpRequestBodySchema): request
         return false;
     }
     return (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (requestBody as HttpInlineRequestBodySchema)?.extends != null ||
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (requestBody as HttpInlineRequestBodySchema)?.properties != null
     );
 }

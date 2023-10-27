@@ -6,7 +6,7 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaEqual } from "./utils/isSchemaEqual";
 
 export class ErrorBodyCollector {
-    private references: Set<string> = new Set();
+    private references = new Set<string>();
     private schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] = [];
     private convertedSchemas: Schema[] = [];
     private context: AbstractOpenAPIV3ParserContext;

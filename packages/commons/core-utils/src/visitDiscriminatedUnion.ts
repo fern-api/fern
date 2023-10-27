@@ -11,7 +11,7 @@ export function visitDiscriminatedUnion<T extends Record<Discriminant, string>, 
     return {
         _visit: (visitor) => {
             const visit = visitor[item[discriminant]];
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
             if (visit != null) {
                 return visit(item as Extract<T, Record<Discriminant, string>>);
             } else {

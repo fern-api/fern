@@ -134,8 +134,5 @@ async function visitHeaders({
 export function isRawDiscriminatedUnionDefinition(
     payload: WebhookPayloadSchema
 ): payload is WebhookReferencedPayloadSchema {
-    return (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        (payload as WebhookReferencedPayloadSchema).type != null
-    );
+    return (payload as WebhookReferencedPayloadSchema).type != null;
 }

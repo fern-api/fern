@@ -51,7 +51,6 @@ export function convertToTypeDeclaration(schema: Schema, schemas: Record<SchemaI
         return convertLiteralToTypeDeclaration(schema.value);
     } else if (schema.type === "unknown") {
         return convertUnknownToTypeDeclaration();
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (schema.type === "oneOf") {
         return convertOneOfToTypeDeclaration({ schema: schema.oneOf, schemas });
     }

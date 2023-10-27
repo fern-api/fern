@@ -113,20 +113,17 @@ function convertPublishingToOutput(publishing: OldSchemas.GeneratorPublishingSch
 function isNpmPublishing(
     rawPublishingSchema: OldSchemas.GeneratorPublishingSchema
 ): rawPublishingSchema is OldSchemas.NpmPublishingSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawPublishingSchema as OldSchemas.NpmPublishingSchema).npm != null;
 }
 
 function isMavenPublishing(
     rawPublishingSchema: OldSchemas.GeneratorPublishingSchema
 ): rawPublishingSchema is OldSchemas.MavenPublishingSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawPublishingSchema as OldSchemas.MavenPublishingSchema).maven != null;
 }
 
 function isPostmanPublishing(
     rawPublishingSchema: OldSchemas.GeneratorPublishingSchema
 ): rawPublishingSchema is OldSchemas.PostmanPublishingSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (rawPublishingSchema as OldSchemas.PostmanPublishingSchema).postman != null;
 }

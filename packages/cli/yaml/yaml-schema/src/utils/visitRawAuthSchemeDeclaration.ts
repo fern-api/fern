@@ -30,6 +30,5 @@ export function visitRawAuthSchemeDeclaration<R>(
 }
 
 export function isHeaderAuthScheme(authScheme: AuthSchemeDeclarationSchema): authScheme is HeaderAuthSchemeSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (authScheme as HeaderAuthSchemeSchema).header != null;
 }
