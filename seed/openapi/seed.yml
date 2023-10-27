@@ -11,3 +11,6 @@ fixtures:
           info: 
             license: MIT
       outputFolder: custom-overrides
+    - customConfig:
+        format: json
+      outputFolder: json-format

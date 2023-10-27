@@ -1,7 +1,7 @@
 info:
-  version: ''
   license: MIT
   title: api
+  version: ''
 openapi: 3.0.1
 paths:
   /movies/create-movie:
