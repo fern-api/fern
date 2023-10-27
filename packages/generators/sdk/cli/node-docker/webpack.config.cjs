@@ -27,7 +27,7 @@ module.exports = async (_env, { mode = "production" }) => {
                 // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732
                 {
                     test: /node_modules[\\|/]code-block-writer[\\|/]umd[\\|/]/,
-                    use: { loader: "umd-compat-loader" },
+                    use: { loader: "@fern-api/umd-compat-loader" },
                 },
             ],
             // https://github.com/dsherret/ts-morph/issues/171#issuecomment-1107867732

@@ -14,7 +14,7 @@
       "ignores": [
         "webpack",
         "webpack-cli",
-        "umd-compat-loader",
+        "@fern-api/umd-compat-loader",
         "@ts-morph/common",
         "ts-loader",
         "ts-node",
