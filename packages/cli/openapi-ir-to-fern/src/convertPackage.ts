@@ -122,6 +122,13 @@ function getRootApiFile(
         rootApiFile["auth-schemes"] = authSchemes.authSchemes;
     }
 
+    for (const [headerKey, headerSchema] of Object.entries(authSchemes.globalHeaders)) {
+        if (rootApiFile.headers == null) {
+            rootApiFile.headers = {};
+        }
+        rootApiFile.headers[headerKey] = headerSchema;
+    }
+
     if (environment?.type === "multi") {
         rootApiFile["default-environment"] = PRODUCTION_ENVIRONMENT;
         rootApiFile.environments = {
