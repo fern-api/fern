@@ -13186,6 +13186,7 @@ empty.
   "securitySchemes": {
     "auth-token": {
       "headerName": "Authorization",
+      "headerVariableName": undefined,
       "prefix": undefined,
       "type": "header",
     },

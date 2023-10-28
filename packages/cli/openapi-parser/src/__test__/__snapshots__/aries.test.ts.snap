@@ -72086,6 +72086,7 @@ exports[`open api parser aries parse open api 1`] = `
   "securitySchemes": {
     "AuthorizationHeader": {
       "headerName": "Authorization",
+      "headerVariableName": undefined,
       "prefix": undefined,
       "type": "header",
     },

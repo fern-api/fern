@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { SecurityScheme, SecuritySchemeId } from "@fern-fern/openapi-ir-model/commons";
+import { getHeaderName } from "./utils/getHeaderName";
 
 export interface FernAuth {
     auth: string | undefined;
@@ -61,7 +62,7 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
         if (securityScheme.type === "header") {
             authSchemes[id] = {
                 header: securityScheme.headerName,
-                name: "apiKey",
+                name: securityScheme.headerVariableName ?? "apiKey",
                 type: "string",
                 prefix: securityScheme.prefix ?? undefined,
             };
@@ -73,6 +74,7 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
             } else {
                 globalHeaders[securityScheme.headerName] = {
                     type: "string",
+                    name: securityScheme.headerVariableName ?? getHeaderName(securityScheme.headerName),
                 };
             }
         }
