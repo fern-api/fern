@@ -66386,6 +66386,7 @@ The inquiry can still be resumed after expiry.",
   "securitySchemes": {
     "sec0": {
       "headerName": "Authorization",
+      "headerVariableName": undefined,
       "prefix": "Bearer",
       "type": "header",
     },

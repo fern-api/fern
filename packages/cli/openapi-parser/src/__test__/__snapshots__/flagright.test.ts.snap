@@ -11864,6 +11864,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   "securitySchemes": {
     "x-api-key": {
       "headerName": "x-api-key",
+      "headerVariableName": undefined,
       "prefix": undefined,
       "type": "header",
     },

@@ -73,6 +73,16 @@ export const FernOpenAPIExtension = {
     BEARER_TOKEN_VARIABLE_NAME: "x-fern-token-variable-name",
 
     /**
+     * securitySchemes:
+     *   Bearer:
+     *     type: apiKey
+     *     in: header
+     *     name: X-API-KEY-ID
+     *     x-fern-header-variable-name: apiKeyId
+     */
+    HEADER_VARIABLE_NAME: "x-fern-header-variable-name",
+
+    /**
      * The x-fern-enum allows you to specify docs for the enum value.
      * If your enum is not codegen friendly (not alphanumeric), then you can specify a codegen name as well.
      *

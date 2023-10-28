@@ -55,6 +55,7 @@ types:
     properties:
       headerName: string
       prefix: optional<string>
+      headerVariableName: optional<string>
 
   QuerySecurityScheme:
     properties:

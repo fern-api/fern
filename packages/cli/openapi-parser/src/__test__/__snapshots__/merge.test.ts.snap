@@ -32804,6 +32804,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
   "securitySchemes": {
     "tokenAuth": {
       "headerName": "Authorization",
+      "headerVariableName": undefined,
       "prefix": undefined,
       "type": "header",
     },

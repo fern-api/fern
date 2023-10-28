@@ -3706,6 +3706,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
   "securitySchemes": {
     "Authentication": {
       "headerName": "X-Hume-Api-Key",
+      "headerVariableName": undefined,
       "prefix": undefined,
       "type": "header",
     },
