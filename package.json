@@ -62,7 +62,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
-    "execa": "^5.1.1",
+    "execa": "^8.0.1",
     "husky": "^8.0.1",
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
