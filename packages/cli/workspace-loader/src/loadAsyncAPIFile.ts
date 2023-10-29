@@ -1,9 +1,9 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readdir, readFile } from "fs/promises";
 import { AsyncAPIFile } from "./types/Workspace";
 
-export async function loadAsyncAPIFile(
+export async function loadAsyncAPIFromFolder(
     context: TaskContext,
     absolutePathToAsyncAPIFolder: AbsoluteFilePath
 ): Promise<AsyncAPIFile> {
@@ -14,7 +14,22 @@ export async function loadAsyncAPIFile(
     const absolutePathToAsyncAPIFile = join(absolutePathToAsyncAPIFolder, RelativeFilePath.of(files[0]));
     return {
         absoluteFilepath: absolutePathToAsyncAPIFile,
-        relativeFilepath: RelativeFilePath.of(files[0]),
         contents: (await readFile(absolutePathToAsyncAPIFile)).toString(),
+    };
+}
+
+export async function loadAsyncAPIFile(
+    context: TaskContext,
+    absolutePathToAsyncAPI: AbsoluteFilePath
+): Promise<AsyncAPIFile> {
+    const absolutePathToAsyncAPIExists = await doesPathExist(absolutePathToAsyncAPI);
+    if (!absolutePathToAsyncAPIExists) {
+        context.failAndThrow(
+            `AsyncAPI spec not found at ${absolutePathToAsyncAPIExists}. Please update the path in generators.yml`
+        );
+    }
+    return {
+        absoluteFilepath: absolutePathToAsyncAPI,
+        contents: (await readFile(absolutePathToAsyncAPI)).toString(),
     };
 }

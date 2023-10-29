@@ -17,7 +17,6 @@ export function testParseOpenAPI(fixtureName: string, filename: string): void {
                 openApiFile: {
                     absoluteFilepath: AbsoluteFilePath.of(openApiPath),
                     contents: "",
-                    relativeFilepath: RelativeFilePath.of(filename),
                 },
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
             });

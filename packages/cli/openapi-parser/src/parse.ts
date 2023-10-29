@@ -1,5 +1,5 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import { OpenAPIIntermediateRepresentation, Schema } from "@fern-fern/openapi-ir-model/finalIr";
@@ -12,15 +12,11 @@ import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 
 export interface RawOpenAPIFile {
     absoluteFilepath: AbsoluteFilePath;
-    /* relative filepath from the root of the definition */
-    relativeFilepath: RelativeFilePath;
     contents: string;
 }
 
 export interface RawAsyncAPIFile {
     absoluteFilepath: AbsoluteFilePath;
-    /* relative filepath from the root of the definition */
-    relativeFilepath: RelativeFilePath;
     contents: string;
 }
 

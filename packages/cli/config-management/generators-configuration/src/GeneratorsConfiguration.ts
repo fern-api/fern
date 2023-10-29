@@ -6,6 +6,8 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 
 export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
+    absolutePathToOpenAPI: AbsoluteFilePath | undefined;
+    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
     rawConfiguration: GeneratorsConfigurationSchema;
     defaultGroup: string | undefined;
     groups: GeneratorGroup[];

@@ -1,9 +1,9 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readdir, readFile } from "fs/promises";
 import { OpenAPIFile } from "./types/Workspace";
 
-export async function loadOpenAPIFile(
+export async function loadOpenAPIFromFolder(
     context: TaskContext,
     absolutePathToOpenAPIFolder: AbsoluteFilePath
 ): Promise<OpenAPIFile> {
@@ -14,7 +14,22 @@ export async function loadOpenAPIFile(
     const absolutePathToOpenAPIFile = join(absolutePathToOpenAPIFolder, RelativeFilePath.of(files[0]));
     return {
         absoluteFilepath: absolutePathToOpenAPIFile,
-        relativeFilepath: RelativeFilePath.of(files[0]),
         contents: (await readFile(absolutePathToOpenAPIFile)).toString(),
+    };
+}
+
+export async function loadOpenAPIFile(
+    context: TaskContext,
+    absolutePathToOpenAPI: AbsoluteFilePath
+): Promise<OpenAPIFile> {
+    const absolutePathToOpenAPIExists = await doesPathExist(absolutePathToOpenAPI);
+    if (!absolutePathToOpenAPIExists) {
+        context.failAndThrow(
+            `OpenAPI spec not found at ${absolutePathToOpenAPI}. Please update the path in generators.yml`
+        );
+    }
+    return {
+        absoluteFilepath: absolutePathToOpenAPI,
+        contents: (await readFile(absolutePathToOpenAPI)).toString(),
     };
 }
