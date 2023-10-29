@@ -1,0 +1,112 @@
+name: ci
+
+on:
+  push:
+  workflow_call:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Lint Monorepo
+        run: yarn lint:monorepo
+
+      - name: Organize Imports
+        run: yarn organize-imports:fix
+
+      - name: Check dependencies
+        run: yarn depcheck
+
+      - name: Compile
+        run: yarn compile
+
+      - name: Lint
+        run: yarn lint:eslint
+
+      - name: Format
+        run: yarn format
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install Deps
+        run: yarn install
+
+      - name: Run tests
+        run: |
+          sudo npm install -g fern-api
+          yarn test --ci
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  seed-sdk-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install Deps
+        run: yarn install
+
+      - name: Install Seed
+        run: npm install -g @fern-api/seed-cli@0.15.0-rc38
+
+      - name: Seed Test
+        run: seed test --workspace sdk --parallel-dockers 10
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  seed-express-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install Deps
+        run: yarn install
+
+      - name: Install Seed
+        run: npm install -g @fern-api/seed-cli@0.15.0-rc38
+
+      - name: Seed Test
+        run: seed test --workspace express --parallel-dockers 10
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code

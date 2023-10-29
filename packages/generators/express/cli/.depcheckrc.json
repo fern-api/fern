@@ -2,9 +2,6 @@
   "ignores": [
     "@types/jest",
     "@types/node",
-    "@babel/core",
-    "@babel/preset-env",
-    "@babel/preset-typescript",
     "webpack-cli",
     "@fern-api/umd-compat-loader",
     "@ts-morph/common",
