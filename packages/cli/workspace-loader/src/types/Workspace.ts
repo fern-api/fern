@@ -29,15 +29,11 @@ export interface OpenAPIWorkspace {
 
 export interface OpenAPIFile {
     absoluteFilepath: AbsoluteFilePath;
-    /* relative filepath from the root of the definition */
-    relativeFilepath: RelativeFilePath;
     contents: string;
 }
 
 export interface AsyncAPIFile {
     absoluteFilepath: AbsoluteFilePath;
-    /* relative filepath from the root of the definition */
-    relativeFilepath: RelativeFilePath;
     contents: string;
 }
 
