@@ -396,7 +396,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/generator", "npm:7.23.0"],\
             ["@babel/types", "npm:7.23.0"],\
             ["@jridgewell/gen-mapping", "npm:0.3.2"],\
-            ["@jridgewell/trace-mapping", "npm:0.3.19"],\
+            ["@jridgewell/trace-mapping", "npm:0.3.20"],\
             ["jsesc", "npm:2.5.2"]\
           ],\
           "linkType": "HARD"\
@@ -5026,6 +5026,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jridgewell/resolve-uri", "npm:3.1.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:3.1.1", {\
+          "packageLocation": "./.yarn/cache/@jridgewell-resolve-uri-npm-3.1.1-aa2de3f210-f5b441fe79.zip/node_modules/@jridgewell/resolve-uri/",\
+          "packageDependencies": [\
+            ["@jridgewell/resolve-uri", "npm:3.1.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@jridgewell/set-array", [\
@@ -5062,6 +5069,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jridgewell/sourcemap-codec", "npm:1.4.14"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:1.4.15", {\
+          "packageLocation": "./.yarn/cache/@jridgewell-sourcemap-codec-npm-1.4.15-a055fb62cf-b881c7e503.zip/node_modules/@jridgewell/sourcemap-codec/",\
+          "packageDependencies": [\
+            ["@jridgewell/sourcemap-codec", "npm:1.4.15"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@jridgewell/trace-mapping", [\
@@ -5089,6 +5103,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@jridgewell/trace-mapping", "npm:0.3.18"],\
             ["@jridgewell/resolve-uri", "npm:3.1.0"],\
             ["@jridgewell/sourcemap-codec", "npm:1.4.14"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:0.3.20", {\
+          "packageLocation": "./.yarn/cache/@jridgewell-trace-mapping-npm-0.3.20-d90f282910-cd1a735313.zip/node_modules/@jridgewell/trace-mapping/",\
+          "packageDependencies": [\
+            ["@jridgewell/trace-mapping", "npm:0.3.20"],\
+            ["@jridgewell/resolve-uri", "npm:3.1.1"],\
+            ["@jridgewell/sourcemap-codec", "npm:1.4.15"]\
           ],\
           "linkType": "HARD"\
         }],\
