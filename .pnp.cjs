@@ -236,7 +236,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@types/is-ci", "npm:3.0.0"],\
+            ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.6"],\
             ["@types/lodash-es", "npm:4.17.9"],\
@@ -5416,10 +5416,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/is-ci", [\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/@types-is-ci-npm-3.0.0-7dabaf4b67-7c1f1f16c1.zip/node_modules/@types/is-ci/",\
+        ["npm:3.0.3", {\
+          "packageLocation": "./.yarn/cache/@types-is-ci-npm-3.0.3-4401925f84-9fe0fcfdd7.zip/node_modules/@types/is-ci/",\
           "packageDependencies": [\
-            ["@types/is-ci", "npm:3.0.0"],\
+            ["@types/is-ci", "npm:3.0.3"],\
             ["ci-info", "npm:3.3.2"]\
           ],\
           "linkType": "HARD"\
@@ -8542,7 +8542,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@types/is-ci", "npm:3.0.0"],\
+            ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.6"],\
             ["@types/lodash-es", "npm:4.17.9"],\
