@@ -2487,6 +2487,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.128
+    "@redocly/openapi-core": ^1.4.0
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2510,6 +2511,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.128
+    "@redocly/openapi-core": ^1.4.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7

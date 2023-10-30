@@ -4217,6 +4217,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/openapi-ir-model", "npm:0.0.128"],\
+            ["@redocly/openapi-core", "npm:1.4.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4242,6 +4243,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/openapi-ir-model", "npm:0.0.128"],\
+            ["@redocly/openapi-core", "npm:1.4.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5632,7 +5634,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash.isequal", "npm:4.5.0"],\
             ["minimatch", "npm:5.1.0"],\
-            ["node-fetch", "virtual:ff4ad92811b13298df06d4b345f014a92b8cfb7227a3c53391527917242a9bb4dfdfd9e705312c254702f5a247c0e06ce3ad30d0fbb9cecaad20da6b9b06889f#npm:2.6.9"],\
+            ["node-fetch", "virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9"],\
             ["pluralize", "npm:8.0.0"],\
             ["yaml-ast-parser", "npm:0.0.43"]\
           ],\
@@ -14192,10 +14194,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:ff4ad92811b13298df06d4b345f014a92b8cfb7227a3c53391527917242a9bb4dfdfd9e705312c254702f5a247c0e06ce3ad30d0fbb9cecaad20da6b9b06889f#npm:2.6.9", {\
-          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-2c31c2d4bc/0/cache/node-fetch-npm-2.6.9-9fc9a54529-acb04f9ce7.zip/node_modules/node-fetch/",\
+        ["virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-3f403f341c/0/cache/node-fetch-npm-2.6.9-9fc9a54529-acb04f9ce7.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
-            ["node-fetch", "virtual:ff4ad92811b13298df06d4b345f014a92b8cfb7227a3c53391527917242a9bb4dfdfd9e705312c254702f5a247c0e06ce3ad30d0fbb9cecaad20da6b9b06889f#npm:2.6.9"],\
+            ["node-fetch", "virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9"],\
             ["@types/encoding", null],\
             ["encoding", null],\
             ["whatwg-url", "npm:5.0.0"]\
@@ -16912,7 +16914,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["swagger2openapi", "npm:7.0.8"],\
             ["call-me-maybe", "npm:1.0.2"],\
-            ["node-fetch", "virtual:ff4ad92811b13298df06d4b345f014a92b8cfb7227a3c53391527917242a9bb4dfdfd9e705312c254702f5a247c0e06ce3ad30d0fbb9cecaad20da6b9b06889f#npm:2.6.9"],\
+            ["node-fetch", "virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9"],\
             ["node-fetch-h2", "npm:2.3.0"],\
             ["node-readfiles", "npm:0.2.0"],\
             ["oas-kit-common", "npm:1.0.8"],\
