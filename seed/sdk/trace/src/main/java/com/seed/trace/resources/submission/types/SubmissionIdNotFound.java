@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,8 +21,9 @@ import java.util.UUID;
 public final class SubmissionIdNotFound {
     private final UUID missingSubmissionId;
 
-    private SubmissionIdNotFound(UUID missingSubmissionId) {
+    private SubmissionIdNotFound(UUID missingSubmissionId, Map<String, Object> additionalProperties) {
         this.missingSubmissionId = missingSubmissionId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("missingSubmissionId")
@@ -30,6 +35,11 @@ public final class SubmissionIdNotFound {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SubmissionIdNotFound && equalTo((SubmissionIdNotFound) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SubmissionIdNotFound other) {
@@ -64,6 +74,9 @@ public final class SubmissionIdNotFound {
     public static final class Builder implements MissingSubmissionIdStage, _FinalStage {
         private UUID missingSubmissionId;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -81,7 +94,7 @@ public final class SubmissionIdNotFound {
 
         @Override
         public SubmissionIdNotFound build() {
-            return new SubmissionIdNotFound(missingSubmissionId);
+            return new SubmissionIdNotFound(missingSubmissionId, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.endpoints.params.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class GetWithMultipleQuery {
 
     private final int numer;
 
-    private GetWithMultipleQuery(String query, int numer) {
+    private GetWithMultipleQuery(String query, int numer, Map<String, Object> additionalProperties) {
         this.query = query;
         this.numer = numer;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("query")
@@ -37,6 +42,11 @@ public final class GetWithMultipleQuery {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetWithMultipleQuery && equalTo((GetWithMultipleQuery) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetWithMultipleQuery other) {
@@ -77,6 +87,9 @@ public final class GetWithMultipleQuery {
 
         private int numer;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class GetWithMultipleQuery {
 
         @Override
         public GetWithMultipleQuery build() {
-            return new GetWithMultipleQuery(query, numer);
+            return new GetWithMultipleQuery(query, numer, additionalProperties);
         }
     }
 }

@@ -3,6 +3,7 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -19,8 +21,9 @@ import java.util.Optional;
 public final class Tree {
     private final Optional<List<Node>> nodes;
 
-    private Tree(Optional<List<Node>> nodes) {
+    private Tree(Optional<List<Node>> nodes, Map<String, Object> additionalProperties) {
         this.nodes = nodes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("nodes")
@@ -32,6 +35,11 @@ public final class Tree {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Tree && equalTo((Tree) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Tree other) {
@@ -75,7 +83,7 @@ public final class Tree {
         }
 
         public Tree build() {
-            return new Tree(nodes);
+            return new Tree(nodes, additionalProperties);
         }
     }
 }

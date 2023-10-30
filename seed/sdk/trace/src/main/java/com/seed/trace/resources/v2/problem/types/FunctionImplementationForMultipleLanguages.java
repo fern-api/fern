@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,8 +21,10 @@ import java.util.Objects;
 public final class FunctionImplementationForMultipleLanguages {
     private final Map<Language, FunctionImplementation> codeByLanguage;
 
-    private FunctionImplementationForMultipleLanguages(Map<Language, FunctionImplementation> codeByLanguage) {
+    private FunctionImplementationForMultipleLanguages(
+            Map<Language, FunctionImplementation> codeByLanguage, Map<String, Object> additionalProperties) {
         this.codeByLanguage = codeByLanguage;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("codeByLanguage")
@@ -34,6 +37,11 @@ public final class FunctionImplementationForMultipleLanguages {
         if (this == other) return true;
         return other instanceof FunctionImplementationForMultipleLanguages
                 && equalTo((FunctionImplementationForMultipleLanguages) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(FunctionImplementationForMultipleLanguages other) {
@@ -83,7 +91,7 @@ public final class FunctionImplementationForMultipleLanguages {
         }
 
         public FunctionImplementationForMultipleLanguages build() {
-            return new FunctionImplementationForMultipleLanguages(codeByLanguage);
+            return new FunctionImplementationForMultipleLanguages(codeByLanguage, additionalProperties);
         }
     }
 }

@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,8 +21,10 @@ import java.util.Objects;
 public final class TestCaseImplementationDescription {
     private final List<TestCaseImplementationDescriptionBoard> boards;
 
-    private TestCaseImplementationDescription(List<TestCaseImplementationDescriptionBoard> boards) {
+    private TestCaseImplementationDescription(
+            List<TestCaseImplementationDescriptionBoard> boards, Map<String, Object> additionalProperties) {
         this.boards = boards;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("boards")
@@ -32,6 +36,11 @@ public final class TestCaseImplementationDescription {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseImplementationDescription && equalTo((TestCaseImplementationDescription) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseImplementationDescription other) {
@@ -81,7 +90,7 @@ public final class TestCaseImplementationDescription {
         }
 
         public TestCaseImplementationDescription build() {
-            return new TestCaseImplementationDescription(boards);
+            return new TestCaseImplementationDescription(boards, additionalProperties);
         }
     }
 }

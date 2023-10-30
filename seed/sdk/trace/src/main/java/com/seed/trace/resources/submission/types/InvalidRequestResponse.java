@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class InvalidRequestResponse {
 
     private final InvalidRequestCause cause;
 
-    private InvalidRequestResponse(SubmissionRequest request, InvalidRequestCause cause) {
+    private InvalidRequestResponse(
+            SubmissionRequest request, InvalidRequestCause cause, Map<String, Object> additionalProperties) {
         this.request = request;
         this.cause = cause;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("request")
@@ -37,6 +43,11 @@ public final class InvalidRequestResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InvalidRequestResponse && equalTo((InvalidRequestResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(InvalidRequestResponse other) {
@@ -77,6 +88,9 @@ public final class InvalidRequestResponse {
 
         private InvalidRequestCause cause;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class InvalidRequestResponse {
 
         @Override
         public InvalidRequestResponse build() {
-            return new InvalidRequestResponse(request, cause);
+            return new InvalidRequestResponse(request, cause, additionalProperties);
         }
     }
 }

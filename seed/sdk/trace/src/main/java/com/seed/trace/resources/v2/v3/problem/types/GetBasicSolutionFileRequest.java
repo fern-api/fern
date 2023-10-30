@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class GetBasicSolutionFileRequest {
 
     private final NonVoidFunctionSignature signature;
 
-    private GetBasicSolutionFileRequest(String methodName, NonVoidFunctionSignature signature) {
+    private GetBasicSolutionFileRequest(
+            String methodName, NonVoidFunctionSignature signature, Map<String, Object> additionalProperties) {
         this.methodName = methodName;
         this.signature = signature;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("methodName")
@@ -37,6 +43,11 @@ public final class GetBasicSolutionFileRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetBasicSolutionFileRequest && equalTo((GetBasicSolutionFileRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetBasicSolutionFileRequest other) {
@@ -77,6 +88,9 @@ public final class GetBasicSolutionFileRequest {
 
         private NonVoidFunctionSignature signature;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class GetBasicSolutionFileRequest {
 
         @Override
         public GetBasicSolutionFileRequest build() {
-            return new GetBasicSolutionFileRequest(methodName, signature);
+            return new GetBasicSolutionFileRequest(methodName, signature, additionalProperties);
         }
     }
 }

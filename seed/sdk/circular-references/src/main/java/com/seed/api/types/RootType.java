@@ -3,12 +3,16 @@
  */
 package com.seed.api.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class RootType implements IRootType {
     private final String s;
 
-    private RootType(String s) {
+    private RootType(String s, Map<String, Object> additionalProperties) {
         this.s = s;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("s")
@@ -30,6 +35,11 @@ public final class RootType implements IRootType {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RootType && equalTo((RootType) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RootType other) {
@@ -64,6 +74,9 @@ public final class RootType implements IRootType {
     public static final class Builder implements SStage, _FinalStage {
         private String s;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -81,7 +94,7 @@ public final class RootType implements IRootType {
 
         @Override
         public RootType build() {
-            return new RootType(s);
+            return new RootType(s, additionalProperties);
         }
     }
 }

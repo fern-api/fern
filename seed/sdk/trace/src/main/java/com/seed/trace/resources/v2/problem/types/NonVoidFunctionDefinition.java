@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,9 +23,12 @@ public final class NonVoidFunctionDefinition {
     private final FunctionImplementationForMultipleLanguages code;
 
     private NonVoidFunctionDefinition(
-            NonVoidFunctionSignature signature, FunctionImplementationForMultipleLanguages code) {
+            NonVoidFunctionSignature signature,
+            FunctionImplementationForMultipleLanguages code,
+            Map<String, Object> additionalProperties) {
         this.signature = signature;
         this.code = code;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("signature")
@@ -38,6 +45,11 @@ public final class NonVoidFunctionDefinition {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof NonVoidFunctionDefinition && equalTo((NonVoidFunctionDefinition) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(NonVoidFunctionDefinition other) {
@@ -78,6 +90,9 @@ public final class NonVoidFunctionDefinition {
 
         private FunctionImplementationForMultipleLanguages code;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +118,7 @@ public final class NonVoidFunctionDefinition {
 
         @Override
         public NonVoidFunctionDefinition build() {
-            return new NonVoidFunctionDefinition(signature, code);
+            return new NonVoidFunctionDefinition(signature, code, additionalProperties);
         }
     }
 }

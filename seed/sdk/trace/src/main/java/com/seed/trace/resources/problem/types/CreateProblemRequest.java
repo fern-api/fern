@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +16,7 @@ import com.seed.trace.resources.commons.types.Language;
 import com.seed.trace.resources.commons.types.TestCaseWithExpectedResult;
 import com.seed.trace.resources.commons.types.VariableType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +46,8 @@ public final class CreateProblemRequest {
             List<VariableTypeAndName> inputParams,
             VariableType outputType,
             List<TestCaseWithExpectedResult> testcases,
-            String methodName) {
+            String methodName,
+            Map<String, Object> additionalProperties) {
         this.problemName = problemName;
         this.problemDescription = problemDescription;
         this.files = files;
@@ -51,6 +55,7 @@ public final class CreateProblemRequest {
         this.outputType = outputType;
         this.testcases = testcases;
         this.methodName = methodName;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("problemName")
@@ -92,6 +97,11 @@ public final class CreateProblemRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateProblemRequest && equalTo((CreateProblemRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(CreateProblemRequest other) {
@@ -181,6 +191,9 @@ public final class CreateProblemRequest {
         private List<VariableTypeAndName> inputParams = new ArrayList<>();
 
         private Map<Language, ProblemFiles> files = new LinkedHashMap<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -287,7 +300,14 @@ public final class CreateProblemRequest {
         @Override
         public CreateProblemRequest build() {
             return new CreateProblemRequest(
-                    problemName, problemDescription, files, inputParams, outputType, testcases, methodName);
+                    problemName,
+                    problemDescription,
+                    files,
+                    inputParams,
+                    outputType,
+                    testcases,
+                    methodName,
+                    additionalProperties);
         }
     }
 }

@@ -16,6 +16,7 @@
 
 package com.fern.java.generators.object;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -32,6 +33,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -54,19 +56,35 @@ public final class BuilderGenerator {
 
     private final ClassName objectClassName;
     private final ClassName nestedBuilderClassName;
+    private final String additionalPropertiesFieldName;
     private final List<EnrichedObjectPropertyWithField> objectPropertyWithFields;
+    private final List<String> buildMethodArguments = new ArrayList<>();
 
     private final boolean isSerialized;
+    private final boolean supportAdditionalProperties;
 
     public BuilderGenerator(
-            ClassName objectClassName, List<EnrichedObjectProperty> objectPropertyWithFields, boolean isSerialized) {
+            ClassName objectClassName,
+            List<EnrichedObjectProperty> objectPropertyWithFields,
+            boolean isSerialized,
+            boolean supportAdditionalProperties) {
         this.objectClassName = objectClassName;
         this.objectPropertyWithFields = objectPropertyWithFields.stream()
                 .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList());
+        buildMethodArguments.addAll(this.objectPropertyWithFields.stream()
+                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
+                .collect(Collectors.toList()));
+        this.additionalPropertiesFieldName = buildMethodArguments.contains("additionalProperties")
+                ? "_additionalProperties"
+                : "additionalProperties";
+        if (supportAdditionalProperties) {
+            buildMethodArguments.add(additionalPropertiesFieldName);
+        }
         this.nestedBuilderClassName = objectClassName.nestedClass(NESTED_BUILDER_CLASS_NAME);
         this.isSerialized = isSerialized;
+        this.supportAdditionalProperties = supportAdditionalProperties;
     }
 
     public Optional<ObjectBuilder> generate() {
@@ -121,6 +139,15 @@ public final class BuilderGenerator {
         builderImplTypeSpec.addFields(reverse(builderImplValue.reversedFields()));
         builderImplTypeSpec.addSuperinterfaces(
                 interfaces.stream().map(PoetTypeWithClassName::className).collect(Collectors.toList()));
+        if (this.supportAdditionalProperties) {
+            builderImplTypeSpec.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(Map.class, String.class, Object.class),
+                            additionalPropertiesFieldName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .addAnnotation(JsonAnySetter.class)
+                    .initializer("new $T<>()", HashMap.class)
+                    .build());
+        }
 
         List<PoetTypeWithClassName> stagedBuilderTypes = new ArrayList<>();
         stagedBuilderTypes.addAll(interfaces);
@@ -169,12 +196,7 @@ public final class BuilderGenerator {
         }
 
         builderImplTypeSpec.addMethod(getBaseBuildMethod()
-                .addStatement(
-                        "return new $T($L)",
-                        objectClassName,
-                        objectPropertyWithFields.stream()
-                                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
-                                .collect(Collectors.joining(", ")))
+                .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
                 .build());
 
         return PoetTypeWithClassName.of(nestedBuilderClassName, builderImplTypeSpec.build());
@@ -283,12 +305,7 @@ public final class BuilderGenerator {
             StagedBuilderConfig stagedBuilderConfig, ImmutableBuilderImplBuilder.Builder builderImpl) {
         builderImpl.addReversedMethods(getBaseBuildMethod()
                 .addAnnotation(Override.class)
-                .addStatement(
-                        "return new $T($L)",
-                        objectClassName,
-                        objectPropertyWithFields.stream()
-                                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
-                                .collect(Collectors.joining(", ")))
+                .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
                 .build());
 
         ClassName finalStageClassName = objectClassName.nestedClass(StageBuilderConstants.FINAL_STAGE_CLASS_NAME);

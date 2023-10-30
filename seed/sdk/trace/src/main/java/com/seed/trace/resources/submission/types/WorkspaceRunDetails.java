@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,10 +26,15 @@ public final class WorkspaceRunDetails {
 
     private final String stdout;
 
-    private WorkspaceRunDetails(Optional<ExceptionV2> exceptionV2, Optional<ExceptionInfo> exception, String stdout) {
+    private WorkspaceRunDetails(
+            Optional<ExceptionV2> exceptionV2,
+            Optional<ExceptionInfo> exception,
+            String stdout,
+            Map<String, Object> additionalProperties) {
         this.exceptionV2 = exceptionV2;
         this.exception = exception;
         this.stdout = stdout;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("exceptionV2")
@@ -47,6 +56,11 @@ public final class WorkspaceRunDetails {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceRunDetails && equalTo((WorkspaceRunDetails) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceRunDetails other) {
@@ -95,6 +109,9 @@ public final class WorkspaceRunDetails {
 
         private Optional<ExceptionV2> exceptionV2 = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -140,7 +157,7 @@ public final class WorkspaceRunDetails {
 
         @Override
         public WorkspaceRunDetails build() {
-            return new WorkspaceRunDetails(exceptionV2, exception, stdout);
+            return new WorkspaceRunDetails(exceptionV2, exception, stdout, additionalProperties);
         }
     }
 }

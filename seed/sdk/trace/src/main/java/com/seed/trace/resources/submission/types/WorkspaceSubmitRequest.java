@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,11 +33,16 @@ public final class WorkspaceSubmitRequest {
     private final Optional<String> userId;
 
     private WorkspaceSubmitRequest(
-            UUID submissionId, Language language, List<SubmissionFileInfo> submissionFiles, Optional<String> userId) {
+            UUID submissionId,
+            Language language,
+            List<SubmissionFileInfo> submissionFiles,
+            Optional<String> userId,
+            Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.language = language;
         this.submissionFiles = submissionFiles;
         this.userId = userId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -60,6 +69,11 @@ public final class WorkspaceSubmitRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceSubmitRequest && equalTo((WorkspaceSubmitRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceSubmitRequest other) {
@@ -116,6 +130,9 @@ public final class WorkspaceSubmitRequest {
         private Optional<String> userId = Optional.empty();
 
         private List<SubmissionFileInfo> submissionFiles = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -177,7 +194,7 @@ public final class WorkspaceSubmitRequest {
 
         @Override
         public WorkspaceSubmitRequest build() {
-            return new WorkspaceSubmitRequest(submissionId, language, submissionFiles, userId);
+            return new WorkspaceSubmitRequest(submissionId, language, submissionFiles, userId, additionalProperties);
         }
     }
 }

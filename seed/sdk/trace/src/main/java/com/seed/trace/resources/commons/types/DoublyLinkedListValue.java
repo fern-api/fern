@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,9 +23,13 @@ public final class DoublyLinkedListValue {
 
     private final Map<String, DoublyLinkedListNodeValue> nodes;
 
-    private DoublyLinkedListValue(Optional<String> head, Map<String, DoublyLinkedListNodeValue> nodes) {
+    private DoublyLinkedListValue(
+            Optional<String> head,
+            Map<String, DoublyLinkedListNodeValue> nodes,
+            Map<String, Object> additionalProperties) {
         this.head = head;
         this.nodes = nodes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("head")
@@ -41,6 +46,11 @@ public final class DoublyLinkedListValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DoublyLinkedListValue && equalTo((DoublyLinkedListValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(DoublyLinkedListValue other) {
@@ -104,7 +114,7 @@ public final class DoublyLinkedListValue {
         }
 
         public DoublyLinkedListValue build() {
-            return new DoublyLinkedListValue(head, nodes);
+            return new DoublyLinkedListValue(head, nodes, additionalProperties);
         }
     }
 }

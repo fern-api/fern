@@ -16,6 +16,7 @@
 
 package com.fern.java.generators.object;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ObjectMethodFactory;
@@ -26,9 +27,11 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -40,6 +43,7 @@ public final class ObjectTypeSpecGenerator {
     private final List<ImplementsInterface> interfaces;
     private final boolean isSerialized;
     private final boolean publicConstructorsEnabled;
+    private final boolean supportAdditionalProperties;
 
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
@@ -47,7 +51,8 @@ public final class ObjectTypeSpecGenerator {
             List<EnrichedObjectProperty> enrichedObjectProperties,
             List<ImplementsInterface> interfaces,
             boolean isSerialized,
-            boolean publicConstructorsEnabled) {
+            boolean publicConstructorsEnabled,
+            boolean supportAdditionalProperties) {
         this.objectClassName = objectClassName;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.interfaces = interfaces;
@@ -57,6 +62,7 @@ public final class ObjectTypeSpecGenerator {
         allEnrichedProperties.addAll(enrichedObjectProperties);
         this.isSerialized = isSerialized;
         this.publicConstructorsEnabled = publicConstructorsEnabled;
+        this.supportAdditionalProperties = supportAdditionalProperties;
     }
 
     public TypeSpec generate() {
@@ -76,6 +82,11 @@ public final class ObjectTypeSpecGenerator {
                         .map(EnrichedObjectProperty::getterProperty)
                         .collect(Collectors.toList()))
                 .addMethod(equalsMethod.getEqualsMethodSpec());
+
+        if (supportAdditionalProperties) {
+            typeSpecBuilder.addMethod(getAdditionalPropertiesMethodSpec());
+        }
+
         equalsMethod.getEqualToMethodSpec().ifPresent(typeSpecBuilder::addMethod);
         generateHashCode().ifPresent(typeSpecBuilder::addMethod);
         typeSpecBuilder.addMethod(generateToString());
@@ -112,7 +123,37 @@ public final class ObjectTypeSpecGenerator {
                     constructorBuilder.addParameter(parameterSpec);
                     constructorBuilder.addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name);
                 });
+        if (supportAdditionalProperties) {
+            String additionalPropertiesFieldName = getAdditionalPropertiesFieldName();
+            ParameterSpec parameterSpec = ParameterSpec.builder(
+                            ParameterizedTypeName.get(Map.class, String.class, Object.class),
+                            additionalPropertiesFieldName)
+                    .build();
+            constructorBuilder.addParameter(parameterSpec);
+            constructorBuilder.addStatement(
+                    "this.$L = $L", additionalPropertiesFieldName, additionalPropertiesFieldName);
+        }
         return constructorBuilder.build();
+    }
+
+    private String getAdditionalPropertiesFieldName() {
+        boolean hasConflict = allEnrichedProperties.stream()
+                .anyMatch(enrichedObjectProperty ->
+                        enrichedObjectProperty.camelCaseKey().equals("additionalProperties"));
+        return hasConflict ? "_additionalProperties" : "additionalProperties";
+    }
+
+    private MethodSpec getAdditionalPropertiesMethodSpec() {
+        boolean hasConflict = allEnrichedProperties.stream()
+                .anyMatch(enrichedObjectProperty ->
+                        enrichedObjectProperty.camelCaseKey().equals("additionalProperties"));
+        String methodName = hasConflict ? "_getAdditionalProperties" : "getAdditionalProperties";
+        return MethodSpec.methodBuilder(methodName)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(ParameterizedTypeName.get(Map.class, String.class, Object.class))
+                .addAnnotation(JsonAnyGetter.class)
+                .addStatement("return this.$L", getAdditionalPropertiesFieldName())
+                .build();
     }
 
     private EqualsMethod generateEqualsMethod() {
@@ -152,7 +193,8 @@ public final class ObjectTypeSpecGenerator {
     }
 
     private Optional<ObjectBuilder> generateBuilder() {
-        BuilderGenerator builderGenerator = new BuilderGenerator(objectClassName, allEnrichedProperties, isSerialized);
+        BuilderGenerator builderGenerator =
+                new BuilderGenerator(objectClassName, allEnrichedProperties, isSerialized, supportAdditionalProperties);
         return builderGenerator.generate();
     }
 }

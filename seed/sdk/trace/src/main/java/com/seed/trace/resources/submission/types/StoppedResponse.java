@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,8 +21,9 @@ import java.util.UUID;
 public final class StoppedResponse {
     private final UUID submissionId;
 
-    private StoppedResponse(UUID submissionId) {
+    private StoppedResponse(UUID submissionId, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -30,6 +35,11 @@ public final class StoppedResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StoppedResponse && equalTo((StoppedResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(StoppedResponse other) {
@@ -64,6 +74,9 @@ public final class StoppedResponse {
     public static final class Builder implements SubmissionIdStage, _FinalStage {
         private UUID submissionId;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -81,7 +94,7 @@ public final class StoppedResponse {
 
         @Override
         public StoppedResponse build() {
-            return new StoppedResponse(submissionId);
+            return new StoppedResponse(submissionId, additionalProperties);
         }
     }
 }

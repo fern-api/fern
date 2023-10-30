@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.problem.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +15,9 @@ import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableType;
 import com.seed.trace.resources.problem.types.VariableTypeAndName;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -26,10 +30,14 @@ public final class GetDefaultStarterFilesRequest {
     private final String methodName;
 
     private GetDefaultStarterFilesRequest(
-            List<VariableTypeAndName> inputParams, VariableType outputType, String methodName) {
+            List<VariableTypeAndName> inputParams,
+            VariableType outputType,
+            String methodName,
+            Map<String, Object> additionalProperties) {
         this.inputParams = inputParams;
         this.outputType = outputType;
         this.methodName = methodName;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("inputParams")
@@ -61,6 +69,11 @@ public final class GetDefaultStarterFilesRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetDefaultStarterFilesRequest && equalTo((GetDefaultStarterFilesRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetDefaultStarterFilesRequest other) {
@@ -110,6 +123,9 @@ public final class GetDefaultStarterFilesRequest {
         private String methodName;
 
         private List<VariableTypeAndName> inputParams = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -168,7 +184,7 @@ public final class GetDefaultStarterFilesRequest {
 
         @Override
         public GetDefaultStarterFilesRequest build() {
-            return new GetDefaultStarterFilesRequest(inputParams, outputType, methodName);
+            return new GetDefaultStarterFilesRequest(inputParams, outputType, methodName, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class File {
 
     private final String contents;
 
-    private File(String name, String contents) {
+    private File(String name, String contents, Map<String, Object> additionalProperties) {
         this.name = name;
         this.contents = contents;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
@@ -37,6 +42,11 @@ public final class File {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof File && equalTo((File) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(File other) {
@@ -77,6 +87,9 @@ public final class File {
 
         private String contents;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class File {
 
         @Override
         public File build() {
-            return new File(name, contents);
+            return new File(name, contents, additionalProperties);
         }
     }
 }

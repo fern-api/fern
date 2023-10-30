@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,9 +23,13 @@ public final class SinglyLinkedListValue {
 
     private final Map<String, SinglyLinkedListNodeValue> nodes;
 
-    private SinglyLinkedListValue(Optional<String> head, Map<String, SinglyLinkedListNodeValue> nodes) {
+    private SinglyLinkedListValue(
+            Optional<String> head,
+            Map<String, SinglyLinkedListNodeValue> nodes,
+            Map<String, Object> additionalProperties) {
         this.head = head;
         this.nodes = nodes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("head")
@@ -41,6 +46,11 @@ public final class SinglyLinkedListValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SinglyLinkedListValue && equalTo((SinglyLinkedListValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SinglyLinkedListValue other) {
@@ -104,7 +114,7 @@ public final class SinglyLinkedListValue {
         }
 
         public SinglyLinkedListValue build() {
-            return new SinglyLinkedListValue(head, nodes);
+            return new SinglyLinkedListValue(head, nodes, additionalProperties);
         }
     }
 }

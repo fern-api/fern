@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -24,11 +28,17 @@ public final class DoublyLinkedListNodeValue {
 
     private final Optional<String> prev;
 
-    private DoublyLinkedListNodeValue(String nodeId, double val, Optional<String> next, Optional<String> prev) {
+    private DoublyLinkedListNodeValue(
+            String nodeId,
+            double val,
+            Optional<String> next,
+            Optional<String> prev,
+            Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;
         this.val = val;
         this.next = next;
         this.prev = prev;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("nodeId")
@@ -55,6 +65,11 @@ public final class DoublyLinkedListNodeValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DoublyLinkedListNodeValue && equalTo((DoublyLinkedListNodeValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(DoublyLinkedListNodeValue other) {
@@ -106,6 +121,9 @@ public final class DoublyLinkedListNodeValue {
         private Optional<String> prev = Optional.empty();
 
         private Optional<String> next = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -160,7 +178,7 @@ public final class DoublyLinkedListNodeValue {
 
         @Override
         public DoublyLinkedListNodeValue build() {
-            return new DoublyLinkedListNodeValue(nodeId, val, next, prev);
+            return new DoublyLinkedListNodeValue(nodeId, val, next, prev, additionalProperties);
         }
     }
 }

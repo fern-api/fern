@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class LightweightStackframeInformation {
 
     private final String topStackFrameMethodName;
 
-    private LightweightStackframeInformation(int numStackFrames, String topStackFrameMethodName) {
+    private LightweightStackframeInformation(
+            int numStackFrames, String topStackFrameMethodName, Map<String, Object> additionalProperties) {
         this.numStackFrames = numStackFrames;
         this.topStackFrameMethodName = topStackFrameMethodName;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("numStackFrames")
@@ -37,6 +43,11 @@ public final class LightweightStackframeInformation {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LightweightStackframeInformation && equalTo((LightweightStackframeInformation) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LightweightStackframeInformation other) {
@@ -77,6 +88,9 @@ public final class LightweightStackframeInformation {
 
         private String topStackFrameMethodName;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class LightweightStackframeInformation {
 
         @Override
         public LightweightStackframeInformation build() {
-            return new LightweightStackframeInformation(numStackFrames, topStackFrameMethodName);
+            return new LightweightStackframeInformation(numStackFrames, topStackFrameMethodName, additionalProperties);
         }
     }
 }

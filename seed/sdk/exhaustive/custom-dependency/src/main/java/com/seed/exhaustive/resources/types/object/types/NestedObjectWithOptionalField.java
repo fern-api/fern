@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.types.object.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,9 +22,13 @@ public final class NestedObjectWithOptionalField {
 
     private final Optional<ObjectWithOptionalField> nestedObject;
 
-    private NestedObjectWithOptionalField(Optional<String> string, Optional<ObjectWithOptionalField> nestedObject) {
+    private NestedObjectWithOptionalField(
+            Optional<String> string,
+            Optional<ObjectWithOptionalField> nestedObject,
+            Map<String, Object> additionalProperties) {
         this.string = string;
         this.nestedObject = nestedObject;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("string")
@@ -39,6 +45,11 @@ public final class NestedObjectWithOptionalField {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof NestedObjectWithOptionalField && equalTo((NestedObjectWithOptionalField) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(NestedObjectWithOptionalField other) {
@@ -96,7 +107,7 @@ public final class NestedObjectWithOptionalField {
         }
 
         public NestedObjectWithOptionalField build() {
-            return new NestedObjectWithOptionalField(string, nestedObject);
+            return new NestedObjectWithOptionalField(string, nestedObject, additionalProperties);
         }
     }
 }

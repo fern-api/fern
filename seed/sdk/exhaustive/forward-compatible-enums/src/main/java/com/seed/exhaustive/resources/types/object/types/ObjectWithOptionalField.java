@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.types.object.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -57,7 +58,8 @@ public final class ObjectWithOptionalField {
             Optional<byte[]> base64,
             Optional<List<String>> list,
             Optional<Set<String>> set,
-            Optional<Map<Integer, String>> map) {
+            Optional<Map<Integer, String>> map,
+            Map<String, Object> additionalProperties) {
         this.string = string;
         this.integer = integer;
         this.long_ = long_;
@@ -70,6 +72,7 @@ public final class ObjectWithOptionalField {
         this.list = list;
         this.set = set;
         this.map = map;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("string")
@@ -136,6 +139,11 @@ public final class ObjectWithOptionalField {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ObjectWithOptionalField && equalTo((ObjectWithOptionalField) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ObjectWithOptionalField other) {
@@ -357,7 +365,19 @@ public final class ObjectWithOptionalField {
 
         public ObjectWithOptionalField build() {
             return new ObjectWithOptionalField(
-                    string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map);
+                    string,
+                    integer,
+                    long_,
+                    double_,
+                    bool,
+                    datetime,
+                    date,
+                    uuid,
+                    base64,
+                    list,
+                    set,
+                    map,
+                    additionalProperties);
         }
     }
 }

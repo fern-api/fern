@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,9 +24,10 @@ public final class FunctionImplementation {
 
     private final Optional<String> imports;
 
-    private FunctionImplementation(String impl, Optional<String> imports) {
+    private FunctionImplementation(String impl, Optional<String> imports, Map<String, Object> additionalProperties) {
         this.impl = impl;
         this.imports = imports;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("impl")
@@ -39,6 +44,11 @@ public final class FunctionImplementation {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FunctionImplementation && equalTo((FunctionImplementation) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(FunctionImplementation other) {
@@ -79,6 +89,9 @@ public final class FunctionImplementation {
 
         private Optional<String> imports = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -110,7 +123,7 @@ public final class FunctionImplementation {
 
         @Override
         public FunctionImplementation build() {
-            return new FunctionImplementation(impl, imports);
+            return new FunctionImplementation(impl, imports, additionalProperties);
         }
     }
 }

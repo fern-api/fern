@@ -3,12 +3,16 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class Response {
     private final Object response;
 
-    private Response(Object response) {
+    private Response(Object response, Map<String, Object> additionalProperties) {
         this.response = response;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("response")
@@ -29,6 +34,11 @@ public final class Response {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Response && equalTo((Response) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Response other) {
@@ -63,6 +73,9 @@ public final class Response {
     public static final class Builder implements ResponseStage, _FinalStage {
         private Object response;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class Response {
 
         @Override
         public Response build() {
-            return new Response(response);
+            return new Response(response, additionalProperties);
         }
     }
 }

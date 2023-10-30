@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -30,11 +33,13 @@ public final class BasicCustomFiles {
             String methodName,
             NonVoidFunctionSignature signature,
             Map<Language, Files> additionalFiles,
-            BasicTestCaseTemplate basicTestCaseTemplate) {
+            BasicTestCaseTemplate basicTestCaseTemplate,
+            Map<String, Object> additionalProperties) {
         this.methodName = methodName;
         this.signature = signature;
         this.additionalFiles = additionalFiles;
         this.basicTestCaseTemplate = basicTestCaseTemplate;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("methodName")
@@ -61,6 +66,11 @@ public final class BasicCustomFiles {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BasicCustomFiles && equalTo((BasicCustomFiles) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(BasicCustomFiles other) {
@@ -119,6 +129,9 @@ public final class BasicCustomFiles {
 
         private Map<Language, Files> additionalFiles = new LinkedHashMap<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -173,7 +186,8 @@ public final class BasicCustomFiles {
 
         @Override
         public BasicCustomFiles build() {
-            return new BasicCustomFiles(methodName, signature, additionalFiles, basicTestCaseTemplate);
+            return new BasicCustomFiles(
+                    methodName, signature, additionalFiles, basicTestCaseTemplate, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,9 +23,11 @@ public final class BuildingExecutorResponse {
 
     private final ExecutionSessionStatus status;
 
-    private BuildingExecutorResponse(UUID submissionId, ExecutionSessionStatus status) {
+    private BuildingExecutorResponse(
+            UUID submissionId, ExecutionSessionStatus status, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.status = status;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -38,6 +44,11 @@ public final class BuildingExecutorResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BuildingExecutorResponse && equalTo((BuildingExecutorResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(BuildingExecutorResponse other) {
@@ -78,6 +89,9 @@ public final class BuildingExecutorResponse {
 
         private ExecutionSessionStatus status;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +117,7 @@ public final class BuildingExecutorResponse {
 
         @Override
         public BuildingExecutorResponse build() {
-            return new BuildingExecutorResponse(submissionId, status);
+            return new BuildingExecutorResponse(submissionId, status, additionalProperties);
         }
     }
 }

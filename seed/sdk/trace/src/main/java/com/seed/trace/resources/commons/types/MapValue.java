@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,8 +21,9 @@ import java.util.Objects;
 public final class MapValue {
     private final List<KeyValuePair> keyValuePairs;
 
-    private MapValue(List<KeyValuePair> keyValuePairs) {
+    private MapValue(List<KeyValuePair> keyValuePairs, Map<String, Object> additionalProperties) {
         this.keyValuePairs = keyValuePairs;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("keyValuePairs")
@@ -32,6 +35,11 @@ public final class MapValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MapValue && equalTo((MapValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(MapValue other) {
@@ -81,7 +89,7 @@ public final class MapValue {
         }
 
         public MapValue build() {
-            return new MapValue(keyValuePairs);
+            return new MapValue(keyValuePairs, additionalProperties);
         }
     }
 }

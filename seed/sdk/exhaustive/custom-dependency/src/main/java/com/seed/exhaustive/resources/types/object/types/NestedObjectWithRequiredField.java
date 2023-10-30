@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.types.object.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class NestedObjectWithRequiredField {
 
     private final ObjectWithOptionalField nestedObject;
 
-    private NestedObjectWithRequiredField(String string, ObjectWithOptionalField nestedObject) {
+    private NestedObjectWithRequiredField(
+            String string, ObjectWithOptionalField nestedObject, Map<String, Object> additionalProperties) {
         this.string = string;
         this.nestedObject = nestedObject;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("string")
@@ -37,6 +43,11 @@ public final class NestedObjectWithRequiredField {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof NestedObjectWithRequiredField && equalTo((NestedObjectWithRequiredField) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(NestedObjectWithRequiredField other) {
@@ -77,6 +88,9 @@ public final class NestedObjectWithRequiredField {
 
         private ObjectWithOptionalField nestedObject;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class NestedObjectWithRequiredField {
 
         @Override
         public NestedObjectWithRequiredField build() {
-            return new NestedObjectWithRequiredField(string, nestedObject);
+            return new NestedObjectWithRequiredField(string, nestedObject, additionalProperties);
         }
     }
 }

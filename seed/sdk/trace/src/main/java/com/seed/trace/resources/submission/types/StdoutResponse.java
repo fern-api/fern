@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,9 +23,10 @@ public final class StdoutResponse {
 
     private final String stdout;
 
-    private StdoutResponse(UUID submissionId, String stdout) {
+    private StdoutResponse(UUID submissionId, String stdout, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.stdout = stdout;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -38,6 +43,11 @@ public final class StdoutResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StdoutResponse && equalTo((StdoutResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(StdoutResponse other) {
@@ -78,6 +88,9 @@ public final class StdoutResponse {
 
         private String stdout;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +116,7 @@ public final class StdoutResponse {
 
         @Override
         public StdoutResponse build() {
-            return new StdoutResponse(submissionId, stdout);
+            return new StdoutResponse(submissionId, stdout, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.migration.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class GetAttemptedMigrationsRequest {
     private final String adminKeyHeader;
 
-    private GetAttemptedMigrationsRequest(String adminKeyHeader) {
+    private GetAttemptedMigrationsRequest(String adminKeyHeader, Map<String, Object> additionalProperties) {
         this.adminKeyHeader = adminKeyHeader;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("admin-key-header")
@@ -29,6 +34,11 @@ public final class GetAttemptedMigrationsRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetAttemptedMigrationsRequest && equalTo((GetAttemptedMigrationsRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetAttemptedMigrationsRequest other) {
@@ -63,6 +73,9 @@ public final class GetAttemptedMigrationsRequest {
     public static final class Builder implements AdminKeyHeaderStage, _FinalStage {
         private String adminKeyHeader;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class GetAttemptedMigrationsRequest {
 
         @Override
         public GetAttemptedMigrationsRequest build() {
-            return new GetAttemptedMigrationsRequest(adminKeyHeader);
+            return new GetAttemptedMigrationsRequest(adminKeyHeader, additionalProperties);
         }
     }
 }

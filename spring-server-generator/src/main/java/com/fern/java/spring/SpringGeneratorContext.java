@@ -34,4 +34,9 @@ public final class SpringGeneratorContext
                 customConfig,
                 new SpringLocalFilesPoetClassNameFactory(springDownloadFilesCustomConfig.packagePrefix()));
     }
+
+    @Override
+    public boolean deserializeWithAdditionalProperties() {
+        return false;
+    }
 }

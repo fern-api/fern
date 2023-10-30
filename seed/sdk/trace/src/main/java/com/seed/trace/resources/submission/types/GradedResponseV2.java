@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,9 +25,11 @@ public final class GradedResponseV2 {
 
     private final Map<String, TestCaseGrade> testCases;
 
-    private GradedResponseV2(UUID submissionId, Map<String, TestCaseGrade> testCases) {
+    private GradedResponseV2(
+            UUID submissionId, Map<String, TestCaseGrade> testCases, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.testCases = testCases;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -41,6 +46,11 @@ public final class GradedResponseV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GradedResponseV2 && equalTo((GradedResponseV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GradedResponseV2 other) {
@@ -83,6 +93,9 @@ public final class GradedResponseV2 {
 
         private Map<String, TestCaseGrade> testCases = new LinkedHashMap<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -121,7 +134,7 @@ public final class GradedResponseV2 {
 
         @Override
         public GradedResponseV2 build() {
-            return new GradedResponseV2(submissionId, testCases);
+            return new GradedResponseV2(submissionId, testCases, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,11 +26,17 @@ public final class FileInfoV2 {
 
     private final boolean editable;
 
-    private FileInfoV2(String filename, String directory, String contents, boolean editable) {
+    private FileInfoV2(
+            String filename,
+            String directory,
+            String contents,
+            boolean editable,
+            Map<String, Object> additionalProperties) {
         this.filename = filename;
         this.directory = directory;
         this.contents = contents;
         this.editable = editable;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("filename")
@@ -53,6 +63,11 @@ public final class FileInfoV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FileInfoV2 && equalTo((FileInfoV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(FileInfoV2 other) {
@@ -109,6 +124,9 @@ public final class FileInfoV2 {
 
         private boolean editable;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -150,7 +168,7 @@ public final class FileInfoV2 {
 
         @Override
         public FileInfoV2 build() {
-            return new FileInfoV2(filename, directory, contents, editable);
+            return new FileInfoV2(filename, directory, contents, editable, additionalProperties);
         }
     }
 }

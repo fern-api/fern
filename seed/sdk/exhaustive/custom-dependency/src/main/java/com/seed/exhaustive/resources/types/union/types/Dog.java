@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.types.union.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class Dog {
 
     private final boolean likesToWoof;
 
-    private Dog(String name, boolean likesToWoof) {
+    private Dog(String name, boolean likesToWoof, Map<String, Object> additionalProperties) {
         this.name = name;
         this.likesToWoof = likesToWoof;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
@@ -37,6 +42,11 @@ public final class Dog {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Dog && equalTo((Dog) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Dog other) {
@@ -77,6 +87,9 @@ public final class Dog {
 
         private boolean likesToWoof;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class Dog {
 
         @Override
         public Dog build() {
-            return new Dog(name, likesToWoof);
+            return new Dog(name, likesToWoof, additionalProperties);
         }
     }
 }

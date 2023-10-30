@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class RecordedTestCaseUpdate {
 
     private final int traceResponsesSize;
 
-    private RecordedTestCaseUpdate(String testCaseId, int traceResponsesSize) {
+    private RecordedTestCaseUpdate(
+            String testCaseId, int traceResponsesSize, Map<String, Object> additionalProperties) {
         this.testCaseId = testCaseId;
         this.traceResponsesSize = traceResponsesSize;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("testCaseId")
@@ -37,6 +43,11 @@ public final class RecordedTestCaseUpdate {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordedTestCaseUpdate && equalTo((RecordedTestCaseUpdate) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RecordedTestCaseUpdate other) {
@@ -77,6 +88,9 @@ public final class RecordedTestCaseUpdate {
 
         private int traceResponsesSize;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class RecordedTestCaseUpdate {
 
         @Override
         public RecordedTestCaseUpdate build() {
-            return new RecordedTestCaseUpdate(testCaseId, traceResponsesSize);
+            return new RecordedTestCaseUpdate(testCaseId, traceResponsesSize, additionalProperties);
         }
     }
 }

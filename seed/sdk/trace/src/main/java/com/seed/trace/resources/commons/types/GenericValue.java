@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,9 +24,11 @@ public final class GenericValue {
 
     private final String stringifiedValue;
 
-    private GenericValue(Optional<String> stringifiedType, String stringifiedValue) {
+    private GenericValue(
+            Optional<String> stringifiedType, String stringifiedValue, Map<String, Object> additionalProperties) {
         this.stringifiedType = stringifiedType;
         this.stringifiedValue = stringifiedValue;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("stringifiedType")
@@ -39,6 +45,11 @@ public final class GenericValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GenericValue && equalTo((GenericValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GenericValue other) {
@@ -79,6 +90,9 @@ public final class GenericValue {
 
         private Optional<String> stringifiedType = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -110,7 +124,7 @@ public final class GenericValue {
 
         @Override
         public GenericValue build() {
-            return new GenericValue(stringifiedType, stringifiedValue);
+            return new GenericValue(stringifiedType, stringifiedValue, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.multiUrlEnvironment.resources.ec2.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class BootInstanceRequest {
     private final String size;
 
-    private BootInstanceRequest(String size) {
+    private BootInstanceRequest(String size, Map<String, Object> additionalProperties) {
         this.size = size;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("size")
@@ -29,6 +34,11 @@ public final class BootInstanceRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BootInstanceRequest && equalTo((BootInstanceRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(BootInstanceRequest other) {
@@ -63,6 +73,9 @@ public final class BootInstanceRequest {
     public static final class Builder implements SizeStage, _FinalStage {
         private String size;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class BootInstanceRequest {
 
         @Override
         public BootInstanceRequest build() {
-            return new BootInstanceRequest(size);
+            return new BootInstanceRequest(size, additionalProperties);
         }
     }
 }

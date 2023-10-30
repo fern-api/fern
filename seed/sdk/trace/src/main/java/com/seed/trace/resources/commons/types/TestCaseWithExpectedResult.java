@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class TestCaseWithExpectedResult {
 
     private final VariableValue expectedResult;
 
-    private TestCaseWithExpectedResult(TestCase testCase, VariableValue expectedResult) {
+    private TestCaseWithExpectedResult(
+            TestCase testCase, VariableValue expectedResult, Map<String, Object> additionalProperties) {
         this.testCase = testCase;
         this.expectedResult = expectedResult;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("testCase")
@@ -37,6 +43,11 @@ public final class TestCaseWithExpectedResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseWithExpectedResult && equalTo((TestCaseWithExpectedResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseWithExpectedResult other) {
@@ -77,6 +88,9 @@ public final class TestCaseWithExpectedResult {
 
         private VariableValue expectedResult;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class TestCaseWithExpectedResult {
 
         @Override
         public TestCaseWithExpectedResult build() {
-            return new TestCaseWithExpectedResult(testCase, expectedResult);
+            return new TestCaseWithExpectedResult(testCase, expectedResult, additionalProperties);
         }
     }
 }

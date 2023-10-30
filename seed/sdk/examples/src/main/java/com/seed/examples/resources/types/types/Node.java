@@ -3,6 +3,8 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,10 +27,15 @@ public final class Node {
 
     private final Optional<List<Tree>> trees;
 
-    private Node(String name, Optional<List<Node>> nodes, Optional<List<Tree>> trees) {
+    private Node(
+            String name,
+            Optional<List<Node>> nodes,
+            Optional<List<Tree>> trees,
+            Map<String, Object> additionalProperties) {
         this.name = name;
         this.nodes = nodes;
         this.trees = trees;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
@@ -48,6 +57,11 @@ public final class Node {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Node && equalTo((Node) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Node other) {
@@ -94,6 +108,9 @@ public final class Node {
 
         private Optional<List<Node>> nodes = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -139,7 +156,7 @@ public final class Node {
 
         @Override
         public Node build() {
-            return new Node(name, nodes, trees);
+            return new Node(name, nodes, trees, additionalProperties);
         }
     }
 }

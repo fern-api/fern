@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,10 +30,12 @@ public final class GetExecutionSessionStateResponse {
     private GetExecutionSessionStateResponse(
             Map<String, ExecutionSessionState> states,
             Optional<Integer> numWarmingInstances,
-            List<String> warmingSessionIds) {
+            List<String> warmingSessionIds,
+            Map<String, Object> additionalProperties) {
         this.states = states;
         this.numWarmingInstances = numWarmingInstances;
         this.warmingSessionIds = warmingSessionIds;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("states")
@@ -54,6 +57,11 @@ public final class GetExecutionSessionStateResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetExecutionSessionStateResponse && equalTo((GetExecutionSessionStateResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetExecutionSessionStateResponse other) {
@@ -139,7 +147,8 @@ public final class GetExecutionSessionStateResponse {
         }
 
         public GetExecutionSessionStateResponse build() {
-            return new GetExecutionSessionStateResponse(states, numWarmingInstances, warmingSessionIds);
+            return new GetExecutionSessionStateResponse(
+                    states, numWarmingInstances, warmingSessionIds, additionalProperties);
         }
     }
 }

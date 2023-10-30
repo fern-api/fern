@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -35,13 +39,15 @@ public final class ExecutionSessionState {
             boolean isWarmInstance,
             Optional<String> awsTaskId,
             Language language,
-            ExecutionSessionStatus status) {
+            ExecutionSessionStatus status,
+            Map<String, Object> additionalProperties) {
         this.lastTimeContacted = lastTimeContacted;
         this.sessionId = sessionId;
         this.isWarmInstance = isWarmInstance;
         this.awsTaskId = awsTaskId;
         this.language = language;
         this.status = status;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("lastTimeContacted")
@@ -81,6 +87,11 @@ public final class ExecutionSessionState {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExecutionSessionState && equalTo((ExecutionSessionState) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ExecutionSessionState other) {
@@ -157,6 +168,9 @@ public final class ExecutionSessionState {
 
         private Optional<String> lastTimeContacted = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -230,7 +244,8 @@ public final class ExecutionSessionState {
 
         @Override
         public ExecutionSessionState build() {
-            return new ExecutionSessionState(lastTimeContacted, sessionId, isWarmInstance, awsTaskId, language, status);
+            return new ExecutionSessionState(
+                    lastTimeContacted, sessionId, isWarmInstance, awsTaskId, language, status, additionalProperties);
         }
     }
 }

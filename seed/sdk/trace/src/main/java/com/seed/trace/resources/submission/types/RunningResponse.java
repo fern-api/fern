@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,9 +23,10 @@ public final class RunningResponse {
 
     private final RunningSubmissionState state;
 
-    private RunningResponse(UUID submissionId, RunningSubmissionState state) {
+    private RunningResponse(UUID submissionId, RunningSubmissionState state, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.state = state;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -38,6 +43,11 @@ public final class RunningResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RunningResponse && equalTo((RunningResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RunningResponse other) {
@@ -78,6 +88,9 @@ public final class RunningResponse {
 
         private RunningSubmissionState state;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +116,7 @@ public final class RunningResponse {
 
         @Override
         public RunningResponse build() {
-            return new RunningResponse(submissionId, state);
+            return new RunningResponse(submissionId, state, additionalProperties);
         }
     }
 }

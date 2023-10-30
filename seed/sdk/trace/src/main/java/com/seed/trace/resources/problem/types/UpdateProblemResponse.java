@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class UpdateProblemResponse {
     private final int problemVersion;
 
-    private UpdateProblemResponse(int problemVersion) {
+    private UpdateProblemResponse(int problemVersion, Map<String, Object> additionalProperties) {
         this.problemVersion = problemVersion;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("problemVersion")
@@ -29,6 +34,11 @@ public final class UpdateProblemResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UpdateProblemResponse && equalTo((UpdateProblemResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(UpdateProblemResponse other) {
@@ -63,6 +73,9 @@ public final class UpdateProblemResponse {
     public static final class Builder implements ProblemVersionStage, _FinalStage {
         private int problemVersion;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class UpdateProblemResponse {
 
         @Override
         public UpdateProblemResponse build() {
-            return new UpdateProblemResponse(problemVersion);
+            return new UpdateProblemResponse(problemVersion, additionalProperties);
         }
     }
 }

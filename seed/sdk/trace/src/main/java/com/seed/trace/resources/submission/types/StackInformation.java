@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,9 +24,11 @@ public final class StackInformation {
 
     private final Optional<StackFrame> topStackFrame;
 
-    private StackInformation(int numStackFrames, Optional<StackFrame> topStackFrame) {
+    private StackInformation(
+            int numStackFrames, Optional<StackFrame> topStackFrame, Map<String, Object> additionalProperties) {
         this.numStackFrames = numStackFrames;
         this.topStackFrame = topStackFrame;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("numStackFrames")
@@ -39,6 +45,11 @@ public final class StackInformation {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StackInformation && equalTo((StackInformation) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(StackInformation other) {
@@ -79,6 +90,9 @@ public final class StackInformation {
 
         private Optional<StackFrame> topStackFrame = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -110,7 +124,7 @@ public final class StackInformation {
 
         @Override
         public StackInformation build() {
-            return new StackInformation(numStackFrames, topStackFrame);
+            return new StackInformation(numStackFrames, topStackFrame, additionalProperties);
         }
     }
 }

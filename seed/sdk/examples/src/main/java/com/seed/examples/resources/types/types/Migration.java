@@ -3,12 +3,16 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class Migration {
 
     private final MigrationStatus status;
 
-    private Migration(String name, MigrationStatus status) {
+    private Migration(String name, MigrationStatus status, Map<String, Object> additionalProperties) {
         this.name = name;
         this.status = status;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
@@ -37,6 +42,11 @@ public final class Migration {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Migration && equalTo((Migration) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Migration other) {
@@ -77,6 +87,9 @@ public final class Migration {
 
         private MigrationStatus status;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class Migration {
 
         @Override
         public Migration build() {
-            return new Migration(name, status);
+            return new Migration(name, status, additionalProperties);
         }
     }
 }

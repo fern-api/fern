@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,8 +21,10 @@ import java.util.Objects;
 public final class GetDefaultStarterFilesResponse {
     private final Map<Language, ProblemFiles> files;
 
-    private GetDefaultStarterFilesResponse(Map<Language, ProblemFiles> files) {
+    private GetDefaultStarterFilesResponse(
+            Map<Language, ProblemFiles> files, Map<String, Object> additionalProperties) {
         this.files = files;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("files")
@@ -33,6 +36,11 @@ public final class GetDefaultStarterFilesResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetDefaultStarterFilesResponse && equalTo((GetDefaultStarterFilesResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetDefaultStarterFilesResponse other) {
@@ -82,7 +90,7 @@ public final class GetDefaultStarterFilesResponse {
         }
 
         public GetDefaultStarterFilesResponse build() {
-            return new GetDefaultStarterFilesResponse(files);
+            return new GetDefaultStarterFilesResponse(files, additionalProperties);
         }
     }
 }

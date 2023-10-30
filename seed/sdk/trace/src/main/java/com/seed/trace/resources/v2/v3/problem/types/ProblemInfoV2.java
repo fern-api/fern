@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,8 +15,10 @@ import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
 import com.seed.trace.resources.problem.types.ProblemDescription;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,7 +55,8 @@ public final class ProblemInfoV2 {
             GeneratedFiles generatedFiles,
             List<TestCaseTemplate> customTestCaseTemplates,
             List<TestCaseV2> testcases,
-            boolean isPublic) {
+            boolean isPublic,
+            Map<String, Object> additionalProperties) {
         this.problemId = problemId;
         this.problemDescription = problemDescription;
         this.problemName = problemName;
@@ -62,6 +67,7 @@ public final class ProblemInfoV2 {
         this.customTestCaseTemplates = customTestCaseTemplates;
         this.testcases = testcases;
         this.isPublic = isPublic;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("problemId")
@@ -118,6 +124,11 @@ public final class ProblemInfoV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProblemInfoV2 && equalTo((ProblemInfoV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ProblemInfoV2 other) {
@@ -238,6 +249,9 @@ public final class ProblemInfoV2 {
         private List<TestCaseTemplate> customTestCaseTemplates = new ArrayList<>();
 
         private Set<Language> supportedLanguages = new LinkedHashSet<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -377,7 +391,8 @@ public final class ProblemInfoV2 {
                     generatedFiles,
                     customTestCaseTemplates,
                     testcases,
-                    isPublic);
+                    isPublic,
+                    additionalProperties);
         }
     }
 }

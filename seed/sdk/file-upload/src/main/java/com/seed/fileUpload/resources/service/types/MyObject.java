@@ -3,12 +3,16 @@
  */
 package com.seed.fileUpload.resources.service.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.fileUpload.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class MyObject {
     private final String foo;
 
-    private MyObject(String foo) {
+    private MyObject(String foo, Map<String, Object> additionalProperties) {
         this.foo = foo;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("foo")
@@ -29,6 +34,11 @@ public final class MyObject {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MyObject && equalTo((MyObject) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(MyObject other) {
@@ -63,6 +73,9 @@ public final class MyObject {
     public static final class Builder implements FooStage, _FinalStage {
         private String foo;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class MyObject {
 
         @Override
         public MyObject build() {
-            return new MyObject(foo);
+            return new MyObject(foo, additionalProperties);
         }
     }
 }

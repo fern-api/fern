@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class ExpressionLocation {
 
     private final int offset;
 
-    private ExpressionLocation(int start, int offset) {
+    private ExpressionLocation(int start, int offset, Map<String, Object> additionalProperties) {
         this.start = start;
         this.offset = offset;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("start")
@@ -37,6 +42,11 @@ public final class ExpressionLocation {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExpressionLocation && equalTo((ExpressionLocation) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ExpressionLocation other) {
@@ -77,6 +87,9 @@ public final class ExpressionLocation {
 
         private int offset;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class ExpressionLocation {
 
         @Override
         public ExpressionLocation build() {
-            return new ExpressionLocation(start, offset);
+            return new ExpressionLocation(start, offset, additionalProperties);
         }
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.seed.examples.resources.service.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,10 +26,15 @@ public final class GetMetadataRequest {
 
     private final Optional<String> tag;
 
-    private GetMetadataRequest(String xApiVersion, Optional<Boolean> shallow, Optional<String> tag) {
+    private GetMetadataRequest(
+            String xApiVersion,
+            Optional<Boolean> shallow,
+            Optional<String> tag,
+            Map<String, Object> additionalProperties) {
         this.xApiVersion = xApiVersion;
         this.shallow = shallow;
         this.tag = tag;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("X-API-Version")
@@ -47,6 +56,11 @@ public final class GetMetadataRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetMetadataRequest && equalTo((GetMetadataRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetMetadataRequest other) {
@@ -93,6 +107,9 @@ public final class GetMetadataRequest {
 
         private Optional<Boolean> shallow = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -138,7 +155,7 @@ public final class GetMetadataRequest {
 
         @Override
         public GetMetadataRequest build() {
-            return new GetMetadataRequest(xApiVersion, shallow, tag);
+            return new GetMetadataRequest(xApiVersion, shallow, tag, additionalProperties);
         }
     }
 }

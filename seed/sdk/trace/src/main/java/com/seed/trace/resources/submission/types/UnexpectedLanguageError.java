@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,9 +23,11 @@ public final class UnexpectedLanguageError {
 
     private final Language actualLanguage;
 
-    private UnexpectedLanguageError(Language expectedLanguage, Language actualLanguage) {
+    private UnexpectedLanguageError(
+            Language expectedLanguage, Language actualLanguage, Map<String, Object> additionalProperties) {
         this.expectedLanguage = expectedLanguage;
         this.actualLanguage = actualLanguage;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("expectedLanguage")
@@ -38,6 +44,11 @@ public final class UnexpectedLanguageError {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UnexpectedLanguageError && equalTo((UnexpectedLanguageError) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(UnexpectedLanguageError other) {
@@ -78,6 +89,9 @@ public final class UnexpectedLanguageError {
 
         private Language actualLanguage;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +117,7 @@ public final class UnexpectedLanguageError {
 
         @Override
         public UnexpectedLanguageError build() {
-            return new UnexpectedLanguageError(expectedLanguage, actualLanguage);
+            return new UnexpectedLanguageError(expectedLanguage, actualLanguage, additionalProperties);
         }
     }
 }

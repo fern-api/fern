@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,8 +20,9 @@ import java.util.Optional;
 public final class TestCaseExpects {
     private final Optional<String> expectedStdout;
 
-    private TestCaseExpects(Optional<String> expectedStdout) {
+    private TestCaseExpects(Optional<String> expectedStdout, Map<String, Object> additionalProperties) {
         this.expectedStdout = expectedStdout;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("expectedStdout")
@@ -31,6 +34,11 @@ public final class TestCaseExpects {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseExpects && equalTo((TestCaseExpects) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseExpects other) {
@@ -74,7 +82,7 @@ public final class TestCaseExpects {
         }
 
         public TestCaseExpects build() {
-            return new TestCaseExpects(expectedStdout);
+            return new TestCaseExpects(expectedStdout, additionalProperties);
         }
     }
 }

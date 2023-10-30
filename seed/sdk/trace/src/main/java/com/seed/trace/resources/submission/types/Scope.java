@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,8 +21,9 @@ import java.util.Objects;
 public final class Scope {
     private final Map<String, DebugVariableValue> variables;
 
-    private Scope(Map<String, DebugVariableValue> variables) {
+    private Scope(Map<String, DebugVariableValue> variables, Map<String, Object> additionalProperties) {
         this.variables = variables;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("variables")
@@ -33,6 +35,11 @@ public final class Scope {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Scope && equalTo((Scope) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Scope other) {
@@ -82,7 +89,7 @@ public final class Scope {
         }
 
         public Scope build() {
-            return new Scope(variables);
+            return new Scope(variables, additionalProperties);
         }
     }
 }

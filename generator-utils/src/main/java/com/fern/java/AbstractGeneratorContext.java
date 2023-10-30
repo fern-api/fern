@@ -60,6 +60,8 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.interfaces = getInterfaceTypeIds(ir);
     }
 
+    public abstract boolean deserializeWithAdditionalProperties();
+
     public final IntermediateRepresentation getIr() {
         return ir;
     }

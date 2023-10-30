@@ -3,12 +3,16 @@
  */
 package com.seed.basicAuth.resources.errors.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.basicAuth.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class UnauthorizedRequestErrorBody {
     private final String message;
 
-    private UnauthorizedRequestErrorBody(String message) {
+    private UnauthorizedRequestErrorBody(String message, Map<String, Object> additionalProperties) {
         this.message = message;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("message")
@@ -29,6 +34,11 @@ public final class UnauthorizedRequestErrorBody {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UnauthorizedRequestErrorBody && equalTo((UnauthorizedRequestErrorBody) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(UnauthorizedRequestErrorBody other) {
@@ -63,6 +73,9 @@ public final class UnauthorizedRequestErrorBody {
     public static final class Builder implements MessageStage, _FinalStage {
         private String message;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class UnauthorizedRequestErrorBody {
 
         @Override
         public UnauthorizedRequestErrorBody build() {
-            return new UnauthorizedRequestErrorBody(message);
+            return new UnauthorizedRequestErrorBody(message, additionalProperties);
         }
     }
 }

@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,10 +28,12 @@ public final class GeneratedFiles {
     private GeneratedFiles(
             Map<Language, Files> generatedTestCaseFiles,
             Map<Language, Files> generatedTemplateFiles,
-            Map<Language, Files> other) {
+            Map<Language, Files> other,
+            Map<String, Object> additionalProperties) {
         this.generatedTestCaseFiles = generatedTestCaseFiles;
         this.generatedTemplateFiles = generatedTemplateFiles;
         this.other = other;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("generatedTestCaseFiles")
@@ -52,6 +55,11 @@ public final class GeneratedFiles {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GeneratedFiles && equalTo((GeneratedFiles) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GeneratedFiles other) {
@@ -143,7 +151,7 @@ public final class GeneratedFiles {
         }
 
         public GeneratedFiles build() {
-            return new GeneratedFiles(generatedTestCaseFiles, generatedTemplateFiles, other);
+            return new GeneratedFiles(generatedTestCaseFiles, generatedTemplateFiles, other, additionalProperties);
         }
     }
 }

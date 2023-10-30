@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -24,11 +28,17 @@ public final class BinaryTreeNodeValue {
 
     private final Optional<String> left;
 
-    private BinaryTreeNodeValue(String nodeId, double val, Optional<String> right, Optional<String> left) {
+    private BinaryTreeNodeValue(
+            String nodeId,
+            double val,
+            Optional<String> right,
+            Optional<String> left,
+            Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;
         this.val = val;
         this.right = right;
         this.left = left;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("nodeId")
@@ -55,6 +65,11 @@ public final class BinaryTreeNodeValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BinaryTreeNodeValue && equalTo((BinaryTreeNodeValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(BinaryTreeNodeValue other) {
@@ -106,6 +121,9 @@ public final class BinaryTreeNodeValue {
         private Optional<String> left = Optional.empty();
 
         private Optional<String> right = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -160,7 +178,7 @@ public final class BinaryTreeNodeValue {
 
         @Override
         public BinaryTreeNodeValue build() {
-            return new BinaryTreeNodeValue(nodeId, val, right, left);
+            return new BinaryTreeNodeValue(nodeId, val, right, left, additionalProperties);
         }
     }
 }

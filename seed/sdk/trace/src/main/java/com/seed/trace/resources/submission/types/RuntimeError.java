@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class RuntimeError {
     private final String message;
 
-    private RuntimeError(String message) {
+    private RuntimeError(String message, Map<String, Object> additionalProperties) {
         this.message = message;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("message")
@@ -29,6 +34,11 @@ public final class RuntimeError {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RuntimeError && equalTo((RuntimeError) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RuntimeError other) {
@@ -63,6 +73,9 @@ public final class RuntimeError {
     public static final class Builder implements MessageStage, _FinalStage {
         private String message;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class RuntimeError {
 
         @Override
         public RuntimeError build() {
-            return new RuntimeError(message);
+            return new RuntimeError(message, additionalProperties);
         }
     }
 }

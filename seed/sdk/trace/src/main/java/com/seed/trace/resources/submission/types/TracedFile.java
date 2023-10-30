@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class TracedFile {
 
     private final String directory;
 
-    private TracedFile(String filename, String directory) {
+    private TracedFile(String filename, String directory, Map<String, Object> additionalProperties) {
         this.filename = filename;
         this.directory = directory;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("filename")
@@ -37,6 +42,11 @@ public final class TracedFile {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TracedFile && equalTo((TracedFile) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TracedFile other) {
@@ -77,6 +87,9 @@ public final class TracedFile {
 
         private String directory;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class TracedFile {
 
         @Override
         public TracedFile build() {
-            return new TracedFile(filename, directory);
+            return new TracedFile(filename, directory, additionalProperties);
         }
     }
 }

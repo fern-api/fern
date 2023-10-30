@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.FileInfo;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,9 +26,11 @@ public final class ProblemFiles {
 
     private final List<FileInfo> readOnlyFiles;
 
-    private ProblemFiles(FileInfo solutionFile, List<FileInfo> readOnlyFiles) {
+    private ProblemFiles(
+            FileInfo solutionFile, List<FileInfo> readOnlyFiles, Map<String, Object> additionalProperties) {
         this.solutionFile = solutionFile;
         this.readOnlyFiles = readOnlyFiles;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("solutionFile")
@@ -41,6 +47,11 @@ public final class ProblemFiles {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProblemFiles && equalTo((ProblemFiles) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ProblemFiles other) {
@@ -83,6 +94,9 @@ public final class ProblemFiles {
 
         private List<FileInfo> readOnlyFiles = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -121,7 +135,7 @@ public final class ProblemFiles {
 
         @Override
         public ProblemFiles build() {
-            return new ProblemFiles(solutionFile, readOnlyFiles);
+            return new ProblemFiles(solutionFile, readOnlyFiles, additionalProperties);
         }
     }
 }

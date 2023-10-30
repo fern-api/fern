@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.types.object.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class ObjectWithRequiredField {
     private final String string;
 
-    private ObjectWithRequiredField(String string) {
+    private ObjectWithRequiredField(String string, Map<String, Object> additionalProperties) {
         this.string = string;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("string")
@@ -29,6 +34,11 @@ public final class ObjectWithRequiredField {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ObjectWithRequiredField && equalTo((ObjectWithRequiredField) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ObjectWithRequiredField other) {
@@ -63,6 +73,9 @@ public final class ObjectWithRequiredField {
     public static final class Builder implements StringStage, _FinalStage {
         private String string;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class ObjectWithRequiredField {
 
         @Override
         public ObjectWithRequiredField build() {
-            return new ObjectWithRequiredField(string);
+            return new ObjectWithRequiredField(string, additionalProperties);
         }
     }
 }

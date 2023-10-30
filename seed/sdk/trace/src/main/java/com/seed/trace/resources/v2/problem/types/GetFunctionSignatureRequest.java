@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class GetFunctionSignatureRequest {
     private final FunctionSignature functionSignature;
 
-    private GetFunctionSignatureRequest(FunctionSignature functionSignature) {
+    private GetFunctionSignatureRequest(FunctionSignature functionSignature, Map<String, Object> additionalProperties) {
         this.functionSignature = functionSignature;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("functionSignature")
@@ -29,6 +34,11 @@ public final class GetFunctionSignatureRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetFunctionSignatureRequest && equalTo((GetFunctionSignatureRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetFunctionSignatureRequest other) {
@@ -63,6 +73,9 @@ public final class GetFunctionSignatureRequest {
     public static final class Builder implements FunctionSignatureStage, _FinalStage {
         private FunctionSignature functionSignature;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class GetFunctionSignatureRequest {
 
         @Override
         public GetFunctionSignatureRequest build() {
-            return new GetFunctionSignatureRequest(functionSignature);
+            return new GetFunctionSignatureRequest(functionSignature, additionalProperties);
         }
     }
 }

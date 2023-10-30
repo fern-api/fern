@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class TracedTestCase {
 
     private final int traceResponsesSize;
 
-    private TracedTestCase(TestCaseResultWithStdout result, int traceResponsesSize) {
+    private TracedTestCase(
+            TestCaseResultWithStdout result, int traceResponsesSize, Map<String, Object> additionalProperties) {
         this.result = result;
         this.traceResponsesSize = traceResponsesSize;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("result")
@@ -37,6 +43,11 @@ public final class TracedTestCase {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TracedTestCase && equalTo((TracedTestCase) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TracedTestCase other) {
@@ -77,6 +88,9 @@ public final class TracedTestCase {
 
         private int traceResponsesSize;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class TracedTestCase {
 
         @Override
         public TracedTestCase build() {
-            return new TracedTestCase(result, traceResponsesSize);
+            return new TracedTestCase(result, traceResponsesSize, additionalProperties);
         }
     }
 }

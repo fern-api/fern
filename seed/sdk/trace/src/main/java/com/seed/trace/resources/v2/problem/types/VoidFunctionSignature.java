@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,8 +21,9 @@ import java.util.Objects;
 public final class VoidFunctionSignature {
     private final List<Parameter> parameters;
 
-    private VoidFunctionSignature(List<Parameter> parameters) {
+    private VoidFunctionSignature(List<Parameter> parameters, Map<String, Object> additionalProperties) {
         this.parameters = parameters;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("parameters")
@@ -32,6 +35,11 @@ public final class VoidFunctionSignature {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VoidFunctionSignature && equalTo((VoidFunctionSignature) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(VoidFunctionSignature other) {
@@ -81,7 +89,7 @@ public final class VoidFunctionSignature {
         }
 
         public VoidFunctionSignature build() {
-            return new VoidFunctionSignature(parameters);
+            return new VoidFunctionSignature(parameters, additionalProperties);
         }
     }
 }

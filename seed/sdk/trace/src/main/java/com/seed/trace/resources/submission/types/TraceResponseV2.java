@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.DebugVariableValue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -39,7 +43,8 @@ public final class TraceResponseV2 {
             Optional<DebugVariableValue> returnValue,
             Optional<ExpressionLocation> expressionLocation,
             StackInformation stack,
-            Optional<String> stdout) {
+            Optional<String> stdout,
+            Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.lineNumber = lineNumber;
         this.file = file;
@@ -47,6 +52,7 @@ public final class TraceResponseV2 {
         this.expressionLocation = expressionLocation;
         this.stack = stack;
         this.stdout = stdout;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -88,6 +94,11 @@ public final class TraceResponseV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TraceResponseV2 && equalTo((TraceResponseV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TraceResponseV2 other) {
@@ -172,6 +183,9 @@ public final class TraceResponseV2 {
 
         private Optional<DebugVariableValue> returnValue = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -255,7 +269,15 @@ public final class TraceResponseV2 {
 
         @Override
         public TraceResponseV2 build() {
-            return new TraceResponseV2(submissionId, lineNumber, file, returnValue, expressionLocation, stack, stdout);
+            return new TraceResponseV2(
+                    submissionId,
+                    lineNumber,
+                    file,
+                    returnValue,
+                    expressionLocation,
+                    stack,
+                    stdout,
+                    additionalProperties);
         }
     }
 }

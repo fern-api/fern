@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,9 +26,11 @@ public final class DefaultProvidedFile {
 
     private final List<VariableType> relatedTypes;
 
-    private DefaultProvidedFile(FileInfoV2 file, List<VariableType> relatedTypes) {
+    private DefaultProvidedFile(
+            FileInfoV2 file, List<VariableType> relatedTypes, Map<String, Object> additionalProperties) {
         this.file = file;
         this.relatedTypes = relatedTypes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("file")
@@ -41,6 +47,11 @@ public final class DefaultProvidedFile {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DefaultProvidedFile && equalTo((DefaultProvidedFile) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(DefaultProvidedFile other) {
@@ -83,6 +94,9 @@ public final class DefaultProvidedFile {
 
         private List<VariableType> relatedTypes = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -121,7 +135,7 @@ public final class DefaultProvidedFile {
 
         @Override
         public DefaultProvidedFile build() {
-            return new DefaultProvidedFile(file, relatedTypes);
+            return new DefaultProvidedFile(file, relatedTypes, additionalProperties);
         }
     }
 }

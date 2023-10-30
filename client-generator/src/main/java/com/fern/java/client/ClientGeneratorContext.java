@@ -30,4 +30,9 @@ public final class ClientGeneratorContext
             ClientPoetClassNameFactory clientPoetClassNameFactory) {
         super(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
     }
+
+    @Override
+    public boolean deserializeWithAdditionalProperties() {
+        return true;
+    }
 }

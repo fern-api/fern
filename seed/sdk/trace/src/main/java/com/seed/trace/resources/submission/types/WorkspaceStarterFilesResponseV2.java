@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,8 +22,10 @@ import java.util.Objects;
 public final class WorkspaceStarterFilesResponseV2 {
     private final Map<Language, Files> filesByLanguage;
 
-    private WorkspaceStarterFilesResponseV2(Map<Language, Files> filesByLanguage) {
+    private WorkspaceStarterFilesResponseV2(
+            Map<Language, Files> filesByLanguage, Map<String, Object> additionalProperties) {
         this.filesByLanguage = filesByLanguage;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("filesByLanguage")
@@ -34,6 +37,11 @@ public final class WorkspaceStarterFilesResponseV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceStarterFilesResponseV2 && equalTo((WorkspaceStarterFilesResponseV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceStarterFilesResponseV2 other) {
@@ -83,7 +91,7 @@ public final class WorkspaceStarterFilesResponseV2 {
         }
 
         public WorkspaceStarterFilesResponseV2 build() {
-            return new WorkspaceStarterFilesResponseV2(filesByLanguage);
+            return new WorkspaceStarterFilesResponseV2(filesByLanguage, additionalProperties);
         }
     }
 }

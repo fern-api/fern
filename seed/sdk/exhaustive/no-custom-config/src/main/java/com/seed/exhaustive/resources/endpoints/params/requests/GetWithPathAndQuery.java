@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.endpoints.params.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class GetWithPathAndQuery {
     private final String query;
 
-    private GetWithPathAndQuery(String query) {
+    private GetWithPathAndQuery(String query, Map<String, Object> additionalProperties) {
         this.query = query;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("query")
@@ -29,6 +34,11 @@ public final class GetWithPathAndQuery {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetWithPathAndQuery && equalTo((GetWithPathAndQuery) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetWithPathAndQuery other) {
@@ -63,6 +73,9 @@ public final class GetWithPathAndQuery {
     public static final class Builder implements QueryStage, _FinalStage {
         private String query;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class GetWithPathAndQuery {
 
         @Override
         public GetWithPathAndQuery build() {
-            return new GetWithPathAndQuery(query);
+            return new GetWithPathAndQuery(query, additionalProperties);
         }
     }
 }

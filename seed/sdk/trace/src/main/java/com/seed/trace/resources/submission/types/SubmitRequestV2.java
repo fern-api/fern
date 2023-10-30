@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,13 +42,15 @@ public final class SubmitRequestV2 {
             List<SubmissionFileInfo> submissionFiles,
             String problemId,
             Optional<Integer> problemVersion,
-            Optional<String> userId) {
+            Optional<String> userId,
+            Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.language = language;
         this.submissionFiles = submissionFiles;
         this.problemId = problemId;
         this.problemVersion = problemVersion;
         this.userId = userId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -81,6 +87,11 @@ public final class SubmitRequestV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SubmitRequestV2 && equalTo((SubmitRequestV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SubmitRequestV2 other) {
@@ -157,6 +168,9 @@ public final class SubmitRequestV2 {
         private Optional<Integer> problemVersion = Optional.empty();
 
         private List<SubmissionFileInfo> submissionFiles = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -240,7 +254,8 @@ public final class SubmitRequestV2 {
 
         @Override
         public SubmitRequestV2 build() {
-            return new SubmitRequestV2(submissionId, language, submissionFiles, problemId, problemVersion, userId);
+            return new SubmitRequestV2(
+                    submissionId, language, submissionFiles, problemId, problemVersion, userId, additionalProperties);
         }
     }
 }

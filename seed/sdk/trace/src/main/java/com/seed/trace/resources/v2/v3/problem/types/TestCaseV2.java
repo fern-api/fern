@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableValue;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,11 +34,13 @@ public final class TestCaseV2 {
             TestCaseMetadata metadata,
             TestCaseImplementationReference implementation,
             Map<String, VariableValue> arguments,
-            Optional<TestCaseExpects> expects) {
+            Optional<TestCaseExpects> expects,
+            Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.implementation = implementation;
         this.arguments = arguments;
         this.expects = expects;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("metadata")
@@ -62,6 +67,11 @@ public final class TestCaseV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseV2 && equalTo((TestCaseV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseV2 other) {
@@ -118,6 +128,9 @@ public final class TestCaseV2 {
         private Optional<TestCaseExpects> expects = Optional.empty();
 
         private Map<String, VariableValue> arguments = new LinkedHashMap<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -179,7 +192,7 @@ public final class TestCaseV2 {
 
         @Override
         public TestCaseV2 build() {
-            return new TestCaseV2(metadata, implementation, arguments, expects);
+            return new TestCaseV2(metadata, implementation, arguments, expects, additionalProperties);
         }
     }
 }

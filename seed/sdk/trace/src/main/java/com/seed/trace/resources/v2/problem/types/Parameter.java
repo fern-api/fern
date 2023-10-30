@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableType;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -21,10 +25,12 @@ public final class Parameter {
 
     private final VariableType variableType;
 
-    private Parameter(String parameterId, String name, VariableType variableType) {
+    private Parameter(
+            String parameterId, String name, VariableType variableType, Map<String, Object> additionalProperties) {
         this.parameterId = parameterId;
         this.name = name;
         this.variableType = variableType;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("parameterId")
@@ -46,6 +52,11 @@ public final class Parameter {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Parameter && equalTo((Parameter) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Parameter other) {
@@ -94,6 +105,9 @@ public final class Parameter {
 
         private VariableType variableType;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -127,7 +141,7 @@ public final class Parameter {
 
         @Override
         public Parameter build() {
-            return new Parameter(parameterId, name, variableType);
+            return new Parameter(parameterId, name, variableType, additionalProperties);
         }
     }
 }

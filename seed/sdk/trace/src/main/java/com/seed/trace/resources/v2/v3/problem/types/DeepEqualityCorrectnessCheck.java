@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class DeepEqualityCorrectnessCheck {
     private final String expectedValueParameterId;
 
-    private DeepEqualityCorrectnessCheck(String expectedValueParameterId) {
+    private DeepEqualityCorrectnessCheck(String expectedValueParameterId, Map<String, Object> additionalProperties) {
         this.expectedValueParameterId = expectedValueParameterId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("expectedValueParameterId")
@@ -29,6 +34,11 @@ public final class DeepEqualityCorrectnessCheck {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeepEqualityCorrectnessCheck && equalTo((DeepEqualityCorrectnessCheck) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(DeepEqualityCorrectnessCheck other) {
@@ -63,6 +73,9 @@ public final class DeepEqualityCorrectnessCheck {
     public static final class Builder implements ExpectedValueParameterIdStage, _FinalStage {
         private String expectedValueParameterId;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class DeepEqualityCorrectnessCheck {
 
         @Override
         public DeepEqualityCorrectnessCheck build() {
-            return new DeepEqualityCorrectnessCheck(expectedValueParameterId);
+            return new DeepEqualityCorrectnessCheck(expectedValueParameterId, additionalProperties);
         }
     }
 }

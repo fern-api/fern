@@ -27,4 +27,9 @@ public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetCla
             IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {
         super(ir, generatorConfig, customConfig, new ModelPoetClassNameFactory(ir, generatorConfig.getOrganization()));
     }
+
+    @Override
+    public final boolean deserializeWithAdditionalProperties() {
+        return false;
+    }
 }

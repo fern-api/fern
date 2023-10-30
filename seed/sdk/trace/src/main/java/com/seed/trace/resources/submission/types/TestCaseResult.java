@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableValue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -21,10 +25,15 @@ public final class TestCaseResult {
 
     private final boolean passed;
 
-    private TestCaseResult(VariableValue expectedResult, ActualResult actualResult, boolean passed) {
+    private TestCaseResult(
+            VariableValue expectedResult,
+            ActualResult actualResult,
+            boolean passed,
+            Map<String, Object> additionalProperties) {
         this.expectedResult = expectedResult;
         this.actualResult = actualResult;
         this.passed = passed;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("expectedResult")
@@ -46,6 +55,11 @@ public final class TestCaseResult {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseResult && equalTo((TestCaseResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseResult other) {
@@ -94,6 +108,9 @@ public final class TestCaseResult {
 
         private boolean passed;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -127,7 +144,7 @@ public final class TestCaseResult {
 
         @Override
         public TestCaseResult build() {
-            return new TestCaseResult(expectedResult, actualResult, passed);
+            return new TestCaseResult(expectedResult, actualResult, passed, additionalProperties);
         }
     }
 }

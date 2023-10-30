@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,9 +24,11 @@ public final class TraceResponsesPage {
 
     private final List<TraceResponse> traceResponses;
 
-    private TraceResponsesPage(Optional<Integer> offset, List<TraceResponse> traceResponses) {
+    private TraceResponsesPage(
+            Optional<Integer> offset, List<TraceResponse> traceResponses, Map<String, Object> additionalProperties) {
         this.offset = offset;
         this.traceResponses = traceResponses;
+        this.additionalProperties = additionalProperties;
     }
 
     /**
@@ -45,6 +49,11 @@ public final class TraceResponsesPage {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TraceResponsesPage && equalTo((TraceResponsesPage) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TraceResponsesPage other) {
@@ -108,7 +117,7 @@ public final class TraceResponsesPage {
         }
 
         public TraceResponsesPage build() {
-            return new TraceResponsesPage(offset, traceResponses);
+            return new TraceResponsesPage(offset, traceResponses, additionalProperties);
         }
     }
 }

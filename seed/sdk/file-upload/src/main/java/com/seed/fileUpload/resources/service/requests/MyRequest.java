@@ -3,6 +3,8 @@
  */
 package com.seed.fileUpload.resources.service.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,8 +16,10 @@ import com.seed.fileUpload.resources.service.types.MaybeList;
 import com.seed.fileUpload.resources.service.types.MaybeListOrSet;
 import com.seed.fileUpload.resources.service.types.MyObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -59,7 +63,8 @@ public final class MyRequest {
             Optional<MaybeList> optionalMaybeList,
             MaybeListOrSet maybeListOrSet,
             Optional<MaybeListOrSet> optionalMaybeListOrSet,
-            List<MyObject> listOfObjects) {
+            List<MyObject> listOfObjects,
+            Map<String, Object> additionalProperties) {
         this.maybeString = maybeString;
         this.integer = integer;
         this.maybeInteger = maybeInteger;
@@ -72,6 +77,7 @@ public final class MyRequest {
         this.maybeListOrSet = maybeListOrSet;
         this.optionalMaybeListOrSet = optionalMaybeListOrSet;
         this.listOfObjects = listOfObjects;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("maybeString")
@@ -138,6 +144,11 @@ public final class MyRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MyRequest && equalTo((MyRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(MyRequest other) {
@@ -266,6 +277,9 @@ public final class MyRequest {
         private Optional<Integer> maybeInteger = Optional.empty();
 
         private Optional<String> maybeString = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -459,7 +473,8 @@ public final class MyRequest {
                     optionalMaybeList,
                     maybeListOrSet,
                     optionalMaybeListOrSet,
-                    listOfObjects);
+                    listOfObjects,
+                    additionalProperties);
         }
     }
 }

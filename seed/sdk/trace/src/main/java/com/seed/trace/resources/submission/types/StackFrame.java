@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -23,10 +27,12 @@ public final class StackFrame {
 
     private final List<Scope> scopes;
 
-    private StackFrame(String methodName, int lineNumber, List<Scope> scopes) {
+    private StackFrame(
+            String methodName, int lineNumber, List<Scope> scopes, Map<String, Object> additionalProperties) {
         this.methodName = methodName;
         this.lineNumber = lineNumber;
         this.scopes = scopes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("methodName")
@@ -48,6 +54,11 @@ public final class StackFrame {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StackFrame && equalTo((StackFrame) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(StackFrame other) {
@@ -96,6 +107,9 @@ public final class StackFrame {
 
         private List<Scope> scopes = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -142,7 +156,7 @@ public final class StackFrame {
 
         @Override
         public StackFrame build() {
-            return new StackFrame(methodName, lineNumber, scopes);
+            return new StackFrame(methodName, lineNumber, scopes, additionalProperties);
         }
     }
 }

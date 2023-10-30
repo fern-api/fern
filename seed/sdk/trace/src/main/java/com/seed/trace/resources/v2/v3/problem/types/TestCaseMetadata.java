@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,11 @@ public final class TestCaseMetadata {
 
     private final boolean hidden;
 
-    private TestCaseMetadata(String id, String name, boolean hidden) {
+    private TestCaseMetadata(String id, String name, boolean hidden, Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
         this.hidden = hidden;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
@@ -45,6 +50,11 @@ public final class TestCaseMetadata {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseMetadata && equalTo((TestCaseMetadata) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseMetadata other) {
@@ -91,6 +101,9 @@ public final class TestCaseMetadata {
 
         private boolean hidden;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -124,7 +137,7 @@ public final class TestCaseMetadata {
 
         @Override
         public TestCaseMetadata build() {
-            return new TestCaseMetadata(id, name, hidden);
+            return new TestCaseMetadata(id, name, hidden, additionalProperties);
         }
     }
 }

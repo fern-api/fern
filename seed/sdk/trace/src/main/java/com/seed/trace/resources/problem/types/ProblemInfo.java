@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +16,7 @@ import com.seed.trace.resources.commons.types.Language;
 import com.seed.trace.resources.commons.types.TestCaseWithExpectedResult;
 import com.seed.trace.resources.commons.types.VariableType;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +55,8 @@ public final class ProblemInfo {
             VariableType outputType,
             List<TestCaseWithExpectedResult> testcases,
             String methodName,
-            boolean supportsCustomTestCases) {
+            boolean supportsCustomTestCases,
+            Map<String, Object> additionalProperties) {
         this.problemId = problemId;
         this.problemDescription = problemDescription;
         this.problemName = problemName;
@@ -63,6 +67,7 @@ public final class ProblemInfo {
         this.testcases = testcases;
         this.methodName = methodName;
         this.supportsCustomTestCases = supportsCustomTestCases;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("problemId")
@@ -119,6 +124,11 @@ public final class ProblemInfo {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProblemInfo && equalTo((ProblemInfo) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ProblemInfo other) {
@@ -239,6 +249,9 @@ public final class ProblemInfo {
         private List<VariableTypeAndName> inputParams = new ArrayList<>();
 
         private Map<Language, ProblemFiles> files = new LinkedHashMap<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -378,7 +391,8 @@ public final class ProblemInfo {
                     outputType,
                     testcases,
                     methodName,
-                    supportsCustomTestCases);
+                    supportsCustomTestCases,
+                    additionalProperties);
         }
     }
 }

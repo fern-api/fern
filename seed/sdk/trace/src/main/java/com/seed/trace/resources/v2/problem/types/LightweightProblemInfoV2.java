@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableType;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,11 +31,16 @@ public final class LightweightProblemInfoV2 {
     private final Set<VariableType> variableTypes;
 
     private LightweightProblemInfoV2(
-            String problemId, String problemName, int problemVersion, Set<VariableType> variableTypes) {
+            String problemId,
+            String problemName,
+            int problemVersion,
+            Set<VariableType> variableTypes,
+            Map<String, Object> additionalProperties) {
         this.problemId = problemId;
         this.problemName = problemName;
         this.problemVersion = problemVersion;
         this.variableTypes = variableTypes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("problemId")
@@ -58,6 +67,11 @@ public final class LightweightProblemInfoV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LightweightProblemInfoV2 && equalTo((LightweightProblemInfoV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LightweightProblemInfoV2 other) {
@@ -115,6 +129,9 @@ public final class LightweightProblemInfoV2 {
 
         private Set<VariableType> variableTypes = new LinkedHashSet<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -169,7 +186,8 @@ public final class LightweightProblemInfoV2 {
 
         @Override
         public LightweightProblemInfoV2 build() {
-            return new LightweightProblemInfoV2(problemId, problemName, problemVersion, variableTypes);
+            return new LightweightProblemInfoV2(
+                    problemId, problemName, problemVersion, variableTypes, additionalProperties);
         }
     }
 }

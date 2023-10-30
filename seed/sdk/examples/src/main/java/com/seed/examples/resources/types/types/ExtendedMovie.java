@@ -3,6 +3,8 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -27,12 +31,19 @@ public final class ExtendedMovie implements IMovie {
 
     private final List<String> cast;
 
-    private ExtendedMovie(String id, String title, String from, double rating, List<String> cast) {
+    private ExtendedMovie(
+            String id,
+            String title,
+            String from,
+            double rating,
+            List<String> cast,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.title = title;
         this.from = from;
         this.rating = rating;
         this.cast = cast;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
@@ -77,6 +88,11 @@ public final class ExtendedMovie implements IMovie {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExtendedMovie && equalTo((ExtendedMovie) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ExtendedMovie other) {
@@ -140,6 +156,9 @@ public final class ExtendedMovie implements IMovie {
         private double rating;
 
         private List<String> cast = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -207,7 +226,7 @@ public final class ExtendedMovie implements IMovie {
 
         @Override
         public ExtendedMovie build() {
-            return new ExtendedMovie(id, title, from, rating, cast);
+            return new ExtendedMovie(id, title, from, rating, cast, additionalProperties);
         }
     }
 }

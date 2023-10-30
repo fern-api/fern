@@ -3,6 +3,7 @@
  */
 package com.seed.api.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.resources.a.types.A;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -19,8 +21,9 @@ import java.util.Optional;
 public final class ImportingA {
     private final Optional<A> a;
 
-    private ImportingA(Optional<A> a) {
+    private ImportingA(Optional<A> a, Map<String, Object> additionalProperties) {
         this.a = a;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("a")
@@ -32,6 +35,11 @@ public final class ImportingA {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ImportingA && equalTo((ImportingA) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ImportingA other) {
@@ -75,7 +83,7 @@ public final class ImportingA {
         }
 
         public ImportingA build() {
-            return new ImportingA(a);
+            return new ImportingA(a, additionalProperties);
         }
     }
 }

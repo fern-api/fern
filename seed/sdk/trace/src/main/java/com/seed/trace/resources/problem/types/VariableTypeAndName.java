@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableType;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,9 +23,10 @@ public final class VariableTypeAndName {
 
     private final String name;
 
-    private VariableTypeAndName(VariableType variableType, String name) {
+    private VariableTypeAndName(VariableType variableType, String name, Map<String, Object> additionalProperties) {
         this.variableType = variableType;
         this.name = name;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("variableType")
@@ -38,6 +43,11 @@ public final class VariableTypeAndName {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VariableTypeAndName && equalTo((VariableTypeAndName) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(VariableTypeAndName other) {
@@ -78,6 +88,9 @@ public final class VariableTypeAndName {
 
         private String name;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +116,7 @@ public final class VariableTypeAndName {
 
         @Override
         public VariableTypeAndName build() {
-            return new VariableTypeAndName(variableType, name);
+            return new VariableTypeAndName(variableType, name, additionalProperties);
         }
     }
 }

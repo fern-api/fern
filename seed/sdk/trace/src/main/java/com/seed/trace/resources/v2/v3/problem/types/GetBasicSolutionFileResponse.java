@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,8 +21,10 @@ import java.util.Objects;
 public final class GetBasicSolutionFileResponse {
     private final Map<Language, FileInfoV2> solutionFileByLanguage;
 
-    private GetBasicSolutionFileResponse(Map<Language, FileInfoV2> solutionFileByLanguage) {
+    private GetBasicSolutionFileResponse(
+            Map<Language, FileInfoV2> solutionFileByLanguage, Map<String, Object> additionalProperties) {
         this.solutionFileByLanguage = solutionFileByLanguage;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("solutionFileByLanguage")
@@ -33,6 +36,11 @@ public final class GetBasicSolutionFileResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetBasicSolutionFileResponse && equalTo((GetBasicSolutionFileResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetBasicSolutionFileResponse other) {
@@ -82,7 +90,7 @@ public final class GetBasicSolutionFileResponse {
         }
 
         public GetBasicSolutionFileResponse build() {
-            return new GetBasicSolutionFileResponse(solutionFileByLanguage);
+            return new GetBasicSolutionFileResponse(solutionFileByLanguage, additionalProperties);
         }
     }
 }

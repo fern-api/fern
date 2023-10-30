@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,10 +27,15 @@ public final class RecordedResponseNotification {
 
     private final Optional<String> testCaseId;
 
-    private RecordedResponseNotification(UUID submissionId, int traceResponsesSize, Optional<String> testCaseId) {
+    private RecordedResponseNotification(
+            UUID submissionId,
+            int traceResponsesSize,
+            Optional<String> testCaseId,
+            Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.traceResponsesSize = traceResponsesSize;
         this.testCaseId = testCaseId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -48,6 +57,11 @@ public final class RecordedResponseNotification {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordedResponseNotification && equalTo((RecordedResponseNotification) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(RecordedResponseNotification other) {
@@ -96,6 +110,9 @@ public final class RecordedResponseNotification {
 
         private Optional<String> testCaseId = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -135,7 +152,7 @@ public final class RecordedResponseNotification {
 
         @Override
         public RecordedResponseNotification build() {
-            return new RecordedResponseNotification(submissionId, traceResponsesSize, testCaseId);
+            return new RecordedResponseNotification(submissionId, traceResponsesSize, testCaseId, additionalProperties);
         }
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.v2.problem.types.ProblemInfoV2;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -27,11 +31,16 @@ public final class TestSubmissionStatusV2 {
     private final ProblemInfoV2 problemInfo;
 
     private TestSubmissionStatusV2(
-            List<TestSubmissionUpdate> updates, String problemId, int problemVersion, ProblemInfoV2 problemInfo) {
+            List<TestSubmissionUpdate> updates,
+            String problemId,
+            int problemVersion,
+            ProblemInfoV2 problemInfo,
+            Map<String, Object> additionalProperties) {
         this.updates = updates;
         this.problemId = problemId;
         this.problemVersion = problemVersion;
         this.problemInfo = problemInfo;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("updates")
@@ -58,6 +67,11 @@ public final class TestSubmissionStatusV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestSubmissionStatusV2 && equalTo((TestSubmissionStatusV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestSubmissionStatusV2 other) {
@@ -115,6 +129,9 @@ public final class TestSubmissionStatusV2 {
 
         private List<TestSubmissionUpdate> updates = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -169,7 +186,7 @@ public final class TestSubmissionStatusV2 {
 
         @Override
         public TestSubmissionStatusV2 build() {
-            return new TestSubmissionStatusV2(updates, problemId, problemVersion, problemInfo);
+            return new TestSubmissionStatusV2(updates, problemId, problemVersion, problemInfo, additionalProperties);
         }
     }
 }

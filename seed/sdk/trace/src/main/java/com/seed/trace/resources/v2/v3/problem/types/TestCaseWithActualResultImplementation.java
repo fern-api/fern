@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,9 +23,12 @@ public final class TestCaseWithActualResultImplementation {
     private final AssertCorrectnessCheck assertCorrectnessCheck;
 
     private TestCaseWithActualResultImplementation(
-            NonVoidFunctionDefinition getActualResult, AssertCorrectnessCheck assertCorrectnessCheck) {
+            NonVoidFunctionDefinition getActualResult,
+            AssertCorrectnessCheck assertCorrectnessCheck,
+            Map<String, Object> additionalProperties) {
         this.getActualResult = getActualResult;
         this.assertCorrectnessCheck = assertCorrectnessCheck;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("getActualResult")
@@ -39,6 +46,11 @@ public final class TestCaseWithActualResultImplementation {
         if (this == other) return true;
         return other instanceof TestCaseWithActualResultImplementation
                 && equalTo((TestCaseWithActualResultImplementation) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseWithActualResultImplementation other) {
@@ -80,6 +92,9 @@ public final class TestCaseWithActualResultImplementation {
 
         private AssertCorrectnessCheck assertCorrectnessCheck;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -105,7 +120,8 @@ public final class TestCaseWithActualResultImplementation {
 
         @Override
         public TestCaseWithActualResultImplementation build() {
-            return new TestCaseWithActualResultImplementation(getActualResult, assertCorrectnessCheck);
+            return new TestCaseWithActualResultImplementation(
+                    getActualResult, assertCorrectnessCheck, additionalProperties);
         }
     }
 }

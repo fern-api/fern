@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,9 +23,13 @@ public final class WorkspaceSubmissionUpdate {
 
     private final WorkspaceSubmissionUpdateInfo updateInfo;
 
-    private WorkspaceSubmissionUpdate(OffsetDateTime updateTime, WorkspaceSubmissionUpdateInfo updateInfo) {
+    private WorkspaceSubmissionUpdate(
+            OffsetDateTime updateTime,
+            WorkspaceSubmissionUpdateInfo updateInfo,
+            Map<String, Object> additionalProperties) {
         this.updateTime = updateTime;
         this.updateInfo = updateInfo;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("updateTime")
@@ -38,6 +46,11 @@ public final class WorkspaceSubmissionUpdate {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceSubmissionUpdate && equalTo((WorkspaceSubmissionUpdate) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceSubmissionUpdate other) {
@@ -78,6 +91,9 @@ public final class WorkspaceSubmissionUpdate {
 
         private WorkspaceSubmissionUpdateInfo updateInfo;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +119,7 @@ public final class WorkspaceSubmissionUpdate {
 
         @Override
         public WorkspaceSubmissionUpdate build() {
-            return new WorkspaceSubmissionUpdate(updateTime, updateInfo);
+            return new WorkspaceSubmissionUpdate(updateTime, updateInfo, additionalProperties);
         }
     }
 }

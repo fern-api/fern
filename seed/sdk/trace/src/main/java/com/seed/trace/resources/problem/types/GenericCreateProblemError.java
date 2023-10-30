@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,12 @@ public final class GenericCreateProblemError {
 
     private final String stacktrace;
 
-    private GenericCreateProblemError(String message, String type, String stacktrace) {
+    private GenericCreateProblemError(
+            String message, String type, String stacktrace, Map<String, Object> additionalProperties) {
         this.message = message;
         this.type = type;
         this.stacktrace = stacktrace;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("message")
@@ -45,6 +51,11 @@ public final class GenericCreateProblemError {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GenericCreateProblemError && equalTo((GenericCreateProblemError) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GenericCreateProblemError other) {
@@ -91,6 +102,9 @@ public final class GenericCreateProblemError {
 
         private String stacktrace;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -124,7 +138,7 @@ public final class GenericCreateProblemError {
 
         @Override
         public GenericCreateProblemError build() {
-            return new GenericCreateProblemError(message, type, stacktrace);
+            return new GenericCreateProblemError(message, type, stacktrace, additionalProperties);
         }
     }
 }

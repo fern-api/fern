@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.endpoints.params.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class GetWithQuery {
 
     private final int number;
 
-    private GetWithQuery(String query, int number) {
+    private GetWithQuery(String query, int number, Map<String, Object> additionalProperties) {
         this.query = query;
         this.number = number;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("query")
@@ -37,6 +42,11 @@ public final class GetWithQuery {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetWithQuery && equalTo((GetWithQuery) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetWithQuery other) {
@@ -77,6 +87,9 @@ public final class GetWithQuery {
 
         private int number;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class GetWithQuery {
 
         @Override
         public GetWithQuery build() {
-            return new GetWithQuery(query, number);
+            return new GetWithQuery(query, number, additionalProperties);
         }
     }
 }

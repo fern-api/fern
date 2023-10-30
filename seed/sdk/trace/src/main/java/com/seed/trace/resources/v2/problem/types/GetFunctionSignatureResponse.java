@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,8 +21,10 @@ import java.util.Objects;
 public final class GetFunctionSignatureResponse {
     private final Map<Language, String> functionByLanguage;
 
-    private GetFunctionSignatureResponse(Map<Language, String> functionByLanguage) {
+    private GetFunctionSignatureResponse(
+            Map<Language, String> functionByLanguage, Map<String, Object> additionalProperties) {
         this.functionByLanguage = functionByLanguage;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("functionByLanguage")
@@ -33,6 +36,11 @@ public final class GetFunctionSignatureResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetFunctionSignatureResponse && equalTo((GetFunctionSignatureResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetFunctionSignatureResponse other) {
@@ -82,7 +90,7 @@ public final class GetFunctionSignatureResponse {
         }
 
         public GetFunctionSignatureResponse build() {
-            return new GetFunctionSignatureResponse(functionByLanguage);
+            return new GetFunctionSignatureResponse(functionByLanguage, additionalProperties);
         }
     }
 }

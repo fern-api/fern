@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.VariableValue;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -26,11 +30,16 @@ public final class TestCaseNonHiddenGrade {
     private final String stdout;
 
     private TestCaseNonHiddenGrade(
-            boolean passed, Optional<VariableValue> actualResult, Optional<ExceptionV2> exception, String stdout) {
+            boolean passed,
+            Optional<VariableValue> actualResult,
+            Optional<ExceptionV2> exception,
+            String stdout,
+            Map<String, Object> additionalProperties) {
         this.passed = passed;
         this.actualResult = actualResult;
         this.exception = exception;
         this.stdout = stdout;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("passed")
@@ -57,6 +66,11 @@ public final class TestCaseNonHiddenGrade {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseNonHiddenGrade && equalTo((TestCaseNonHiddenGrade) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseNonHiddenGrade other) {
@@ -112,6 +126,9 @@ public final class TestCaseNonHiddenGrade {
 
         private Optional<VariableValue> actualResult = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -165,7 +182,7 @@ public final class TestCaseNonHiddenGrade {
 
         @Override
         public TestCaseNonHiddenGrade build() {
-            return new TestCaseNonHiddenGrade(passed, actualResult, exception, stdout);
+            return new TestCaseNonHiddenGrade(passed, actualResult, exception, stdout, additionalProperties);
         }
     }
 }

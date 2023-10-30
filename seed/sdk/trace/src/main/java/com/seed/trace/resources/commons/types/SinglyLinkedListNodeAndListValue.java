@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,11 @@ public final class SinglyLinkedListNodeAndListValue {
 
     private final SinglyLinkedListValue fullList;
 
-    private SinglyLinkedListNodeAndListValue(String nodeId, SinglyLinkedListValue fullList) {
+    private SinglyLinkedListNodeAndListValue(
+            String nodeId, SinglyLinkedListValue fullList, Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;
         this.fullList = fullList;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("nodeId")
@@ -37,6 +43,11 @@ public final class SinglyLinkedListNodeAndListValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SinglyLinkedListNodeAndListValue && equalTo((SinglyLinkedListNodeAndListValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(SinglyLinkedListNodeAndListValue other) {
@@ -77,6 +88,9 @@ public final class SinglyLinkedListNodeAndListValue {
 
         private SinglyLinkedListValue fullList;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +116,7 @@ public final class SinglyLinkedListNodeAndListValue {
 
         @Override
         public SinglyLinkedListNodeAndListValue build() {
-            return new SinglyLinkedListNodeAndListValue(nodeId, fullList);
+            return new SinglyLinkedListNodeAndListValue(nodeId, fullList, additionalProperties);
         }
     }
 }

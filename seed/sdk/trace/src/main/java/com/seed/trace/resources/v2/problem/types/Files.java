@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,8 +21,9 @@ import java.util.Objects;
 public final class Files {
     private final List<FileInfoV2> files;
 
-    private Files(List<FileInfoV2> files) {
+    private Files(List<FileInfoV2> files, Map<String, Object> additionalProperties) {
         this.files = files;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("files")
@@ -32,6 +35,11 @@ public final class Files {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Files && equalTo((Files) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Files other) {
@@ -81,7 +89,7 @@ public final class Files {
         }
 
         public Files build() {
-            return new Files(files);
+            return new Files(files, additionalProperties);
         }
     }
 }

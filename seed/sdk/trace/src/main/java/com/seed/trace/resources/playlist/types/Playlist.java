@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.playlist.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -25,11 +29,17 @@ public final class Playlist implements IPlaylistCreateRequest {
 
     private final String ownerId;
 
-    private Playlist(String name, List<String> problems, String playlistId, String ownerId) {
+    private Playlist(
+            String name,
+            List<String> problems,
+            String playlistId,
+            String ownerId,
+            Map<String, Object> additionalProperties) {
         this.name = name;
         this.problems = problems;
         this.playlistId = playlistId;
         this.ownerId = ownerId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
@@ -58,6 +68,11 @@ public final class Playlist implements IPlaylistCreateRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Playlist && equalTo((Playlist) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Playlist other) {
@@ -115,6 +130,9 @@ public final class Playlist implements IPlaylistCreateRequest {
 
         private List<String> problems = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -169,7 +187,7 @@ public final class Playlist implements IPlaylistCreateRequest {
 
         @Override
         public Playlist build() {
-            return new Playlist(name, problems, playlistId, ownerId);
+            return new Playlist(name, problems, playlistId, ownerId, additionalProperties);
         }
     }
 }

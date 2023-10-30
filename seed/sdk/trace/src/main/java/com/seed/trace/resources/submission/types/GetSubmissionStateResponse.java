@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -30,11 +34,13 @@ public final class GetSubmissionStateResponse {
             Optional<OffsetDateTime> timeSubmitted,
             String submission,
             Language language,
-            SubmissionTypeState submissionTypeState) {
+            SubmissionTypeState submissionTypeState,
+            Map<String, Object> additionalProperties) {
         this.timeSubmitted = timeSubmitted;
         this.submission = submission;
         this.language = language;
         this.submissionTypeState = submissionTypeState;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("timeSubmitted")
@@ -61,6 +67,11 @@ public final class GetSubmissionStateResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetSubmissionStateResponse && equalTo((GetSubmissionStateResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetSubmissionStateResponse other) {
@@ -116,6 +127,9 @@ public final class GetSubmissionStateResponse {
 
         private Optional<OffsetDateTime> timeSubmitted = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -163,7 +177,8 @@ public final class GetSubmissionStateResponse {
 
         @Override
         public GetSubmissionStateResponse build() {
-            return new GetSubmissionStateResponse(timeSubmitted, submission, language, submissionTypeState);
+            return new GetSubmissionStateResponse(
+                    timeSubmitted, submission, language, submissionTypeState, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -26,11 +30,13 @@ public final class BasicTestCaseTemplate {
             String templateId,
             String name,
             TestCaseImplementationDescription description,
-            String expectedValueParameterId) {
+            String expectedValueParameterId,
+            Map<String, Object> additionalProperties) {
         this.templateId = templateId;
         this.name = name;
         this.description = description;
         this.expectedValueParameterId = expectedValueParameterId;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("templateId")
@@ -57,6 +63,11 @@ public final class BasicTestCaseTemplate {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BasicTestCaseTemplate && equalTo((BasicTestCaseTemplate) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(BasicTestCaseTemplate other) {
@@ -113,6 +124,9 @@ public final class BasicTestCaseTemplate {
 
         private String expectedValueParameterId;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -154,7 +168,8 @@ public final class BasicTestCaseTemplate {
 
         @Override
         public BasicTestCaseTemplate build() {
-            return new BasicTestCaseTemplate(templateId, name, description, expectedValueParameterId);
+            return new BasicTestCaseTemplate(
+                    templateId, name, description, expectedValueParameterId, additionalProperties);
         }
     }
 }

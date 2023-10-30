@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.v2.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,15 @@ public final class TestCaseTemplate {
 
     private final TestCaseImplementation implementation;
 
-    private TestCaseTemplate(String templateId, String name, TestCaseImplementation implementation) {
+    private TestCaseTemplate(
+            String templateId,
+            String name,
+            TestCaseImplementation implementation,
+            Map<String, Object> additionalProperties) {
         this.templateId = templateId;
         this.name = name;
         this.implementation = implementation;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("templateId")
@@ -45,6 +54,11 @@ public final class TestCaseTemplate {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TestCaseTemplate && equalTo((TestCaseTemplate) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(TestCaseTemplate other) {
@@ -93,6 +107,9 @@ public final class TestCaseTemplate {
 
         private TestCaseImplementation implementation;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -126,7 +143,7 @@ public final class TestCaseTemplate {
 
         @Override
         public TestCaseTemplate build() {
-            return new TestCaseTemplate(templateId, name, implementation);
+            return new TestCaseTemplate(templateId, name, implementation, additionalProperties);
         }
     }
 }

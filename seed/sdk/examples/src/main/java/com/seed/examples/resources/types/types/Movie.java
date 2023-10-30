@@ -3,12 +3,16 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,11 +26,12 @@ public final class Movie implements IMovie {
 
     private final double rating;
 
-    private Movie(String id, String title, String from, double rating) {
+    private Movie(String id, String title, String from, double rating, Map<String, Object> additionalProperties) {
         this.id = id;
         this.title = title;
         this.from = from;
         this.rating = rating;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
@@ -66,6 +71,11 @@ public final class Movie implements IMovie {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Movie && equalTo((Movie) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Movie other) {
@@ -118,6 +128,9 @@ public final class Movie implements IMovie {
 
         private double rating;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -163,7 +176,7 @@ public final class Movie implements IMovie {
 
         @Override
         public Movie build() {
-            return new Movie(id, title, from, rating);
+            return new Movie(id, title, from, rating, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.exhaustive.resources.reqwithheaders.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,15 @@ public final class ReqWithHeaders {
 
     private final String body;
 
-    private ReqWithHeaders(String xTestServiceHeader, String xTestEndpointHeader, String body) {
+    private ReqWithHeaders(
+            String xTestServiceHeader,
+            String xTestEndpointHeader,
+            String body,
+            Map<String, Object> additionalProperties) {
         this.xTestServiceHeader = xTestServiceHeader;
         this.xTestEndpointHeader = xTestEndpointHeader;
         this.body = body;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("X-TEST-SERVICE-HEADER")
@@ -45,6 +54,11 @@ public final class ReqWithHeaders {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ReqWithHeaders && equalTo((ReqWithHeaders) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ReqWithHeaders other) {
@@ -94,6 +108,9 @@ public final class ReqWithHeaders {
 
         private String body;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -127,7 +144,7 @@ public final class ReqWithHeaders {
 
         @Override
         public ReqWithHeaders build() {
-            return new ReqWithHeaders(xTestServiceHeader, xTestEndpointHeader, body);
+            return new ReqWithHeaders(xTestServiceHeader, xTestEndpointHeader, body, additionalProperties);
         }
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.playlist.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,12 +35,14 @@ public final class GetPlaylistsRequest {
             String otherField,
             String multiLineDocs,
             Optional<String> optionalMultipleField,
-            String multipleField) {
+            String multipleField,
+            Map<String, Object> additionalProperties) {
         this.limit = limit;
         this.otherField = otherField;
         this.multiLineDocs = multiLineDocs;
         this.optionalMultipleField = optionalMultipleField;
         this.multipleField = multipleField;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("limit")
@@ -75,6 +81,11 @@ public final class GetPlaylistsRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetPlaylistsRequest && equalTo((GetPlaylistsRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetPlaylistsRequest other) {
@@ -137,6 +148,9 @@ public final class GetPlaylistsRequest {
         private Optional<String> optionalMultipleField = Optional.empty();
 
         private Optional<Integer> limit = Optional.empty();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -208,7 +222,8 @@ public final class GetPlaylistsRequest {
 
         @Override
         public GetPlaylistsRequest build() {
-            return new GetPlaylistsRequest(limit, otherField, multiLineDocs, optionalMultipleField, multipleField);
+            return new GetPlaylistsRequest(
+                    limit, otherField, multiLineDocs, optionalMultipleField, multipleField, additionalProperties);
         }
     }
 }

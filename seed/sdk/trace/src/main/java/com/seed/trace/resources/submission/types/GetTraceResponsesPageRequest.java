@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,8 +20,9 @@ import java.util.Optional;
 public final class GetTraceResponsesPageRequest {
     private final Optional<Integer> offset;
 
-    private GetTraceResponsesPageRequest(Optional<Integer> offset) {
+    private GetTraceResponsesPageRequest(Optional<Integer> offset, Map<String, Object> additionalProperties) {
         this.offset = offset;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("offset")
@@ -31,6 +34,11 @@ public final class GetTraceResponsesPageRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetTraceResponsesPageRequest && equalTo((GetTraceResponsesPageRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetTraceResponsesPageRequest other) {
@@ -74,7 +82,7 @@ public final class GetTraceResponsesPageRequest {
         }
 
         public GetTraceResponsesPageRequest build() {
-            return new GetTraceResponsesPageRequest(offset);
+            return new GetTraceResponsesPageRequest(offset, additionalProperties);
         }
     }
 }

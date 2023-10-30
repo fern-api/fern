@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.playlist.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -21,9 +25,10 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
 
     private final List<String> problems;
 
-    private PlaylistCreateRequest(String name, List<String> problems) {
+    private PlaylistCreateRequest(String name, List<String> problems, Map<String, Object> additionalProperties) {
         this.name = name;
         this.problems = problems;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
@@ -42,6 +47,11 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PlaylistCreateRequest && equalTo((PlaylistCreateRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(PlaylistCreateRequest other) {
@@ -84,6 +94,9 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
 
         private List<String> problems = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -122,7 +135,7 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
 
         @Override
         public PlaylistCreateRequest build() {
-            return new PlaylistCreateRequest(name, problems);
+            return new PlaylistCreateRequest(name, problems, additionalProperties);
         }
     }
 }

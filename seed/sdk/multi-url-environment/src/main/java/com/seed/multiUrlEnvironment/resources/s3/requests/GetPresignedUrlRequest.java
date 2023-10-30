@@ -3,12 +3,16 @@
  */
 package com.seed.multiUrlEnvironment.resources.s3.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class GetPresignedUrlRequest {
     private final String s3Key;
 
-    private GetPresignedUrlRequest(String s3Key) {
+    private GetPresignedUrlRequest(String s3Key, Map<String, Object> additionalProperties) {
         this.s3Key = s3Key;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("s3Key")
@@ -29,6 +34,11 @@ public final class GetPresignedUrlRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetPresignedUrlRequest && equalTo((GetPresignedUrlRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetPresignedUrlRequest other) {
@@ -63,6 +73,9 @@ public final class GetPresignedUrlRequest {
     public static final class Builder implements S3KeyStage, _FinalStage {
         private String s3Key;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class GetPresignedUrlRequest {
 
         @Override
         public GetPresignedUrlRequest build() {
-            return new GetPresignedUrlRequest(s3Key);
+            return new GetPresignedUrlRequest(s3Key, additionalProperties);
         }
     }
 }

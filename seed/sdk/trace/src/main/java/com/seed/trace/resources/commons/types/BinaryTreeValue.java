@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,9 +23,11 @@ public final class BinaryTreeValue {
 
     private final Map<String, BinaryTreeNodeValue> nodes;
 
-    private BinaryTreeValue(Optional<String> root, Map<String, BinaryTreeNodeValue> nodes) {
+    private BinaryTreeValue(
+            Optional<String> root, Map<String, BinaryTreeNodeValue> nodes, Map<String, Object> additionalProperties) {
         this.root = root;
         this.nodes = nodes;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("root")
@@ -41,6 +44,11 @@ public final class BinaryTreeValue {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BinaryTreeValue && equalTo((BinaryTreeValue) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(BinaryTreeValue other) {
@@ -104,7 +112,7 @@ public final class BinaryTreeValue {
         }
 
         public BinaryTreeValue build() {
-            return new BinaryTreeValue(root, nodes);
+            return new BinaryTreeValue(root, nodes, additionalProperties);
         }
     }
 }

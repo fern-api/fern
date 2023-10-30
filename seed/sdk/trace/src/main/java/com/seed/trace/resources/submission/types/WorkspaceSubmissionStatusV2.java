@@ -3,6 +3,7 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -19,8 +21,10 @@ import java.util.Objects;
 public final class WorkspaceSubmissionStatusV2 {
     private final List<WorkspaceSubmissionUpdate> updates;
 
-    private WorkspaceSubmissionStatusV2(List<WorkspaceSubmissionUpdate> updates) {
+    private WorkspaceSubmissionStatusV2(
+            List<WorkspaceSubmissionUpdate> updates, Map<String, Object> additionalProperties) {
         this.updates = updates;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("updates")
@@ -32,6 +36,11 @@ public final class WorkspaceSubmissionStatusV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceSubmissionStatusV2 && equalTo((WorkspaceSubmissionStatusV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceSubmissionStatusV2 other) {
@@ -81,7 +90,7 @@ public final class WorkspaceSubmissionStatusV2 {
         }
 
         public WorkspaceSubmissionStatusV2 build() {
-            return new WorkspaceSubmissionStatusV2(updates);
+            return new WorkspaceSubmissionStatusV2(updates, additionalProperties);
         }
     }
 }

@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,9 +23,11 @@ public final class WorkspaceRanResponse {
 
     private final WorkspaceRunDetails runDetails;
 
-    private WorkspaceRanResponse(UUID submissionId, WorkspaceRunDetails runDetails) {
+    private WorkspaceRanResponse(
+            UUID submissionId, WorkspaceRunDetails runDetails, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.runDetails = runDetails;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("submissionId")
@@ -38,6 +44,11 @@ public final class WorkspaceRanResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceRanResponse && equalTo((WorkspaceRanResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceRanResponse other) {
@@ -78,6 +89,9 @@ public final class WorkspaceRanResponse {
 
         private WorkspaceRunDetails runDetails;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -103,7 +117,7 @@ public final class WorkspaceRanResponse {
 
         @Override
         public WorkspaceRanResponse build() {
-            return new WorkspaceRanResponse(submissionId, runDetails);
+            return new WorkspaceRanResponse(submissionId, runDetails, additionalProperties);
         }
     }
 }

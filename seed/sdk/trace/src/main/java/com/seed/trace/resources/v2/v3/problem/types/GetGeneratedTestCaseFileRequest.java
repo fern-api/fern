@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,9 +24,11 @@ public final class GetGeneratedTestCaseFileRequest {
 
     private final TestCaseV2 testCase;
 
-    private GetGeneratedTestCaseFileRequest(Optional<TestCaseTemplate> template, TestCaseV2 testCase) {
+    private GetGeneratedTestCaseFileRequest(
+            Optional<TestCaseTemplate> template, TestCaseV2 testCase, Map<String, Object> additionalProperties) {
         this.template = template;
         this.testCase = testCase;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("template")
@@ -39,6 +45,11 @@ public final class GetGeneratedTestCaseFileRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetGeneratedTestCaseFileRequest && equalTo((GetGeneratedTestCaseFileRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(GetGeneratedTestCaseFileRequest other) {
@@ -79,6 +90,9 @@ public final class GetGeneratedTestCaseFileRequest {
 
         private Optional<TestCaseTemplate> template = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -110,7 +124,7 @@ public final class GetGeneratedTestCaseFileRequest {
 
         @Override
         public GetGeneratedTestCaseFileRequest build() {
-            return new GetGeneratedTestCaseFileRequest(template, testCase);
+            return new GetGeneratedTestCaseFileRequest(template, testCase, additionalProperties);
         }
     }
 }

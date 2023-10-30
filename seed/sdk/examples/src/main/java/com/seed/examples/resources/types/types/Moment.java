@@ -3,6 +3,8 @@
  */
 package com.seed.examples.resources.types.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,10 +26,11 @@ public final class Moment {
 
     private final OffsetDateTime datetime;
 
-    private Moment(UUID id, String date, OffsetDateTime datetime) {
+    private Moment(UUID id, String date, OffsetDateTime datetime, Map<String, Object> additionalProperties) {
         this.id = id;
         this.date = date;
         this.datetime = datetime;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
@@ -47,6 +52,11 @@ public final class Moment {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Moment && equalTo((Moment) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(Moment other) {
@@ -93,6 +103,9 @@ public final class Moment {
 
         private OffsetDateTime datetime;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -126,7 +139,7 @@ public final class Moment {
 
         @Override
         public Moment build() {
-            return new Moment(id, date, datetime);
+            return new Moment(id, date, datetime, additionalProperties);
         }
     }
 }

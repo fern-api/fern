@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,9 +26,12 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
     private final FunctionImplementationForMultipleLanguages code;
 
     private VoidFunctionDefinitionThatTakesActualResult(
-            List<Parameter> additionalParameters, FunctionImplementationForMultipleLanguages code) {
+            List<Parameter> additionalParameters,
+            FunctionImplementationForMultipleLanguages code,
+            Map<String, Object> additionalProperties) {
         this.additionalParameters = additionalParameters;
         this.code = code;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("additionalParameters")
@@ -42,6 +49,11 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
         if (this == other) return true;
         return other instanceof VoidFunctionDefinitionThatTakesActualResult
                 && equalTo((VoidFunctionDefinitionThatTakesActualResult) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(VoidFunctionDefinitionThatTakesActualResult other) {
@@ -84,6 +96,9 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
 
         private List<Parameter> additionalParameters = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -122,7 +137,7 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
 
         @Override
         public VoidFunctionDefinitionThatTakesActualResult build() {
-            return new VoidFunctionDefinitionThatTakesActualResult(additionalParameters, code);
+            return new VoidFunctionDefinitionThatTakesActualResult(additionalParameters, code, additionalProperties);
         }
     }
 }

@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.v2.v3.problem.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,8 +15,10 @@ import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
 import com.seed.trace.resources.problem.types.ProblemDescription;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -42,7 +46,8 @@ public final class CreateProblemRequestV2 {
             List<TestCaseTemplate> customTestCaseTemplates,
             List<TestCaseV2> testcases,
             Set<Language> supportedLanguages,
-            boolean isPublic) {
+            boolean isPublic,
+            Map<String, Object> additionalProperties) {
         this.problemName = problemName;
         this.problemDescription = problemDescription;
         this.customFiles = customFiles;
@@ -50,6 +55,7 @@ public final class CreateProblemRequestV2 {
         this.testcases = testcases;
         this.supportedLanguages = supportedLanguages;
         this.isPublic = isPublic;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("problemName")
@@ -91,6 +97,11 @@ public final class CreateProblemRequestV2 {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateProblemRequestV2 && equalTo((CreateProblemRequestV2) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(CreateProblemRequestV2 other) {
@@ -180,6 +191,9 @@ public final class CreateProblemRequestV2 {
         private List<TestCaseV2> testcases = new ArrayList<>();
 
         private List<TestCaseTemplate> customTestCaseTemplates = new ArrayList<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
@@ -292,7 +306,8 @@ public final class CreateProblemRequestV2 {
                     customTestCaseTemplates,
                     testcases,
                     supportedLanguages,
-                    isPublic);
+                    isPublic,
+                    additionalProperties);
         }
     }
 }

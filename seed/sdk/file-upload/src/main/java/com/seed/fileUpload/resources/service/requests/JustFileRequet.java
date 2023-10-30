@@ -3,15 +3,24 @@
  */
 package com.seed.fileUpload.resources.service.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.seed.fileUpload.core.ObjectMappers;
+import java.util.Map;
 
 public final class JustFileRequet {
-    private JustFileRequet() {}
+    private JustFileRequet(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JustFileRequet;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     @Override

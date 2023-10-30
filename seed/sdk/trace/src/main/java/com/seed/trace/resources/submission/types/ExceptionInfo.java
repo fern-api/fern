@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -20,10 +24,15 @@ public final class ExceptionInfo {
 
     private final String exceptionStacktrace;
 
-    private ExceptionInfo(String exceptionType, String exceptionMessage, String exceptionStacktrace) {
+    private ExceptionInfo(
+            String exceptionType,
+            String exceptionMessage,
+            String exceptionStacktrace,
+            Map<String, Object> additionalProperties) {
         this.exceptionType = exceptionType;
         this.exceptionMessage = exceptionMessage;
         this.exceptionStacktrace = exceptionStacktrace;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("exceptionType")
@@ -45,6 +54,11 @@ public final class ExceptionInfo {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExceptionInfo && equalTo((ExceptionInfo) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(ExceptionInfo other) {
@@ -94,6 +108,9 @@ public final class ExceptionInfo {
 
         private String exceptionStacktrace;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -127,7 +144,7 @@ public final class ExceptionInfo {
 
         @Override
         public ExceptionInfo build() {
-            return new ExceptionInfo(exceptionType, exceptionMessage, exceptionStacktrace);
+            return new ExceptionInfo(exceptionType, exceptionMessage, exceptionStacktrace, additionalProperties);
         }
     }
 }

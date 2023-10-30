@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.commons.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -18,9 +22,10 @@ public final class MapType {
 
     private final VariableType valueType;
 
-    private MapType(VariableType keyType, VariableType valueType) {
+    private MapType(VariableType keyType, VariableType valueType, Map<String, Object> additionalProperties) {
         this.keyType = keyType;
         this.valueType = valueType;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("keyType")
@@ -37,6 +42,11 @@ public final class MapType {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MapType && equalTo((MapType) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(MapType other) {
@@ -77,6 +87,9 @@ public final class MapType {
 
         private VariableType valueType;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -102,7 +115,7 @@ public final class MapType {
 
         @Override
         public MapType build() {
-            return new MapType(keyType, valueType);
+            return new MapType(keyType, valueType, additionalProperties);
         }
     }
 }

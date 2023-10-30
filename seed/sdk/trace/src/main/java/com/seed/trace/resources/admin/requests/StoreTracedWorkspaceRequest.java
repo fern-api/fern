@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.admin.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +15,9 @@ import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.submission.types.TraceResponse;
 import com.seed.trace.resources.submission.types.WorkspaceRunDetails;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -23,9 +27,13 @@ public final class StoreTracedWorkspaceRequest {
 
     private final List<TraceResponse> traceResponses;
 
-    private StoreTracedWorkspaceRequest(WorkspaceRunDetails workspaceRunDetails, List<TraceResponse> traceResponses) {
+    private StoreTracedWorkspaceRequest(
+            WorkspaceRunDetails workspaceRunDetails,
+            List<TraceResponse> traceResponses,
+            Map<String, Object> additionalProperties) {
         this.workspaceRunDetails = workspaceRunDetails;
         this.traceResponses = traceResponses;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("workspaceRunDetails")
@@ -42,6 +50,11 @@ public final class StoreTracedWorkspaceRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StoreTracedWorkspaceRequest && equalTo((StoreTracedWorkspaceRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(StoreTracedWorkspaceRequest other) {
@@ -84,6 +97,9 @@ public final class StoreTracedWorkspaceRequest {
 
         private List<TraceResponse> traceResponses = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -122,7 +138,7 @@ public final class StoreTracedWorkspaceRequest {
 
         @Override
         public StoreTracedWorkspaceRequest build() {
-            return new StoreTracedWorkspaceRequest(workspaceRunDetails, traceResponses);
+            return new StoreTracedWorkspaceRequest(workspaceRunDetails, traceResponses, additionalProperties);
         }
     }
 }

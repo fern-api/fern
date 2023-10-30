@@ -3,15 +3,24 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.seed.trace.core.ObjectMappers;
+import java.util.Map;
 
 public final class TerminatedResponse {
-    private TerminatedResponse() {}
+    private TerminatedResponse(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TerminatedResponse;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     @Override

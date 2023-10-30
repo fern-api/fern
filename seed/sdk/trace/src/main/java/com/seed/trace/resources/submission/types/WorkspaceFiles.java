@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.submission.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.FileInfo;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -22,9 +26,10 @@ public final class WorkspaceFiles {
 
     private final List<FileInfo> readOnlyFiles;
 
-    private WorkspaceFiles(FileInfo mainFile, List<FileInfo> readOnlyFiles) {
+    private WorkspaceFiles(FileInfo mainFile, List<FileInfo> readOnlyFiles, Map<String, Object> additionalProperties) {
         this.mainFile = mainFile;
         this.readOnlyFiles = readOnlyFiles;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("mainFile")
@@ -41,6 +46,11 @@ public final class WorkspaceFiles {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkspaceFiles && equalTo((WorkspaceFiles) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(WorkspaceFiles other) {
@@ -83,6 +93,9 @@ public final class WorkspaceFiles {
 
         private List<FileInfo> readOnlyFiles = new ArrayList<>();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -121,7 +134,7 @@ public final class WorkspaceFiles {
 
         @Override
         public WorkspaceFiles build() {
-            return new WorkspaceFiles(mainFile, readOnlyFiles);
+            return new WorkspaceFiles(mainFile, readOnlyFiles, additionalProperties);
         }
     }
 }

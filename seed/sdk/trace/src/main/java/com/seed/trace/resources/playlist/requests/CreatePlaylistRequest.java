@@ -3,6 +3,8 @@
  */
 package com.seed.trace.resources.playlist.requests;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.playlist.types.PlaylistCreateRequest;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -25,10 +29,14 @@ public final class CreatePlaylistRequest {
     private final PlaylistCreateRequest body;
 
     private CreatePlaylistRequest(
-            OffsetDateTime datetime, Optional<OffsetDateTime> optionalDatetime, PlaylistCreateRequest body) {
+            OffsetDateTime datetime,
+            Optional<OffsetDateTime> optionalDatetime,
+            PlaylistCreateRequest body,
+            Map<String, Object> additionalProperties) {
         this.datetime = datetime;
         this.optionalDatetime = optionalDatetime;
         this.body = body;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("datetime")
@@ -50,6 +58,11 @@ public final class CreatePlaylistRequest {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreatePlaylistRequest && equalTo((CreatePlaylistRequest) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(CreatePlaylistRequest other) {
@@ -98,6 +111,9 @@ public final class CreatePlaylistRequest {
 
         private Optional<OffsetDateTime> optionalDatetime = Optional.empty();
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -137,7 +153,7 @@ public final class CreatePlaylistRequest {
 
         @Override
         public CreatePlaylistRequest build() {
-            return new CreatePlaylistRequest(datetime, optionalDatetime, body);
+            return new CreatePlaylistRequest(datetime, optionalDatetime, body, additionalProperties);
         }
     }
 }

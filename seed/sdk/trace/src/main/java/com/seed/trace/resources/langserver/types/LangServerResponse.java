@@ -3,12 +3,16 @@
  */
 package com.seed.trace.resources.langserver.types;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -16,8 +20,9 @@ import java.util.Objects;
 public final class LangServerResponse {
     private final Object response;
 
-    private LangServerResponse(Object response) {
+    private LangServerResponse(Object response, Map<String, Object> additionalProperties) {
         this.response = response;
+        this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("response")
@@ -29,6 +34,11 @@ public final class LangServerResponse {
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LangServerResponse && equalTo((LangServerResponse) other);
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
     private boolean equalTo(LangServerResponse other) {
@@ -63,6 +73,9 @@ public final class LangServerResponse {
     public static final class Builder implements ResponseStage, _FinalStage {
         private Object response;
 
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
         private Builder() {}
 
         @Override
@@ -80,7 +93,7 @@ public final class LangServerResponse {
 
         @Override
         public LangServerResponse build() {
-            return new LangServerResponse(response);
+            return new LangServerResponse(response, additionalProperties);
         }
     }
 }
