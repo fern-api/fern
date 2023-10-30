@@ -26,6 +26,8 @@ public final class BasicTestCaseTemplate {
 
     private final String expectedValueParameterId;
 
+    private final Map<String, Object> additionalProperties;
+
     private BasicTestCaseTemplate(
             String templateId,
             String name,

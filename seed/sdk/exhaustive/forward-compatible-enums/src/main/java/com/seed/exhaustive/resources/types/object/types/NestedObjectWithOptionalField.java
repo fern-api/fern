@@ -22,6 +22,8 @@ public final class NestedObjectWithOptionalField {
 
     private final Optional<ObjectWithOptionalField> nestedObject;
 
+    private final Map<String, Object> additionalProperties;
+
     private NestedObjectWithOptionalField(
             Optional<String> string,
             Optional<ObjectWithOptionalField> nestedObject,

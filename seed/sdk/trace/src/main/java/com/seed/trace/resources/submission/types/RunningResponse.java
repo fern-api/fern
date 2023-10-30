@@ -23,6 +23,8 @@ public final class RunningResponse {
 
     private final RunningSubmissionState state;
 
+    private final Map<String, Object> additionalProperties;
+
     private RunningResponse(UUID submissionId, RunningSubmissionState state, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.state = state;

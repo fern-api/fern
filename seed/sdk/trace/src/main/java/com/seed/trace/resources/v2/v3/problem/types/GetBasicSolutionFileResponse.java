@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class GetBasicSolutionFileResponse {
     private final Map<Language, FileInfoV2> solutionFileByLanguage;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetBasicSolutionFileResponse(
             Map<Language, FileInfoV2> solutionFileByLanguage, Map<String, Object> additionalProperties) {
         this.solutionFileByLanguage = solutionFileByLanguage;

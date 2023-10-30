@@ -26,6 +26,8 @@ public final class DefaultProvidedFile {
 
     private final List<VariableType> relatedTypes;
 
+    private final Map<String, Object> additionalProperties;
+
     private DefaultProvidedFile(
             FileInfoV2 file, List<VariableType> relatedTypes, Map<String, Object> additionalProperties) {
         this.file = file;

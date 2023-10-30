@@ -29,6 +29,8 @@ public final class Playlist implements IPlaylistCreateRequest {
 
     private final String ownerId;
 
+    private final Map<String, Object> additionalProperties;
+
     private Playlist(
             String name,
             List<String> problems,

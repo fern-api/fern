@@ -26,6 +26,8 @@ public final class FileInfoV2 {
 
     private final boolean editable;
 
+    private final Map<String, Object> additionalProperties;
+
     private FileInfoV2(
             String filename,
             String directory,

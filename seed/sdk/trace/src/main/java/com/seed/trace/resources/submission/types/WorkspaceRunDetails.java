@@ -26,6 +26,8 @@ public final class WorkspaceRunDetails {
 
     private final String stdout;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceRunDetails(
             Optional<ExceptionV2> exceptionV2,
             Optional<ExceptionInfo> exception,

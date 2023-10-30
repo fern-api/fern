@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class WorkspaceTracedUpdate {
     private final int traceResponsesSize;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceTracedUpdate(int traceResponsesSize, Map<String, Object> additionalProperties) {
         this.traceResponsesSize = traceResponsesSize;
         this.additionalProperties = additionalProperties;

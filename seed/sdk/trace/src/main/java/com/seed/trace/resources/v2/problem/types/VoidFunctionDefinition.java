@@ -25,6 +25,8 @@ public final class VoidFunctionDefinition {
 
     private final FunctionImplementationForMultipleLanguages code;
 
+    private final Map<String, Object> additionalProperties;
+
     private VoidFunctionDefinition(
             List<Parameter> parameters,
             FunctionImplementationForMultipleLanguages code,

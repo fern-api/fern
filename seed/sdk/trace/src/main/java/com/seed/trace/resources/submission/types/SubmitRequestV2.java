@@ -36,6 +36,8 @@ public final class SubmitRequestV2 {
 
     private final Optional<String> userId;
 
+    private final Map<String, Object> additionalProperties;
+
     private SubmitRequestV2(
             UUID submissionId,
             Language language,

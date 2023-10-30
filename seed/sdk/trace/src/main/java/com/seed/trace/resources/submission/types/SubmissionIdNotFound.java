@@ -21,6 +21,8 @@ import java.util.UUID;
 public final class SubmissionIdNotFound {
     private final UUID missingSubmissionId;
 
+    private final Map<String, Object> additionalProperties;
+
     private SubmissionIdNotFound(UUID missingSubmissionId, Map<String, Object> additionalProperties) {
         this.missingSubmissionId = missingSubmissionId;
         this.additionalProperties = additionalProperties;

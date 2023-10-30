@@ -24,6 +24,8 @@ public final class GetGeneratedTestCaseFileRequest {
 
     private final TestCaseV2 testCase;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetGeneratedTestCaseFileRequest(
             Optional<TestCaseTemplate> template, TestCaseV2 testCase, Map<String, Object> additionalProperties) {
         this.template = template;

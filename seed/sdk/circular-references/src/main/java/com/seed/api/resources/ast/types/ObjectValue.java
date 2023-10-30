@@ -8,6 +8,8 @@ import com.seed.api.core.ObjectMappers;
 import java.util.Map;
 
 public final class ObjectValue {
+    private final Map<String, Object> additionalProperties;
+
     private ObjectValue(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }

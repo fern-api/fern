@@ -22,6 +22,8 @@ public final class DebugKeyValuePairs {
 
     private final DebugVariableValue value;
 
+    private final Map<String, Object> additionalProperties;
+
     private DebugKeyValuePairs(
             DebugVariableValue key, DebugVariableValue value, Map<String, Object> additionalProperties) {
         this.key = key;

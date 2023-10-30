@@ -39,6 +39,8 @@ public final class CreateProblemRequest {
 
     private final String methodName;
 
+    private final Map<String, Object> additionalProperties;
+
     private CreateProblemRequest(
             String problemName,
             ProblemDescription problemDescription,

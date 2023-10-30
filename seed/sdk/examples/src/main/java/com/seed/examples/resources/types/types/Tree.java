@@ -21,6 +21,8 @@ import java.util.Optional;
 public final class Tree {
     private final Optional<List<Node>> nodes;
 
+    private final Map<String, Object> additionalProperties;
+
     private Tree(Optional<List<Node>> nodes, Map<String, Object> additionalProperties) {
         this.nodes = nodes;
         this.additionalProperties = additionalProperties;

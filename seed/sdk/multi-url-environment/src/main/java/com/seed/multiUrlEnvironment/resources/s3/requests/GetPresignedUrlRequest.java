@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class GetPresignedUrlRequest {
     private final String s3Key;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetPresignedUrlRequest(String s3Key, Map<String, Object> additionalProperties) {
         this.s3Key = s3Key;
         this.additionalProperties = additionalProperties;

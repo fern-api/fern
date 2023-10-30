@@ -26,6 +26,8 @@ public final class VoidFunctionSignatureThatTakesActualResult {
 
     private final VariableType actualResultType;
 
+    private final Map<String, Object> additionalProperties;
+
     private VoidFunctionSignatureThatTakesActualResult(
             List<Parameter> parameters, VariableType actualResultType, Map<String, Object> additionalProperties) {
         this.parameters = parameters;

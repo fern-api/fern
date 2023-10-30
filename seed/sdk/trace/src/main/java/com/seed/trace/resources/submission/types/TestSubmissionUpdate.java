@@ -23,6 +23,8 @@ public final class TestSubmissionUpdate {
 
     private final TestSubmissionUpdateInfo updateInfo;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestSubmissionUpdate(
             OffsetDateTime updateTime, TestSubmissionUpdateInfo updateInfo, Map<String, Object> additionalProperties) {
         this.updateTime = updateTime;

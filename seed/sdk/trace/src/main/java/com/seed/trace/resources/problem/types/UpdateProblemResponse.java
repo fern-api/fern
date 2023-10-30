@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class UpdateProblemResponse {
     private final int problemVersion;
 
+    private final Map<String, Object> additionalProperties;
+
     private UpdateProblemResponse(int problemVersion, Map<String, Object> additionalProperties) {
         this.problemVersion = problemVersion;
         this.additionalProperties = additionalProperties;

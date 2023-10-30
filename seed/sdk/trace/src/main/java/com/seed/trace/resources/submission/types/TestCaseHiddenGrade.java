@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class TestCaseHiddenGrade {
     private final boolean passed;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseHiddenGrade(boolean passed, Map<String, Object> additionalProperties) {
         this.passed = passed;
         this.additionalProperties = additionalProperties;

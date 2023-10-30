@@ -26,6 +26,8 @@ public final class Movie implements IMovie {
 
     private final double rating;
 
+    private final Map<String, Object> additionalProperties;
+
     private Movie(String id, String title, String from, double rating, Map<String, Object> additionalProperties) {
         this.id = id;
         this.title = title;

@@ -22,6 +22,8 @@ public final class TracedFile {
 
     private final String directory;
 
+    private final Map<String, Object> additionalProperties;
+
     private TracedFile(String filename, String directory, Map<String, Object> additionalProperties) {
         this.filename = filename;
         this.directory = directory;

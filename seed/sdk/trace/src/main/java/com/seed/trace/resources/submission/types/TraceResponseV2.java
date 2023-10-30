@@ -36,6 +36,8 @@ public final class TraceResponseV2 {
 
     private final Optional<String> stdout;
 
+    private final Map<String, Object> additionalProperties;
+
     private TraceResponseV2(
             UUID submissionId,
             int lineNumber,

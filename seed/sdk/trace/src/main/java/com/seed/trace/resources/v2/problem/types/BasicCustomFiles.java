@@ -29,6 +29,8 @@ public final class BasicCustomFiles {
 
     private final BasicTestCaseTemplate basicTestCaseTemplate;
 
+    private final Map<String, Object> additionalProperties;
+
     private BasicCustomFiles(
             String methodName,
             NonVoidFunctionSignature signature,

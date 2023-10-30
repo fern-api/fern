@@ -25,6 +25,8 @@ public final class Parameter {
 
     private final VariableType variableType;
 
+    private final Map<String, Object> additionalProperties;
+
     private Parameter(
             String parameterId, String name, VariableType variableType, Map<String, Object> additionalProperties) {
         this.parameterId = parameterId;

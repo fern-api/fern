@@ -26,6 +26,8 @@ public final class GetMetadataRequest {
 
     private final Optional<String> tag;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetMetadataRequest(
             String xApiVersion,
             Optional<Boolean> shallow,

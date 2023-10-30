@@ -22,6 +22,8 @@ public final class KeyValuePair {
 
     private final VariableValue value;
 
+    private final Map<String, Object> additionalProperties;
+
     private KeyValuePair(VariableValue key, VariableValue value, Map<String, Object> additionalProperties) {
         this.key = key;
         this.value = value;

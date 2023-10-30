@@ -21,6 +21,8 @@ import java.util.UUID;
 public final class FinishedResponse {
     private final UUID submissionId;
 
+    private final Map<String, Object> additionalProperties;
+
     private FinishedResponse(UUID submissionId, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.additionalProperties = additionalProperties;

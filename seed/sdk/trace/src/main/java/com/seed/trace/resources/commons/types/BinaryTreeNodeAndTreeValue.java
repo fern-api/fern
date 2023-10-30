@@ -22,6 +22,8 @@ public final class BinaryTreeNodeAndTreeValue {
 
     private final BinaryTreeValue fullTree;
 
+    private final Map<String, Object> additionalProperties;
+
     private BinaryTreeNodeAndTreeValue(
             String nodeId, BinaryTreeValue fullTree, Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;

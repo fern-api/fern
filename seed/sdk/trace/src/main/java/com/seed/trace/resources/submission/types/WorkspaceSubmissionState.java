@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class WorkspaceSubmissionState {
     private final WorkspaceSubmissionStatus status;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceSubmissionState(WorkspaceSubmissionStatus status, Map<String, Object> additionalProperties) {
         this.status = status;
         this.additionalProperties = additionalProperties;

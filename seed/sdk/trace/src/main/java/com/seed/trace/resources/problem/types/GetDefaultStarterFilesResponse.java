@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class GetDefaultStarterFilesResponse {
     private final Map<Language, ProblemFiles> files;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetDefaultStarterFilesResponse(
             Map<Language, ProblemFiles> files, Map<String, Object> additionalProperties) {
         this.files = files;

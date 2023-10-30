@@ -26,6 +26,8 @@ public final class WorkspaceFiles {
 
     private final List<FileInfo> readOnlyFiles;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceFiles(FileInfo mainFile, List<FileInfo> readOnlyFiles, Map<String, Object> additionalProperties) {
         this.mainFile = mainFile;
         this.readOnlyFiles = readOnlyFiles;

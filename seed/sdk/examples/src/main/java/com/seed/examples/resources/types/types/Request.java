@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class Request {
     private final Object request;
 
+    private final Map<String, Object> additionalProperties;
+
     private Request(Object request, Map<String, Object> additionalProperties) {
         this.request = request;
         this.additionalProperties = additionalProperties;

@@ -25,6 +25,8 @@ public final class UpdatePlaylistRequest {
 
     private final List<String> problems;
 
+    private final Map<String, Object> additionalProperties;
+
     private UpdatePlaylistRequest(String name, List<String> problems, Map<String, Object> additionalProperties) {
         this.name = name;
         this.problems = problems;

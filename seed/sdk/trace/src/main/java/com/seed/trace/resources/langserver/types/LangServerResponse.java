@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class LangServerResponse {
     private final Object response;
 
+    private final Map<String, Object> additionalProperties;
+
     private LangServerResponse(Object response, Map<String, Object> additionalProperties) {
         this.response = response;
         this.additionalProperties = additionalProperties;

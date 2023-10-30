@@ -25,6 +25,8 @@ public final class PostWithObjectBody {
 
     private final ObjectWithOptionalField nestedObject;
 
+    private final Map<String, Object> additionalProperties;
+
     private PostWithObjectBody(
             String string,
             int integer,

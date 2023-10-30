@@ -51,6 +51,8 @@ public final class MyRequest {
 
     private final List<MyObject> listOfObjects;
 
+    private final Map<String, Object> additionalProperties;
+
     private MyRequest(
             Optional<String> maybeString,
             int integer,

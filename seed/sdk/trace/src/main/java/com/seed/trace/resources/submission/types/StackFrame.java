@@ -27,6 +27,8 @@ public final class StackFrame {
 
     private final List<Scope> scopes;
 
+    private final Map<String, Object> additionalProperties;
+
     private StackFrame(
             String methodName, int lineNumber, List<Scope> scopes, Map<String, Object> additionalProperties) {
         this.methodName = methodName;

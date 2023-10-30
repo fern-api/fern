@@ -22,6 +22,8 @@ public final class Cat {
 
     private final boolean likesToMeow;
 
+    private final Map<String, Object> additionalProperties;
+
     private Cat(String name, boolean likesToMeow, Map<String, Object> additionalProperties) {
         this.name = name;
         this.likesToMeow = likesToMeow;

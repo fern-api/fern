@@ -23,6 +23,8 @@ public final class SinglyLinkedListValue {
 
     private final Map<String, SinglyLinkedListNodeValue> nodes;
 
+    private final Map<String, Object> additionalProperties;
+
     private SinglyLinkedListValue(
             Optional<String> head,
             Map<String, SinglyLinkedListNodeValue> nodes,

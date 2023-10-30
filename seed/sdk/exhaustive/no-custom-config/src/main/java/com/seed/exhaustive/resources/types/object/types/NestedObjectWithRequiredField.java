@@ -22,6 +22,8 @@ public final class NestedObjectWithRequiredField {
 
     private final ObjectWithOptionalField nestedObject;
 
+    private final Map<String, Object> additionalProperties;
+
     private NestedObjectWithRequiredField(
             String string, ObjectWithOptionalField nestedObject, Map<String, Object> additionalProperties) {
         this.string = string;

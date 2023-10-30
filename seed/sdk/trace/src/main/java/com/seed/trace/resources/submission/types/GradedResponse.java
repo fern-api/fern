@@ -25,6 +25,8 @@ public final class GradedResponse {
 
     private final Map<String, TestCaseResultWithStdout> testCases;
 
+    private final Map<String, Object> additionalProperties;
+
     private GradedResponse(
             UUID submissionId,
             Map<String, TestCaseResultWithStdout> testCases,

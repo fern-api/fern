@@ -22,6 +22,8 @@ public final class TestCaseWithActualResultImplementation {
 
     private final AssertCorrectnessCheck assertCorrectnessCheck;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseWithActualResultImplementation(
             NonVoidFunctionDefinition getActualResult,
             AssertCorrectnessCheck assertCorrectnessCheck,

@@ -23,6 +23,8 @@ public final class DoublyLinkedListValue {
 
     private final Map<String, DoublyLinkedListNodeValue> nodes;
 
+    private final Map<String, Object> additionalProperties;
+
     private DoublyLinkedListValue(
             Optional<String> head,
             Map<String, DoublyLinkedListNodeValue> nodes,

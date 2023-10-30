@@ -25,6 +25,8 @@ public final class GeneratedFiles {
 
     private final Map<Language, Files> other;
 
+    private final Map<String, Object> additionalProperties;
+
     private GeneratedFiles(
             Map<Language, Files> generatedTestCaseFiles,
             Map<Language, Files> generatedTemplateFiles,

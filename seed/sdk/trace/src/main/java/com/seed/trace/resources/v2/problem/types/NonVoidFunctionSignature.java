@@ -26,6 +26,8 @@ public final class NonVoidFunctionSignature {
 
     private final VariableType returnType;
 
+    private final Map<String, Object> additionalProperties;
+
     private NonVoidFunctionSignature(
             List<Parameter> parameters, VariableType returnType, Map<String, Object> additionalProperties) {
         this.parameters = parameters;

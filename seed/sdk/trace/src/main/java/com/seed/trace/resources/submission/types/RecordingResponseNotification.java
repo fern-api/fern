@@ -31,6 +31,8 @@ public final class RecordingResponseNotification {
 
     private final Optional<TracedFile> tracedFile;
 
+    private final Map<String, Object> additionalProperties;
+
     private RecordingResponseNotification(
             UUID submissionId,
             Optional<String> testCaseId,

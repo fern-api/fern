@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class TestCaseImplementationDescription {
     private final List<TestCaseImplementationDescriptionBoard> boards;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseImplementationDescription(
             List<TestCaseImplementationDescriptionBoard> boards, Map<String, Object> additionalProperties) {
         this.boards = boards;

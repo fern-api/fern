@@ -30,6 +30,8 @@ public final class TestSubmissionState {
 
     private final TestSubmissionStatus status;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestSubmissionState(
             String problemId,
             List<TestCase> defaultTestCases,

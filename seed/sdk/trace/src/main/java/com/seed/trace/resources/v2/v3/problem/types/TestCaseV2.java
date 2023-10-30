@@ -30,6 +30,8 @@ public final class TestCaseV2 {
 
     private final Optional<TestCaseExpects> expects;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseV2(
             TestCaseMetadata metadata,
             TestCaseImplementationReference implementation,

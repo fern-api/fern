@@ -24,6 +24,8 @@ public final class GenericCreateProblemError {
 
     private final String stacktrace;
 
+    private final Map<String, Object> additionalProperties;
+
     private GenericCreateProblemError(
             String message, String type, String stacktrace, Map<String, Object> additionalProperties) {
         this.message = message;

@@ -23,6 +23,8 @@ public final class VariableTypeAndName {
 
     private final String name;
 
+    private final Map<String, Object> additionalProperties;
+
     private VariableTypeAndName(VariableType variableType, String name, Map<String, Object> additionalProperties) {
         this.variableType = variableType;
         this.name = name;

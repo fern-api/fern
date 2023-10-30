@@ -23,6 +23,8 @@ public final class BinaryTreeValue {
 
     private final Map<String, BinaryTreeNodeValue> nodes;
 
+    private final Map<String, Object> additionalProperties;
+
     private BinaryTreeValue(
             Optional<String> root, Map<String, BinaryTreeNodeValue> nodes, Map<String, Object> additionalProperties) {
         this.root = root;

@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class DebugMapValue {
     private final List<DebugKeyValuePairs> keyValuePairs;
 
+    private final Map<String, Object> additionalProperties;
+
     private DebugMapValue(List<DebugKeyValuePairs> keyValuePairs, Map<String, Object> additionalProperties) {
         this.keyValuePairs = keyValuePairs;
         this.additionalProperties = additionalProperties;

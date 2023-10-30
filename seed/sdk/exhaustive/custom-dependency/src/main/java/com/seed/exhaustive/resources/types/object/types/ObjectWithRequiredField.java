@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class ObjectWithRequiredField {
     private final String string;
 
+    private final Map<String, Object> additionalProperties;
+
     private ObjectWithRequiredField(String string, Map<String, Object> additionalProperties) {
         this.string = string;
         this.additionalProperties = additionalProperties;

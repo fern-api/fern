@@ -22,6 +22,8 @@ public final class GetBasicSolutionFileRequest {
 
     private final NonVoidFunctionSignature signature;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetBasicSolutionFileRequest(
             String methodName, NonVoidFunctionSignature signature, Map<String, Object> additionalProperties) {
         this.methodName = methodName;

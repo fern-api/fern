@@ -31,6 +31,8 @@ public final class ExtendedMovie implements IMovie {
 
     private final List<String> cast;
 
+    private final Map<String, Object> additionalProperties;
+
     private ExtendedMovie(
             String id,
             String title,

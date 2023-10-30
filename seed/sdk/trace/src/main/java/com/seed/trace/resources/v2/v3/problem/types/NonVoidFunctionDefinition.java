@@ -22,6 +22,8 @@ public final class NonVoidFunctionDefinition {
 
     private final FunctionImplementationForMultipleLanguages code;
 
+    private final Map<String, Object> additionalProperties;
+
     private NonVoidFunctionDefinition(
             NonVoidFunctionSignature signature,
             FunctionImplementationForMultipleLanguages code,

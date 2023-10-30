@@ -45,6 +45,8 @@ public final class ProblemInfo {
 
     private final boolean supportsCustomTestCases;
 
+    private final Map<String, Object> additionalProperties;
+
     private ProblemInfo(
             String problemId,
             ProblemDescription problemDescription,

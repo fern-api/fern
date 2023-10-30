@@ -23,6 +23,8 @@ public final class WorkspaceRanResponse {
 
     private final WorkspaceRunDetails runDetails;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceRanResponse(
             UUID submissionId, WorkspaceRunDetails runDetails, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;

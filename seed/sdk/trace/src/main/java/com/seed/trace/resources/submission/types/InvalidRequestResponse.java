@@ -22,6 +22,8 @@ public final class InvalidRequestResponse {
 
     private final InvalidRequestCause cause;
 
+    private final Map<String, Object> additionalProperties;
+
     private InvalidRequestResponse(
             SubmissionRequest request, InvalidRequestCause cause, Map<String, Object> additionalProperties) {
         this.request = request;

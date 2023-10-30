@@ -24,6 +24,8 @@ public final class FunctionImplementation {
 
     private final Optional<String> imports;
 
+    private final Map<String, Object> additionalProperties;
+
     private FunctionImplementation(String impl, Optional<String> imports, Map<String, Object> additionalProperties) {
         this.impl = impl;
         this.imports = imports;

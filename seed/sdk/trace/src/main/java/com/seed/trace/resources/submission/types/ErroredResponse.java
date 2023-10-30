@@ -23,6 +23,8 @@ public final class ErroredResponse {
 
     private final ErrorInfo errorInfo;
 
+    private final Map<String, Object> additionalProperties;
+
     private ErroredResponse(UUID submissionId, ErrorInfo errorInfo, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.errorInfo = errorInfo;

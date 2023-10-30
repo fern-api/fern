@@ -24,6 +24,8 @@ public final class TestCaseTemplate {
 
     private final TestCaseImplementation implementation;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseTemplate(
             String templateId,
             String name,

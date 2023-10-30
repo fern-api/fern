@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class GetFunctionSignatureRequest {
     private final FunctionSignature functionSignature;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetFunctionSignatureRequest(FunctionSignature functionSignature, Map<String, Object> additionalProperties) {
         this.functionSignature = functionSignature;
         this.additionalProperties = additionalProperties;

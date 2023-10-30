@@ -27,6 +27,8 @@ public final class StoreTracedWorkspaceRequest {
 
     private final List<TraceResponse> traceResponses;
 
+    private final Map<String, Object> additionalProperties;
+
     private StoreTracedWorkspaceRequest(
             WorkspaceRunDetails workspaceRunDetails,
             List<TraceResponse> traceResponses,

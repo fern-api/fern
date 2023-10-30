@@ -22,6 +22,8 @@ public final class Dog {
 
     private final boolean likesToWoof;
 
+    private final Map<String, Object> additionalProperties;
+
     private Dog(String name, boolean likesToWoof, Map<String, Object> additionalProperties) {
         this.name = name;
         this.likesToWoof = likesToWoof;

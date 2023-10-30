@@ -30,6 +30,8 @@ public final class LightweightProblemInfoV2 {
 
     private final Set<VariableType> variableTypes;
 
+    private final Map<String, Object> additionalProperties;
+
     private LightweightProblemInfoV2(
             String problemId,
             String problemName,

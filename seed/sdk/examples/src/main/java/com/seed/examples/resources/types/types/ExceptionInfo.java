@@ -24,6 +24,8 @@ public final class ExceptionInfo {
 
     private final String exceptionStacktrace;
 
+    private final Map<String, Object> additionalProperties;
+
     private ExceptionInfo(
             String exceptionType,
             String exceptionMessage,

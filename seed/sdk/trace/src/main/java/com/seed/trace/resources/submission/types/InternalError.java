@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class InternalError {
     private final ExceptionInfo exceptionInfo;
 
+    private final Map<String, Object> additionalProperties;
+
     private InternalError(ExceptionInfo exceptionInfo, Map<String, Object> additionalProperties) {
         this.exceptionInfo = exceptionInfo;
         this.additionalProperties = additionalProperties;

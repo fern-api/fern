@@ -45,6 +45,8 @@ public final class ProblemInfoV2 {
 
     private final boolean isPublic;
 
+    private final Map<String, Object> additionalProperties;
+
     private ProblemInfoV2(
             String problemId,
             ProblemDescription problemDescription,

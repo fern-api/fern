@@ -39,6 +39,8 @@ public final class CreateProblemRequestV2 {
 
     private final boolean isPublic;
 
+    private final Map<String, Object> additionalProperties;
+
     private CreateProblemRequestV2(
             String problemName,
             ProblemDescription problemDescription,

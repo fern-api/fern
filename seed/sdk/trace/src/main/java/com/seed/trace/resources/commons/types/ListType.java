@@ -24,6 +24,8 @@ public final class ListType {
 
     private final Optional<Boolean> isFixedLength;
 
+    private final Map<String, Object> additionalProperties;
+
     private ListType(
             VariableType valueType, Optional<Boolean> isFixedLength, Map<String, Object> additionalProperties) {
         this.valueType = valueType;

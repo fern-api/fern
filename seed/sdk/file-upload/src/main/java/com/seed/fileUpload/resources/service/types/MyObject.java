@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class MyObject {
     private final String foo;
 
+    private final Map<String, Object> additionalProperties;
+
     private MyObject(String foo, Map<String, Object> additionalProperties) {
         this.foo = foo;
         this.additionalProperties = additionalProperties;

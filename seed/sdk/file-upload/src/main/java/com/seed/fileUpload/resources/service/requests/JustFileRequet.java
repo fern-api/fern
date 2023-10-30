@@ -8,6 +8,8 @@ import com.seed.fileUpload.core.ObjectMappers;
 import java.util.Map;
 
 public final class JustFileRequet {
+    private final Map<String, Object> additionalProperties;
+
     private JustFileRequet(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }

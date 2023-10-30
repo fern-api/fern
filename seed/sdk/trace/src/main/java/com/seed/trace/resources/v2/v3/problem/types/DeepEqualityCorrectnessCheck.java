@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class DeepEqualityCorrectnessCheck {
     private final String expectedValueParameterId;
 
+    private final Map<String, Object> additionalProperties;
+
     private DeepEqualityCorrectnessCheck(String expectedValueParameterId, Map<String, Object> additionalProperties) {
         this.expectedValueParameterId = expectedValueParameterId;
         this.additionalProperties = additionalProperties;

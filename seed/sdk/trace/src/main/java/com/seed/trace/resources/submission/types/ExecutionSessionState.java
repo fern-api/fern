@@ -33,6 +33,8 @@ public final class ExecutionSessionState {
 
     private final ExecutionSessionStatus status;
 
+    private final Map<String, Object> additionalProperties;
+
     private ExecutionSessionState(
             Optional<String> lastTimeContacted,
             String sessionId,

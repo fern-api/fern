@@ -26,6 +26,8 @@ public final class ProblemFiles {
 
     private final List<FileInfo> readOnlyFiles;
 
+    private final Map<String, Object> additionalProperties;
+
     private ProblemFiles(
             FileInfo solutionFile, List<FileInfo> readOnlyFiles, Map<String, Object> additionalProperties) {
         this.solutionFile = solutionFile;

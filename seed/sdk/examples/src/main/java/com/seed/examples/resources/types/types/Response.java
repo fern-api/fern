@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class Response {
     private final Object response;
 
+    private final Map<String, Object> additionalProperties;
+
     private Response(Object response, Map<String, Object> additionalProperties) {
         this.response = response;
         this.additionalProperties = additionalProperties;

@@ -23,6 +23,8 @@ public final class CustomTestCasesUnsupported {
 
     private final UUID submissionId;
 
+    private final Map<String, Object> additionalProperties;
+
     private CustomTestCasesUnsupported(String problemId, UUID submissionId, Map<String, Object> additionalProperties) {
         this.problemId = problemId;
         this.submissionId = submissionId;

@@ -24,6 +24,8 @@ public final class TestCaseMetadata {
 
     private final boolean hidden;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseMetadata(String id, String name, boolean hidden, Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;

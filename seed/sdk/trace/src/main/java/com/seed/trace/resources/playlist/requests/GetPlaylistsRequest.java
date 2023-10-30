@@ -30,6 +30,8 @@ public final class GetPlaylistsRequest {
 
     private final String multipleField;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetPlaylistsRequest(
             Optional<Integer> limit,
             String otherField,

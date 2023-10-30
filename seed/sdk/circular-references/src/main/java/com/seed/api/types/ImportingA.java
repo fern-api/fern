@@ -21,6 +21,8 @@ import java.util.Optional;
 public final class ImportingA {
     private final Optional<A> a;
 
+    private final Map<String, Object> additionalProperties;
+
     private ImportingA(Optional<A> a, Map<String, Object> additionalProperties) {
         this.a = a;
         this.additionalProperties = additionalProperties;

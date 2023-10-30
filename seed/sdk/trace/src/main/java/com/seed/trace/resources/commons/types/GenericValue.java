@@ -24,6 +24,8 @@ public final class GenericValue {
 
     private final String stringifiedValue;
 
+    private final Map<String, Object> additionalProperties;
+
     private GenericValue(
             Optional<String> stringifiedType, String stringifiedValue, Map<String, Object> additionalProperties) {
         this.stringifiedType = stringifiedType;

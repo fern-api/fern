@@ -28,6 +28,8 @@ public final class BinaryTreeNodeValue {
 
     private final Optional<String> left;
 
+    private final Map<String, Object> additionalProperties;
+
     private BinaryTreeNodeValue(
             String nodeId,
             double val,

@@ -23,6 +23,8 @@ public final class BuildingExecutorResponse {
 
     private final ExecutionSessionStatus status;
 
+    private final Map<String, Object> additionalProperties;
+
     private BuildingExecutorResponse(
             UUID submissionId, ExecutionSessionStatus status, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;

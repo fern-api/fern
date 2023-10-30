@@ -25,6 +25,8 @@ public final class TestCase {
 
     private final List<VariableValue> params;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCase(String id, List<VariableValue> params, Map<String, Object> additionalProperties) {
         this.id = id;
         this.params = params;

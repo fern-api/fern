@@ -24,6 +24,8 @@ public final class StackInformation {
 
     private final Optional<StackFrame> topStackFrame;
 
+    private final Map<String, Object> additionalProperties;
+
     private StackInformation(
             int numStackFrames, Optional<StackFrame> topStackFrame, Map<String, Object> additionalProperties) {
         this.numStackFrames = numStackFrames;

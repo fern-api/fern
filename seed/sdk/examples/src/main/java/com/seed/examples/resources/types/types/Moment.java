@@ -26,6 +26,8 @@ public final class Moment {
 
     private final OffsetDateTime datetime;
 
+    private final Map<String, Object> additionalProperties;
+
     private Moment(UUID id, String date, OffsetDateTime datetime, Map<String, Object> additionalProperties) {
         this.id = id;
         this.date = date;

@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class Files {
     private final List<FileInfoV2> files;
 
+    private final Map<String, Object> additionalProperties;
+
     private Files(List<FileInfoV2> files, Map<String, Object> additionalProperties) {
         this.files = files;
         this.additionalProperties = additionalProperties;

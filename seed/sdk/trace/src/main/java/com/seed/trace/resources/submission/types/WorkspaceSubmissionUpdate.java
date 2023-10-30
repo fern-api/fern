@@ -23,6 +23,8 @@ public final class WorkspaceSubmissionUpdate {
 
     private final WorkspaceSubmissionUpdateInfo updateInfo;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceSubmissionUpdate(
             OffsetDateTime updateTime,
             WorkspaceSubmissionUpdateInfo updateInfo,

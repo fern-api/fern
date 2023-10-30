@@ -25,6 +25,7 @@ import com.fern.java.PoetTypeWithClassName;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -84,6 +85,11 @@ public final class ObjectTypeSpecGenerator {
                 .addMethod(equalsMethod.getEqualsMethodSpec());
 
         if (supportAdditionalProperties) {
+            typeSpecBuilder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(Map.class, String.class, Object.class),
+                            getAdditionalPropertiesFieldName())
+                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .build());
             typeSpecBuilder.addMethod(getAdditionalPropertiesMethodSpec());
         }
 

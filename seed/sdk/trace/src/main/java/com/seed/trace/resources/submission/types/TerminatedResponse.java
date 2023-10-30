@@ -8,6 +8,8 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.Map;
 
 public final class TerminatedResponse {
+    private final Map<String, Object> additionalProperties;
+
     private TerminatedResponse(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }

@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class ProblemDescription {
     private final List<ProblemDescriptionBoard> boards;
 
+    private final Map<String, Object> additionalProperties;
+
     private ProblemDescription(List<ProblemDescriptionBoard> boards, Map<String, Object> additionalProperties) {
         this.boards = boards;
         this.additionalProperties = additionalProperties;

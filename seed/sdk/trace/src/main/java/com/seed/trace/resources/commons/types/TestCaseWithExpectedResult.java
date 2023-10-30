@@ -22,6 +22,8 @@ public final class TestCaseWithExpectedResult {
 
     private final VariableValue expectedResult;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseWithExpectedResult(
             TestCase testCase, VariableValue expectedResult, Map<String, Object> additionalProperties) {
         this.testCase = testCase;

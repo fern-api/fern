@@ -25,6 +25,8 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
 
     private final FunctionImplementationForMultipleLanguages code;
 
+    private final Map<String, Object> additionalProperties;
+
     private VoidFunctionDefinitionThatTakesActualResult(
             List<Parameter> additionalParameters,
             FunctionImplementationForMultipleLanguages code,

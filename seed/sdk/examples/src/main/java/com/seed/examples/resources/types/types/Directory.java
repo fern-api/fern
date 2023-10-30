@@ -27,6 +27,8 @@ public final class Directory {
 
     private final Optional<List<Directory>> directories;
 
+    private final Map<String, Object> additionalProperties;
+
     private Directory(
             String name,
             Optional<List<File>> files,

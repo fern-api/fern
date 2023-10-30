@@ -22,6 +22,8 @@ public final class SinglyLinkedListNodeAndListValue {
 
     private final SinglyLinkedListValue fullList;
 
+    private final Map<String, Object> additionalProperties;
+
     private SinglyLinkedListNodeAndListValue(
             String nodeId, SinglyLinkedListValue fullList, Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;

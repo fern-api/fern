@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class GetFileRequest {
     private final String xFileApiVersion;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetFileRequest(String xFileApiVersion, Map<String, Object> additionalProperties) {
         this.xFileApiVersion = xFileApiVersion;
         this.additionalProperties = additionalProperties;

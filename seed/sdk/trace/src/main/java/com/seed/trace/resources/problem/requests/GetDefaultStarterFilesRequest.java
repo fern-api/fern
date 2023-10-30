@@ -29,6 +29,8 @@ public final class GetDefaultStarterFilesRequest {
 
     private final String methodName;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetDefaultStarterFilesRequest(
             List<VariableTypeAndName> inputParams,
             VariableType outputType,

@@ -28,6 +28,8 @@ public final class CreatePlaylistRequest {
 
     private final PlaylistCreateRequest body;
 
+    private final Map<String, Object> additionalProperties;
+
     private CreatePlaylistRequest(
             OffsetDateTime datetime,
             Optional<OffsetDateTime> optionalDatetime,

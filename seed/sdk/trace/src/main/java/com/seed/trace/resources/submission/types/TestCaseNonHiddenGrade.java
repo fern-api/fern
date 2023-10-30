@@ -29,6 +29,8 @@ public final class TestCaseNonHiddenGrade {
 
     private final String stdout;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseNonHiddenGrade(
             boolean passed,
             Optional<VariableValue> actualResult,

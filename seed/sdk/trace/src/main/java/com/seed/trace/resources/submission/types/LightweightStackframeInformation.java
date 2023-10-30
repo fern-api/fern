@@ -22,6 +22,8 @@ public final class LightweightStackframeInformation {
 
     private final String topStackFrameMethodName;
 
+    private final Map<String, Object> additionalProperties;
+
     private LightweightStackframeInformation(
             int numStackFrames, String topStackFrameMethodName, Map<String, Object> additionalProperties) {
         this.numStackFrames = numStackFrames;

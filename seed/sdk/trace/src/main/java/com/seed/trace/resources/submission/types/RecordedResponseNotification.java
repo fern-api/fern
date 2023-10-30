@@ -27,6 +27,8 @@ public final class RecordedResponseNotification {
 
     private final Optional<String> testCaseId;
 
+    private final Map<String, Object> additionalProperties;
+
     private RecordedResponseNotification(
             UUID submissionId,
             int traceResponsesSize,

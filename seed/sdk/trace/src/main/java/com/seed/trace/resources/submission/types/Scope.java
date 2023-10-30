@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class Scope {
     private final Map<String, DebugVariableValue> variables;
 
+    private final Map<String, Object> additionalProperties;
+
     private Scope(Map<String, DebugVariableValue> variables, Map<String, Object> additionalProperties) {
         this.variables = variables;
         this.additionalProperties = additionalProperties;

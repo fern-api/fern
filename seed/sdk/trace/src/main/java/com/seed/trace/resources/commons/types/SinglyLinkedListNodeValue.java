@@ -26,6 +26,8 @@ public final class SinglyLinkedListNodeValue {
 
     private final Optional<String> next;
 
+    private final Map<String, Object> additionalProperties;
+
     private SinglyLinkedListNodeValue(
             String nodeId, double val, Optional<String> next, Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;

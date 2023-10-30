@@ -46,6 +46,8 @@ public final class ObjectWithOptionalField {
 
     private final Optional<Map<Integer, String>> map;
 
+    private final Map<String, Object> additionalProperties;
+
     private ObjectWithOptionalField(
             Optional<String> string,
             Optional<Integer> integer,

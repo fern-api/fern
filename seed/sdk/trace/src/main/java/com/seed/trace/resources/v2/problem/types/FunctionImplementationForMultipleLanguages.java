@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class FunctionImplementationForMultipleLanguages {
     private final Map<Language, FunctionImplementation> codeByLanguage;
 
+    private final Map<String, Object> additionalProperties;
+
     private FunctionImplementationForMultipleLanguages(
             Map<Language, FunctionImplementation> codeByLanguage, Map<String, Object> additionalProperties) {
         this.codeByLanguage = codeByLanguage;

@@ -22,6 +22,8 @@ public final class TestCaseResultWithStdout {
 
     private final String stdout;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseResultWithStdout(TestCaseResult result, String stdout, Map<String, Object> additionalProperties) {
         this.result = result;
         this.stdout = stdout;

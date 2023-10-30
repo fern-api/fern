@@ -22,6 +22,8 @@ public final class FileInfo {
 
     private final String contents;
 
+    private final Map<String, Object> additionalProperties;
+
     private FileInfo(String filename, String contents, Map<String, Object> additionalProperties) {
         this.filename = filename;
         this.contents = contents;

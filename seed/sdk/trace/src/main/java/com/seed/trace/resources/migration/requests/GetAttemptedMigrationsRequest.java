@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class GetAttemptedMigrationsRequest {
     private final String adminKeyHeader;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetAttemptedMigrationsRequest(String adminKeyHeader, Map<String, Object> additionalProperties) {
         this.adminKeyHeader = adminKeyHeader;
         this.additionalProperties = additionalProperties;

@@ -30,6 +30,8 @@ public final class GetSubmissionStateResponse {
 
     private final SubmissionTypeState submissionTypeState;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetSubmissionStateResponse(
             Optional<OffsetDateTime> timeSubmitted,
             String submission,

@@ -20,6 +20,8 @@ import java.util.Optional;
 public final class GetTraceResponsesPageRequest {
     private final Optional<Integer> offset;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetTraceResponsesPageRequest(Optional<Integer> offset, Map<String, Object> additionalProperties) {
         this.offset = offset;
         this.additionalProperties = additionalProperties;

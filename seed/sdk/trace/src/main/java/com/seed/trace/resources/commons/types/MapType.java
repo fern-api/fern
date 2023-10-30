@@ -22,6 +22,8 @@ public final class MapType {
 
     private final VariableType valueType;
 
+    private final Map<String, Object> additionalProperties;
+
     private MapType(VariableType keyType, VariableType valueType, Map<String, Object> additionalProperties) {
         this.keyType = keyType;
         this.valueType = valueType;

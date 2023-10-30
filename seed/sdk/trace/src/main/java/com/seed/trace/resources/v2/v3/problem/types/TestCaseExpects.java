@@ -20,6 +20,8 @@ import java.util.Optional;
 public final class TestCaseExpects {
     private final Optional<String> expectedStdout;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseExpects(Optional<String> expectedStdout, Map<String, Object> additionalProperties) {
         this.expectedStdout = expectedStdout;
         this.additionalProperties = additionalProperties;

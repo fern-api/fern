@@ -22,6 +22,8 @@ public final class TracedTestCase {
 
     private final int traceResponsesSize;
 
+    private final Map<String, Object> additionalProperties;
+
     private TracedTestCase(
             TestCaseResultWithStdout result, int traceResponsesSize, Map<String, Object> additionalProperties) {
         this.result = result;

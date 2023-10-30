@@ -22,6 +22,8 @@ public final class RecordedTestCaseUpdate {
 
     private final int traceResponsesSize;
 
+    private final Map<String, Object> additionalProperties;
+
     private RecordedTestCaseUpdate(
             String testCaseId, int traceResponsesSize, Map<String, Object> additionalProperties) {
         this.testCaseId = testCaseId;

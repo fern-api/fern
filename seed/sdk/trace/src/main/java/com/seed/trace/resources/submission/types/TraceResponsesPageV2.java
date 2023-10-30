@@ -24,6 +24,8 @@ public final class TraceResponsesPageV2 {
 
     private final List<TraceResponseV2> traceResponses;
 
+    private final Map<String, Object> additionalProperties;
+
     private TraceResponsesPageV2(
             Optional<Integer> offset, List<TraceResponseV2> traceResponses, Map<String, Object> additionalProperties) {
         this.offset = offset;

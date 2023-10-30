@@ -22,6 +22,8 @@ public final class GradedTestCaseUpdate {
 
     private final TestCaseGrade grade;
 
+    private final Map<String, Object> additionalProperties;
+
     private GradedTestCaseUpdate(String testCaseId, TestCaseGrade grade, Map<String, Object> additionalProperties) {
         this.testCaseId = testCaseId;
         this.grade = grade;

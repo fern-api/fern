@@ -23,6 +23,8 @@ public final class UnexpectedLanguageError {
 
     private final Language actualLanguage;
 
+    private final Map<String, Object> additionalProperties;
+
     private UnexpectedLanguageError(
             Language expectedLanguage, Language actualLanguage, Map<String, Object> additionalProperties) {
         this.expectedLanguage = expectedLanguage;

@@ -24,6 +24,8 @@ public final class SubmissionFileInfo {
 
     private final String contents;
 
+    private final Map<String, Object> additionalProperties;
+
     private SubmissionFileInfo(
             String directory, String filename, String contents, Map<String, Object> additionalProperties) {
         this.directory = directory;

@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class CompileError {
     private final String message;
 
+    private final Map<String, Object> additionalProperties;
+
     private CompileError(String message, Map<String, Object> additionalProperties) {
         this.message = message;
         this.additionalProperties = additionalProperties;

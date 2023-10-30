@@ -27,6 +27,8 @@ public final class StoreTracedTestCaseRequest {
 
     private final List<TraceResponse> traceResponses;
 
+    private final Map<String, Object> additionalProperties;
+
     private StoreTracedTestCaseRequest(
             TestCaseResultWithStdout result,
             List<TraceResponse> traceResponses,

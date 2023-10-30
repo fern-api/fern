@@ -28,6 +28,8 @@ public final class DoublyLinkedListNodeValue {
 
     private final Optional<String> prev;
 
+    private final Map<String, Object> additionalProperties;
+
     private DoublyLinkedListNodeValue(
             String nodeId,
             double val,

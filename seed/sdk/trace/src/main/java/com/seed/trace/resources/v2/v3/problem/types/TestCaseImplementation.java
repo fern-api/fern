@@ -22,6 +22,8 @@ public final class TestCaseImplementation {
 
     private final TestCaseFunction function;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseImplementation(
             TestCaseImplementationDescription description,
             TestCaseFunction function,

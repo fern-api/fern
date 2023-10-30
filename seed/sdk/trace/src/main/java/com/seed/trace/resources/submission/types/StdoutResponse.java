@@ -23,6 +23,8 @@ public final class StdoutResponse {
 
     private final String stdout;
 
+    private final Map<String, Object> additionalProperties;
+
     private StdoutResponse(UUID submissionId, String stdout, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.stdout = stdout;

@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class VoidFunctionSignature {
     private final List<Parameter> parameters;
 
+    private final Map<String, Object> additionalProperties;
+
     private VoidFunctionSignature(List<Parameter> parameters, Map<String, Object> additionalProperties) {
         this.parameters = parameters;
         this.additionalProperties = additionalProperties;

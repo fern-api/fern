@@ -21,6 +21,8 @@ import java.util.UUID;
 public final class StoppedResponse {
     private final UUID submissionId;
 
+    private final Map<String, Object> additionalProperties;
+
     private StoppedResponse(UUID submissionId, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.additionalProperties = additionalProperties;

@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class RootType implements IRootType {
     private final String s;
 
+    private final Map<String, Object> additionalProperties;
+
     private RootType(String s, Map<String, Object> additionalProperties) {
         this.s = s;
         this.additionalProperties = additionalProperties;

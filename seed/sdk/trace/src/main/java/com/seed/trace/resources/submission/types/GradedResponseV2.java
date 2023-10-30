@@ -25,6 +25,8 @@ public final class GradedResponseV2 {
 
     private final Map<String, TestCaseGrade> testCases;
 
+    private final Map<String, Object> additionalProperties;
+
     private GradedResponseV2(
             UUID submissionId, Map<String, TestCaseGrade> testCases, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;

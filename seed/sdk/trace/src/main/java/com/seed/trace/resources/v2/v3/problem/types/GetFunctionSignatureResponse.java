@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class GetFunctionSignatureResponse {
     private final Map<Language, String> functionByLanguage;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetFunctionSignatureResponse(
             Map<Language, String> functionByLanguage, Map<String, Object> additionalProperties) {
         this.functionByLanguage = functionByLanguage;

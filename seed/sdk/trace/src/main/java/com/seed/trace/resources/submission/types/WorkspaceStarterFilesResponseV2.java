@@ -22,6 +22,8 @@ import java.util.Objects;
 public final class WorkspaceStarterFilesResponseV2 {
     private final Map<Language, Files> filesByLanguage;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceStarterFilesResponseV2(
             Map<Language, Files> filesByLanguage, Map<String, Object> additionalProperties) {
         this.filesByLanguage = filesByLanguage;

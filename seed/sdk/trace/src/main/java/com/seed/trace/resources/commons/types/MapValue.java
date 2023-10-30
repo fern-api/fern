@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class MapValue {
     private final List<KeyValuePair> keyValuePairs;
 
+    private final Map<String, Object> additionalProperties;
+
     private MapValue(List<KeyValuePair> keyValuePairs, Map<String, Object> additionalProperties) {
         this.keyValuePairs = keyValuePairs;
         this.additionalProperties = additionalProperties;

@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class GetGeneratedTestCaseTemplateFileRequest {
     private final TestCaseTemplate template;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetGeneratedTestCaseTemplateFileRequest(
             TestCaseTemplate template, Map<String, Object> additionalProperties) {
         this.template = template;

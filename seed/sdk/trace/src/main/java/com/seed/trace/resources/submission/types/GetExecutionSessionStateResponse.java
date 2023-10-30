@@ -27,6 +27,8 @@ public final class GetExecutionSessionStateResponse {
 
     private final List<String> warmingSessionIds;
 
+    private final Map<String, Object> additionalProperties;
+
     private GetExecutionSessionStateResponse(
             Map<String, ExecutionSessionState> states,
             Optional<Integer> numWarmingInstances,

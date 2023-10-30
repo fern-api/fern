@@ -22,6 +22,8 @@ public final class ExpressionLocation {
 
     private final int offset;
 
+    private final Map<String, Object> additionalProperties;
+
     private ExpressionLocation(int start, int offset, Map<String, Object> additionalProperties) {
         this.start = start;
         this.offset = offset;

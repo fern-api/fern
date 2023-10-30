@@ -30,6 +30,8 @@ public final class TestSubmissionStatusV2 {
 
     private final ProblemInfoV2 problemInfo;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestSubmissionStatusV2(
             List<TestSubmissionUpdate> updates,
             String problemId,

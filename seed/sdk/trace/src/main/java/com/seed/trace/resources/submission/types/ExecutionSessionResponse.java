@@ -29,6 +29,8 @@ public final class ExecutionSessionResponse {
 
     private final ExecutionSessionStatus status;
 
+    private final Map<String, Object> additionalProperties;
+
     private ExecutionSessionResponse(
             String sessionId,
             Optional<String> executionSessionUrl,

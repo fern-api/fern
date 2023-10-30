@@ -24,6 +24,8 @@ public final class ReqWithHeaders {
 
     private final String body;
 
+    private final Map<String, Object> additionalProperties;
+
     private ReqWithHeaders(
             String xTestServiceHeader,
             String xTestEndpointHeader,

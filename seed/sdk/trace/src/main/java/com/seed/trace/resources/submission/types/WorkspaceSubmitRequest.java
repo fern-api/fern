@@ -32,6 +32,8 @@ public final class WorkspaceSubmitRequest {
 
     private final Optional<String> userId;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceSubmitRequest(
             UUID submissionId,
             Language language,

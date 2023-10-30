@@ -24,6 +24,8 @@ public final class InitializeProblemRequest {
 
     private final Optional<Integer> problemVersion;
 
+    private final Map<String, Object> additionalProperties;
+
     private InitializeProblemRequest(
             String problemId, Optional<Integer> problemVersion, Map<String, Object> additionalProperties) {
         this.problemId = problemId;

@@ -21,6 +21,8 @@ import java.util.Objects;
 public final class WorkspaceSubmissionStatusV2 {
     private final List<WorkspaceSubmissionUpdate> updates;
 
+    private final Map<String, Object> additionalProperties;
+
     private WorkspaceSubmissionStatusV2(
             List<WorkspaceSubmissionUpdate> updates, Map<String, Object> additionalProperties) {
         this.updates = updates;

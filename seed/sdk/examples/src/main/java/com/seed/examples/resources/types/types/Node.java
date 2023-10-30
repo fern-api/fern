@@ -27,6 +27,8 @@ public final class Node {
 
     private final Optional<List<Tree>> trees;
 
+    private final Map<String, Object> additionalProperties;
+
     private Node(
             String name,
             Optional<List<Node>> nodes,

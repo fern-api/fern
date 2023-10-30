@@ -22,6 +22,8 @@ public final class DoublyLinkedListNodeAndListValue {
 
     private final DoublyLinkedListValue fullList;
 
+    private final Map<String, Object> additionalProperties;
+
     private DoublyLinkedListNodeAndListValue(
             String nodeId, DoublyLinkedListValue fullList, Map<String, Object> additionalProperties) {
         this.nodeId = nodeId;

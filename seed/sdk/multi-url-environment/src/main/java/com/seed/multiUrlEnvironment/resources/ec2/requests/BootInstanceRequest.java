@@ -20,6 +20,8 @@ import java.util.Objects;
 public final class BootInstanceRequest {
     private final String size;
 
+    private final Map<String, Object> additionalProperties;
+
     private BootInstanceRequest(String size, Map<String, Object> additionalProperties) {
         this.size = size;
         this.additionalProperties = additionalProperties;

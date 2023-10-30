@@ -23,6 +23,8 @@ public final class StderrResponse {
 
     private final String stderr;
 
+    private final Map<String, Object> additionalProperties;
+
     private StderrResponse(UUID submissionId, String stderr, Map<String, Object> additionalProperties) {
         this.submissionId = submissionId;
         this.stderr = stderr;

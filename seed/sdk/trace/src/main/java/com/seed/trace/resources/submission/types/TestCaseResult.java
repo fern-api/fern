@@ -25,6 +25,8 @@ public final class TestCaseResult {
 
     private final boolean passed;
 
+    private final Map<String, Object> additionalProperties;
+
     private TestCaseResult(
             VariableValue expectedResult,
             ActualResult actualResult,

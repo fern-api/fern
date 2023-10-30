@@ -22,6 +22,8 @@ public final class Migration {
 
     private final MigrationStatus status;
 
+    private final Map<String, Object> additionalProperties;
+
     private Migration(String name, MigrationStatus status, Map<String, Object> additionalProperties) {
         this.name = name;
         this.status = status;
