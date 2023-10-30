@@ -5,10 +5,18 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "sdk/core"
 )
 
 type Docs struct {
 	Docs string `json:"docs"`
+}
+
+func (d *Docs) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type ExampleType struct {
@@ -16,15 +24,36 @@ type ExampleType struct {
 	Name string `json:"name"`
 }
 
+func (e *ExampleType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type Json struct {
 	Docs string `json:"docs"`
 	Raw  string `json:"raw"`
+}
+
+func (j *Json) String() string {
+	if value, err := core.StringifyJSON(j); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", j)
 }
 
 type NestedType struct {
 	Docs string `json:"docs"`
 	Raw  string `json:"raw"`
 	Name string `json:"name"`
+}
+
+func (n *NestedType) String() string {
+	if value, err := core.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type NestedUnion struct {

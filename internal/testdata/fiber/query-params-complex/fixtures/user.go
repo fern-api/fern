@@ -3,6 +3,8 @@
 package api
 
 import (
+	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/fiber/query-params-complex/fixtures/core"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -21,4 +23,11 @@ type GetUsersRequest struct {
 type User struct {
 	Name string   `json:"name"`
 	Tags []string `json:"tags,omitempty"`
+}
+
+func (u *User) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

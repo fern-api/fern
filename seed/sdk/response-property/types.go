@@ -2,10 +2,66 @@
 
 package responseproperty
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	core "github.com/fern-api/seed-go/core"
+)
+
 type Movie struct {
 	Id string `json:"id"`
+
+	_rawJSON json.RawMessage
+}
+
+func (m *Movie) UnmarshalJSON(data []byte) error {
+	type unmarshaler Movie
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Movie(value)
+	m._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (m *Movie) String() string {
+	if len(m._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(m._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type WithDocs struct {
 	Docs string `json:"docs"`
+
+	_rawJSON json.RawMessage
+}
+
+func (w *WithDocs) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithDocs
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithDocs(value)
+	w._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithDocs) String() string {
+	if len(w._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(w._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

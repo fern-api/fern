@@ -6,20 +6,42 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	bar "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/bar"
+	core "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/core"
 )
 
 type Base struct {
 	Name string `json:"name"`
 }
 
+func (b *Base) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type Value struct {
 	Name string `json:"name"`
+}
+
+func (v *Value) String() string {
+	if value, err := core.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type Foo struct {
 	Name  string   `json:"name"`
 	Value *Value   `json:"value,omitempty"`
 	Bar   *bar.Bar `json:"bar,omitempty"`
+}
+
+func (f *Foo) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type Union struct {

@@ -138,7 +138,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 		for _, typeToGenerate := range typesToGenerate {
 			switch {
 			case typeToGenerate.TypeDeclaration != nil:
-				if err := writer.WriteType(typeToGenerate.TypeDeclaration); err != nil {
+				if err := writer.WriteType(typeToGenerate.TypeDeclaration, mode == ModeClient); err != nil {
 					return nil, err
 				}
 			case typeToGenerate.Endpoint != nil:
@@ -243,6 +243,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		return nil, err
 	}
 	files = append(files, modelFiles...)
+	files = append(files, newStringerFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	var generatedClient *GeneratedClient
 	switch mode {
@@ -719,6 +720,14 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
+	)
+}
+
+func newStringerFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/stringer.go",
+		[]byte(stringerFile),
 	)
 }
 

@@ -3,11 +3,39 @@
 package user
 
 import (
+	json "encoding/json"
+	fmt "fmt"
 	identity "github.com/fern-api/fern-go/internal/testdata/sdk/cycle/fixtures/common/identity"
 	user "github.com/fern-api/fern-go/internal/testdata/sdk/cycle/fixtures/common/user"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/cycle/fixtures/core"
 )
 
 type User struct {
 	Id       identity.Id    `json:"id"`
 	Username *user.Username `json:"username,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	type unmarshaler User
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = User(value)
+	u._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *User) String() string {
+	if len(u._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

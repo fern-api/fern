@@ -3,7 +3,9 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
 )
 
 type Bar struct {
@@ -13,6 +15,31 @@ type Bar struct {
 	Type    *FooType `json:"type,omitempty"`
 	Request *Request `json:"request,omitempty"`
 	Delay   *string  `json:"delay,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+	b._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Bar) String() string {
+	if len(b._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type Baz struct {
@@ -24,11 +51,61 @@ type Baz struct {
 	// just above the field.
 	// Note: Newlines should be preserved.
 	HasDocs *string `json:"hasDocs,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (b *Baz) UnmarshalJSON(data []byte) error {
+	type unmarshaler Baz
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Baz(value)
+	b._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Baz) String() string {
+	if len(b._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type Error struct {
 	Message   *string  `json:"message,omitempty"`
 	Recursive []*Error `json:"recursive,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (e *Error) UnmarshalJSON(data []byte) error {
+	type unmarshaler Error
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Error(value)
+	e._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *Error) String() string {
+	if len(e._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type Foo struct {
@@ -38,6 +115,31 @@ type Foo struct {
 	Type    *FooType `json:"type,omitempty"`
 	Request *Request `json:"request,omitempty"`
 	Delay   *string  `json:"delay,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+	f._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Foo) String() string {
+	if len(f._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FooType string
@@ -74,6 +176,31 @@ type Request struct {
 	Body     *string                `json:"body,omitempty"`
 	Platform *string                `json:"platform,omitempty"`
 	Unknown  interface{}            `json:"unknown,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (r *Request) UnmarshalJSON(data []byte) error {
+	type unmarshaler Request
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Request(value)
+	r._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *Request) String() string {
+	if len(r._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type Id = string

@@ -4,6 +4,8 @@ package api
 
 import (
 	json "encoding/json"
+	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/model/builtin/fixtures/core"
 	uuid "github.com/google/uuid"
 	time "time"
 )
@@ -54,4 +56,11 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 		Eighteen: "fern",
 	}
 	return json.Marshal(marshaler)
+}
+
+func (t *Type) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

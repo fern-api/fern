@@ -3,6 +3,8 @@
 package api
 
 import (
+	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/model/custom/fixtures/core"
 	uuid "github.com/google/uuid"
 )
 
@@ -11,8 +13,22 @@ type Bar struct {
 	Foo *Foo `json:"foo,omitempty"`
 }
 
+func (b *Bar) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 // This is a Foo.
 type Foo struct {
 	Id   uuid.UUID `json:"id"`
 	Name string    `json:"name"`
+}
+
+func (f *Foo) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

@@ -3,9 +3,18 @@
 package foo
 
 import (
+	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures"
+	core "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/core"
 )
 
 type Foo struct {
 	Foo *fixtures.Foo `json:"foo,omitempty"`
+}
+
+func (f *Foo) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

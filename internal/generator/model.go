@@ -1,6 +1,7 @@
 package generator
 
 import (
+	_ "embed"
 	"fmt"
 	"path"
 	"strings"
@@ -10,13 +11,19 @@ import (
 	"github.com/fern-api/fern-go/internal/gospec"
 )
 
+var (
+	//go:embed model/core/stringer.go
+	stringerFile string
+)
+
 // WriteType writes a complete type, including all of its properties.
-func (f *fileWriter) WriteType(typeDeclaration *ir.TypeDeclaration) error {
+func (f *fileWriter) WriteType(typeDeclaration *ir.TypeDeclaration, includeRawJSON bool) error {
 	visitor := &typeVisitor{
 		typeName:       typeDeclaration.Name.Name.PascalCase.UnsafeName,
 		baseImportPath: f.baseImportPath,
 		importPath:     fernFilepathToImportPath(f.baseImportPath, typeDeclaration.Name.FernFilepath),
 		writer:         f,
+		includeRawJSON: includeRawJSON,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
@@ -28,6 +35,8 @@ type typeVisitor struct {
 	baseImportPath string
 	importPath     string
 	writer         *fileWriter
+
+	includeRawJSON bool
 }
 
 // Compile-time assertion.
@@ -112,12 +121,6 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
 	_, literals := t.visitObjectProperties(object, true /* includeTags */, false /* includeOptionals */)
 
-	if len(literals) == 0 {
-		t.writer.P("}")
-		t.writer.P()
-		return nil
-	}
-
 	// If the object has a literal, it needs custom [de]serialization logic,
 	// and a getter method to access the field so that it's impossible for
 	// the user to mutate it.
@@ -126,6 +129,10 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// here.
 	for _, literal := range literals {
 		t.writer.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	}
+	if t.includeRawJSON {
+		t.writer.P()
+		t.writer.P("_rawJSON json.RawMessage")
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -141,37 +148,61 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	}
 
 	// Implement the json.Unmarshaler interface.
-	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-	t.writer.P("type unmarshaler ", t.typeName)
-	t.writer.P("var value unmarshaler")
-	t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
-	t.writer.P("return err")
-	t.writer.P("}")
-	t.writer.P("*", receiver, " = ", t.typeName, "(value)")
-	for _, literal := range literals {
-		t.writer.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+	if t.includeRawJSON || len(literals) > 0 {
+		t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+		t.writer.P("type unmarshaler ", t.typeName)
+		t.writer.P("var value unmarshaler")
+		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
+		t.writer.P("return err")
+		t.writer.P("}")
+		t.writer.P("*", receiver, " = ", t.typeName, "(value)")
+		for _, literal := range literals {
+			t.writer.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		}
+		if t.includeRawJSON {
+			t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
+		}
+		t.writer.P("return nil")
+		t.writer.P("}")
+		t.writer.P()
 	}
-	t.writer.P("return nil")
+
+	// Implement the json.Marshaler interface (if we have any literals).
+	if len(literals) > 0 {
+		t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
+		t.writer.P("type embed ", t.typeName)
+		t.writer.P("var marshaler = struct{")
+		t.writer.P("embed")
+		for _, literal := range literals {
+			t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+		}
+		t.writer.P("}{")
+		t.writer.P("embed: embed(*", receiver, "),")
+		for _, literal := range literals {
+			t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+		}
+		t.writer.P("}")
+		t.writer.P("return json.Marshal(marshaler)")
+		t.writer.P("}")
+		t.writer.P()
+	}
+
+	// Implement fmt.Stringer.
+	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+	if t.includeRawJSON {
+		t.writer.P("if len(", receiver, "._rawJSON) > 0 {")
+		t.writer.P("if value, err := core.StringifyJSON(", receiver, "._rawJSON); err == nil {")
+		t.writer.P("return value")
+		t.writer.P("}")
+		t.writer.P("}")
+	}
+	t.writer.P("if value, err := core.StringifyJSON(", receiver, "); err == nil {")
+	t.writer.P("return value")
+	t.writer.P("}")
+	t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
 	t.writer.P("}")
 	t.writer.P()
 
-	// Implement the json.Marshaler interface.
-	t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("type embed ", t.typeName)
-	t.writer.P("var marshaler = struct{")
-	t.writer.P("embed")
-	for _, literal := range literals {
-		t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
-	}
-	t.writer.P("}{")
-	t.writer.P("embed: embed(*", receiver, "),")
-	for _, literal := range literals {
-		t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
-	}
-	t.writer.P("}")
-	t.writer.P("return json.Marshal(marshaler)")
-	t.writer.P("}")
-	t.writer.P()
 	return nil
 }
 

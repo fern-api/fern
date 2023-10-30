@@ -2,6 +2,37 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
+)
+
 type UserNotFoundErrorBody struct {
 	RequestedUserId string `json:"requestedUserId"`
+
+	_rawJSON json.RawMessage
+}
+
+func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
+	type unmarshaler UserNotFoundErrorBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UserNotFoundErrorBody(value)
+	u._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UserNotFoundErrorBody) String() string {
+	if len(u._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(u._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }

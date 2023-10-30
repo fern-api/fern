@@ -2,7 +2,38 @@
 
 package responseproperty
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	core "github.com/fern-api/seed-go/core"
+)
+
 type Response struct {
 	Docs string `json:"docs"`
 	Data *Movie `json:"data,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (r *Response) UnmarshalJSON(data []byte) error {
+	type unmarshaler Response
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Response(value)
+	r._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *Response) String() string {
+	if len(r._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }

@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/model/undiscriminated/fixtures/core"
 )
 
 type AnotherUnion struct {
@@ -90,12 +91,33 @@ type Bar struct {
 	Name string `json:"name"`
 }
 
+func (b *Bar) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type Baz struct {
 	Id string `json:"id"`
 }
 
+func (b *Baz) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type Foo struct {
 	Name string `json:"name"`
+}
+
+func (f *Foo) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type Union struct {

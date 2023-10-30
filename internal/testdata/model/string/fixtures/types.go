@@ -2,7 +2,19 @@
 
 package api
 
+import (
+	fmt "fmt"
+	core "sdk/core"
+)
+
 type Movie struct {
 	Id    string `json:"id"`
 	Title string `json:"title"`
+}
+
+func (m *Movie) String() string {
+	if value, err := core.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }

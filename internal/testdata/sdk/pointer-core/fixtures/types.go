@@ -2,6 +2,37 @@
 
 package api
 
+import (
+	json "encoding/json"
+	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/pointer-core/fixtures/core"
+)
+
 type String struct {
 	Value string `json:"value"`
+
+	_rawJSON json.RawMessage
+}
+
+func (s *String) UnmarshalJSON(data []byte) error {
+	type unmarshaler String
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = String(value)
+	s._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *String) String() string {
+	if len(s._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }

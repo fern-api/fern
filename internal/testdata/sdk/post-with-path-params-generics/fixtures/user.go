@@ -89,10 +89,60 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 
 type Filter struct {
 	Tag string `json:"tag"`
+
+	_rawJSON json.RawMessage
+}
+
+func (f *Filter) UnmarshalJSON(data []byte) error {
+	type unmarshaler Filter
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Filter(value)
+	f._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Filter) String() string {
+	if len(f._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type SetNameRequestV3Body struct {
 	UserName string `json:"userName"`
+
+	_rawJSON json.RawMessage
+}
+
+func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetNameRequestV3Body
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SetNameRequestV3Body(value)
+	s._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SetNameRequestV3Body) String() string {
+	if len(s._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type Union struct {

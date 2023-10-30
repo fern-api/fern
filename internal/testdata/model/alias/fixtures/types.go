@@ -6,11 +6,19 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
+	core "sdk/core"
 	time "time"
 )
 
 type Bar struct {
 	Foo *Foo `json:"foo,omitempty"`
+}
+
+func (b *Bar) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type BarAlias = *Bar
@@ -31,6 +39,13 @@ type Foo struct {
 	Id          uuid.UUID `json:"id"`
 	Name        string    `json:"name"`
 	StringAlias String    `json:"stringAlias"`
+}
+
+func (f *Foo) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FooAlias = *Foo

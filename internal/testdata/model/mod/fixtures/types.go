@@ -3,10 +3,19 @@
 package api
 
 import (
+	fmt "fmt"
 	bar "github.com/example/organization/bar"
+	core "github.com/example/organization/core"
 )
 
 type Foo struct {
 	Name string   `json:"name"`
 	Bar  *bar.Bar `json:"bar,omitempty"`
+}
+
+func (f *Foo) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

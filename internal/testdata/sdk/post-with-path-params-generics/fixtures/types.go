@@ -2,10 +2,66 @@
 
 package api
 
+import (
+	core "acme.io/sdk/core"
+	json "encoding/json"
+	fmt "fmt"
+)
+
 type Bar struct {
 	Id string `json:"id"`
+
+	_rawJSON json.RawMessage
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+	b._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Bar) String() string {
+	if len(b._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(b._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type Foo struct {
 	Id string `json:"id"`
+
+	_rawJSON json.RawMessage
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+	f._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *Foo) String() string {
+	if len(f._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(f._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }

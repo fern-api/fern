@@ -2,11 +2,30 @@
 
 package api
 
+import (
+	fmt "fmt"
+	core "sdk/core"
+)
+
 type AnotherType struct {
 	String *string `json:"string,omitempty"`
 	Type   *Type   `json:"type,omitempty"`
 }
 
+func (a *AnotherType) String() string {
+	if value, err := core.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
 type Type struct {
 	Name string `json:"name"`
+}
+
+func (t *Type) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }

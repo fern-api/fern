@@ -3,7 +3,9 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
 )
 
 type ScheduleNew struct {
@@ -37,6 +39,31 @@ type Error struct {
 	Param *string `json:"param,omitempty"`
 	// If multiple errors occured (e.g., with param validation), the list of errors that occured.
 	Errors []*Error `json:"errors,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (e *Error) UnmarshalJSON(data []byte) error {
+	type unmarshaler Error
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Error(value)
+	e._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *Error) String() string {
+	if len(e._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type Request struct {
@@ -51,6 +78,31 @@ type Request struct {
 	Headers map[string]interface{} `json:"headers,omitempty"`
 	// The HTTP request body as a string.
 	Body *string `json:"body,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (r *Request) UnmarshalJSON(data []byte) error {
+	type unmarshaler Request
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Request(value)
+	r._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *Request) String() string {
+	if len(r._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type Schedule struct {
@@ -75,6 +127,31 @@ type Schedule struct {
 	Paused    *bool      `json:"paused,omitempty"`
 	Request   *Request   `json:"request,omitempty"`
 	CreatedAt *CreatedAt `json:"created_at,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (s *Schedule) UnmarshalJSON(data []byte) error {
+	type unmarshaler Schedule
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = Schedule(value)
+	s._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *Schedule) String() string {
+	if len(s._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type Task struct {
@@ -91,6 +168,31 @@ type Task struct {
 	// A duration string containing numbers and a unit suffix of "s" for seconds, "m" for minutes, and "h" for hours. Examples: "5s"; "1.5h"; "2h45m" When both `delay` and `scheduled_for` are present, `delay` will be added to `scheduled_for`.
 	Delay     *string    `json:"delay,omitempty"`
 	CreatedAt *CreatedAt `json:"created_at,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (t *Task) UnmarshalJSON(data []byte) error {
+	type unmarshaler Task
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Task(value)
+	t._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *Task) String() string {
+	if len(t._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 type TaskNew struct {
@@ -107,6 +209,31 @@ type TaskNew struct {
 	// A duration string containing numbers and a unit suffix of "s" for seconds, "m" for minutes, and "h" for hours. Examples: "5s"; "1.5h"; "2h45m" When both `delay` and `scheduled_for` are present, `delay` will be added to `scheduled_for`.
 	Delay     *string    `json:"delay,omitempty"`
 	CreatedAt *CreatedAt `json:"created_at,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (t *TaskNew) UnmarshalJSON(data []byte) error {
+	type unmarshaler TaskNew
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TaskNew(value)
+	t._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TaskNew) String() string {
+	if len(t._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(t._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 // The status of this Task.

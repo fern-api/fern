@@ -3,7 +3,9 @@
 package api
 
 import (
+	fmt "fmt"
 	uuid "github.com/google/uuid"
+	core "sdk/core"
 	time "time"
 )
 
@@ -17,4 +19,11 @@ type Type struct {
 	Seven time.Time `json:"seven"`
 	Eight uuid.UUID `json:"eight"`
 	Nine  []byte    `json:"nine"`
+}
+
+func (t *Type) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
