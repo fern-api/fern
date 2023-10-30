@@ -3773,7 +3773,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["strip-ansi", "npm:7.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["ua-parser-js", "npm:1.0.36"]\
+            ["ua-parser-js", "npm:1.0.37"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -17425,10 +17425,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["ua-parser-js", [\
-        ["npm:1.0.36", {\
-          "packageLocation": "./.yarn/cache/ua-parser-js-npm-1.0.36-5d735c4a9a-5b2c8a5e34.zip/node_modules/ua-parser-js/",\
+        ["npm:1.0.37", {\
+          "packageLocation": "./.yarn/cache/ua-parser-js-npm-1.0.37-b79655e1b5-4d481c720d.zip/node_modules/ua-parser-js/",\
           "packageDependencies": [\
-            ["ua-parser-js", "npm:1.0.36"]\
+            ["ua-parser-js", "npm:1.0.37"]\
           ],\
           "linkType": "HARD"\
         }]\
