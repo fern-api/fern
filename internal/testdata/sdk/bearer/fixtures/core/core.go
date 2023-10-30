@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
 )
 
@@ -155,6 +156,17 @@ func DoRequest(
 	}
 
 	return nil
+}
+
+// WriteMultipartJSON writes the given value as a JSON part.
+// This is used to serialize non-primitive multipart properties
+// (i.e. lists, objects, etc).
+func WriteMultipartJSON(writer *multipart.Writer, field string, value interface{}) error {
+	bytes, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+	return writer.WriteField(field, string(bytes))
 }
 
 // newRequest returns a new *http.Request with all of the fields

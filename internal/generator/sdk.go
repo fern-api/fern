@@ -654,16 +654,26 @@ func (f *fileWriter) WriteClient(
 				}
 				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+
+				// Encapsulate the multipart form WriteField in a closure so that we can easily
+				// wrap it with an optional nil check below.
+				writeField := func() {
+					if !valueTypeFormat.IsPrimitive {
+						// Non-primitive types need to be JSON-serialized (e.g. lists, objects, etc).
+						f.P(`if err := core.WriteMultipartJSON(writer, "`, fileBodyProperty.Name.WireValue, `", `, requestField, "); err != nil {")
+					} else {
+						f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
+					}
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+				}
+
 				if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
-					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
+					writeField()
 					f.P("}")
 				} else {
-					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
-					f.P("return ", endpoint.ErrorReturnValues)
-					f.P("}")
+					writeField()
 				}
 			}
 			f.P("if err := writer.Close(); err != nil {")
@@ -1526,23 +1536,27 @@ func irMethodToMethodEnum(method ir.HttpMethod) string {
 }
 
 type valueTypeFormat struct {
-	Prefix     string
-	Suffix     string
-	IsOptional bool
+	Prefix      string
+	Suffix      string
+	IsOptional  bool
+	IsPrimitive bool
 }
 
 func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 	var (
-		prefix     string
-		suffix     string
-		isOptional bool
+		prefix      string
+		suffix      string
+		isOptional  bool
+		isPrimitive bool
 	)
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		prefix = "*"
 		isOptional = true
 	}
 	if primitive := maybePrimitive(typeReference); primitive != "" {
 		// Several of the primitive types require special handling for query parameter serialization.
+		if isOptional {
+			prefix = "*"
+		}
 		switch primitive {
 		case ir.PrimitiveTypeDateTime:
 			prefix = ""
@@ -1554,11 +1568,13 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 			prefix = "base64.StdEncoding.EncodeToString(" + prefix
 			suffix = ")"
 		}
+		isPrimitive = true
 	}
 	return &valueTypeFormat{
-		Prefix:     prefix,
-		Suffix:     suffix,
-		IsOptional: isOptional,
+		Prefix:      prefix,
+		Suffix:      suffix,
+		IsOptional:  isOptional,
+		IsPrimitive: isPrimitive,
 	}
 }
 
