@@ -11,7 +11,7 @@ export interface AsyncAPI {
 export interface Message {
     messageId: string;
     summary?: string;
-    payload: OpenAPIV3.ReferenceObject;
+    payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }
 
 export interface Channel {
