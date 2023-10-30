@@ -1,0 +1,43 @@
+post:
+  tags:
+    - Tag
+  summary: Operation summary with examples
+  description: |
+    Operation description **markdown**.
+  operationId: postPathItemWithExamples
+  security:
+    - api_key: []
+    - basic_auth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Schema.yaml
+        examples:
+          mapName:
+            summary: My first example
+            description: My first example's description.
+            value:
+              stringProperty: tada
+          mapNameDoesNotShowInDocsUnlessSummaryIsNotProvided:
+            value:
+              stringProperty: checkmark
+    description: requestBody description
+    required: true
+  responses:
+    '200':
+      description: OK
+      headers:
+        X-Rate-Limit:
+          description: calls per hour allowed by the user
+          schema:
+            type: integer
+            format: int32
+        X-Expires-After:
+          $ref: ../components/headers/ExpiresAfter.yaml
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Schema.yaml
+    '400':
+      $ref: ../components/responses/Problem.yaml

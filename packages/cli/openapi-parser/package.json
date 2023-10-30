@@ -33,6 +33,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/openapi-ir-model": "0.0.128",
+    "@redocly/openapi-core": "^1.4.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.0.0",
