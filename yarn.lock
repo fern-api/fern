@@ -2177,7 +2177,7 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
-    json-stream-stringify: ^3.0.1
+    json-stream-stringify: ^3.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -9487,10 +9487,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"json-stream-stringify@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "json-stream-stringify@npm:3.0.1"
-  checksum: bc6a00e67a33cad54bbaecabfd051c7d837d5bb9ce58bfd047b258919d5ed8831ff699a6d0aa4bd1aa94db9cb502a6ab94eedfa47193e418d3bcacdae07675e2
+"json-stream-stringify@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "json-stream-stringify@npm:3.1.0"
+  checksum: 9ee4b29c90b48cf9c6e968d31f0a78d874aac83b6c815cdc2837fcb9e12696d6486251b03cc89af41d0fc333e50f9aa5f6141dabb0eddb39907d71b23d401485
   languageName: node
   linkType: hard
 

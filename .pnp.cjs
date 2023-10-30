@@ -3883,7 +3883,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["json-stream-stringify", "npm:3.0.1"],\
+            ["json-stream-stringify", "npm:3.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
@@ -12470,10 +12470,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["json-stream-stringify", [\
-        ["npm:3.0.1", {\
-          "packageLocation": "./.yarn/cache/json-stream-stringify-npm-3.0.1-46e5348fc2-bc6a00e67a.zip/node_modules/json-stream-stringify/",\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/json-stream-stringify-npm-3.1.0-8b9f2c0ee0-9ee4b29c90.zip/node_modules/json-stream-stringify/",\
           "packageDependencies": [\
-            ["json-stream-stringify", "npm:3.0.1"]\
+            ["json-stream-stringify", "npm:3.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

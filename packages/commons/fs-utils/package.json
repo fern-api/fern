@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "json-stream-stringify": "^3.0.1",
+    "json-stream-stringify": "^3.1.0",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
