@@ -4596,6 +4596,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
+            ["@redocly/openapi-core", "npm:1.4.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5606,6 +5607,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@redocly/ajv", [\
+        ["npm:8.11.0", {\
+          "packageLocation": "./.yarn/cache/@redocly-ajv-npm-8.11.0-3148ef50d1-3e4c7a1822.zip/node_modules/@redocly/ajv/",\
+          "packageDependencies": [\
+            ["@redocly/ajv", "npm:8.11.0"],\
+            ["fast-deep-equal", "npm:3.1.3"],\
+            ["json-schema-traverse", "npm:1.0.0"],\
+            ["require-from-string", "npm:2.0.2"],\
+            ["uri-js", "npm:4.4.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@redocly/openapi-core", [\
+        ["npm:1.4.0", {\
+          "packageLocation": "./.yarn/cache/@redocly-openapi-core-npm-1.4.0-79d8edaae1-8419256d79.zip/node_modules/@redocly/openapi-core/",\
+          "packageDependencies": [\
+            ["@redocly/openapi-core", "npm:1.4.0"],\
+            ["@redocly/ajv", "npm:8.11.0"],\
+            ["@types/node", "npm:14.18.63"],\
+            ["colorette", "npm:1.4.0"],\
+            ["js-levenshtein", "npm:1.1.6"],\
+            ["js-yaml", "npm:4.1.0"],\
+            ["lodash.isequal", "npm:4.5.0"],\
+            ["minimatch", "npm:5.1.0"],\
+            ["node-fetch", "virtual:ff4ad92811b13298df06d4b345f014a92b8cfb7227a3c53391527917242a9bb4dfdfd9e705312c254702f5a247c0e06ce3ad30d0fbb9cecaad20da6b9b06889f#npm:2.6.9"],\
+            ["pluralize", "npm:8.0.0"],\
+            ["yaml-ast-parser", "npm:0.0.43"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@sinclair/typebox", [\
         ["npm:0.24.20", {\
           "packageLocation": "./.yarn/cache/@sinclair-typebox-npm-0.24.20-26b4f821fa-bb2e95ab60.zip/node_modules/@sinclair/typebox/",\
@@ -6240,6 +6273,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
+        ["npm:14.18.63", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-14.18.63-a411f0ee60-be909061a5.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:14.18.63"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:18.7.18", {\
           "packageLocation": "./.yarn/cache/@types-node-npm-18.7.18-5bcc3f839f-8aec61f0f9.zip/node_modules/@types/node/",\
           "packageDependencies": [\
@@ -8354,6 +8394,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["colorette", [\
+        ["npm:1.4.0", {\
+          "packageLocation": "./.yarn/cache/colorette-npm-1.4.0-7e94b44dc3-01c3c16058.zip/node_modules/colorette/",\
+          "packageDependencies": [\
+            ["colorette", "npm:1.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:2.0.19", {\
           "packageLocation": "./.yarn/cache/colorette-npm-2.0.19-f73dfe6a4e-888cf5493f.zip/node_modules/colorette/",\
           "packageDependencies": [\
@@ -12315,6 +12362,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["js-levenshtein", [\
+        ["npm:1.1.6", {\
+          "packageLocation": "./.yarn/cache/js-levenshtein-npm-1.1.6-ab883e61a3-409f052a7f.zip/node_modules/js-levenshtein/",\
+          "packageDependencies": [\
+            ["js-levenshtein", "npm:1.1.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["js-sdsl", [\
         ["npm:4.1.4", {\
           "packageLocation": "./.yarn/cache/js-sdsl-npm-4.1.4-334fa1c399-1977cea4ab.zip/node_modules/js-sdsl/",\
@@ -12752,6 +12808,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lodash.debounce-npm-4.0.8-f1d6e09799-a3f527d22c.zip/node_modules/lodash.debounce/",\
           "packageDependencies": [\
             ["lodash.debounce", "npm:4.0.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["lodash.isequal", [\
+        ["npm:4.5.0", {\
+          "packageLocation": "./.yarn/cache/lodash.isequal-npm-4.5.0-f8b0f64d63-da27515dc5.zip/node_modules/lodash.isequal/",\
+          "packageDependencies": [\
+            ["lodash.isequal", "npm:4.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14885,6 +14950,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["please-upgrade-node", "npm:3.2.0"],\
             ["semver-compare", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["pluralize", [\
+        ["npm:8.0.0", {\
+          "packageLocation": "./.yarn/cache/pluralize-npm-8.0.0-f5f044ed52-08931d4a6a.zip/node_modules/pluralize/",\
+          "packageDependencies": [\
+            ["pluralize", "npm:8.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -17957,6 +18031,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/yaml-npm-2.3.2-b844830a8b-acd80cc24d.zip/node_modules/yaml/",\
           "packageDependencies": [\
             ["yaml", "npm:2.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["yaml-ast-parser", [\
+        ["npm:0.0.43", {\
+          "packageLocation": "./.yarn/cache/yaml-ast-parser-npm-0.0.43-14bb1a83f7-fb5df4c067.zip/node_modules/yaml-ast-parser/",\
+          "packageDependencies": [\
+            ["yaml-ast-parser", "npm:0.0.43"]\
           ],\
           "linkType": "HARD"\
         }]\

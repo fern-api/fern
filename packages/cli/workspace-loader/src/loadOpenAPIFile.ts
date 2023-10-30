@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { bundle, Config } from "@redocly/openapi-core";
 import { readdir, readFile } from "fs/promises";
 import { OpenAPIFile } from "./types/Workspace";
 
@@ -28,8 +29,16 @@ export async function loadOpenAPIFile(
             `OpenAPI spec not found at ${absolutePathToOpenAPI}. Please update the path in generators.yml`
         );
     }
+    const result = await bundle({
+        config: new Config({ apis: {}, styleguide: {} }, undefined),
+        ref: absolutePathToOpenAPI,
+        dereference: false,
+        removeUnusedComponents: false,
+        keepUrlRefs: true,
+    });
+
     return {
         absoluteFilepath: absolutePathToOpenAPI,
-        contents: (await readFile(absolutePathToOpenAPI)).toString(),
+        contents: result.bundle.source.body as string,
     };
 }
