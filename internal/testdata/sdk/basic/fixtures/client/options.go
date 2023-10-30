@@ -31,8 +31,8 @@ func WithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	}
 }
 
-// WithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.
-func WithAuthBasic(username, password string) core.ClientOption {
+// WithBasicAuth sets the 'Authorization: Basic <base64>' header on every request.
+func WithBasicAuth(username, password string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.Username = username
 		opts.Password = password

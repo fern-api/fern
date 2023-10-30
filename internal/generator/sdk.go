@@ -289,7 +289,7 @@ func (f *fileWriter) WriteClientOptions(
 			if i == 0 {
 				option = ast.NewCallExpr(
 					ast.NewImportedObject(
-						"WithAuth"+pascalCase,
+						"With"+pascalCase,
 						importPath,
 					),
 					[]ast.Expr{
@@ -297,12 +297,12 @@ func (f *fileWriter) WriteClientOptions(
 					},
 				)
 			}
-			f.P("// WithAuth", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
+			f.P("// With", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func WithAuth", pascalCase, "(", camelCase, " string) ", clientOptionType, " {")
+			f.P("func With", pascalCase, "(", camelCase, " string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.", pascalCase, " = ", camelCase)
 			f.P("}")
@@ -313,7 +313,7 @@ func (f *fileWriter) WriteClientOptions(
 			if i == 0 {
 				option = ast.NewCallExpr(
 					ast.NewImportedObject(
-						"WithAuthBasic",
+						"WithBasicAuth",
 						importPath,
 					),
 					[]ast.Expr{
@@ -322,12 +322,12 @@ func (f *fileWriter) WriteClientOptions(
 					},
 				)
 			}
-			f.P("// WithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.")
+			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func WithAuthBasic(username, password string) ", clientOptionType, " {")
+			f.P("func WithBasicAuth(username, password string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.Username = username")
 			f.P("opts.Password = password")
@@ -342,7 +342,7 @@ func (f *fileWriter) WriteClientOptions(
 			}
 			var (
 				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
-				optionName = fmt.Sprintf("WithAuth%s", pascalCase)
+				optionName = fmt.Sprintf("With%s", pascalCase)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
 				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
@@ -350,7 +350,7 @@ func (f *fileWriter) WriteClientOptions(
 			if i == 0 {
 				option = ast.NewCallExpr(
 					ast.NewImportedObject(
-						"WithAuth"+pascalCase,
+						"With"+pascalCase,
 						importPath,
 					),
 					[]ast.Expr{
@@ -378,7 +378,7 @@ func (f *fileWriter) WriteClientOptions(
 			continue
 		}
 		var (
-			optionName = fmt.Sprintf("WithHeader%s", header.Name.Name.PascalCase.UnsafeName)
+			optionName = fmt.Sprintf("With%s", header.Name.Name.PascalCase.UnsafeName)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
 			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)

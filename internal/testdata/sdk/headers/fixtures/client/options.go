@@ -33,78 +33,78 @@ func WithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	}
 }
 
-// WithAuthCustom sets the custom auth header on every request.
-func WithAuthCustom(custom *[]byte) core.ClientOption {
+// WithCustom sets the custom auth header on every request.
+func WithCustom(custom *[]byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.Custom = custom
 	}
 }
 
-// WithHeaderXApiName sets the xApiName header on every request.
-func WithHeaderXApiName(xApiName string) core.ClientOption {
+// WithXApiName sets the xApiName header on every request.
+func WithXApiName(xApiName string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiName = xApiName
 	}
 }
 
-// WithHeaderXApiId sets the xApiId header on every request.
-func WithHeaderXApiId(xApiId uuid.UUID) core.ClientOption {
+// WithXApiId sets the xApiId header on every request.
+func WithXApiId(xApiId uuid.UUID) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiId = xApiId
 	}
 }
 
-// WithHeaderXApiDatetime sets the xApiDatetime header on every request.
-func WithHeaderXApiDatetime(xApiDatetime time.Time) core.ClientOption {
+// WithXApiDatetime sets the xApiDatetime header on every request.
+func WithXApiDatetime(xApiDatetime time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiDatetime = xApiDatetime
 	}
 }
 
-// WithHeaderXApiDate sets the xApiDate header on every request.
-func WithHeaderXApiDate(xApiDate time.Time) core.ClientOption {
+// WithXApiDate sets the xApiDate header on every request.
+func WithXApiDate(xApiDate time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiDate = xApiDate
 	}
 }
 
-// WithHeaderXApiBytes sets the xApiBytes header on every request.
-func WithHeaderXApiBytes(xApiBytes []byte) core.ClientOption {
+// WithXApiBytes sets the xApiBytes header on every request.
+func WithXApiBytes(xApiBytes []byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiBytes = xApiBytes
 	}
 }
 
-// WithHeaderXApiOptionalName sets the xApiOptionalName header on every request.
-func WithHeaderXApiOptionalName(xApiOptionalName *string) core.ClientOption {
+// WithXApiOptionalName sets the xApiOptionalName header on every request.
+func WithXApiOptionalName(xApiOptionalName *string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalName = xApiOptionalName
 	}
 }
 
-// WithHeaderXApiOptionalId sets the xApiOptionalId header on every request.
-func WithHeaderXApiOptionalId(xApiOptionalId *uuid.UUID) core.ClientOption {
+// WithXApiOptionalId sets the xApiOptionalId header on every request.
+func WithXApiOptionalId(xApiOptionalId *uuid.UUID) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalId = xApiOptionalId
 	}
 }
 
-// WithHeaderXApiOptionalDatetime sets the xApiOptionalDatetime header on every request.
-func WithHeaderXApiOptionalDatetime(xApiOptionalDatetime *time.Time) core.ClientOption {
+// WithXApiOptionalDatetime sets the xApiOptionalDatetime header on every request.
+func WithXApiOptionalDatetime(xApiOptionalDatetime *time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalDatetime = xApiOptionalDatetime
 	}
 }
 
-// WithHeaderXApiOptionalDate sets the xApiOptionalDate header on every request.
-func WithHeaderXApiOptionalDate(xApiOptionalDate *time.Time) core.ClientOption {
+// WithXApiOptionalDate sets the xApiOptionalDate header on every request.
+func WithXApiOptionalDate(xApiOptionalDate *time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalDate = xApiOptionalDate
 	}
 }
 
-// WithHeaderXApiOptionalBytes sets the xApiOptionalBytes header on every request.
-func WithHeaderXApiOptionalBytes(xApiOptionalBytes *[]byte) core.ClientOption {
+// WithXApiOptionalBytes sets the xApiOptionalBytes header on every request.
+func WithXApiOptionalBytes(xApiOptionalBytes *[]byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalBytes = xApiOptionalBytes
 	}

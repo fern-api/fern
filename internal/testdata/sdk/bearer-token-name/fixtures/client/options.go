@@ -31,8 +31,8 @@ func WithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	}
 }
 
-// WithAuthApiKey sets the 'Authorization: Bearer <apiKey>' header on every request.
-func WithAuthApiKey(apiKey string) core.ClientOption {
+// WithApiKey sets the 'Authorization: Bearer <apiKey>' header on every request.
+func WithApiKey(apiKey string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.ApiKey = apiKey
 	}
