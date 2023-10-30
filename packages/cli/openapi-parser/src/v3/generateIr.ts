@@ -1,6 +1,12 @@
 import { TaskContext } from "@fern-api/task-context";
-import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
-import { Endpoint, OpenAPIIntermediateRepresentation, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { SchemaId, SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
+import {
+    Endpoint,
+    ObjectSchema,
+    OpenAPIIntermediateRepresentation,
+    Schema,
+    Webhook,
+} from "@fern-fern/openapi-ir-model/finalIr";
 import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
@@ -134,30 +140,66 @@ function maybeRemoveDiscriminantsFromSchemas(
     schemas: Record<string, Schema>,
     context: AbstractOpenAPIV3ParserContext
 ): Record<string, Schema> {
-    return Object.fromEntries(
-        Object.entries(schemas).map(([schemaId, schema]) => {
-            if (schema.type !== "object") {
-                return [schemaId, schema];
-            }
-            const referenceToSchema: OpenAPIV3.ReferenceObject = {
-                $ref: `#/components/schemas/${schemaId}`,
-            };
-            const discriminatedUnionReference = context.getReferencesFromDiscriminatedUnion(referenceToSchema);
-            if (discriminatedUnionReference == null) {
-                return [schemaId, schema];
-            }
+    const result: Record<string, Schema> = {};
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schema.type !== "object") {
+            result[schemaId] = schema;
+            break;
+        }
+        const referenceToSchema: OpenAPIV3.ReferenceObject = {
+            $ref: `#/components/schemas/${schemaId}`,
+        };
+        const discriminatedUnionReference = context.getReferencesFromDiscriminatedUnion(referenceToSchema);
+        if (discriminatedUnionReference == null) {
+            result[schemaId] = schema;
+            break;
+        }
 
-            const schemaWithoutDiscriminants = Schema.object({
-                ...schema,
-                properties: schema.properties.filter((objectProperty) => {
+        const schemaWithoutDiscriminants = Schema.object({
+            ...schema,
+            properties: schema.properties.filter((objectProperty) => {
+                return !discriminatedUnionReference.discriminants.has(objectProperty.key);
+            }),
+            allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
+                return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
+            }),
+        });
+        result[schemaId] = schemaWithoutDiscriminants;
+
+        const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
+        for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
+            const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId];
+            if (parentSchema == null || parentSchema.type !== "object") {
+                continue;
+            }
+            result[parentSchemaId] = Schema.object({
+                ...parentSchema,
+                properties: parentSchema.properties.filter((objectProperty) => {
                     return !discriminatedUnionReference.discriminants.has(objectProperty.key);
                 }),
-                allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
+                allOfPropertyConflicts: parentSchema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                     return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
                 }),
             });
+        }
+    }
+    return result;
+}
 
-            return [schemaId, schemaWithoutDiscriminants];
-        })
-    );
+function getAllParentSchemaIds({
+    schema,
+    schemas,
+}: {
+    schema: ObjectSchema;
+    schemas: Record<string, Schema>;
+}): SchemaId[] {
+    const result: SchemaId[] = [];
+    for (const allOfSchema of schema.allOf) {
+        result.push(allOfSchema.schema);
+        const allOfSchemaDefinition = schemas[allOfSchema.schema];
+        if (allOfSchemaDefinition != null && allOfSchemaDefinition.type === "object") {
+            result.push(...getAllParentSchemaIds({ schema: allOfSchemaDefinition, schemas }));
+        }
+    }
+    return result;
 }
