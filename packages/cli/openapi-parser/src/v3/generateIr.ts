@@ -144,7 +144,7 @@ function maybeRemoveDiscriminantsFromSchemas(
     for (const [schemaId, schema] of Object.entries(schemas)) {
         if (schema.type !== "object") {
             result[schemaId] = schema;
-            break;
+            continue;
         }
         const referenceToSchema: OpenAPIV3.ReferenceObject = {
             $ref: `#/components/schemas/${schemaId}`,
@@ -152,7 +152,7 @@ function maybeRemoveDiscriminantsFromSchemas(
         const discriminatedUnionReference = context.getReferencesFromDiscriminatedUnion(referenceToSchema);
         if (discriminatedUnionReference == null) {
             result[schemaId] = schema;
-            break;
+            continue;
         }
 
         const schemaWithoutDiscriminants = Schema.object({
