@@ -39,6 +39,6 @@ export async function loadOpenAPIFile(
 
     return {
         absoluteFilepath: absolutePathToOpenAPI,
-        contents: result.bundle.source.body as string,
+        contents: JSON.stringify(result.bundle.parsed) as string,
     };
 }

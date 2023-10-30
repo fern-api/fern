@@ -1,0 +1,154 @@
+type: object
+title: Scalars
+properties:
+  stringProperty:
+    description: Property name's description (type is string)
+    type: string
+    examples:
+      - example
+      - sample
+  readOnlyStringProperty:
+    description: Notice this only appears in the response.
+    type: string
+    readOnly: true
+    examples:
+      - example
+  writeOnlyStringProperty:
+    description: Notice this only appears in the request.
+    type: string
+    writeOnly: true
+    examples:
+      - example
+  minLengthString:
+    description: Property name's description (type is string)
+    type: string
+    minLength: 4
+    examples:
+      - example
+  maxLengthString:
+    description: Property name's description (type is string)
+    type: string
+    maxLength: 140
+    examples:
+      - example
+  minAndMaxLengthString:
+    description: Property name's description (type is string)
+    type: string
+    minLength: 4
+    maxLength: 140
+    examples:
+      - example
+  nullableOrStringProperty:
+    description: Property name's description (type is string or null)
+    type:
+      - string
+      - 'null'
+    examples:
+      - example
+  stringEnumValues:
+    description: Property name's description (type is string)
+    type: string
+    enum:
+      - sample
+      - example
+      - specimen
+      - case
+      - instance
+      - illustration
+  stringDateTime:
+    description: Property name's description (type is string, format is date-time)
+    type: string
+    format: date-time
+  stringDate:
+    description: Property name's description (type is string, format is date-time)
+    type: string
+    format: date
+  stringEmail:
+    description: Property name's description (type is string, format is email)
+    type: string
+    format: email
+  stringIpAddressV4:
+    description: Property name's description (type is string, format is ipv4 address)
+    type: string
+    format: ipv4
+  stringIpAddressV6:
+    description: Property name's description (type is string, format is ipv6 address)
+    type: string
+    format: ipv6
+  stringPassword:
+    description: Property name's description (type is string, format is password)
+    type: string
+    format: password
+  stringHostname:
+    description: Property name's description (type is string, format is hostname)
+    type: string
+    format: hostname
+  stringUri:
+    description: Property name's description (type is string, format is uri)
+    type: string
+    format: uri
+  stringUuid:
+    description: Property name's description (type is string, format is uuid)
+    type: string
+    format: uuid
+  numberProperty:
+    description: Property name's description (type is number)
+    type: number
+    example: 8
+  numberFloat:
+    description: Property name's description (type is number, format is float)
+    type: number
+    format: float
+  numberDouble:
+    description: Property name's description (type is number, format is double)
+    type: number
+    format: double
+  numberGreaterThanOrEquals:
+    description: Property name's description (type is number)
+    type: number
+    minimum: 5
+  numberGreaterThan:
+    description: Property name's description (type is number)
+    type: number
+    exclusiveMinimum: 5
+  numberLessThan:
+    description: Property name's description (type is number)
+    type: number
+    exclusiveMaximum: 8
+  numberLessThanOrEquals:
+    description: Property name's description (type is number)
+    type: number
+    maximum: 8
+  numberRange:
+    description: Property name's description (type is number)
+    type: number
+    minimum: 5
+    maximum: 8
+  numberRangeExclusiveMaximum:
+    description: Property name's description (type is number)
+    type: number
+    minimum: 5
+    exclusiveMaximum: 8
+  numberRangeExclusiveMinimumAndMaximum:
+    description: Property name's description (type is number)
+    type: number
+    exclusiveMinimum: 5
+    exclusiveMaximum: 8
+  numberMultipleOf:
+    description: Property name's description (type is number)
+    type: number
+    multipleOf: 2
+  integerType:
+    description: Property name's description (type is integer)
+    type: integer
+  integer32bit:
+    description: Property name's description (type is integer, format is int32)
+    type: integer
+    format: int32
+  integer64bit:
+    description: Property name's description (type is integer, format is int64)
+    type: integer
+    format: int64
+  booleanProperty:
+    description: Property name's description (type is boolean)
+    type: boolean
