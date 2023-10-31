@@ -49,7 +49,7 @@ type NotFoundError struct {
 	Message string `json:"message"`
 }
 
-func TestDoRequest(t *testing.T) {
+func TestCall(t *testing.T) {
 	tests := []*TestCase{
 		{
 			description: "GET success",
@@ -113,17 +113,19 @@ func TestDoRequest(t *testing.T) {
 				server = newTestServer(t, test)
 				client = server.Client()
 			)
+			caller := NewCaller(client)
 			var response *Response
-			err := DoRequest(
+			err := caller.Call(
 				context.Background(),
-				client,
-				server.URL,
-				test.giveMethod,
-				test.giveRequest,
-				&response,
-				test.giveResponseIsOptional,
-				test.giveHeader,
-				test.giveErrorDecoder,
+				&CallParams{
+					URL:                server.URL,
+					Method:             test.giveMethod,
+					Headers:            test.giveHeader,
+					Request:            test.giveRequest,
+					Response:           &response,
+					ResponseIsOptional: test.giveResponseIsOptional,
+					ErrorDecoder:       test.giveErrorDecoder,
+				},
 			)
 			if test.wantError != nil {
 				assert.EqualError(t, err, test.wantError.Error())

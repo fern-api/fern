@@ -12,9 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 
 	Notification *notificationnotification.Client
 }
@@ -26,7 +26,7 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 	return &Client{
 		baseURL:      options.BaseURL,
-		httpClient:   options.HTTPClient,
+		caller:       core.NewCaller(options.HTTPClient),
 		header:       options.ToHeader(),
 		Notification: notificationnotification.NewClient(opts...),
 	}
@@ -40,16 +40,14 @@ func (c *Client) GetUserNotification(ctx context.Context, userId string, notific
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications/%v", userId, notificationId)
 
 	var response *notification.Notification
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodGet,
+			Headers:  c.header,
+			Response: &response,
+		},
 	); err != nil {
 		return nil, err
 	}

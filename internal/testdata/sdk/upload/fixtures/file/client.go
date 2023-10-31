@@ -14,9 +14,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -25,9 +25,9 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
 	}
 }
 
@@ -63,16 +63,15 @@ func (c *Client) Upload(ctx context.Context, file io.Reader, request *fixtures.U
 	}
 	c.header.Set("Content-Type", writer.FormDataContentType())
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		requestBuffer,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  requestBuffer,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}
@@ -105,16 +104,15 @@ func (c *Client) UploadSimple(ctx context.Context, file io.Reader) (string, erro
 	}
 	c.header.Set("Content-Type", writer.FormDataContentType())
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		requestBuffer,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  requestBuffer,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}
@@ -163,16 +161,15 @@ func (c *Client) UploadMultiple(ctx context.Context, file io.Reader, optionalFil
 	}
 	c.header.Set("Content-Type", writer.FormDataContentType())
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		requestBuffer,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  requestBuffer,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}

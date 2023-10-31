@@ -12,9 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -23,9 +23,9 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
 	}
 }
 
@@ -37,16 +37,14 @@ func (c *Client) Download(ctx context.Context, filename string) (io.Reader, erro
 	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v/download", filename)
 
 	response := bytes.NewBuffer(nil)
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodGet,
+			Headers:  c.header,
+			Response: response,
+		},
 	); err != nil {
 		return nil, err
 	}

@@ -12,9 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -23,9 +23,9 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
 	}
 }
 
@@ -37,16 +37,15 @@ func (c *Client) SetName(ctx context.Context, userId string, request string) (st
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
 	var response string
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}
@@ -61,16 +60,15 @@ func (c *Client) SetNameV2(ctx context.Context, userId string, request *fixtures
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v2", userId)
 
 	var response string
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}
@@ -88,16 +86,15 @@ func (c *Client) SetNameV3(ctx context.Context, userId string, request *fixtures
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response *fixtures.SetNameRequestV3Body
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		headers,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  headers,
+			Request:  request,
+			Response: &response,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -115,16 +112,16 @@ func (c *Client) SetNameV3Optional(ctx context.Context, userId string, request *
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response *fixtures.SetNameRequestV3Body
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		true,
-		headers,
-		nil,
+		&core.CallParams{
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            headers,
+			Request:            request,
+			Response:           &response,
+			ResponseIsOptional: true,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -142,16 +139,15 @@ func (c *Client) SetNameV4(ctx context.Context, userId string, request *fixtures
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		headers,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  headers,
+			Request:  request,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}
@@ -169,16 +165,15 @@ func (c *Client) SetNameV5(ctx context.Context, userId string, request *fixtures
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		headers,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  headers,
+			Request:  request,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}
@@ -202,16 +197,15 @@ func (c *Client) Update(ctx context.Context, userId string, request *fixtures.Up
 	}
 
 	var response string
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
 	); err != nil {
 		return "", err
 	}

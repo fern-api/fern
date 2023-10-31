@@ -10,9 +10,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -21,9 +21,9 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
 	}
 }
 
@@ -34,16 +34,14 @@ func (c *Client) PostTag(ctx context.Context, request *metrics.Tag) error {
 	}
 	endpointURL := baseURL + "/" + "metrics/tag"
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		nil,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:     endpointURL,
+			Method:  http.MethodPost,
+			Headers: c.header,
+			Request: request,
+		},
 	); err != nil {
 		return err
 	}

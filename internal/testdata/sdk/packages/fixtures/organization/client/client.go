@@ -12,9 +12,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 
 	Metrics *metricsclient.Client
 }
@@ -25,10 +25,10 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
-		Metrics:    metricsclient.NewClient(opts...),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
+		Metrics: metricsclient.NewClient(opts...),
 	}
 }
 
@@ -40,16 +40,14 @@ func (c *Client) Check(ctx context.Context, id string) (*fixtures.Organization, 
 	endpointURL := fmt.Sprintf(baseURL+"/"+"organization/%v", id)
 
 	var response *fixtures.Organization
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodGet,
+			Headers:  c.header,
+			Response: &response,
+		},
 	); err != nil {
 		return nil, err
 	}

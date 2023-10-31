@@ -11,9 +11,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -22,9 +22,9 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
 	}
 }
 
@@ -36,16 +36,15 @@ func (c *Client) GetName(ctx context.Context, userId string) (*string, error) {
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/name", userId)
 
 	var response *string
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		true,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:                endpointURL,
+			Method:             http.MethodGet,
+			Headers:            c.header,
+			Response:           &response,
+			ResponseIsOptional: true,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -60,16 +59,15 @@ func (c *Client) GetUser(ctx context.Context, userId string) (*fixtures.User, er
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
 	var response *fixtures.User
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		true,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:                endpointURL,
+			Method:             http.MethodGet,
+			Headers:            c.header,
+			Response:           &response,
+			ResponseIsOptional: true,
+		},
 	); err != nil {
 		return nil, err
 	}

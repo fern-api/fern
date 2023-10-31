@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"path"
 	"sort"
-	"strconv"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/ast"
@@ -441,7 +440,7 @@ func (f *fileWriter) WriteClient(
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
 	f.P("baseURL string")
-	f.P("httpClient core.HTTPClient")
+	f.P("caller *core.Caller")
 	f.P("header http.Header")
 	f.P()
 	for _, subpackage := range subpackages {
@@ -462,7 +461,7 @@ func (f *fileWriter) WriteClient(
 	f.P("}")
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
-	f.P("httpClient: options.HTTPClient,")
+	f.P("caller: core.NewCaller(options.HTTPClient),")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
 		var (
@@ -684,16 +683,25 @@ func (f *fileWriter) WriteClient(
 		}
 
 		// Issue the request.
-		f.P("if err := core.DoRequest(")
+		f.P("if err := ", receiver, ".caller.Call(")
 		f.P("ctx,")
-		f.P(receiver, ".httpClient,")
-		f.P("endpointURL, ")
-		f.P(endpoint.Method, ",")
-		f.P(endpoint.RequestValueName, ",")
-		f.P(endpoint.ResponseParameterName, ",")
-		f.P(strconv.FormatBool(endpoint.ResponseIsOptionalParameter), ",")
-		f.P(headersParameter, ",")
-		f.P(endpoint.ErrorDecoderParameterName, ",")
+		f.P("&core.CallParams{")
+		f.P("URL: endpointURL, ")
+		f.P("Method:", endpoint.Method, ",")
+		f.P("Headers:", headersParameter, ",")
+		if endpoint.RequestValueName != "" {
+			f.P("Request: ", endpoint.RequestValueName, ",")
+		}
+		if endpoint.ResponseParameterName != "" {
+			f.P("Response: ", endpoint.ResponseParameterName, ",")
+		}
+		if endpoint.ResponseIsOptionalParameter {
+			f.P("ResponseIsOptional: true,")
+		}
+		if endpoint.ErrorDecoderParameterName != "" {
+			f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+		}
+		f.P("},")
 		f.P("); err != nil {")
 		f.P("return ", endpoint.ErrorReturnValues)
 		f.P("}")
@@ -801,7 +809,7 @@ func (f *fileWriter) endpointFromIR(
 	// Format the rest of the request parameters.
 	var (
 		requestParameterName = ""
-		requestValueName     = "nil"
+		requestValueName     = ""
 	)
 	if irEndpoint.SdkRequest != nil {
 		if needsRequestParameter(irEndpoint) {
@@ -879,7 +887,7 @@ func (f *fileWriter) endpointFromIR(
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Type)
 		}
 	} else {
-		responseParameterName = "nil"
+		responseParameterName = ""
 		signatureReturnValues = "error"
 		successfulReturnValues = "nil"
 		errorReturnValues = "err"
@@ -917,7 +925,7 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	// An error decoder is required when there are endpoint-specific errors.
-	errorDecoderParameterName := "nil"
+	errorDecoderParameterName := ""
 	if len(irEndpoint.Errors) > 0 {
 		errorDecoderParameterName = "errorDecoder"
 	}

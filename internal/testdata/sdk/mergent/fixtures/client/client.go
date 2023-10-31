@@ -15,9 +15,9 @@ import (
 )
 
 type Client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL string
+	caller  *core.Caller
+	header  http.Header
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -26,9 +26,9 @@ func NewClient(opts ...core.ClientOption) *Client {
 		opt(options)
 	}
 	return &Client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL: options.BaseURL,
+		caller:  core.NewCaller(options.HTTPClient),
+		header:  options.ToHeader(),
 	}
 }
 
@@ -40,16 +40,14 @@ func (c *Client) GetTasks(ctx context.Context) ([]*fixtures.Task, error) {
 	endpointURL := baseURL + "/" + "tasks"
 
 	var response []*fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodGet,
+			Headers:  c.header,
+			Response: &response,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -90,16 +88,16 @@ func (c *Client) PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fix
 	}
 
 	var response *fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPost,
+			Headers:      c.header,
+			Request:      request,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -134,16 +132,15 @@ func (c *Client) GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtu
 	}
 
 	var response *fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodGet,
+			Headers:      c.header,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -192,16 +189,16 @@ func (c *Client) PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, reque
 	}
 
 	var response *fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPatch,
-		request,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPatch,
+			Headers:      c.header,
+			Request:      request,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -235,16 +232,14 @@ func (c *Client) DeleteTasksTaskId(ctx context.Context, taskId fixtures.Id) erro
 		return apiError
 	}
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodDelete,
-		nil,
-		nil,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodDelete,
+			Headers:      c.header,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return err
 	}
@@ -288,16 +283,15 @@ func (c *Client) PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*f
 	}
 
 	var response *fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		nil,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPost,
+			Headers:      c.header,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -356,16 +350,16 @@ func (c *Client) PostTasksBatchCreate(ctx context.Context, request []*fixtures.T
 	}
 
 	var response []*fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPost,
+			Headers:      c.header,
+			Request:      request,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -409,16 +403,15 @@ func (c *Client) PostTasksBatchDelete(ctx context.Context, request []fixtures.Id
 		return apiError
 	}
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		nil,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPost,
+			Headers:      c.header,
+			Request:      request,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return err
 	}
@@ -433,16 +426,14 @@ func (c *Client) GetSchedules(ctx context.Context) ([]*fixtures.Schedule, error)
 	endpointURL := baseURL + "/" + "schedules"
 
 	var response []*fixtures.Schedule
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		nil,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodGet,
+			Headers:  c.header,
+			Response: &response,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -476,16 +467,16 @@ func (c *Client) PostSchedules(ctx context.Context, request *fixtures.ScheduleNe
 	}
 
 	var response *fixtures.Schedule
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPost,
-		request,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPost,
+			Headers:      c.header,
+			Request:      request,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -520,16 +511,15 @@ func (c *Client) GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures
 	}
 
 	var response *fixtures.Schedule
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodGet,
+			Headers:      c.header,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -571,16 +561,16 @@ func (c *Client) PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtur
 	}
 
 	var response *fixtures.Schedule
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodPatch,
-		request,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodPatch,
+			Headers:      c.header,
+			Request:      request,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}
@@ -614,16 +604,14 @@ func (c *Client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId fixtu
 		return apiError
 	}
 
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodDelete,
-		nil,
-		nil,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodDelete,
+			Headers:      c.header,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return err
 	}
@@ -658,16 +646,15 @@ func (c *Client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId fix
 	}
 
 	var response []*fixtures.Task
-	if err := core.DoRequest(
+	if err := c.caller.Call(
 		ctx,
-		c.httpClient,
-		endpointURL,
-		http.MethodGet,
-		nil,
-		&response,
-		false,
-		c.header,
-		errorDecoder,
+		&core.CallParams{
+			URL:          endpointURL,
+			Method:       http.MethodGet,
+			Headers:      c.header,
+			Response:     &response,
+			ErrorDecoder: errorDecoder,
+		},
 	); err != nil {
 		return nil, err
 	}

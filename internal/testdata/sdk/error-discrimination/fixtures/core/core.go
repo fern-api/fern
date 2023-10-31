@@ -65,31 +65,44 @@ func (a *APIError) Error() string {
 // typed API error (e.g. *APIError).
 type ErrorDecoder func(statusCode int, body io.Reader) error
 
-// DoRequest issues a JSON request to the given url.
-func DoRequest(
-	ctx context.Context,
-	client HTTPClient,
-	url string,
-	method string,
-	request interface{},
-	response interface{},
-	responseIsOptional bool,
-	endpointHeaders http.Header,
-	errorDecoder ErrorDecoder,
-) error {
+// Caller calls APIs and deserializes their response, if any.
+type Caller struct {
+	client HTTPClient
+}
+
+// NewCaller returns a new *Caller backed by the given HTTP client.
+func NewCaller(client HTTPClient) *Caller {
+	return &Caller{
+		client: client,
+	}
+}
+
+// CallParams represents the parameters used to issue an API call.
+type CallParams struct {
+	URL                string
+	Method             string
+	Headers            http.Header
+	Request            interface{}
+	Response           interface{}
+	ResponseIsOptional bool
+	ErrorDecoder       ErrorDecoder
+}
+
+// Call issues an API call according to the given call parameters.
+func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	var requestBody io.Reader
-	if request != nil {
-		if body, ok := request.(io.Reader); ok {
+	if params.Request != nil {
+		if body, ok := params.Request.(io.Reader); ok {
 			requestBody = body
 		} else {
-			requestBytes, err := json.Marshal(request)
+			requestBytes, err := json.Marshal(params.Request)
 			if err != nil {
 				return err
 			}
 			requestBody = bytes.NewReader(requestBytes)
 		}
 	}
-	req, err := newRequest(ctx, url, method, endpointHeaders, requestBody)
+	req, err := newRequest(ctx, params.URL, params.Method, params.Headers, requestBody)
 	if err != nil {
 		return err
 	}
@@ -98,7 +111,7 @@ func DoRequest(
 	if err := ctx.Err(); err != nil {
 		return err
 	}
-	resp, err := client.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -113,11 +126,11 @@ func DoRequest(
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		if errorDecoder != nil {
+		if params.ErrorDecoder != nil {
 			// This endpoint has custom errors, so we'll
 			// attempt to unmarshal the error into a structured
 			// type based on the status code.
-			return errorDecoder(resp.StatusCode, resp.Body)
+			return params.ErrorDecoder(resp.StatusCode, resp.Body)
 		}
 		// This endpoint doesn't have any custom error
 		// types, so we just read the body as-is, and
@@ -136,20 +149,20 @@ func DoRequest(
 	}
 
 	// Mutate the response parameter in-place.
-	if response != nil {
-		if writer, ok := response.(io.Writer); ok {
+	if params.Response != nil {
+		if writer, ok := params.Response.(io.Writer); ok {
 			_, err = io.Copy(writer, resp.Body)
 		} else {
-			err = json.NewDecoder(resp.Body).Decode(response)
+			err = json.NewDecoder(resp.Body).Decode(params.Response)
 		}
 		if err != nil {
 			if err == io.EOF {
-				if responseIsOptional {
+				if params.ResponseIsOptional {
 					// The response is optional, so we should ignore the
 					// io.EOF error
 					return nil
 				}
-				return fmt.Errorf("expected a %T response, but the server responded with nothing", response)
+				return fmt.Errorf("expected a %T response, but the server responded with nothing", params.Response)
 			}
 			return err
 		}
