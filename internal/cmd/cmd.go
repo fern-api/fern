@@ -32,8 +32,9 @@ var (
 	// defaultImports specify the default imports used in the generated
 	// go.mod (if any).
 	defaultImports = map[string]string{
-		"github.com/google/uuid":      "v1.3.1",
+		"github.com/google/uuid":      "v1.4.0",
 		"github.com/stretchr/testify": "v1.7.0",
+		"gopkg.in/yaml.v3":            "v3.0.1", // Indirect, but pin to make this stable.
 	}
 
 	// defaultModuleConfig is used whenever an import path or module is not

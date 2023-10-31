@@ -29,7 +29,7 @@ const (
 //
 // go 1.13
 //
-// require github.com/google/uuid v1.3.1
+// require github.com/google/uuid v1.4.0
 func NewModFile(coordinator *coordinator.Client, c *ModuleConfig, requiresGenerics bool) (*File, string, error) {
 	if c.Path == "" {
 		return nil, "", fmt.Errorf("module path is required")
