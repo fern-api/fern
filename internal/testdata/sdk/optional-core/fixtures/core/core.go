@@ -22,6 +22,17 @@ type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
+// WriteMultipartJSON writes the given value as a JSON part.
+// This is used to serialize non-primitive multipart properties
+// (i.e. lists, objects, etc).
+func WriteMultipartJSON(writer *multipart.Writer, field string, value interface{}) error {
+	bytes, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+	return writer.WriteField(field, string(bytes))
+}
+
 // APIError is a lightweight wrapper around the standard error
 // interface that preserves the status code from the RPC, if any.
 type APIError struct {
@@ -90,19 +101,7 @@ type CallParams struct {
 
 // Call issues an API call according to the given call parameters.
 func (c *Caller) Call(ctx context.Context, params *CallParams) error {
-	var requestBody io.Reader
-	if params.Request != nil {
-		if body, ok := params.Request.(io.Reader); ok {
-			requestBody = body
-		} else {
-			requestBytes, err := json.Marshal(params.Request)
-			if err != nil {
-				return err
-			}
-			requestBody = bytes.NewReader(requestBytes)
-		}
-	}
-	req, err := newRequest(ctx, params.URL, params.Method, params.Headers, requestBody)
+	req, err := newRequest(ctx, params.URL, params.Method, params.Headers, params.Request)
 	if err != nil {
 		return err
 	}
@@ -111,6 +110,7 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	if err := ctx.Err(); err != nil {
 		return err
 	}
+
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return err
@@ -126,26 +126,7 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		if params.ErrorDecoder != nil {
-			// This endpoint has custom errors, so we'll
-			// attempt to unmarshal the error into a structured
-			// type based on the status code.
-			return params.ErrorDecoder(resp.StatusCode, resp.Body)
-		}
-		// This endpoint doesn't have any custom error
-		// types, so we just read the body as-is, and
-		// put it into a normal error.
-		bytes, err := io.ReadAll(resp.Body)
-		if err != nil && err != io.EOF {
-			return err
-		}
-		if err == io.EOF {
-			// The error didn't have a response body,
-			// so all we can do is return an error
-			// with the status code.
-			return NewAPIError(resp.StatusCode, nil)
-		}
-		return NewAPIError(resp.StatusCode, errors.New(string(bytes)))
+		return decodeError(resp, params.ErrorDecoder)
 	}
 
 	// Mutate the response parameter in-place.
@@ -171,17 +152,6 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	return nil
 }
 
-// WriteMultipartJSON writes the given value as a JSON part.
-// This is used to serialize non-primitive multipart properties
-// (i.e. lists, objects, etc).
-func WriteMultipartJSON(writer *multipart.Writer, field string, value interface{}) error {
-	bytes, err := json.Marshal(value)
-	if err != nil {
-		return err
-	}
-	return writer.WriteField(field, string(bytes))
-}
-
 // newRequest returns a new *http.Request with all of the fields
 // required to issue the call.
 func newRequest(
@@ -189,8 +159,12 @@ func newRequest(
 	url string,
 	method string,
 	endpointHeaders http.Header,
-	requestBody io.Reader,
+	request interface{},
 ) (*http.Request, error) {
+	requestBody, err := newRequestBody(request)
+	if err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequestWithContext(ctx, method, url, requestBody)
 	if err != nil {
 		return nil, err
@@ -201,4 +175,46 @@ func newRequest(
 		req.Header[name] = values
 	}
 	return req, nil
+}
+
+// newRequestBody returns a new io.Reader that represents the HTTP request body.
+func newRequestBody(request interface{}) (io.Reader, error) {
+	var requestBody io.Reader
+	if request != nil {
+		if body, ok := request.(io.Reader); ok {
+			requestBody = body
+		} else {
+			requestBytes, err := json.Marshal(request)
+			if err != nil {
+				return nil, err
+			}
+			requestBody = bytes.NewReader(requestBytes)
+		}
+	}
+	return requestBody, nil
+}
+
+// decodeError decodes the error from the given HTTP response. Note that
+// it's the caller's responsibility to close the response body.
+func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
+	if errorDecoder != nil {
+		// This endpoint has custom errors, so we'll
+		// attempt to unmarshal the error into a structured
+		// type based on the status code.
+		return errorDecoder(response.StatusCode, response.Body)
+	}
+	// This endpoint doesn't have any custom error
+	// types, so we just read the body as-is, and
+	// put it into a normal error.
+	bytes, err := io.ReadAll(response.Body)
+	if err != nil && err != io.EOF {
+		return err
+	}
+	if err == io.EOF {
+		// The error didn't have a response body,
+		// so all we can do is return an error
+		// with the status code.
+		return NewAPIError(response.StatusCode, nil)
+	}
+	return NewAPIError(response.StatusCode, errors.New(string(bytes)))
 }

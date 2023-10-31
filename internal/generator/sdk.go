@@ -34,6 +34,9 @@ var (
 
 	//go:embed sdk/core/pointer.go
 	pointerFile string
+
+	//go:embed sdk/core/stream.go
+	streamFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -611,7 +614,7 @@ func (f *fileWriter) WriteClient(
 		}
 
 		// Prepare a response variable.
-		if endpoint.ResponseType != "" {
+		if endpoint.ResponseType != "" && !endpoint.IsStreaming {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
@@ -683,31 +686,54 @@ func (f *fileWriter) WriteClient(
 		}
 
 		// Issue the request.
-		f.P("if err := ", receiver, ".caller.Call(")
-		f.P("ctx,")
-		f.P("&core.CallParams{")
-		f.P("URL: endpointURL, ")
-		f.P("Method:", endpoint.Method, ",")
-		f.P("Headers:", headersParameter, ",")
-		if endpoint.RequestValueName != "" {
-			f.P("Request: ", endpoint.RequestValueName, ",")
+		if endpoint.IsStreaming {
+			f.P("streamer := core.NewStreamer[", endpoint.ResponseType, "](", receiver, ".caller)")
+			f.P("return streamer.Stream(")
+			f.P("ctx,")
+			f.P("&core.StreamParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			if endpoint.StreamDelimiter != "" {
+				f.P("Delimiter: ", endpoint.StreamDelimiter, ",")
+			}
+			f.P("},")
+			f.P(")")
+			f.P("}")
+			f.P()
+		} else {
+			f.P("if err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&core.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P("); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("return ", endpoint.SuccessfulReturnValues)
+			f.P("}")
+			f.P()
 		}
-		if endpoint.ResponseParameterName != "" {
-			f.P("Response: ", endpoint.ResponseParameterName, ",")
-		}
-		if endpoint.ResponseIsOptionalParameter {
-			f.P("ResponseIsOptional: true,")
-		}
-		if endpoint.ErrorDecoderParameterName != "" {
-			f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
-		}
-		f.P("},")
-		f.P("); err != nil {")
-		f.P("return ", endpoint.ErrorReturnValues)
-		f.P("}")
-		f.P("return ", endpoint.SuccessfulReturnValues)
-		f.P("}")
-		f.P()
 	}
 	var parameters []ast.Expr
 	if generatedAuth != nil {
@@ -757,6 +783,8 @@ type endpoint struct {
 	BaseURL                     string
 	PathSuffix                  string
 	Method                      string
+	IsStreaming                 bool
+	StreamDelimiter             string
 	ErrorDecoderParameterName   string
 	Errors                      ir.ResponseErrors
 	QueryParameters             []*ir.QueryParameter
@@ -844,6 +872,8 @@ func (f *fileWriter) endpointFromIR(
 		signatureReturnValues     string
 		successfulReturnValues    string
 		errorReturnValues         string
+		streamDelimiter           string
+		isStreaming               bool
 	)
 	var responseIsOptionalParameter bool
 	if irEndpoint.Response != nil {
@@ -883,6 +913,19 @@ func (f *fileWriter) endpointFromIR(
 			signatureReturnValues = "(string, error)"
 			successfulReturnValues = "response, nil"
 			errorReturnValues = `"", err`
+		case "streaming":
+			if terminator := irEndpoint.Response.Streaming.Terminator; terminator != nil {
+				streamDelimiter = *terminator
+			}
+			typeReference := typeReferenceFromStreamingResponseChunkType(irEndpoint.Response.Streaming.DataEventType)
+			if typeReference == nil {
+				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.DataEventType.Type)
+			}
+			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
+			responseParameterName = "response"
+			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
+			errorReturnValues = "nil, err"
+			isStreaming = true
 		default:
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Type)
 		}
@@ -956,6 +999,8 @@ func (f *fileWriter) endpointFromIR(
 		BaseURL:                     baseURL,
 		PathSuffix:                  pathSuffix,
 		Method:                      irMethodToMethodEnum(irEndpoint.Method),
+		IsStreaming:                 isStreaming,
+		StreamDelimiter:             streamDelimiter,
 		ErrorDecoderParameterName:   errorDecoderParameterName,
 		Errors:                      irEndpoint.Errors,
 		QueryParameters:             irEndpoint.QueryParameters,
@@ -1597,6 +1642,21 @@ func typeReferenceFromJsonResponse(
 		return jsonResponse.Response.ResponseBodyType
 	case "nestedPropertyAsResponse":
 		return jsonResponse.NestedPropertyAsResponse.ResponseBodyType
+	}
+	return nil
+}
+
+func typeReferenceFromStreamingResponseChunkType(
+	chunkType *ir.StreamingResponseChunkType,
+) *ir.TypeReference {
+	if chunkType == nil {
+		return nil
+	}
+	switch chunkType.Type {
+	case "json":
+		return chunkType.Json
+	case "text":
+		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString)
 	}
 	return nil
 }

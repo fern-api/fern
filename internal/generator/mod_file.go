@@ -14,7 +14,7 @@ const (
 	minimumGoVersion = "1.13"
 
 	// minimumGoGenericsVersion specifies the minimum Go version if
-	// the user requires generics (i.e. *Optional[T]).
+	// the user requires generics (i.e. *Optional[T] or *Stream[T]).
 	minimumGoGenericsVersion = "1.18"
 
 	// modFilename is the default name of a Go module file.
@@ -30,7 +30,7 @@ const (
 // go 1.13
 //
 // require github.com/google/uuid v1.3.1
-func NewModFile(coordinator *coordinator.Client, c *ModuleConfig, enableExplicitNull bool) (*File, string, error) {
+func NewModFile(coordinator *coordinator.Client, c *ModuleConfig, requiresGenerics bool) (*File, string, error) {
 	if c.Path == "" {
 		return nil, "", fmt.Errorf("module path is required")
 	}
@@ -44,7 +44,7 @@ func NewModFile(coordinator *coordinator.Client, c *ModuleConfig, enableExplicit
 	// Write the go version.
 	version := c.Version
 	if version == "" {
-		if enableExplicitNull {
+		if requiresGenerics {
 			version = minimumGoGenericsVersion
 		} else {
 			version = minimumGoVersion

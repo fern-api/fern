@@ -339,7 +339,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
-
+		if ir.SdkConfig.HasStreamingEndpoints {
+			files = append(files, newStreamFile(g.coordinator))
+		}
 		// Generate the error types, if any.
 		for fileInfo, irErrors := range fileInfoToErrors(ir.ApiName, ir.Errors) {
 			writer := newFileWriter(
@@ -455,7 +457,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// The go.sum file will be generated after the
 	// go.mod file is written to disk.
 	if g.config.ModuleConfig != nil {
-		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, g.config.EnableExplicitNull)
+		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints
+		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, requiresGenerics)
 		if err != nil {
 			return nil, err
 		}
@@ -720,6 +723,14 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
+	)
+}
+
+func newStreamFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/stream.go",
+		[]byte(streamFile),
 	)
 }
 
