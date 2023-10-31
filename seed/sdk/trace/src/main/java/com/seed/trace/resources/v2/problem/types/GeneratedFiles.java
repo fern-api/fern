@@ -4,6 +4,7 @@
 package com.seed.trace.resources.v2.problem.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.trace.core.ObjectMappers;
 import com.seed.trace.resources.commons.types.Language;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -91,6 +93,9 @@ public final class GeneratedFiles {
         private Map<Language, Files> generatedTemplateFiles = new LinkedHashMap<>();
 
         private Map<Language, Files> other = new LinkedHashMap<>();
+
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 

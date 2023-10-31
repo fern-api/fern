@@ -199,6 +199,16 @@ public final class BuilderGenerator {
                 .addStatement("return new $T($L)", objectClassName, String.join(", ", buildMethodArguments))
                 .build());
 
+        if (this.supportAdditionalProperties) {
+            builderImplTypeSpec.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(Map.class, String.class, Object.class),
+                            additionalPropertiesFieldName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .addAnnotation(JsonAnySetter.class)
+                    .initializer("new $T<>()", HashMap.class)
+                    .build());
+        }
+
         return PoetTypeWithClassName.of(nestedBuilderClassName, builderImplTypeSpec.build());
     }
 
