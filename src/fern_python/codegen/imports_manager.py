@@ -1,6 +1,8 @@
 from collections import defaultdict
 from typing import DefaultDict, Set
 
+from ordered_set import OrderedSet
+
 from . import AST
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import StatementId
@@ -11,16 +13,16 @@ class ImportsManager:
         self._module_path = module_path
 
         self._import_to_statements_that_must_precede_it: DefaultDict[
-            AST.ReferenceImport, Set[StatementId]
-        ] = defaultdict(set)
+            AST.ReferenceImport, OrderedSet[StatementId]
+        ] = defaultdict(OrderedSet)
 
-        self._bottom_imports: DefaultDict[AST.ReferenceImport, Set[None]] = defaultdict(set)
+        self._bottom_imports: DefaultDict[AST.ReferenceImport, OrderedSet[None]] = defaultdict(OrderedSet)
 
         self._postponed_annotations = False
         self._has_written_top_imports = False
         self._has_written_any_statements = False
 
-    def resolve_constraints(self, *, statement_id: StatementId, references: Set[AST.Reference]) -> None:
+    def resolve_constraints(self, *, statement_id: StatementId, references: OrderedSet[AST.Reference]) -> None:
         for reference in references:
             if reference.is_forward_reference:
                 self._postponed_annotations = True
@@ -33,7 +35,7 @@ class ImportsManager:
                 elif reference.import_ not in self._import_to_statements_that_must_precede_it:
                     # even if there's no constraints, we still store the import
                     # so that we write it to the file.
-                    self._import_to_statements_that_must_precede_it[reference.import_] = set()
+                    self._import_to_statements_that_must_precede_it[reference.import_] = OrderedSet()
 
     def write_top_imports_for_file(self, writer: AST.Writer, reference_resolver: ReferenceResolverImpl) -> None:
         if self._postponed_annotations or reference_resolver.does_file_self_import():
