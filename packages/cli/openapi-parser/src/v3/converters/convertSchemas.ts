@@ -35,7 +35,7 @@ export function convertSchema(
         } else {
             context.markSchemaAsReferencedByRequest(getSchemaIdFromReference(schema));
         }
-        return convertReferenceObject(schema, wrapAsNullable, breadcrumbs);
+        return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
     } else {
         return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs, propertiesToExclude);
     }
@@ -44,9 +44,12 @@ export function convertSchema(
 export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
     wrapAsNullable: boolean,
+    context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[]
 ): SchemaWithExample {
-    const referenceSchema = SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
+    const referenceSchema = schema.$ref.includes("properties")
+        ? convertSchemaObject(context.resolveSchemaReference(schema), wrapAsNullable, context, breadcrumbs, new Set())
+        : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: referenceSchema,

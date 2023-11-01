@@ -33,6 +33,7 @@ export function convertDiscriminatedOneOf({
                     $ref: schema,
                 },
                 false,
+                context,
                 [schema]
             );
             context.markReferencedByDiscriminatedUnion(
@@ -94,7 +95,7 @@ export function convertDiscriminatedOneOfWithVariants({
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
             if (isReferenceObject(schema)) {
-                const subtypeReference = convertReferenceObject(schema, false, [schema.$ref]);
+                const subtypeReference = convertReferenceObject(schema, false, context, [schema.$ref]);
                 context.markReferencedByDiscriminatedUnion(schema, discriminant, 1);
                 return [discriminantValue, subtypeReference];
             } else {
