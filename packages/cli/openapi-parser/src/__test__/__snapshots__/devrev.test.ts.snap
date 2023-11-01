@@ -243,43 +243,7 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "token_id",
-              "value": {
-                "primitive": {
-                  "string": "token-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "token": {
-                "properties": {
-                  "requested_token_type": {
-                    "enum": "urn:devrev:params:oauth:token-type:aat",
-                    "type": "enum",
-                  },
-                  "status": {
-                    "enum": "active",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensGetRequest",
       "headers": [],
       "internal": undefined,
@@ -356,21 +320,7 @@ token type issued for a given subject.
           "response": {
             "properties": {
               "tokens": {
-                "array": [
-                  {
-                    "properties": {
-                      "requested_token_type": {
-                        "enum": "urn:devrev:params:oauth:token-type:aat",
-                        "type": "enum",
-                      },
-                      "status": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -957,17 +907,7 @@ disabled.
           "response": {
             "properties": {
               "dev_users": {
-                "array": [
-                  {
-                    "properties": {
-                      "state": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1131,28 +1071,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "dev_user": {
-                "properties": {
-                  "state": {
-                    "enum": "active",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevUsersSelfRequest",
       "headers": [],
       "internal": undefined,
@@ -1782,34 +1701,7 @@ organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevOrgsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -2120,38 +2012,7 @@ them.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "environment": {
-                "enum": "production",
-                "type": "enum",
-              },
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevOrgsUpdateRequest",
       "headers": [],
       "internal": undefined,
