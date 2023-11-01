@@ -1306,6 +1306,30 @@ The LLM response data, as well as any context provided in the original request w
     "Error",
   ],
   "schemas": {
+    "AudioData": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "AudioData",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "audioDataAudioData",
+          "key": "audio_data",
+          "schema": {
+            "description": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
     "AudioIntelligenceModelStatus": {
       "description": "Will be either success, or unavailable in the rare case that the model failed.",
       "generatedName": "AudioIntelligenceModelStatus",
@@ -2615,6 +2639,58 @@ Valid values are in the range [0, 1] inclusive.
       ],
       "type": "object",
     },
+    "FinalTranscript": {
+      "allOf": [
+        {
+          "description": undefined,
+          "generatedName": "RealtimeBaseTranscript",
+          "nameOverride": undefined,
+          "schema": "RealtimeBaseTranscript",
+          "type": "reference",
+        },
+      ],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "FinalTranscript",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "finalTranscriptMessageType",
+          "key": "message_type",
+          "schema": {
+            "description": "Describes the type of message.",
+            "type": "literal",
+            "value": "FinalTranscript",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "finalTranscriptPunctuated",
+          "key": "punctuated",
+          "schema": {
+            "description": "Whether the text has been punctuated and cased.",
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "finalTranscriptTextFormatted",
+          "key": "text_formatted",
+          "schema": {
+            "description": "Whether the text has been formatted (e.g. Dollar -> $)",
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
     "LemurActionItemsParameters": {
       "description": undefined,
       "generatedName": "LemurActionItemsParameters",
@@ -3173,6 +3249,38 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "type": "object",
     },
+    "MessageType": {
+      "description": undefined,
+      "generatedName": "MessageType",
+      "nameOverride": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "description": undefined,
+          "generatedName": "SessionBegins",
+          "nameOverride": undefined,
+          "value": "SessionBegins",
+        },
+        {
+          "description": undefined,
+          "generatedName": "PartialTranscript",
+          "nameOverride": undefined,
+          "value": "PartialTranscript",
+        },
+        {
+          "description": undefined,
+          "generatedName": "FinalTranscript",
+          "nameOverride": undefined,
+          "value": "FinalTranscript",
+        },
+        {
+          "description": undefined,
+          "generatedName": "SessionTerminated",
+          "nameOverride": undefined,
+          "value": "SessionTerminated",
+        },
+      ],
+    },
     "PageDetails": {
       "allOf": [],
       "allOfPropertyConflicts": [],
@@ -3316,6 +3424,34 @@ Can be any value between 0.0 and 1.0 inclusive.
               "schema": "TranscriptParagraph",
               "type": "reference",
             },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "PartialTranscript": {
+      "allOf": [
+        {
+          "description": undefined,
+          "generatedName": "RealtimeBaseTranscript",
+          "nameOverride": undefined,
+          "schema": "RealtimeBaseTranscript",
+          "type": "reference",
+        },
+      ],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "PartialTranscript",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "partialTranscriptMessageType",
+          "key": "message_type",
+          "schema": {
+            "description": "Describes the type of message.",
+            "type": "literal",
+            "value": "PartialTranscript",
           },
         },
       ],
@@ -3541,6 +3677,188 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "type": "object",
     },
+    "RealtimeBaseMessage": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "RealtimeBaseMessage",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseMessageMessageType",
+          "key": "message_type",
+          "schema": {
+            "description": "Describes the type of the message.",
+            "generatedName": "RealtimeBaseMessageMessageType",
+            "nameOverride": undefined,
+            "schema": "MessageType",
+            "type": "reference",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RealtimeBaseTranscript": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "RealtimeBaseTranscript",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseTranscriptAudioStart",
+          "key": "audio_start",
+          "schema": {
+            "description": "Start time of audio sample relative to session start, in milliseconds.",
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseTranscriptAudioEnd",
+          "key": "audio_end",
+          "schema": {
+            "description": "End time of audio sample relative to session start, in milliseconds.",
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseTranscriptConfidence",
+          "key": "confidence",
+          "schema": {
+            "description": "The confidence score of the entire transcription, between 0 and 1.",
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseTranscriptText",
+          "key": "text",
+          "schema": {
+            "description": "The partial transcript for your audio.",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseTranscriptWords",
+          "key": "words",
+          "schema": {
+            "description": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "generatedName": "RealtimeBaseTranscriptWordsItem",
+              "nameOverride": undefined,
+              "schema": "Word",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "realtimeBaseTranscriptCreated",
+          "key": "created",
+          "schema": {
+            "description": "The timestamp for the partial transcript.",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RealtimeError": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "RealtimeError",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "realtimeErrorError",
+          "key": "error",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RealtimeMessage": {
+      "oneOf": {
+        "description": undefined,
+        "generatedName": "RealtimeMessage",
+        "nameOverride": undefined,
+        "schemas": [
+          {
+            "description": undefined,
+            "generatedName": "RealtimeMessageZero",
+            "nameOverride": undefined,
+            "schema": "SessionBegins",
+            "type": "reference",
+          },
+          {
+            "description": undefined,
+            "generatedName": "RealtimeMessageOne",
+            "nameOverride": undefined,
+            "schema": "PartialTranscript",
+            "type": "reference",
+          },
+          {
+            "description": undefined,
+            "generatedName": "RealtimeMessageTwo",
+            "nameOverride": undefined,
+            "schema": "FinalTranscript",
+            "type": "reference",
+          },
+          {
+            "description": undefined,
+            "generatedName": "RealtimeMessageThree",
+            "nameOverride": undefined,
+            "schema": "SessionTerminated",
+            "type": "reference",
+          },
+          {
+            "description": undefined,
+            "generatedName": "RealtimeMessageFour",
+            "nameOverride": undefined,
+            "schema": "RealtimeError",
+            "type": "reference",
+          },
+        ],
+        "type": "undisciminated",
+      },
+      "type": "oneOf",
+    },
     "RealtimeTemporaryTokenResponse": {
       "allOf": [],
       "allOfPropertyConflicts": [],
@@ -3564,6 +3882,51 @@ Can be any value between 0.0 and 1.0 inclusive.
         },
       ],
       "type": "object",
+    },
+    "RealtimeTranscript": {
+      "oneOf": {
+        "description": undefined,
+        "generatedName": "RealtimeTranscript",
+        "nameOverride": undefined,
+        "schemas": [
+          {
+            "description": undefined,
+            "generatedName": "RealtimeTranscriptZero",
+            "nameOverride": undefined,
+            "schema": "PartialTranscript",
+            "type": "reference",
+          },
+          {
+            "description": undefined,
+            "generatedName": "RealtimeTranscriptOne",
+            "nameOverride": undefined,
+            "schema": "FinalTranscript",
+            "type": "reference",
+          },
+        ],
+        "type": "undisciminated",
+      },
+      "type": "oneOf",
+    },
+    "RealtimeTranscriptType": {
+      "description": undefined,
+      "generatedName": "RealtimeTranscriptType",
+      "nameOverride": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "description": undefined,
+          "generatedName": "PartialTranscript",
+          "nameOverride": undefined,
+          "value": "PartialTranscript",
+        },
+        {
+          "description": undefined,
+          "generatedName": "FinalTranscript",
+          "nameOverride": undefined,
+          "value": "FinalTranscript",
+        },
+      ],
     },
     "RedactedAudioResponse": {
       "allOf": [],
@@ -3790,6 +4153,98 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "type": "object",
     },
+    "SessionBegins": {
+      "allOf": [
+        {
+          "description": undefined,
+          "generatedName": "RealtimeBaseMessage",
+          "nameOverride": undefined,
+          "schema": "RealtimeBaseMessage",
+          "type": "reference",
+        },
+      ],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "SessionBegins",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {
+            "RealtimeBaseMessage": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "sessionBeginsMessageType",
+          "key": "message_type",
+          "schema": {
+            "description": "Describes the type of the message.",
+            "type": "literal",
+            "value": "SessionBegins",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "sessionBeginsSessionId",
+          "key": "session_id",
+          "schema": {
+            "description": "Unique identifier for the established session.",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "sessionBeginsExpiresAt",
+          "key": "expires_at",
+          "schema": {
+            "description": "Timestamp when this session will expire.",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SessionTerminated": {
+      "allOf": [
+        {
+          "description": undefined,
+          "generatedName": "RealtimeBaseMessage",
+          "nameOverride": undefined,
+          "schema": "RealtimeBaseMessage",
+          "type": "reference",
+        },
+      ],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "SessionTerminated",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {
+            "RealtimeBaseMessage": {
+              "differentSchema": true,
+            },
+          },
+          "generatedName": "sessionTerminatedMessageType",
+          "key": "message_type",
+          "schema": {
+            "description": "Describes the type of the message.",
+            "type": "literal",
+            "value": "SessionTerminated",
+          },
+        },
+      ],
+      "type": "object",
+    },
     "SeverityScoreSummary": {
       "allOf": [],
       "allOfPropertyConflicts": [],
@@ -3939,6 +4394,36 @@ Can be any value between 0.0 and 1.0 inclusive.
           "value": "paragraph",
         },
       ],
+    },
+    "TerminateSession": {
+      "allOf": [
+        {
+          "description": undefined,
+          "generatedName": "RealtimeBaseMessage",
+          "nameOverride": undefined,
+          "schema": "RealtimeBaseMessage",
+          "type": "reference",
+        },
+      ],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "TerminateSession",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "terminateSessionTerminateSession",
+          "key": "terminate_session",
+          "schema": {
+            "description": "A boolean value to communicate that you wish to end your real-time session forever.",
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
     },
     "Timestamp": {
       "allOf": [],
@@ -6096,6 +6581,66 @@ The default value is 'en_us'.
           "key": "upload_url",
           "schema": {
             "description": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "Word": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "Word",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "wordStart",
+          "key": "start",
+          "schema": {
+            "description": "Start time of the word in milliseconds",
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "wordEnd",
+          "key": "end",
+          "schema": {
+            "description": "End time of the word in milliseconds",
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "wordConfidence",
+          "key": "confidence",
+          "schema": {
+            "description": "Confidence score of the word",
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "wordText",
+          "key": "text",
+          "schema": {
+            "description": "The word itself",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,

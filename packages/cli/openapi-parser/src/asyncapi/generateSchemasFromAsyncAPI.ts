@@ -17,12 +17,14 @@ export function generateSchemasFromAsyncAPI(asyncApi: AsyncAPI, taskContext: Tas
         components: {
             schemas: {
                 ...Object.fromEntries(
-                    Object.entries(asyncApi.components?.messages ?? {}).map(([messageId, message]) => {
-                        if (isReferenceObject(message.payload)) {
-                            return [];
-                        }
-                        return [messageId, message.payload];
-                    })
+                    Object.entries(asyncApi.components?.messages ?? {})
+                        .map(([messageId, message]) => {
+                            if (isReferenceObject(message.payload)) {
+                                return [];
+                            }
+                            return [messageId, message.payload];
+                        })
+                        .filter(([_, value]) => value !== undefined)
                 ),
                 ...asyncApi.components?.schemas,
             },
