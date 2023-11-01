@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-
-from ordered_set import OrderedSet
+from typing import Set
 
 from ..references import Reference
 from .generic_type_var import GenericTypeVar
@@ -10,9 +9,9 @@ from .generic_type_var import GenericTypeVar
 
 @dataclasses.dataclass
 class AstNodeMetadata:
-    references: OrderedSet[Reference] = dataclasses.field(default_factory=OrderedSet)
-    declarations: OrderedSet[str] = dataclasses.field(default_factory=OrderedSet)
-    generics: OrderedSet[GenericTypeVar] = dataclasses.field(default_factory=OrderedSet)
+    references: Set[Reference] = dataclasses.field(default_factory=set)
+    declarations: Set[str] = dataclasses.field(default_factory=set)
+    generics: Set[GenericTypeVar] = dataclasses.field(default_factory=set)
 
     def update(self, other: AstNodeMetadata) -> None:
         self.references.update(other.references)
