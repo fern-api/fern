@@ -5192,39 +5192,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "timesheet_id",
-              "value": {
-                "primitive": {
-                  "int": 1,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "approvers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTimesheetByIdRequest",
       "headers": [],
       "internal": undefined,

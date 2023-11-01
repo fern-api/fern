@@ -10678,23 +10678,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "timesheet_id": 1,
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "data": {
-                      "approvers": [],
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {

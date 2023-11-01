@@ -3447,24 +3447,6 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "token_id": "token-id",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "token": {
-                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "status": "active",
-                    },
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
@@ -3507,12 +3489,7 @@ token type issued for a given subject.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "tokens": [
-                      {
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "status": "active",
-                      },
-                    ],
+                    "tokens": [],
                   },
                 },
               },
@@ -3666,11 +3643,7 @@ organization.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "dev_users": [
-                      {
-                        "state": "active",
-                      },
-                    ],
+                    "dev_users": [],
                   },
                 },
               },
@@ -3733,21 +3706,6 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "dev_user": {
-                      "state": "active",
-                    },
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/dev-users.self",
@@ -4100,21 +4058,6 @@ records.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "rev_org": {},
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/rev-orgs.get",
             "request": {
@@ -4248,22 +4191,6 @@ them.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "environment": "production",
-                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                },
-                "response": {
-                  "body": {
-                    "rev_org": {},
-                  },
-                },
-              },
             ],
             "method": "POST",
             "path": "/rev-orgs.update",

@@ -1793,23 +1793,6 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "final_model": "default",
-                  "questions": [],
-                  "transcript_ids": [],
-                },
-                "response": {
-                  "body": {
-                    "response": [],
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/lemur/v3/generate/question-answer",
             "request": {
