@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import Callable, List, Set, TypeVar
+from typing import Callable, List, TypeVar
+
+from ordered_set import OrderedSet
 
 from fern_python.codegen.dependency_manager import DependencyManager
 
@@ -59,7 +61,7 @@ class SourceFileImpl(SourceFile):
         self._imports_manager = ImportsManager(module_path=module_path)
         self._completion_listener = completion_listener
         self._statements: List[TopLevelStatement] = []
-        self._exports: Set[str] = set()
+        self._exports: OrderedSet[str] = OrderedSet()
         self._footer_statements: List[TopLevelStatement] = []
         self._dependency_manager = dependency_manager
         self._should_format = should_format
@@ -142,7 +144,7 @@ class SourceFileImpl(SourceFile):
             statement_metadata = statement.get_metadata()
             ast_metadata.update(statement_metadata)
 
-            references_in_statement = set(statement_metadata.references)
+            references_in_statement = OrderedSet(statement_metadata.references)
 
             # get generics declarations
             generics_declarations = self._get_generics_declarations(statement_metadata.generics)
@@ -199,13 +201,13 @@ class SourceFileImpl(SourceFile):
             writer.write_newline_if_last_line_not()
         return writer
 
-    def get_exports(self) -> Set[str]:
+    def get_exports(self) -> OrderedSet[str]:
         return self._exports
 
     def _get_all_statements(self) -> List[TopLevelStatement]:
         return self._statements + self._footer_statements
 
-    def _get_generics_declarations(self, generics: Set[AST.GenericTypeVar]) -> List[TopLevelStatement]:
+    def _get_generics_declarations(self, generics: OrderedSet[AST.GenericTypeVar]) -> List[TopLevelStatement]:
         return [
             TopLevelStatement(
                 id=generic.name,
