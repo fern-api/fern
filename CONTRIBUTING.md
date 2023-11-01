@@ -79,23 +79,3 @@ To run the locally-generated CLI, run:
 ```
 FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 ```
-
-### Docs UI
-
-To build and run the NextJS docs UI, run either:
-
-- `yarn workspace @fern-api/fe-bundle dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
-
-- `yarn workspace @fern-api/fe-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our cloud production environment.
-
-The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
-
-```bash
-# packages/ui/fe-bundle/.env.local
-
-# uncomment the next line when targeting the production cloud environment
-# NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com
-
-# uncomment the next line when targeting the dev cloud environment
-# NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
-```
