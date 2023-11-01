@@ -108,6 +108,8 @@ export class ExampleTypeFactory {
                             ...properties,
                             ...allOfExample.properties,
                         };
+                    } else {
+                        return undefined;
                     }
                 }
                 for (const objPropertyWithExample of schema.properties) {

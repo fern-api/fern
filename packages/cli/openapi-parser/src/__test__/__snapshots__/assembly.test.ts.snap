@@ -912,39 +912,7 @@ exports[`open api parser assembly parse open api 1`] = `
         503,
         504,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "final_model": {
-                "enum": "default",
-                "type": "enum",
-              },
-              "questions": {
-                "array": [],
-                "type": "array",
-              },
-              "transcript_ids": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "response": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "LemurQuestionAnswerRequest",
       "headers": [],
       "internal": undefined,
