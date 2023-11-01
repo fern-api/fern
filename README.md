@@ -44,7 +44,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
 
 ```yml
 - name: fernapi/fern-go-sdk
-  version: 0.4.0
+  version: 0.9.0
   output:
     location: local-file-system
     path: ../../generated/go
