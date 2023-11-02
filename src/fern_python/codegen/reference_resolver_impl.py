@@ -2,6 +2,8 @@ import dataclasses
 from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
+from ordered_set import OrderedSet
+
 from . import AST
 from .reference_resolver import ReferenceResolver
 
@@ -15,7 +17,7 @@ class ResolvedImport:
 class ReferenceResolverImpl(ReferenceResolver):
     def __init__(self, module_path_of_source_file: AST.ModulePath):
         self._module_path_of_source_file = module_path_of_source_file
-        self._default_name_to_original_references: DefaultDict[AST.QualifiedName, Set[AST.Reference]] = defaultdict(set)
+        self._default_name_to_original_references: DefaultDict[AST.QualifiedName, OrderedSet[AST.Reference]] = defaultdict(OrderedSet)
         self._original_import_to_resolved_import: Optional[Dict[AST.ReferenceImport, ResolvedImport]] = None
         self._does_file_self_import = False
         self._declarations: Set[AST.QualifiedName] = set()
@@ -34,7 +36,7 @@ class ReferenceResolverImpl(ReferenceResolver):
             # get the set of all imports that result in this default name.
             # if len(set) > 1, or this default name is the same as a declaration,
             # then there's a collision, so we need to alias the imports.
-            original_imports = set(
+            original_imports = OrderedSet(
                 reference.import_ for reference in original_references if reference.import_ is not None
             )
 

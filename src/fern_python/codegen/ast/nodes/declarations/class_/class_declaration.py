@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from typing import List, Optional, Sequence, Set
+from typing import List, Optional, Sequence
+
+from ordered_set import OrderedSet
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import ClassReference, Module, Reference, ReferenceImport
@@ -39,7 +41,7 @@ class ClassDeclaration(AstNode):
         self.snippet = snippet
         self.class_vars: List[VariableDeclaration] = []
         self.statements: List[AstNode] = []
-        self.ghost_references: Set[Reference] = set()
+        self.ghost_references: OrderedSet[Reference] = OrderedSet()
 
     def add_class_var(self, variable_declaration: VariableDeclaration) -> None:
         self.class_vars.append(variable_declaration)
@@ -125,7 +127,8 @@ class ClassDeclaration(AstNode):
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
         metadata.declarations.add(self.name)
-        metadata.references.update({*self.extends, *self.ghost_references})
+        metadata.references.update(self.extends)
+        metadata.references.update(self.ghost_references)
         if self.constructor is not None:
             metadata.update(self.constructor.get_metadata())
         for class_var in self.class_vars:
