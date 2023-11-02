@@ -1,0 +1,20 @@
+types:
+  UnauthorizedUser:
+    properties:
+      id: string
+      name: string
+      authorized: literal<false>
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    getUnauthorizedUser:
+      path: /
+      method: POST
+      request:
+        name: GetUnauthorizedUserRequest
+        body:
+          properties:
+            authorized: literal<false>
+      response: UnauthorizedUser

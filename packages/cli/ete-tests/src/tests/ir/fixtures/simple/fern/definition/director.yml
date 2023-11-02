@@ -13,4 +13,5 @@ types:
     examples:
       - name: Example1
         value: 20
+  LiteralBoolean: literal<true>
   LiteralString: literal<"hello">

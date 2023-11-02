@@ -227,8 +227,15 @@ export function convertTypeReferenceExample({
                 )
             );
         },
-        literal: (literalValue) => {
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(literalValue));
+        literal: (literal) => {
+            switch (literal.type) {
+                case "boolean":
+                    return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean));
+                case "string":
+                    return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(literal.string));
+                default:
+                    assertNever(literal);
+            }
         },
         named: (named) => {
             const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({

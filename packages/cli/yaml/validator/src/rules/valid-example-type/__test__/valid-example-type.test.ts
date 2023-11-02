@@ -119,6 +119,54 @@ describe("valid-example-type", () => {
                 message: 'Expected example to be "hello". Example is: "goodbye"',
                 nodePath: ["types", "LiteralAlias", { key: "examples", arrayIndex: 1 }],
             },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: "Expected example to be false. Example is: true",
+                nodePath: ["types", "LiteralFalseAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be false. Example is: "false"',
+                nodePath: ["types", "LiteralFalseAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be false. Example is: "true"',
+                nodePath: ["types", "LiteralFalseAlias", { key: "examples", arrayIndex: 3 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be false. Example is: "goodbye"',
+                nodePath: ["types", "LiteralFalseAlias", { key: "examples", arrayIndex: 4 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: "Expected example to be true. Example is: false",
+                nodePath: ["types", "LiteralTrueAlias", { key: "examples", arrayIndex: 1 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be true. Example is: "true"',
+                nodePath: ["types", "LiteralTrueAlias", { key: "examples", arrayIndex: 2 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be true. Example is: "false"',
+                nodePath: ["types", "LiteralTrueAlias", { key: "examples", arrayIndex: 3 }],
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be true. Example is: "goodbye"',
+                nodePath: ["types", "LiteralTrueAlias", { key: "examples", arrayIndex: 4 }],
+            },
 
             // enum.yml
             {

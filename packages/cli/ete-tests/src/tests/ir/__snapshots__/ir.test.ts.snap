@@ -16891,6 +16891,100 @@ exports[`ir {"name":"simple"} 1`] = `
             "availability": null,
             "docs": null
         },
+        "type_director:LiteralBoolean": {
+            "name": {
+                "name": {
+                    "originalName": "LiteralBoolean",
+                    "camelCase": {
+                        "unsafeName": "literalBoolean",
+                        "safeName": "literalBoolean"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "literal_boolean",
+                        "safeName": "literal_boolean"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LITERAL_BOOLEAN",
+                        "safeName": "LITERAL_BOOLEAN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "LiteralBoolean",
+                        "safeName": "LiteralBoolean"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "director",
+                            "camelCase": {
+                                "unsafeName": "director",
+                                "safeName": "director"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "director",
+                                "safeName": "director"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DIRECTOR",
+                                "safeName": "DIRECTOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Director",
+                                "safeName": "Director"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "director",
+                        "camelCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTOR",
+                            "safeName": "DIRECTOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Director",
+                            "safeName": "Director"
+                        }
+                    }
+                },
+                "typeId": "type_director:LiteralBoolean"
+            },
+            "shape": {
+                "_type": "alias",
+                "aliasOf": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "literal",
+                        "literal": {
+                            "type": "boolean",
+                            "boolean": true
+                        }
+                    }
+                },
+                "resolvedType": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "literal",
+                        "literal": {
+                            "type": "boolean",
+                            "boolean": true
+                        }
+                    }
+                }
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_director:LiteralString": {
             "name": {
                 "name": {
@@ -25214,6 +25308,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "type_commons:UndiscriminatedUnion",
             "type_director:Director",
             "type_director:Age",
+            "type_director:LiteralBoolean",
             "type_director:LiteralString",
             "type_imdb:CurrencyAmount",
             "type_imdb:ActorId",
@@ -25369,6 +25464,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "types": [
                 "type_director:Director",
                 "type_director:Age",
+                "type_director:LiteralBoolean",
                 "type_director:LiteralString"
             ],
             "errors": [],

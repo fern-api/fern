@@ -96,3 +96,19 @@ types:
     examples:
       - value: hello
       - value: goodbye
+  LiteralFalseAlias:
+    type: literal<false>
+    examples:
+      - value: false
+      - value: true
+      - value: "false"
+      - value: "true"
+      - value: goodbye
+  LiteralTrueAlias:
+    type: literal<true>
+    examples:
+      - value: true
+      - value: false
+      - value: "true"
+      - value: "false"
+      - value: goodbye
