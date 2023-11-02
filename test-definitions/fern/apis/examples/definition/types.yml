@@ -23,6 +23,7 @@ types:
         docs: The rating scale is one to five stars
       type: literal<"movie">
       tag: commons.Tag
+      book: optional<string>
     examples:
       - name: One
         value:
