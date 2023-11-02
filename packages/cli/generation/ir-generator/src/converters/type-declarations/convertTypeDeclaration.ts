@@ -19,12 +19,14 @@ export function convertTypeDeclaration({
     file,
     typeResolver,
     exampleResolver,
+    audiences,
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    audiences: Set<string>;
 }): TypeDeclaration {
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
@@ -34,8 +36,8 @@ export function convertTypeDeclaration({
     return {
         ...declaration,
         name: declaredTypeName,
-        shape: convertType({ typeDeclaration, file, typeResolver }),
-        referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
+        shape: convertType({ typeDeclaration, file, typeResolver, audiences }),
+        referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver, audiences }),
         examples:
             typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                 ? typeDeclaration.examples.map(
@@ -65,14 +67,16 @@ export function convertType({
     typeDeclaration,
     file,
     typeResolver,
+    audiences,
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
+    audiences: Set<string>;
 }): Type {
     return visitRawTypeDeclaration<Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
-        object: (object) => convertObjectTypeDeclaration({ object, file }),
+        object: (object) => convertObjectTypeDeclaration({ object, file, audiences }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
         enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file }),

@@ -140,12 +140,14 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
+                    const audiences = irGraph.getAudiences();
                     const convertedTypeDeclaration = convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
                         typeResolver,
                         exampleResolver,
+                        audiences
                     });
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
@@ -351,6 +353,7 @@ function filterIntermediateRepresentationForAudiences(
     if (filteredIr == null) {
         return intermediateRepresentation;
     }
+
     return {
         ...intermediateRepresentation,
         types: pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type)),

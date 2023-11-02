@@ -43,6 +43,9 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
+    public getAudiences():Set<string>{
+        return this.audiences.type === "filtered" ? this.audiences.audiences: new Set();
+    }
     public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
         const typeId = IdGenerator.generateTypeId(declaredTypeName);
         const typeNode: TypeNode = {

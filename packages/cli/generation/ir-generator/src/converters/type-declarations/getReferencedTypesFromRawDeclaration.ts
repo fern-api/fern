@@ -3,6 +3,7 @@ import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
+import {filterPropertiesByAudiences} from "./convertObjectTypeDeclaration";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;
@@ -13,11 +14,13 @@ export function getReferencedTypesFromRawDeclaration({
     typeDeclaration,
     file,
     typeResolver,
+    audiences,
     seenTypeNames = new SeenTypeNamesImpl(),
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
+    audiences: Set<string>;
     seenTypeNames?: SeenTypeNames;
 }): DeclaredTypeName[] {
     const rawTypeReferences = visitRawTypeDeclaration<string[]>(typeDeclaration, {
@@ -34,8 +37,10 @@ export function getReferencedTypesFromRawDeclaration({
                 types.push(...extendsArr);
             }
             if (objectDeclaration.properties != null) {
+                const propertiesByAudience =
+                    filterPropertiesByAudiences(objectDeclaration, audiences);
                 types.push(
-                    ...Object.values(objectDeclaration.properties).map((property) =>
+                    ...Object.values(propertiesByAudience).map((property) =>
                         typeof property === "string" ? property : property.type
                     )
                 );
@@ -95,6 +100,7 @@ export function getReferencedTypesFromRawDeclaration({
                         file: maybeDeclaration.file,
                         typeResolver,
                         seenTypeNames,
+                        audiences
                     })
                 );
             }
