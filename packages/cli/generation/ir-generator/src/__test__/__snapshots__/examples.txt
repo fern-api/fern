@@ -13033,6 +13033,42 @@ exports[`generate IR 1`] = `
               "typeId": "type_commons/types:Tag",
             },
           },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "book",
+                  "unsafeName": "book",
+                },
+                "originalName": "book",
+                "pascalCase": {
+                  "safeName": "Book",
+                  "unsafeName": "Book",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BOOK",
+                  "unsafeName": "BOOK",
+                },
+                "snakeCase": {
+                  "safeName": "book",
+                  "unsafeName": "book",
+                },
+              },
+              "wireValue": "book",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+              },
+            },
+          },
         ],
       },
     },
