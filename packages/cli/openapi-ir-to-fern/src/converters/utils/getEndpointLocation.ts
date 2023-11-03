@@ -25,6 +25,16 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const operationId = endpoint.operationId;
 
     if (operationId == null) {
+        if (tag != null) {
+            return {
+                file: RelativeFilePath.of(`${camelCase(tag)}.yml`),
+                endpointId:
+                    endpoint.summary != null
+                        ? camelCase(endpoint.summary)
+                        : camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`),
+            };
+        }
+
         // TODO(dsinghvi): warn that using path and method to generate id
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
