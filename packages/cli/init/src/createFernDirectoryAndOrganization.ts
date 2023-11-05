@@ -1,4 +1,5 @@
 import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
+import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import {
@@ -7,7 +8,6 @@ import {
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
-import { createVenusService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";

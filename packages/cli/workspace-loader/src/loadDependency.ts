@@ -1,3 +1,4 @@
+import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import {
     DependenciesConfiguration,
@@ -8,7 +9,6 @@ import {
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
-import { createFiddleService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";

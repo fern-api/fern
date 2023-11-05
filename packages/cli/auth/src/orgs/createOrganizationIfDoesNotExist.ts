@@ -1,4 +1,4 @@
-import { createVenusService } from "@fern-api/services";
+import { createVenusService } from "@fern-api/core";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernUserToken } from "../FernToken";

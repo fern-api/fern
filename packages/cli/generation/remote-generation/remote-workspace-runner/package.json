@@ -29,6 +29,7 @@
   "dependencies": {
     "@fern-api/auth": "workspace:*",
     "@fern-api/config-management-commons": "workspace:*",
+    "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
@@ -36,7 +37,6 @@
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/register": "workspace:*",
-    "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",

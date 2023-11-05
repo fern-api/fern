@@ -4,11 +4,11 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/fs-utils" },
+    { "path": "../../core" },
     { "path": "../auth" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
     { "path": "../login" },
-    { "path": "../services" },
     { "path": "../task-context" },
     { "path": "../yaml/formatter" },
     { "path": "../yaml/yaml-schema" }

@@ -1,8 +1,8 @@
 import { FernToken } from "@fern-api/auth";
+import { createFdrService } from "@fern-api/core";
 import { assertNever, entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
-import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";

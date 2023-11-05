@@ -108,10 +108,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/semver-utils"\
       },\
       {\
-        "name": "@fern-api/services",\
-        "reference": "workspace:packages/cli/services"\
-      },\
-      {\
         "name": "@fern-api/task-context",\
         "reference": "workspace:packages/cli/task-context"\
       },\
@@ -207,7 +203,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/scripts", ["workspace:packages/scripts"]],\
       ["@fern-api/seed-cli", ["workspace:packages/seed"]],\
       ["@fern-api/semver-utils", ["workspace:packages/cli/semver-utils"]],\
-      ["@fern-api/services", ["workspace:packages/cli/services"]],\
       ["@fern-api/task-context", ["workspace:packages/cli/task-context"]],\
       ["@fern-api/validator", ["workspace:packages/cli/yaml/validator"]],\
       ["@fern-api/workspace-loader", ["workspace:packages/cli/workspace-loader"]],\
@@ -3597,9 +3592,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/auth/",\
           "packageDependencies": [\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
+            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -3624,6 +3619,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/cli", "workspace:packages/cli/cli"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
+            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
@@ -3642,7 +3638,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
@@ -3725,7 +3720,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/scripts", "workspace:packages/scripts"],\
             ["@fern-api/seed-cli", "workspace:packages/seed"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
@@ -3769,6 +3763,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/core/",\
           "packageDependencies": [\
             ["@fern-api/core", "workspace:packages/core"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
+            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -3948,11 +3945,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/init", "workspace:packages/cli/init"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
+            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
@@ -4365,9 +4362,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
+            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2930"],\
@@ -4393,6 +4390,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
+            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
@@ -4400,7 +4398,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/register", "workspace:packages/cli/register"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
@@ -4522,26 +4519,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/services", [\
-        ["workspace:packages/cli/services", {\
-          "packageLocation": "./packages/cli/services/",\
-          "packageDependencies": [\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.6"],\
-            ["eslint", "npm:8.26.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-api/task-context", [\
         ["workspace:packages/cli/task-context", {\
           "packageLocation": "./packages/cli/task-context/",\
@@ -4608,6 +4585,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/workspace-loader/",\
           "packageDependencies": [\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
+            ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
@@ -4616,7 +4594,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\

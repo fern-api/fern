@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences } from "@fern-api/config-management-commons";
+import { createFdrService } from "@fern-api/core";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry } from "@fern-fern/registry-node";
