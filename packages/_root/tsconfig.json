@@ -38,6 +38,7 @@
     { "path": "../commons/fs-utils" },
     { "path": "../commons/loadable" },
     { "path": "../commons/logging-execa" },
+    { "path": "../core" },
     { "path": "../scripts" },
     { "path": "../seed" }
   ]

@@ -2000,6 +2000,7 @@ __metadata:
     "@fern-api/auth": "workspace:*"
     "@fern-api/cli": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/dependencies-configuration": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
@@ -2081,7 +2082,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/core@workspace:packages/core":
+"@fern-api/core@workspace:*, @fern-api/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:

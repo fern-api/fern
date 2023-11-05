@@ -30,6 +30,7 @@
     "@fern-api/auth": "workspace:*",
     "@fern-api/cli": "workspace:*",
     "@fern-api/config-management-commons": "workspace:*",
+    "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/dependencies-configuration": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
