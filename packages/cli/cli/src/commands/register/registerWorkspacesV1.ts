@@ -1,6 +1,6 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { createFiddleService } from "@fern-api/core";
 import { Project } from "@fern-api/project-loader";
-import { createFiddleService } from "@fern-api/services";
 import { YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";

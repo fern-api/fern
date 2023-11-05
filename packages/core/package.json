@@ -26,6 +26,11 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
+  "dependencies": {
+    "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
+    "@fern-fern/fiddle-sdk": "^0.0.351",
+    "@fern-fern/registry-node": "0.33.3-2-gddc733d"
+  },
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",

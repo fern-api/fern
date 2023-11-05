@@ -25,7 +25,6 @@
     { "path": "../cli/project-loader" },
     { "path": "../cli/register" },
     { "path": "../cli/semver-utils" },
-    { "path": "../cli/services" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../cli/yaml/docs-validator" },

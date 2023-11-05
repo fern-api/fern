@@ -58,7 +58,6 @@
     "@fern-api/scripts": "workspace:*",
     "@fern-api/seed-cli": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
-    "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
