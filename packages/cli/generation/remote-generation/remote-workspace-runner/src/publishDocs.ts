@@ -1,6 +1,16 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { assertNever, entries } from "@fern-api/core-utils";
+import {
+    DocsNavigationConfiguration,
+    DocsNavigationItem,
+    FontConfig,
+    ImageReference,
+    ParsedDocsConfiguration,
+    parseDocsConfiguration,
+    TypographyConfig,
+    UnversionedNavigationConfiguration,
+} from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -12,16 +22,6 @@ import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
-import {
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    FontConfig,
-    ImageReference,
-    ParsedDocsConfiguration,
-    TypographyConfig,
-    UnversionedNavigationConfiguration,
-} from "./converter/ParsedDocsConfiguration";
-import { parseDocsConfiguration } from "./converter/parseDocsConfiguration";
 
 export async function publishDocs({
     token,

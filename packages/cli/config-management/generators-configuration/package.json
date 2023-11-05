@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/js-yaml": "^4.0.6",
+    "@types/js-yaml": "^4.0.8",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.26.0",

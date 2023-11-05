@@ -23,6 +23,7 @@ import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/g
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
+import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { upgrade } from "./commands/upgrade/upgrade";
@@ -131,6 +132,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
+    addPreviewCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -626,6 +628,23 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true,
+                }),
+                cliContext,
+            });
+        }
+    );
+}
+
+function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hide from help message
+        (yargs) => yargs,
+        async () => {
+            await previewDocsWorkspace({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined,
                 }),
                 cliContext,
             });
