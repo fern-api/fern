@@ -53,13 +53,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.6.0",
     },
     [GeneratorName.GO_FIBER]: {
-        version: "0.6.0",
+        version: "0.9.0",
     },
     [GeneratorName.GO_MODEL]: {
-        version: "0.6.0",
+        version: "0.9.0",
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.6.0",
+        version: "0.9.0",
         output: {
             location: "local-file-system",
             path: "../generated/go",
