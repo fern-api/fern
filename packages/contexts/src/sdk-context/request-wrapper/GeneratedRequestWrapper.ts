@@ -17,6 +17,7 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
         context: SdkContext;
-        callback: (value: ts.Expression) => ts.Statement[];
+        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
+        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
     }) => ts.Statement[];
 }

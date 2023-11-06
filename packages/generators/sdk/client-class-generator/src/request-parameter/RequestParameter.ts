@@ -12,6 +12,7 @@ export interface RequestParameter {
     withQueryParameter: (
         queryParameter: QueryParameter,
         context: SdkContext,
-        callback: (value: ts.Expression) => ts.Statement[]
+        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
+        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
     ) => ts.Statement[];
 }

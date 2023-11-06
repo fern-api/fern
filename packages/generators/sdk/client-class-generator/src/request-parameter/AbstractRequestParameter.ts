@@ -49,7 +49,8 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     public abstract withQueryParameter(
         queryParameter: QueryParameter,
         context: SdkContext,
-        callback: (value: ts.Expression) => ts.Statement[]
+        queryParamSetter: (value: ts.Expression) => ts.Statement[],
+        queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[];
     protected abstract getParameterType(contxt: SdkContext): {
         type: ts.TypeNode;

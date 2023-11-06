@@ -113,7 +113,8 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     public withQueryParameter(
         queryParameter: QueryParameter,
         context: SdkContext,
-        callback: (value: ts.Expression) => ts.Statement[]
+        queryParamSetter: (value: ts.Expression) => ts.Statement[],
+        queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return generatedRequestWrapper.withQueryParameter({
@@ -122,7 +123,8 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter))
             ),
             context,
-            callback,
+            queryParamSetter,
+            queryParamItemSetter,
         });
     }
 

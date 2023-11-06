@@ -30,7 +30,8 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
     public withQueryParameter(
         queryParameter: QueryParameter,
         context: SdkContext,
-        callback: (value: ts.Expression) => ts.Statement[]
+        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
+        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return generatedRequestWrapper.withQueryParameter({
@@ -39,7 +40,8 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
                 generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).propertyName
             ),
             context,
-            callback,
+            queryParamSetter,
+            queryParamItemSetter,
         });
     }
 

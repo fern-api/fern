@@ -9,7 +9,7 @@ export declare namespace StreamingFetcher {
         url: string;
         method: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: Record<string, string>;
+        queryParameters?: Record<string, string | string[]>;
         body?: unknown;
         timeoutMs?: number;
         withCredentials?: boolean;
@@ -48,7 +48,7 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
         url: args.url,
         params: args.queryParameters,
         paramsSerializer: (params) => {
-            return qs.stringify(params);
+            return qs.stringify(params, { arrayFormat: "repeat" });
         },
         method: args.method,
         headers,

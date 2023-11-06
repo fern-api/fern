@@ -33,7 +33,7 @@ export class Playlist {
         requestOptions?: Playlist.RequestOptions
     ): Promise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         _queryParams["datetime"] = datetime.toISOString();
         if (optionalDatetime != null) {
             _queryParams["optionalDatetime"] = optionalDatetime.toISOString();
@@ -89,7 +89,7 @@ export class Playlist {
         requestOptions?: Playlist.RequestOptions
     ): Promise<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -98,18 +98,14 @@ export class Playlist {
         _queryParams["multiLineDocs"] = multiLineDocs;
         if (optionalMultipleField != null) {
             if (Array.isArray(optionalMultipleField)) {
-                for (const _item of optionalMultipleField) {
-                    _queryParams["optionalMultipleField"] = _item;
-                }
+                _queryParams["optionalMultipleField"] = optionalMultipleField.map((item) => item);
             } else {
                 _queryParams["optionalMultipleField"] = optionalMultipleField;
             }
         }
 
         if (Array.isArray(multipleField)) {
-            for (const _item of multipleField) {
-                _queryParams["multipleField"] = _item;
-            }
+            _queryParams["multipleField"] = multipleField.map((item) => item);
         } else {
             _queryParams["multipleField"] = multipleField;
         }

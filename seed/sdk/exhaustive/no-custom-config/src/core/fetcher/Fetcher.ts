@@ -10,7 +10,7 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: Record<string, string>;
+        queryParameters?: Record<string, string | string[]>;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -67,7 +67,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             url: args.url,
             params: args.queryParameters,
             paramsSerializer: (params) => {
-                return qs.stringify(params);
+                return qs.stringify(params, { arrayFormat: "repeat" });
             },
             method: args.method,
             headers,

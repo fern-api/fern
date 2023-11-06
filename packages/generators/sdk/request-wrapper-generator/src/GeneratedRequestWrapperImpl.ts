@@ -22,10 +22,6 @@ export declare namespace GeneratedRequestWrapperImpl {
 }
 
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
-    // this has an underscore to prevent deconflicting with user-provided names
-    // that are in scope (e.g. path parameters)
-    private static QUERY_PARAM_LIST_ITEM = "_item";
-
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private wrapperName: string;
@@ -131,12 +127,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         queryParameter,
         referenceToQueryParameterProperty,
         context,
-        callback,
+        queryParamSetter,
+        queryParamItemSetter,
     }: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
         context: SdkContext;
-        callback: (value: ts.Expression) => ts.Statement[];
+        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
+        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
     }): ts.Statement[] {
         let statements: ts.Statement[];
 
@@ -151,34 +149,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         undefined,
                         [referenceToQueryParameterProperty]
                     ),
-                    ts.factory.createBlock(
-                        [
-                            ts.factory.createForOfStatement(
-                                undefined,
-                                ts.factory.createVariableDeclarationList(
-                                    [
-                                        ts.factory.createVariableDeclaration(
-                                            GeneratedRequestWrapperImpl.QUERY_PARAM_LIST_ITEM
-                                        ),
-                                    ],
-                                    ts.NodeFlags.Const
-                                ),
-                                referenceToQueryParameterProperty,
-                                ts.factory.createBlock(
-                                    callback(
-                                        ts.factory.createIdentifier(GeneratedRequestWrapperImpl.QUERY_PARAM_LIST_ITEM)
-                                    ),
-                                    true
-                                )
-                            ),
-                        ],
-                        true
-                    ),
-                    ts.factory.createBlock(callback(referenceToQueryParameterProperty), true)
+                    ts.factory.createBlock(queryParamItemSetter(referenceToQueryParameterProperty), true),
+                    ts.factory.createBlock(queryParamSetter(referenceToQueryParameterProperty), true)
                 ),
             ];
         } else {
-            statements = callback(referenceToQueryParameterProperty);
+            statements = queryParamSetter(referenceToQueryParameterProperty);
         }
 
         const resolvedType = context.type.resolveTypeReference(queryParameter.valueType);

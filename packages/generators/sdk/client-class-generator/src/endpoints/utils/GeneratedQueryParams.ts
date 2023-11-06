@@ -33,7 +33,12 @@ export class GeneratedQueryParams {
                                     undefined,
                                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                        ts.factory.createUnionTypeNode([
+                                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                            ts.factory.createArrayTypeNode(
+                                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                            ),
+                                        ]),
                                     ]),
                                     ts.factory.createObjectLiteralExpression([], false)
                                 ),
@@ -62,6 +67,51 @@ export class GeneratedQueryParams {
                                                 referenceToQueryParameter,
                                                 queryParameter.valueType,
                                                 { includeNullCheckIfOptional: false }
+                                            )
+                                        )
+                                    ),
+                                ];
+                            },
+                            (referenceToQueryParameter) => {
+                                return [
+                                    ts.factory.createExpressionStatement(
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createElementAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME
+                                                ),
+                                                ts.factory.createStringLiteral(queryParameter.name.wireValue)
+                                            ),
+                                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                            ts.factory.createCallExpression(
+                                                ts.factory.createPropertyAccessExpression(
+                                                    referenceToQueryParameter,
+                                                    ts.factory.createIdentifier("map")
+                                                ),
+                                                undefined,
+                                                [
+                                                    ts.factory.createArrowFunction(
+                                                        undefined,
+                                                        undefined,
+                                                        [
+                                                            ts.factory.createParameterDeclaration(
+                                                                undefined,
+                                                                undefined,
+                                                                undefined,
+                                                                ts.factory.createIdentifier("item"),
+                                                                undefined,
+                                                                undefined
+                                                            ),
+                                                        ],
+                                                        undefined,
+                                                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                                        context.type.stringify(
+                                                            ts.factory.createIdentifier("item"),
+                                                            queryParameter.valueType,
+                                                            { includeNullCheckIfOptional: false }
+                                                        )
+                                                    ),
+                                                ]
                                             )
                                         )
                                     ),
