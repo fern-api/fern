@@ -32,7 +32,6 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "execa": "^5.1.1",
-    "fetch-node": "^0.0.1",
     "js-yaml": "^4.1.0",
     "node-fetch": "^3.3.2",
     "strip-ansi": "^7.1.0",
