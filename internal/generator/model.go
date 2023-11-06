@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 	"path"
+	"strconv"
 	"strings"
 	"unicode"
 
@@ -899,6 +900,11 @@ type literalValueVisitor struct {
 // Compile-time assertion.
 var _ ir.LiteralVisitor = (*literalValueVisitor)(nil)
 
+func (l *literalValueVisitor) VisitBoolean(value bool) error {
+	l.value = strconv.FormatBool(value)
+	return nil
+}
+
 func (l *literalValueVisitor) VisitString(value string) error {
 	l.value = fmt.Sprintf("%q", value)
 	return nil
@@ -913,7 +919,12 @@ type literalTypeVisitor struct {
 // Compile-time assertion.
 var _ ir.LiteralVisitor = (*literalTypeVisitor)(nil)
 
-func (l *literalTypeVisitor) VisitString(value string) error {
+func (l *literalTypeVisitor) VisitBoolean(_ bool) error {
+	l.value = "bool"
+	return nil
+}
+
+func (l *literalTypeVisitor) VisitString(_ string) error {
 	l.value = "string"
 	return nil
 }

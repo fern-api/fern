@@ -8,8 +8,38 @@ import (
 	core "github.com/fern-api/seed-go/core"
 )
 
+type WithMetadata struct {
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (w *WithMetadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithMetadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithMetadata(value)
+	w._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithMetadata) String() string {
+	if len(w._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(w._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
 type Movie struct {
-	Id string `json:"id"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
 
 	_rawJSON json.RawMessage
 }

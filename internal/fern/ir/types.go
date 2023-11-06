@@ -5,14 +5,23 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	uuid "github.com/google/uuid"
 	time "time"
+
+	core "github.com/fern-api/fern-go/internal/fern/ir/core"
+	uuid "github.com/google/uuid"
 )
 
 type ApiAuth struct {
 	Docs        *string                `json:"docs,omitempty"`
 	Requirement AuthSchemesRequirement `json:"requirement,omitempty"`
 	Schemes     []*AuthScheme          `json:"schemes,omitempty"`
+}
+
+func (a *ApiAuth) String() string {
+	if value, err := core.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type AuthScheme struct {
@@ -150,11 +159,25 @@ type BasicAuthScheme struct {
 	PasswordEnvVar *EnvironmentVariable `json:"passwordEnvVar,omitempty"`
 }
 
+func (b *BasicAuthScheme) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type BearerAuthScheme struct {
 	Docs  *string `json:"docs,omitempty"`
 	Token *Name   `json:"token,omitempty"`
 	// The environment variable the SDK should use to read the token.
 	TokenEnvVar *EnvironmentVariable `json:"tokenEnvVar,omitempty"`
+}
+
+func (b *BearerAuthScheme) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
 }
 
 type EnvironmentVariable = string
@@ -168,9 +191,23 @@ type HeaderAuthScheme struct {
 	HeaderEnvVar *EnvironmentVariable `json:"headerEnvVar,omitempty"`
 }
 
+func (h *HeaderAuthScheme) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
+}
+
 type Availability struct {
 	Status  AvailabilityStatus `json:"status,omitempty"`
 	Message *string            `json:"message,omitempty"`
+}
+
+func (a *Availability) String() string {
+	if value, err := core.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type AvailabilityStatus string
@@ -206,6 +243,13 @@ type Declaration struct {
 	Availability *Availability `json:"availability,omitempty"`
 }
 
+func (d *Declaration) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
 type EndpointId = string
 
 type ErrorId = string
@@ -216,6 +260,13 @@ type FernFilepath struct {
 	File        *Name   `json:"file,omitempty"`
 }
 
+func (f *FernFilepath) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 type Name struct {
 	OriginalName       string               `json:"originalName"`
 	CamelCase          *SafeAndUnsafeString `json:"camelCase,omitempty"`
@@ -224,9 +275,23 @@ type Name struct {
 	ScreamingSnakeCase *SafeAndUnsafeString `json:"screamingSnakeCase,omitempty"`
 }
 
+func (n *Name) String() string {
+	if value, err := core.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
 type NameAndWireValue struct {
 	WireValue string `json:"wireValue"`
 	Name      *Name  `json:"name,omitempty"`
+}
+
+func (n *NameAndWireValue) String() string {
+	if value, err := core.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 type SafeAndUnsafeString struct {
@@ -234,6 +299,13 @@ type SafeAndUnsafeString struct {
 	UnsafeName string `json:"unsafeName"`
 	// this name will NOT overlap with reserved keywords of the language being generated
 	SafeName string `json:"safeName"`
+}
+
+func (s *SafeAndUnsafeString) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type ServiceId = string
@@ -248,12 +320,33 @@ type WithDocs struct {
 	Docs *string `json:"docs,omitempty"`
 }
 
+func (w *WithDocs) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
 type WithJsonExample struct {
 	JsonExample interface{} `json:"jsonExample,omitempty"`
 }
 
+func (w *WithJsonExample) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
+}
+
 type Constants struct {
 	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey,omitempty"`
+}
+
+func (c *Constants) String() string {
+	if value, err := core.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type EnvironmentBaseUrlId = string
@@ -261,6 +354,13 @@ type EnvironmentBaseUrlId = string
 type EnvironmentBaseUrlWithId struct {
 	Id   EnvironmentBaseUrlId `json:"id"`
 	Name *Name                `json:"name,omitempty"`
+}
+
+func (e *EnvironmentBaseUrlWithId) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type EnvironmentId = string
@@ -352,6 +452,13 @@ type EnvironmentsConfig struct {
 	Environments       *Environments  `json:"environments,omitempty"`
 }
 
+func (e *EnvironmentsConfig) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type MultipleBaseUrlsEnvironment struct {
 	Docs *string                                 `json:"docs,omitempty"`
 	Id   EnvironmentId                           `json:"id"`
@@ -359,9 +466,23 @@ type MultipleBaseUrlsEnvironment struct {
 	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls,omitempty"`
 }
 
+func (m *MultipleBaseUrlsEnvironment) String() string {
+	if value, err := core.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
+}
+
 type MultipleBaseUrlsEnvironments struct {
 	BaseUrls     []*EnvironmentBaseUrlWithId    `json:"baseUrls,omitempty"`
 	Environments []*MultipleBaseUrlsEnvironment `json:"environments,omitempty"`
+}
+
+func (m *MultipleBaseUrlsEnvironments) String() string {
+	if value, err := core.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type SingleBaseUrlEnvironment struct {
@@ -371,8 +492,22 @@ type SingleBaseUrlEnvironment struct {
 	Url  EnvironmentUrl `json:"url"`
 }
 
+func (s *SingleBaseUrlEnvironment) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type SingleBaseUrlEnvironments struct {
 	Environments []*SingleBaseUrlEnvironment `json:"environments,omitempty"`
+}
+
+func (s *SingleBaseUrlEnvironments) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type DeclaredErrorName struct {
@@ -381,12 +516,26 @@ type DeclaredErrorName struct {
 	Name         *Name         `json:"name,omitempty"`
 }
 
+func (d *DeclaredErrorName) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
 type ErrorDeclaration struct {
 	Docs              *string            `json:"docs,omitempty"`
 	Name              *DeclaredErrorName `json:"name,omitempty"`
 	DiscriminantValue *NameAndWireValue  `json:"discriminantValue,omitempty"`
 	Type              *TypeReference     `json:"type,omitempty"`
 	StatusCode        int                `json:"statusCode"`
+}
+
+func (e *ErrorDeclaration) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ErrorDeclarationDiscriminantValue struct {
@@ -474,8 +623,22 @@ type BytesRequest struct {
 	ContentType *string `json:"contentType,omitempty"`
 }
 
+func (b *BytesRequest) String() string {
+	if value, err := core.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type DeclaredServiceName struct {
 	FernFilepath *FernFilepath `json:"fernFilepath,omitempty"`
+}
+
+func (d *DeclaredServiceName) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
 }
 
 type EndpointName = *Name
@@ -494,13 +657,34 @@ type ExampleEndpointCall struct {
 	Response               *ExampleResponse         `json:"response,omitempty"`
 }
 
+func (e *ExampleEndpointCall) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleEndpointErrorResponse struct {
 	Error *DeclaredErrorName    `json:"error,omitempty"`
 	Body  *ExampleTypeReference `json:"body,omitempty"`
 }
 
+func (e *ExampleEndpointErrorResponse) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleEndpointSuccessResponse struct {
 	Body *ExampleTypeReference `json:"body,omitempty"`
+}
+
+func (e *ExampleEndpointSuccessResponse) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExampleHeader struct {
@@ -508,9 +692,23 @@ type ExampleHeader struct {
 	Value   *ExampleTypeReference `json:"value,omitempty"`
 }
 
+func (e *ExampleHeader) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleInlinedRequestBody struct {
 	JsonExample interface{}                          `json:"jsonExample,omitempty"`
 	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties,omitempty"`
+}
+
+func (e *ExampleInlinedRequestBody) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExampleInlinedRequestBodyProperty struct {
@@ -521,14 +719,35 @@ type ExampleInlinedRequestBodyProperty struct {
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty"`
 }
 
+func (e *ExampleInlinedRequestBodyProperty) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExamplePathParameter struct {
 	Key   string                `json:"key"`
 	Value *ExampleTypeReference `json:"value,omitempty"`
 }
 
+func (e *ExamplePathParameter) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleQueryParameter struct {
 	WireKey string                `json:"wireKey"`
 	Value   *ExampleTypeReference `json:"value,omitempty"`
+}
+
+func (e *ExampleQueryParameter) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExampleRequestBody struct {
@@ -695,14 +914,35 @@ type FileDownloadResponse struct {
 	Docs *string `json:"docs,omitempty"`
 }
 
+func (f *FileDownloadResponse) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 type FileProperty struct {
 	Key        *NameAndWireValue `json:"key,omitempty"`
 	IsOptional bool              `json:"isOptional"`
 }
 
+func (f *FileProperty) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
 type FileUploadRequest struct {
 	Name       *Name                        `json:"name,omitempty"`
 	Properties []*FileUploadRequestProperty `json:"properties,omitempty"`
+}
+
+func (f *FileUploadRequest) String() string {
+	if value, err := core.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
 }
 
 type FileUploadRequestProperty struct {
@@ -807,11 +1047,25 @@ type HttpEndpoint struct {
 	Examples          []*ExampleEndpointCall `json:"examples,omitempty"`
 }
 
+func (h *HttpEndpoint) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
+}
+
 type HttpHeader struct {
 	Docs         *string           `json:"docs,omitempty"`
 	Availability *Availability     `json:"availability,omitempty"`
 	Name         *NameAndWireValue `json:"name,omitempty"`
 	ValueType    *TypeReference    `json:"valueType,omitempty"`
+}
+
+func (h *HttpHeader) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 type HttpMethod string
@@ -850,9 +1104,23 @@ type HttpPath struct {
 	Parts []*HttpPathPart `json:"parts,omitempty"`
 }
 
+func (h *HttpPath) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
+}
+
 type HttpPathPart struct {
 	PathParameter string `json:"pathParameter"`
 	Tail          string `json:"tail"`
+}
+
+func (h *HttpPathPart) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 type HttpRequestBody struct {
@@ -985,6 +1253,13 @@ type HttpRequestBodyReference struct {
 	Docs            *string        `json:"docs,omitempty"`
 	RequestBodyType *TypeReference `json:"requestBodyType,omitempty"`
 	ContentType     *string        `json:"contentType,omitempty"`
+}
+
+func (h *HttpRequestBodyReference) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
 }
 
 type HttpResponse struct {
@@ -1125,6 +1400,13 @@ type HttpService struct {
 	PathParameters []*PathParameter     `json:"pathParameters,omitempty"`
 }
 
+func (h *HttpService) String() string {
+	if value, err := core.StringifyJSON(h); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", h)
+}
+
 type InlinedRequestBody struct {
 	Name        *Name                         `json:"name,omitempty"`
 	Extends     []*DeclaredTypeName           `json:"extends,omitempty"`
@@ -1132,10 +1414,24 @@ type InlinedRequestBody struct {
 	ContentType *string                       `json:"contentType,omitempty"`
 }
 
+func (i *InlinedRequestBody) String() string {
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
 type InlinedRequestBodyProperty struct {
 	Docs      *string           `json:"docs,omitempty"`
 	Name      *NameAndWireValue `json:"name,omitempty"`
 	ValueType *TypeReference    `json:"valueType,omitempty"`
+}
+
+func (i *InlinedRequestBodyProperty) String() string {
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
 }
 
 type JsonResponse struct {
@@ -1223,6 +1519,13 @@ type JsonResponseBody struct {
 	ResponseBodyType *TypeReference `json:"responseBodyType,omitempty"`
 }
 
+func (j *JsonResponseBody) String() string {
+	if value, err := core.StringifyJSON(j); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", j)
+}
+
 type JsonResponseBodyWithProperty struct {
 	Docs             *string        `json:"docs,omitempty"`
 	ResponseBodyType *TypeReference `json:"responseBodyType,omitempty"`
@@ -1234,12 +1537,26 @@ type JsonResponseBodyWithProperty struct {
 	ResponseProperty *ObjectProperty `json:"responseProperty,omitempty"`
 }
 
+func (j *JsonResponseBodyWithProperty) String() string {
+	if value, err := core.StringifyJSON(j); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", j)
+}
+
 type PathParameter struct {
 	Docs      *string               `json:"docs,omitempty"`
 	Name      *Name                 `json:"name,omitempty"`
 	ValueType *TypeReference        `json:"valueType,omitempty"`
 	Location  PathParameterLocation `json:"location,omitempty"`
 	Variable  *VariableId           `json:"variable,omitempty"`
+}
+
+func (p *PathParameter) String() string {
+	if value, err := core.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type PathParameterLocation string
@@ -1275,9 +1592,23 @@ type QueryParameter struct {
 	AllowMultiple bool              `json:"allowMultiple"`
 }
 
+func (q *QueryParameter) String() string {
+	if value, err := core.StringifyJSON(q); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", q)
+}
+
 type ResponseError struct {
 	Docs  *string            `json:"docs,omitempty"`
 	Error *DeclaredErrorName `json:"error,omitempty"`
+}
+
+func (r *ResponseError) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type ResponseErrors = []*ResponseError
@@ -1285,6 +1616,13 @@ type ResponseErrors = []*ResponseError
 type SdkRequest struct {
 	RequestParameterName *Name            `json:"requestParameterName,omitempty"`
 	Shape                *SdkRequestShape `json:"shape,omitempty"`
+}
+
+func (s *SdkRequest) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type SdkRequestBodyType struct {
@@ -1454,10 +1792,24 @@ type SdkRequestWrapper struct {
 	BodyKey     *Name `json:"bodyKey,omitempty"`
 }
 
+func (s *SdkRequestWrapper) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type StreamingResponse struct {
 	Docs          *string                     `json:"docs,omitempty"`
 	DataEventType *StreamingResponseChunkType `json:"dataEventType,omitempty"`
 	Terminator    *string                     `json:"terminator,omitempty"`
+}
+
+func (s *StreamingResponse) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type StreamingResponseChunkType struct {
@@ -1546,9 +1898,23 @@ type TextResponse struct {
 	Docs *string `json:"docs,omitempty"`
 }
 
+func (t *TextResponse) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
 type ErrorDiscriminationByPropertyStrategy struct {
 	Discriminant    *NameAndWireValue `json:"discriminant,omitempty"`
 	ContentProperty *NameAndWireValue `json:"contentProperty,omitempty"`
+}
+
+func (e *ErrorDiscriminationByPropertyStrategy) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ErrorDiscriminationStrategy struct {
@@ -1659,6 +2025,13 @@ type IntermediateRepresentation struct {
 	ServiceTypeReferenceInfo    *ServiceTypeReferenceInfo       `json:"serviceTypeReferenceInfo,omitempty"`
 }
 
+func (i *IntermediateRepresentation) String() string {
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
 type Package struct {
 	Docs               *string                  `json:"docs,omitempty"`
 	FernFilepath       *FernFilepath            `json:"fernFilepath,omitempty"`
@@ -1671,14 +2044,35 @@ type Package struct {
 	NavigationConfig   *PackageNavigationConfig `json:"navigationConfig,omitempty"`
 }
 
+func (p *Package) String() string {
+	if value, err := core.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
 type PackageNavigationConfig struct {
 	PointsTo SubpackageId `json:"pointsTo"`
+}
+
+func (p *PackageNavigationConfig) String() string {
+	if value, err := core.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type PlatformHeaders struct {
 	Language   string `json:"language"`
 	SdkName    string `json:"sdkName"`
 	SdkVersion string `json:"sdkVersion"`
+}
+
+func (p *PlatformHeaders) String() string {
+	if value, err := core.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
 
 type SdkConfig struct {
@@ -1688,11 +2082,25 @@ type SdkConfig struct {
 	PlatformHeaders          *PlatformHeaders `json:"platformHeaders,omitempty"`
 }
 
+func (s *SdkConfig) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type ServiceTypeReferenceInfo struct {
 	// Types referenced by exactly one service.
 	TypesReferencedOnlyByService map[ServiceId][]TypeId `json:"typesReferencedOnlyByService,omitempty"`
 	// Types referenced by either zero or multiple services.
 	SharedTypes []TypeId `json:"sharedTypes,omitempty"`
+}
+
+func (s *ServiceTypeReferenceInfo) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type Subpackage struct {
@@ -1708,9 +2116,23 @@ type Subpackage struct {
 	Name               *Name                    `json:"name,omitempty"`
 }
 
+func (s *Subpackage) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type AliasTypeDeclaration struct {
 	AliasOf      *TypeReference         `json:"aliasOf,omitempty"`
 	ResolvedType *ResolvedTypeReference `json:"resolvedType,omitempty"`
+}
+
+func (a *AliasTypeDeclaration) String() string {
+	if value, err := core.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
 }
 
 type ContainerType struct {
@@ -1876,8 +2298,22 @@ type DeclaredTypeName struct {
 	Name         *Name         `json:"name,omitempty"`
 }
 
+func (d *DeclaredTypeName) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
 type EnumTypeDeclaration struct {
 	Values []*EnumValue `json:"values,omitempty"`
+}
+
+func (e *EnumTypeDeclaration) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type EnumValue struct {
@@ -1886,8 +2322,22 @@ type EnumValue struct {
 	Name         *NameAndWireValue `json:"name,omitempty"`
 }
 
+func (e *EnumValue) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleAliasType struct {
 	Value *ExampleTypeReference `json:"value,omitempty"`
+}
+
+func (e *ExampleAliasType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExampleContainer struct {
@@ -2028,14 +2478,35 @@ type ExampleEnumType struct {
 	WireValue string `json:"wireValue"`
 }
 
+func (e *ExampleEnumType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleKeyValuePair struct {
 	Key   *ExampleTypeReference `json:"key,omitempty"`
 	Value *ExampleTypeReference `json:"value,omitempty"`
 }
 
+func (e *ExampleKeyValuePair) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleNamedType struct {
 	TypeName *DeclaredTypeName `json:"typeName,omitempty"`
 	Shape    *ExampleTypeShape `json:"shape,omitempty"`
+}
+
+func (e *ExampleNamedType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExampleObjectProperty struct {
@@ -2046,8 +2517,22 @@ type ExampleObjectProperty struct {
 	OriginalTypeDeclaration *DeclaredTypeName `json:"originalTypeDeclaration,omitempty"`
 }
 
+func (e *ExampleObjectProperty) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleObjectType struct {
 	Properties []*ExampleObjectProperty `json:"properties,omitempty"`
+}
+
+func (e *ExampleObjectType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExamplePrimitive struct {
@@ -2289,6 +2774,13 @@ type ExampleSingleUnionType struct {
 	Properties            *ExampleSingleUnionTypeProperties `json:"properties,omitempty"`
 }
 
+func (e *ExampleSingleUnionType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleSingleUnionTypeProperties struct {
 	Type                   string
 	SamePropertiesAsObject *ExampleNamedType
@@ -2399,9 +2891,23 @@ type ExampleType struct {
 	Shape       *ExampleTypeShape `json:"shape,omitempty"`
 }
 
+func (e *ExampleType) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 type ExampleTypeReference struct {
 	JsonExample interface{}                `json:"jsonExample,omitempty"`
 	Shape       *ExampleTypeReferenceShape `json:"shape,omitempty"`
+}
+
+func (e *ExampleTypeReference) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type ExampleTypeReferenceShape struct {
@@ -2663,12 +3169,17 @@ func (e *ExampleTypeShape) Accept(visitor ExampleTypeShapeVisitor) error {
 }
 
 type Literal struct {
-	Type   string
-	String string
+	Type    string
+	String  string
+	Boolean bool
 }
 
 func NewLiteralFromString(value string) *Literal {
 	return &Literal{Type: "string", String: value}
+}
+
+func NewLiteralFromBoolean(value bool) *Literal {
+	return &Literal{Type: "boolean", Boolean: value}
 }
 
 func (l *Literal) UnmarshalJSON(data []byte) error {
@@ -2688,6 +3199,14 @@ func (l *Literal) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		l.String = valueUnmarshaler.String
+	case "boolean":
+		var valueUnmarshaler struct {
+			Boolean bool `json:"boolean"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		l.Boolean = valueUnmarshaler.Boolean
 	}
 	return nil
 }
@@ -2705,11 +3224,21 @@ func (l Literal) MarshalJSON() ([]byte, error) {
 			String: l.String,
 		}
 		return json.Marshal(marshaler)
+	case "boolean":
+		var marshaler = struct {
+			Type    string `json:"type"`
+			Boolean bool   `json:"boolean"`
+		}{
+			Type:    l.Type,
+			Boolean: l.Boolean,
+		}
+		return json.Marshal(marshaler)
 	}
 }
 
 type LiteralVisitor interface {
 	VisitString(string) error
+	VisitBoolean(bool) error
 }
 
 func (l *Literal) Accept(visitor LiteralVisitor) error {
@@ -2718,12 +3247,21 @@ func (l *Literal) Accept(visitor LiteralVisitor) error {
 		return fmt.Errorf("invalid type %s in %T", l.Type, l)
 	case "string":
 		return visitor.VisitString(l.String)
+	case "boolean":
+		return visitor.VisitBoolean(l.Boolean)
 	}
 }
 
 type MapType struct {
 	KeyType   *TypeReference `json:"keyType,omitempty"`
 	ValueType *TypeReference `json:"valueType,omitempty"`
+}
+
+func (m *MapType) String() string {
+	if value, err := core.StringifyJSON(m); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", m)
 }
 
 type ObjectProperty struct {
@@ -2733,10 +3271,24 @@ type ObjectProperty struct {
 	ValueType    *TypeReference    `json:"valueType,omitempty"`
 }
 
+func (o *ObjectProperty) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
 type ObjectTypeDeclaration struct {
 	// A list of other types to inherit from
 	Extends    []*DeclaredTypeName `json:"extends,omitempty"`
 	Properties []*ObjectProperty   `json:"properties,omitempty"`
+}
+
+func (o *ObjectTypeDeclaration) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }
 
 type PrimitiveType string
@@ -2786,6 +3338,13 @@ func (p PrimitiveType) Ptr() *PrimitiveType {
 type ResolvedNamedType struct {
 	Name  *DeclaredTypeName `json:"name,omitempty"`
 	Shape ShapeType         `json:"shape,omitempty"`
+}
+
+func (r *ResolvedNamedType) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
 
 type ResolvedTypeReference struct {
@@ -2952,6 +3511,13 @@ type SingleUnionType struct {
 	Shape             *SingleUnionTypeProperties `json:"shape,omitempty"`
 }
 
+func (s *SingleUnionType) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type SingleUnionTypeProperties struct {
 	PropertiesType         string
 	SamePropertiesAsObject *DeclaredTypeName
@@ -3058,6 +3624,13 @@ func (s *SingleUnionTypeProperties) Accept(visitor SingleUnionTypePropertiesVisi
 type SingleUnionTypeProperty struct {
 	Name *NameAndWireValue `json:"name,omitempty"`
 	Type *TypeReference    `json:"type,omitempty"`
+}
+
+func (s *SingleUnionTypeProperty) String() string {
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type Type struct {
@@ -3220,6 +3793,13 @@ type TypeDeclaration struct {
 	ReferencedTypes []*DeclaredTypeName `json:"referencedTypes,omitempty"`
 }
 
+func (t *TypeDeclaration) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
 type TypeReference struct {
 	Type      string
 	Container *ContainerType
@@ -3355,8 +3935,22 @@ type UndiscriminatedUnionMember struct {
 	Type *TypeReference `json:"type,omitempty"`
 }
 
+func (u *UndiscriminatedUnionMember) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 type UndiscriminatedUnionTypeDeclaration struct {
 	Members []*UndiscriminatedUnionMember `json:"members,omitempty"`
+}
+
+func (u *UndiscriminatedUnionTypeDeclaration) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
 }
 
 type UnionTypeDeclaration struct {
@@ -3367,11 +3961,25 @@ type UnionTypeDeclaration struct {
 	BaseProperties []*ObjectProperty   `json:"baseProperties,omitempty"`
 }
 
+func (u *UnionTypeDeclaration) String() string {
+	if value, err := core.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
 type VariableDeclaration struct {
 	Docs *string        `json:"docs,omitempty"`
 	Id   VariableId     `json:"id"`
 	Name *Name          `json:"name,omitempty"`
 	Type *TypeReference `json:"type,omitempty"`
+}
+
+func (v *VariableDeclaration) String() string {
+	if value, err := core.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
 }
 
 type VariableId = string
@@ -3382,10 +3990,24 @@ type InlinedWebhookPayload struct {
 	Properties []*InlinedWebhookPayloadProperty `json:"properties,omitempty"`
 }
 
+func (i *InlinedWebhookPayload) String() string {
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
 type InlinedWebhookPayloadProperty struct {
 	Docs      *string           `json:"docs,omitempty"`
 	Name      *NameAndWireValue `json:"name,omitempty"`
 	ValueType *TypeReference    `json:"valueType,omitempty"`
+}
+
+func (i *InlinedWebhookPayloadProperty) String() string {
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
 }
 
 type Webhook struct {
@@ -3396,6 +4018,13 @@ type Webhook struct {
 	Method       WebhookHttpMethod `json:"method,omitempty"`
 	Headers      []*HttpHeader     `json:"headers,omitempty"`
 	Payload      *WebhookPayload   `json:"payload,omitempty"`
+}
+
+func (w *Webhook) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }
 
 type WebhookGroup = []*Webhook
@@ -3507,4 +4136,11 @@ func (w *WebhookPayload) Accept(visitor WebhookPayloadVisitor) error {
 type WebhookPayloadReference struct {
 	Docs        *string        `json:"docs,omitempty"`
 	PayloadType *TypeReference `json:"payloadType,omitempty"`
+}
+
+func (w *WebhookPayloadReference) String() string {
+	if value, err := core.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

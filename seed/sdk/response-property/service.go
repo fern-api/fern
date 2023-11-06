@@ -8,9 +8,43 @@ import (
 	core "github.com/fern-api/seed-go/core"
 )
 
+type OptionalStringResponse = *StringResponse
+
+type StringResponse struct {
+	Data string `json:"data"`
+
+	_rawJSON json.RawMessage
+}
+
+func (s *StringResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler StringResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = StringResponse(value)
+	s._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *StringResponse) String() string {
+	if len(s._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(s._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+type OptionalWithDocs = *WithDocs
+
 type Response struct {
-	Docs string `json:"docs"`
-	Data *Movie `json:"data,omitempty"`
+	Metadata map[string]string `json:"metadata,omitempty"`
+	Docs     string            `json:"docs"`
+	Data     *Movie            `json:"data,omitempty"`
 
 	_rawJSON json.RawMessage
 }

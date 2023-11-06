@@ -72,3 +72,119 @@ func (c *Client) GetMovieDocs(ctx context.Context, request string) (string, erro
 	}
 	return response.Docs, nil
 }
+
+func (c *Client) GetMovieName(ctx context.Context, request string) (string, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "movie"
+
+	var response *seedgo.StringResponse
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response.Data, nil
+}
+
+func (c *Client) GetMovieMetadata(ctx context.Context, request string) (map[string]string, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "movie"
+
+	var response *seedgo.Response
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response.Metadata, nil
+}
+
+func (c *Client) GetOptionalMovie(ctx context.Context, request string) (*seedgo.Movie, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "movie"
+
+	var response *seedgo.Response
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            c.header,
+			Request:            request,
+			Response:           &response,
+			ResponseIsOptional: true,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}
+
+func (c *Client) GetOptionalMovieDocs(ctx context.Context, request string) (string, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "movie"
+
+	var response seedgo.OptionalWithDocs
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response.Docs, nil
+}
+
+func (c *Client) GetOptionalMovieName(ctx context.Context, request string) (string, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "movie"
+
+	var response seedgo.OptionalStringResponse
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
+	); err != nil {
+		return "", err
+	}
+	return response.Data, nil
+}

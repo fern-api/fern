@@ -1,4 +1,4 @@
-irVersion: v27
+irVersion: v28
 docker: fernapi/fern-go-sdk:latest
 dockerCommand: docker build -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:latest .
 language: go

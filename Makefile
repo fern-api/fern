@@ -16,9 +16,11 @@ install:
 .PHONY: test
 test: install
 	go test ./...
-	npm install -g @fern-api/seed-cli@0.15.0-rc47
+	npm install -g @fern-api/seed-cli@0.15.0-rc67-6-ge84caf196
 	seed test --workspace sdk --fixture response-property
 	seed test --workspace sdk --fixture file-upload
+	seed test --workspace sdk --fixture literal
+	seed test --workspace sdk --fixture literal-headers
 
 .PHONY: fixtures
 fixtures: install
