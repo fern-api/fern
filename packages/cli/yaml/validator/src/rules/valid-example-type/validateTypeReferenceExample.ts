@@ -2,7 +2,7 @@ import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { ExampleResolver, FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { PrimitiveType } from "@fern-fern/ir-sdk/api";
+import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
@@ -174,8 +174,18 @@ export function validateTypeReferenceExample({
         unknown: () => {
             return [];
         },
-        literal: (expectedLiteralValue) => {
-            return createValidator((e) => e === expectedLiteralValue, `"${expectedLiteralValue}"`)(example);
+        literal: (expectedLiteral) => {
+            switch (expectedLiteral.type) {
+                case "boolean":
+                    return createValidator(
+                        (e) => e === expectedLiteral.boolean,
+                        expectedLiteral.boolean.toString()
+                    )(example);
+                case "string":
+                    return createValidator((e) => e === expectedLiteral.string, `"${expectedLiteral.string}"`)(example);
+                default:
+                    assertNever(expectedLiteral);
+            }
         },
     });
 }
@@ -268,11 +278,13 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                     })
                 );
             case "literal":
-                return (
-                    actual._type === "container" &&
-                    actual.container._type === expected.container._type &&
-                    expected.container.literal.string === actual.container.literal.string
-                );
+                if (actual._type !== "container" || actual.container._type !== expected.container._type) {
+                    return false;
+                }
+                return areLiteralTypesEquivalent({
+                    expected: expected.container.literal,
+                    actual: actual.container.literal,
+                });
             default:
                 assertNever(expected.container);
         }
@@ -284,4 +296,15 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
     }
 
     assertNever(expected);
+}
+
+function areLiteralTypesEquivalent({ expected, actual }: { expected: Literal; actual: Literal }) {
+    switch (expected.type) {
+        case "boolean":
+            return actual.type === "boolean" ? expected.boolean === actual.boolean : false;
+        case "string":
+            return actual.type === "string" ? expected.string === actual.string : false;
+        default:
+            assertNever(expected);
+    }
 }

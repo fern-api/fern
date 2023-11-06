@@ -113,6 +113,11 @@ export function convertTypeReference(
                 },
                 literal: (literal) => {
                     return Ir.types.Literal._visit(literal, {
+                        boolean: (booleanLiteral) =>
+                            // TODO: Refactor this when the FernRegsitry API supports boolean literals.
+                            FernRegistry.api.v1.register.TypeReference.literal(
+                                FernRegistry.api.v1.register.LiteralType.stringLiteral(booleanLiteral.toString())
+                            ),
                         string: (stringLiteral) =>
                             FernRegistry.api.v1.register.TypeReference.literal(
                                 FernRegistry.api.v1.register.LiteralType.stringLiteral(stringLiteral)

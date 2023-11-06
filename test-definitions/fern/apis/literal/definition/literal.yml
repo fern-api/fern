@@ -1,0 +1,37 @@
+types:
+  Options:
+    properties:
+      id: literal<"options">
+      enabled: literal<true>
+      values: map<string, string>
+
+  CreateOptionsResponse:
+    union:
+      ok: literal<true>
+      options: Options
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    createOptions:
+      auth: false
+      path: /options
+      method: POST
+      request:
+        name: CreateOptionsRequest
+        body:
+          properties:
+            values: map<string, string>
+      response: CreateOptionsResponse
+
+    getOptions:
+      auth: false
+      path: /options
+      method: POST
+      request:
+        name: GetOptionsRequest
+        body:
+          properties:
+            dryRun: literal<true>
+      response: Options

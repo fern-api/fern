@@ -5,6 +5,7 @@ service:
     integer: integer
     maybeInteger: optional<integer>
     literalServiceHeader: literal<"service header">
+    trueServiceHeader: literal<true>
   endpoints:
     get:
       path: ""
@@ -14,3 +15,4 @@ service:
         headers:
           nonLiteralEndpointHeader: string
           literalEndpointHeader: literal<"endpoint header">
+          trueEndpointHeader: literal<true>

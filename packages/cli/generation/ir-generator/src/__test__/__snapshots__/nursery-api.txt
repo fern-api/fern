@@ -95,6 +95,42 @@ exports[`generate IR 1`] = `
         },
       },
     },
+    {
+      "availability": null,
+      "docs": null,
+      "name": {
+        "name": {
+          "camelCase": {
+            "safeName": "apiTest",
+            "unsafeName": "apiTest",
+          },
+          "originalName": "apiTest",
+          "pascalCase": {
+            "safeName": "ApiTest",
+            "unsafeName": "ApiTest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "API_TEST",
+            "unsafeName": "API_TEST",
+          },
+          "snakeCase": {
+            "safeName": "api_test",
+            "unsafeName": "api_test",
+          },
+        },
+        "wireValue": "X-API-Test",
+      },
+      "valueType": {
+        "_type": "container",
+        "container": {
+          "_type": "literal",
+          "literal": {
+            "boolean": false,
+            "type": "boolean",
+          },
+        },
+      },
+    },
   ],
   "pathParameters": [],
   "rootPackage": {
@@ -287,6 +323,42 @@ exports[`generate IR 1`] = `
                   "literal": {
                     "string": "endpoint header",
                     "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "falseEndpointHeader",
+                    "unsafeName": "falseEndpointHeader",
+                  },
+                  "originalName": "falseEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "FalseEndpointHeader",
+                    "unsafeName": "FalseEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FALSE_ENDPOINT_HEADER",
+                    "unsafeName": "FALSE_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "false_endpoint_header",
+                    "unsafeName": "false_endpoint_header",
+                  },
+                },
+                "wireValue": "falseEndpointHeader",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "boolean": false,
+                    "type": "boolean",
                   },
                 },
               },
@@ -497,6 +569,42 @@ exports[`generate IR 1`] = `
                 },
               },
             },
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "trueEndpointHeader",
+                    "unsafeName": "trueEndpointHeader",
+                  },
+                  "originalName": "trueEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "TrueEndpointHeader",
+                    "unsafeName": "TrueEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TRUE_ENDPOINT_HEADER",
+                    "unsafeName": "TRUE_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "true_endpoint_header",
+                    "unsafeName": "true_endpoint_header",
+                  },
+                },
+                "wireValue": "trueEndpointHeader",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "boolean": true,
+                    "type": "boolean",
+                  },
+                },
+              },
+            },
           ],
           "id": "endpoint_with-non-literal-headers.get",
           "method": "POST",
@@ -690,6 +798,42 @@ exports[`generate IR 1`] = `
               "literal": {
                 "string": "service header",
                 "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": null,
+          "docs": null,
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "trueServiceHeader",
+                "unsafeName": "trueServiceHeader",
+              },
+              "originalName": "trueServiceHeader",
+              "pascalCase": {
+                "safeName": "TrueServiceHeader",
+                "unsafeName": "TrueServiceHeader",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TRUE_SERVICE_HEADER",
+                "unsafeName": "TRUE_SERVICE_HEADER",
+              },
+              "snakeCase": {
+                "safeName": "true_service_header",
+                "unsafeName": "true_service_header",
+              },
+            },
+            "wireValue": "trueServiceHeader",
+          },
+          "valueType": {
+            "_type": "container",
+            "container": {
+              "_type": "literal",
+              "literal": {
+                "boolean": true,
+                "type": "boolean",
               },
             },
           },

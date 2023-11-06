@@ -11,3 +11,4 @@ service:
         name: OnlyLiteralHeadersRequest
         headers:
           literalEndpointHeader: literal<"endpoint header">
+          falseEndpointHeader: literal<false>

@@ -36,7 +36,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-sdk": "0.0.2930",
+    "@fern-fern/ir-sdk": "0.0.2940",
     "lodash-es": "^4.17.21",
     "url-join": "^5.0.0"
   },
