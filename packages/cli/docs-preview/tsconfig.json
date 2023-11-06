@@ -6,8 +6,6 @@
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../config-management/docs-configuration" },
-    { "path": "../config-management/project-configuration" },
-    { "path": "../project-loader" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]

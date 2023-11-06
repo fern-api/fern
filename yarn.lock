@@ -2171,14 +2171,10 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
-    "@fern-api/fdr-sdk": 0.38.0-5-g43172f1
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
-    "@fern-api/project-loader": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/ir-sdk": 0.0.2930
     "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
@@ -2240,18 +2236,6 @@ __metadata:
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
-
-"@fern-api/fdr-sdk@npm:0.38.0-5-g43172f1":
-  version: 0.38.0-5-g43172f1
-  resolution: "@fern-api/fdr-sdk@npm:0.38.0-5-g43172f1"
-  dependencies:
-    "@ungap/url-search-params": 0.2.2
-    axios: 0.27.2
-    js-base64: 3.7.2
-    url-join: 4.0.1
-  checksum: 181c966dbf73002b43b955c22c26cf12595815b0b042c8d1f488e827d6d0cb0a385fbe2ecdb9fdd49190edc8e91d7d2a81f2589bff82c5fbd89dc125b4b0c43d
-  languageName: node
-  linkType: hard
 
 "@fern-api/fs-utils@workspace:*, @fern-api/fs-utils@workspace:packages/commons/fs-utils":
   version: 0.0.0-use.local
@@ -2731,7 +2715,6 @@ __metadata:
     "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
     "@types/mime-types": ^2.1.2
     "@types/node": ^18.7.18
@@ -2743,7 +2726,6 @@ __metadata:
     eslint: ^8.26.0
     form-data: ^4.0.0
     jest: ^29.7.0
-    js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0

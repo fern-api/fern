@@ -3887,14 +3887,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
-            ["@fern-api/fdr-sdk", "npm:0.38.0-5-g43172f1"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
-            ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.2930"],\
             ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/express", "npm:4.17.20"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -3960,19 +3956,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-api/fdr-sdk", [\
-        ["npm:0.38.0-5-g43172f1", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.38.0-5-g43172f1-b477dc41d8-181c966dbf.zip/node_modules/@fern-api/fdr-sdk/",\
-          "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.38.0-5-g43172f1"],\
-            ["@ungap/url-search-params", "npm:0.2.2"],\
-            ["axios", "npm:0.27.2"],\
-            ["js-base64", "npm:3.7.2"],\
-            ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/fs-utils", [\
@@ -4490,7 +4473,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/mime-types", "npm:2.1.2"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4502,7 +4484,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["form-data", "npm:4.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mime-types", "npm:2.1.35"],\
             ["organize-imports-cli", "npm:0.10.0"],\
