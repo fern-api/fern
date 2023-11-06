@@ -113,7 +113,6 @@ async function convertNavigationConfig({
     navigationConfig,
     tabs,
     parsedDocsConfig,
-
     context,
 }: {
     navigationConfig: DocsNavigationConfiguration;

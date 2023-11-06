@@ -21,6 +21,8 @@ export async function runPreviewServer({
         res.send(docsDefinition);
     });
 
+    app.listen(3000);
+
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {});
