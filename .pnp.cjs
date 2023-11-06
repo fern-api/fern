@@ -3707,6 +3707,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
             ["@fern-api/docker-utils", "workspace:packages/cli/generation/local-generation/docker-utils"],\
+            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
