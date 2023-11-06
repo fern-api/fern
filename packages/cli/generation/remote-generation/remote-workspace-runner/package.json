@@ -31,6 +31,7 @@
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
@@ -47,7 +48,6 @@
     "chalk": "^5.0.1",
     "decompress": "^4.2.1",
     "form-data": "^4.0.0",
-    "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "mime-types": "^2.1.35",
     "terminal-link": "^3.0.0",
@@ -57,7 +57,6 @@
   "devDependencies": {
     "@types/decompress": "^4.2.4",
     "@types/jest": "^29.0.3",
-    "@types/js-yaml": "^4.0.6",
     "@types/lodash-es": "^4.17.7",
     "@types/mime-types": "^2.1.2",
     "@types/node": "^18.7.18",
