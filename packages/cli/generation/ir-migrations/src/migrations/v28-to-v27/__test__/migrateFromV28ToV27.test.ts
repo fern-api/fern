@@ -5,10 +5,11 @@ import { V28_TO_V27_MIGRATION } from "../migrateFromV28ToV27";
 const runMigration = createMigrationTester(V28_TO_V27_MIGRATION);
 
 describe("migrateFromV28ToV27", () => {
-    it("maps boolean literals to boolean types", async () => {
+    it("snapshot", async () => {
+        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/literal"));
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/literal")),
+            pathToFixture,
         });
-        expect(migrated).not.toBe(null);
+        expect(migrated).toMatchSnapshot();
     });
 });
