@@ -4,7 +4,7 @@ STARLETTE_MODULE = AST.Module.external(
     module_path=("starlette",),
     dependency=AST.Dependency(
         name="starlette",
-        version="^0.21.0",
+        version="^0.27.0",
     ),
 )
 
