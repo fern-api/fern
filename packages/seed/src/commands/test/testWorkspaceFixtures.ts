@@ -28,6 +28,7 @@ export const FIXTURES = {
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
     IMDB: "imdb",
+    LITERAL: "literal",
     LITERAL_HEADERS: "literal-headers",
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
     NO_ENVIRONMENT: "no-environment",
