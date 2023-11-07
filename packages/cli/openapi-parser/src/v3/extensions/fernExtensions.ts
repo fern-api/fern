@@ -3,13 +3,38 @@ import { Values } from "@fern-api/core-utils";
 export const FernOpenAPIExtension = {
     SDK_METHOD_NAME: "x-fern-sdk-method-name",
     SDK_GROUP_NAME: "x-fern-sdk-group-name",
-    STREAMING: "x-fern-streaming",
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
 
     SERVER_NAME_V1: "x-name",
     SERVER_NAME_V2: "x-fern-server-name",
+
+    /**
+     * Used to specify if an endpoint should be generated
+     * as a streaming endpoint.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming: true
+     *
+     * Alternatively, you can annotate the endpoint so that
+     * it generates both a traditional unary endpoint,
+     * as well as its streaming equivalent. The optional
+     * stream condition property is included to specify
+     * a boolean propetry that tells the server whether
+     * or not the response should be streamed or not.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming:
+     *         stream-condition: stream
+     *         response: ./path/to/response/type.yaml
+     *         response-stream: ./path/to/response-stream/type.yaml
+     */
+    STREAMING: "x-fern-streaming",
 
     /**
      * Used to specify if an endpoint is actually

@@ -2095,6 +2095,73 @@ Note: This operation requires an identity challenge if the financial institution
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "Delete this transfer resource and any resources that are owned by it. Only transfers that have not been processed may be deleted.",
+      "errorStatusCode": [
+        401,
+        403,
+        404,
+        409,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "transferId",
+              "value": {
+                "primitive": {
+                  "string": "transfer-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
+      "generatedRequestName": "TransfersDeleteTransferRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": undefined,
+      "path": "/transfers/{transferId}",
+      "pathParameters": [
+        {
+          "description": "The unique identifier of this transfer. This is an opaque string.",
+          "name": "transferId",
+          "schema": {
+            "description": undefined,
+            "generatedName": "TransfersDeleteTransferRequestTransferId",
+            "nameOverride": undefined,
+            "schema": "resourceId",
+            "type": "reference",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": undefined,
+      "sdkName": {
+        "groupName": [
+          "transfers",
+        ],
+        "methodName": "deleteTransfer",
+      },
+      "server": [],
+      "summary": "Delete this transfer resource",
+      "tags": [
+        "Transfers",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "Perform a partial update of this transfer as per [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules. Only fields in the request body are updated on the resource; fields which are omitted are not updated.
 
 Note: This operation requires an identity challenge if the financial institution requires the user to prove their identity for some types of transfers. See the "Challenges API".",
@@ -2175,73 +2242,6 @@ Note: This operation requires an identity challenge if the financial institution
       },
       "server": [],
       "summary": "Update this transfer",
-      "tags": [
-        "Transfers",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "Delete this transfer resource and any resources that are owned by it. Only transfers that have not been processed may be deleted.",
-      "errorStatusCode": [
-        401,
-        403,
-        404,
-        409,
-      ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "transferId",
-              "value": {
-                "primitive": {
-                  "string": "transfer-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
-      "generatedRequestName": "TransfersDeleteTransferRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": undefined,
-      "path": "/transfers/{transferId}",
-      "pathParameters": [
-        {
-          "description": "The unique identifier of this transfer. This is an opaque string.",
-          "name": "transferId",
-          "schema": {
-            "description": undefined,
-            "generatedName": "TransfersDeleteTransferRequestTransferId",
-            "nameOverride": undefined,
-            "schema": "resourceId",
-            "type": "reference",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": undefined,
-      "sdkName": {
-        "groupName": [
-          "transfers",
-        ],
-        "methodName": "deleteTransfer",
-      },
-      "server": [],
-      "summary": "Delete this transfer resource",
       "tags": [
         "Transfers",
       ],

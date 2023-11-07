@@ -274,7 +274,10 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "employee",
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -288,14 +291,20 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "remote_fields",
               "value": {
-                "literal": "account_type",
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "account_type",
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -531,7 +540,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "employee",
+              "value": {
+                "string": "employee",
+                "type": "string",
+              },
             },
           },
         },
@@ -647,7 +659,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "account_type",
+              "value": {
+                "string": "account_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -677,7 +692,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "account_type",
+              "value": {
+                "string": "account_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -738,21 +756,30 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "employee",
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "remote_fields",
               "value": {
-                "literal": "account_type",
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "account_type",
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -867,7 +894,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "employee",
+              "value": {
+                "string": "employee",
+                "type": "string",
+              },
             },
           },
         },
@@ -895,7 +925,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "account_type",
+              "value": {
+                "string": "account_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -908,7 +941,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "account_type",
+              "value": {
+                "string": "account_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -958,7 +994,10 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "employee",
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -1153,7 +1192,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "employee",
+              "value": {
+                "string": "employee",
+                "type": "string",
+              },
             },
           },
         },
@@ -1306,7 +1348,10 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "employee",
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -1428,7 +1473,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "employee",
+              "value": {
+                "string": "employee",
+                "type": "string",
+              },
             },
           },
         },
@@ -9300,14 +9348,20 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "remote_fields",
               "value": {
-                "literal": "type",
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "type",
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -9532,7 +9586,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "type",
+              "value": {
+                "string": "type",
+                "type": "string",
+              },
             },
           },
         },
@@ -9562,7 +9619,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "type",
+              "value": {
+                "string": "type",
+                "type": "string",
+              },
             },
           },
         },
@@ -9640,14 +9700,20 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "remote_fields",
               "value": {
-                "literal": "type",
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "type",
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -9756,7 +9822,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "type",
+              "value": {
+                "string": "type",
+                "type": "string",
+              },
             },
           },
         },
@@ -9769,7 +9838,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "type",
+              "value": {
+                "string": "type",
+                "type": "string",
+              },
             },
           },
         },
@@ -10709,14 +10781,20 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "remote_fields",
               "value": {
-                "literal": "location_type",
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "location_type",
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -10976,7 +11054,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "location_type",
+              "value": {
+                "string": "location_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -11006,7 +11087,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "location_type",
+              "value": {
+                "string": "location_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -11067,14 +11151,20 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "remote_fields",
               "value": {
-                "literal": "location_type",
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "location_type",
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -11218,7 +11308,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "location_type",
+              "value": {
+                "string": "location_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -11231,7 +11324,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "location_type",
+              "value": {
+                "string": "location_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -13160,7 +13256,10 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "parent_team",
+                "literal": {
+                  "string": "parent_team",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -13310,7 +13409,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "parent_team",
+              "value": {
+                "string": "parent_team",
+                "type": "string",
+              },
             },
           },
         },
@@ -13480,7 +13582,10 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "parent_team",
+                "literal": {
+                  "string": "parent_team",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -13574,7 +13679,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "parent_team",
+              "value": {
+                "string": "parent_team",
+                "type": "string",
+              },
             },
           },
         },
@@ -14614,7 +14722,10 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "employee",
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -14628,14 +14739,20 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "remote_fields",
               "value": {
-                "literal": "policy_type",
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "policy_type",
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -14795,7 +14912,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "employee",
+              "value": {
+                "string": "employee",
+                "type": "string",
+              },
             },
           },
         },
@@ -14942,7 +15062,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "policy_type",
+              "value": {
+                "string": "policy_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -14972,7 +15095,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "policy_type",
+              "value": {
+                "string": "policy_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -15033,21 +15159,30 @@ exports[`open api parser merge parse open api 1`] = `
             {
               "name": "expand",
               "value": {
-                "literal": "employee",
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "remote_fields",
               "value": {
-                "literal": "policy_type",
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
             {
               "name": "show_enum_origins",
               "value": {
-                "literal": "policy_type",
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -15134,7 +15269,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "employee",
+              "value": {
+                "string": "employee",
+                "type": "string",
+              },
             },
           },
         },
@@ -15162,7 +15300,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "policy_type",
+              "value": {
+                "string": "policy_type",
+                "type": "string",
+              },
             },
           },
         },
@@ -15175,7 +15316,10 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "policy_type",
+              "value": {
+                "string": "policy_type",
+                "type": "string",
+              },
             },
           },
         },

@@ -247,7 +247,12 @@ types:
   LiteralSchema:
     extends: commons.WithDescription
     properties:
-      value: string
+      value: LiteralSchemaValue
+
+  LiteralSchemaValue:
+    union:
+      boolean: boolean
+      string: string
 
   ObjectSchema:
     extends:

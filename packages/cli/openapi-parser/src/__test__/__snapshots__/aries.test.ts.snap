@@ -32306,7 +32306,10 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "primitive",
               },
               "key_management_mode": {
-                "literal": "managed",
+                "literal": {
+                  "string": "managed",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "label": {
@@ -46609,7 +46612,10 @@ exports[`open api parser aries parse open api 1`] = `
                     "type": "primitive",
                   },
                   "revoc_def_type": {
-                    "literal": "CL_ACCUM",
+                    "literal": {
+                      "string": "CL_ACCUM",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "revoc_reg_def": {
@@ -46629,7 +46635,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revocDefType": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -46941,7 +46950,10 @@ exports[`open api parser aries parse open api 1`] = `
                     "type": "primitive",
                   },
                   "revoc_def_type": {
-                    "literal": "CL_ACCUM",
+                    "literal": {
+                      "string": "CL_ACCUM",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "revoc_reg_def": {
@@ -46961,7 +46973,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revocDefType": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -47696,7 +47711,10 @@ exports[`open api parser aries parse open api 1`] = `
                     "type": "primitive",
                   },
                   "revoc_def_type": {
-                    "literal": "CL_ACCUM",
+                    "literal": {
+                      "string": "CL_ACCUM",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "revoc_reg_def": {
@@ -47716,7 +47734,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revocDefType": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -47972,7 +47993,10 @@ exports[`open api parser aries parse open api 1`] = `
                     "type": "primitive",
                   },
                   "revoc_def_type": {
-                    "literal": "CL_ACCUM",
+                    "literal": {
+                      "string": "CL_ACCUM",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "revoc_reg_def": {
@@ -47992,7 +48016,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revocDefType": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -48250,7 +48277,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revoc_def_type": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "revoc_reg_def": {
@@ -48270,7 +48300,10 @@ exports[`open api parser aries parse open api 1`] = `
                             "type": "primitive",
                           },
                           "revocDefType": {
-                            "literal": "CL_ACCUM",
+                            "literal": {
+                              "string": "CL_ACCUM",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                           "value": {
@@ -48612,7 +48645,10 @@ exports[`open api parser aries parse open api 1`] = `
                     "type": "primitive",
                   },
                   "revoc_def_type": {
-                    "literal": "CL_ACCUM",
+                    "literal": {
+                      "string": "CL_ACCUM",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "revoc_reg_def": {
@@ -48632,7 +48668,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revocDefType": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -49304,7 +49343,10 @@ exports[`open api parser aries parse open api 1`] = `
                     "type": "primitive",
                   },
                   "revoc_def_type": {
-                    "literal": "CL_ACCUM",
+                    "literal": {
+                      "string": "CL_ACCUM",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "revoc_reg_def": {
@@ -49324,7 +49366,10 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "revocDefType": {
-                        "literal": "CL_ACCUM",
+                        "literal": {
+                          "string": "CL_ACCUM",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -55443,7 +55488,10 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "description": "Key management method to use for this wallet.",
               "type": "literal",
-              "value": "managed",
+              "value": {
+                "string": "managed",
+                "type": "string",
+              },
             },
           },
         },
@@ -61686,7 +61734,10 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "description": "Revocation registry type (specify CL_ACCUM)",
               "type": "literal",
-              "value": "CL_ACCUM",
+              "value": {
+                "string": "CL_ACCUM",
+                "type": "string",
+              },
             },
           },
         },
@@ -63125,7 +63176,10 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "description": "Revocation registry type (specify CL_ACCUM)",
               "type": "literal",
-              "value": "CL_ACCUM",
+              "value": {
+                "string": "CL_ACCUM",
+                "type": "string",
+              },
             },
           },
         },

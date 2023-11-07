@@ -950,7 +950,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "ACHPaymentMethod": {
       "description": "Classify the method of payment as "ACH" for ACHDetails",
       "type": "literal",
-      "value": "ACH",
+      "value": {
+        "string": "ACH",
+        "type": "string",
+      },
     },
     "AcquisitionChannel": {
       "description": "Model for User acquisition channel",
@@ -2440,7 +2443,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "Card" for CardDetails
 ",
       "type": "literal",
-      "value": "CARD",
+      "value": {
+        "string": "CARD",
+        "type": "string",
+      },
     },
     "CaseClosedDetails": {
       "allOf": [],
@@ -2898,7 +2904,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "CheckPaymentMethod": {
       "description": "Classify the method of payment as "CHECK" for CheckDetails",
       "type": "literal",
-      "value": "CHECK",
+      "value": {
+        "string": "CHECK",
+        "type": "string",
+      },
     },
     "CompanyFinancialDetails": {
       "allOf": [],
@@ -7162,7 +7171,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "GeneralBankAccountPaymentMethod": {
       "description": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
       "type": "literal",
-      "value": "GENERIC_BANK_ACCOUNT",
+      "value": {
+        "string": "GENERIC_BANK_ACCOUNT",
+        "type": "string",
+      },
     },
     "GenericBankAccountDetails": {
       "allOf": [],
@@ -7616,7 +7628,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "IBAN" for IBANDetails
 ",
       "type": "literal",
-      "value": "IBAN",
+      "value": {
+        "string": "IBAN",
+        "type": "string",
+      },
     },
     "KYCStatus": {
       "description": undefined,
@@ -8456,7 +8471,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "MpesaPaymentMethod": {
       "description": "Classify the method of payment as "Mpesa" for MpesaDetails",
       "type": "literal",
-      "value": "MPESA",
+      "value": {
+        "string": "MPESA",
+        "type": "string",
+      },
     },
     "PEPStatus": {
       "allOf": [],
@@ -9193,7 +9211,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "SWIFTPaymentMethod": {
       "description": "Classify the method of payment as "SWIFT" for SWIFTDetails",
       "type": "literal",
-      "value": "SWIFT",
+      "value": {
+        "string": "SWIFT",
+        "type": "string",
+      },
     },
     "SanctionsDetails": {
       "allOf": [],
@@ -10759,7 +10780,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "UPIPaymentMethod": {
       "description": "Classify the method of payment as "UPI" for UPIDetails",
       "type": "literal",
-      "value": "UPI",
+      "value": {
+        "string": "UPI",
+        "type": "string",
+      },
     },
     "User": {
       "allOf": [
@@ -11512,7 +11536,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "WalletPaymentMethod": {
       "description": "Classify the method of payment as "Wallet" for WalletDetails",
       "type": "literal",
-      "value": "WALLET",
+      "value": {
+        "string": "WALLET",
+        "type": "string",
+      },
     },
     "WebhookEvent": {
       "allOf": [],

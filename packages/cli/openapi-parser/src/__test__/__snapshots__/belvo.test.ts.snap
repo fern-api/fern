@@ -1876,6 +1876,76 @@ in the DevPortal.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
+# Deleting links in batches
+To delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.
+
+  > 🚧 **Rate limiting and IP blocking**
+  > 
+  > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.
+  > 
+  > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).",
+      "errorStatusCode": [
+        401,
+        404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
+      "generatedRequestName": "DestroyLinkRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "DestroyLink",
+      "path": "/api/links/{id}",
+      "pathParameters": [
+        {
+          "description": "The \`link.id\` that you want to delete.",
+          "name": "id",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": undefined,
+      "sdkName": undefined,
+      "server": [],
+      "summary": "Delete a link",
+      "tags": [
+        "Links",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "Change a link's access mode from \`single\` to \`recurrent\` or from \`recurrent\` to single.
 ℹ️ **Note**: When you change a link from \`single\`\` to \`recurrent\`, they will only be updated the next day at the scheduled interval.",
       "errorStatusCode": [
@@ -2090,76 +2160,6 @@ in the DevPortal.
       "sdkName": undefined,
       "server": [],
       "summary": "Change a link's access mode",
-      "tags": [
-        "Links",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
-# Deleting links in batches
-To delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.
-
-  > 🚧 **Rate limiting and IP blocking**
-  > 
-  > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.
-  > 
-  > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).",
-      "errorStatusCode": [
-        401,
-        404,
-      ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
-      "generatedRequestName": "DestroyLinkRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "DestroyLink",
-      "path": "/api/links/{id}",
-      "pathParameters": [
-        {
-          "description": "The \`link.id\` that you want to delete.",
-          "name": "id",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": undefined,
-      "sdkName": undefined,
-      "server": [],
-      "summary": "Delete a link",
       "tags": [
         "Links",
       ],
@@ -8573,7 +8573,10 @@ If you try to access older information than what we can access, we will return a
             {
               "name": "X-Belvo-Request-Mode",
               "value": {
-                "literal": "async",
+                "literal": {
+                  "string": "async",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -8663,7 +8666,10 @@ If you try to access older information than what we can access, we will return a
           "schema": {
             "description": null,
             "type": "literal",
-            "value": "async",
+            "value": {
+              "string": "async",
+              "type": "string",
+            },
           },
         },
       ],
@@ -19722,7 +19728,10 @@ If you try to access older information than what we can access, we will return a
                         "type": "primitive",
                       },
                       "income_source_type": {
-                        "literal": "BANK",
+                        "literal": {
+                          "string": "BANK",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "income_streams": {
@@ -20123,7 +20132,10 @@ If you try to access older information than what we can access, we will return a
                 "type": "primitive",
               },
               "income_source_type": {
-                "literal": "BANK",
+                "literal": {
+                  "string": "BANK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "income_streams": {
@@ -20411,7 +20423,10 @@ If you try to access older information than what we can access, we will return a
                     "type": "primitive",
                   },
                   "income_source_type": {
-                    "literal": "BANK",
+                    "literal": {
+                      "string": "BANK",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "income_streams": {
@@ -20682,7 +20697,10 @@ If you try to access older information than what we can access, we will return a
                     "type": "primitive",
                   },
                   "income_source_type": {
-                    "literal": "BANK",
+                    "literal": {
+                      "string": "BANK",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "income_streams": {
@@ -21532,7 +21550,10 @@ If you try to access older information than what we can access, we will return a
                         "type": "primitive",
                       },
                       "frequency": {
-                        "literal": "MONTHLY",
+                        "literal": {
+                          "string": "MONTHLY",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "id": {
@@ -22332,7 +22353,10 @@ If you try to access older information than what we can access, we will return a
                     "type": "primitive",
                   },
                   "frequency": {
-                    "literal": "MONTHLY",
+                    "literal": {
+                      "string": "MONTHLY",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "id": {
@@ -23003,7 +23027,10 @@ If you try to access older information than what we can access, we will return a
                     "type": "primitive",
                   },
                   "frequency": {
-                    "literal": "MONTHLY",
+                    "literal": {
+                      "string": "MONTHLY",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "id": {
@@ -23650,7 +23677,10 @@ If you try to access older information than what we can access, we will return a
                     "type": "primitive",
                   },
                   "frequency": {
-                    "literal": "MONTHLY",
+                    "literal": {
+                      "string": "MONTHLY",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "id": {
@@ -25889,7 +25919,10 @@ If you try to access older information than what we can access, we will return a
                           {
                             "properties": {
                               "type": {
-                                "literal": "TRANSACTION_FEE",
+                                "literal": {
+                                  "string": "TRANSACTION_FEE",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                               "value": {
@@ -26471,7 +26504,10 @@ If you try to access older information than what we can access, we will return a
                   {
                     "properties": {
                       "type": {
-                        "literal": "TRANSACTION_FEE",
+                        "literal": {
+                          "string": "TRANSACTION_FEE",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -26741,7 +26777,10 @@ If you try to access older information than what we can access, we will return a
                   {
                     "properties": {
                       "type": {
-                        "literal": "TRANSACTION_FEE",
+                        "literal": {
+                          "string": "TRANSACTION_FEE",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value": {
@@ -32976,7 +33015,10 @@ If you need to know the currency of the account, just do a GET Details to the ac
                         "type": "primitive",
                       },
                       "account_holder_type": {
-                        "literal": "INDIVIDUAL",
+                        "literal": {
+                          "string": "INDIVIDUAL",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "account_id": {
@@ -33022,7 +33064,10 @@ If you need to know the currency of the account, just do a GET Details to the ac
                         "type": "primitive",
                       },
                       "type": {
-                        "literal": "INFLOW",
+                        "literal": {
+                          "string": "INFLOW",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "value_date": {
@@ -33067,7 +33112,10 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     "type": "primitive",
                   },
                   "income_source_type": {
-                    "literal": "BANK",
+                    "literal": {
+                      "string": "BANK",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "income_streams": {
@@ -45875,7 +45923,10 @@ We return one of the following enum values:
     "EnumBankAccountHolderTypePse": {
       "description": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
       "type": "literal",
-      "value": "BUSINESS",
+      "value": {
+        "string": "BUSINESS",
+        "type": "string",
+      },
     },
     "EnumBankAccountPixAccountTypeOfpi": {
       "description": "The type of bank account. Can be either:
@@ -46463,7 +46514,10 @@ We return one of the following enum values:
   - \`BANK\`
 ",
       "type": "literal",
-      "value": "BANK",
+      "value": {
+        "string": "BANK",
+        "type": "string",
+      },
     },
     "EnumIncomeStreamConfidence": {
       "description": "Belvo's level of confidence for future incomes.
@@ -46655,7 +46709,10 @@ Can be either:
 
   - \`INDIVIDUAL\`",
       "type": "literal",
-      "value": "INDIVIDUAL",
+      "value": {
+        "string": "INDIVIDUAL",
+        "type": "string",
+      },
     },
     "EnumIncomeVerificationType": {
       "description": "The direction of the transaction:
@@ -46669,7 +46726,10 @@ Can be either:
 - \`INFLOW\` indicates money coming into the account.
 ",
         "type": "literal",
-        "value": "INFLOW",
+        "value": {
+          "string": "INFLOW",
+          "type": "string",
+        },
       },
     },
     "EnumInstitutionIntegrationType": {
@@ -46944,7 +47004,10 @@ For Colombia's DIAN, we return one of the following values:
   - \`Factura Electrónica de Venta\`
 ",
         "type": "literal",
-        "value": "Factura Electrónica de Venta",
+        "value": {
+          "string": "Factura Electrónica de Venta",
+          "type": "string",
+        },
       },
     },
     "EnumInvoiceDianPaymentMethod": {
@@ -47465,7 +47528,10 @@ We return one of the following values:
 
   - \`TRANSACTION_FEE\`",
         "type": "literal",
-        "value": "TRANSACTION_FEE",
+        "value": {
+          "string": "TRANSACTION_FEE",
+          "type": "string",
+        },
       },
     },
     "EnumReceivableTransactionStatus": {
@@ -47608,7 +47674,10 @@ We return one of the following values:
 ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
 ",
       "type": "literal",
-      "value": "MONTHLY",
+      "value": {
+        "string": "MONTHLY",
+        "type": "string",
+      },
     },
     "EnumRecurringExpensePaymentType": {
       "description": "The type of recurring expense. We return one of the following values:

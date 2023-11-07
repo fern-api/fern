@@ -5142,7 +5142,10 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "vector_database_pinecone",
+            "value": {
+              "string": "vector_database_pinecone",
+              "type": "string",
+            },
           },
         },
         {
@@ -5204,7 +5207,10 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "vector_database_pinecone",
+            "value": {
+              "string": "vector_database_pinecone",
+              "type": "string",
+            },
           },
         },
         {
@@ -5266,7 +5272,10 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "vector_database_pinecone",
+            "value": {
+              "string": "vector_database_pinecone",
+              "type": "string",
+            },
           },
         },
         {

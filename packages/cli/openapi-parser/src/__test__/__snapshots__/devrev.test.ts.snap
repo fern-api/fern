@@ -5192,7 +5192,10 @@ token. Only applicable for application access tokens.
       "description": "The type of the issued token. Bearer is the only supported token type.
 ",
       "type": "literal",
-      "value": "bearer",
+      "value": {
+        "string": "bearer",
+        "type": "string",
+      },
     },
     "auth-tokens-create-request": {
       "allOf": [],
@@ -6780,7 +6783,10 @@ sort order. If not set, then no prior elements exist.
     "error-forbidden-type": {
       "description": undefined,
       "type": "literal",
-      "value": "forbidden",
+      "value": {
+        "string": "forbidden",
+        "type": "string",
+      },
     },
     "error-internal-server-error": {
       "allOf": [
@@ -6851,7 +6857,10 @@ inquiry.
     "error-internal-server-error-type": {
       "description": undefined,
       "type": "literal",
-      "value": "internal_error",
+      "value": {
+        "string": "internal_error",
+        "type": "string",
+      },
     },
     "error-not-found": {
       "allOf": [
@@ -6902,7 +6911,10 @@ inquiry.
     "error-not-found-type": {
       "description": undefined,
       "type": "literal",
-      "value": "not_found",
+      "value": {
+        "string": "not_found",
+        "type": "string",
+      },
     },
     "error-service-unavailable": {
       "allOf": [
@@ -6953,7 +6965,10 @@ inquiry.
     "error-service-unavailable-type": {
       "description": undefined,
       "type": "literal",
-      "value": "service_unavailable",
+      "value": {
+        "string": "service_unavailable",
+        "type": "string",
+      },
     },
     "error-too-many-requests": {
       "allOf": [
@@ -7021,7 +7036,10 @@ inquiry.
     "error-too-many-requests-type": {
       "description": undefined,
       "type": "literal",
-      "value": "too_many_requests",
+      "value": {
+        "string": "too_many_requests",
+        "type": "string",
+      },
     },
     "error-unauthorized": {
       "allOf": [
@@ -7056,7 +7074,10 @@ inquiry.
     "error-unauthorized-type": {
       "description": undefined,
       "type": "literal",
-      "value": "unauthenticated",
+      "value": {
+        "string": "unauthenticated",
+        "type": "string",
+      },
     },
     "error-unauthorized-unauthenticated": {
       "description": undefined,
@@ -7732,7 +7753,10 @@ always be returned in the specified sort-by order.
     "org-type": {
       "description": undefined,
       "type": "literal",
-      "value": "rev_org",
+      "value": {
+        "string": "rev_org",
+        "type": "string",
+      },
     },
     "part": {
       "oneOf": {
@@ -10150,7 +10174,10 @@ will appear in the response.
     "timeline-entries-create-request-type": {
       "description": undefined,
       "type": "literal",
-      "value": "timeline_comment",
+      "value": {
+        "string": "timeline_comment",
+        "type": "string",
+      },
     },
     "timeline-entries-create-response": {
       "allOf": [],
@@ -10464,7 +10491,10 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
     "timeline-entries-update-request-type": {
       "description": undefined,
       "type": "literal",
-      "value": "timeline_comment",
+      "value": {
+        "string": "timeline_comment",
+        "type": "string",
+      },
     },
     "timeline-entries-update-response": {
       "allOf": [],
@@ -10518,7 +10548,10 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
     "timeline-entry-type": {
       "description": undefined,
       "type": "literal",
-      "value": "timeline_comment",
+      "value": {
+        "string": "timeline_comment",
+        "type": "string",
+      },
     },
     "timeline-entry-visibility": {
       "description": "The visibility of the entry. If 'private', then the entry is only
@@ -10526,7 +10559,10 @@ visible to the creator, otherwise if not set, then the entry has
 default visibility.
 ",
       "type": "literal",
-      "value": "private",
+      "value": {
+        "string": "private",
+        "type": "string",
+      },
     },
     "user-base": {
       "allOf": [

@@ -11,7 +11,7 @@ types:
       array: list<FullExample>
       map: list<KeyValuePair>
       enum: string
-      literal: string
+      literal: LiteralExample
       oneOf: FullOneOfExample
       unknown: FullExample
 
@@ -27,6 +27,11 @@ types:
       base64: base64
       boolean: boolean
 
+  LiteralExample:
+    union:
+      boolean: boolean
+      string: string
+
   FullObjectExample:
     properties:
       properties: map<PropertyKey, FullExample>
@@ -40,4 +45,3 @@ types:
     union:
       discriminated: map<PropertyKey, FullExample>
       undisciminated: FullExample
-

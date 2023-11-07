@@ -1126,7 +1126,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -1134,7 +1137,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -1714,7 +1720,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -1722,7 +1731,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -2836,7 +2848,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -2844,7 +2859,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -3739,7 +3757,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             {
               "name": "include",
               "value": {
-                "literal": "data",
+                "literal": {
+                  "string": "data",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -4992,7 +5013,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "value": {
               "description": "Include the data object in the event model",
               "type": "literal",
-              "value": "data",
+              "value": {
+                "string": "data",
+                "type": "string",
+              },
             },
           },
         },
@@ -5431,7 +5455,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "value": {
                 "properties": {
                   "include": {
-                    "literal": "data",
+                    "literal": {
+                      "string": "data",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                 },
@@ -7190,7 +7217,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Include the data object in the event model",
                       "type": "literal",
-                      "value": "data",
+                      "value": {
+                        "string": "data",
+                        "type": "string",
+                      },
                     },
                   },
                 },
@@ -7436,7 +7466,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -7444,7 +7477,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -11001,7 +11037,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -11009,7 +11048,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -14972,7 +15014,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             {
               "name": "include",
               "value": {
-                "literal": "data",
+                "literal": {
+                  "string": "data",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -15956,7 +16001,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "data",
+              "value": {
+                "string": "data",
+                "type": "string",
+              },
             },
           },
         },
@@ -16375,7 +16423,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             {
               "name": "include",
               "value": {
-                "literal": "data",
+                "literal": {
+                  "string": "data",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -17643,7 +17694,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "value": {
               "description": "Include the data object in the event model",
               "type": "literal",
-              "value": "data",
+              "value": {
+                "string": "data",
+                "type": "string",
+              },
             },
           },
         },
@@ -17967,7 +18021,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -17975,7 +18032,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -18137,7 +18197,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "value": {
                 "properties": {
                   "include": {
-                    "literal": "data",
+                    "literal": {
+                      "string": "data",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -19624,7 +19687,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "data",
+                      "value": {
+                        "string": "data",
+                        "type": "string",
+                      },
                     },
                   },
                 },
@@ -19843,7 +19909,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -19851,7 +19920,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -22768,7 +22840,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -22776,7 +22851,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -23859,7 +23937,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -23867,7 +23948,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -24641,7 +24725,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -24649,7 +24736,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -25947,7 +26037,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -25955,7 +26048,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -26779,7 +26875,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   {
                     "description": undefined,
                     "type": "literal",
-                    "value": "created_at",
+                    "value": {
+                      "string": "created_at",
+                      "type": "string",
+                    },
                   },
                   {
                     "description": undefined,
@@ -26787,7 +26886,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "type": "literal",
-                      "value": "created_at",
+                      "value": {
+                        "string": "created_at",
+                        "type": "string",
+                      },
                     },
                   },
                 ],
@@ -28456,7 +28558,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "schema": {
             "description": "An alert rule must be of type \`alert\`",
             "type": "literal",
-            "value": "alert",
+            "value": {
+              "string": "alert",
+              "type": "string",
+            },
           },
         },
         {
@@ -29853,7 +29958,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "schema": {
             "description": "A delay rule must be of type \`delay\`",
             "type": "literal",
-            "value": "delay",
+            "value": {
+              "string": "delay",
+              "type": "string",
+            },
           },
         },
         {
@@ -31948,7 +32056,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "schema": {
             "description": "A filter rule must be of type \`filter\`",
             "type": "literal",
-            "value": "filter",
+            "value": {
+              "string": "filter",
+              "type": "string",
+            },
           },
         },
         {
@@ -34409,7 +34520,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "schema": {
             "description": "A retry rule must be of type \`retry\`",
             "type": "literal",
-            "value": "retry",
+            "value": {
+              "string": "retry",
+              "type": "string",
+            },
           },
         },
         {
@@ -35611,7 +35725,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "schema": {
             "description": "A transformation rule must be of type \`transformation\`",
             "type": "literal",
-            "value": "transform",
+            "value": {
+              "string": "transform",
+              "type": "string",
+            },
           },
         },
         {
@@ -35739,7 +35856,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "schema": {
             "description": "A transformation rule must be of type \`transformation\`",
             "type": "literal",
-            "value": "transform",
+            "value": {
+              "string": "transform",
+              "type": "string",
+            },
           },
         },
         {

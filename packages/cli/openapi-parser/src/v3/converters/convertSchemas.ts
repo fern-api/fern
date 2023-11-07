@@ -1,4 +1,4 @@
-import { ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
+import { LiteralSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -509,14 +509,14 @@ export function wrapLiteral({
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: SchemaWithExample.literal({
-                value: literal,
+                value: LiteralSchemaValue.string(literal),
                 description,
             }),
             description,
         });
     }
     return SchemaWithExample.literal({
-        value: literal,
+        value: LiteralSchemaValue.string(literal),
         description,
     });
 }

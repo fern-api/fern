@@ -1703,7 +1703,10 @@ exports[`open api parser supertokens parse open api 1`] = `
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -2423,7 +2426,10 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "type": "literal",
-                        "value": "RESTART_FLOW_ERROR",
+                        "value": {
+                          "string": "RESTART_FLOW_ERROR",
+                          "type": "string",
+                        },
                       },
                     },
                   },
@@ -2880,7 +2886,10 @@ Passing the optional deviceId signifies a resend code flow.
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -3134,7 +3143,10 @@ Passing the optional deviceId signifies a resend code flow.
                 "type": "array",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -5108,7 +5120,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "users": {
@@ -5436,7 +5451,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "type": "literal",
-                  "value": "token",
+                  "value": {
+                    "string": "token",
+                    "type": "string",
+                  },
                 },
               },
             },
@@ -5567,7 +5585,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -5733,7 +5754,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "user": {
@@ -6032,7 +6056,10 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "user": {
@@ -6529,7 +6556,10 @@ Note that there is an invisible character at the end of the path, this was to av
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "users": {
@@ -6750,7 +6780,10 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "user": {
@@ -7026,7 +7059,10 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -7333,7 +7369,10 @@ Note that there is an invisible character at the end of the path, this was to av
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -7433,7 +7472,10 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "type": "literal",
-                  "value": "OK",
+                  "value": {
+                    "string": "OK",
+                    "type": "string",
+                  },
                 },
               },
             },
@@ -7498,7 +7540,10 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -7749,7 +7794,10 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "type": "literal",
-                  "value": "token",
+                  "value": {
+                    "string": "token",
+                    "type": "string",
+                  },
                 },
               },
             },
@@ -7889,7 +7937,10 @@ Note that there is an invisible character at the end of the path, this was to av
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -7989,7 +8040,10 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "type": "literal",
-                  "value": "OK",
+                  "value": {
+                    "string": "OK",
+                    "type": "string",
+                  },
                 },
               },
             },
@@ -8037,7 +8091,10 @@ Note that there is an invisible character at the end of the path, this was to av
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -8214,7 +8271,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -8415,7 +8475,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -8936,7 +8999,10 @@ e.g.:
                 "type": "array",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -9278,7 +9344,10 @@ e.g.:
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -9808,7 +9877,10 @@ e.g.:
                 "type": "array",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -9990,7 +10062,10 @@ e.g.:
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -10172,7 +10247,10 @@ e.g.:
                 "type": "array",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -10653,7 +10731,10 @@ e.g.:
                 "type": "object",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -11720,7 +11801,10 @@ e.g.:
                 "type": "array",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -12615,7 +12699,10 @@ e.g.:
                   {
                     "properties": {
                       "alg": {
-                        "literal": "RS256",
+                        "literal": {
+                          "string": "RS256",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "kty": {
@@ -13698,7 +13785,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -13877,7 +13967,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "users": {
@@ -14004,7 +14097,10 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "type": "literal",
-                  "value": "OK",
+                  "value": {
+                    "string": "OK",
+                    "type": "string",
+                  },
                 },
               },
             },
@@ -14320,7 +14416,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -15171,7 +15270,10 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "literal": "Hello",
+            "literal": {
+              "string": "Hello",
+              "type": "string",
+            },
             "type": "literal",
           },
         },
@@ -15220,7 +15322,10 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "literal": "Hello",
+            "literal": {
+              "string": "Hello",
+              "type": "string",
+            },
             "type": "literal",
           },
         },
@@ -15269,7 +15374,10 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "literal": "Hello",
+            "literal": {
+              "string": "Hello",
+              "type": "string",
+            },
             "type": "literal",
           },
         },
@@ -15318,7 +15426,10 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "literal": "Hello",
+            "literal": {
+              "string": "Hello",
+              "type": "string",
+            },
             "type": "literal",
           },
         },
@@ -15367,7 +15478,10 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "literal": "Hello",
+            "literal": {
+              "string": "Hello",
+              "type": "string",
+            },
             "type": "literal",
           },
         },
@@ -15591,7 +15705,10 @@ e.g.:
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -15754,7 +15871,10 @@ e.g.:
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -15958,7 +16078,10 @@ e.g.:
                 "type": "primitive",
               },
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -16330,7 +16453,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -16471,7 +16597,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -16604,7 +16733,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -17019,7 +17151,10 @@ e.g.:
           "response": {
             "properties": {
               "status": {
-                "literal": "OK",
+                "literal": {
+                  "string": "OK",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -17277,7 +17412,10 @@ e.g.:
     "createJWTAlgorithm": {
       "description": "The algorithm to use when creating the JWT.",
       "type": "literal",
-      "value": "RS256",
+      "value": {
+        "string": "RS256",
+        "type": "string",
+      },
     },
     "createJWTPayload": {
       "description": "The payload of the JWT, should be a JSON object.",
@@ -17381,12 +17519,18 @@ e.g.:
     "helloResponse": {
       "description": undefined,
       "type": "literal",
-      "value": "Hello",
+      "value": {
+        "string": "Hello",
+        "type": "string",
+      },
     },
     "internalError": {
       "description": undefined,
       "type": "literal",
-      "value": "Internal Error",
+      "value": {
+        "string": "Internal Error",
+        "type": "string",
+      },
     },
     "invalidJSON": {
       "description": undefined,
@@ -17543,12 +17687,18 @@ e.g.:
     "methodNotSupported": {
       "description": undefined,
       "type": "literal",
-      "value": "Method not supported",
+      "value": {
+        "string": "Method not supported",
+        "type": "string",
+      },
     },
     "notFound": {
       "description": undefined,
       "type": "literal",
-      "value": "Not Found",
+      "value": {
+        "string": "Not Found",
+        "type": "string",
+      },
     },
     "paginationToken": {
       "description": undefined,
@@ -17663,7 +17813,10 @@ e.g.:
     "requestUnauthorised": {
       "description": undefined,
       "type": "literal",
-      "value": "Invalid API key",
+      "value": {
+        "string": "Invalid API key",
+        "type": "string",
+      },
     },
     "role": {
       "description": undefined,
@@ -17746,7 +17899,10 @@ e.g.:
     "statusOK": {
       "description": undefined,
       "type": "literal",
-      "value": "OK",
+      "value": {
+        "string": "OK",
+        "type": "string",
+      },
     },
     "statusOKResponse": {
       "allOf": [],
@@ -17936,12 +18092,18 @@ e.g.:
     "tokenTheftResponse": {
       "description": undefined,
       "type": "literal",
-      "value": "TOKEN_THEFT_DETECTED",
+      "value": {
+        "string": "TOKEN_THEFT_DETECTED",
+        "type": "string",
+      },
     },
     "tryRefreshTokenResponse": {
       "description": undefined,
       "type": "literal",
-      "value": "TRY_REFRESH_TOKEN",
+      "value": {
+        "string": "TRY_REFRESH_TOKEN",
+        "type": "string",
+      },
     },
     "unauthorisedMessageResponse": {
       "allOf": [],
@@ -17972,7 +18134,10 @@ e.g.:
     "unauthorisedResponse": {
       "description": undefined,
       "type": "literal",
-      "value": "UNAUTHORISED",
+      "value": {
+        "string": "UNAUTHORISED",
+        "type": "string",
+      },
     },
     "unknownRoleResponse": {
       "allOf": [],

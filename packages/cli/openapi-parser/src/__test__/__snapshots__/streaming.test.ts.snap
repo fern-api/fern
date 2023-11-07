@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser streaming parse open api 1`] = `
+{
+  "description": undefined,
+  "endpoints": [],
+  "errors": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "StreamUser": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "StreamUser",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "streamUserId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "User": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "User",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "userId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {},
+  "title": "Streaming API",
+  "variables": {},
+  "webhooks": [],
+}
+`;

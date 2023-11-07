@@ -1,0 +1,42 @@
+openapi: 3.0.3
+info:
+  title: Streaming API
+  version: 1.0.0
+paths:
+  /v1/users:
+    post:
+      operationId: user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: ""
+                  type: string
+      x-fern-streaming:
+        stream-condition: stream
+        response: "#/components/schemas/User"
+        response-stream: "#/components/schemas/StreamUser"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+    StreamUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid

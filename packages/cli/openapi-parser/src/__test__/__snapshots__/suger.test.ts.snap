@@ -547,11 +547,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -565,7 +571,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -578,7 +587,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -595,7 +607,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -1203,11 +1218,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -1221,7 +1242,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -1234,7 +1258,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -1286,7 +1313,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -1803,11 +1833,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -1821,7 +1857,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -1834,7 +1873,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -1886,7 +1928,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -2093,11 +2138,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -2111,7 +2162,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -2124,7 +2178,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -2141,7 +2198,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -2352,11 +2412,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -2370,7 +2436,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -2383,7 +2452,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -2400,7 +2472,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -2699,11 +2774,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -2717,7 +2798,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -2730,7 +2814,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -2747,7 +2834,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -2978,11 +3068,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -2996,7 +3092,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -3009,7 +3108,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -3035,7 +3137,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                 },
@@ -3266,11 +3371,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -3284,7 +3395,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -3297,7 +3411,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -3323,7 +3440,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -3933,7 +4053,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -4106,7 +4229,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -4213,6 +4339,116 @@ exports[`open api parser suger parse open api 1`] = `
       "sdkName": undefined,
       "server": [],
       "summary": "get integration",
+      "tags": [
+        "Integration",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
+      "description": "delete the integration for the given orgId, partner and service.",
+      "errorStatusCode": [
+        500,
+      ],
+      "examples": [],
+      "generatedRequestName": "DeleteIntegrationRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "DeleteIntegration",
+      "path": "/org/{orgId}/integration/{partner}/{service}",
+      "pathParameters": [
+        {
+          "description": "Organization ID",
+          "name": "orgId",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+        {
+          "description": "Cloud Partner",
+          "name": "partner",
+          "schema": {
+            "description": undefined,
+            "generatedName": "DeleteIntegrationRequestPartner",
+            "nameOverride": undefined,
+            "type": "enum",
+            "values": [
+              {
+                "description": undefined,
+                "generatedName": "AWS",
+                "nameOverride": undefined,
+                "value": "AWS",
+              },
+              {
+                "description": undefined,
+                "generatedName": "AZURE",
+                "nameOverride": undefined,
+                "value": "AZURE",
+              },
+              {
+                "description": undefined,
+                "generatedName": "GCP",
+                "nameOverride": undefined,
+                "value": "GCP",
+              },
+            ],
+          },
+          "variableReference": undefined,
+        },
+        {
+          "description": "Partner Service",
+          "name": "service",
+          "schema": {
+            "description": undefined,
+            "generatedName": "DeleteIntegrationRequestService",
+            "nameOverride": undefined,
+            "type": "enum",
+            "values": [
+              {
+                "description": undefined,
+                "generatedName": "MARKETPLACE",
+                "nameOverride": undefined,
+                "value": "MARKETPLACE",
+              },
+              {
+                "description": undefined,
+                "generatedName": "CRM",
+                "nameOverride": undefined,
+                "value": "CRM",
+              },
+            ],
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "Empty string if deletion is successful",
+        "schema": {
+          "description": undefined,
+          "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": "delete integration",
       "tags": [
         "Integration",
       ],
@@ -4333,116 +4569,6 @@ exports[`open api parser suger parse open api 1`] = `
       "sdkName": undefined,
       "server": [],
       "summary": "update integration",
-      "tags": [
-        "Integration",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "delete the integration for the given orgId, partner and service.",
-      "errorStatusCode": [
-        500,
-      ],
-      "examples": [],
-      "generatedRequestName": "DeleteIntegrationRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "DeleteIntegration",
-      "path": "/org/{orgId}/integration/{partner}/{service}",
-      "pathParameters": [
-        {
-          "description": "Organization ID",
-          "name": "orgId",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-        {
-          "description": "Cloud Partner",
-          "name": "partner",
-          "schema": {
-            "description": undefined,
-            "generatedName": "DeleteIntegrationRequestPartner",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "AWS",
-                "nameOverride": undefined,
-                "value": "AWS",
-              },
-              {
-                "description": undefined,
-                "generatedName": "AZURE",
-                "nameOverride": undefined,
-                "value": "AZURE",
-              },
-              {
-                "description": undefined,
-                "generatedName": "GCP",
-                "nameOverride": undefined,
-                "value": "GCP",
-              },
-            ],
-          },
-          "variableReference": undefined,
-        },
-        {
-          "description": "Partner Service",
-          "name": "service",
-          "schema": {
-            "description": undefined,
-            "generatedName": "DeleteIntegrationRequestService",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "MARKETPLACE",
-                "nameOverride": undefined,
-                "value": "MARKETPLACE",
-              },
-              {
-                "description": undefined,
-                "generatedName": "CRM",
-                "nameOverride": undefined,
-                "value": "CRM",
-              },
-            ],
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": {
-        "description": "Empty string if deletion is successful",
-        "schema": {
-          "description": undefined,
-          "schema": {
-            "maxLength": undefined,
-            "minLength": undefined,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
-      },
-      "sdkName": undefined,
-      "server": [],
-      "summary": "delete integration",
       "tags": [
         "Integration",
       ],
@@ -5089,11 +5215,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -5107,7 +5239,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -5120,7 +5255,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -5172,7 +5310,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -5766,11 +5907,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -5784,7 +5931,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -5797,7 +5947,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -5849,7 +6002,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -6366,11 +6522,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -6384,7 +6546,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -6397,7 +6562,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -6449,7 +6617,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -7057,11 +7228,17 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "period": {
-                                        "literal": "ONE_YEAR",
+                                        "literal": {
+                                          "string": "ONE_YEAR",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -7075,7 +7252,10 @@ exports[`open api parser suger parse open api 1`] = `
                                   {
                                     "properties": {
                                       "taxCategoryOverride": {
-                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                        "literal": {
+                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -7088,7 +7268,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "purchaseMode": {
-                            "literal": "PURCHASE_MODE_PUBLIC",
+                            "literal": {
+                              "string": "PURCHASE_MODE_PUBLIC",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                         },
@@ -7140,7 +7323,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
               "status": {
@@ -7497,11 +7683,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -7515,7 +7707,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -7528,7 +7723,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -7545,7 +7743,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -7651,7 +7852,10 @@ exports[`open api parser suger parse open api 1`] = `
               {
                 "properties": {
                   "type": {
-                    "literal": "TemporalWorkflow",
+                    "literal": {
+                      "string": "TemporalWorkflow",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                 },
@@ -7926,11 +8130,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -7944,7 +8154,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -7957,7 +8170,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -7974,7 +8190,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -8619,11 +8838,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -8637,7 +8862,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -8650,7 +8878,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -8702,7 +8933,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -8900,7 +9134,10 @@ exports[`open api parser suger parse open api 1`] = `
                                     "type": "array",
                                   },
                                   "resourceType": {
-                                    "literal": "AzureListing",
+                                    "literal": {
+                                      "string": "AzureListing",
+                                      "type": "string",
+                                    },
                                     "type": "literal",
                                   },
                                 },
@@ -8914,7 +9151,10 @@ exports[`open api parser suger parse open api 1`] = `
                               {
                                 "properties": {
                                   "resourceType": {
-                                    "literal": "AzureSoftwareAsAServicePackageConfiguration",
+                                    "literal": {
+                                      "string": "AzureSoftwareAsAServicePackageConfiguration",
+                                      "type": "string",
+                                    },
                                     "type": "literal",
                                   },
                                 },
@@ -8930,7 +9170,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "enum",
                               },
                               "resourceType": {
-                                "literal": "AzureProductSetup",
+                                "literal": {
+                                  "string": "AzureProductSetup",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                               "sellingOption": {
@@ -8945,7 +9188,10 @@ exports[`open api parser suger parse open api 1`] = `
                               {
                                 "properties": {
                                   "resourceType": {
-                                    "literal": "Submission",
+                                    "literal": {
+                                      "string": "Submission",
+                                      "type": "string",
+                                    },
                                     "type": "literal",
                                   },
                                   "state": {
@@ -9146,7 +9392,10 @@ exports[`open api parser suger parse open api 1`] = `
                           "listingSpec": {
                             "properties": {
                               "listingType": {
-                                "literal": "BillingIntegratedManagedService",
+                                "literal": {
+                                  "string": "BillingIntegratedManagedService",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                               "purchaseSpec": {
@@ -9180,11 +9429,17 @@ exports[`open api parser suger parse open api 1`] = `
                                                   {
                                                     "properties": {
                                                       "period": {
-                                                        "literal": "ONE_YEAR",
+                                                        "literal": {
+                                                          "string": "ONE_YEAR",
+                                                          "type": "string",
+                                                        },
                                                         "type": "literal",
                                                       },
                                                       "taxCategoryOverride": {
-                                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                                        "literal": {
+                                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                          "type": "string",
+                                                        },
                                                         "type": "literal",
                                                       },
                                                     },
@@ -9198,7 +9453,10 @@ exports[`open api parser suger parse open api 1`] = `
                                                   {
                                                     "properties": {
                                                       "taxCategoryOverride": {
-                                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                                        "literal": {
+                                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                          "type": "string",
+                                                        },
                                                         "type": "literal",
                                                       },
                                                     },
@@ -9211,7 +9469,10 @@ exports[`open api parser suger parse open api 1`] = `
                                             "type": "object",
                                           },
                                           "purchaseMode": {
-                                            "literal": "PURCHASE_MODE_PUBLIC",
+                                            "literal": {
+                                              "string": "PURCHASE_MODE_PUBLIC",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -9227,7 +9488,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "marketplace": {
-                            "literal": "marketplaces/google-cloud",
+                            "literal": {
+                              "string": "marketplaces/google-cloud",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                           "serviceConfig": {
@@ -9264,7 +9528,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                 },
@@ -9895,7 +10162,10 @@ exports[`open api parser suger parse open api 1`] = `
                                     "type": "array",
                                   },
                                   "resourceType": {
-                                    "literal": "AzureListing",
+                                    "literal": {
+                                      "string": "AzureListing",
+                                      "type": "string",
+                                    },
                                     "type": "literal",
                                   },
                                 },
@@ -9909,7 +10179,10 @@ exports[`open api parser suger parse open api 1`] = `
                               {
                                 "properties": {
                                   "resourceType": {
-                                    "literal": "AzureSoftwareAsAServicePackageConfiguration",
+                                    "literal": {
+                                      "string": "AzureSoftwareAsAServicePackageConfiguration",
+                                      "type": "string",
+                                    },
                                     "type": "literal",
                                   },
                                 },
@@ -9925,7 +10198,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "enum",
                               },
                               "resourceType": {
-                                "literal": "AzureProductSetup",
+                                "literal": {
+                                  "string": "AzureProductSetup",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                               "sellingOption": {
@@ -9940,7 +10216,10 @@ exports[`open api parser suger parse open api 1`] = `
                               {
                                 "properties": {
                                   "resourceType": {
-                                    "literal": "Submission",
+                                    "literal": {
+                                      "string": "Submission",
+                                      "type": "string",
+                                    },
                                     "type": "literal",
                                   },
                                   "state": {
@@ -10141,7 +10420,10 @@ exports[`open api parser suger parse open api 1`] = `
                           "listingSpec": {
                             "properties": {
                               "listingType": {
-                                "literal": "BillingIntegratedManagedService",
+                                "literal": {
+                                  "string": "BillingIntegratedManagedService",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                               "purchaseSpec": {
@@ -10175,11 +10457,17 @@ exports[`open api parser suger parse open api 1`] = `
                                                   {
                                                     "properties": {
                                                       "period": {
-                                                        "literal": "ONE_YEAR",
+                                                        "literal": {
+                                                          "string": "ONE_YEAR",
+                                                          "type": "string",
+                                                        },
                                                         "type": "literal",
                                                       },
                                                       "taxCategoryOverride": {
-                                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                                        "literal": {
+                                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                          "type": "string",
+                                                        },
                                                         "type": "literal",
                                                       },
                                                     },
@@ -10193,7 +10481,10 @@ exports[`open api parser suger parse open api 1`] = `
                                                   {
                                                     "properties": {
                                                       "taxCategoryOverride": {
-                                                        "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                                        "literal": {
+                                                          "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                          "type": "string",
+                                                        },
                                                         "type": "literal",
                                                       },
                                                     },
@@ -10206,7 +10497,10 @@ exports[`open api parser suger parse open api 1`] = `
                                             "type": "object",
                                           },
                                           "purchaseMode": {
-                                            "literal": "PURCHASE_MODE_PUBLIC",
+                                            "literal": {
+                                              "string": "PURCHASE_MODE_PUBLIC",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -10222,7 +10516,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "object",
                           },
                           "marketplace": {
-                            "literal": "marketplaces/google-cloud",
+                            "literal": {
+                              "string": "marketplaces/google-cloud",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                           "serviceConfig": {
@@ -10259,7 +10556,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                 },
@@ -10409,7 +10709,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "array",
                               },
                               "resourceType": {
-                                "literal": "AzureListing",
+                                "literal": {
+                                  "string": "AzureListing",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -10423,7 +10726,10 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "properties": {
                               "resourceType": {
-                                "literal": "AzureSoftwareAsAServicePackageConfiguration",
+                                "literal": {
+                                  "string": "AzureSoftwareAsAServicePackageConfiguration",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -10439,7 +10745,10 @@ exports[`open api parser suger parse open api 1`] = `
                             "type": "enum",
                           },
                           "resourceType": {
-                            "literal": "AzureProductSetup",
+                            "literal": {
+                              "string": "AzureProductSetup",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                           "sellingOption": {
@@ -10454,7 +10763,10 @@ exports[`open api parser suger parse open api 1`] = `
                           {
                             "properties": {
                               "resourceType": {
-                                "literal": "Submission",
+                                "literal": {
+                                  "string": "Submission",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                               "state": {
@@ -10655,7 +10967,10 @@ exports[`open api parser suger parse open api 1`] = `
                       "listingSpec": {
                         "properties": {
                           "listingType": {
-                            "literal": "BillingIntegratedManagedService",
+                            "literal": {
+                              "string": "BillingIntegratedManagedService",
+                              "type": "string",
+                            },
                             "type": "literal",
                           },
                           "purchaseSpec": {
@@ -10689,11 +11004,17 @@ exports[`open api parser suger parse open api 1`] = `
                                               {
                                                 "properties": {
                                                   "period": {
-                                                    "literal": "ONE_YEAR",
+                                                    "literal": {
+                                                      "string": "ONE_YEAR",
+                                                      "type": "string",
+                                                    },
                                                     "type": "literal",
                                                   },
                                                   "taxCategoryOverride": {
-                                                    "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                                    "literal": {
+                                                      "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                      "type": "string",
+                                                    },
                                                     "type": "literal",
                                                   },
                                                 },
@@ -10707,7 +11028,10 @@ exports[`open api parser suger parse open api 1`] = `
                                               {
                                                 "properties": {
                                                   "taxCategoryOverride": {
-                                                    "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                                    "literal": {
+                                                      "string": "TAX_CATEGORY_UNSPECIFIED",
+                                                      "type": "string",
+                                                    },
                                                     "type": "literal",
                                                   },
                                                 },
@@ -10720,7 +11044,10 @@ exports[`open api parser suger parse open api 1`] = `
                                         "type": "object",
                                       },
                                       "purchaseMode": {
-                                        "literal": "PURCHASE_MODE_PUBLIC",
+                                        "literal": {
+                                          "string": "PURCHASE_MODE_PUBLIC",
+                                          "type": "string",
+                                        },
                                         "type": "literal",
                                       },
                                     },
@@ -10736,7 +11063,10 @@ exports[`open api parser suger parse open api 1`] = `
                         "type": "object",
                       },
                       "marketplace": {
-                        "literal": "marketplaces/google-cloud",
+                        "literal": {
+                          "string": "marketplaces/google-cloud",
+                          "type": "string",
+                        },
                         "type": "literal",
                       },
                       "serviceConfig": {
@@ -10773,7 +11103,10 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
               },
               "service": {
-                "literal": "MARKETPLACE",
+                "literal": {
+                  "string": "MARKETPLACE",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -10834,6 +11167,74 @@ exports[`open api parser suger parse open api 1`] = `
       "sdkName": undefined,
       "server": [],
       "summary": "get product",
+      "tags": [
+        "Product",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
+      "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
+      "errorStatusCode": [
+        500,
+      ],
+      "examples": [],
+      "generatedRequestName": "DeleteProductRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "DeleteProduct",
+      "path": "/org/{orgId}/product/{productId}",
+      "pathParameters": [
+        {
+          "description": "Organization ID",
+          "name": "orgId",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+        {
+          "description": "Product ID",
+          "name": "productId",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "Empty string if deletion is successful",
+        "schema": {
+          "description": undefined,
+          "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": "delete product",
       "tags": [
         "Product",
       ],
@@ -10911,74 +11312,6 @@ exports[`open api parser suger parse open api 1`] = `
       "sdkName": undefined,
       "server": [],
       "summary": "update product",
-      "tags": [
-        "Product",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
-      "errorStatusCode": [
-        500,
-      ],
-      "examples": [],
-      "generatedRequestName": "DeleteProductRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "DeleteProduct",
-      "path": "/org/{orgId}/product/{productId}",
-      "pathParameters": [
-        {
-          "description": "Organization ID",
-          "name": "orgId",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-        {
-          "description": "Product ID",
-          "name": "productId",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": {
-        "description": "Empty string if deletion is successful",
-        "schema": {
-          "description": undefined,
-          "schema": {
-            "maxLength": undefined,
-            "minLength": undefined,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
-      },
-      "sdkName": undefined,
-      "server": [],
-      "summary": "delete product",
       "tags": [
         "Product",
       ],
@@ -11236,11 +11569,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -11254,7 +11593,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -11267,7 +11609,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -11284,7 +11629,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -11904,11 +12252,17 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "period": {
-                                            "literal": "ONE_YEAR",
+                                            "literal": {
+                                              "string": "ONE_YEAR",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -11922,7 +12276,10 @@ exports[`open api parser suger parse open api 1`] = `
                                       {
                                         "properties": {
                                           "taxCategoryOverride": {
-                                            "literal": "TAX_CATEGORY_UNSPECIFIED",
+                                            "literal": {
+                                              "string": "TAX_CATEGORY_UNSPECIFIED",
+                                              "type": "string",
+                                            },
                                             "type": "literal",
                                           },
                                         },
@@ -11935,7 +12292,10 @@ exports[`open api parser suger parse open api 1`] = `
                                 "type": "object",
                               },
                               "purchaseMode": {
-                                "literal": "PURCHASE_MODE_PUBLIC",
+                                "literal": {
+                                  "string": "PURCHASE_MODE_PUBLIC",
+                                  "type": "string",
+                                },
                                 "type": "literal",
                               },
                             },
@@ -11987,7 +12347,10 @@ exports[`open api parser suger parse open api 1`] = `
                     "type": "enum",
                   },
                   "service": {
-                    "literal": "MARKETPLACE",
+                    "literal": {
+                      "string": "MARKETPLACE",
+                      "type": "string",
+                    },
                     "type": "literal",
                   },
                   "status": {
@@ -16983,7 +17346,10 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "AzureListing",
+              "value": {
+                "string": "AzureListing",
+                "type": "string",
+              },
             },
           },
         },
@@ -17385,7 +17751,10 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "AzureSoftwareAsAServicePackageConfiguration",
+              "value": {
+                "string": "AzureSoftwareAsAServicePackageConfiguration",
+                "type": "string",
+              },
             },
           },
         },
@@ -17856,7 +18225,10 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "AzureProductSetup",
+              "value": {
+                "string": "AzureProductSetup",
+                "type": "string",
+              },
             },
           },
         },
@@ -18045,7 +18417,10 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "Submission",
+              "value": {
+                "string": "Submission",
+                "type": "string",
+              },
             },
           },
         },
@@ -24460,7 +24835,10 @@ in the google.rpc.Status.details field, or localized by the client.",
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "MARKETPLACE",
+            "value": {
+              "string": "MARKETPLACE",
+              "type": "string",
+            },
           },
         },
       ],
@@ -25240,7 +25618,10 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "BillingIntegratedManagedService",
+              "value": {
+                "string": "BillingIntegratedManagedService",
+                "type": "string",
+              },
             },
           },
         },
@@ -25690,7 +26071,10 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "ONE_YEAR",
+              "value": {
+                "string": "ONE_YEAR",
+                "type": "string",
+              },
             },
           },
         },
@@ -25720,7 +26104,10 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "TAX_CATEGORY_UNSPECIFIED",
+              "value": {
+                "string": "TAX_CATEGORY_UNSPECIFIED",
+                "type": "string",
+              },
             },
           },
         },
@@ -25856,7 +26243,10 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "TAX_CATEGORY_UNSPECIFIED",
+              "value": {
+                "string": "TAX_CATEGORY_UNSPECIFIED",
+                "type": "string",
+              },
             },
           },
         },
@@ -27447,7 +27837,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "marketplaces/google-cloud",
+              "value": {
+                "string": "marketplaces/google-cloud",
+                "type": "string",
+              },
             },
           },
         },
@@ -27557,7 +27950,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "PURCHASE_MODE_PUBLIC",
+              "value": {
+                "string": "PURCHASE_MODE_PUBLIC",
+                "type": "string",
+              },
             },
           },
         },
@@ -27809,7 +28205,10 @@ This field is present only if the product has usage-based billing configured.",
           "schema": {
             "description": "Required.",
             "type": "literal",
-            "value": "MARKETPLACE",
+            "value": {
+              "string": "MARKETPLACE",
+              "type": "string",
+            },
           },
         },
       ],
@@ -28328,7 +28727,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "MARKETPLACE",
+              "value": {
+                "string": "MARKETPLACE",
+                "type": "string",
+              },
             },
           },
         },
@@ -30412,7 +30814,10 @@ This field is present only if the product has usage-based billing configured.",
     "shared.OperationType": {
       "description": undefined,
       "type": "literal",
-      "value": "TemporalWorkflow",
+      "value": {
+        "string": "TemporalWorkflow",
+        "type": "string",
+      },
     },
     "shared.PaymentInstallment": {
       "allOf": [],
@@ -31902,7 +32307,10 @@ This field is present only if the product has usage-based billing configured.",
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "MARKETPLACE",
+            "value": {
+              "string": "MARKETPLACE",
+              "type": "string",
+            },
           },
         },
       ],
@@ -32446,7 +32854,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "MARKETPLACE",
+              "value": {
+                "string": "MARKETPLACE",
+                "type": "string",
+              },
             },
           },
         },
@@ -32792,7 +33203,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "MARKETPLACE",
+              "value": {
+                "string": "MARKETPLACE",
+                "type": "string",
+              },
             },
           },
         },
@@ -33186,7 +33600,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "MARKETPLACE",
+              "value": {
+                "string": "MARKETPLACE",
+                "type": "string",
+              },
             },
           },
         },
@@ -33549,7 +33966,10 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "MARKETPLACE",
+              "value": {
+                "string": "MARKETPLACE",
+                "type": "string",
+              },
             },
           },
         },

@@ -1,4 +1,4 @@
-import { HttpMethod } from "@fern-fern/openapi-ir-model/finalIr";
+import { HttpMethod, LiteralSchemaValue } from "@fern-fern/openapi-ir-model/finalIr";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -81,7 +81,7 @@ export function convertParameters({
             const defaultValue = (resolvedParameter.schema as any).default;
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({
-                    value: defaultValue,
+                    value: LiteralSchemaValue.string(defaultValue),
                     description: undefined,
                 });
             }

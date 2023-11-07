@@ -19524,7 +19524,10 @@ we still recommend setting the Content-Type header to the value \`application/js
             {
               "name": "sort",
               "value": {
-                "literal": "due_date",
+                "literal": {
+                  "string": "due_date",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -20359,7 +20362,10 @@ we still recommend setting the Content-Type header to the value \`application/js
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "due_date",
+              "value": {
+                "string": "due_date",
+                "type": "string",
+              },
             },
           },
         },
@@ -33872,7 +33878,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             {
               "name": "sort",
               "value": {
-                "literal": "id",
+                "literal": {
+                  "string": "id",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -34838,7 +34847,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "id",
+              "value": {
+                "string": "id",
+                "type": "string",
+              },
             },
           },
         },

@@ -4130,7 +4130,10 @@ Upload a document to be indexed and used for search.
     "ProcessingFailureReasonEnum": {
       "description": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
       "type": "literal",
-      "value": "EXCEEDED_CHARACTER_LIMIT",
+      "value": {
+        "string": "EXCEEDED_CHARACTER_LIMIT",
+        "type": "string",
+      },
     },
     "ProcessingStateEnum": {
       "description": "* \`QUEUED\` - Queued
@@ -6595,7 +6598,10 @@ Upload a document to be indexed and used for search.
     "SlimDocumentStatusEnum": {
       "description": "* \`ACTIVE\` - Active",
       "type": "literal",
-      "value": "ACTIVE",
+      "value": {
+        "string": "ACTIVE",
+        "type": "string",
+      },
     },
     "SubmitCompletionActualRequest": {
       "allOf": [],

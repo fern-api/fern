@@ -82,7 +82,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "type": "literal",
-                "value": "block",
+                "value": {
+                  "string": "block",
+                  "type": "string",
+                },
               },
             },
             {
@@ -630,7 +633,10 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "block",
+              "value": {
+                "string": "block",
+                "type": "string",
+              },
             },
           },
         },
@@ -683,7 +689,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "type": "literal",
-                "value": "flow",
+                "value": {
+                  "string": "flow",
+                  "type": "string",
+                },
               },
             },
             {
@@ -693,7 +702,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "type": "literal",
-                "value": "flow",
+                "value": {
+                  "string": "flow",
+                  "type": "string",
+                },
               },
             },
             {
@@ -811,7 +823,10 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "type": "literal",
-                          "value": "block",
+                          "value": {
+                            "string": "block",
+                            "type": "string",
+                          },
                         },
                       },
                       {
@@ -1717,7 +1732,10 @@ exports[`open api parser dopt parse open api 1`] = `
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "block",
+              "value": {
+                "string": "block",
+                "type": "string",
+              },
             },
           },
         },
@@ -1830,7 +1848,10 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "internal_server_error",
+            "value": {
+              "string": "internal_server_error",
+              "type": "string",
+            },
           },
         },
         {
@@ -1864,7 +1885,10 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "not_found_error",
+            "value": {
+              "string": "not_found_error",
+              "type": "string",
+            },
           },
         },
         {
@@ -1898,7 +1922,10 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "internal_server_error",
+            "value": {
+              "string": "internal_server_error",
+              "type": "string",
+            },
           },
         },
         {
@@ -1932,7 +1959,10 @@ exports[`open api parser dopt parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "unauthorized_error",
+            "value": {
+              "string": "unauthorized_error",
+              "type": "string",
+            },
           },
         },
         {
