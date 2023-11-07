@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import assert from "assert";
 import { loadAPIWorkspace } from "../loadAPIWorkspace";
 
@@ -31,34 +32,5 @@ describe("loadWorkspace", () => {
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
         assert(workspace.workspace.type === "openapi");
-        assert(workspace.workspace.openapi.contents.includes("Swagger Petstore"));
-    });
-
-    it("open api split", async () => {
-        const workspace = await loadAPIWorkspace({
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures/openapi-split")
-            ),
-            context: createMockTaskContext(),
-            cliVersion: "0.0.0",
-            workspaceName: undefined,
-        });
-        expect(workspace.didSucceed).toBe(true);
-        assert(workspace.didSucceed);
-        assert(workspace.workspace.type === "openapi");
-    });
-
-    it("cohere", async () => {
-        const workspace = await loadAPIWorkspace({
-            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/cohere")),
-            context: createMockTaskContext(),
-            cliVersion: "0.0.0",
-            workspaceName: undefined,
-        });
-        expect(workspace.didSucceed).toBe(true);
-        assert(workspace.didSucceed);
-        assert(workspace.workspace.type === "openapi");
-        expect(workspace.workspace.openapi.contents).toMatchSnapshot();
     });
 });

@@ -1,12 +1,13 @@
-import SwaggerParser from "@apidevtools/swagger-parser";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import { OpenAPIIntermediateRepresentation, Schema } from "@fern-fern/openapi-ir-model/finalIr";
+import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { AsyncAPI } from "./asyncapi";
 import { generateSchemasFromAsyncAPI } from "./asyncapi/generateSchemasFromAsyncAPI";
+import { loadOpenAPI } from "./loadOpenAPI";
 import { generateIr as generateIrFromV2 } from "./v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 
@@ -21,21 +22,21 @@ export interface RawAsyncAPIFile {
 }
 
 export async function parse({
-    asyncApiFile,
-    openApiFile,
+    absolutePathToAsyncAPI,
+    absolutePathToOpenAPI,
     taskContext,
 }: {
-    asyncApiFile: RawAsyncAPIFile | undefined;
-    openApiFile: RawOpenAPIFile;
+    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
+    absolutePathToOpenAPI: AbsoluteFilePath;
     taskContext: TaskContext;
 }): Promise<OpenAPIIntermediateRepresentation> {
     let asyncAPISchemas: Record<SchemaId, Schema> = {};
-    if (asyncApiFile != null) {
-        const asyncAPI = (await yaml.load(asyncApiFile.contents)) as AsyncAPI;
+    if (absolutePathToAsyncAPI != null) {
+        const asyncAPI = await loadAsyncAPI(absolutePathToAsyncAPI);
         asyncAPISchemas = generateSchemasFromAsyncAPI(asyncAPI, taskContext);
     }
 
-    const openApiDocument = await SwaggerParser.parse(JSON.parse(openApiFile.contents));
+    const openApiDocument = await loadOpenAPI(absolutePathToOpenAPI);
     let openApiIr: OpenAPIIntermediateRepresentation | undefined = undefined;
     if (isOpenApiV3(openApiDocument)) {
         openApiIr = generateIrFromV3(openApiDocument, taskContext);
@@ -54,6 +55,11 @@ export async function parse({
     }
 
     return taskContext.failAndThrow("Only OpenAPI V3 and V2 Documents are supported.");
+}
+
+async function loadAsyncAPI(absoluteFilePathToAsyncAPI: AbsoluteFilePath): Promise<AsyncAPI> {
+    const contents = (await readFile(absoluteFilePathToAsyncAPI)).toString();
+    return (await yaml.load(contents)) as AsyncAPI;
 }
 
 function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {

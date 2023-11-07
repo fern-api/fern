@@ -23,8 +23,8 @@ export interface OpenAPIWorkspace {
     name: string;
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
-    openapi: OpenAPIFile;
-    asyncapi: AsyncAPIFile | undefined;
+    absolutePathToOpenAPI: AbsoluteFilePath;
+    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
 }
 
 export interface OpenAPIFile {
