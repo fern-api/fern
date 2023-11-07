@@ -6,6 +6,7 @@ export const FernOpenAPIExtension = {
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
+    BOOLEAN_LITERAL: "x-fern-boolean-literal",
 
     SERVER_NAME_V1: "x-name",
     SERVER_NAME_V2: "x-fern-server-name",
@@ -21,18 +22,20 @@ export const FernOpenAPIExtension = {
      *
      * Alternatively, you can annotate the endpoint so that
      * it generates both a traditional unary endpoint,
-     * as well as its streaming equivalent. The optional
-     * stream condition property is included to specify
-     * a boolean propetry that tells the server whether
-     * or not the response should be streamed or not.
+     * as well as its streaming equivalent. The stream
+     * condition property is included to specify a boolean
+     * propetry that tells the server whether or not the
+     * response should be streamed or not.
      *
      * Example usage:
      *   paths:
      *     /path/to/my/endpoint:
      *       x-fern-streaming:
-     *         stream-condition: stream
-     *         response: ./path/to/response/type.yaml
-     *         response-stream: ./path/to/response-stream/type.yaml
+     *         stream-condition: $request.stream
+     *         response:
+     *           $ref: ./path/to/response/type.yaml
+     *         response-stream:
+     *           $ref: ./path/to/response-stream/type.yaml
      */
     STREAMING: "x-fern-streaming",
 

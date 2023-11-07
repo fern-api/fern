@@ -16,9 +16,11 @@ paths:
                   description: ""
                   type: string
       x-fern-streaming:
-        stream-condition: stream
-        response: "#/components/schemas/User"
-        response-stream: "#/components/schemas/StreamUser"
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/User"
+        response-stream:
+          $ref: "#/components/schemas/StreamUser"
       responses:
         "200":
           description: ""

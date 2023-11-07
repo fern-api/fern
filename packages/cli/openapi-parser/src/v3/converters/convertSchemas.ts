@@ -148,6 +148,13 @@ export function convertSchemaObject(
 
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
+        const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
+        if (literalValue !== undefined) {
+            return SchemaWithExample.literal({
+                value: LiteralSchemaValue.boolean(literalValue),
+                description,
+            });
+        }
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 example: getExampleAsBoolean(schema),
