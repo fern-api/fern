@@ -140,19 +140,21 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
-                    const convertedTypeDeclaration = convertTypeDeclaration({
+                    const convertedTypeDeclarationWithFilepaths = convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
                         typeResolver,
                         exampleResolver,
                     });
+                    const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
+                    const filepaths = convertedTypeDeclarationWithFilepaths.filepaths;
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
-                    irGraph.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
+                    irGraph.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes, filepaths);
                     irGraph.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },

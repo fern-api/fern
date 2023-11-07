@@ -43,13 +43,17 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addType(declaredTypeName: DeclaredTypeName, descendantTypeIds: Set<string>): void {
+    public addType(
+        declaredTypeName: DeclaredTypeName,
+        descendantTypeIds: Set<string>,
+        descendantFilepaths: Set<FernFilepath>
+    ): void {
         const typeId = IdGenerator.generateTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
             descendants: descendantTypeIds,
             // temporary because I think we need to get the filepaths in here somehow
-            referencedSubpackages: new Set(),
+            referencedSubpackages: descendantFilepaths,
         };
         this.types[typeId] = typeNode;
         if (this.typesReferencedByService[typeId] == null) {
