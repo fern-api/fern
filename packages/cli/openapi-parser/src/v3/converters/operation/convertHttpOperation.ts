@@ -28,10 +28,6 @@ export function convertHttpOperation({
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
 
-    if (suffix != null) {
-        baseBreadcrumbs.push(suffix);
-    }
-
     const requestNameOverride = getExtension<string>(operation, [
         FernOpenAPIExtension.REQUEST_NAME_V1,
         FernOpenAPIExtension.REQUEST_NAME_V2,

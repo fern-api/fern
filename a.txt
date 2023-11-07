@@ -1,0 +1,5433 @@
+  console.debug
+    Converting path /api/links/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/links/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/accounts/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/accounts/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/transactions/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/transactions/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/balances/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/balances/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/institutions/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/institutions/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/owners/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/owners/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/invoices/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/invoices/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-returns/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-returns/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-status/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-status/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-compliance-status/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-compliance-status/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/incomes/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/incomes/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/recurring-expenses/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/recurring-expenses/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /investments/portfolios/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /investments/portfolios/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /receivables/transactions/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /receivables/transactions/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/risk-insights/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/risk-insights/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-retentions/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-retentions/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-declarations/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/tax-declarations/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/employment-records/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/employment-records/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/enrich/incomes/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /api/categorization/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/secret-keys/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/webhooks/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/webhooks/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/institutions/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/institutions/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/customers/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/customers/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/bank-accounts/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/bank-accounts/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/payment-links/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/payment-links/{access_token}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/payment-intents/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/payment-intents/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/transactions/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Converting path /payments/transactions/{id}/
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.forEach (<anonymous>)
+
+  console.error
+    I AM HEREEEEE
+
+      4 | function log(level, ...args) {
+      5 |     const consoleLogger = getConsoleLoggerForLevel(level);
+    > 6 |     consoleLogger(...args);
+        |     ^
+      7 | }
+      8 | function getConsoleLoggerForLevel(level) {
+      9 |     switch (level) {
+
+      at log (../logger/lib/console.js:6:5)
+      at Object.error (../logger/lib/createLogger.js:7:29)
+      at convertOperation (src/v3/converters/operation/convertOperation.ts:53:32)
+      at convertPathItem (src/v3/converters/convertPathItem.ts:24:36)
+      at forEach (src/v3/generateIr.ts:54:37)
+          at Array.forEach (<anonymous>)
+      at generateIr (src/v3/generateIr.ts:48:35)
+      at parse (src/parse.ts:41:21)
+      at async Object.<anonymous> (src/__test__/testParseOpenApi.ts:28:31)
+
+  console.debug
+    Building endpoint example for GET /api/links
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/links
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/links
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/links/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PUT /api/links/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/links/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/links/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/accounts
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/accounts
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/accounts
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/accounts/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/accounts/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/transactions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/transactions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/transactions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/transactions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/transactions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/balances
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/balances
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/balances
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/balances/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/balances/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/institutions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/institutions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/owners
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/owners
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/owners
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/owners/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/owners/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/invoices
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/invoices
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/invoices
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/invoices/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /api/invoices/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/invoices/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-returns
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /api/tax-returns. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/tax-returns
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate request example for POST /api/tax-returns. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-returns/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /api/tax-returns/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/tax-returns/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-status
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/tax-status
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for POST /api/tax-status. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-status/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /api/tax-status/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/tax-status/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-compliance-status
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/tax-compliance-status
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-compliance-status/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/tax-compliance-status/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/incomes
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/incomes
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/incomes
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/incomes/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/incomes/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/recurring-expenses
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/recurring-expenses
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/recurring-expenses
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/recurring-expenses/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/recurring-expenses/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /investments/portfolios
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /investments/portfolios
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /investments/portfolios
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /investments/portfolios/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /investments/portfolios/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /receivables/transactions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /receivables/transactions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /receivables/transactions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /receivables/transactions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/risk-insights
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/risk-insights
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /api/risk-insights
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/risk-insights/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/risk-insights/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-retentions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/tax-retentions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-retentions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/tax-retentions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-declarations
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /api/tax-declarations. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/tax-declarations
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/tax-declarations/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /api/tax-declarations/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/tax-declarations/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/employment-records
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/employment-records
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /api/employment-records/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /api/employment-records/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/enrich/incomes
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /api/categorization
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/secret-keys
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /payments/secret-keys
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/webhooks
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /payments/webhooks
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/webhooks/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /payments/webhooks/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for DELETE /payments/webhooks/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/institutions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/institutions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/customers
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /payments/customers
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate request example for POST /payments/customers. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/customers/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /payments/customers/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/bank-accounts
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /payments/bank-accounts
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate request example for POST /payments/bank-accounts. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/bank-accounts/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /payments/bank-accounts/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/payment-links
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /payments/payment-links
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate request example for POST /payments/payment-links. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/payment-links/{access_token}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /payments/payment-links/{access_token}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/payment-intents
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for POST /payments/payment-intents
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate request example for POST /payments/payment-intents. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/payment-intents/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /payments/payment-intents/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for PATCH /payments/payment-intents/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for PATCH /payments/payment-intents/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/transactions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Building endpoint example for GET /payments/transactions/{id}
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Not enough information to generate response example for GET /payments/transactions/{id}. Skipping example.
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumLinkAccessModeResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumLinkStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumLinkRefreshRate
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Link
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaginatedResponseLink
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema UnauthorizedError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumLinkAccessModeRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LinksRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TooManySessionsError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LoginError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema SessionExpiredError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ValidationError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionDownError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionUnavailableError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionInactiveError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema UnsupportedOperationError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvalidLinkError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema UnconfirmedLinkError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TokenRequiredResponseTokenGenerationData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TokenRequiredResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema UnexpectedError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PatchBodyWithoutSaveData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NotFoundError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LinksPutRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ChangeAccessMode
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvalidAccessMode
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInstitutionType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionAccount
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumAccountCategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsBalance
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsCreditData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumLoanDataInterestRateType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsLoanDataInterestRate
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumLoanDataFeeType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsLoanDataFees
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsLoanData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsFundsDataPublicIdentifications
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsFundsData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsReceivablesData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Account
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccountsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema StandardRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RequestTimeoutError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PatchBody
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionMerchantData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTransactionCategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTransactionSubcategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTransactionType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTransactionStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTransactionBillStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionCreditCardData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Transaction
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionsRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AsynchronousAccepted202
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Balance
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BalancesPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BalancesRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionsFormFieldValues
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionsFormField
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionsFeature
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInstitutionIntegrationType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInstitutionStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Institution
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema OwnerDocumentId
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Owner
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema OwnersPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvoiceSatInvoiceType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvoiceType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvoiceSatPaymentMethod
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceDetailRetainedTaxSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceDetailSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesPaymentsRelatedDocumentsSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesPaymentsSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesPayrollSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceWarningsSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceWithIdSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvoiceDianInvoiceType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceSenderDetailsDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesReceiverDetailsDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvoiceDianPaymentMethod
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceDetailDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesPaymentsRelatedDocumentsDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesPaymentsDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesPayrollDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceWarningsDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoiceDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesResponsePaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvoicesRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnPersonal
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnsPersonalPaginated
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnPersonalMonthly
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnsPersonalMonthlyPaginated
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnsBusinessPaginated
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnBusinessMonthly
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnsBusinessMonthlyPaginated
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnsMonthlyRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxReturnsYearlyRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusTaxPayerInformationSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusAddressBetweenStreetSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusAddressSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusEconomicActivitySat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusRegimensSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusObligationsSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusSat
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusTaxPayerInformationDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusAddressBetweenStreetDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusAddressDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusEconomicActivityDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusRegimensDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusObligationsDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusDian
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxStatusRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTaxComplianceStatusOutcome
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxComplianceStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxComplianceStatusPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxComplianceStatusRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeStreamType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeStreamFrequency
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeStreamConfidence
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema IncomeStreamsBody
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeSourceType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Income
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema IncomesPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvoiceAllowedIncomeTypesRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeMinimumConfidenceLevelRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema IncomesRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvalidPeriodError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RecurringExpenseSourceTransaction
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumRecurringExpenseFrequency
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumRecurringExpenseCategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumRecurringExpensePaymentType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RecurringExpenses
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RecurringExpensesPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RecurringExpensesRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvestmentPortfolioType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfolioInstrumentPublicId
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumInvestmentPortfolioInstrumentType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfolioInstrumentRedemptionConditions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfolioInstrumentFees
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfolioInstrumentInterestRate
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfolioInstrument
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfolio
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InvestmentsPortfoliosPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ReceivablesTransactionAccount
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumReceivableTransactionType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumReceivableTransactionFeeType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RecevablesTransactionFees
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumReceivableTransactionStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ReceivablesTransactionNumberOfInstallments
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ReceivablesTransaction
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ReceivablesTransactionsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ReceivableTransactionRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsightsTransactionMetrics
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsightsBalanceMetrics
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsightsCashflowMetrics
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsightsCreditCardMetrics
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsightsLoansMetrics
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsights
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RiskInsightsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTaxRetentionReceiverNationality
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTaxRetentionPaymentStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema RetentionBreakdown
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxRetentions
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxRetentionsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumTaxRetentionType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxRetentionsRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DocumentInformationIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DocumentIdIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ReportingId
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxPayerInformationIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EquityStatementIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema GrossIncomeIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NonTaxableIncomeIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NetIncomeIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AnnualTotalsIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AnnualIncomeStatementIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PensionIncomeStatementIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxAssessmentIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxDeclarationIndividual
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxDeclarationIndividualPaginated
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DocumentInformationBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DocumentIdBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxPayerInformationBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EquityStatementBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AnnualIncomeStatementBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AnnualCostsAndDeductionsStatementBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxAssessmentBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxDeclarationBusiness
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxDeclarationBusinessPaginated
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TaxDeclarationsRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumEmploymentRecordStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordEntitlement
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumEmploymentRecordDocumentType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordDocumentId
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordPersonalData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordSocialSecuritySummary
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumEmploymentRecordStatusUpdateEvents
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordEmploymentStatusUpdates
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordDetail
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordFile
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecord
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EmploymentRecordRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeVerificationAccountHolderType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeVerificationAccountCategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumIncomeVerificationType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EyodIncomeVerificationBodyRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EyodIncomeVerificationRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema AccessToResourceDenied
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCategorizationAccountHolderType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCategorizationAccountCategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCategorizationTransactionType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CategorizationBodyRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CategorizationRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCategorizationTransactionCategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCategorizationTransactionSubcategory
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CategorizationMerchantData
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CategorizationBody
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Categorization
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema SecretKeys
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema SecretKeysPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema paymentWebhook
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentsWebhooksPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentWebhookRequest
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentsCountry
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema InstitutionFormField
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema paymentInstitution
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentsInstitutionsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCustomerType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCustomerIdentifierTypeOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CustomerOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumCustomerIdentifierTypePse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CustomerPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CustomerPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreateCustomerOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreateCustomerPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumBankAccountPixAccountTypeOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountDetailsOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountDetailsOfpiPix
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumBankAccountHolderTypeOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderInformationBusinessOfpiResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderInformationIndividualOfpiResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderResponseOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountOfpiResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumBankAccountHolderTypePse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderInformationBusinessPseResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderBusinessResponsePse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountBusinessPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountPseResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderInformationBusinessOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderInformationIndividualOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountHolderRequestOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreateBankAccountOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderInformationBusinessPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderBusinessPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentsWay
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ProvidersPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreateBankAccountPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkCallbackUrlsResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentLinksStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkListOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkListPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentLinkAllowedPaymentMethod
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentLinkProvider
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinksPaymentMethodDetailsBodyOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodDetailsOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkCallbackUrls
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreatePaymentLinkOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinksPaymentMethodDetailsBodyPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodDetailsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreatePaymentLinkPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentsCurrency
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayPaymentMethodInformationContentOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayPaymentMethodInformation
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NeedsRedirectContent
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepNeedsRedirect
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountDetailsOpenFinance
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountDetailsOpenFinancePix
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BeneficiaryBankAccountOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayConfirmationRequiredOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayConfirmationRequiredOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayPaymentProcessing
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayPaymentProcessing
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayPaymentSucceeded
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayPaymentSucceeded
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayPaymentFailed
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayPaymentFailed
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LastErrorPaymentError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaymentMethodDetailsBodyIndividualOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaymentMethodDetailsIndividualOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaymentMethodDetailsBodyBusinessOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaymentMethodDetailsBusinessOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodInformationBodyOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodInformationOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ChargePaymentMethodDetailsPseContent
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ChargePaymentMethodDetailsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ChargePaymentMethodDetailsOfpiContent
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema ChargePaymentMethodDetailsOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodInformationBodyPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodInformationPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentTransactionType
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionBankAccountOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionBankAccountBodyPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountInformationContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BankAccountInformationPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema TransactionBankAccountPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema paymentTransaction
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema Charge
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentIntentStatus
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkOfpi
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema EnumPaymentIntentHolderTypePse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderBankAccountInformationPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema HolderBankAccountPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodInformationDetailsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentMethodInfoCustomerBankAccountsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayPaymentMethodInformationContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayPaymentMethodInformationPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayCredentialsRequiredContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayCredentialsRequiredPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NeedsRedirectContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayNeedsRedirectPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayTokenRequiredContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayTokenRequiredPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema BeneficiaryBankAccountPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayCustomerBankAccountsContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayCustomerBankAccountsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema DisplayConfirmationRequiredContentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema NextStepDisplayConfirmationRequiredPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LastErrorInvalidCredentials
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LastErrorInvalidToken
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LastErrorLoginError
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LastErrorTwoFactor
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema LastErrorSessionExpired
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaymentMethodDetailsBodyPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaymentMethodDetailsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentLinkPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentsPaymentMethodDetailsBodyPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentIntentsPaymentMethodDetailsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema CreatePaymentIntentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PatchPaymentMethodDetailsPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PatchPaymentIntentsBodyPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PatchPaymentIntentPse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+
+  console.debug
+    Converting schema PaymentsTransactionsPaginatedResponse
+
+      at log (../logger/lib/console.js:6:5)
+          at Array.map (<anonymous>)
+

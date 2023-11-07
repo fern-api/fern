@@ -7788,6 +7788,787 @@ If you try to access older information than what we can access, we will return a
       ],
       "examples": [
         {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "array": [
+              {
+                "properties": {
+                  "account": {
+                    "properties": {
+                      "balance": {
+                        "properties": {
+                          "available": {
+                            "primitive": {
+                              "float": 5621.12,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "current": {
+                            "primitive": {
+                              "float": 5874.13,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "balance_type": {
+                        "primitive": {
+                          "string": "ASSET",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "category": {
+                        "primitive": {
+                          "string": "CHECKING_ACCOUNT",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "collected_at": {
+                        "primitive": {
+                          "datetime": "2019-09-27T13:01:41.941Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2022-02-09T08:45:50.406032Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "credit_data": {
+                        "properties": {
+                          "collected_at": {
+                            "primitive": {
+                              "datetime": "2019-09-27T13:01:41.941Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "credit_limit": {
+                            "primitive": {
+                              "float": 192000,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "cutting_date": {
+                            "primitive": {
+                              "string": "2019-12-11",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "interest_rate": {
+                            "primitive": {
+                              "float": 4,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "minimum_payment": {
+                            "primitive": {
+                              "float": 2400.3,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "next_payment_date": {
+                            "primitive": {
+                              "string": "2019-12-13",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "no_interest_payment": {
+                            "primitive": {
+                              "float": 2690.83,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "currency": {
+                        "primitive": {
+                          "string": "MXN",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "funds_data": {
+                        "array": [
+                          {
+                            "properties": {
+                              "balance": {
+                                "primitive": {
+                                  "float": 88427.94,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "collected_at": {
+                                "primitive": {
+                                  "datetime": "2020-04-23T21:32:55.336854+00:00",
+                                  "type": "datetime",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "FIX X",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "percentage": {
+                                "primitive": {
+                                  "float": 100,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "public_identifications": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "name": {
+                                        "primitive": {
+                                          "string": "CNPJ",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "05.954.445/0221-68",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "CNPJ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "institution": {
+                        "properties": {
+                          "name": {
+                            "primitive": {
+                              "string": "erebor_mx_retail",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "bank",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "last_accessed_at": {
+                        "primitive": {
+                          "datetime": "2021-03-09T10:28:40.000Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "link": {
+                        "primitive": {
+                          "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "loan_data": {
+                        "properties": {
+                          "collected_at": {
+                            "primitive": {
+                              "datetime": "2022-02-09T08:45:50.406032Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "contract_amount": {
+                            "primitive": {
+                              "float": 202000,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "contract_end_date": {
+                            "primitive": {
+                              "string": "2027-10-01",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "contract_number": {
+                            "primitive": {
+                              "string": "890ASLDJF87SD00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "contract_start_date": {
+                            "primitive": {
+                              "string": "2020-03-01",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "fees": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "type": {
+                                    "enum": "OPERATION_FEE",
+                                    "type": "enum",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "float": 5.6,
+                                      "type": "float",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "interest_rates": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "name": {
+                                    "primitive": {
+                                      "string": "jurosEfetivo",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "type": {
+                                    "enum": "MONTHLY",
+                                    "type": "enum",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "float": 7.85,
+                                      "type": "float",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "loan_type": {
+                            "primitive": {
+                              "string": "Consignado",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "monthly_payment": {
+                            "primitive": {
+                              "float": 1000,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_installments_outstanding": {
+                            "primitive": {
+                              "int": 48,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "number_of_installments_total": {
+                            "primitive": {
+                              "int": 60,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "outstanding_balance": {
+                            "primitive": {
+                              "float": 182000,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "outstanding_principal": {
+                            "primitive": {
+                              "float": 142023,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "payment_day": {
+                            "primitive": {
+                              "string": "27",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "principal": {
+                            "primitive": {
+                              "float": 192000,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "Cuenta Perfiles- M.N. - MXN-666",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "string": "4057068115181",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "public_identification_name": {
+                        "primitive": {
+                          "string": "CLABE",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "public_identification_value": {
+                        "primitive": {
+                          "string": "150194683119900273",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "receivables_data": {
+                        "properties": {
+                          "anticipated": {
+                            "primitive": {
+                              "float": 1393.46,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "available": {
+                            "primitive": {
+                              "float": 800.37,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                          "collected_at": {
+                            "primitive": {
+                              "datetime": "2022-02-09T08:45:50.406032Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "current": {
+                            "primitive": {
+                              "float": 2193.83,
+                              "type": "float",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "type": {
+                        "primitive": {
+                          "string": "Cuentas de efectivo",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "accounting_date": {
+                    "primitive": {
+                      "datetime": "2019-10-23T13:01:41.941Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "amount": {
+                    "primitive": {
+                      "float": 2145.45,
+                      "type": "float",
+                    },
+                    "type": "primitive",
+                  },
+                  "balance": {
+                    "primitive": {
+                      "float": 16907.96,
+                      "type": "float",
+                    },
+                    "type": "primitive",
+                  },
+                  "category": {
+                    "primitive": {
+                      "string": "Income & Payments",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "collected_at": {
+                    "primitive": {
+                      "datetime": "2019-11-28T10:27:44.813Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "datetime": "2022-02-09T08:45:50.406032Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "credit_card_data": {
+                    "properties": {
+                      "bill_amount": {
+                        "primitive": {
+                          "float": 300,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "bill_name": {
+                        "primitive": {
+                          "string": "apr-2020",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "bill_status": {
+                        "primitive": {
+                          "string": "PAID",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "collected_at": {
+                        "primitive": {
+                          "datetime": "2019-09-27T13:01:41.941Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "previous_bill_total": {
+                        "primitive": {
+                          "string": "9614.30",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "currency": {
+                    "primitive": {
+                      "string": "BRL",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "internal_identification": {
+                    "primitive": {
+                      "string": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "merchant": {
+                    "properties": {
+                      "logo": {
+                        "primitive": {
+                          "string": "https://logo.clearbit.com/asesor-contable.es",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "merchant_name": {
+                        "primitive": {
+                          "string": "Merchants R Us Global",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "website": {
+                        "primitive": {
+                          "string": "https://merchants-r-us.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "observations": {
+                    "primitive": {
+                      "string": "OPTIONAL OBSERVATIONS",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "reference": {
+                    "primitive": {
+                      "string": "8703",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "primitive": {
+                      "string": "PROCESSED",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "subcategory": {
+                    "primitive": {
+                      "string": "Freelance",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": {
+                    "primitive": {
+                      "string": "INFLOW",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "value_date": {
+                    "primitive": {
+                      "string": "2019-10-23",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            ],
+            "type": "array",
+          },
+        },
+      ],
+      "generatedRequestName": "RetrieveTransactionsRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "POST",
+      "operationId": "RetrieveTransactions",
+      "path": "/api/transactions",
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
+          "name": "omit",
+          "schema": {
+            "description": undefined,
+            "type": "nullable",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
+          "name": "fields",
+          "schema": {
+            "description": undefined,
+            "type": "nullable",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "RetrieveTransactionsRequestBody",
+          "nameOverride": undefined,
+          "schema": "TransactionsRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "Ok (when \`save_data=false\`)",
+        "schema": {
+          "description": undefined,
+          "type": "array",
+          "value": {
+            "description": undefined,
+            "generatedName": "RetrieveTransactionsResponseItem",
+            "nameOverride": undefined,
+            "schema": "Transaction",
+            "type": "reference",
+          },
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": "Retrieve transactions for a link",
+      "tags": [
+        "Transactions",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
+      "description": "Retrieve transactions for one or more accounts from a specific link.
+<div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
+If you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>
+",
+      "errorStatusCode": [
+        400,
+        401,
+        408,
+        428,
+        500,
+      ],
+      "examples": [
+        {
           "headers": [
             {
               "name": "X-Belvo-Request-Mode",
@@ -8485,40 +9266,24 @@ If you try to access older information than what we can access, we will return a
           },
         },
       ],
-      "generatedRequestName": "RetrieveTransactionsRequest",
+      "generatedRequestName": "RetrieveTransactionsAsyncRequest",
       "headers": [
         {
           "description": undefined,
           "name": "X-Belvo-Request-Mode",
           "schema": {
-            "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).
-
-When you make a asynchronous request, Belvo responds with a \`202 - Accepted\` payload, including the \`request_id\`. Once we have retrieved the transaction information, you will receive a \`new_transactions_available\` webhook with the link and request IDs.
-
-
-**Note**: This parameter is case sensitive (in other words, if you write \`ASYNC\`, then Belvo will default to a synchronous call).
-",
-            "type": "nullable",
+            "description": null,
+            "type": "literal",
             "value": {
-              "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).
-
-When you make a asynchronous request, Belvo responds with a \`202 - Accepted\` payload, including the \`request_id\`. Once we have retrieved the transaction information, you will receive a \`new_transactions_available\` webhook with the link and request IDs.
-
-
-**Note**: This parameter is case sensitive (in other words, if you write \`ASYNC\`, then Belvo will default to a synchronous call).
-",
-              "type": "literal",
-              "value": {
-                "string": "async",
-                "type": "string",
-              },
+              "string": "async",
+              "type": "string",
             },
           },
         },
       ],
       "internal": undefined,
       "method": "POST",
-      "operationId": "RetrieveTransactions",
+      "operationId": "RetrieveTransactions_async",
       "path": "/api/transactions",
       "pathParameters": [],
       "queryParameters": [
@@ -8562,7 +9327,7 @@ When you make a asynchronous request, Belvo responds with a \`202 - Accepted\` p
         "description": undefined,
         "schema": {
           "description": undefined,
-          "generatedName": "RetrieveTransactionsRequestBody",
+          "generatedName": "RetrieveTransactionsAsyncRequestBody",
           "nameOverride": undefined,
           "schema": "TransactionsRequest",
           "type": "reference",
@@ -8577,7 +9342,7 @@ When you make a asynchronous request, Belvo responds with a \`202 - Accepted\` p
           "type": "array",
           "value": {
             "description": undefined,
-            "generatedName": "RetrieveTransactionsResponseItem",
+            "generatedName": "RetrieveTransactionsAsyncResponseItem",
             "nameOverride": undefined,
             "schema": "Transaction",
             "type": "reference",
@@ -38333,6 +39098,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
     "PaymentIntentsPaymentMethodDetailsPse",
     "PatchPaymentMethodDetailsPse",
     "PatchPaymentIntentsBodyPse",
+    "TransactionsRequest",
     "PatchBody",
     "StandardRequest",
     "PatchBodyWithoutSaveData",

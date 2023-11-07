@@ -106,7 +106,8 @@ export function convertOperation({
         });
         return {
             type: "async",
-            ...asyncAndSync,
+            async: asyncAndSync.async,
+            sync: asyncAndSync.sync,
         };
     }
 

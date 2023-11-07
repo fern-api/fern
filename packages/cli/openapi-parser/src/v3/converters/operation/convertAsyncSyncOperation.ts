@@ -52,6 +52,7 @@ export function convertAsyncSyncOperation({
             ...operationContext,
             pathItemParameters: filteredPathItemParams,
             operationParameters: filteredOperationParams,
+            baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "async"],
         },
         context,
         suffix: "async",

@@ -11,5 +11,5 @@ export interface AsyncFernExtensionSchema {
 }
 
 export function getFernAsyncExtension(operation: OpenAPIV3.OperationObject): AsyncFernExtensionSchema | undefined {
-    return getExtension<AsyncFernExtensionSchema>(operation, FernOpenAPIExtension.STREAMING);
+    return getExtension<AsyncFernExtensionSchema>(operation, FernOpenAPIExtension.ASYNC_CONFIG);
 }
