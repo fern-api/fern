@@ -2841,7 +2841,6 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@redocly/openapi-core": ^1.4.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
