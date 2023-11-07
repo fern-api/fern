@@ -14357,10 +14357,7 @@ exports[`open api parser flexport simple 1`] = `
                   "f.status": "outstanding",
                   "page": 1,
                   "per": 20,
-                  "sort": {
-                    "string": "due_date",
-                    "type": "string",
-                  },
+                  "sort": "due_date",
                 },
                 "request": undefined,
                 "response": {
@@ -15933,10 +15930,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "f.updated_at.lt": "2022-01-01 18:26:37 PST",
                   "page": 1,
                   "per": 20,
-                  "sort": {
-                    "string": "id",
-                    "type": "string",
-                  },
+                  "sort": "id",
                 },
                 "request": undefined,
                 "response": {

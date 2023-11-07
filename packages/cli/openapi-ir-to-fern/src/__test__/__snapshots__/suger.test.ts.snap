@@ -6792,37 +6792,22 @@ the same customer, dimension, and time, but a different quantity.",
                             "priceModel": "FREE",
                             "subscriptionPlans": [
                               {
-                                "period": {
-                                  "string": "ONE_YEAR",
-                                  "type": "string",
-                                },
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
-                          "purchaseMode": {
-                            "string": "PURCHASE_MODE_PUBLIC",
-                            "type": "string",
-                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
                     },
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                     "status": "ACTIVE",
                   },
                 },
@@ -6902,37 +6887,22 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                       },
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACTIVE",
                     },
                   ],
@@ -7010,37 +6980,22 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                       },
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACTIVE",
                     },
                   ],
@@ -7122,37 +7077,22 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                       },
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACTIVE",
                     },
                   ],
@@ -7234,37 +7174,22 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                       },
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACTIVE",
                     },
                   ],
@@ -7346,37 +7271,22 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                       },
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACTIVE",
                     },
                   ],
@@ -7457,37 +7367,22 @@ the same customer, dimension, and time, but a different quantity.",
                             "priceModel": "FREE",
                             "subscriptionPlans": [
                               {
-                                "period": {
-                                  "string": "ONE_YEAR",
-                                  "type": "string",
-                                },
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
-                          "purchaseMode": {
-                            "string": "PURCHASE_MODE_PUBLIC",
-                            "type": "string",
-                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
                     },
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                     "status": "ACTIVE",
                   },
                 },
@@ -7600,29 +7495,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "priceModel": "FREE",
                             "subscriptionPlans": [
                               {
-                                "period": {
-                                  "string": "ONE_YEAR",
-                                  "type": "string",
-                                },
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
-                          "purchaseMode": {
-                            "string": "PURCHASE_MODE_PUBLIC",
-                            "type": "string",
-                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
                     },
@@ -7630,10 +7513,7 @@ the same customer, dimension, and time, but a different quantity.",
                       "type": "",
                     },
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                   },
                 },
               },
@@ -7717,29 +7597,17 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                       },
@@ -7747,10 +7615,7 @@ the same customer, dimension, and time, but a different quantity.",
                         "type": "",
                       },
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                     },
                   ],
                 },
@@ -7877,10 +7742,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": {
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                     "status": "CREATED",
                   },
                 },
@@ -7926,10 +7788,7 @@ the same customer, dimension, and time, but a different quantity.",
                   "body": [
                     {
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "CREATED",
                     },
                   ],
@@ -8882,29 +8741,17 @@ the same customer, dimension, and time, but a different quantity.",
                           "priceModel": "FREE",
                           "subscriptionPlans": [
                             {
-                              "period": {
-                                "string": "ONE_YEAR",
-                                "type": "string",
-                              },
-                              "taxCategoryOverride": {
-                                "string": "TAX_CATEGORY_UNSPECIFIED",
-                                "type": "string",
-                              },
+                              "period": "ONE_YEAR",
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                           "usageFees": [
                             {
-                              "taxCategoryOverride": {
-                                "string": "TAX_CATEGORY_UNSPECIFIED",
-                                "type": "string",
-                              },
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                         },
-                        "purchaseMode": {
-                          "string": "PURCHASE_MODE_PUBLIC",
-                          "type": "string",
-                        },
+                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
                       },
                     ],
                     "visibility": "PRIVATE",
@@ -8920,10 +8767,7 @@ the same customer, dimension, and time, but a different quantity.",
                   },
                   "offerType": "DEFAULT",
                   "partner": "AWS",
-                  "service": {
-                    "string": "MARKETPLACE",
-                    "type": "string",
-                  },
+                  "service": "MARKETPLACE",
                   "status": "ACCEPTED",
                 },
                 "response": {
@@ -9105,29 +8949,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "priceModel": "FREE",
                             "subscriptionPlans": [
                               {
-                                "period": {
-                                  "string": "ONE_YEAR",
-                                  "type": "string",
-                                },
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
-                          "purchaseMode": {
-                            "string": "PURCHASE_MODE_PUBLIC",
-                            "type": "string",
-                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
                       "visibility": "PRIVATE",
@@ -9143,10 +8975,7 @@ the same customer, dimension, and time, but a different quantity.",
                     },
                     "offerType": "DEFAULT",
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                     "status": "ACCEPTED",
                   },
                 },
@@ -9364,29 +9193,17 @@ the same customer, dimension, and time, but a different quantity.",
                           "priceModel": "FREE",
                           "subscriptionPlans": [
                             {
-                              "period": {
-                                "string": "ONE_YEAR",
-                                "type": "string",
-                              },
-                              "taxCategoryOverride": {
-                                "string": "TAX_CATEGORY_UNSPECIFIED",
-                                "type": "string",
-                              },
+                              "period": "ONE_YEAR",
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                           "usageFees": [
                             {
-                              "taxCategoryOverride": {
-                                "string": "TAX_CATEGORY_UNSPECIFIED",
-                                "type": "string",
-                              },
+                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                             },
                           ],
                         },
-                        "purchaseMode": {
-                          "string": "PURCHASE_MODE_PUBLIC",
-                          "type": "string",
-                        },
+                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
                       },
                     ],
                     "visibility": "PRIVATE",
@@ -9402,10 +9219,7 @@ the same customer, dimension, and time, but a different quantity.",
                   },
                   "offerType": "DEFAULT",
                   "partner": "AWS",
-                  "service": {
-                    "string": "MARKETPLACE",
-                    "type": "string",
-                  },
+                  "service": "MARKETPLACE",
                   "status": "ACCEPTED",
                 },
                 "response": {
@@ -9587,29 +9401,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "priceModel": "FREE",
                             "subscriptionPlans": [
                               {
-                                "period": {
-                                  "string": "ONE_YEAR",
-                                  "type": "string",
-                                },
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
-                          "purchaseMode": {
-                            "string": "PURCHASE_MODE_PUBLIC",
-                            "type": "string",
-                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
                       "visibility": "PRIVATE",
@@ -9625,10 +9427,7 @@ the same customer, dimension, and time, but a different quantity.",
                     },
                     "offerType": "DEFAULT",
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                     "status": "ACCEPTED",
                   },
                 },
@@ -9872,29 +9671,17 @@ the same customer, dimension, and time, but a different quantity.",
                             "priceModel": "FREE",
                             "subscriptionPlans": [
                               {
-                                "period": {
-                                  "string": "ONE_YEAR",
-                                  "type": "string",
-                                },
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "period": "ONE_YEAR",
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                             "usageFees": [
                               {
-                                "taxCategoryOverride": {
-                                  "string": "TAX_CATEGORY_UNSPECIFIED",
-                                  "type": "string",
-                                },
+                                "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                               },
                             ],
                           },
-                          "purchaseMode": {
-                            "string": "PURCHASE_MODE_PUBLIC",
-                            "type": "string",
-                          },
+                          "purchaseMode": "PURCHASE_MODE_PUBLIC",
                         },
                       ],
                       "visibility": "PRIVATE",
@@ -9910,10 +9697,7 @@ the same customer, dimension, and time, but a different quantity.",
                     },
                     "offerType": "DEFAULT",
                     "partner": "AWS",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                     "status": "ACCEPTED",
                   },
                 },
@@ -10131,29 +9915,17 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                         "visibility": "PRIVATE",
@@ -10169,10 +9941,7 @@ the same customer, dimension, and time, but a different quantity.",
                       },
                       "offerType": "DEFAULT",
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACCEPTED",
                     },
                   ],
@@ -10390,29 +10159,17 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                         "visibility": "PRIVATE",
@@ -10428,10 +10185,7 @@ the same customer, dimension, and time, but a different quantity.",
                       },
                       "offerType": "DEFAULT",
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACCEPTED",
                     },
                   ],
@@ -10661,29 +10415,17 @@ the same customer, dimension, and time, but a different quantity.",
                               "priceModel": "FREE",
                               "subscriptionPlans": [
                                 {
-                                  "period": {
-                                    "string": "ONE_YEAR",
-                                    "type": "string",
-                                  },
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "period": "ONE_YEAR",
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                               "usageFees": [
                                 {
-                                  "taxCategoryOverride": {
-                                    "string": "TAX_CATEGORY_UNSPECIFIED",
-                                    "type": "string",
-                                  },
+                                  "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                 },
                               ],
                             },
-                            "purchaseMode": {
-                              "string": "PURCHASE_MODE_PUBLIC",
-                              "type": "string",
-                            },
+                            "purchaseMode": "PURCHASE_MODE_PUBLIC",
                           },
                         ],
                         "visibility": "PRIVATE",
@@ -10699,10 +10441,7 @@ the same customer, dimension, and time, but a different quantity.",
                       },
                       "offerType": "DEFAULT",
                       "partner": "AWS",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                       "status": "ACCEPTED",
                     },
                   ],
@@ -10755,10 +10494,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "response": {
                   "body": [
                     {
-                      "type": {
-                        "string": "TemporalWorkflow",
-                        "type": "string",
-                      },
+                      "type": "TemporalWorkflow",
                     },
                   ],
                 },
@@ -10875,34 +10611,22 @@ the same customer, dimension, and time, but a different quantity.",
                                 "type": "CustomerSupport",
                               },
                             ],
-                            "resourceType": {
-                              "string": "AzureListing",
-                              "type": "string",
-                            },
+                            "resourceType": "AzureListing",
                           },
                         ],
                         "packageConfigurations": [
                           {
-                            "resourceType": {
-                              "string": "AzureSoftwareAsAServicePackageConfiguration",
-                              "type": "string",
-                            },
+                            "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                           },
                         ],
                         "setup": {
                           "callToAction": "free",
-                          "resourceType": {
-                            "string": "AzureProductSetup",
-                            "type": "string",
-                          },
+                          "resourceType": "AzureProductSetup",
                           "sellingOption": "ListingOnly",
                         },
                         "submissions": [
                           {
-                            "resourceType": {
-                              "string": "Submission",
-                              "type": "string",
-                            },
+                            "resourceType": "Submission",
                             "state": "Inprogress",
                             "subState": "InDraft",
                           },
@@ -10972,10 +10696,7 @@ the same customer, dimension, and time, but a different quantity.",
                       ],
                       "gcpProduct": {
                         "listingSpec": {
-                          "listingType": {
-                            "string": "BillingIntegratedManagedService",
-                            "type": "string",
-                          },
+                          "listingType": "BillingIntegratedManagedService",
                           "purchaseSpec": {
                             "metrics": [
                               {
@@ -10988,37 +10709,22 @@ the same customer, dimension, and time, but a different quantity.",
                                   "priceModel": "FREE",
                                   "subscriptionPlans": [
                                     {
-                                      "period": {
-                                        "string": "ONE_YEAR",
-                                        "type": "string",
-                                      },
-                                      "taxCategoryOverride": {
-                                        "string": "TAX_CATEGORY_UNSPECIFIED",
-                                        "type": "string",
-                                      },
+                                      "period": "ONE_YEAR",
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                     },
                                   ],
                                   "usageFees": [
                                     {
-                                      "taxCategoryOverride": {
-                                        "string": "TAX_CATEGORY_UNSPECIFIED",
-                                        "type": "string",
-                                      },
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                     },
                                   ],
                                 },
-                                "purchaseMode": {
-                                  "string": "PURCHASE_MODE_PUBLIC",
-                                  "type": "string",
-                                },
+                                "purchaseMode": "PURCHASE_MODE_PUBLIC",
                               },
                             ],
                           },
                         },
-                        "marketplace": {
-                          "string": "marketplaces/google-cloud",
-                          "type": "string",
-                        },
+                        "marketplace": "marketplaces/google-cloud",
                         "serviceConfig": {
                           "metrics": [
                             {
@@ -11030,10 +10736,7 @@ the same customer, dimension, and time, but a different quantity.",
                     },
                     "partner": "AWS",
                     "productType": "UNKNOWN",
-                    "service": {
-                      "string": "MARKETPLACE",
-                      "type": "string",
-                    },
+                    "service": "MARKETPLACE",
                   },
                 },
               },
@@ -11131,34 +10834,22 @@ the same customer, dimension, and time, but a different quantity.",
                                   "type": "CustomerSupport",
                                 },
                               ],
-                              "resourceType": {
-                                "string": "AzureListing",
-                                "type": "string",
-                              },
+                              "resourceType": "AzureListing",
                             },
                           ],
                           "packageConfigurations": [
                             {
-                              "resourceType": {
-                                "string": "AzureSoftwareAsAServicePackageConfiguration",
-                                "type": "string",
-                              },
+                              "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                             },
                           ],
                           "setup": {
                             "callToAction": "free",
-                            "resourceType": {
-                              "string": "AzureProductSetup",
-                              "type": "string",
-                            },
+                            "resourceType": "AzureProductSetup",
                             "sellingOption": "ListingOnly",
                           },
                           "submissions": [
                             {
-                              "resourceType": {
-                                "string": "Submission",
-                                "type": "string",
-                              },
+                              "resourceType": "Submission",
                               "state": "Inprogress",
                               "subState": "InDraft",
                             },
@@ -11228,10 +10919,7 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                         "gcpProduct": {
                           "listingSpec": {
-                            "listingType": {
-                              "string": "BillingIntegratedManagedService",
-                              "type": "string",
-                            },
+                            "listingType": "BillingIntegratedManagedService",
                             "purchaseSpec": {
                               "metrics": [
                                 {
@@ -11244,37 +10932,22 @@ the same customer, dimension, and time, but a different quantity.",
                                     "priceModel": "FREE",
                                     "subscriptionPlans": [
                                       {
-                                        "period": {
-                                          "string": "ONE_YEAR",
-                                          "type": "string",
-                                        },
-                                        "taxCategoryOverride": {
-                                          "string": "TAX_CATEGORY_UNSPECIFIED",
-                                          "type": "string",
-                                        },
+                                        "period": "ONE_YEAR",
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
                                     "usageFees": [
                                       {
-                                        "taxCategoryOverride": {
-                                          "string": "TAX_CATEGORY_UNSPECIFIED",
-                                          "type": "string",
-                                        },
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
                                   },
-                                  "purchaseMode": {
-                                    "string": "PURCHASE_MODE_PUBLIC",
-                                    "type": "string",
-                                  },
+                                  "purchaseMode": "PURCHASE_MODE_PUBLIC",
                                 },
                               ],
                             },
                           },
-                          "marketplace": {
-                            "string": "marketplaces/google-cloud",
-                            "type": "string",
-                          },
+                          "marketplace": "marketplaces/google-cloud",
                           "serviceConfig": {
                             "metrics": [
                               {
@@ -11286,10 +10959,7 @@ the same customer, dimension, and time, but a different quantity.",
                       },
                       "partner": "AWS",
                       "productType": "UNKNOWN",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                     },
                   ],
                 },
@@ -11347,34 +11017,22 @@ the same customer, dimension, and time, but a different quantity.",
                                   "type": "CustomerSupport",
                                 },
                               ],
-                              "resourceType": {
-                                "string": "AzureListing",
-                                "type": "string",
-                              },
+                              "resourceType": "AzureListing",
                             },
                           ],
                           "packageConfigurations": [
                             {
-                              "resourceType": {
-                                "string": "AzureSoftwareAsAServicePackageConfiguration",
-                                "type": "string",
-                              },
+                              "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
                             },
                           ],
                           "setup": {
                             "callToAction": "free",
-                            "resourceType": {
-                              "string": "AzureProductSetup",
-                              "type": "string",
-                            },
+                            "resourceType": "AzureProductSetup",
                             "sellingOption": "ListingOnly",
                           },
                           "submissions": [
                             {
-                              "resourceType": {
-                                "string": "Submission",
-                                "type": "string",
-                              },
+                              "resourceType": "Submission",
                               "state": "Inprogress",
                               "subState": "InDraft",
                             },
@@ -11444,10 +11102,7 @@ the same customer, dimension, and time, but a different quantity.",
                         ],
                         "gcpProduct": {
                           "listingSpec": {
-                            "listingType": {
-                              "string": "BillingIntegratedManagedService",
-                              "type": "string",
-                            },
+                            "listingType": "BillingIntegratedManagedService",
                             "purchaseSpec": {
                               "metrics": [
                                 {
@@ -11460,37 +11115,22 @@ the same customer, dimension, and time, but a different quantity.",
                                     "priceModel": "FREE",
                                     "subscriptionPlans": [
                                       {
-                                        "period": {
-                                          "string": "ONE_YEAR",
-                                          "type": "string",
-                                        },
-                                        "taxCategoryOverride": {
-                                          "string": "TAX_CATEGORY_UNSPECIFIED",
-                                          "type": "string",
-                                        },
+                                        "period": "ONE_YEAR",
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
                                     "usageFees": [
                                       {
-                                        "taxCategoryOverride": {
-                                          "string": "TAX_CATEGORY_UNSPECIFIED",
-                                          "type": "string",
-                                        },
+                                        "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
                                       },
                                     ],
                                   },
-                                  "purchaseMode": {
-                                    "string": "PURCHASE_MODE_PUBLIC",
-                                    "type": "string",
-                                  },
+                                  "purchaseMode": "PURCHASE_MODE_PUBLIC",
                                 },
                               ],
                             },
                           },
-                          "marketplace": {
-                            "string": "marketplaces/google-cloud",
-                            "type": "string",
-                          },
+                          "marketplace": "marketplaces/google-cloud",
                           "serviceConfig": {
                             "metrics": [
                               {
@@ -11502,10 +11142,7 @@ the same customer, dimension, and time, but a different quantity.",
                       },
                       "partner": "AWS",
                       "productType": "UNKNOWN",
-                      "service": {
-                        "string": "MARKETPLACE",
-                        "type": "string",
-                      },
+                      "service": "MARKETPLACE",
                     },
                   ],
                 },

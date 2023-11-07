@@ -1,6 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
+import {
+    FullExample,
+    FullOneOfExample,
+    KeyValuePair,
+    LiteralExample,
+    PrimitiveExample,
+} from "@fern-fern/openapi-ir-model/example";
 import { EndpointExample } from "@fern-fern/openapi-ir-model/finalIr";
 
 export function convertEndpointExample({
@@ -91,7 +97,7 @@ function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeRef
         case "enum":
             return fullExample.enum;
         case "literal":
-            return fullExample.literal;
+            return convertLiteralExample(fullExample.literal);
         case "unknown":
             return convertFullExample(fullExample.unknown);
         default:
@@ -151,4 +157,15 @@ function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeRef
         return convertObject(oneOf.discriminated);
     }
     return convertFullExample(oneOf.undisciminated);
+}
+
+function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
+    switch (literal.type) {
+        case "string":
+            return literal.string;
+        case "boolean":
+            return literal.boolean;
+        default:
+            assertNever(literal);
+    }
 }

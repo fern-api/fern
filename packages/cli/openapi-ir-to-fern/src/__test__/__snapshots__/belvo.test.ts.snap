@@ -13955,20 +13955,14 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "account_category": "CHECKING_ACCOUNT",
                       "account_holder_id": "a61bc801-9fa5-457b-88ad-850c96eaca30",
-                      "account_holder_type": {
-                        "string": "INDIVIDUAL",
-                        "type": "string",
-                      },
+                      "account_holder_type": "INDIVIDUAL",
                       "account_id": "EBACA-89077589",
                       "amount": 650.89,
                       "currency": "BRL",
                       "description": "SALÁRIO MENSAL",
                       "institution": "Erebor Retail Brasil",
                       "transaction_id": "3CWE4927CF15355",
-                      "type": {
-                        "string": "INFLOW",
-                        "type": "string",
-                      },
+                      "type": "INFLOW",
                       "value_date": "2022-11-18",
                     },
                   ],
@@ -13979,10 +13973,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "first_transaction_date": "2022-06-09",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                      "income_source_type": {
-                        "string": "BANK",
-                        "type": "string",
-                      },
+                      "income_source_type": "BANK",
                       "income_streams": [],
                       "last_transaction_date": "2023-02-09",
                       "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
@@ -14176,10 +14167,7 @@ client.incomes.list(params: {
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "first_transaction_date": "2022-06-09",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                      "income_source_type": {
-                        "string": "BANK",
-                        "type": "string",
-                      },
+                      "income_source_type": "BANK",
                       "income_streams": [],
                       "last_transaction_date": "2023-02-09",
                       "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
@@ -14260,10 +14248,7 @@ client.incomes.list(params: {
                         "created_at": "2022-02-09T08:45:50.406032Z",
                         "first_transaction_date": "2022-06-09",
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                        "income_source_type": {
-                          "string": "BANK",
-                          "type": "string",
-                        },
+                        "income_source_type": "BANK",
                         "income_streams": [],
                         "last_transaction_date": "2023-02-09",
                         "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
@@ -14378,10 +14363,7 @@ client.incomes.list(params: {
                       "created_at": "2022-02-09T08:45:50.406032Z",
                       "first_transaction_date": "2022-06-09",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                      "income_source_type": {
-                        "string": "BANK",
-                        "type": "string",
-                      },
+                      "income_source_type": "BANK",
                       "income_streams": [],
                       "last_transaction_date": "2023-02-09",
                       "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
@@ -14463,10 +14445,7 @@ client.incomes.list(params: {
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "first_transaction_date": "2022-06-09",
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
-                    "income_source_type": {
-                      "string": "BANK",
-                      "type": "string",
-                    },
+                    "income_source_type": "BANK",
                     "income_streams": [],
                     "last_transaction_date": "2023-02-09",
                     "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
@@ -18243,10 +18222,7 @@ You can use the Payment Transactions resource in order to get useful information
                     "currency": "BRL",
                     "fees": [
                       {
-                        "type": {
-                          "string": "TRANSACTION_FEE",
-                          "type": "string",
-                        },
+                        "type": "TRANSACTION_FEE",
                         "value": 2.21,
                       },
                     ],
@@ -18345,10 +18321,7 @@ You can use the Payment Transactions resource in order to get useful information
                         "currency": "BRL",
                         "fees": [
                           {
-                            "type": {
-                              "string": "TRANSACTION_FEE",
-                              "type": "string",
-                            },
+                            "type": "TRANSACTION_FEE",
                             "value": 2.21,
                           },
                         ],
@@ -18524,10 +18497,7 @@ You can use the Payment Transactions resource in order to get useful information
                     "currency": "BRL",
                     "fees": [
                       {
-                        "type": {
-                          "string": "TRANSACTION_FEE",
-                          "type": "string",
-                        },
+                        "type": "TRANSACTION_FEE",
                         "value": 2.21,
                       },
                     ],
@@ -18786,10 +18756,7 @@ client. recurring_expenses.list(params: {
                       "average_transaction_amount": 32.9,
                       "category": "Bills & Utilities",
                       "days_since_last_transaction": 5,
-                      "frequency": {
-                        "string": "MONTHLY",
-                        "type": "string",
-                      },
+                      "frequency": "MONTHLY",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "median_transaction_amount": 32.9,
                       "name": "Netflix",
@@ -18948,10 +18915,7 @@ client. recurring_expenses.list(params: {
                         "average_transaction_amount": 32.9,
                         "category": "Bills & Utilities",
                         "days_since_last_transaction": 5,
-                        "frequency": {
-                          "string": "MONTHLY",
-                          "type": "string",
-                        },
+                        "frequency": "MONTHLY",
                         "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                         "median_transaction_amount": 32.9,
                         "name": "Netflix",
@@ -19152,10 +19116,7 @@ client. recurring_expenses.list(params: {
                       "average_transaction_amount": 32.9,
                       "category": "Bills & Utilities",
                       "days_since_last_transaction": 5,
-                      "frequency": {
-                        "string": "MONTHLY",
-                        "type": "string",
-                      },
+                      "frequency": "MONTHLY",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "median_transaction_amount": 32.9,
                       "name": "Netflix",
@@ -19310,10 +19271,7 @@ client. recurring_expenses.list(params: {
                       "average_transaction_amount": 32.9,
                       "category": "Bills & Utilities",
                       "days_since_last_transaction": 5,
-                      "frequency": {
-                        "string": "MONTHLY",
-                        "type": "string",
-                      },
+                      "frequency": "MONTHLY",
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "median_transaction_amount": 32.9,
                       "name": "Netflix",
@@ -22765,10 +22723,7 @@ If you try to access older information than what we can access, we will return a
             "examples": [
               {
                 "headers": {
-                  "X-Belvo-Request-Mode": {
-                    "string": "async",
-                    "type": "string",
-                  },
+                  "X-Belvo-Request-Mode": "async",
                 },
                 "path-parameters": undefined,
                 "query-parameters": {

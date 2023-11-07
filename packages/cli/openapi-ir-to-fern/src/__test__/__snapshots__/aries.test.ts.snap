@@ -15907,10 +15907,7 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "image_url": "https://aries.ca/images/sample.png",
-                  "key_management_mode": {
-                    "string": "managed",
-                    "type": "string",
-                  },
+                  "key_management_mode": "managed",
                   "label": "Alice",
                   "wallet_dispatch_type": "default",
                   "wallet_key": "MySecretKey123",
@@ -19959,17 +19956,11 @@ exports[`open api parser aries simple 1`] = `
                         "23",
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": {
-                        "string": "CL_ACCUM",
-                        "type": "string",
-                      },
+                      "revoc_def_type": "CL_ACCUM",
                       "revoc_reg_def": {
                         "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
                           "maxCredNum": 10,
@@ -20103,17 +20094,11 @@ exports[`open api parser aries simple 1`] = `
                         "23",
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": {
-                        "string": "CL_ACCUM",
-                        "type": "string",
-                      },
+                      "revoc_def_type": "CL_ACCUM",
                       "revoc_reg_def": {
                         "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
                           "maxCredNum": 10,
@@ -20386,17 +20371,11 @@ exports[`open api parser aries simple 1`] = `
                         "23",
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": {
-                        "string": "CL_ACCUM",
-                        "type": "string",
-                      },
+                      "revoc_def_type": "CL_ACCUM",
                       "revoc_reg_def": {
                         "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
                           "maxCredNum": 10,
@@ -20464,17 +20443,11 @@ exports[`open api parser aries simple 1`] = `
                           "23",
                         ],
                         "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "revoc_def_type": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revoc_def_type": "CL_ACCUM",
                         "revoc_reg_def": {
                           "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                           "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                          "revocDefType": {
-                            "string": "CL_ACCUM",
-                            "type": "string",
-                          },
+                          "revocDefType": "CL_ACCUM",
                           "value": {
                             "issuanceType": "ISSUANCE_ON_DEMAND",
                             "maxCredNum": 10,
@@ -20567,17 +20540,11 @@ exports[`open api parser aries simple 1`] = `
                         "23",
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": {
-                        "string": "CL_ACCUM",
-                        "type": "string",
-                      },
+                      "revoc_def_type": "CL_ACCUM",
                       "revoc_reg_def": {
                         "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
                           "maxCredNum": 10,
@@ -20775,17 +20742,11 @@ exports[`open api parser aries simple 1`] = `
                         "23",
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": {
-                        "string": "CL_ACCUM",
-                        "type": "string",
-                      },
+                      "revoc_def_type": "CL_ACCUM",
                       "revoc_reg_def": {
                         "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
                           "maxCredNum": 10,
@@ -20907,17 +20868,11 @@ exports[`open api parser aries simple 1`] = `
                         "23",
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revoc_def_type": {
-                        "string": "CL_ACCUM",
-                        "type": "string",
-                      },
+                      "revoc_def_type": "CL_ACCUM",
                       "revoc_reg_def": {
                         "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": {
-                          "string": "CL_ACCUM",
-                          "type": "string",
-                        },
+                        "revocDefType": "CL_ACCUM",
                         "value": {
                           "issuanceType": "ISSUANCE_ON_DEMAND",
                           "maxCredNum": 10,

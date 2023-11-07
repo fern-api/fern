@@ -5373,10 +5373,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": {
                   "query": {
-                    "include": {
-                      "string": "data",
-                      "type": "string",
-                    },
+                    "include": "data",
                   },
                 },
                 "request": undefined,
@@ -5770,10 +5767,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": {
                   "query": {
-                    "include": {
-                      "string": "data",
-                      "type": "string",
-                    },
+                    "include": "data",
                     "status": "accepted",
                   },
                 },
@@ -6598,10 +6592,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "include": {
-                    "string": "data",
-                    "type": "string",
-                  },
+                  "include": "data",
                 },
                 "request": undefined,
                 "response": {
@@ -7735,10 +7726,7 @@ exports[`open api parser hookdeck simple 1`] = `
                   "id": "id",
                 },
                 "query-parameters": {
-                  "include": {
-                    "string": "data",
-                    "type": "string",
-                  },
+                  "include": "data",
                 },
                 "request": undefined,
                 "response": {
@@ -7997,10 +7985,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "include": {
-                    "string": "data",
-                    "type": "string",
-                  },
+                  "include": "data",
                   "status": "accepted",
                 },
                 "request": undefined,
