@@ -41,20 +41,17 @@ export function convertStreamingOperation({
                 streamingExtension,
                 isStreaming: true,
             });
-
-            const nonStreamingRequestBody = getRequestBody({
-                context,
+            const streamingResponses = getResponses({
                 operation: operationContext.operation,
-                streamingExtension,
-                isStreaming: false,
+                response: streamingExtension.responseStream,
             });
-
             const streamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     operation: {
                         ...operationContext.operation,
                         requestBody: streamingRequestBody,
+                        responses: streamingResponses,
                     },
                     baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "stream"],
                 },
@@ -63,12 +60,23 @@ export function convertStreamingOperation({
                 suffix: "stream",
             });
 
+            const nonStreamingRequestBody = getRequestBody({
+                context,
+                operation: operationContext.operation,
+                streamingExtension,
+                isStreaming: false,
+            });
+            const nonStreamingResponses = getResponses({
+                operation: operationContext.operation,
+                response: streamingExtension.response,
+            });
             const nonStreamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     operation: {
                         ...operationContext.operation,
                         requestBody: nonStreamingRequestBody,
+                        responses: nonStreamingResponses,
                     },
                 },
                 context,
@@ -134,5 +142,25 @@ function getRequestBody({
                 schema: requestBodySchemaWithLiteralProperty,
             },
         },
+    };
+}
+
+function getResponses({
+    operation,
+    response,
+}: {
+    operation: OpenAPIV3.OperationObject;
+    response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+}): OpenAPIV3.ResponsesObject {
+    return {
+        ...operation.responses,
+        "200": {
+            description: "",
+            content: {
+                "application/json": {
+                    schema: response,
+                },
+            },
+        } as OpenAPIV3.ResponseObject,
     };
 }

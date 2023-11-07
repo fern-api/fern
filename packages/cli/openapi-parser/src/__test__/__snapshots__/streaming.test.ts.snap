@@ -73,11 +73,32 @@ exports[`open api parser streaming parse open api 1`] = `
       "response": {
         "description": "",
         "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserStreamResponse",
           "nameOverride": undefined,
-          "schema": "User",
-          "type": "reference",
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userStreamResponseId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
         },
         "type": "streamingJson",
       },
@@ -177,11 +198,32 @@ exports[`open api parser streaming parse open api 1`] = `
       "response": {
         "description": "",
         "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserResponse",
           "nameOverride": undefined,
-          "schema": "User",
-          "type": "reference",
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userResponseId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
         },
         "type": "json",
       },
@@ -193,9 +235,7 @@ exports[`open api parser streaming parse open api 1`] = `
   ],
   "errors": {},
   "hasEndpointsMarkedInternal": false,
-  "nonRequestReferencedSchemas": [
-    "User",
-  ],
+  "nonRequestReferencedSchemas": [],
   "schemas": {
     "StreamUser": {
       "allOf": [],
