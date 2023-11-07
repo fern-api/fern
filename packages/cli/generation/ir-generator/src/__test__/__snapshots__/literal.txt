@@ -783,71 +783,7 @@ exports[`generate IR 1`] = `
         "typeId": "type_literal:CreateOptionsResponse",
       },
       "referencedTypes": [
-        {
-          "fernFilepath": {
-            "allParts": [
-              {
-                "camelCase": {
-                  "safeName": "literal",
-                  "unsafeName": "literal",
-                },
-                "originalName": "literal",
-                "pascalCase": {
-                  "safeName": "Literal",
-                  "unsafeName": "Literal",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "LITERAL",
-                  "unsafeName": "LITERAL",
-                },
-                "snakeCase": {
-                  "safeName": "literal",
-                  "unsafeName": "literal",
-                },
-              },
-            ],
-            "file": {
-              "camelCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
-              },
-              "originalName": "literal",
-              "pascalCase": {
-                "safeName": "Literal",
-                "unsafeName": "Literal",
-              },
-              "screamingSnakeCase": {
-                "safeName": "LITERAL",
-                "unsafeName": "LITERAL",
-              },
-              "snakeCase": {
-                "safeName": "literal",
-                "unsafeName": "literal",
-              },
-            },
-            "packagePath": [],
-          },
-          "name": {
-            "camelCase": {
-              "safeName": "options",
-              "unsafeName": "options",
-            },
-            "originalName": "Options",
-            "pascalCase": {
-              "safeName": "Options",
-              "unsafeName": "Options",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OPTIONS",
-              "unsafeName": "OPTIONS",
-            },
-            "snakeCase": {
-              "safeName": "options",
-              "unsafeName": "options",
-            },
-          },
-          "typeId": "type_literal:Options",
-        },
+        "type_literal:Options",
       ],
       "shape": {
         "_type": "union",
