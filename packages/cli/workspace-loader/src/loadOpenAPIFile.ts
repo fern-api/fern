@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { bundle, Config } from "@redocly/openapi-core";
+import { NodeType } from "@redocly/openapi-core/src/types";
 import { readdir } from "fs/promises";
 import { OpenAPIFile } from "./types/Workspace";
 
@@ -27,6 +28,16 @@ export async function loadOpenAPIFromFolder(
     };
 }
 
+const XFernStreaming: NodeType = {
+    properties: {
+        "stream-condition": { type: "string" },
+        response: "Schema",
+        "response-stream": "Schema",
+    },
+    required: ["stream-condition", "response", "response-stream"],
+    extensionsPrefix: "x-",
+};
+
 export async function loadOpenAPIFile(
     context: TaskContext,
     absolutePathToOpenAPI: AbsoluteFilePath
@@ -38,7 +49,37 @@ export async function loadOpenAPIFile(
         );
     }
     const result = await bundle({
-        config: new Config({ apis: {}, styleguide: {} }, undefined),
+        config: new Config(
+            {
+                apis: {},
+                styleguide: {
+                    plugins: [
+                        {
+                            id: "",
+                            typeExtension: {
+                                oas3: (types) => {
+                                    return {
+                                        ...types,
+                                        XFernStreaming,
+                                        Operation: {
+                                            ...types.Operation,
+                                            properties: {
+                                                ...types.Operation?.properties,
+                                                "x-fern-streaming": "XFernStreaming",
+                                            },
+                                        },
+                                    };
+                                },
+                            },
+                        },
+                    ],
+                    rules: {
+                        spec: "warn",
+                    },
+                },
+            },
+            undefined
+        ),
         ref: absolutePathToOpenAPI,
         dereference: false,
         removeUnusedComponents: false,
