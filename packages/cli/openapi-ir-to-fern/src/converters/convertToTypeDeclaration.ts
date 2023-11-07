@@ -3,6 +3,7 @@ import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     EnumSchema,
+    LiteralSchemaValue,
     MapSchema,
     ObjectProperty,
     ObjectSchema,
@@ -280,7 +281,7 @@ export function convertUnknownToTypeDeclaration(): TypeDeclarations {
     };
 }
 
-export function convertLiteralToTypeDeclaration(value: string): TypeDeclarations {
+export function convertLiteralToTypeDeclaration(value: LiteralSchemaValue): TypeDeclarations {
     const literalTypeReference = convertLiteralToTypeReference(value);
     return {
         typeDeclaration: literalTypeReference.typeReference,

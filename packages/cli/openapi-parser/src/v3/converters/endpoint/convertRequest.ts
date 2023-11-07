@@ -2,8 +2,10 @@ import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/finalIr";
 import { RequestWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { StreamingConditionEndpoint } from "../../extensions/getStreaming";
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
+import { addStreamConditionProperty } from "../addStreamConditionProperty";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
@@ -86,11 +88,15 @@ export function convertRequest({
     document,
     context,
     requestBreadcrumbs,
+    isStreaming,
+    streamCondition,
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
+    isStreaming: boolean;
+    streamCondition: StreamingConditionEndpoint | undefined;
 }): RequestWithExample | undefined {
     const resolvedRequestBody = isReferenceObject(requestBody)
         ? context.resolveRequestBodyReference(requestBody)
@@ -147,7 +153,10 @@ export function convertRequest({
     if (jsonSchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonSchema.schema, false, context, requestBreadcrumbs, true);
+    let requestSchema = convertSchema(jsonSchema.schema, false, context, requestBreadcrumbs, true);
+    if (streamCondition != null) {
+        requestSchema = addStreamConditionProperty(requestSchema, streamCondition, isStreaming);
+    }
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,

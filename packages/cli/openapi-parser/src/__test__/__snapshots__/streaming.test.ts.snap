@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser streaming parse open api 1`] = `
+{
+  "description": undefined,
+  "endpoints": [
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": undefined,
+      "description": undefined,
+      "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "stream": {
+                "literal": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "literal",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
+      "generatedRequestName": "UserRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "POST",
+      "operationId": "user",
+      "path": "/v1/users",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userRequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "stream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "description": undefined,
+          "generatedName": "UserResponse",
+          "nameOverride": undefined,
+          "schema": "User",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": undefined,
+      "tags": [],
+    },
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": undefined,
+      "description": undefined,
+      "errorStatusCode": [],
+      "examples": [],
+      "generatedRequestName": "UserRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "POST",
+      "operationId": "user",
+      "path": "/v1/users",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UserRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "userRequestId",
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "",
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "stream",
+              "key": "stream",
+              "schema": {
+                "description": undefined,
+                "type": "literal",
+                "value": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "description": undefined,
+          "generatedName": "UserResponse",
+          "nameOverride": undefined,
+          "schema": "StreamUser",
+          "type": "reference",
+        },
+        "type": "streamingJson",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": undefined,
+      "tags": [],
+    },
+  ],
+  "errors": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [
+    "User",
+    "StreamUser",
+  ],
+  "schemas": {
+    "StreamUser": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "StreamUser",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "streamUserId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "User": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "User",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "userId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {},
+  "title": "Streaming API",
+  "variables": {},
+  "webhooks": [],
+}
+`;

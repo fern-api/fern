@@ -53,10 +53,10 @@ export function convertUndiscriminatedOneOf({
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
-            if (schema.type === "literal") {
-                enumValues.push(schema.value);
+            if (schema.type === "literal" && schema.value.type === "string") {
+                enumValues.push(schema.value.string);
                 if (schema.description != null) {
-                    enumDescriptions[schema.value] = {
+                    enumDescriptions[schema.value.string] = {
                         description: schema.description,
                     };
                 }

@@ -22697,7 +22697,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "GeolocationFieldEditor": {
       "description": "",
       "type": "literal",
-      "value": "Map",
+      "value": {
+        "string": "Map",
+        "type": "string",
+      },
     },
     "GeolocationFieldPropertiesDto": {
       "allOf": [],
@@ -29004,7 +29007,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "UIFieldEditor": {
       "description": "",
       "type": "literal",
-      "value": "Separator",
+      "value": {
+        "string": "Separator",
+        "type": "string",
+      },
     },
     "UIFieldPropertiesDto": {
       "allOf": [],

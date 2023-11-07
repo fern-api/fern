@@ -1,4 +1,5 @@
-import { EndpointSdkName, HttpMethod, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { assertNever } from "@fern-api/core-utils";
+import { EndpointSdkName, HttpMethod, LiteralSchemaValue, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
 import { EndpointWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -8,6 +9,7 @@ import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getExtension } from "../extensions/getExtension";
 import { getFernAvailability } from "../extensions/getFernAvailability";
+import { getStreaming, StreamingConditionEndpoint } from "../extensions/getStreaming";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertServer } from "./convertServer";
@@ -172,6 +174,8 @@ function convertWebhook({
         document,
         context,
         requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
+        isStreaming: false,
+        streamCondition: undefined,
     });
 
     if (convertedPayload == null || convertedPayload.type !== "json") {
@@ -194,6 +198,11 @@ function convertWebhook({
         payload: convertedPayload.schema,
         description: operation.description,
     };
+}
+
+interface ConvertEndpointRequest {
+    isStreaming: boolean;
+    streamCondition: StreamingConditionEndpoint | undefined;
 }
 
 function convertSyncAndAsyncEndpoints({
@@ -220,6 +229,8 @@ function convertSyncAndAsyncEndpoints({
     const sdkName = getSdkName({ operation });
     const parameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
 
+    const convertEndpointRequests = convertEndpointRequestsForOperation({ operation });
+
     const asyncConfig = getExtension<FernAsyncConfig>(operation, FernOpenAPIExtension.ASYNC_CONFIG);
     if (asyncConfig != null) {
         const headerToIgnore = asyncConfig.discriminant.name;
@@ -236,68 +247,116 @@ function convertSyncAndAsyncEndpoints({
             return true;
         });
 
-        const synchronousEndpoint = convertToEndpoint({
-            sdkName,
-            operation: {
-                ...operation,
-                responses: Object.fromEntries(
-                    Object.entries(operation.responses).filter(([statusCode]) => {
-                        return parseInt(statusCode) !== asyncResponseStatusCode;
-                    })
-                ),
-            },
-            parameters: parametersWithoutHeader,
-            document,
-            context,
-            path,
-            httpMethod,
-        });
-        endpoints.push({
-            ...synchronousEndpoint,
-            path,
-            method: httpMethod,
-        });
-
-        const asynchronousEndpoint = convertToEndpoint({
-            sdkName,
-            operation,
-            parameters: parametersWithoutHeader,
-            document,
-            context,
-            responseStatusCode: asyncResponseStatusCode,
-            suffix: "async",
-            path,
-            httpMethod,
-        });
-        asynchronousEndpoint.headers.push({
-            name: headerToIgnore,
-            schema: Schema.literal({
-                description: null,
-                value: headerValue,
-            }),
-            description: undefined,
-        });
-        endpoints.push({
-            ...asynchronousEndpoint,
-            path,
-            method: httpMethod,
-        });
-    } else {
-        endpoints.push({
-            ...convertToEndpoint({
+        for (const convertEndpointRequest of convertEndpointRequests) {
+            const synchronousEndpoint = convertToEndpoint({
                 sdkName,
-                operation,
-                parameters,
+                operation: {
+                    ...operation,
+                    responses: Object.fromEntries(
+                        Object.entries(operation.responses).filter(([statusCode]) => {
+                            return parseInt(statusCode) !== asyncResponseStatusCode;
+                        })
+                    ),
+                },
+                parameters: parametersWithoutHeader,
                 document,
                 context,
                 path,
                 httpMethod,
-            }),
-            path,
-            method: httpMethod,
-        });
+                isStreaming: convertEndpointRequest.isStreaming,
+                streamCondition: convertEndpointRequest.streamCondition,
+            });
+            endpoints.push({
+                ...synchronousEndpoint,
+                path,
+                method: httpMethod,
+            });
+
+            const asynchronousEndpoint = convertToEndpoint({
+                sdkName,
+                operation,
+                parameters: parametersWithoutHeader,
+                document,
+                context,
+                responseStatusCode: asyncResponseStatusCode,
+                suffix: "async",
+                path,
+                httpMethod,
+                isStreaming: convertEndpointRequest.isStreaming,
+                streamCondition: convertEndpointRequest.streamCondition,
+            });
+            asynchronousEndpoint.headers.push({
+                name: headerToIgnore,
+                schema: Schema.literal({
+                    description: null,
+                    value: LiteralSchemaValue.string(headerValue),
+                }),
+                description: undefined,
+            });
+            endpoints.push({
+                ...asynchronousEndpoint,
+                path,
+                method: httpMethod,
+            });
+        }
+    } else {
+        for (const convertEndpointRequest of convertEndpointRequests) {
+            endpoints.push({
+                ...convertToEndpoint({
+                    sdkName,
+                    operation,
+                    parameters,
+                    document,
+                    context,
+                    path,
+                    httpMethod,
+                    isStreaming: convertEndpointRequest.isStreaming,
+                    streamCondition: convertEndpointRequest.streamCondition,
+                }),
+                path,
+                method: httpMethod,
+            });
+        }
     }
     return endpoints;
+}
+
+function convertEndpointRequestsForOperation({
+    operation,
+}: {
+    operation: OpenAPIV3.OperationObject;
+}): ConvertEndpointRequest[] {
+    const streaming = getStreaming(operation);
+    if (streaming === undefined) {
+        return [
+            {
+                isStreaming: false,
+                streamCondition: undefined,
+            },
+        ];
+    }
+    switch (streaming.type) {
+        case "stream":
+            return [
+                {
+                    isStreaming: true,
+                    streamCondition: undefined,
+                },
+            ];
+        case "streamCondition":
+            return [
+                {
+                    isStreaming: false,
+                    streamCondition: streaming,
+                },
+                {
+                    isStreaming: true,
+                    streamCondition: streaming,
+                },
+            ];
+        default:
+            assertNever(streaming);
+    }
 }
 
 function getSdkName({ operation }: { operation: OpenAPIV3.OperationObject }): EndpointSdkName | undefined {
@@ -356,6 +415,8 @@ function convertToEndpoint({
     suffix,
     path,
     httpMethod,
+    isStreaming,
+    streamCondition,
 }: {
     sdkName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
@@ -366,16 +427,15 @@ function convertToEndpoint({
     suffix?: string;
     path: string;
     httpMethod: HttpMethod;
+    isStreaming: boolean;
+    streamCondition: StreamingConditionEndpoint | undefined;
 }): Omit<EndpointWithExample, "path" | "method"> {
     const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, suffix, httpMethod, path });
-
-    const isStreaming = getExtension<boolean>(operation, FernOpenAPIExtension.STREAMING);
     const requestNameOverride = getExtension<string>(operation, [
         FernOpenAPIExtension.REQUEST_NAME_V1,
         FernOpenAPIExtension.REQUEST_NAME_V2,
     ]);
     const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
-
     const convertedParameters = convertParameters({
         parameters,
         context,
@@ -393,6 +453,8 @@ function convertToEndpoint({
                       taskContext: context.taskContext,
                   }),
                   requestBreadcrumbs,
+                  isStreaming,
+                  streamCondition,
               })
             : undefined;
 
@@ -409,6 +471,8 @@ function convertToEndpoint({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+            isStreaming,
+            streamCondition,
         });
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
@@ -416,13 +480,34 @@ function convertToEndpoint({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs],
+            isStreaming,
+            streamCondition,
         });
     }
 
+    // TODO: We need to convert the operation.responses into a structure with the same code, content-type, etc.
+    let responses = operation.responses;
+    if (streamCondition != null) {
+        const ref = isStreaming ? streamCondition.responseStream : streamCondition.response;
+        responses = {
+            "200": {
+                description: "",
+                content: {
+                    "application/json": {
+                        schema: {
+                            $ref: ref,
+                        },
+                    },
+                },
+            },
+        };
+    }
+
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
+
     const convertedResponse = convertResponse({
-        isStreaming: isStreaming ?? false,
-        responses: operation.responses,
+        isStreaming,
+        responses,
         context,
         responseBreadcrumbs,
         responseStatusCode,

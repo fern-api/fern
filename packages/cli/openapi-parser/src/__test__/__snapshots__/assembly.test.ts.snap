@@ -2600,7 +2600,10 @@ Valid values are in the range [0, 1] inclusive.
             "value": {
               "description": undefined,
               "type": "literal",
-              "value": "error",
+              "value": {
+                "string": "error",
+                "type": "string",
+              },
             },
           },
         },
@@ -2629,7 +2632,10 @@ Valid values are in the range [0, 1] inclusive.
           "schema": {
             "description": "Describes the type of message.",
             "type": "literal",
-            "value": "FinalTranscript",
+            "value": {
+              "string": "FinalTranscript",
+              "type": "string",
+            },
           },
         },
         {
@@ -3419,7 +3425,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "Describes the type of message.",
             "type": "literal",
-            "value": "PartialTranscript",
+            "value": {
+              "string": "PartialTranscript",
+              "type": "string",
+            },
           },
         },
       ],
@@ -3935,7 +3944,10 @@ Can be any value between 0.0 and 1.0 inclusive.
     "RedactedAudioStatus": {
       "description": "The status of the redacted audio",
       "type": "literal",
-      "value": "redacted_audio_ready",
+      "value": {
+        "string": "redacted_audio_ready",
+        "type": "string",
+      },
     },
     "SentencesResponse": {
       "allOf": [],
@@ -4147,7 +4159,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "Describes the type of the message.",
             "type": "literal",
-            "value": "SessionBegins",
+            "value": {
+              "string": "SessionBegins",
+              "type": "string",
+            },
           },
         },
         {
@@ -4207,7 +4222,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "Describes the type of the message.",
             "type": "literal",
-            "value": "SessionTerminated",
+            "value": {
+              "string": "SessionTerminated",
+              "type": "string",
+            },
           },
         },
       ],

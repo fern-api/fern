@@ -4203,7 +4203,10 @@ Note that this will only delete the report -- it does not delete associated acco
             {
               "name": "Persona-Version",
               "value": {
-                "literal": "2020-01-13",
+                "literal": {
+                  "string": "2020-01-13",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -4296,7 +4299,10 @@ Note that this will only delete the report -- it does not delete associated acco
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "2020-01-13",
+            "value": {
+              "string": "2020-01-13",
+              "type": "string",
+            },
           },
         },
       ],
@@ -7059,7 +7065,10 @@ Note: An account is still updatable after redaction. If you want to delete data 
             {
               "name": "Persona-Version",
               "value": {
-                "literal": "2020-01-13",
+                "literal": {
+                  "string": "2020-01-13",
+                  "type": "string",
+                },
                 "type": "literal",
               },
             },
@@ -7131,7 +7140,10 @@ Note: An account is still updatable after redaction. If you want to delete data 
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "2020-01-13",
+            "value": {
+              "string": "2020-01-13",
+              "type": "string",
+            },
           },
         },
       ],

@@ -3,6 +3,7 @@ import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     EnumSchema,
+    LiteralSchemaValue,
     MapSchema,
     NullableSchema,
     ObjectSchema,
@@ -221,11 +222,19 @@ export function convertUnknownToTypeReference(): TypeReference {
     };
 }
 
-export function convertLiteralToTypeReference(value: string): TypeReference {
-    return {
-        typeReference: `literal<"${value}">`,
-        additionalTypeDeclarations: {},
-    };
+export function convertLiteralToTypeReference(value: LiteralSchemaValue): TypeReference {
+    switch (value.type) {
+        case "boolean":
+            return {
+                typeReference: `literal<${value.boolean}>`,
+                additionalTypeDeclarations: {},
+            };
+        case "string":
+            return {
+                typeReference: `literal<"${value.string}">`,
+                additionalTypeDeclarations: {},
+            };
+    }
 }
 
 export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSchema; prefix?: string }): TypeReference {

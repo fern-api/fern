@@ -13898,7 +13898,10 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "ongoing_time_based",
+            "value": {
+              "string": "ongoing_time_based",
+              "type": "string",
+            },
           },
         },
       ],
@@ -13964,7 +13967,10 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "pay_as_you_go_time_based",
+            "value": {
+              "string": "pay_as_you_go_time_based",
+              "type": "string",
+            },
           },
         },
       ],
@@ -14004,7 +14010,10 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "payg_milestones",
+            "value": {
+              "string": "payg_milestones",
+              "type": "string",
+            },
           },
         },
       ],
@@ -14044,7 +14053,10 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": {
             "description": undefined,
             "type": "literal",
-            "value": "payg_tasks",
+            "value": {
+              "string": "payg_tasks",
+              "type": "string",
+            },
           },
         },
       ],
@@ -24489,7 +24501,10 @@ exports[`open api parser deel parse open api 1`] = `
     "OffCyclePaymentTypeEnum": {
       "description": "Type for Off-cycle payments",
       "type": "literal",
-      "value": "offcycle",
+      "value": {
+        "string": "offcycle",
+        "type": "string",
+      },
     },
     "OrganizationList": {
       "description": undefined,
@@ -29571,7 +29586,10 @@ exports[`open api parser deel parse open api 1`] = `
     "TimesheetTypeEnum": {
       "description": "Type for timesheet",
       "type": "literal",
-      "value": "work",
+      "value": {
+        "string": "work",
+        "type": "string",
+      },
     },
     "TimesheetTypeEnumList": {
       "description": undefined,
