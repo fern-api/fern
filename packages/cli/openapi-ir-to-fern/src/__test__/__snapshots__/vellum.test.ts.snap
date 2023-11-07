@@ -30,49 +30,6 @@ exports[`open api parser vellum simple 1`] = `
         "auth": false,
         "base-path": "",
         "endpoints": {
-          "execute-workflow-stream": {
-            "auth": true,
-            "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
-
-Executes a deployed Workflow and streams back its results.",
-            "errors": [],
-            "method": "POST",
-            "path": "/v1/execute-workflow-stream",
-            "request": {
-              "body": {
-                "properties": {
-                  "external_id": {
-                    "docs": "Optionally include a unique identifier for tracking purposes.",
-                    "type": "optional<string>",
-                  },
-                  "inputs": {
-                    "docs": undefined,
-                    "type": "list<WorkflowRequestInputRequest>",
-                  },
-                  "release_tag": {
-                    "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
-                    "type": "optional<string>",
-                  },
-                  "workflow_deployment_id": {
-                    "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "workflow_deployment_name": {
-                    "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ExecuteWorkflowStreamRequest",
-              "query-parameters": undefined,
-            },
-            "response-stream": {
-              "docs": "",
-              "type": "WorkflowStreamEvent",
-            },
-            "url": "Predict",
-          },
           "generate": {
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
@@ -144,52 +101,6 @@ Generate a completion using a previously defined deployment.
             "response": {
               "docs": "",
               "type": "GenerateResponse",
-            },
-            "url": "Predict",
-          },
-          "generate-stream": {
-            "auth": true,
-            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
-
-Generate a stream of completions using a previously defined deployment.
-
-**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-            "errors": [
-              "BadRequestError",
-              "ForbiddenError",
-              "NotFoundError",
-              "InternalServerError",
-            ],
-            "method": "POST",
-            "path": "/v1/generate-stream",
-            "request": {
-              "body": {
-                "properties": {
-                  "deployment_id": {
-                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "deployment_name": {
-                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                    "type": "optional<string>",
-                  },
-                  "options": {
-                    "docs": "Additional configuration that can be used to control what's included in the response.",
-                    "type": "optional<GenerateOptionsRequest>",
-                  },
-                  "requests": {
-                    "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-                    "type": "list<GenerateRequest>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "GenerateStreamBodyRequest",
-              "query-parameters": undefined,
-            },
-            "response-stream": {
-              "docs": "",
-              "type": "GenerateStreamResponse",
             },
             "url": "Predict",
           },
@@ -654,6 +565,31 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "ExecuteWorkflowStreamRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "docs": "Optionally include a unique identifier for tracking purposes.",
+              "type": "optional<string>",
+            },
+            "inputs": {
+              "docs": undefined,
+              "type": "list<WorkflowRequestInputRequest>",
+            },
+            "release_tag": {
+              "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+              "type": "optional<string>",
+            },
+            "workflow_deployment_id": {
+              "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+              "type": "optional<string>",
+            },
+            "workflow_deployment_name": {
+              "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+              "type": "optional<string>",
+            },
+          },
+        },
         "FinishReasonEnum": {
           "docs": "* \`LENGTH\` - LENGTH
 * \`STOP\` - STOP
@@ -751,6 +687,27 @@ Used to submit feedback regarding the quality of previously generated completion
             "message": {
               "docs": "The error message returned by the LLM provider.",
               "type": "string",
+            },
+          },
+        },
+        "GenerateStreamBodyRequest": {
+          "docs": undefined,
+          "properties": {
+            "deployment_id": {
+              "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+              "type": "optional<string>",
+            },
+            "deployment_name": {
+              "docs": "The name of the deployment. Must provide either this or deployment_id.",
+              "type": "optional<string>",
+            },
+            "options": {
+              "docs": "Additional configuration that can be used to control what's included in the response.",
+              "type": "optional<GenerateOptionsRequest>",
+            },
+            "requests": {
+              "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+              "type": "list<GenerateRequest>",
             },
           },
         },

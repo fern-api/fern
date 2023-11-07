@@ -1876,6 +1876,76 @@ in the DevPortal.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
+# Deleting links in batches
+To delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.
+
+  > 🚧 **Rate limiting and IP blocking**
+  > 
+  > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.
+  > 
+  > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).",
+      "errorStatusCode": [
+        401,
+        404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
+      "generatedRequestName": "DestroyLinkRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "DestroyLink",
+      "path": "/api/links/{id}",
+      "pathParameters": [
+        {
+          "description": "The \`link.id\` that you want to delete.",
+          "name": "id",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": undefined,
+      "sdkName": undefined,
+      "server": [],
+      "summary": "Delete a link",
+      "tags": [
+        "Links",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "Change a link's access mode from \`single\` to \`recurrent\` or from \`recurrent\` to single.
 ℹ️ **Note**: When you change a link from \`single\`\` to \`recurrent\`, they will only be updated the next day at the scheduled interval.",
       "errorStatusCode": [
@@ -2090,76 +2160,6 @@ in the DevPortal.
       "sdkName": undefined,
       "server": [],
       "summary": "Change a link's access mode",
-      "tags": [
-        "Links",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
-# Deleting links in batches
-To delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.
-
-  > 🚧 **Rate limiting and IP blocking**
-  > 
-  > An important technical note for performing operations in batches is to take into consideration our rate-limiting: up to 80 requests every 30 seconds. If you exceed this limit, you run the risk of Belvo blocking your IP from making further requests.
-  > 
-  > For more information, or if your IP address has been blocked, please contact our [support team](https://support.belvo.com/hc/en-us/requests/new).",
-      "errorStatusCode": [
-        401,
-        404,
-      ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "primitive": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
-      "generatedRequestName": "DestroyLinkRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "DestroyLink",
-      "path": "/api/links/{id}",
-      "pathParameters": [
-        {
-          "description": "The \`link.id\` that you want to delete.",
-          "name": "id",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": undefined,
-      "sdkName": undefined,
-      "server": [],
-      "summary": "Delete a link",
       "tags": [
         "Links",
       ],
@@ -7788,7 +7788,18 @@ If you try to access older information than what we can access, we will return a
       ],
       "examples": [
         {
-          "headers": [],
+          "headers": [
+            {
+              "name": "X-Belvo-Request-Mode",
+              "value": {
+                "literal": {
+                  "string": "async",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "pathParameters": [],
           "queryParameters": [
             {
@@ -8475,7 +8486,36 @@ If you try to access older information than what we can access, we will return a
         },
       ],
       "generatedRequestName": "RetrieveTransactionsRequest",
-      "headers": [],
+      "headers": [
+        {
+          "description": undefined,
+          "name": "X-Belvo-Request-Mode",
+          "schema": {
+            "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).
+
+When you make a asynchronous request, Belvo responds with a \`202 - Accepted\` payload, including the \`request_id\`. Once we have retrieved the transaction information, you will receive a \`new_transactions_available\` webhook with the link and request IDs.
+
+
+**Note**: This parameter is case sensitive (in other words, if you write \`ASYNC\`, then Belvo will default to a synchronous call).
+",
+            "type": "nullable",
+            "value": {
+              "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).
+
+When you make a asynchronous request, Belvo responds with a \`202 - Accepted\` payload, including the \`request_id\`. Once we have retrieved the transaction information, you will receive a \`new_transactions_available\` webhook with the link and request IDs.
+
+
+**Note**: This parameter is case sensitive (in other words, if you write \`ASYNC\`, then Belvo will default to a synchronous call).
+",
+              "type": "literal",
+              "value": {
+                "string": "async",
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
       "internal": undefined,
       "method": "POST",
       "operationId": "RetrieveTransactions",
@@ -8542,199 +8582,6 @@ If you try to access older information than what we can access, we will return a
             "schema": "Transaction",
             "type": "reference",
           },
-        },
-        "type": "json",
-      },
-      "sdkName": undefined,
-      "server": [],
-      "summary": "Retrieve transactions for a link",
-      "tags": [
-        "Transactions",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "Retrieve transactions for one or more accounts from a specific link.
-<div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
-If you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>
-",
-      "errorStatusCode": [
-        400,
-        401,
-        408,
-        428,
-        500,
-      ],
-      "examples": [
-        {
-          "headers": [
-            {
-              "name": "X-Belvo-Request-Mode",
-              "value": {
-                "literal": {
-                  "string": "async",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "omit",
-              "value": {
-                "primitive": {
-                  "string": "link,balance",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "fields",
-              "value": {
-                "primitive": {
-                  "string": "link,balance,account",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": {
-            "properties": {
-              "account": {
-                "primitive": {
-                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_from": {
-                "primitive": {
-                  "string": "2020-08-05",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "date_to": {
-                "primitive": {
-                  "string": "2020-10-05",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "link": {
-                "primitive": {
-                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "token": {
-                "primitive": {
-                  "string": "1234ab",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "request_id": {
-                "primitive": {
-                  "string": "b5d0106ac9cc43d5b36199fe831f6bbe",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
-      "generatedRequestName": "RetrieveTransactionsAsyncRequest",
-      "headers": [
-        {
-          "description": undefined,
-          "name": "X-Belvo-Request-Mode",
-          "schema": {
-            "description": null,
-            "type": "literal",
-            "value": {
-              "string": "async",
-              "type": "string",
-            },
-          },
-        },
-      ],
-      "internal": undefined,
-      "method": "POST",
-      "operationId": "RetrieveTransactions_async",
-      "path": "/api/transactions",
-      "pathParameters": [],
-      "queryParameters": [
-        {
-          "description": "Omit certain fields from being returned in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-          "name": "omit",
-          "schema": {
-            "description": undefined,
-            "type": "nullable",
-            "value": {
-              "description": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-          },
-        },
-        {
-          "description": "Return only the specified fields in the response. For more information, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) DevPortal article.",
-          "name": "fields",
-          "schema": {
-            "description": undefined,
-            "type": "nullable",
-            "value": {
-              "description": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-          },
-        },
-      ],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "RetrieveTransactionsAsyncRequestBody",
-          "nameOverride": undefined,
-          "schema": "TransactionsRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
-      "requestNameOverride": undefined,
-      "response": {
-        "description": "Accepted (when \`X-Belvo-Request-Mode\` is \`async\`)",
-        "schema": {
-          "description": undefined,
-          "generatedName": "RetrieveTransactionsAsyncResponse",
-          "nameOverride": undefined,
-          "schema": "AsynchronousAccepted202",
-          "type": "reference",
         },
         "type": "json",
       },
@@ -38179,7 +38026,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
     "Account",
     "TransactionsPaginatedResponse",
     "Transaction",
-    "AsynchronousAccepted202",
     "BalancesPaginatedResponse",
     "Balance",
     "InstitutionsPaginatedResponse",
@@ -38487,7 +38333,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
     "PaymentIntentsPaymentMethodDetailsPse",
     "PatchPaymentMethodDetailsPse",
     "PatchPaymentIntentsBodyPse",
-    "TransactionsRequest",
     "PatchBody",
     "StandardRequest",
     "PatchBodyWithoutSaveData",

@@ -4347,6 +4347,116 @@ exports[`open api parser suger parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "delete the integration for the given orgId, partner and service.",
+      "errorStatusCode": [
+        500,
+      ],
+      "examples": [],
+      "generatedRequestName": "DeleteIntegrationRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "DeleteIntegration",
+      "path": "/org/{orgId}/integration/{partner}/{service}",
+      "pathParameters": [
+        {
+          "description": "Organization ID",
+          "name": "orgId",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+        {
+          "description": "Cloud Partner",
+          "name": "partner",
+          "schema": {
+            "description": undefined,
+            "generatedName": "DeleteIntegrationRequestPartner",
+            "nameOverride": undefined,
+            "type": "enum",
+            "values": [
+              {
+                "description": undefined,
+                "generatedName": "AWS",
+                "nameOverride": undefined,
+                "value": "AWS",
+              },
+              {
+                "description": undefined,
+                "generatedName": "AZURE",
+                "nameOverride": undefined,
+                "value": "AZURE",
+              },
+              {
+                "description": undefined,
+                "generatedName": "GCP",
+                "nameOverride": undefined,
+                "value": "GCP",
+              },
+            ],
+          },
+          "variableReference": undefined,
+        },
+        {
+          "description": "Partner Service",
+          "name": "service",
+          "schema": {
+            "description": undefined,
+            "generatedName": "DeleteIntegrationRequestService",
+            "nameOverride": undefined,
+            "type": "enum",
+            "values": [
+              {
+                "description": undefined,
+                "generatedName": "MARKETPLACE",
+                "nameOverride": undefined,
+                "value": "MARKETPLACE",
+              },
+              {
+                "description": undefined,
+                "generatedName": "CRM",
+                "nameOverride": undefined,
+                "value": "CRM",
+              },
+            ],
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "Empty string if deletion is successful",
+        "schema": {
+          "description": undefined,
+          "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": "delete integration",
+      "tags": [
+        "Integration",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "Update the given integration.",
       "errorStatusCode": [
         400,
@@ -4459,116 +4569,6 @@ exports[`open api parser suger parse open api 1`] = `
       "sdkName": undefined,
       "server": [],
       "summary": "update integration",
-      "tags": [
-        "Integration",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "delete the integration for the given orgId, partner and service.",
-      "errorStatusCode": [
-        500,
-      ],
-      "examples": [],
-      "generatedRequestName": "DeleteIntegrationRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "DeleteIntegration",
-      "path": "/org/{orgId}/integration/{partner}/{service}",
-      "pathParameters": [
-        {
-          "description": "Organization ID",
-          "name": "orgId",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-        {
-          "description": "Cloud Partner",
-          "name": "partner",
-          "schema": {
-            "description": undefined,
-            "generatedName": "DeleteIntegrationRequestPartner",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "AWS",
-                "nameOverride": undefined,
-                "value": "AWS",
-              },
-              {
-                "description": undefined,
-                "generatedName": "AZURE",
-                "nameOverride": undefined,
-                "value": "AZURE",
-              },
-              {
-                "description": undefined,
-                "generatedName": "GCP",
-                "nameOverride": undefined,
-                "value": "GCP",
-              },
-            ],
-          },
-          "variableReference": undefined,
-        },
-        {
-          "description": "Partner Service",
-          "name": "service",
-          "schema": {
-            "description": undefined,
-            "generatedName": "DeleteIntegrationRequestService",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "MARKETPLACE",
-                "nameOverride": undefined,
-                "value": "MARKETPLACE",
-              },
-              {
-                "description": undefined,
-                "generatedName": "CRM",
-                "nameOverride": undefined,
-                "value": "CRM",
-              },
-            ],
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": {
-        "description": "Empty string if deletion is successful",
-        "schema": {
-          "description": undefined,
-          "schema": {
-            "maxLength": undefined,
-            "minLength": undefined,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
-      },
-      "sdkName": undefined,
-      "server": [],
-      "summary": "delete integration",
       "tags": [
         "Integration",
       ],
@@ -11175,6 +11175,74 @@ exports[`open api parser suger parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
+      "errorStatusCode": [
+        500,
+      ],
+      "examples": [],
+      "generatedRequestName": "DeleteProductRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "DeleteProduct",
+      "path": "/org/{orgId}/product/{productId}",
+      "pathParameters": [
+        {
+          "description": "Organization ID",
+          "name": "orgId",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+        {
+          "description": "Product ID",
+          "name": "productId",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "Empty string if deletion is successful",
+        "schema": {
+          "description": undefined,
+          "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": "delete product",
+      "tags": [
+        "Product",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "currently only the Fulfillment URL is allowed to update via this API.",
       "errorStatusCode": [
         500,
@@ -11244,74 +11312,6 @@ exports[`open api parser suger parse open api 1`] = `
       "sdkName": undefined,
       "server": [],
       "summary": "update product",
-      "tags": [
-        "Product",
-      ],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
-      "errorStatusCode": [
-        500,
-      ],
-      "examples": [],
-      "generatedRequestName": "DeleteProductRequest",
-      "headers": [],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "DeleteProduct",
-      "path": "/org/{orgId}/product/{productId}",
-      "pathParameters": [
-        {
-          "description": "Organization ID",
-          "name": "orgId",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-        {
-          "description": "Product ID",
-          "name": "productId",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": {
-        "description": "Empty string if deletion is successful",
-        "schema": {
-          "description": undefined,
-          "schema": {
-            "maxLength": undefined,
-            "minLength": undefined,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
-      },
-      "sdkName": undefined,
-      "server": [],
-      "summary": "delete product",
       "tags": [
         "Product",
       ],

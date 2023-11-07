@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { SchemaId, SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
 import {
@@ -50,9 +51,28 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         }
         taskContext.logger.debug(`Converting path ${path}`);
         const pathWithoutTrailingSlash = path.replace(/\/$/, "");
-        const convertedPathItem = convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
-        endpointsWithExample.push(...convertedPathItem.endpoints);
-        webhooks.push(...convertedPathItem.webhooks);
+        const convertedOperations = convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
+
+        for (const operation of convertedOperations) {
+            switch (operation.type) {
+                case "async":
+                    endpointsWithExample.push(operation.async);
+                    endpointsWithExample.push(operation.sync);
+                    break;
+                case "http":
+                    endpointsWithExample.push(operation.value);
+                    break;
+                case "streaming":
+                    endpointsWithExample.push(operation.streaming);
+                    endpointsWithExample.push(operation.nonStreaming);
+                    break;
+                case "webhook":
+                    webhooks.push(operation.value);
+                    break;
+                default:
+                    assertNever(operation);
+            }
+        }
     });
 
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(

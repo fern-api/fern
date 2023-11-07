@@ -2621,409 +2621,6 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "description": "Updates an existing inquiry.",
-      "errorStatusCode": [
-        404,
-      ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "inquiry-id",
-              "value": {
-                "primitive": {
-                  "string": "inquiry-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
-      "generatedRequestName": "UpdateAnInquiryRequest",
-      "headers": [
-        {
-          "description": "Determines casing for the API response",
-          "name": "Key-Inflection",
-          "schema": {
-            "description": undefined,
-            "type": "nullable",
-            "value": {
-              "description": undefined,
-              "schema": {
-                "maxLength": undefined,
-                "minLength": undefined,
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-          },
-        },
-      ],
-      "internal": undefined,
-      "method": "PATCH",
-      "operationId": "update-an-inquiry",
-      "path": "/inquiries/{inquiry-id}",
-      "pathParameters": [
-        {
-          "description": undefined,
-          "name": "inquiry-id",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
-          "description": undefined,
-          "generatedName": "UpdateAnInquiryRequest",
-          "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "updateAnInquiryRequestData",
-              "key": "data",
-              "schema": {
-                "allOf": [],
-                "allOfPropertyConflicts": [],
-                "description": undefined,
-                "generatedName": "UpdateAnInquiryRequestData",
-                "nameOverride": undefined,
-                "properties": [
-                  {
-                    "conflict": {},
-                    "generatedName": "updateAnInquiryRequestDataAttributes",
-                    "key": "attributes",
-                    "schema": {
-                      "description": undefined,
-                      "type": "optional",
-                      "value": {
-                        "allOf": [],
-                        "allOfPropertyConflicts": [],
-                        "description": undefined,
-                        "generatedName": "UpdateAnInquiryRequestDataAttributes",
-                        "nameOverride": undefined,
-                        "properties": [
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesIdentificationNumber",
-                            "key": "identification-number",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": "Identification numbers, i.e. SSN",
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesLocale",
-                            "key": "locale",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesSelectedCountryCode",
-                            "key": "selected-country-code",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesNameFirst",
-                            "key": "name-first",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesNameMiddle",
-                            "key": "name-middle",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesNameLast",
-                            "key": "name-last",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesBirthdate",
-                            "key": "birthdate",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": "Use the following format: YYYY-MM-DD",
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesEmailAddress",
-                            "key": "email-address",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesPhoneNumber",
-                            "key": "phone-number",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesAddressStreet1",
-                            "key": "address-street-1",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesAddressStreet2",
-                            "key": "address-street-2",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesAddressCity",
-                            "key": "address-city",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesAddressSubdivision",
-                            "key": "address-subdivision",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesAddressPostalCode",
-                            "key": "address-postal-code",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                          {
-                            "conflict": {},
-                            "generatedName": "updateAnInquiryRequestDataAttributesNote",
-                            "key": "note",
-                            "schema": {
-                              "description": undefined,
-                              "type": "optional",
-                              "value": {
-                                "description": undefined,
-                                "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          },
-                        ],
-                        "type": "object",
-                      },
-                    },
-                  },
-                ],
-                "type": "object",
-              },
-            },
-          ],
-          "type": "object",
-        },
-        "type": "json",
-      },
-      "requestNameOverride": undefined,
-      "response": undefined,
-      "sdkName": undefined,
-      "server": [],
-      "summary": "Update an Inquiry",
-      "tags": [],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
       "description": "Permanently deletes personally identifiable information (PII) for an Inquiry and all associated Verifications and Reports. This action cannot be undone. 
 
 This endpoint can be used to comply with privacy regulations such as GDPR / CCPA or to enforce data privacy.",
@@ -3683,6 +3280,409 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "sdkName": undefined,
       "server": [],
       "summary": "Redact an Inquiry",
+      "tags": [],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
+      "description": "Updates an existing inquiry.",
+      "errorStatusCode": [
+        404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "primitive": {
+                  "string": "inquiry-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
+      "generatedRequestName": "UpdateAnInquiryRequest",
+      "headers": [
+        {
+          "description": "Determines casing for the API response",
+          "name": "Key-Inflection",
+          "schema": {
+            "description": undefined,
+            "type": "nullable",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "internal": undefined,
+      "method": "PATCH",
+      "operationId": "update-an-inquiry",
+      "path": "/inquiries/{inquiry-id}",
+      "pathParameters": [
+        {
+          "description": undefined,
+          "name": "inquiry-id",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "UpdateAnInquiryRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "updateAnInquiryRequestData",
+              "key": "data",
+              "schema": {
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "description": undefined,
+                "generatedName": "UpdateAnInquiryRequestData",
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "updateAnInquiryRequestDataAttributes",
+                    "key": "attributes",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "allOf": [],
+                        "allOfPropertyConflicts": [],
+                        "description": undefined,
+                        "generatedName": "UpdateAnInquiryRequestDataAttributes",
+                        "nameOverride": undefined,
+                        "properties": [
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesIdentificationNumber",
+                            "key": "identification-number",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": "Identification numbers, i.e. SSN",
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesLocale",
+                            "key": "locale",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesSelectedCountryCode",
+                            "key": "selected-country-code",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesNameFirst",
+                            "key": "name-first",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesNameMiddle",
+                            "key": "name-middle",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesNameLast",
+                            "key": "name-last",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesBirthdate",
+                            "key": "birthdate",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": "Use the following format: YYYY-MM-DD",
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesEmailAddress",
+                            "key": "email-address",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesPhoneNumber",
+                            "key": "phone-number",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesAddressStreet1",
+                            "key": "address-street-1",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesAddressStreet2",
+                            "key": "address-street-2",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesAddressCity",
+                            "key": "address-city",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesAddressSubdivision",
+                            "key": "address-subdivision",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesAddressPostalCode",
+                            "key": "address-postal-code",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                          {
+                            "conflict": {},
+                            "generatedName": "updateAnInquiryRequestDataAttributesNote",
+                            "key": "note",
+                            "schema": {
+                              "description": undefined,
+                              "type": "optional",
+                              "value": {
+                                "description": undefined,
+                                "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                          },
+                        ],
+                        "type": "object",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": undefined,
+      "response": undefined,
+      "sdkName": undefined,
+      "server": [],
+      "summary": "Update an Inquiry",
       "tags": [],
     },
     {
@@ -6350,6 +6350,388 @@ Note that this action will trigger any associated workflows and webhooks.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "Permanently deletes personally identifiable information (PII) for an Account and all associated Inquiries, Verifications and Reports. This action cannot be undone. 
+
+This endpoint can be used to comply with privacy regulations such as GDPR / CCPA or to enforce data privacy.
+
+Note: An account is still updatable after redaction. If you want to delete data continuously, please reach out to us to help you setup a retention policy.",
+      "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "Persona-Version",
+              "value": {
+                "literal": {
+                  "string": "2020-01-13",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
+          "pathParameters": [
+            {
+              "name": "account-id",
+              "value": {
+                "primitive": {
+                  "string": "account-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "attributes": {
+                    "properties": {
+                      "created-at": {
+                        "primitive": {
+                          "string": "2020-04-12T05:08:51.000Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated-at": {
+                        "primitive": {
+                          "string": "2020-04-13T00:23:57.000Z",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "act_Gryv7cVbF2hDyFLKDhAYcqT9",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": {
+                    "primitive": {
+                      "string": "account",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
+      "generatedRequestName": "RedactAnAccountRequest",
+      "headers": [
+        {
+          "description": undefined,
+          "name": "Persona-Version",
+          "schema": {
+            "description": undefined,
+            "type": "literal",
+            "value": {
+              "string": "2020-01-13",
+              "type": "string",
+            },
+          },
+        },
+      ],
+      "internal": undefined,
+      "method": "DELETE",
+      "operationId": "redact-an-account",
+      "path": "/accounts/{account-id}",
+      "pathParameters": [
+        {
+          "description": undefined,
+          "name": "account-id",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": undefined,
+        },
+      ],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "200",
+        "schema": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "RedactAnAccountResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "redactAnAccountResponseData",
+              "key": "data",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [],
+                  "allOfPropertyConflicts": [],
+                  "description": undefined,
+                  "generatedName": "RedactAnAccountResponseData",
+                  "nameOverride": undefined,
+                  "properties": [
+                    {
+                      "conflict": {},
+                      "generatedName": "redactAnAccountResponseDataType",
+                      "key": "type",
+                      "schema": {
+                        "description": undefined,
+                        "type": "optional",
+                        "value": {
+                          "description": undefined,
+                          "schema": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "redactAnAccountResponseDataId",
+                      "key": "id",
+                      "schema": {
+                        "description": undefined,
+                        "type": "optional",
+                        "value": {
+                          "description": undefined,
+                          "schema": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                    {
+                      "conflict": {},
+                      "generatedName": "redactAnAccountResponseDataAttributes",
+                      "key": "attributes",
+                      "schema": {
+                        "description": undefined,
+                        "type": "optional",
+                        "value": {
+                          "allOf": [],
+                          "allOfPropertyConflicts": [],
+                          "description": undefined,
+                          "generatedName": "RedactAnAccountResponseDataAttributes",
+                          "nameOverride": undefined,
+                          "properties": [
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesReferenceId",
+                              "key": "reference-id",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesCreatedAt",
+                              "key": "created-at",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "description": undefined,
+                                  "schema": {
+                                    "maxLength": undefined,
+                                    "minLength": undefined,
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesUpdatedAt",
+                              "key": "updated-at",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "description": undefined,
+                                  "schema": {
+                                    "maxLength": undefined,
+                                    "minLength": undefined,
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesNameFirst",
+                              "key": "name-first",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesNameMiddle",
+                              "key": "name-middle",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesNameLast",
+                              "key": "name-last",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesAddressStreet1",
+                              "key": "address-street-1",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesAddressStreet2",
+                              "key": "address-street-2",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesAddressCity",
+                              "key": "address-city",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesAddressSubdivision",
+                              "key": "address-subdivision",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesAddressPostalCode",
+                              "key": "address-postal-code",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesBirthdate",
+                              "key": "birthdate",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                            {
+                              "conflict": {},
+                              "generatedName": "redactAnAccountResponseDataAttributesSocialSecurityNumber",
+                              "key": "social-security-number",
+                              "schema": {
+                                "description": undefined,
+                                "type": "optional",
+                                "value": {
+                                  "type": "unknown",
+                                },
+                              },
+                            },
+                          ],
+                          "type": "object",
+                        },
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": "Redact an Account",
+      "tags": [],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "Updates an existing Account.",
       "errorStatusCode": [
         409,
@@ -7047,388 +7429,6 @@ Note that this action will trigger any associated workflows and webhooks.",
       "sdkName": undefined,
       "server": [],
       "summary": "Update an Account",
-      "tags": [],
-    },
-    {
-      "audiences": [],
-      "authed": true,
-      "availability": undefined,
-      "description": "Permanently deletes personally identifiable information (PII) for an Account and all associated Inquiries, Verifications and Reports. This action cannot be undone. 
-
-This endpoint can be used to comply with privacy regulations such as GDPR / CCPA or to enforce data privacy.
-
-Note: An account is still updatable after redaction. If you want to delete data continuously, please reach out to us to help you setup a retention policy.",
-      "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [
-            {
-              "name": "Persona-Version",
-              "value": {
-                "literal": {
-                  "string": "2020-01-13",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
-          "pathParameters": [
-            {
-              "name": "account-id",
-              "value": {
-                "primitive": {
-                  "string": "account-id",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "attributes": {
-                    "properties": {
-                      "created-at": {
-                        "primitive": {
-                          "string": "2020-04-12T05:08:51.000Z",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "updated-at": {
-                        "primitive": {
-                          "string": "2020-04-13T00:23:57.000Z",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "id": {
-                    "primitive": {
-                      "string": "act_Gryv7cVbF2hDyFLKDhAYcqT9",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "type": {
-                    "primitive": {
-                      "string": "account",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
-      "generatedRequestName": "RedactAnAccountRequest",
-      "headers": [
-        {
-          "description": undefined,
-          "name": "Persona-Version",
-          "schema": {
-            "description": undefined,
-            "type": "literal",
-            "value": {
-              "string": "2020-01-13",
-              "type": "string",
-            },
-          },
-        },
-      ],
-      "internal": undefined,
-      "method": "DELETE",
-      "operationId": "redact-an-account",
-      "path": "/accounts/{account-id}",
-      "pathParameters": [
-        {
-          "description": undefined,
-          "name": "account-id",
-          "schema": {
-            "description": undefined,
-            "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
-            },
-            "type": "primitive",
-          },
-          "variableReference": undefined,
-        },
-      ],
-      "queryParameters": [],
-      "request": undefined,
-      "requestNameOverride": undefined,
-      "response": {
-        "description": "200",
-        "schema": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
-          "description": undefined,
-          "generatedName": "RedactAnAccountResponse",
-          "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "redactAnAccountResponseData",
-              "key": "data",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "allOf": [],
-                  "allOfPropertyConflicts": [],
-                  "description": undefined,
-                  "generatedName": "RedactAnAccountResponseData",
-                  "nameOverride": undefined,
-                  "properties": [
-                    {
-                      "conflict": {},
-                      "generatedName": "redactAnAccountResponseDataType",
-                      "key": "type",
-                      "schema": {
-                        "description": undefined,
-                        "type": "optional",
-                        "value": {
-                          "description": undefined,
-                          "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                    },
-                    {
-                      "conflict": {},
-                      "generatedName": "redactAnAccountResponseDataId",
-                      "key": "id",
-                      "schema": {
-                        "description": undefined,
-                        "type": "optional",
-                        "value": {
-                          "description": undefined,
-                          "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                    },
-                    {
-                      "conflict": {},
-                      "generatedName": "redactAnAccountResponseDataAttributes",
-                      "key": "attributes",
-                      "schema": {
-                        "description": undefined,
-                        "type": "optional",
-                        "value": {
-                          "allOf": [],
-                          "allOfPropertyConflicts": [],
-                          "description": undefined,
-                          "generatedName": "RedactAnAccountResponseDataAttributes",
-                          "nameOverride": undefined,
-                          "properties": [
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesReferenceId",
-                              "key": "reference-id",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesCreatedAt",
-                              "key": "created-at",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "description": undefined,
-                                  "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesUpdatedAt",
-                              "key": "updated-at",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "description": undefined,
-                                  "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesNameFirst",
-                              "key": "name-first",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesNameMiddle",
-                              "key": "name-middle",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesNameLast",
-                              "key": "name-last",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesAddressStreet1",
-                              "key": "address-street-1",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesAddressStreet2",
-                              "key": "address-street-2",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesAddressCity",
-                              "key": "address-city",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesAddressSubdivision",
-                              "key": "address-subdivision",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesAddressPostalCode",
-                              "key": "address-postal-code",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesBirthdate",
-                              "key": "birthdate",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                            {
-                              "conflict": {},
-                              "generatedName": "redactAnAccountResponseDataAttributesSocialSecurityNumber",
-                              "key": "social-security-number",
-                              "schema": {
-                                "description": undefined,
-                                "type": "optional",
-                                "value": {
-                                  "type": "unknown",
-                                },
-                              },
-                            },
-                          ],
-                          "type": "object",
-                        },
-                      },
-                    },
-                  ],
-                  "type": "object",
-                },
-              },
-            },
-          ],
-          "type": "object",
-        },
-        "type": "json",
-      },
-      "sdkName": undefined,
-      "server": [],
-      "summary": "Redact an Account",
       "tags": [],
     },
     {
