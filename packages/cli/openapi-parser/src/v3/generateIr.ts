@@ -56,8 +56,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         for (const operation of convertedOperations) {
             switch (operation.type) {
                 case "async":
-                    endpointsWithExample.push(operation.async);
                     endpointsWithExample.push(operation.sync);
+                    endpointsWithExample.push(operation.async);
                     break;
                 case "http":
                     endpointsWithExample.push(operation.value);
