@@ -54,5 +54,5 @@ export async function loadOpenAPI(absoluteFilePathToOpenAPI: AbsoluteFilePath): 
         keepUrlRefs: true,
     });
 
-    return await SwaggerParser.parse(JSON.parse(result.bundle.parsed));
+    return await SwaggerParser.parse(result.bundle.parsed);
 }
