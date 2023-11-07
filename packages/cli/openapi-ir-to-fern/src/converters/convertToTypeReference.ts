@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
@@ -226,14 +227,20 @@ export function convertLiteralToTypeReference(value: LiteralSchemaValue): TypeRe
     switch (value.type) {
         case "boolean":
             return {
-                typeReference: `literal<${value.boolean}>`,
+                typeReference: {
+                    type: `literal<${value.boolean}>`,
+                },
                 additionalTypeDeclarations: {},
             };
         case "string":
             return {
-                typeReference: `literal<"${value.string}">`,
+                typeReference: {
+                    type: `literal<"${value.string}">`,
+                },
                 additionalTypeDeclarations: {},
             };
+        default:
+            assertNever(value);
     }
 }
 

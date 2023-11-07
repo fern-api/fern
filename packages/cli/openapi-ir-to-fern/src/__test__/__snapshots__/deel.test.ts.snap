@@ -1265,7 +1265,9 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "ContractToCreateOngoingTimeBasedCompensationDetails",
             },
-            "type": "literal<"ongoing_time_based">",
+            "type": {
+              "type": "literal<"ongoing_time_based">",
+            },
           },
         },
         "ContractToCreateOngoingTimeBasedCompensationDetails": {
@@ -1328,7 +1330,9 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
             },
-            "type": "literal<"pay_as_you_go_time_based">",
+            "type": {
+              "type": "literal<"pay_as_you_go_time_based">",
+            },
           },
         },
         "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
@@ -1391,7 +1395,9 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "CompensationDetailsOfContractToCreateShared",
             },
-            "type": "literal<"payg_milestones">",
+            "type": {
+              "type": "literal<"payg_milestones">",
+            },
           },
         },
         "ContractToCreatePaygTasks": {
@@ -1404,7 +1410,9 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "CompensationDetailsOfContractToCreateShared",
             },
-            "type": "literal<"payg_tasks">",
+            "type": {
+              "type": "literal<"payg_tasks">",
+            },
           },
         },
         "ContractToCreateShared": {
@@ -5037,7 +5045,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
-        "OffCyclePaymentTypeEnum": "literal<"offcycle">",
+        "OffCyclePaymentTypeEnum": {
+          "type": "literal<"offcycle">",
+        },
         "OrganizationList": {
           "docs": undefined,
           "type": "list<BasicOrganization>",
@@ -6599,7 +6609,9 @@ exports[`open api parser deel simple 1`] = `
             "quantity": "double",
           },
         },
-        "TimesheetTypeEnum": "literal<"work">",
+        "TimesheetTypeEnum": {
+          "type": "literal<"work">",
+        },
         "TimesheetTypeEnumList": {
           "docs": undefined,
           "type": "list<TimesheetTypeEnum>",

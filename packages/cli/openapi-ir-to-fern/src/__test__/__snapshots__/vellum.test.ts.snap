@@ -1086,7 +1086,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
-        "ProcessingFailureReasonEnum": "literal<"EXCEEDED_CHARACTER_LIMIT">",
+        "ProcessingFailureReasonEnum": {
+          "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
+        },
         "ProcessingStateEnum": {
           "docs": "* \`QUEUED\` - Queued
 * \`PROCESSING\` - Processing
@@ -1750,7 +1752,9 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
-        "SlimDocumentStatusEnum": "literal<"ACTIVE">",
+        "SlimDocumentStatusEnum": {
+          "type": "literal<"ACTIVE">",
+        },
         "SubmitCompletionActualRequest": {
           "docs": undefined,
           "properties": {
