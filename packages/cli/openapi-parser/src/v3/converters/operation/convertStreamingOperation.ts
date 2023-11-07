@@ -39,14 +39,14 @@ export function convertStreamingOperation({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
-                isStreaming: false,
+                isStreaming: true,
             });
 
             const nonStreamingRequestBody = getRequestBody({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
-                isStreaming: true,
+                isStreaming: false,
             });
 
             const streamingOperation = convertHttpOperation({
