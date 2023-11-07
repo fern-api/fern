@@ -32,21 +32,5 @@ describe("loadWorkspace", () => {
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
         assert(workspace.workspace.type === "openapi");
-        assert(workspace.workspace.openapi.contents.includes("Swagger Petstore"));
-    });
-
-    it("open api split", async () => {
-        const workspace = await loadAPIWorkspace({
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures/openapi-split")
-            ),
-            context: createMockTaskContext(),
-            cliVersion: "0.0.0",
-            workspaceName: undefined,
-        });
-        expect(workspace.didSucceed).toBe(true);
-        assert(workspace.didSucceed);
-        assert(workspace.workspace.type === "openapi");
     });
 });
