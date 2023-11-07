@@ -53,14 +53,10 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "literal",
                 "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": true,
-                    "type": "boolean",
-                  },
+                  "boolean": true,
+                  "type": "boolean",
                 },
               },
             },
@@ -178,14 +174,10 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "literal",
                 "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": false,
-                    "type": "boolean",
-                  },
+                  "boolean": false,
+                  "type": "boolean",
                 },
               },
             },
@@ -281,14 +273,10 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "literal",
                 "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": true,
-                    "type": "boolean",
-                  },
+                  "boolean": true,
+                  "type": "boolean",
                 },
               },
             },
@@ -449,14 +437,10 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "literal",
                 "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": false,
-                    "type": "boolean",
-                  },
+                  "boolean": false,
+                  "type": "boolean",
                 },
               },
             },
@@ -587,14 +571,10 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "literal",
                 "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": true,
-                    "type": "boolean",
-                  },
+                  "boolean": true,
+                  "type": "boolean",
                 },
               },
             },
@@ -744,14 +724,10 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "literal",
                 "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": false,
-                    "type": "boolean",
-                  },
+                  "boolean": false,
+                  "type": "boolean",
                 },
               },
             },

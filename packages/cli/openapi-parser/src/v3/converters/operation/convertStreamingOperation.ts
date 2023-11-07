@@ -134,6 +134,7 @@ function getRequestBody({
                 "x-fern-boolean-literal": isStreaming,
             } as OpenAPIV3.SchemaObject,
         },
+        required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty],
     };
 
     return {
