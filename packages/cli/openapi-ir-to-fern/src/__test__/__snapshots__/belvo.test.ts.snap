@@ -2472,9 +2472,7 @@ We return one of the following enum values:
             },
           ],
         },
-        "EnumBankAccountHolderTypePse": {
-          "type": "literal<"BUSINESS">",
-        },
+        "EnumBankAccountHolderTypePse": "literal<"BUSINESS">",
         "EnumBankAccountPixAccountTypeOfpi": {
           "docs": "The type of bank account. Can be either:
 
@@ -2855,9 +2853,7 @@ You can send through one of the following values:
             },
           ],
         },
-        "EnumIncomeSourceType": {
-          "type": "literal<"BANK">",
-        },
+        "EnumIncomeSourceType": "literal<"BANK">",
         "EnumIncomeStreamConfidence": {
           "docs": "Belvo's level of confidence for future incomes.
 
@@ -3011,12 +3007,8 @@ Can be either:
             },
           ],
         },
-        "EnumIncomeVerificationAccountHolderType": {
-          "type": "literal<"INDIVIDUAL">",
-        },
-        "EnumIncomeVerificationType": {
-          "type": "literal<"INFLOW">",
-        },
+        "EnumIncomeVerificationAccountHolderType": "literal<"INDIVIDUAL">",
+        "EnumIncomeVerificationType": "literal<"INFLOW">",
         "EnumInstitutionIntegrationType": {
           "docs": "The type of technology used to access the institution. We return one of the following values:
 
@@ -3227,9 +3219,7 @@ You can send through one or more of the following values:
             },
           ],
         },
-        "EnumInvoiceDianInvoiceType": {
-          "type": "literal<"Factura Electrónica de Venta">",
-        },
+        "EnumInvoiceDianInvoiceType": "literal<"Factura Electrónica de Venta">",
         "EnumInvoiceDianPaymentMethod": {
           "docs": "The payment method used for this invoice, as defined by the legal entity of the country.
 
@@ -3572,9 +3562,7 @@ We return one of the following values:
             },
           ],
         },
-        "EnumReceivableTransactionFeeType": {
-          "type": "literal<"TRANSACTION_FEE">",
-        },
+        "EnumReceivableTransactionFeeType": "literal<"TRANSACTION_FEE">",
         "EnumReceivableTransactionStatus": {
           "docs": "The status of the transaction. Can be either:
 
@@ -3663,9 +3651,7 @@ We return one of the following values:
             },
           ],
         },
-        "EnumRecurringExpenseFrequency": {
-          "type": "literal<"MONTHLY">",
-        },
+        "EnumRecurringExpenseFrequency": "literal<"MONTHLY">",
         "EnumRecurringExpensePaymentType": {
           "docs": "The type of recurring expense. We return one of the following values:
 

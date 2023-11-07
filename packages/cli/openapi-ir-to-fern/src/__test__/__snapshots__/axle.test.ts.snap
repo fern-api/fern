@@ -341,9 +341,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "Vehicle",
             },
             "id": "string",
-            "type": {
-              "type": "literal<"vehicle">",
-            },
+            "type": "literal<"vehicle">",
           },
         },
         "StartIgnitionResponse": {

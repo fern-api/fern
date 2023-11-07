@@ -27,9 +27,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "AlertStrategy",
             },
-            "type": {
-              "type": "literal<"alert">",
-            },
+            "type": "literal<"alert">",
           },
         },
         "AlertStrategy": {
@@ -1613,9 +1611,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Delay to introduce in MS",
               "type": "integer",
             },
-            "type": {
-              "type": "literal<"delay">",
-            },
+            "type": "literal<"delay">",
           },
         },
         "DeletedBookmarkResponse": {
@@ -2227,9 +2223,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<ConnectionFilterProperty>",
             },
-            "type": {
-              "type": "literal<"filter">",
-            },
+            "type": "literal<"filter">",
           },
         },
         "FilteredMeta": {
@@ -3759,9 +3753,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "RetryStrategy",
             },
-            "type": {
-              "type": "literal<"retry">",
-            },
+            "type": "literal<"retry">",
           },
         },
         "RetryStrategy": {
@@ -4198,9 +4190,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
               "type": "optional<string>",
             },
-            "type": {
-              "type": "literal<"transform">",
-            },
+            "type": "literal<"transform">",
           },
         },
         "TransformFullTransformation": {
@@ -4227,9 +4217,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
               "type": "string",
             },
-            "type": {
-              "type": "literal<"transform">",
-            },
+            "type": "literal<"transform">",
           },
         },
         "TransformRule": {

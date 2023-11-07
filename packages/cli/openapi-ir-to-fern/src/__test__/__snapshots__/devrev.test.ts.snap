@@ -2935,9 +2935,7 @@ empty.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "auth-token-token-type": {
-          "type": "literal<"bearer">",
-        },
+        "auth-token-token-type": "literal<"bearer">",
         "empty": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -2954,40 +2952,28 @@ empty.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-forbidden-type": {
-          "type": "literal<"forbidden">",
-        },
+        "error-forbidden-type": "literal<"forbidden">",
         "error-internal-server-error-internal-error": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-internal-server-error-type": {
-          "type": "literal<"internal_error">",
-        },
+        "error-internal-server-error-type": "literal<"internal_error">",
         "error-not-found-not-found": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-not-found-type": {
-          "type": "literal<"not_found">",
-        },
+        "error-not-found-type": "literal<"not_found">",
         "error-service-unavailable-service-unavailable": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-service-unavailable-type": {
-          "type": "literal<"service_unavailable">",
-        },
+        "error-service-unavailable-type": "literal<"service_unavailable">",
         "error-too-many-requests-too-many-requests": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-too-many-requests-type": {
-          "type": "literal<"too_many_requests">",
-        },
-        "error-unauthorized-type": {
-          "type": "literal<"unauthenticated">",
-        },
+        "error-too-many-requests-type": "literal<"too_many_requests">",
+        "error-unauthorized-type": "literal<"unauthenticated">",
         "error-unauthorized-unauthenticated": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -2996,9 +2982,7 @@ empty.
           "docs": "External identity of a user.",
           "type": "map<string, unknown>",
         },
-        "org-type": {
-          "type": "literal<"rev_org">",
-        },
+        "org-type": "literal<"rev_org">",
         "parts-create-request-product": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -3027,18 +3011,10 @@ empty.
           "docs": "The response for deleting a tag.",
           "type": "map<string, unknown>",
         },
-        "timeline-entries-create-request-type": {
-          "type": "literal<"timeline_comment">",
-        },
-        "timeline-entries-update-request-type": {
-          "type": "literal<"timeline_comment">",
-        },
-        "timeline-entry-type": {
-          "type": "literal<"timeline_comment">",
-        },
-        "timeline-entry-visibility": {
-          "type": "literal<"private">",
-        },
+        "timeline-entries-create-request-type": "literal<"timeline_comment">",
+        "timeline-entries-update-request-type": "literal<"timeline_comment">",
+        "timeline-entry-type": "literal<"timeline_comment">",
+        "timeline-entry-visibility": "literal<"private">",
         "webhooks-delete-response": {
           "docs": "The response to deleting the webhook.",
           "type": "map<string, unknown>",

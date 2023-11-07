@@ -227,16 +227,12 @@ export function convertLiteralToTypeReference(value: LiteralSchemaValue): TypeRe
     switch (value.type) {
         case "boolean":
             return {
-                typeReference: {
-                    type: `literal<${value.boolean}>`,
-                },
+                typeReference: `literal<${value.boolean}>`,
                 additionalTypeDeclarations: {},
             };
         case "string":
             return {
-                typeReference: {
-                    type: `literal<"${value.string}">`,
-                },
+                typeReference: `literal<"${value.string}">`,
                 additionalTypeDeclarations: {},
             };
         default:

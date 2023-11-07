@@ -437,9 +437,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "types": {
-        "ACHPaymentMethod": {
-          "type": "literal<"ACH">",
-        },
+        "ACHPaymentMethod": "literal<"ACH">",
         "AchDetails": {
           "docs": "Model for ACH payment method",
           "properties": {
@@ -933,9 +931,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "CardPaymentMethod": {
-          "type": "literal<"CARD">",
-        },
+        "CardPaymentMethod": "literal<"CARD">",
         "CaseClosedDetails": {
           "docs": undefined,
           "properties": {
@@ -1106,9 +1102,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
         },
-        "CheckPaymentMethod": {
-          "type": "literal<"CHECK">",
-        },
+        "CheckPaymentMethod": "literal<"CHECK">",
         "CompanyFinancialDetails": {
           "docs": "Model for business user company financial details",
           "properties": {
@@ -4009,9 +4003,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "isFalsePositive": "boolean",
           },
         },
-        "GeneralBankAccountPaymentMethod": {
-          "type": "literal<"GENERIC_BANK_ACCOUNT">",
-        },
+        "GeneralBankAccountPaymentMethod": "literal<"GENERIC_BANK_ACCOUNT">",
         "GenericBankAccountDetails": {
           "docs": "Model for any generic bank account",
           "properties": {
@@ -4083,9 +4075,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "IBANPaymentMethod": {
-          "type": "literal<"IBAN">",
-        },
+        "IBANPaymentMethod": "literal<"IBAN">",
         "IbanDetails": {
           "docs": "Standardized model for Bank Details",
           "properties": {
@@ -4450,9 +4440,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
         },
-        "MpesaPaymentMethod": {
-          "type": "literal<"MPESA">",
-        },
+        "MpesaPaymentMethod": "literal<"MPESA">",
         "PaymentMethod": {
           "docs": undefined,
           "enum": [
@@ -4802,9 +4790,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "SWIFTPaymentMethod": {
-          "type": "literal<"SWIFT">",
-        },
+        "SWIFTPaymentMethod": "literal<"SWIFT">",
         "SanctionsDetails": {
           "docs": undefined,
           "properties": {
@@ -5355,9 +5341,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "UPIPaymentMethod": {
-          "type": "literal<"UPI">",
-        },
+        "UPIPaymentMethod": "literal<"UPI">",
         "UpiDetails": {
           "docs": "Model for UPI payment method",
           "properties": {
@@ -5657,9 +5641,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "WalletPaymentMethod": {
-          "type": "literal<"WALLET">",
-        },
+        "WalletPaymentMethod": "literal<"WALLET">",
         "WebhookEvent": {
           "docs": undefined,
           "properties": {

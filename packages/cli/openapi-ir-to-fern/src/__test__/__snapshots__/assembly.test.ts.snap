@@ -853,9 +853,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
-        "RedactedAudioStatus": {
-          "type": "literal<"redacted_audio_ready">",
-        },
+        "RedactedAudioStatus": "literal<"redacted_audio_ready">",
         "SentencesResponse": {
           "docs": undefined,
           "properties": {
