@@ -56,6 +56,7 @@ export function convertAsyncSyncOperation({
         },
         context,
         suffix: "async",
+        responseStatusCode: asyncResponseStatusCode,
     });
 
     asyncOperation.headers.push({
