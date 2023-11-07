@@ -13,21 +13,17 @@ export interface OnlyStreamingEndpoint {
 export interface StreamConditionEndpoint {
     type: "streamCondition";
     streamConditionProperty: string;
-    responseStream: string;
-    response: string;
+    responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }
 
 declare namespace Raw {
     export type StreamingExtensionSchema = boolean | StreamingExtensionObjectSchema;
 
-    export interface TypeRef {
-        $ref: string;
-    }
-
     export interface StreamingExtensionObjectSchema {
         ["stream-condition"]: string;
-        ["response-stream"]: TypeRef;
-        response: TypeRef;
+        ["response-stream"]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+        response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     }
 }
 
@@ -49,8 +45,8 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
     return {
         type: "streamCondition",
         streamConditionProperty: maybeTrimRequestPrefix(streaming["stream-condition"]),
-        responseStream: streaming["response-stream"].$ref,
-        response: streaming.response.$ref,
+        responseStream: streaming["response-stream"],
+        response: streaming.response,
     };
 }
 

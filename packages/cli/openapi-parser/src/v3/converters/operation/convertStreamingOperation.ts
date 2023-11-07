@@ -2,11 +2,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { EndpointWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";
-import { setExtension } from "../../extensions/setExtension";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { OperationContext } from "../contexts";
+import { getApplicationJsonRequest } from "../endpoint/convertRequest";
 import { convertHttpOperation } from "./convertHttpOperation";
 
 export interface StreamingEndpoints {
@@ -36,17 +35,26 @@ export function convertStreamingOperation({
             };
         }
         case "streamCondition": {
+            const streamingRequestBody = getRequestBody({
+                context,
+                operation: operationContext.operation,
+                streamingExtension,
+                isStreaming: false,
+            });
+
+            const nonStreamingRequestBody = getRequestBody({
+                context,
+                operation: operationContext.operation,
+                streamingExtension,
+                isStreaming: true,
+            });
+
             const streamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     operation: {
                         ...operationContext.operation,
-                        requestBody: convertRequestBodyToInlinedRequest({
-                            context,
-                            requestBody: operationContext.operation.requestBody,
-                            streamCondition: streamingExtension,
-                            isStreaming: true,
-                        }),
+                        requestBody: streamingRequestBody,
                     },
                     baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "stream"],
                 },
@@ -54,21 +62,18 @@ export function convertStreamingOperation({
                 streamingResponse: true,
                 suffix: "stream",
             });
+
             const nonStreamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     operation: {
                         ...operationContext.operation,
-                        requestBody: convertRequestBodyToInlinedRequest({
-                            context,
-                            requestBody: operationContext.operation.requestBody,
-                            streamCondition: streamingExtension,
-                            isStreaming: false,
-                        }),
+                        requestBody: nonStreamingRequestBody,
                     },
                 },
                 context,
             });
+
             return {
                 streaming: streamingOperation,
                 nonStreaming: nonStreamingOperation,
@@ -79,147 +84,55 @@ export function convertStreamingOperation({
     }
 }
 
-function convertRequestBodyToInlinedRequest({
+function getRequestBody({
     context,
-    requestBody,
-    streamCondition,
+    operation,
+    streamingExtension,
     isStreaming,
 }: {
     context: AbstractOpenAPIV3ParserContext;
-    requestBody?: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
-    streamCondition: StreamConditionEndpoint;
+    operation: OpenAPIV3.OperationObject;
+    streamingExtension: StreamConditionEndpoint;
     isStreaming: boolean;
-}): OpenAPIV3.RequestBodyObject {
-    if (requestBody === undefined) {
-        return {
-            content: {
-                "application/json": {
-                    schema: newSchemaObjectWithBooleanLiteralProperty({
-                        propertyName: streamCondition.streamConditionProperty,
-                        propertyValue: isStreaming,
-                    }),
-                },
-            },
-        };
+}): OpenAPIV3.RequestBodyObject | undefined {
+    if (operation.requestBody == null) {
+        return undefined;
     }
-    if (isReferenceObject(requestBody)) {
-        const requestBodyObject = context.resolveRequestBodyReference(requestBody);
-        return addStreamConditionPropertyToRequestBody({
-            context,
-            requestBodyObject,
-            streamCondition,
-            isStreaming,
-        });
-    }
-    return addStreamConditionPropertyToRequestBody({
-        context,
-        requestBodyObject: requestBody,
-        streamCondition,
-        isStreaming,
-    });
-}
 
-function addStreamConditionPropertyToRequestBody({
-    context,
-    requestBodyObject,
-    streamCondition,
-    isStreaming,
-}: {
-    context: AbstractOpenAPIV3ParserContext;
-    requestBodyObject: OpenAPIV3.RequestBodyObject;
-    streamCondition: StreamConditionEndpoint;
-    isStreaming: boolean;
-}): OpenAPIV3.RequestBodyObject {
-    return {
-        ...requestBodyObject,
-        content: Object.fromEntries(
-            Object.entries(requestBodyObject.content).map(([contentType, mediaTypeObject]) => [
-                contentType,
-                {
-                    ...mediaTypeObject,
-                    schema: addStreamConditionPropertyToObject({
-                        context,
-                        object: mediaTypeObject.schema,
-                        streamCondition,
-                        isStreaming,
-                    }),
-                },
-            ])
-        ),
-    };
-}
+    const resolvedRequestBody = isReferenceObject(operation.requestBody)
+        ? context.resolveRequestBodyReference(operation.requestBody)
+        : operation.requestBody;
 
-function addStreamConditionPropertyToObject({
-    context,
-    object,
-    streamCondition,
-    isStreaming,
-}: {
-    context: AbstractOpenAPIV3ParserContext;
-    object: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
-    streamCondition: StreamConditionEndpoint;
-    isStreaming: boolean;
-}): OpenAPIV3.SchemaObject {
-    if (object === undefined) {
-        return newSchemaObjectWithBooleanLiteralProperty({
-            propertyName: streamCondition.streamConditionProperty,
-            propertyValue: isStreaming,
-        });
-    }
-    if (isReferenceObject(object)) {
-        const schemaObject = context.resolveSchemaReference(object);
-        return addStreamConditionPropertyToSchemaObject({
-            schemaObject,
-            streamCondition,
-            isStreaming,
-        });
-    }
-    return addStreamConditionPropertyToSchemaObject({
-        schemaObject: object,
-        streamCondition,
-        isStreaming,
-    });
-}
+    const applicationJsonRequest = getApplicationJsonRequest(resolvedRequestBody);
 
-function addStreamConditionPropertyToSchemaObject({
-    schemaObject,
-    streamCondition,
-    isStreaming,
-}: {
-    schemaObject: OpenAPIV3.SchemaObject;
-    streamCondition: StreamConditionEndpoint;
-    isStreaming: boolean;
-}): OpenAPIV3.SchemaObject {
-    if (schemaObject.type === "object") {
-        const properties = schemaObject.properties ?? {};
-        properties[streamCondition.streamConditionProperty] = newBooleanLiteralProperty(isStreaming);
-        return {
-            ...schemaObject,
-            properties,
-        };
+    if (applicationJsonRequest == null) {
+        return undefined;
     }
-    // If the schema object isn't an object, there's nothing we can do.
-    return schemaObject;
-}
 
-function newSchemaObjectWithBooleanLiteralProperty({
-    propertyName,
-    propertyValue,
-}: {
-    propertyName: string;
-    propertyValue: boolean;
-}): OpenAPIV3.SchemaObject {
-    return {
-        type: "object",
+    const resolvedRequstBodySchema = isReferenceObject(applicationJsonRequest.schema)
+        ? context.resolveSchemaReference(applicationJsonRequest.schema)
+        : applicationJsonRequest.schema;
+
+    if (resolvedRequstBodySchema.allOf == null && resolvedRequstBodySchema.properties == null) {
+        return undefined; // not an object
+    }
+
+    const requestBodySchemaWithLiteralProperty: OpenAPIV3.SchemaObject = {
+        ...resolvedRequstBodySchema,
         properties: {
-            [propertyName]: newBooleanLiteralProperty(propertyValue),
+            ...resolvedRequstBodySchema.properties,
+            [streamingExtension.streamConditionProperty]: {
+                type: "boolean",
+                "x-fern-boolean-literal": isStreaming,
+            } as OpenAPIV3.SchemaObject,
         },
     };
-}
 
-function newBooleanLiteralProperty(value: boolean): OpenAPIV3.SchemaObject {
-    const schemaObject = {
-        type: "boolean",
+    return {
+        content: {
+            "application/json": {
+                schema: requestBodySchemaWithLiteralProperty,
+            },
+        },
     };
-    return setExtension(schemaObject, FernOpenAPIExtension.BOOLEAN_LITERAL, value);
 }

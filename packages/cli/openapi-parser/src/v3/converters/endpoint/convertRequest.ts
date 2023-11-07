@@ -31,7 +31,9 @@ interface ParsedApplicationJsonRequest {
     overridenContentType?: string;
 }
 
-function getApplicationJsonRequest(requestBody: OpenAPIV3.RequestBodyObject): ParsedApplicationJsonRequest | undefined {
+export function getApplicationJsonRequest(
+    requestBody: OpenAPIV3.RequestBodyObject
+): ParsedApplicationJsonRequest | undefined {
     const applicationJsonSchema = getSchemaForContentType({
         contentType: APPLICATION_JSON_CONTENT,
         media: requestBody.content,
