@@ -64,7 +64,9 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     break;
                 case "streaming":
                     endpointsWithExample.push(operation.streaming);
-                    endpointsWithExample.push(operation.nonStreaming);
+                    if (operation.nonStreaming) {
+                        endpointsWithExample.push(operation.nonStreaming);
+                    }
                     break;
                 case "webhook":
                     webhooks.push(operation.value);

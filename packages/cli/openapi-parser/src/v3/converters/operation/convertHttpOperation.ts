@@ -18,11 +18,13 @@ export function convertHttpOperation({
     context,
     responseStatusCode,
     suffix,
+    streamingResponse,
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
+    streamingResponse?: boolean;
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
 
@@ -81,7 +83,7 @@ export function convertHttpOperation({
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
     const convertedResponse = convertResponse({
-        isStreaming: false,
+        isStreaming: streamingResponse ?? false,
         responses: operation.responses,
         context,
         responseBreadcrumbs,

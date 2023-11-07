@@ -10,6 +10,7 @@ import { getFernStreamingExtension } from "../../extensions/getFernStreamingExte
 import { OperationContext, PathItemContext } from "../contexts";
 import { convertAsyncSyncOperation } from "./convertAsyncSyncOperation";
 import { convertHttpOperation } from "./convertHttpOperation";
+import { convertStreamingOperation } from "./convertStreamingOperation";
 import { convertWebhookOperation } from "./convertWebhookOperation";
 
 export type ConvertedOperation =
@@ -37,7 +38,7 @@ export interface ConvertedWebhookOperation {
 export interface ConvertedStreamingOperation {
     type: "streaming";
     streaming: EndpointWithExample;
-    nonStreaming: EndpointWithExample;
+    nonStreaming: EndpointWithExample | undefined;
 }
 
 export function convertOperation({
@@ -82,8 +83,18 @@ export function convertOperation({
 
     const streamingExtension = getFernStreamingExtension(operation);
     if (streamingExtension != null) {
-        // convert streaming operation
-        return undefined;
+        const streamingOperation = convertStreamingOperation({
+            context,
+            operationContext,
+            streamingExtension,
+        });
+        return streamingOperation != null
+            ? {
+                  type: "streaming",
+                  streaming: streamingOperation.streaming,
+                  nonStreaming: undefined,
+              }
+            : undefined;
     }
 
     const asyncExtension = getFernAsyncExtension(operation);

@@ -275,6 +275,60 @@ Used to list documents. Optionally filter on supported fields.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+
+Executes a deployed Workflow and streams back its results.",
+      "errorStatusCode": [],
+      "examples": [],
+      "generatedRequestName": "ExecuteWorkflowStreamRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "POST",
+      "operationId": "execute_workflow_stream",
+      "path": "/v1/execute-workflow-stream",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "ExecuteWorkflowStreamRequest",
+          "nameOverride": undefined,
+          "schema": "ExecuteWorkflowStreamRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "description": undefined,
+          "generatedName": "ExecuteWorkflowStreamResponse",
+          "nameOverride": undefined,
+          "schema": "WorkflowStreamEvent",
+          "type": "reference",
+        },
+        "type": "streamingJson",
+      },
+      "sdkName": undefined,
+      "server": [
+        {
+          "description": undefined,
+          "name": "Predict",
+          "url": "https://predict.vellum.ai",
+        },
+      ],
+      "summary": undefined,
+      "tags": [
+        "execute-workflow-stream",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a completion using a previously defined deployment.
@@ -388,6 +442,67 @@ Generate a completion using a previously defined deployment.
       "summary": undefined,
       "tags": [
         "generate",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": undefined,
+      "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Generate a stream of completions using a previously defined deployment.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+      "errorStatusCode": [
+        400,
+        403,
+        404,
+        500,
+      ],
+      "examples": [],
+      "generatedRequestName": "GenerateStreamRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "POST",
+      "operationId": "generate_stream",
+      "path": "/v1/generate-stream",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "contentType": undefined,
+        "description": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "GenerateStreamRequest",
+          "nameOverride": undefined,
+          "schema": "GenerateStreamBodyRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "description": undefined,
+          "generatedName": "GenerateStreamResponse",
+          "nameOverride": undefined,
+          "schema": "GenerateStreamResponse",
+          "type": "reference",
+        },
+        "type": "streamingJson",
+      },
+      "sdkName": undefined,
+      "server": [
+        {
+          "description": undefined,
+          "name": "Predict",
+          "url": "https://predict.vellum.ai",
+        },
+      ],
+      "summary": undefined,
+      "tags": [
+        "generate-stream",
       ],
     },
     {
@@ -1239,7 +1354,9 @@ Upload a document to be indexed and used for search.
     "DeploymentRead",
     "DocumentIndexRead",
     "PaginatedSlimDocumentList",
+    "WorkflowStreamEvent",
     "GenerateResponse",
+    "GenerateStreamResponse",
     "ModelVersionRead",
     "ModelVersionCompilePromptResponse",
     "RegisterPromptResponse",
