@@ -69,32 +69,11 @@ exports[`open api parser streaming parse open api 1`] = `
       "response": {
         "description": "",
         "schema": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserStreamResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "userStreamResponseId",
-              "key": "id",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            },
-          ],
-          "type": "object",
+          "schema": "BaseStreamUser",
+          "type": "reference",
         },
         "type": "streamingJson",
       },
@@ -190,32 +169,11 @@ exports[`open api parser streaming parse open api 1`] = `
       "response": {
         "description": "",
         "schema": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "userResponseId",
-              "key": "id",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            },
-          ],
-          "type": "object",
+          "schema": "BaseUser",
+          "type": "reference",
         },
         "type": "json",
       },
@@ -289,67 +247,11 @@ exports[`open api parser streaming parse open api 1`] = `
       "response": {
         "description": "",
         "schema": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV2StreamResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "userV2StreamResponseId",
-              "key": "id",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            },
-            {
-              "conflict": {},
-              "generatedName": "userV2StreamResponseName",
-              "key": "name",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            },
-            {
-              "conflict": {},
-              "generatedName": "userV2StreamResponseStreamed",
-              "key": "streamed",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": true,
-                    "type": "boolean",
-                  },
-                },
-              },
-            },
-          ],
-          "type": "object",
+          "schema": "StreamUser",
+          "type": "reference",
         },
         "type": "streamingJson",
       },
@@ -453,67 +355,11 @@ exports[`open api parser streaming parse open api 1`] = `
       "response": {
         "description": "",
         "schema": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV2Response",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "userV2ResponseId",
-              "key": "id",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            },
-            {
-              "conflict": {},
-              "generatedName": "userV2ResponseName",
-              "key": "name",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            },
-            {
-              "conflict": {},
-              "generatedName": "userV2ResponseStreamed",
-              "key": "streamed",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": {
-                    "boolean": false,
-                    "type": "boolean",
-                  },
-                },
-              },
-            },
-          ],
-          "type": "object",
+          "schema": "User",
+          "type": "reference",
         },
         "type": "json",
       },
@@ -793,8 +639,69 @@ exports[`open api parser streaming parse open api 1`] = `
   ],
   "errors": {},
   "hasEndpointsMarkedInternal": false,
-  "nonRequestReferencedSchemas": [],
+  "nonRequestReferencedSchemas": [
+    "BaseStreamUser",
+    "BaseUser",
+    "StreamUser",
+    "User",
+  ],
   "schemas": {
+    "BaseStreamUser": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "BaseStreamUser",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "baseStreamUserId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "BaseUser": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "BaseUser",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "baseUserId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
     "StreamUser": {
       "allOf": [],
       "allOfPropertyConflicts": [],
@@ -817,6 +724,41 @@ exports[`open api parser streaming parse open api 1`] = `
                 "type": "string",
               },
               "type": "primitive",
+            },
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "streamUserName",
+          "key": "name",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "streamUserStreamed",
+          "key": "streamed",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "type": "literal",
+              "value": {
+                "boolean": true,
+                "type": "boolean",
+              },
             },
           },
         },
@@ -845,6 +787,41 @@ exports[`open api parser streaming parse open api 1`] = `
                 "type": "string",
               },
               "type": "primitive",
+            },
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "userName",
+          "key": "name",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "conflict": {},
+          "generatedName": "userStreamed",
+          "key": "streamed",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "type": "literal",
+              "value": {
+                "boolean": false,
+                "type": "boolean",
+              },
             },
           },
         },
