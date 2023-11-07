@@ -86,9 +86,11 @@ FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 2. In the new folder, make changes to the IR definition.
 3. `fern generate --api ir-types-vXXX`
 4. Update all `package.json` files to use new `ir-sdk` npm version
-5. `yarn compile`
-6. Fix compile issues
-7. `yarn workspace @fern-api/ir-generator test -u`
-8. Copy the most recent folder in `packages/cli/generation/ir-migrations/src/migrations` and rename to use new version and previous version.
-9. Rename `migrateFromVXXToVYY.ts` to match new version.
-10. Modify the contents of that file to correspond to IR changes.
+5. `yarn install` (had to do this or commit would error out)
+6. Copy the most recent folder in `packages/cli/generation/ir-migrations/src/migrations` and rename to use new version and previous version.
+7. Rename `migrateFromVXXToVYY.ts` to match new version.
+8. Modify the contents of that file to correspond to IR changes.
+
+9. `yarn compile` (issues are to be expected)
+10. Fix compile issues
+11. `yarn workspace @fern-api/ir-generator test -u`
