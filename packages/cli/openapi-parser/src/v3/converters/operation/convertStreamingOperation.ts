@@ -35,11 +35,20 @@ export function convertStreamingOperation({
             };
         }
         case "streamCondition": {
-            const streamingRequestBody = getStreamingRequestBody({
+            const streamingRequestBody = getRequestBody({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
+                isStreaming: false,
             });
+
+            const nonStreamingRequestBody = getRequestBody({
+                context,
+                operation: operationContext.operation,
+                streamingExtension,
+                isStreaming: true,
+            });
+
             const streamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
@@ -53,21 +62,18 @@ export function convertStreamingOperation({
                 streamingResponse: true,
                 suffix: "stream",
             });
+
             const nonStreamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
                     operation: {
                         ...operationContext.operation,
-                        requestBody: convertRequestBodyToInlinedRequest({
-                            context,
-                            requestBody: operationContext.operation.requestBody,
-                            streamCondition: streamingExtension,
-                            isStreaming: false,
-                        }),
+                        requestBody: nonStreamingRequestBody,
                     },
                 },
                 context,
             });
+
             return {
                 streaming: streamingOperation,
                 nonStreaming: nonStreamingOperation,
@@ -78,14 +84,16 @@ export function convertStreamingOperation({
     }
 }
 
-function getStreamingRequestBody({
+function getRequestBody({
     context,
     operation,
     streamingExtension,
+    isStreaming,
 }: {
     context: AbstractOpenAPIV3ParserContext;
     operation: OpenAPIV3.OperationObject;
     streamingExtension: StreamConditionEndpoint;
+    isStreaming: boolean;
 }): OpenAPIV3.RequestBodyObject | undefined {
     if (operation.requestBody == null) {
         return undefined;
@@ -115,7 +123,7 @@ function getStreamingRequestBody({
             ...resolvedRequstBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
                 type: "boolean",
-                "x-fern-boolean-literal": true,
+                "x-fern-boolean-literal": isStreaming,
             } as OpenAPIV3.SchemaObject,
         },
     };
