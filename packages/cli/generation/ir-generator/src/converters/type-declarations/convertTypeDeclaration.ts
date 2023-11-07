@@ -13,9 +13,9 @@ import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
 
-export interface TypeDeclarationWithFilepaths {
+export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration;
-    filepaths: Set<FernFilepath>;
+    descendantFilepaths: Set<FernFilepath>;
 }
 
 export function convertTypeDeclaration({
@@ -30,7 +30,7 @@ export function convertTypeDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-}): TypeDeclarationWithFilepaths {
+}): TypeDeclarationWithDescendantFilepaths {
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
@@ -66,7 +66,7 @@ export function convertTypeDeclaration({
                       )
                     : [],
         },
-        filepaths: new Set(referencedTypes.map((referencedType) => referencedType.fernFilepath)),
+        descendantFilepaths: new Set(referencedTypes.map((referencedType) => referencedType.fernFilepath)),
     };
 }
 

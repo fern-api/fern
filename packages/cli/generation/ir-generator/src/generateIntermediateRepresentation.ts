@@ -148,13 +148,17 @@ export async function generateIntermediateRepresentation({
                         exampleResolver,
                     });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
-                    const filepaths = convertedTypeDeclarationWithFilepaths.filepaths;
+                    const subpackageFilepaths = convertedTypeDeclarationWithFilepaths.descendantFilepaths;
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
-                    irGraph.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes, filepaths);
+                    irGraph.addType(
+                        convertedTypeDeclaration.name,
+                        convertedTypeDeclaration.referencedTypes,
+                        subpackageFilepaths
+                    );
                     irGraph.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },
