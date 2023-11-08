@@ -79,3 +79,17 @@ To run the locally-generated CLI, run:
 ```
 FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 ```
+
+### Creating a new IR version
+
+1. Copy the most recent `fern/ir-types-vXXX` folder and bump the version.
+2. In the new folder, make changes to the IR definition.
+3. `fern generate --api ir-types-vXXX`
+4. Update all `package.json` files to use new `ir-sdk` npm version
+5. `yarn install`
+6. Copy the most recent folder in `packages/cli/generation/ir-migrations/src/migrations` and rename to use new version and previous version.
+7. Rename `migrateFromVXXToVYY.ts` to match new/previous versions.
+8. Write code to convert new version of IR to previous version of IR.
+9. `yarn compile` (issues are to be expected)
+10. Fix compile issues
+11. `yarn workspace @fern-api/ir-generator test -u`

@@ -1,0 +1,15 @@
+default-group: sdks
+groups:
+  sdks:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.274
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/fhir-model"
+        config:
+          useBrandedStringAliases: true
+          noSerdeLayer: true
+      - name: fernapi/fern-pydantic-model
+        version: 0.0.47
