@@ -56,11 +56,7 @@ function getV28TypeDeclarationFromId({
     typeId: commons.TypeId;
     allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
 }): FernIrV28.TypeDeclaration {
-    // Eliminate possibility of undefined
-    const typeDeclaration = allTypes[typeId];
-    if (typeDeclaration === undefined) {
-        throw new Error(`Type definition for type id ${typeId} is undefined`);
-    }
+    const typeDeclaration = getTypeDeclarationOrThrow({ typeId, allTypes });
 
     return {
         ...typeDeclaration,
@@ -83,9 +79,8 @@ function getTypeDeclarationOrThrow({
     allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
 }): FernIr.TypeDeclaration {
     const typeDeclaration = allTypes[typeId];
-    if (typeDeclaration === undefined) {
+    if (typeDeclaration == null) {
         throw new Error(`Type definition for type id ${typeId} is undefined`);
     }
-
     return typeDeclaration;
 }
