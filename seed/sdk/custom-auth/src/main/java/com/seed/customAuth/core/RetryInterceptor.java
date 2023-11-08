@@ -25,22 +25,22 @@ public class RetryInterceptor implements Interceptor {
         Response response = chain.proceed(chain.request());
 
         if (shouldRetry(response.code())) {
-            return retryChain(chain);
+            return retryChain(response, chain);
         }
 
         return response;
     }
 
-    private Response retryChain(Chain chain) throws IOException {
+    private Response retryChain(Response response, Chain chain) throws IOException {
         Optional<Duration> nextBackoff = this.backoff.nextBackoff();
-
         while (nextBackoff.isPresent()) {
             try {
                 Thread.sleep(nextBackoff.get().toMillis());
             } catch (InterruptedException e) {
                 throw new IOException("Interrupted while trying request", e);
             }
-            Response response = chain.proceed(chain.request());
+            response.close();
+            response = chain.proceed(chain.request());
             if (shouldRetry(response.code())) {
                 nextBackoff = this.backoff.nextBackoff();
             } else {
@@ -48,7 +48,7 @@ public class RetryInterceptor implements Interceptor {
             }
         }
 
-        throw new IOException("Max retries reached");
+        return response;
     }
 
     private static boolean shouldRetry(int statusCode) {
