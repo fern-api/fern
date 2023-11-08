@@ -18,16 +18,16 @@ paths:
       x-fern-streaming:
         stream-condition: $request.stream
         response:
-          $ref: "#/components/schemas/BaseUser"
+          $ref: "#/components/schemas/User"
         response-stream:
-          $ref: "#/components/schemas/BaseStreamUser"
+          $ref: "#/components/schemas/StreamUser"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BaseUser"
+                $ref: "#/components/schemas/User"
   /v2/users:
     post:
       operationId: user_v2
@@ -52,7 +52,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BaseUser"
+                $ref: "#/components/schemas/User"
   /v3/users:
     post:
       operationId: user_v3
@@ -91,16 +91,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BaseUser"
+                $ref: "#/components/schemas/User"
 components:
   schemas:
-    BaseUser:
+    User:
       type: object
       properties:
         id:
           type: string
           format: uuid
-    BaseStreamUser:
+    StreamUser:
       type: object
       properties:
         id:

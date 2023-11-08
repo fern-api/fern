@@ -92,7 +92,7 @@ export function convertOperation({
             ? {
                   type: "streaming",
                   streaming: streamingOperation.streaming,
-                  nonStreaming: undefined,
+                  nonStreaming: streamingOperation.nonStreaming,
               }
             : undefined;
     }

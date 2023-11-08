@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser streaming simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "errors": {},
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "user": {
+            "auth": false,
+            "docs": undefined,
+            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "stream": false,
+                },
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/v1/users",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "",
+                    "type": "optional<string>",
+                  },
+                  "stream": "literal<false>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "User",
+            },
+          },
+          "user_stream": {
+            "auth": false,
+            "docs": undefined,
+            "errors": [],
+            "method": "POST",
+            "path": "/v1/users",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "",
+                    "type": "optional<string>",
+                  },
+                  "stream": "literal<true>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserStreamRequest",
+              "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "",
+              "type": "StreamUser",
+            },
+          },
+          "user_v2": {
+            "auth": false,
+            "docs": undefined,
+            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "stream": false,
+                },
+                "response": {
+                  "body": {
+                    "streamed": false,
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/v2/users",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "",
+                    "type": "optional<string>",
+                  },
+                  "stream": "literal<false>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserV2Request",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "User2",
+            },
+          },
+          "user_v2_stream": {
+            "auth": false,
+            "docs": undefined,
+            "errors": [],
+            "method": "POST",
+            "path": "/v2/users",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "",
+                    "type": "optional<string>",
+                  },
+                  "stream": "literal<true>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserV2StreamRequest",
+              "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "",
+              "type": "StreamUser2",
+            },
+          },
+          "user_v3": {
+            "auth": false,
+            "docs": undefined,
+            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "stream": false,
+                },
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/v3/users",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "",
+                    "type": "optional<string>",
+                  },
+                  "stream": "literal<false>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserV3Request",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "UserV3Response",
+            },
+          },
+          "user_v3_stream": {
+            "auth": false,
+            "docs": undefined,
+            "errors": [],
+            "method": "POST",
+            "path": "/v3/users",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "",
+                    "type": "optional<string>",
+                  },
+                  "stream": "literal<true>",
+                },
+              },
+              "headers": undefined,
+              "name": "UserV3StreamRequest",
+              "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "",
+              "type": "UserV3StreamResponse",
+            },
+          },
+        },
+      },
+      "types": {
+        "StreamUser": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "StreamUser2": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "streamed": {
+              "docs": undefined,
+              "type": "optional<literal<true>>",
+            },
+          },
+        },
+        "User": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "User2": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "streamed": {
+              "docs": undefined,
+              "type": "optional<literal<false>>",
+            },
+          },
+        },
+        "UserV3Response": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "inline": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+          },
+        },
+        "UserV3StreamResponse": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "inline": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "streamed": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Streaming API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
+    },
+    "name": "api",
+  },
+}
+`;

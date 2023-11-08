@@ -2,6 +2,8 @@ import { OpenAPIV3 } from "openapi-types";
 import { FernOpenAPIExtension } from "./fernExtensions";
 import { getExtension } from "./getExtension";
 
+const REQUEST_PREFIX = "$request.";
+
 export type FernStreamingExtension = OnlyStreamingEndpoint | StreamConditionEndpoint;
 
 export interface OnlyStreamingEndpoint {
@@ -11,8 +13,8 @@ export interface OnlyStreamingEndpoint {
 export interface StreamConditionEndpoint {
     type: "streamCondition";
     streamConditionProperty: string;
-    responseStream: string;
-    response: string;
+    responseStream: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }
 
 declare namespace Raw {
@@ -20,8 +22,8 @@ declare namespace Raw {
 
     export interface StreamingExtensionObjectSchema {
         ["stream-condition"]: string;
-        ["response-stream"]: string;
-        response: string;
+        ["response-stream"]: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+        response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     }
 }
 
@@ -42,8 +44,15 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
 
     return {
         type: "streamCondition",
-        streamConditionProperty: streaming["stream-condition"],
+        streamConditionProperty: maybeTrimRequestPrefix(streaming["stream-condition"]),
         responseStream: streaming["response-stream"],
         response: streaming.response,
     };
+}
+
+function maybeTrimRequestPrefix(streamCondition: string): string {
+    if (streamCondition.startsWith(REQUEST_PREFIX)) {
+        return streamCondition.slice(REQUEST_PREFIX.length);
+    }
+    return streamCondition;
 }

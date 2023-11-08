@@ -148,6 +148,14 @@ export function convertSchemaObject(
 
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
+        const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
+        if (literalValue != null) {
+            return wrapLiteral({
+                literal: LiteralSchemaValue.boolean(literalValue),
+                wrapAsNullable,
+                description,
+            });
+        }
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.boolean({
                 example: getExampleAsBoolean(schema),
@@ -187,7 +195,7 @@ export function convertSchemaObject(
         const maybeConstValue = getProperty<string>(schema, "const");
         if (maybeConstValue != null) {
             return wrapLiteral({
-                literal: maybeConstValue,
+                literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
                 description,
             });
@@ -502,21 +510,21 @@ export function wrapLiteral({
     wrapAsNullable,
     description,
 }: {
-    literal: string;
+    literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: SchemaWithExample.literal({
-                value: LiteralSchemaValue.string(literal),
+                value: literal,
                 description,
             }),
             description,
         });
     }
     return SchemaWithExample.literal({
-        value: LiteralSchemaValue.string(literal),
+        value: literal,
         description,
     });
 }
