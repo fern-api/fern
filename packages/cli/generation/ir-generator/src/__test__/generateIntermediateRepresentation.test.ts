@@ -2,7 +2,7 @@ import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import path from "path";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
@@ -10,6 +10,7 @@ import { generateIntermediateRepresentation } from "../generateIntermediateRepre
 require("jest-specific-snapshot");
 
 const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
+const FHIR_DIR = path.join(__dirname, "../../../../../../fern/fhir");
 
 const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
     audiences: {
@@ -24,6 +25,7 @@ interface TestConfig {
 it("generate IR", async () => {
     let apiWorkspaces: APIWorkspace[] = [];
 
+    // Test definitions
     apiWorkspaces = await loadApis({
         fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
         context: createMockTaskContext(),
@@ -32,6 +34,20 @@ it("generate IR", async () => {
         commandLineApiWorkspace: undefined,
         defaultToAllApiWorkspaces: true,
     });
+
+    // FHIR
+    // The FHIR API definition is huge and we previously encountered issues with serializing it.
+    // Here we add the FHIR spec to the list of API definitions to test. If this test doesn't
+    // error out, we know that the FHIR spec can be serialized.
+    const fhirWorkspace = await loadAPIWorkspace({
+        absolutePathToWorkspace: AbsoluteFilePath.of(FHIR_DIR),
+        context: createMockTaskContext(),
+        cliVersion: "0.0.0",
+        workspaceName: "fhir",
+    });
+    if (fhirWorkspace.didSucceed) {
+        apiWorkspaces.push(fhirWorkspace.workspace);
+    }
 
     for (const workspace of apiWorkspaces) {
         if (workspace.type === "openapi") {
