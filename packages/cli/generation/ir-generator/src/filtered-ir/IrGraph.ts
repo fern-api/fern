@@ -52,7 +52,6 @@ export class IrGraph {
         const typeNode: TypeNode = {
             typeId,
             descendants: descendantTypeIds,
-            // temporary because I think we need to get the filepaths in here somehow
             referencedSubpackages: descendantFilepaths,
         };
         this.types[typeId] = typeNode;
