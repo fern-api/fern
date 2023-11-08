@@ -270,6 +270,9 @@ exports[`generate IR 1`] = `
   "serviceTypeReferenceInfo": {
     "sharedTypes": [
       "type_commons/types:Tag",
+      "type_commons/types:Metadata",
+      "type_commons/types:EventInfo",
+      "type_commons/types:Data",
       "type_types:Exception",
       "type_types:File",
       "type_types:MovieId",
@@ -5029,6 +5032,9 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [
         "type_commons/types:Tag",
+        "type_commons/types:Metadata",
+        "type_commons/types:EventInfo",
+        "type_commons/types:Data",
       ],
       "webhooks": null,
     },
@@ -5835,6 +5841,2155 @@ exports[`generate IR 1`] = `
     },
   },
   "types": {
+    "type_commons/types:Data": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "type": "string",
+            "value": "data",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "string",
+              "unsafeName": "string",
+            },
+            "originalName": "String",
+            "pascalCase": {
+              "safeName": "String",
+              "unsafeName": "String",
+            },
+            "screamingSnakeCase": {
+              "safeName": "STRING",
+              "unsafeName": "STRING",
+            },
+            "snakeCase": {
+              "safeName": "string",
+              "unsafeName": "string",
+            },
+          },
+          "shape": {
+            "properties": {
+              "jsonExample": "data",
+              "shape": {
+                "primitive": {
+                  "string": "data",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "singleProperty",
+            },
+            "type": "union",
+            "wireDiscriminantValue": "string",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "data",
+            "unsafeName": "data",
+          },
+          "originalName": "Data",
+          "pascalCase": {
+            "safeName": "Data",
+            "unsafeName": "Data",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DATA",
+            "unsafeName": "DATA",
+          },
+          "snakeCase": {
+            "safeName": "data",
+            "unsafeName": "data",
+          },
+        },
+        "typeId": "type_commons/types:Data",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "union",
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
+        "extends": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "string",
+                  "unsafeName": "string",
+                },
+                "originalName": "string",
+                "pascalCase": {
+                  "safeName": "String",
+                  "unsafeName": "String",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STRING",
+                  "unsafeName": "STRING",
+                },
+                "snakeCase": {
+                  "safeName": "string",
+                  "unsafeName": "string",
+                },
+              },
+              "wireValue": "string",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "singleProperty",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                  "originalName": "value",
+                  "pascalCase": {
+                    "safeName": "Value",
+                    "unsafeName": "Value",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "VALUE",
+                    "unsafeName": "VALUE",
+                  },
+                  "snakeCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                },
+                "wireValue": "value",
+              },
+              "type": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+            },
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "base64",
+                  "unsafeName": "base64",
+                },
+                "originalName": "base64",
+                "pascalCase": {
+                  "safeName": "Base64",
+                  "unsafeName": "Base64",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BASE_64",
+                  "unsafeName": "BASE_64",
+                },
+                "snakeCase": {
+                  "safeName": "base_64",
+                  "unsafeName": "base_64",
+                },
+              },
+              "wireValue": "base64",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "singleProperty",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                  "originalName": "value",
+                  "pascalCase": {
+                    "safeName": "Value",
+                    "unsafeName": "Value",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "VALUE",
+                    "unsafeName": "VALUE",
+                  },
+                  "snakeCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                },
+                "wireValue": "value",
+              },
+              "type": {
+                "_type": "primitive",
+                "primitive": "BASE_64",
+              },
+            },
+          },
+        ],
+      },
+    },
+    "type_commons/types:EventInfo": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "data": {
+              "one": "two",
+            },
+            "id": "metadata-alskjfg8",
+            "jsonString": "{"one": "two"}",
+            "type": "metadata",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "metadata",
+              "unsafeName": "metadata",
+            },
+            "originalName": "Metadata",
+            "pascalCase": {
+              "safeName": "Metadata",
+              "unsafeName": "Metadata",
+            },
+            "screamingSnakeCase": {
+              "safeName": "METADATA",
+              "unsafeName": "METADATA",
+            },
+            "snakeCase": {
+              "safeName": "metadata",
+              "unsafeName": "metadata",
+            },
+          },
+          "shape": {
+            "properties": {
+              "shape": {
+                "properties": [
+                  {
+                    "originalTypeDeclaration": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                        ],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "metadata",
+                          "unsafeName": "metadata",
+                        },
+                        "originalName": "Metadata",
+                        "pascalCase": {
+                          "safeName": "Metadata",
+                          "unsafeName": "Metadata",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "METADATA",
+                          "unsafeName": "METADATA",
+                        },
+                        "snakeCase": {
+                          "safeName": "metadata",
+                          "unsafeName": "metadata",
+                        },
+                      },
+                      "typeId": "type_commons/types:Metadata",
+                    },
+                    "value": {
+                      "jsonExample": "metadata-alskjfg8",
+                      "shape": {
+                        "primitive": {
+                          "string": "metadata-alskjfg8",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "wireKey": "id",
+                  },
+                  {
+                    "originalTypeDeclaration": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                        ],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "metadata",
+                          "unsafeName": "metadata",
+                        },
+                        "originalName": "Metadata",
+                        "pascalCase": {
+                          "safeName": "Metadata",
+                          "unsafeName": "Metadata",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "METADATA",
+                          "unsafeName": "METADATA",
+                        },
+                        "snakeCase": {
+                          "safeName": "metadata",
+                          "unsafeName": "metadata",
+                        },
+                      },
+                      "typeId": "type_commons/types:Metadata",
+                    },
+                    "value": {
+                      "jsonExample": {
+                        "one": "two",
+                      },
+                      "shape": {
+                        "container": {
+                          "optional": {
+                            "jsonExample": {
+                              "one": "two",
+                            },
+                            "shape": {
+                              "container": {
+                                "map": [
+                                  {
+                                    "key": {
+                                      "jsonExample": "one",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": "one",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "value": {
+                                      "jsonExample": "two",
+                                      "shape": {
+                                        "primitive": {
+                                          "string": "two",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                  },
+                                ],
+                                "type": "map",
+                              },
+                              "type": "container",
+                            },
+                          },
+                          "type": "optional",
+                        },
+                        "type": "container",
+                      },
+                    },
+                    "wireKey": "data",
+                  },
+                  {
+                    "originalTypeDeclaration": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [
+                          {
+                            "camelCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                            "originalName": "commons",
+                            "pascalCase": {
+                              "safeName": "Commons",
+                              "unsafeName": "Commons",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "COMMONS",
+                              "unsafeName": "COMMONS",
+                            },
+                            "snakeCase": {
+                              "safeName": "commons",
+                              "unsafeName": "commons",
+                            },
+                          },
+                        ],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "metadata",
+                          "unsafeName": "metadata",
+                        },
+                        "originalName": "Metadata",
+                        "pascalCase": {
+                          "safeName": "Metadata",
+                          "unsafeName": "Metadata",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "METADATA",
+                          "unsafeName": "METADATA",
+                        },
+                        "snakeCase": {
+                          "safeName": "metadata",
+                          "unsafeName": "metadata",
+                        },
+                      },
+                      "typeId": "type_commons/types:Metadata",
+                    },
+                    "value": {
+                      "jsonExample": "{"one": "two"}",
+                      "shape": {
+                        "container": {
+                          "optional": {
+                            "jsonExample": "{"one": "two"}",
+                            "shape": {
+                              "primitive": {
+                                "string": "{"one": "two"}",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "type": "optional",
+                        },
+                        "type": "container",
+                      },
+                    },
+                    "wireKey": "jsonString",
+                  },
+                ],
+                "type": "object",
+              },
+              "type": "samePropertiesAsObject",
+              "typeName": {
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                      "originalName": "commons",
+                      "pascalCase": {
+                        "safeName": "Commons",
+                        "unsafeName": "Commons",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "COMMONS",
+                        "unsafeName": "COMMONS",
+                      },
+                      "snakeCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                    },
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                      "originalName": "commons",
+                      "pascalCase": {
+                        "safeName": "Commons",
+                        "unsafeName": "Commons",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "COMMONS",
+                        "unsafeName": "COMMONS",
+                      },
+                      "snakeCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                    },
+                  ],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "metadata",
+                    "unsafeName": "metadata",
+                  },
+                  "originalName": "Metadata",
+                  "pascalCase": {
+                    "safeName": "Metadata",
+                    "unsafeName": "Metadata",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "METADATA",
+                    "unsafeName": "METADATA",
+                  },
+                  "snakeCase": {
+                    "safeName": "metadata",
+                    "unsafeName": "metadata",
+                  },
+                },
+                "typeId": "type_commons/types:Metadata",
+              },
+            },
+            "type": "union",
+            "wireDiscriminantValue": "metadata",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "eventInfo",
+            "unsafeName": "eventInfo",
+          },
+          "originalName": "EventInfo",
+          "pascalCase": {
+            "safeName": "EventInfo",
+            "unsafeName": "EventInfo",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_INFO",
+            "unsafeName": "EVENT_INFO",
+          },
+          "snakeCase": {
+            "safeName": "event_info",
+            "unsafeName": "event_info",
+          },
+        },
+        "typeId": "type_commons/types:EventInfo",
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+              {
+                "camelCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+                "originalName": "types",
+                "pascalCase": {
+                  "safeName": "Types",
+                  "unsafeName": "Types",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPES",
+                  "unsafeName": "TYPES",
+                },
+                "snakeCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+            "packagePath": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "metadata",
+              "unsafeName": "metadata",
+            },
+            "originalName": "Metadata",
+            "pascalCase": {
+              "safeName": "Metadata",
+              "unsafeName": "Metadata",
+            },
+            "screamingSnakeCase": {
+              "safeName": "METADATA",
+              "unsafeName": "METADATA",
+            },
+            "snakeCase": {
+              "safeName": "metadata",
+              "unsafeName": "metadata",
+            },
+          },
+          "typeId": "type_commons/types:Metadata",
+        },
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+              {
+                "camelCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+                "originalName": "types",
+                "pascalCase": {
+                  "safeName": "Types",
+                  "unsafeName": "Types",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPES",
+                  "unsafeName": "TYPES",
+                },
+                "snakeCase": {
+                  "safeName": "types",
+                  "unsafeName": "types",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+            "packagePath": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "tag",
+              "unsafeName": "tag",
+            },
+            "originalName": "Tag",
+            "pascalCase": {
+              "safeName": "Tag",
+              "unsafeName": "Tag",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TAG",
+              "unsafeName": "TAG",
+            },
+            "snakeCase": {
+              "safeName": "tag",
+              "unsafeName": "tag",
+            },
+          },
+          "typeId": "type_commons/types:Tag",
+        },
+      ],
+      "shape": {
+        "_type": "union",
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
+        "extends": [],
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "samePropertiesAsObject",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                    "originalName": "commons",
+                    "pascalCase": {
+                      "safeName": "Commons",
+                      "unsafeName": "Commons",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "COMMONS",
+                      "unsafeName": "COMMONS",
+                    },
+                    "snakeCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                  },
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [
+                  {
+                    "camelCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                    "originalName": "commons",
+                    "pascalCase": {
+                      "safeName": "Commons",
+                      "unsafeName": "Commons",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "COMMONS",
+                      "unsafeName": "COMMONS",
+                    },
+                    "snakeCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                  },
+                ],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "Metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "typeId": "type_commons/types:Metadata",
+            },
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tag",
+                  "unsafeName": "tag",
+                },
+                "originalName": "tag",
+                "pascalCase": {
+                  "safeName": "Tag",
+                  "unsafeName": "Tag",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAG",
+                  "unsafeName": "TAG",
+                },
+                "snakeCase": {
+                  "safeName": "tag",
+                  "unsafeName": "tag",
+                },
+              },
+              "wireValue": "tag",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "singleProperty",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                  "originalName": "value",
+                  "pascalCase": {
+                    "safeName": "Value",
+                    "unsafeName": "Value",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "VALUE",
+                    "unsafeName": "VALUE",
+                  },
+                  "snakeCase": {
+                    "safeName": "value",
+                    "unsafeName": "value",
+                  },
+                },
+                "wireValue": "value",
+              },
+              "type": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                      "originalName": "commons",
+                      "pascalCase": {
+                        "safeName": "Commons",
+                        "unsafeName": "Commons",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "COMMONS",
+                        "unsafeName": "COMMONS",
+                      },
+                      "snakeCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                    },
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                      "originalName": "commons",
+                      "pascalCase": {
+                        "safeName": "Commons",
+                        "unsafeName": "Commons",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "COMMONS",
+                        "unsafeName": "COMMONS",
+                      },
+                      "snakeCase": {
+                        "safeName": "commons",
+                        "unsafeName": "commons",
+                      },
+                    },
+                  ],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "tag",
+                    "unsafeName": "tag",
+                  },
+                  "originalName": "Tag",
+                  "pascalCase": {
+                    "safeName": "Tag",
+                    "unsafeName": "Tag",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TAG",
+                    "unsafeName": "TAG",
+                  },
+                  "snakeCase": {
+                    "safeName": "tag",
+                    "unsafeName": "tag",
+                  },
+                },
+                "typeId": "type_commons/types:Tag",
+              },
+            },
+          },
+        ],
+      },
+    },
+    "type_commons/types:Metadata": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "data": {
+              "baz": "qux",
+              "foo": "bar",
+            },
+            "id": "metadata-js8dg24b",
+            "jsonString": "{"foo": "bar", "baz": "qux"}",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "properties": [
+              {
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                        "originalName": "commons",
+                        "pascalCase": {
+                          "safeName": "Commons",
+                          "unsafeName": "Commons",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMONS",
+                          "unsafeName": "COMMONS",
+                        },
+                        "snakeCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                      },
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [
+                      {
+                        "camelCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                        "originalName": "commons",
+                        "pascalCase": {
+                          "safeName": "Commons",
+                          "unsafeName": "Commons",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMONS",
+                          "unsafeName": "COMMONS",
+                        },
+                        "snakeCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                      },
+                    ],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                    "originalName": "Metadata",
+                    "pascalCase": {
+                      "safeName": "Metadata",
+                      "unsafeName": "Metadata",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "METADATA",
+                      "unsafeName": "METADATA",
+                    },
+                    "snakeCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                  },
+                  "typeId": "type_commons/types:Metadata",
+                },
+                "value": {
+                  "jsonExample": "metadata-js8dg24b",
+                  "shape": {
+                    "primitive": {
+                      "string": "metadata-js8dg24b",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "wireKey": "id",
+              },
+              {
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                        "originalName": "commons",
+                        "pascalCase": {
+                          "safeName": "Commons",
+                          "unsafeName": "Commons",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMONS",
+                          "unsafeName": "COMMONS",
+                        },
+                        "snakeCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                      },
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [
+                      {
+                        "camelCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                        "originalName": "commons",
+                        "pascalCase": {
+                          "safeName": "Commons",
+                          "unsafeName": "Commons",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMONS",
+                          "unsafeName": "COMMONS",
+                        },
+                        "snakeCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                      },
+                    ],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                    "originalName": "Metadata",
+                    "pascalCase": {
+                      "safeName": "Metadata",
+                      "unsafeName": "Metadata",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "METADATA",
+                      "unsafeName": "METADATA",
+                    },
+                    "snakeCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                  },
+                  "typeId": "type_commons/types:Metadata",
+                },
+                "value": {
+                  "jsonExample": {
+                    "baz": "qux",
+                    "foo": "bar",
+                  },
+                  "shape": {
+                    "container": {
+                      "optional": {
+                        "jsonExample": {
+                          "baz": "qux",
+                          "foo": "bar",
+                        },
+                        "shape": {
+                          "container": {
+                            "map": [
+                              {
+                                "key": {
+                                  "jsonExample": "foo",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": "foo",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "value": {
+                                  "jsonExample": "bar",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": "bar",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                              },
+                              {
+                                "key": {
+                                  "jsonExample": "baz",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": "baz",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "value": {
+                                  "jsonExample": "qux",
+                                  "shape": {
+                                    "primitive": {
+                                      "string": "qux",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                              },
+                            ],
+                            "type": "map",
+                          },
+                          "type": "container",
+                        },
+                      },
+                      "type": "optional",
+                    },
+                    "type": "container",
+                  },
+                },
+                "wireKey": "data",
+              },
+              {
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                        "originalName": "commons",
+                        "pascalCase": {
+                          "safeName": "Commons",
+                          "unsafeName": "Commons",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMONS",
+                          "unsafeName": "COMMONS",
+                        },
+                        "snakeCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                      },
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [
+                      {
+                        "camelCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                        "originalName": "commons",
+                        "pascalCase": {
+                          "safeName": "Commons",
+                          "unsafeName": "Commons",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMONS",
+                          "unsafeName": "COMMONS",
+                        },
+                        "snakeCase": {
+                          "safeName": "commons",
+                          "unsafeName": "commons",
+                        },
+                      },
+                    ],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                    "originalName": "Metadata",
+                    "pascalCase": {
+                      "safeName": "Metadata",
+                      "unsafeName": "Metadata",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "METADATA",
+                      "unsafeName": "METADATA",
+                    },
+                    "snakeCase": {
+                      "safeName": "metadata",
+                      "unsafeName": "metadata",
+                    },
+                  },
+                  "typeId": "type_commons/types:Metadata",
+                },
+                "value": {
+                  "jsonExample": "{"foo": "bar", "baz": "qux"}",
+                  "shape": {
+                    "container": {
+                      "optional": {
+                        "jsonExample": "{"foo": "bar", "baz": "qux"}",
+                        "shape": {
+                          "primitive": {
+                            "string": "{"foo": "bar", "baz": "qux"}",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                      "type": "optional",
+                    },
+                    "type": "container",
+                  },
+                },
+                "wireKey": "jsonString",
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "metadata",
+            "unsafeName": "metadata",
+          },
+          "originalName": "Metadata",
+          "pascalCase": {
+            "safeName": "Metadata",
+            "unsafeName": "Metadata",
+          },
+          "screamingSnakeCase": {
+            "safeName": "METADATA",
+            "unsafeName": "METADATA",
+          },
+          "snakeCase": {
+            "safeName": "metadata",
+            "unsafeName": "metadata",
+          },
+        },
+        "typeId": "type_commons/types:Metadata",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "data",
+                  "unsafeName": "data",
+                },
+                "originalName": "data",
+                "pascalCase": {
+                  "safeName": "Data",
+                  "unsafeName": "Data",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DATA",
+                  "unsafeName": "DATA",
+                },
+                "snakeCase": {
+                  "safeName": "data",
+                  "unsafeName": "data",
+                },
+              },
+              "wireValue": "data",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "map",
+                    "keyType": {
+                      "_type": "primitive",
+                      "primitive": "STRING",
+                    },
+                    "valueType": {
+                      "_type": "primitive",
+                      "primitive": "STRING",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "jsonString",
+                  "unsafeName": "jsonString",
+                },
+                "originalName": "jsonString",
+                "pascalCase": {
+                  "safeName": "JsonString",
+                  "unsafeName": "JsonString",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "JSON_STRING",
+                  "unsafeName": "JSON_STRING",
+                },
+                "snakeCase": {
+                  "safeName": "json_string",
+                  "unsafeName": "json_string",
+                },
+              },
+              "wireValue": "jsonString",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
     "type_commons/types:Tag": {
       "availability": null,
       "docs": null,
