@@ -17,8 +17,7 @@ types:
           data:
             foo: bar
             baz: qux
-          jsonString: >
-            {"foo": "bar", "baz": "qux"}
+          jsonString: '{"foo": "bar", "baz": "qux"}'
 
   EventInfo:
     union:
@@ -31,8 +30,7 @@ types:
           id: metadata-alskjfg8
           data:
             one: two
-          jsonString: >
-            {"one": "two"}
+          jsonString: '{"one": "two"}'
 
   Data:
     union:
