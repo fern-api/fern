@@ -42,40 +42,50 @@ export const V29_TO_V28_MIGRATION: IrMigration<
             ...v29,
             types: Object.fromEntries(
                 Object.keys(v29.types).map((key) => {
-                    return [key, getTypeDeclarationFromTypeId(key, v29.types)];
+                    return [key, getV28TypeDeclarationFromId({ typeId: key, allTypes: v29.types })];
                 })
             ),
         };
     },
 };
 
-function getTypeDeclarationFromTypeId(
-    typeId: commons.TypeId,
-    allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>
-): FernIrV28.TypeDeclaration {
+function getV28TypeDeclarationFromId({
+    typeId,
+    allTypes,
+}: {
+    typeId: commons.TypeId;
+    allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
+}): FernIrV28.TypeDeclaration {
     // Eliminate possibility of undefined
-    const typeDefinition = allTypes[typeId];
-    if (typeDefinition === undefined) {
+    const typeDeclaration = allTypes[typeId];
+    if (typeDeclaration === undefined) {
         throw new Error(`Type definition for type id ${typeId} is undefined`);
     }
 
-    // Build referencedTypes
-    const newReferencedTypes: FernIrV28.DeclaredTypeName[] = [];
-    allTypes[typeId]?.referencedTypes.forEach((currentTypeId) => {
-        const currentTypeDefinition = allTypes[currentTypeId];
-        if (currentTypeDefinition === undefined) {
-            throw new Error(`Type definition for type id ${currentTypeId} is undefined`);
-        }
-        newReferencedTypes.push({
-            typeId: currentTypeId,
-            fernFilepath: currentTypeDefinition.name.fernFilepath,
-            name: currentTypeDefinition.name.name,
-        });
-    });
-
-    // Return type declaration
     return {
-        ...typeDefinition,
-        referencedTypes: newReferencedTypes,
+        ...typeDeclaration,
+        referencedTypes: Array.from(typeDeclaration.referencedTypes).map((referencedTypeId) => {
+            const referencedTypeDeclaration = getTypeDeclarationOrThrow({ typeId: referencedTypeId, allTypes });
+            return {
+                typeId: referencedTypeId,
+                fernFilepath: referencedTypeDeclaration.name.fernFilepath,
+                name: referencedTypeDeclaration.name.name,
+            };
+        }),
     };
+}
+
+function getTypeDeclarationOrThrow({
+    typeId,
+    allTypes,
+}: {
+    typeId: commons.TypeId;
+    allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
+}): FernIr.TypeDeclaration {
+    const typeDeclaration = allTypes[typeId];
+    if (typeDeclaration === undefined) {
+        throw new Error(`Type definition for type id ${typeId} is undefined`);
+    }
+
+    return typeDeclaration;
 }
