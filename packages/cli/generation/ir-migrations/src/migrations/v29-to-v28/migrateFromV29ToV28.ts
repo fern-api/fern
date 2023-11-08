@@ -56,7 +56,7 @@ function getTypeDeclarationFromTypeId(
     // Eliminate possibility of undefined
     const typeDefinition = allTypes[typeId];
     if (typeDefinition === undefined) {
-        throw new Error();
+        throw new Error(`Type definition for type id ${typeId} is undefined`);
     }
 
     // Build referencedTypes
@@ -64,7 +64,7 @@ function getTypeDeclarationFromTypeId(
     allTypes[typeId]?.referencedTypes.forEach((currentTypeId) => {
         const currentTypeDefinition = allTypes[currentTypeId];
         if (currentTypeDefinition === undefined) {
-            return;
+            throw new Error(`Type definition for type id ${currentTypeId} is undefined`);
         }
         newReferencedTypes.push({
             typeId: currentTypeId,
