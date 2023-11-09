@@ -1,7 +1,6 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { commons } from "@fern-fern/ir-sdk/api";
-import { FernIrV28 } from "@fern-fern/ir-v28-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -29,9 +28,9 @@ export const V29_TO_V28_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: "0.9.0-2-g6b0be0e",
-        [GeneratorName.GO_MODEL]: "0.9.0-2-g6b0be0e",
-        [GeneratorName.GO_SDK]: "0.9.0-2-g6b0be0e",
+        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V28.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -55,11 +54,14 @@ function getV28TypeDeclarationFromId({
 }: {
     typeId: commons.TypeId;
     allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
-}): FernIrV28.TypeDeclaration {
+}): IrVersions.V28.types.TypeDeclaration {
     const typeDeclaration = getTypeDeclarationOrThrow({ typeId, allTypes });
-
     return {
-        ...typeDeclaration,
+        availability: typeDeclaration.availability,
+        docs: typeDeclaration.docs,
+        name: typeDeclaration.name,
+        shape: typeDeclaration.shape,
+        examples: typeDeclaration.examples,
         referencedTypes: Array.from(typeDeclaration.referencedTypes).map((referencedTypeId) => {
             const referencedTypeDeclaration = getTypeDeclarationOrThrow({ typeId: referencedTypeId, allTypes });
             return {
