@@ -1,4 +1,4 @@
-import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
@@ -58,9 +58,13 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     }
 
     protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
+        const nonLiteralProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
+            context,
+            inlinedRequestBody: this.inlinedRequestBody,
+        });
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            properties: this.inlinedRequestBody.properties.map((property) => {
+            properties: nonLiteralProperties.map((property) => {
                 const type = context.typeSchema.getReferenceToRawType(property.valueType);
                 return {
                     name: `"${property.name.wireValue}"`,
@@ -99,8 +103,12 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     }
 
     protected buildSchema(context: SdkContext): Zurg.Schema {
+        const nonLiteralProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
+            context,
+            inlinedRequestBody: this.inlinedRequestBody,
+        });
         let schema = context.coreUtilities.zurg.object(
-            this.inlinedRequestBody.properties.map((property) => ({
+            nonLiteralProperties.map((property) => ({
                 key: {
                     parsed: context.requestWrapper
                         .getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
@@ -116,5 +124,19 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         }
 
         return schema;
+    }
+
+    private getAllNonLiteralPropertiesFromInlinedRequest({
+        context,
+        inlinedRequestBody,
+    }: {
+        context: SdkContext;
+        inlinedRequestBody: InlinedRequestBody;
+    }): InlinedRequestBodyProperty[] {
+        return inlinedRequestBody.properties.filter((property) => {
+            const resolvedType = context.type.resolveTypeReference(property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            return !isLiteral;
+        });
     }
 }

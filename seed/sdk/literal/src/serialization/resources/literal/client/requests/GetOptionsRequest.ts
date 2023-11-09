@@ -9,12 +9,8 @@ import * as core from "../../../../../core";
 export const GetOptionsRequest: core.serialization.Schema<
     serializers.GetOptionsRequest.Raw,
     SeedLiteral.GetOptionsRequest
-> = core.serialization.object({
-    dryRun: core.serialization.booleanLiteral(true),
-});
+> = core.serialization.object({});
 
 export declare namespace GetOptionsRequest {
-    interface Raw {
-        dryRun: true;
-    }
+    interface Raw {}
 }
