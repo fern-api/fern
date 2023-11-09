@@ -35,6 +35,7 @@ export const V29_TO_V28_MIGRATION: IrMigration<
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V28.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "strip",
+            skipValidation: true,
         }),
     migrateBackwards: (v29): IrVersions.V28.ir.IntermediateRepresentation => {
         return {
