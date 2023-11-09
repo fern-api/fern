@@ -77,7 +77,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             }
 
             if (endpoint.response?.type === "json") {
-                switch (endpoint.response.responseBodyType.type) {
+                switch (endpoint.response.value.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -85,7 +85,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.responseBodyType,
+                            type: endpoint.response.value.responseBodyType,
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -95,7 +95,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.responseBodyType);
+                        assertNever(endpoint.response.value.responseBodyType);
                 }
             }
 
@@ -248,21 +248,25 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             return referenceToRawResponse;
         }
 
-        if (this.endpoint.response.responseBodyType.type === "unknown") {
+        if (this.endpoint.response.type === "text") {
+            throw new Error("Text response is not supported");
+        }
+
+        if (this.endpoint.response.value.responseBodyType.type === "unknown") {
             return referenceToRawResponse;
         }
 
         if (!this.includeSerdeLayer) {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(this.endpoint.response.responseBodyType).typeNode
+                context.type.getReferenceToType(this.endpoint.response.value.responseBodyType).typeNode
             );
         }
 
-        switch (this.endpoint.response.responseBodyType.type) {
+        switch (this.endpoint.response.value.responseBodyType.type) {
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.responseBodyType, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
                     .parseOrThrow(referenceToRawResponse, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
@@ -285,7 +289,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         breadcrumbsPrefix: ["response"],
                     });
             default:
-                assertNever(this.endpoint.response.responseBodyType);
+                assertNever(this.endpoint.response.value.responseBodyType);
         }
     }
 

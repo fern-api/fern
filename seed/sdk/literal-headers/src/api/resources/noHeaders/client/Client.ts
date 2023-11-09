@@ -26,6 +26,7 @@ export class NoHeaders {
             method: "POST",
             headers: {
                 "X-API-Header": "api header value",
+                "X-API-Test": "false",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",

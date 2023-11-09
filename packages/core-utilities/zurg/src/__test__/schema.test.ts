@@ -1,4 +1,5 @@
 import { boolean, discriminant, list, number, object, string, stringLiteral, union } from "../builders";
+import { booleanLiteral } from "../builders/literals/booleanLiteral";
 import { property } from "../builders/object/property";
 import { itSchema } from "./utils/itSchema";
 
@@ -20,6 +21,7 @@ describe("Schema", () => {
                 )
             ),
             d: property("raw_d", boolean()),
+            e: booleanLiteral(true),
         }),
         {
             raw: {
@@ -40,6 +42,7 @@ describe("Schema", () => {
                     },
                 ],
                 raw_d: false,
+                e: true,
             },
             parsed: {
                 a: "hello",
@@ -59,6 +62,7 @@ describe("Schema", () => {
                     },
                 ],
                 d: false,
+                e: true,
             },
         }
     );

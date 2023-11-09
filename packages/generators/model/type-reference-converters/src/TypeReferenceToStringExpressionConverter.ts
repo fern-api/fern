@@ -129,6 +129,12 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     protected override literal(literal: Literal): (reference: ts.Expression) => ts.Expression {
         return Literal._visit(literal, {
             string: () => (reference: ts.Expression) => reference,
+            boolean: () => (reference: ts.Expression) =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(reference, "toString"),
+                    undefined,
+                    undefined
+                ),
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             },

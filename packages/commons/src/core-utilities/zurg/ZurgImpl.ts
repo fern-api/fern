@@ -340,6 +340,24 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         };
     });
 
+    public booleanLiteral = this.withExportedName(
+        "booleanLiteral",
+        (booleanLiteral: Reference) => (literal: boolean) => {
+            const baseSchema: Zurg.BaseSchema = {
+                isOptional: false,
+                toExpression: () =>
+                    ts.factory.createCallExpression(booleanLiteral.getExpression(), undefined, [
+                        literal ? ts.factory.createTrue() : ts.factory.createFalse(),
+                    ]),
+            };
+
+            return {
+                ...baseSchema,
+                ...this.getSchemaUtils(baseSchema),
+            };
+        }
+    );
+
     public number = this.withExportedName("number", (number: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,

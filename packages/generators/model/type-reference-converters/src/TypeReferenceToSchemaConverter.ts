@@ -58,6 +58,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
     protected override literal(literal: Literal): Zurg.Schema {
         return Literal._visit(literal, {
             string: (value) => this.zurg.stringLiteral(value),
+            boolean: (value) => this.zurg.booleanLiteral(value),
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             },

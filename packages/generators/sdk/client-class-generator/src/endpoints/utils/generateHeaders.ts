@@ -58,7 +58,7 @@ function getValueExpressionForHeader({
 }): ts.Expression {
     const literalValue = getLiteralValueForHeader(header, context);
     if (literalValue != null) {
-        return ts.factory.createStringLiteral(literalValue);
+        return ts.factory.createStringLiteral(literalValue.toString());
     } else if (requestParameter == null) {
         throw new Error(`Cannot reference header ${header.name.wireValue} because request parameter is not defined.`);
     } else {

@@ -55,7 +55,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             }
 
             if (endpoint.response?.type === "json") {
-                switch (endpoint.response.responseBodyType.type) {
+                switch (endpoint.response.value.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -63,7 +63,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                             service,
                             endpoint,
                             typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.responseBodyType,
+                            type: endpoint.response.value.responseBodyType,
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -73,7 +73,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.responseBodyType);
+                        assertNever(endpoint.response.value.responseBodyType);
                 }
             }
         }
@@ -145,19 +145,22 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             throw new Error("Cannot serialize file");
         }
         if (this.endpoint.response.type === "streaming") {
-            throw new Error("Streaming is not supported");
+            throw new Error("Streaming response is not supported");
+        }
+        if (this.endpoint.response.type === "text") {
+            throw new Error("Text response is not supported");
         }
 
         if (!this.includeSerdeLayer) {
             return referenceToParsedResponse;
         }
 
-        switch (this.endpoint.response.responseBodyType.type) {
+        switch (this.endpoint.response.value.responseBodyType.type) {
             case "unknown":
                 return referenceToParsedResponse;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.responseBodyType, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedResponse, {
                         unrecognizedObjectKeys: "strip",
                         allowUnrecognizedEnumValues: false,
@@ -180,7 +183,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         breadcrumbsPrefix: [],
                     });
             default:
-                assertNever(this.endpoint.response.responseBodyType);
+                assertNever(this.endpoint.response.value.responseBodyType);
         }
     }
 }

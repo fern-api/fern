@@ -105,6 +105,16 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                     typeNodeWithoutUndefined: typeNode,
                 };
             },
+            boolean: (value) => {
+                const typeNode = ts.factory.createLiteralTypeNode(
+                    value ? ts.factory.createTrue() : ts.factory.createFalse()
+                );
+                return {
+                    isOptional: false,
+                    typeNode,
+                    typeNodeWithoutUndefined: typeNode,
+                };
+            },
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             },

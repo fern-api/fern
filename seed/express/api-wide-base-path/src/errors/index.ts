@@ -1,0 +1,1 @@
+export { SeedApiWideBasePathError } from "./SeedApiWideBasePathError";

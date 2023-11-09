@@ -11,6 +11,8 @@ import * as SeedExamples from "../../..";
  *         title: "Pulp Fiction",
  *         from: "Quentin Tarantino",
  *         rating: 8.5,
+ *         type: "movie",
+ *         tag: "tag-12efs9dv",
  *         cast: ["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"]
  *     }
  */

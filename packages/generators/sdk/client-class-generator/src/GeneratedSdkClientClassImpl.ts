@@ -229,6 +229,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                         }),
+                    text: () => {
+                        throw new Error("Text responses are unsupported");
+                    },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.type);
                     },
@@ -425,7 +428,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         header: header.name.wireValue,
                         value:
                             literalValue != null
-                                ? ts.factory.createStringLiteral(literalValue)
+                                ? ts.factory.createStringLiteral(literalValue.toString())
                                 : context.type.stringify(
                                       context.coreUtilities.fetcher.Supplier.get(
                                           this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))

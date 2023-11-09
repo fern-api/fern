@@ -12,6 +12,7 @@ export interface Zurg {
     enum: (values: string[]) => Zurg.Schema;
     string: () => Zurg.Schema;
     stringLiteral: (literal: string) => Zurg.Schema;
+    booleanLiteral: (literal: boolean) => Zurg.Schema;
     date: () => Zurg.Schema;
     number: () => Zurg.Schema;
     boolean: () => Zurg.Schema;

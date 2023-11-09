@@ -13,6 +13,8 @@ export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedE
         from: core.serialization.string(),
         rating: core.serialization.number(),
         type: core.serialization.stringLiteral("movie"),
+        tag: core.serialization.lazy(async () => (await import("../../..")).commons.Tag),
+        book: core.serialization.string().optional(),
     });
 
 export declare namespace Movie {
@@ -22,5 +24,7 @@ export declare namespace Movie {
         from: string;
         rating: number;
         type: "movie";
+        tag: serializers.commons.Tag.Raw;
+        book?: string | null;
     }
 }

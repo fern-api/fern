@@ -912,6 +912,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             fileDownload: () => {
                 throw new Error("File download is not supported");
             },
+            text: () => {
+                throw new Error("Text response is not supported");
+            },
             _other: () => {
                 throw new Error("Unknown HttpResponse: " + response.type);
             },

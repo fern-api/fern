@@ -14,7 +14,7 @@ export function getSuccessReturnType(
         case "fileDownload":
             return ts.factory.createTypeReferenceNode("Blob");
         case "json":
-            return context.type.getReferenceToType(response.responseBodyType).typeNode;
+            return context.type.getReferenceToType(response.value.responseBodyType).typeNode;
         default:
             assertNever(response);
     }

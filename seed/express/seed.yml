@@ -1,4 +1,4 @@
-irVersion: v23
+irVersion: v28
 docker: fernapi/fern-typescript-express:local
 dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript

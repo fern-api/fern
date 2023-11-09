@@ -50,8 +50,18 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
-                      justRequestBody: (requestBodyReference) =>
-                          new RequestBodyParameter({ packageId, requestBodyReference, service, endpoint, sdkRequest }),
+                      justRequestBody: (requestBodyReference) => {
+                          if (requestBodyReference.type === "bytes") {
+                              throw new Error("Bytes request is not supported");
+                          }
+                          return new RequestBodyParameter({
+                              packageId,
+                              requestBodyReference,
+                              service,
+                              endpoint,
+                              sdkRequest,
+                          });
+                      },
                       wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
                       _other: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
