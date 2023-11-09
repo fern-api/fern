@@ -28,7 +28,7 @@ import urlJoin from "url-join";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";
-import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
+import { OpenApiComponentSchema, convertTypeReference } from "./typeConverter";
 
 export function convertServices({
     httpServices,
@@ -120,7 +120,7 @@ function convertHttpEndpoint({
     const tag =
         mode === "stoplight"
             ? httpService.displayName ??
-              httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" ")
+            httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" ")
             : httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
@@ -213,9 +213,16 @@ function convertRequestBody({
     const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
     for (const example of examples) {
         if (example.request != null) {
-            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                value: example.request.jsonExample,
-            };
+            if (example.name && example.name.originalName != "") {
+                openapiExamples[example.name.originalName] = {
+                    value: example.request.jsonExample,
+                };
+            }
+            else {
+                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                    value: example.request.jsonExample,
+                };
+            }
         }
     }
 
@@ -339,9 +346,16 @@ function convertResponse({
         const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
         for (const example of examples) {
             if (example.response.type === "ok" && example.response.body != null) {
-                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: example.response.body.jsonExample,
-                };
+                if (example.name && example.name.originalName != "") {
+                    openapiExamples[example.name.originalName] = {
+                        value: example.response.body.jsonExample,
+                    };
+                }
+                else {
+                    openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                        value: example.response.body.jsonExample,
+                    };
+                }
             }
         }
         if (size(openapiExamples) > 0) {
@@ -380,9 +394,16 @@ function convertResponse({
                             example.response.body != null &&
                             isEqual(responseError.error, example.response.error)
                         ) {
-                            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                                value: example.response.body.jsonExample,
-                            };
+                            if (example.name && example.name.originalName != "") {
+                                openapiExamples[example.name.originalName] = {
+                                    value: example.response.body.jsonExample,
+                                };
+                            }
+                            else {
+                                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                                    value: example.response.body.jsonExample,
+                                };
+                            }
                         }
                     }
                     if (size(openapiExamples) > 0) {
@@ -423,9 +444,16 @@ function convertResponse({
                     if (example.response.type === "error" && example.response.body != null) {
                         const errorForExample = example.response.error;
                         if (errorInfos.some((errorInfo) => isEqual(errorInfo.errorDeclaration.name, errorForExample))) {
-                            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                                value: example.response.body.jsonExample,
-                            };
+                            if (example.name && example.name.originalName != "") {
+                                openapiExamples[example.name.originalName] = {
+                                    value: example.response.body.jsonExample,
+                                };
+                            }
+                            else {
+                                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                                    value: example.response.body.jsonExample,
+                                };
+                            }
                         }
                     }
                 }
@@ -547,9 +575,16 @@ function convertPathParameter({
             (param) => param.key === pathParameter.name.originalName
         );
         if (pathParameterExample != null) {
-            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                value: pathParameterExample.value.jsonExample,
-            };
+            if (example.name && example.name.originalName != "") {
+                openapiExamples[example.name.originalName] = {
+                    value: pathParameterExample.value.jsonExample,
+                };
+            }
+            else {
+                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                    value: pathParameterExample.value.jsonExample,
+                };
+            }
         }
     }
     if (size(openapiExamples) > 0) {
@@ -584,9 +619,16 @@ function convertQueryParameter({
             (param) => param.wireKey === queryParameter.name.wireValue
         );
         if (queryParameterExample != null) {
-            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                value: queryParameterExample.value.jsonExample,
-            };
+            if (example.name && example.name.originalName != "") {
+                openapiExamples[example.name.originalName] = {
+                    value: queryParameterExample.value.jsonExample,
+                };
+            }
+            else {
+                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                    value: queryParameterExample.value.jsonExample,
+                };
+            }
         }
     }
     if (size(openapiExamples) > 0) {
@@ -619,9 +661,16 @@ function convertHeader({
             (headerFromExample) => headerFromExample.wireKey === httpHeader.name.wireValue
         );
         if (headerExample != null) {
-            openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                value: headerExample.value.jsonExample,
-            };
+            if (example.name && example.name.originalName != "") {
+                openapiExamples[example.name.originalName] = {
+                    value: headerExample.value.jsonExample,
+                };
+            }
+            else {
+                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
+                    value: headerExample.value.jsonExample,
+                };
+            }
         }
     }
     if (size(openapiExamples) > 0) {
