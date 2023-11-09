@@ -3931,7 +3931,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/umd-compat-loader", "npm:2.1.4"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.142"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2940"],\
@@ -3940,24 +3939,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/express-generator", "workspace:packages/generators/express/generator"],\
             ["@ts-morph/common", "npm:0.21.0"],\
-            ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/jest-specific-snapshot", "npm:0.5.6"],\
             ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.3"],\
             ["@types/webpack-bundle-analyzer", "npm:4.6.2"],\
-            ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.52.0"],\
-            ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["jest-specific-snapshot", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:8.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:b9cb4698c745b87511466528fcc65a67f3f7ec6a1085e507c326c58448988795bc44d10b61d29d949c99db8b455f225cc3c53ad2c8dd13d8d52a0c4bd9feafe0#npm:2.0.0"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["ts-loader", "virtual:b9cb4698c745b87511466528fcc65a67f3f7ec6a1085e507c326c58448988795bc44d10b61d29d949c99db8b455f225cc3c53ad2c8dd13d8d52a0c4bd9feafe0#npm:9.3.1"],\
             ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"],\
@@ -4361,7 +4354,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/umd-compat-loader", "npm:2.1.4"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.142"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2940"],\
@@ -4370,24 +4362,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/sdk-generator", "workspace:packages/generators/sdk/generator"],\
             ["@ts-morph/common", "npm:0.21.0"],\
-            ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/jest-specific-snapshot", "npm:0.5.6"],\
             ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.3"],\
             ["@types/webpack-bundle-analyzer", "npm:4.6.2"],\
-            ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.52.0"],\
-            ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["jest-specific-snapshot", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:8.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["simple-progress-webpack-plugin", "virtual:e63295de2bd8fc275ac5033fb924070abcf529ffb116fc48141d6d806d85b3cae9f9f36de59923e81253dacbacb6558ad3568777013d3cbf523bddadae542880#npm:2.0.0"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["ts-loader", "virtual:e63295de2bd8fc275ac5033fb924070abcf529ffb116fc48141d6d806d85b3cae9f9f36de59923e81253dacbacb6558ad3568777013d3cbf523bddadae542880#npm:9.3.1"],\
             ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"],\
