@@ -5,6 +5,7 @@ import {
     HttpHeader,
     HttpRequestBody,
     HttpService,
+    InlinedRequestBody,
     InlinedRequestBodyProperty,
     QueryParameter,
     TypeReference,
@@ -65,7 +66,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (this.endpoint.requestBody != null) {
             HttpRequestBody._visit(this.endpoint.requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const property of inlinedRequestBody.properties) {
+                    for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
+                        inlinedRequestBody,
+                        context,
+                    })) {
                         requestInterface.addProperty(this.getInlineProperty(property, context));
                     }
                     for (const extension of inlinedRequestBody.extends) {
@@ -283,6 +287,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getAllQueryParameters(): QueryParameter[] {
         return this.endpoint.queryParameters;
+    }
+
+    private getAllNonLiteralPropertiesFromInlinedRequest({
+        context,
+        inlinedRequestBody,
+    }: {
+        context: SdkContext;
+        inlinedRequestBody: InlinedRequestBody;
+    }): InlinedRequestBodyProperty[] {
+        return inlinedRequestBody.properties.filter((property) => {
+            const resolvedType = context.type.resolveTypeReference(property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            return !isLiteral;
+        });
     }
 
     private getAllNonLiteralHeaders(context: SdkContext): HttpHeader[] {

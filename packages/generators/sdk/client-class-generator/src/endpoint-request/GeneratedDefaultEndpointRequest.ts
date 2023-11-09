@@ -1,5 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpRequestBody, HttpService, SdkRequest, SdkRequestShape } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpService,
+    InlinedRequestBody,
+    SdkRequest,
+    SdkRequestShape,
+} from "@fern-fern/ir-sdk/api";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -22,6 +29,11 @@ export declare namespace GeneratedDefaultEndpointRequest {
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
     }
+}
+
+interface LiteralPropertyValue {
+    propertyWireKey: string;
+    propertyValue: boolean | string;
 }
 
 export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest {
@@ -164,10 +176,16 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: SdkContext
     ): ts.Expression {
         switch (requestBody.type) {
-            case "inlinedRequestBody":
-                return context.sdkInlinedRequestBodySchema
+            case "inlinedRequestBody": {
+                const serializeExpression = context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
+                return this.serializeInlinedRequestBodyWithLiterals({
+                    inlinedRequestBody: requestBody,
+                    serializeExpression,
+                    context,
+                });
+            }
             case "reference":
                 return context.sdkEndpointTypeSchemas
                     .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
@@ -175,6 +193,61 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             default:
                 assertNever(requestBody);
         }
+    }
+
+    private serializeInlinedRequestBodyWithLiterals({
+        inlinedRequestBody,
+        serializeExpression,
+        context,
+    }: {
+        inlinedRequestBody: InlinedRequestBody;
+        serializeExpression: ts.Expression;
+        context: SdkContext;
+    }): ts.Expression {
+        const literalProperties = this.getLiteralProperties({ inlinedRequestBody, context });
+        if (literalProperties.length > 0) {
+            return ts.factory.createObjectLiteralExpression([
+                ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(serializeExpression)),
+                ...literalProperties.map((property) => {
+                    return ts.factory.createPropertyAssignment(
+                        property.propertyWireKey,
+                        typeof property.propertyValue === "string"
+                            ? ts.factory.createStringLiteral(property.propertyValue)
+                            : property.propertyValue
+                            ? ts.factory.createTrue()
+                            : ts.factory.createFalse()
+                    );
+                }),
+            ]);
+        } else {
+            return serializeExpression;
+        }
+    }
+
+    private getLiteralProperties({
+        inlinedRequestBody,
+        context,
+    }: {
+        inlinedRequestBody: InlinedRequestBody;
+        context: SdkContext;
+    }): LiteralPropertyValue[] {
+        const result: LiteralPropertyValue[] = [];
+        for (const property of inlinedRequestBody.properties) {
+            const resolvedType = context.type.resolveTypeReference(property.valueType);
+            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                result.push({
+                    propertyValue: resolvedType.container.literal._visit<boolean | string>({
+                        string: (val) => val,
+                        boolean: (val) => val,
+                        _other: () => {
+                            throw new Error("Encountered non-boolean, non-string literal");
+                        },
+                    }),
+                    propertyWireKey: property.name.wireValue,
+                });
+            }
+        }
+        return result;
     }
 
     private isRequestBodyNullable(

@@ -83,7 +83,10 @@ export class Literal {
                 "X-Fern-SDK-Version": "0.0.1",
             },
             contentType: "application/json",
-            body: await serializers.GetOptionsRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.GetOptionsRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                dryRun: true,
+            },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
