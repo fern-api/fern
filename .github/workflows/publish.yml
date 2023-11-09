@@ -37,6 +37,9 @@ jobs:
       - name: Compile
         run: yarn compile
 
+      - name: Print Version
+        run: ./scripts/git-version.sh
+
       - name: Publish fernapi/fern-typescript-express docker
         run: |
           projectVersion=$(./scripts/git-version.sh)
@@ -70,6 +73,9 @@ jobs:
       - name: Compile
         run: yarn compile
 
+      - name: Print Version
+        run: ./scripts/git-version.sh
+
       - name: Publish fernapi/fern-typescript-browser-sdk docker
         run: |
           projectVersion=$(./scripts/git-version.sh)
@@ -102,6 +108,9 @@ jobs:
 
       - name: Compile
         run: yarn compile
+
+      - name: Print Version
+        run: ./scripts/git-version.sh
 
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
