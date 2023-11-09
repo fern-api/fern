@@ -42,6 +42,7 @@ export const FIXTURES = {
     UNDISCRIMINATED_UNIONS: "undiscriminated-unions",
     UNKNOWN: "unknown",
     VARIABLES: "variables",
+    RESERVED_KEYWORDS: "reserved-keywords",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
