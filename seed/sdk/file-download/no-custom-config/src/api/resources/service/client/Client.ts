@@ -4,7 +4,6 @@
 
 import * as core from "../../../../core";
 import * as stream from "stream";
-import * as errors from "../../../../errors";
 
 export declare namespace Service {
     interface Options {
@@ -30,11 +29,6 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            onError: (error) => {
-                throw new errors.SeedFileDownloadError({
-                    message: (error as any)?.message,
-                });
-            },
         });
         return _response.data;
     }

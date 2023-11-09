@@ -31,6 +31,11 @@ export interface StreamingFetcher {
     readonly getHeader: {
         _invoke: (args: { referenceToRequest: ts.Expression; header: string }) => ts.Expression;
     };
+
+    readonly Stream: {
+        _construct: (args: { stream: ts.Expression; parse: ts.Expression; terminator: string }) => ts.Expression;
+        _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
+    };
 }
 
 export declare namespace StreamingFetcher {
@@ -44,10 +49,6 @@ export declare namespace StreamingFetcher {
         withCredentials: boolean;
         onUploadProgress: ts.Expression | undefined;
 
-        onData: ts.Expression | undefined;
-        onError: ts.Expression | undefined;
-        onFinish: ts.Expression | undefined;
         abortController: ts.Expression | undefined;
-        terminator: ts.Expression | undefined;
     }
 }

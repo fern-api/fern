@@ -4,7 +4,6 @@
 
 import * as core from "../../../../core";
 import * as SeedStreaming from "../../..";
-import * as stream from "stream";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 
@@ -24,11 +23,8 @@ export class Dummy {
 
     public async generateStream(
         request: SeedStreaming.GenerateStreamRequestzs,
-        cb: (data: SeedStreaming.StreamResponse) => void,
-        opts?: Pick<core.StreamingFetcher.Args, "onError" | "onFinish" | "abortController" | "timeoutMs">,
         requestOptions?: Dummy.RequestOptions
-    ): Promise<stream.Readable> {
-        const _queue = new core.CallbackQueue();
+    ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
         const _response = await core.streamingFetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
             method: "POST",
@@ -39,23 +35,18 @@ export class Dummy {
             },
             body: await serializers.GenerateStreamRequestzs.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            onData: _queue.wrap(async (data) => {
-                const parsed = await serializers.StreamResponse.parse(data, {
+        });
+        return new core.Stream({
+            stream: _response.data,
+            terminator: "\n",
+            parse: async (data) => {
+                return await serializers.StreamResponse.parseOrThrow(data, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     breadcrumbsPrefix: ["response"],
                 });
-                if (parsed.ok) {
-                    cb(parsed.value);
-                } else {
-                    opts?.onError?.(parsed.errors);
-                }
-            }),
-            onError: opts?.onError != null ? _queue.wrap(opts.onError) : undefined,
-            onFinish: opts?.onFinish != null ? _queue.wrap(opts.onFinish) : undefined,
-            abortController: opts?.abortController,
+            },
         });
-        return _response.data;
     }
 }

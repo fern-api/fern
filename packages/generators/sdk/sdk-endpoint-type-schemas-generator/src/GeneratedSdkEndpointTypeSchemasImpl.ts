@@ -305,66 +305,18 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         });
     }
 
-    public deserializeStreamDataAndVisitMaybeValid({
+    public deserializeStreamData({
         referenceToRawStreamData,
         context,
-        visitValid,
-        visitInvalid,
-        parsedDataVariableName,
     }: {
         referenceToRawStreamData: ts.Expression;
         context: SdkContext;
-        visitValid: (referenceToValue: ts.Expression) => ts.Statement[];
-        visitInvalid: (referenceToErrors: ts.Expression) => ts.Statement[];
-        parsedDataVariableName: string;
-    }): ts.Statement[] {
+    }): ts.Expression {
         if (this.endpoint.response?.type !== "streaming") {
             throw new Error("Cannot deserialize stream data because it's not defined");
         }
         if (this.endpoint.response.dataEventType.type === "text") {
             throw new Error("Cannot deserialize non-json stream data");
-        }
-
-        if (this.endpoint.response.dataEventType.json.type === "unknown") {
-            return visitValid(referenceToRawStreamData);
-        }
-
-        if (!this.includeSerdeLayer) {
-            return visitValid(referenceToRawStreamData);
-        }
-
-        return [
-            ts.factory.createVariableStatement(
-                undefined,
-                ts.factory.createVariableDeclarationList(
-                    [
-                        ts.factory.createVariableDeclaration(
-                            parsedDataVariableName,
-                            undefined,
-                            undefined,
-                            this.deserializeStreamData(referenceToRawStreamData, context)
-                        ),
-                    ],
-                    ts.NodeFlags.Const
-                )
-            ),
-            ...context.coreUtilities.zurg.Schema._visitMaybeValid(ts.factory.createIdentifier(parsedDataVariableName), {
-                valid: visitValid,
-                invalid: visitInvalid,
-            }),
-        ];
-    }
-
-    private deserializeStreamData(referenceToRawStreamData: ts.Expression, context: SdkContext): ts.Expression {
-        if (this.endpoint.response?.type !== "streaming") {
-            throw new Error("Cannot deserialize stream data because it's not defined");
-        }
-        if (this.endpoint.response.dataEventType.type === "text") {
-            throw new Error("Cannot deserialize non-json stream data");
-        }
-
-        if (!this.includeSerdeLayer) {
-            return referenceToRawStreamData;
         }
 
         switch (this.endpoint.response.dataEventType.json.type) {
@@ -373,7 +325,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.dataEventType.json, { isGeneratingSchema: false })
-                    .parse(referenceToRawStreamData, {
+                    .parseOrThrow(referenceToRawStreamData, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
@@ -387,7 +339,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }
                 return this.generatedStreamDataSchema
                     .getReferenceToZurgSchema(context)
-                    .parse(referenceToRawStreamData, {
+                    .parseOrThrow(referenceToRawStreamData, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",

@@ -14,7 +14,8 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
         pathInCoreUtilities: [{ nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("axios", "0.27.2");
-            dependencyManager.addDependency("@ungap/url-search-params", "0.2.2");
+            dependencyManager.addDependency("qs", "6.11.2");
+            dependencyManager.addDependency("@types/qs", "6.9.8");
         },
     };
 
@@ -30,13 +31,8 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                 withCredentials: "withCredentials",
                 onUploadProgress: "onUploadProgress",
                 onDownloadProgress: "onDownloadProgress",
-                onData: "onData",
-                onError: "onError",
-                onFinish: "onFinish",
                 abortController: "abortController",
-                terminator: "terminator",
                 adapter: "adapter",
-                responseChunkPrefix: "responseChunkPrefix",
             },
             _getReferenceToType: this.getReferenceToTypeInStreamingFetcherModule("Args"),
         },
@@ -113,34 +109,11 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                     )
                 );
             }
-            if (args.onData != null) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.onData, args.onData)
-                );
-            }
-            if (args.onError != null) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.onError, args.onError)
-                );
-            }
-            if (args.onFinish != null) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.onFinish, args.onFinish)
-                );
-            }
             if (args.abortController != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         this.StreamingFetcher.Args.properties.abortController,
                         args.abortController
-                    )
-                );
-            }
-            if (args.terminator != null) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.StreamingFetcher.Args.properties.terminator,
-                        args.terminator
                     )
                 );
             }
@@ -162,6 +135,42 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                         referenceToRequest,
                         ts.factory.createStringLiteral(header),
                     ])
+        ),
+    };
+
+    public Stream = {
+        _construct: this.withExportedName(
+            "Stream",
+            (Stream) =>
+                ({
+                    stream,
+                    parse,
+                    terminator,
+                }: {
+                    stream: ts.Expression;
+                    parse: ts.Expression;
+                    terminator: string;
+                }): ts.Expression => {
+                    return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("terminator"),
+                                    ts.factory.createStringLiteral(terminator)
+                                ),
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
+                            ],
+                            true
+                        ),
+                    ]);
+                }
+        ),
+
+        _getReferenceToType: this.withExportedName(
+            "Stream",
+            (APIResponse) => (response: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
         ),
     };
 
