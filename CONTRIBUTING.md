@@ -105,7 +105,7 @@ can dependend on differnt versions of the IR. For example, the Python SDK genera
 
 The Fern CLI should be able to run old generators so whenver we
 introduce a new IR version, we write a migration. In other words if you introduce IR V20, then
-you will have to write a version from IR V20 -> IR V19 so that any generator
+you will have to write a migration from IR V20 -> IR V19 so that any generator
 that depends on a lower IR version can continue to be run from our CLI.
 
 ### How to add a new IR Version?
