@@ -96,7 +96,7 @@ of the IR. For example, if we wanted to add a new auth mechanism, we would
 eventually need to add it to the IR so that the generators could generate
 relevant code.
 
-Each generator is pinned to an IR Version. Differnt versions of the generator,
+Each generator is pinned to an IR Version. Different versions of the generator,
 can dependend on differnt versions of the IR. For example, the Python SDK generator released
 2 months ago depends on an older IR than the one released this week.
 
