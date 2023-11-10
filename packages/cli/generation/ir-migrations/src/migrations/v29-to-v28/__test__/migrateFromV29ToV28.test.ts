@@ -74,7 +74,7 @@ const expectedReferenceTypes = [
 
 describe("migrateFromV29ToV28", () => {
     it("snapshot", async () => {
-        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/literal"));
+        const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"));
         const migrated = await runMigration({
             pathToFixture,
         });
