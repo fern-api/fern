@@ -33,6 +33,15 @@ types:
         docs: this name will NOT overlap with reserved keywords of the language being
           generated
         type: string
+  EscapedString:
+    docs: |
+      Defines the original string, and its escaped-equivalent (depending on the target programming language).
+      This is paricularly relevant to example string literals.
+
+      For example, in Python we escape strings that contain single or double quotes by using triple quotes,
+      in Go we use backticks, etc.
+    properties:
+      original: string
 
   WithJsonExample:
     properties:

@@ -184,7 +184,7 @@ types:
       alias: ExampleAliasType
       enum: ExampleEnumType
       object: ExampleObjectType
-      union: ExampleSingleUnionType
+      union: ExampleUnionType
 
   ExampleAliasType:
     properties:
@@ -192,7 +192,7 @@ types:
 
   ExampleEnumType:
     properties:
-      wireValue: string
+      value: commons.NameAndWireValue
 
   ExampleObjectType:
     properties:
@@ -200,22 +200,23 @@ types:
 
   ExampleObjectProperty:
     properties:
-      wireKey: string
+      name: commons.NameAndWireValue
       value: ExampleTypeReference
       originalTypeDeclaration:
         docs: |
-          this property may have been brought in via extension. originalTypeDeclaration
-          is the name of the type that contains this property
+          This property may have been brought in via extension. originalTypeDeclaration
+          is the name of the type that contains this property.
         type: DeclaredTypeName
 
-  ExampleSingleUnionType:
+  ExampleUnionType:
     properties:
-      wireDiscriminantValue: string
-      properties: ExampleSingleUnionTypeProperties
+      discriminant: commons.NameAndWireValue
+      wireDiscriminantValue: commons.NameAndWireValue
+      singleUnionType: ExampleSingleUnionType
 
-  ExampleSingleUnionTypeProperties:
+  ExampleSingleUnionType:
     union:
-      samePropertiesAsObject: ExampleNamedType
+      samePropertiesAsObject: ExampleObjectType
       singleProperty: ExampleTypeReference
       noProperties: {}
 
@@ -266,7 +267,7 @@ types:
         type: double
         key: double
       string:
-        type: string
+        type: commons.EscapedString
         key: string
       boolean:
         type: boolean
