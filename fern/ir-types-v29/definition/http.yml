@@ -207,17 +207,17 @@ types:
 
   ExamplePathParameter:
     properties:
-      key: commons.Name
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
 
   ExampleQueryParameter:
     properties:
-      key: commons.Name
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
 
   ExampleHeader:
     properties:
-      key: commons.Name
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
 
   ExampleRequestBody:
@@ -232,17 +232,13 @@ types:
 
   ExampleInlinedRequestBodyProperty:
     properties:
-      wireKey: string
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
       originalTypeDeclaration:
         docs: |
           This property may have been brought in via extension. originalTypeDeclaration
           is the name of the type that contains this property
         type: optional<types.DeclaredTypeName>
-      property:
-        docs: |
-          The property associated with the object type declaration.
-        type: ObjectProperty
 
   ExampleResponse:
     union:
