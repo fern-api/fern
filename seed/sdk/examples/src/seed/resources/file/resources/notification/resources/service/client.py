@@ -29,7 +29,7 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.file.notification.get_exception(
+        client.file.notification.service.get_exception(
             notification_id="notification-hsy129x",
         )
         """
@@ -64,7 +64,7 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.file.notification.get_exception(
+        await client.file.notification.service.get_exception(
             notification_id="notification-hsy129x",
         )
         """

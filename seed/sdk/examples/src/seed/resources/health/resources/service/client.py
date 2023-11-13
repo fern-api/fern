@@ -28,7 +28,7 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.health.check(
+        client.health.service.check(
             id="id-2sdx82h",
         )
         """
@@ -55,7 +55,7 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.health.ping()
+        client.health.service.ping()
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -88,7 +88,7 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.health.check(
+        await client.health.service.check(
             id="id-2sdx82h",
         )
         """
@@ -115,7 +115,7 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.health.ping()
+        await client.health.service.ping()
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

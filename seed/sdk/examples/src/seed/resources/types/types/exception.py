@@ -32,14 +32,13 @@ class Exception_Timeout(pydantic.BaseModel):
 
 
 """
-from seed import Exception_Generic, ExceptionInfo
+from seed import Exception_Generic
 
 Exception_Generic(
-    value=ExceptionInfo(
-        exception_type="Unavailable",
-        exception_message="This component is unavailable!",
-        exception_stacktrace="<logs>",
-    )
+    type="generic",
+    exception_type="Unavailable",
+    exception_message="This component is unavailable!",
+    exception_stacktrace="<logs>",
 )
 """
 Exception = typing.Union[Exception_Generic, Exception_Timeout]

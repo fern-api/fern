@@ -16,6 +16,8 @@ class ExtendedMovie(Movie):
         title="Pulp Fiction",
         from_="Quentin Tarantino",
         rating=8.5,
+        type="movie",
+        tag="tag-12efs9dv",
         cast=["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
     )
     """

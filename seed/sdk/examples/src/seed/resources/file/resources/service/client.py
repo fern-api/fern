@@ -33,7 +33,7 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.file.get_file(
+        client.file.service.get_file(
             filename="file.txt",
             x_file_api_version="0.0.2",
         )
@@ -75,7 +75,7 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.file.get_file(
+        await client.file.service.get_file(
             filename="file.txt",
             x_file_api_version="0.0.2",
         )

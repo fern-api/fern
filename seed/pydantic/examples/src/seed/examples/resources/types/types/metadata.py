@@ -29,7 +29,7 @@ class Metadata(pydantic.BaseModel):
     """
     from seed.examples import Metadata_Html
 
-    Metadata_Html(value="<head>...</head>")
+    Metadata_Html(type="html", value="<head>...</head>")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

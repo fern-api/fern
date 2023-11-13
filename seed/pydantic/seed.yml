@@ -1,4 +1,4 @@
-irVersion: v25
+irVersion: v26
 docker: fernapi/fern-pydantic-model:latest
 dockerCommand: docker build -f ./docker/fastapi/Dockerfile -t fernapi/fern-pydantic-model:latest .
 language: python

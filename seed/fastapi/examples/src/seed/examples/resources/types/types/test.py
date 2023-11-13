@@ -29,7 +29,7 @@ class Test(pydantic.BaseModel):
     """
     from seed.examples import Test_And
 
-    Test_And(value=True)
+    Test_And(type="and", value=True)
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

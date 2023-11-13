@@ -33,6 +33,6 @@ class Test_Or(pydantic.BaseModel):
 """
 from seed import Test_And
 
-Test_And(value=True)
+Test_And(type="and", value=True)
 """
 Test = typing.Union[Test_And, Test_Or]

@@ -37,7 +37,7 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.get_movie(
+        client.service.get_movie(
             movie_id="movie-c06a4ad7",
         )
         """
@@ -68,12 +68,14 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.create_movie(
+        client.service.create_movie(
             request=Movie(
                 id="movie-c06a4ad7",
                 title="The Boy and the Heron",
                 from_="Hayao Miyazaki",
                 rating=8.0,
+                type="movie",
+                tag="tag-wf9as23d",
             ),
         )
         """
@@ -114,7 +116,7 @@ class ServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        client.get_metadata(
+        client.service.get_metadata(
             x_api_version="0.0.1",
             shallow=False,
             tag="development",
@@ -152,7 +154,7 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.get_movie(
+        await client.service.get_movie(
             movie_id="movie-c06a4ad7",
         )
         """
@@ -183,12 +185,14 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.create_movie(
+        await client.service.create_movie(
             request=Movie(
                 id="movie-c06a4ad7",
                 title="The Boy and the Heron",
                 from_="Hayao Miyazaki",
                 rating=8.0,
+                type="movie",
+                tag="tag-wf9as23d",
             ),
         )
         """
@@ -229,7 +233,7 @@ class AsyncServiceClient:
             token="YOUR_TOKEN",
             environment=SeedExamplesEnvironment.PRODUCTION,
         )
-        await client.get_metadata(
+        await client.service.get_metadata(
             x_api_version="0.0.1",
             shallow=False,
             tag="development",

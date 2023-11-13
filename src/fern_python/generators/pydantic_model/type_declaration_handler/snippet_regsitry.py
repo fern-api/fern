@@ -17,6 +17,12 @@ class EndpointExpression:
     expr: AST.Expression
 
 
+@dataclass
+class UnionType:
+    discriminant: ir_types.NameAndWireValue
+    single_union_type: ir_types.SingleUnionType
+
+
 class SnippetRegistry:
     def __init__(
         self,
@@ -460,6 +466,26 @@ class SnippetRegistry:
         name: ir_types.DeclaredTypeName,
         example: ir_types.ExampleObjectType,
     ) -> AST.Expression:
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self._get_class_reference_for_declared_type_name(
+                    context=context,
+                    name=name,
+                ),
+                args=self._snippet_for_object_properties(
+                    ir=ir,
+                    context=context,
+                    example=example,
+                ),
+            ),
+        )
+
+    def _snippet_for_object_properties(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        example: ir_types.ExampleObjectType,
+    ) -> List[AST.Expression]:
         args: List[AST.Expression] = []
         for property in example.properties:
             value = property.value.shape.visit(
@@ -491,16 +517,7 @@ class SnippetRegistry:
                     value=value,
                 ),
             )
-
-        return AST.Expression(
-            AST.ClassInstantiation(
-                class_=self._get_class_reference_for_declared_type_name(
-                    context=context,
-                    name=name,
-                ),
-                args=args,
-            ),
-        )
+        return args
 
     def _snippet_for_primitive(
         self,
@@ -509,7 +526,7 @@ class SnippetRegistry:
         return primitive.visit(
             integer=lambda integer: AST.Expression(str(integer)),
             double=lambda double: AST.Expression(str(double)),
-            string=lambda string: AST.Expression(f'"{string}"'),
+            string=lambda string: self._snippet_for_string_primitive(string),
             boolean=lambda boolean: AST.Expression(str(boolean)),
             long=lambda long: AST.Expression(str(long)),
             datetime=lambda datetime: AST.Expression(
@@ -558,6 +575,21 @@ class SnippetRegistry:
                 ),
             ),
         )
+
+    def _snippet_for_string_primitive(
+        self,
+        string: str,
+    ) -> AST.Expression:
+        if '"' in string:
+            # There are literal quotes in the given string.
+            # We want to preserve the format and instead surround
+            # the string in single quotes.
+            #
+            # This is especially relevant for JSON examples
+            # specified as a string (e.g. '{"foo": "bar"}').
+            clean = string.replace("'", '"')
+            return AST.Expression(f"'{clean}'")
+        return AST.Expression(f'"{string}"')
 
     def _snippet_for_container(
         self,
@@ -656,18 +688,18 @@ class SnippetRegistry:
         example: ir_types.ExampleSingleUnionType,
     ) -> AST.Expression:
         type_decl = ir.types[name.type_id]
-        single_union_type = type_decl.shape.visit(
+        union_type = type_decl.shape.visit(
             alias=lambda _: None,
             enum=lambda _: None,
             object=lambda _: None,
-            union=lambda union: self._single_union_type_for_example(
+            union=lambda union: self._get_union_type_for_example(
                 union=union,
                 example=example,
             ),
             undiscriminated_union=lambda _: None,
         )
 
-        if single_union_type is None:
+        if union_type is None:
             raise Exception(f"internal error: cannot generate snippet - expected an example union for {name.type_id}")
 
         snippet = example.properties.visit(
@@ -675,19 +707,19 @@ class SnippetRegistry:
                 ir=ir,
                 context=context,
                 name=name,
-                single_union_type=single_union_type,
+                union_type=union_type,
                 example=named,
             )
-            if single_union_type is not None
+            if union_type is not None
             else None,
             single_property=lambda example_type_reference: self._snippet_for_union_with_single_property(
                 ir=ir,
                 context=context,
                 name=name,
-                single_union_type=single_union_type,
+                union_type=union_type,
                 example=example_type_reference,
             )
-            if single_union_type is not None
+            if union_type is not None
             else None,
             no_properties=lambda: self._snippet_for_union_with_no_properties(
                 context=context,
@@ -705,49 +737,60 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
-        single_union_type: ir_types.SingleUnionType,
+        union_type: UnionType,
         example: ir_types.ExampleNamedType,
     ) -> AST.Expression:
-        union_class_reference = AST.ClassReference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.snippet(
-                    module_path=context.get_module_path_in_project(()),
-                ),
-                named_import=f"{name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",
+        object = example.shape.visit(
+            alias=lambda _: None,
+            enum=lambda _: None,
+            object=lambda object: object,
+            union=lambda _: None,
+        )
+        if object is None:
+            raise Exception(f"internal error: cannot generate snippet - expected an example object for {name.type_id}")
+
+        args: List[AST.Expression] = []
+        args.append(
+            self._snippet_for_union_discriminant_parameter(
+                union_type=union_type,
             ),
         )
-        union_value = self._snippet_for_example_type_shape(
-            ir=ir,
-            context=context,
-            name=example.type_name,
-            example_type_shape=example.shape,
+        args.extend(
+            self._snippet_for_object_properties(
+                ir=ir,
+                context=context,
+                example=object,
+            ),
         )
 
-        def write_union(writer: AST.NodeWriter) -> None:
-            writer.write_node(AST.Expression(union_class_reference))
-            writer.write("(value=")
-            writer.write_node(union_value)
-            writer.write(")")
+        union_class_reference = self._get_union_class_reference(
+            context=context,
+            name=name,
+            single_union_type=union_type.single_union_type,
+        )
 
-        return AST.Expression(AST.CodeWriter(write_union))
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=union_class_reference,
+                args=args,
+            ),
+        )
 
     def _snippet_for_union_with_single_property(
         self,
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
-        single_union_type: ir_types.SingleUnionType,
+        union_type: UnionType,
         example: ir_types.ExampleTypeReference,
     ) -> AST.Expression:
-        union_class_reference = AST.ClassReference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.snippet(
-                    module_path=context.get_module_path_in_project(()),
-                ),
-                named_import=f"{name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",
-            ),
+        union_class_reference = self._get_union_class_reference(
+            context=context,
+            name=name,
+            single_union_type=union_type.single_union_type,
+        )
+        union_discriminant_parameter = self._snippet_for_union_discriminant_parameter(
+            union_type=union_type,
         )
         union_value = self._snippet_for_example_type_reference(
             ir=ir,
@@ -757,7 +800,10 @@ class SnippetRegistry:
 
         def write_union(writer: AST.NodeWriter) -> None:
             writer.write_node(AST.Expression(union_class_reference))
-            writer.write("(value=")
+            writer.write("(")
+            writer.write_node(union_discriminant_parameter)
+            writer.write(", ")
+            writer.write("value=")
             writer.write_node(union_value)
             writer.write(")")
 
@@ -779,15 +825,46 @@ class SnippetRegistry:
 
         return AST.Expression(AST.CodeWriter(write_union))
 
-    def _single_union_type_for_example(
+    def _snippet_for_union_discriminant_parameter(
+        self,
+        union_type: UnionType,
+    ) -> AST.Expression:
+        return self._write_named_parameter_for_value(
+            parameter_name=union_type.discriminant.name.snake_case.unsafe_name,
+            value=AST.Expression(f'"{union_type.single_union_type.discriminant_value.wire_value}"'),
+        )
+
+    def _get_union_type_for_example(
         self,
         union: ir_types.UnionTypeDeclaration,
         example: ir_types.ExampleSingleUnionType,
-    ) -> Optional[ir_types.SingleUnionType]:
+    ) -> Optional[UnionType]:
         for single_union_type in union.types:
             if single_union_type.discriminant_value.wire_value == example.wire_discriminant_value:
-                return single_union_type
+                return UnionType(
+                    discriminant=union.discriminant,
+                    single_union_type=single_union_type,
+                )
         return None
+
+    def _get_union_class_reference(
+        self,
+        context: PydanticGeneratorContext,
+        name: ir_types.DeclaredTypeName,
+        single_union_type: ir_types.SingleUnionType,
+    ) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.snippet(
+                    module_path=self._get_module_path_for_declared_type_name(
+                        context=context,
+                        name=name,
+                    ),
+                ),
+                named_import=f"{name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",
+            ),
+        )
 
     def _get_class_reference_for_declared_type_name(
         self,
@@ -798,7 +875,10 @@ class SnippetRegistry:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.snippet(
-                    module_path=context.get_module_path_in_project(()),
+                    module_path=self._get_module_path_for_declared_type_name(
+                        context=context,
+                        name=name,
+                    ),
                 ),
                 named_import=name.name.pascal_case.unsafe_name,
             ),
@@ -964,3 +1044,17 @@ class SnippetRegistry:
             writer.write("}")
 
         return AST.Expression(AST.CodeWriter(write_map))
+
+    def _get_module_path_for_declared_type_name(
+        self,
+        context: PydanticGeneratorContext,
+        name: ir_types.DeclaredTypeName,
+    ) -> AST.ModulePath:
+        module_path = tuple([directory.snake_case.unsafe_name for directory in name.fern_filepath.package_path])
+        if len(module_path) > 0:
+            # If the type is defined in a subpackge, it needs to be imported with the 'resources'
+            # intermediary key. Otherwise the types can be imported from the root package.
+            module_path = ("resources",) + module_path
+        return context.get_module_path_in_project(
+            module_path,
+        )

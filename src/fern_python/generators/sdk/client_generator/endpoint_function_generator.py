@@ -387,9 +387,12 @@ class EndpointFunctionGenerator:
         self,
         package: ir_types.Package,
     ) -> str:
-        if len(package.fern_filepath.package_path) == 0:
+        components = package.fern_filepath.package_path.copy()
+        if package.fern_filepath.file is not None:
+            components += [package.fern_filepath.file]
+        if len(components) == 0:
             return ""
-        return ".".join([directory.snake_case.safe_name for directory in package.fern_filepath.package_path]) + "."
+        return ".".join([component.snake_case.unsafe_name for component in components]) + "."
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
