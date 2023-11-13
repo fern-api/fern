@@ -40,7 +40,7 @@
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
     "@fern-fern/fiddle-sdk": "^0.0.351",
-    "axios": "^0.27.2",
+    "axios": "^1.6.1",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
     "js-yaml": "^4.1.0",

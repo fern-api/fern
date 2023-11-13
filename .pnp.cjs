@@ -3619,7 +3619,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
             ["ansi-escapes", "npm:5.0.0"],\
-            ["axios", "npm:0.27.2"],\
+            ["axios", "npm:1.6.1"],\
             ["boxen", "npm:7.0.0"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -3973,7 +3973,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
-            ["axios", "npm:0.27.2"],\
+            ["axios", "npm:1.6.1"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
@@ -4204,7 +4204,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.7"],\
-            ["axios", "npm:0.27.2"],\
+            ["axios", "npm:1.6.1"],\
             ["boxen", "npm:7.0.0"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4426,7 +4426,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/mime-types", "npm:2.1.2"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/terminal-link", "npm:1.2.0"],\
-            ["axios", "npm:0.27.2"],\
+            ["axios", "npm:1.6.1"],\
             ["chalk", "npm:5.0.1"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4617,7 +4617,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tar", "npm:6.1.3"],\
-            ["axios", "npm:0.27.2"],\
+            ["axios", "npm:1.6.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["glob", "npm:7.2.3"],\
@@ -7548,6 +7548,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/axios-npm-1.2.1-4056ddcb4c-c4dc4e1190.zip/node_modules/axios/",\
           "packageDependencies": [\
             ["axios", "npm:1.2.1"],\
+            ["follow-redirects", "virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.2"],\
+            ["form-data", "npm:4.0.0"],\
+            ["proxy-from-env", "npm:1.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:1.6.1", {\
+          "packageLocation": "./.yarn/cache/axios-npm-1.6.1-ffaff76449-573f03f59b.zip/node_modules/axios/",\
+          "packageDependencies": [\
+            ["axios", "npm:1.6.1"],\
             ["follow-redirects", "virtual:dbe3a48aea1dd5649e16abaf23d4ae05582d2149e16141955113766a0f84f681baf358c77ddccfc82eb23e4ccc66c6c912df62a9c01f2a83f1842bf86cc297b1#npm:1.15.2"],\
             ["form-data", "npm:4.0.0"],\
             ["proxy-from-env", "npm:1.1.0"]\
