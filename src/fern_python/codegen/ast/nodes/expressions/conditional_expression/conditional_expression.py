@@ -1,7 +1,5 @@
-from fern_python.codegen.ast import AstNode
-from fern_python.codegen.ast import AstNodeMetadata
-from fern_python.codegen.ast import Expression
-from fern_python.codegen.ast import NodeWriter
+from ..expression import Expression
+from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 
 
 class ConditionalExpression(AstNode):

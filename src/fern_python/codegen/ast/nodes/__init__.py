@@ -14,6 +14,7 @@ from .declarations import (
 from .docstring import Docstring
 from .expressions import (
     ClassInstantiation,
+    ConditionalExpression,
     DictionaryInstantiation,
     Expression,
     ExpressionSpread,
@@ -44,4 +45,5 @@ __all__ = [
     "Docstring",
     "DictionaryInstantiation",
     "NamedFunctionParameter",
+    "ConditionalExpression",
 ]

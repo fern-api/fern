@@ -19,6 +19,7 @@ from .nodes import (
     ClassMethodDecorator,
     CodeWriter,
     CodeWriterFunction,
+    ConditionalExpression,
     Declaration,
     DictionaryInstantiation,
     Docstring,
@@ -80,4 +81,5 @@ __all__ = [
     "DictionaryInstantiation",
     "NamedFunctionParameter",
     "DependencyCompatibility",
+    "ConditionalExpression",
 ]
