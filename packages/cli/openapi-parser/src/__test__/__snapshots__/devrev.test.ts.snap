@@ -13092,7 +13092,7 @@ empty.
     {
       "description": "DevRev API endpoint.",
       "name": undefined,
-      "url": "{protocol}://{hostname}",
+      "url": "https://api.devrev.ai",
     },
   ],
   "tags": {

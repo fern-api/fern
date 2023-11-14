@@ -37403,7 +37403,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     {
       "description": "Production API",
       "name": undefined,
-      "url": "https://api.hookdeck.com/{version}",
+      "url": "https://api.hookdeck.com/2023-01-01",
     },
   ],
   "tags": {
