@@ -1,5 +1,4 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
-import { FernIr } from "@fern-fern/ir-sdk";
 import { commons } from "@fern-fern/ir-sdk/api";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
@@ -54,7 +53,7 @@ function getV28TypeDeclarationFromId({
     allTypes,
 }: {
     typeId: commons.TypeId;
-    allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
+    allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>;
 }): IrVersions.V28.types.TypeDeclaration {
     const typeDeclaration = getTypeDeclarationOrThrow({ typeId, allTypes });
     return {
@@ -79,8 +78,8 @@ function getTypeDeclarationOrThrow({
     allTypes,
 }: {
     typeId: commons.TypeId;
-    allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
-}): FernIr.TypeDeclaration {
+    allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>;
+}): IrVersions.V29.TypeDeclaration {
     const typeDeclaration = allTypes[typeId];
     if (typeDeclaration == null) {
         throw new Error(`Type definition for type id ${typeId} is undefined`);

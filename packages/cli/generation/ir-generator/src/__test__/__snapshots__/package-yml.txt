@@ -185,7 +185,9 @@ exports[`generate IR 1`] = `
                 "jsonExample": "Hello world!",
                 "shape": {
                   "primitive": {
-                    "string": "Hello world!",
+                    "string": {
+                      "original": "Hello world!",
+                    },
                     "type": "string",
                   },
                   "type": "primitive",
@@ -197,7 +199,9 @@ exports[`generate IR 1`] = `
                   "jsonExample": "Hello world!",
                   "shape": {
                     "primitive": {
-                      "string": "Hello world!",
+                      "string": {
+                        "original": "Hello world!",
+                      },
                       "type": "string",
                     },
                     "type": "primitive",
@@ -207,12 +211,32 @@ exports[`generate IR 1`] = `
               },
               "rootPathParameters": [
                 {
-                  "key": "id",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "Id",
+                      "unsafeName": "Id",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
                   "value": {
                     "jsonExample": "id-ksfd9c1",
                     "shape": {
                       "primitive": {
-                        "string": "id-ksfd9c1",
+                        "string": {
+                          "original": "id-ksfd9c1",
+                        },
                         "type": "string",
                       },
                       "type": "primitive",
@@ -406,12 +430,32 @@ exports[`generate IR 1`] = `
               "endpointHeaders": [],
               "endpointPathParameters": [
                 {
-                  "key": "nestedId",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "nestedId",
+                      "unsafeName": "nestedId",
+                    },
+                    "originalName": "nestedId",
+                    "pascalCase": {
+                      "safeName": "NestedId",
+                      "unsafeName": "NestedId",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NESTED_ID",
+                      "unsafeName": "NESTED_ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "nested_id",
+                      "unsafeName": "nested_id",
+                    },
+                  },
                   "value": {
                     "jsonExample": "id-219xca8",
                     "shape": {
                       "primitive": {
-                        "string": "id-219xca8",
+                        "string": {
+                          "original": "id-219xca8",
+                        },
                         "type": "string",
                       },
                       "type": "primitive",
@@ -428,12 +472,32 @@ exports[`generate IR 1`] = `
               },
               "rootPathParameters": [
                 {
-                  "key": "id",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "Id",
+                      "unsafeName": "Id",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
                   "value": {
                     "jsonExample": "id-a2ijs82",
                     "shape": {
                       "primitive": {
-                        "string": "id-a2ijs82",
+                        "string": {
+                          "original": "id-a2ijs82",
+                        },
                         "type": "string",
                       },
                       "type": "primitive",
