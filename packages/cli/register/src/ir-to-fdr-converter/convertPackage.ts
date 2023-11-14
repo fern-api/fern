@@ -336,7 +336,7 @@ function convertExampleEndpointCall(
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["pathParameters"]
         >((pathParameters, irPathParameterExample) => {
-            pathParameters[convertPathParameterKey(irPathParameterExample.name.wireValue)] =
+            pathParameters[convertPathParameterKey(irPathParameterExample.name.originalName)] =
                 irPathParameterExample.value.jsonExample;
             return pathParameters;
         }, {}),
