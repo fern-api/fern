@@ -7,7 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
-    NameAndWireValue,
+    Name,
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -110,7 +110,7 @@ function convertPathParameters({
         pathParameterDeclaration,
         examplePathParameter,
     }: {
-        name: NameAndWireValue;
+        name: Name;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {
@@ -141,10 +141,7 @@ function convertPathParameters({
             if (rootPathParameterDeclaration != null) {
                 rootPathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateNameAndWireValue({
-                            name: key,
-                            wireValue: key,
-                        }),
+                        name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: rootPathParameterDeclaration,
                         examplePathParameter,
                     })
@@ -152,10 +149,7 @@ function convertPathParameters({
             } else if (endpointPathParameterDeclaration != null) {
                 endpointPathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateNameAndWireValue({
-                            name: key,
-                            wireValue: key,
-                        }),
+                        name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: endpointPathParameterDeclaration,
                         examplePathParameter,
                     })
@@ -163,10 +157,7 @@ function convertPathParameters({
             } else if (servicePathParameterDeclaration != null) {
                 servicePathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateNameAndWireValue({
-                            name: key,
-                            wireValue: key,
-                        }),
+                        name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: servicePathParameterDeclaration,
                         examplePathParameter,
                     })

@@ -949,26 +949,23 @@ exports[`generate IR 1`] = `
               "servicePathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "notificationId",
-                        "unsafeName": "notificationId",
-                      },
-                      "originalName": "notificationId",
-                      "pascalCase": {
-                        "safeName": "NotificationId",
-                        "unsafeName": "NotificationId",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "NOTIFICATION_ID",
-                        "unsafeName": "NOTIFICATION_ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "notification_id",
-                        "unsafeName": "notification_id",
-                      },
+                    "camelCase": {
+                      "safeName": "notificationId",
+                      "unsafeName": "notificationId",
                     },
-                    "wireValue": "notificationId",
+                    "originalName": "notificationId",
+                    "pascalCase": {
+                      "safeName": "NotificationId",
+                      "unsafeName": "NotificationId",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NOTIFICATION_ID",
+                      "unsafeName": "NOTIFICATION_ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "notification_id",
+                      "unsafeName": "notification_id",
+                    },
                   },
                   "value": {
                     "jsonExample": "notification-hsy129x",
@@ -1376,26 +1373,23 @@ exports[`generate IR 1`] = `
               "endpointPathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "filename",
-                        "unsafeName": "filename",
-                      },
-                      "originalName": "filename",
-                      "pascalCase": {
-                        "safeName": "Filename",
-                        "unsafeName": "Filename",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "FILENAME",
-                        "unsafeName": "FILENAME",
-                      },
-                      "snakeCase": {
-                        "safeName": "filename",
-                        "unsafeName": "filename",
-                      },
+                    "camelCase": {
+                      "safeName": "filename",
+                      "unsafeName": "filename",
                     },
-                    "wireValue": "filename",
+                    "originalName": "filename",
+                    "pascalCase": {
+                      "safeName": "Filename",
+                      "unsafeName": "Filename",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FILENAME",
+                      "unsafeName": "FILENAME",
+                    },
+                    "snakeCase": {
+                      "safeName": "filename",
+                      "unsafeName": "filename",
+                    },
                   },
                   "value": {
                     "jsonExample": "file.txt",
@@ -1916,26 +1910,23 @@ exports[`generate IR 1`] = `
               "endpointPathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "id",
-                        "unsafeName": "id",
-                      },
-                      "originalName": "id",
-                      "pascalCase": {
-                        "safeName": "Id",
-                        "unsafeName": "Id",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "ID",
-                        "unsafeName": "ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "id",
-                        "unsafeName": "id",
-                      },
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
                     },
-                    "wireValue": "id",
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "Id",
+                      "unsafeName": "Id",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
                   },
                   "value": {
                     "jsonExample": "id-2sdx82h",
@@ -2322,26 +2313,23 @@ exports[`generate IR 1`] = `
               "endpointPathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "movieId",
-                        "unsafeName": "movieId",
-                      },
-                      "originalName": "movieId",
-                      "pascalCase": {
-                        "safeName": "MovieId",
-                        "unsafeName": "MovieId",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "MOVIE_ID",
-                        "unsafeName": "MOVIE_ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "movie_id",
-                        "unsafeName": "movie_id",
-                      },
+                    "camelCase": {
+                      "safeName": "movieId",
+                      "unsafeName": "movieId",
                     },
-                    "wireValue": "movieId",
+                    "originalName": "movieId",
+                    "pascalCase": {
+                      "safeName": "MovieId",
+                      "unsafeName": "MovieId",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MOVIE_ID",
+                      "unsafeName": "MOVIE_ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "movie_id",
+                      "unsafeName": "movie_id",
+                    },
                   },
                   "value": {
                     "jsonExample": "movie-c06a4ad7",

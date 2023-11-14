@@ -212,26 +212,23 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "id",
-                        "unsafeName": "id",
-                      },
-                      "originalName": "id",
-                      "pascalCase": {
-                        "safeName": "Id",
-                        "unsafeName": "Id",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "ID",
-                        "unsafeName": "ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "id",
-                        "unsafeName": "id",
-                      },
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
                     },
-                    "wireValue": "id",
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "Id",
+                      "unsafeName": "Id",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
                   },
                   "value": {
                     "jsonExample": "id-ksfd9c1",
@@ -434,26 +431,23 @@ exports[`generate IR 1`] = `
               "endpointPathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "nestedId",
-                        "unsafeName": "nestedId",
-                      },
-                      "originalName": "nestedId",
-                      "pascalCase": {
-                        "safeName": "NestedId",
-                        "unsafeName": "NestedId",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "NESTED_ID",
-                        "unsafeName": "NESTED_ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "nested_id",
-                        "unsafeName": "nested_id",
-                      },
+                    "camelCase": {
+                      "safeName": "nestedId",
+                      "unsafeName": "nestedId",
                     },
-                    "wireValue": "nestedId",
+                    "originalName": "nestedId",
+                    "pascalCase": {
+                      "safeName": "NestedId",
+                      "unsafeName": "NestedId",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NESTED_ID",
+                      "unsafeName": "NESTED_ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "nested_id",
+                      "unsafeName": "nested_id",
+                    },
                   },
                   "value": {
                     "jsonExample": "id-219xca8",
@@ -479,26 +473,23 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [
                 {
                   "name": {
-                    "name": {
-                      "camelCase": {
-                        "safeName": "id",
-                        "unsafeName": "id",
-                      },
-                      "originalName": "id",
-                      "pascalCase": {
-                        "safeName": "Id",
-                        "unsafeName": "Id",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "ID",
-                        "unsafeName": "ID",
-                      },
-                      "snakeCase": {
-                        "safeName": "id",
-                        "unsafeName": "id",
-                      },
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
                     },
-                    "wireValue": "id",
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "Id",
+                      "unsafeName": "Id",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
                   },
                   "value": {
                     "jsonExample": "id-a2ijs82",

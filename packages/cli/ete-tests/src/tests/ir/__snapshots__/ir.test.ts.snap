@@ -14413,26 +14413,23 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "rootPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "rootPathParam",
-                                            "camelCase": {
-                                                "unsafeName": "rootPathParam",
-                                                "safeName": "rootPathParam"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "root_path_param",
-                                                "safeName": "root_path_param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ROOT_PATH_PARAM",
-                                                "safeName": "ROOT_PATH_PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "RootPathParam",
-                                                "safeName": "RootPathParam"
-                                            }
+                                        "originalName": "rootPathParam",
+                                        "camelCase": {
+                                            "unsafeName": "rootPathParam",
+                                            "safeName": "rootPathParam"
                                         },
-                                        "wireValue": "rootPathParam"
+                                        "snakeCase": {
+                                            "unsafeName": "root_path_param",
+                                            "safeName": "root_path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_PATH_PARAM",
+                                            "safeName": "ROOT_PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootPathParam",
+                                            "safeName": "RootPathParam"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -14881,26 +14878,23 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "rootPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "rootPathParam",
-                                            "camelCase": {
-                                                "unsafeName": "rootPathParam",
-                                                "safeName": "rootPathParam"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "root_path_param",
-                                                "safeName": "root_path_param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ROOT_PATH_PARAM",
-                                                "safeName": "ROOT_PATH_PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "RootPathParam",
-                                                "safeName": "RootPathParam"
-                                            }
+                                        "originalName": "rootPathParam",
+                                        "camelCase": {
+                                            "unsafeName": "rootPathParam",
+                                            "safeName": "rootPathParam"
                                         },
-                                        "wireValue": "rootPathParam"
+                                        "snakeCase": {
+                                            "unsafeName": "root_path_param",
+                                            "safeName": "root_path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_PATH_PARAM",
+                                            "safeName": "ROOT_PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootPathParam",
+                                            "safeName": "RootPathParam"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -22589,26 +22583,23 @@ exports[`ir {"name":"simple"} 1`] = `
                             "rootPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "rootPathParam",
-                                            "camelCase": {
-                                                "unsafeName": "rootPathParam",
-                                                "safeName": "rootPathParam"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "root_path_param",
-                                                "safeName": "root_path_param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ROOT_PATH_PARAM",
-                                                "safeName": "ROOT_PATH_PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "RootPathParam",
-                                                "safeName": "RootPathParam"
-                                            }
+                                        "originalName": "rootPathParam",
+                                        "camelCase": {
+                                            "unsafeName": "rootPathParam",
+                                            "safeName": "rootPathParam"
                                         },
-                                        "wireValue": "rootPathParam"
+                                        "snakeCase": {
+                                            "unsafeName": "root_path_param",
+                                            "safeName": "root_path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_PATH_PARAM",
+                                            "safeName": "ROOT_PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootPathParam",
+                                            "safeName": "RootPathParam"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -23057,26 +23048,23 @@ exports[`ir {"name":"simple"} 1`] = `
                             "rootPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "rootPathParam",
-                                            "camelCase": {
-                                                "unsafeName": "rootPathParam",
-                                                "safeName": "rootPathParam"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "root_path_param",
-                                                "safeName": "root_path_param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ROOT_PATH_PARAM",
-                                                "safeName": "ROOT_PATH_PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "RootPathParam",
-                                                "safeName": "RootPathParam"
-                                            }
+                                        "originalName": "rootPathParam",
+                                        "camelCase": {
+                                            "unsafeName": "rootPathParam",
+                                            "safeName": "rootPathParam"
                                         },
-                                        "wireValue": "rootPathParam"
+                                        "snakeCase": {
+                                            "unsafeName": "root_path_param",
+                                            "safeName": "root_path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_PATH_PARAM",
+                                            "safeName": "ROOT_PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootPathParam",
+                                            "safeName": "RootPathParam"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -24085,26 +24073,23 @@ exports[`ir {"name":"simple"} 1`] = `
                             "rootPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "rootPathParam",
-                                            "camelCase": {
-                                                "unsafeName": "rootPathParam",
-                                                "safeName": "rootPathParam"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "root_path_param",
-                                                "safeName": "root_path_param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ROOT_PATH_PARAM",
-                                                "safeName": "ROOT_PATH_PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "RootPathParam",
-                                                "safeName": "RootPathParam"
-                                            }
+                                        "originalName": "rootPathParam",
+                                        "camelCase": {
+                                            "unsafeName": "rootPathParam",
+                                            "safeName": "rootPathParam"
                                         },
-                                        "wireValue": "rootPathParam"
+                                        "snakeCase": {
+                                            "unsafeName": "root_path_param",
+                                            "safeName": "root_path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_PATH_PARAM",
+                                            "safeName": "ROOT_PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootPathParam",
+                                            "safeName": "RootPathParam"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -24123,26 +24108,23 @@ exports[`ir {"name":"simple"} 1`] = `
                             "endpointPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "movieId",
-                                            "camelCase": {
-                                                "unsafeName": "movieId",
-                                                "safeName": "movieId"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "movie_id",
-                                                "safeName": "movie_id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "MOVIE_ID",
-                                                "safeName": "MOVIE_ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "MovieId",
-                                                "safeName": "MovieId"
-                                            }
+                                        "originalName": "movieId",
+                                        "camelCase": {
+                                            "unsafeName": "movieId",
+                                            "safeName": "movieId"
                                         },
-                                        "wireValue": "movieId"
+                                        "snakeCase": {
+                                            "unsafeName": "movie_id",
+                                            "safeName": "movie_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE_ID",
+                                            "safeName": "MOVIE_ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MovieId",
+                                            "safeName": "MovieId"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -24740,26 +24722,23 @@ exports[`ir {"name":"simple"} 1`] = `
                             "rootPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "rootPathParam",
-                                            "camelCase": {
-                                                "unsafeName": "rootPathParam",
-                                                "safeName": "rootPathParam"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "root_path_param",
-                                                "safeName": "root_path_param"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ROOT_PATH_PARAM",
-                                                "safeName": "ROOT_PATH_PARAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "RootPathParam",
-                                                "safeName": "RootPathParam"
-                                            }
+                                        "originalName": "rootPathParam",
+                                        "camelCase": {
+                                            "unsafeName": "rootPathParam",
+                                            "safeName": "rootPathParam"
                                         },
-                                        "wireValue": "rootPathParam"
+                                        "snakeCase": {
+                                            "unsafeName": "root_path_param",
+                                            "safeName": "root_path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_PATH_PARAM",
+                                            "safeName": "ROOT_PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootPathParam",
+                                            "safeName": "RootPathParam"
+                                        }
                                     },
                                     "value": {
                                         "shape": {
@@ -24778,26 +24757,23 @@ exports[`ir {"name":"simple"} 1`] = `
                             "endpointPathParameters": [
                                 {
                                     "name": {
-                                        "name": {
-                                            "originalName": "movieId",
-                                            "camelCase": {
-                                                "unsafeName": "movieId",
-                                                "safeName": "movieId"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "movie_id",
-                                                "safeName": "movie_id"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "MOVIE_ID",
-                                                "safeName": "MOVIE_ID"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "MovieId",
-                                                "safeName": "MovieId"
-                                            }
+                                        "originalName": "movieId",
+                                        "camelCase": {
+                                            "unsafeName": "movieId",
+                                            "safeName": "movieId"
                                         },
-                                        "wireValue": "movieId"
+                                        "snakeCase": {
+                                            "unsafeName": "movie_id",
+                                            "safeName": "movie_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE_ID",
+                                            "safeName": "MOVIE_ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MovieId",
+                                            "safeName": "MovieId"
+                                        }
                                     },
                                     "value": {
                                         "shape": {

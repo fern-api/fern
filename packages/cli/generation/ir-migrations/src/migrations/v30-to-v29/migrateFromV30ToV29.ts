@@ -115,7 +115,7 @@ class Converter {
     ): IrVersions.V29.ExamplePathParameter[] {
         return examples.map((examplePathParameter) => {
             return {
-                key: examplePathParameter.name.wireValue,
+                key: examplePathParameter.name.originalName,
                 value: this.convertExampleTypeReference(examplePathParameter.value),
             };
         });

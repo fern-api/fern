@@ -207,7 +207,7 @@ types:
 
   ExamplePathParameter:
     properties:
-      name: commons.NameAndWireValue
+      name: commons.Name
       value: types.ExampleTypeReference
 
   ExampleQueryParameter:
