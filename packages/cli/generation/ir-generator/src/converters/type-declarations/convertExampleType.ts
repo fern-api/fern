@@ -27,6 +27,8 @@ import {
     getUnionDiscriminant,
     getUnionDiscriminantName,
 } from "./convertDiscriminatedUnionTypeDeclaration";
+import { getEnumName } from "./convertEnumTypeDeclaration";
+import { getPropertyName } from "./convertObjectTypeDeclaration";
 
 export function convertTypeExample({
     typeName,
@@ -118,7 +120,7 @@ export function convertTypeExample({
             }
             return ExampleTypeShape.enum({
                 value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                    name: example,
+                    name: getEnumName(example).name,
                     wireValue: example,
                 }),
             });
@@ -419,7 +421,10 @@ function convertObject({
                               });
                               exampleProperties.push({
                                   name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                                      name: wireKey,
+                                      name: getPropertyName({
+                                          propertyKey: wireKey,
+                                          property: originalTypeDeclaration.rawPropertyType,
+                                      }).name,
                                       wireValue: wireKey,
                                   }),
                                   value: valueExample,
