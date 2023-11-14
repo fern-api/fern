@@ -64,7 +64,10 @@ class AbstractGenerator(ABC):
 
         generator_config.output.mode.visit(
             download_files=lambda: None,
-            github=lambda x: None,
+            github=lambda _: self._poetry_install(
+                generator_exec_wrapper=generator_exec_wrapper,
+                generator_config=generator_config,
+            ),
             publish=lambda publish_config: self._publish(
                 generator_exec_wrapper=generator_exec_wrapper,
                 publish_config=publish_config,
@@ -90,6 +93,15 @@ class AbstractGenerator(ABC):
             package_version=output_mode.version,
         )
 
+    def _poetry_install(
+        self, *, generator_exec_wrapper: GeneratorExecWrapper, generator_config: GeneratorConfig
+    ) -> None:
+        publisher = Publisher(
+            generator_exec_wrapper=generator_exec_wrapper,
+            generator_config=generator_config,
+        )
+        publisher.run_poetry_install()
+
     def _publish(
         self,
         generator_exec_wrapper: GeneratorExecWrapper,
@@ -98,10 +110,9 @@ class AbstractGenerator(ABC):
     ) -> None:
         publisher = Publisher(
             generator_exec_wrapper=generator_exec_wrapper,
-            publish_config=publish_config,
             generator_config=generator_config,
         )
-        publisher.publish_project()
+        publisher.publish_package(publish_config=publish_config)
 
     def _write_files_for_github_repo(self, project: Project, output_mode: GithubOutputMode) -> None:
         project.add_file(
