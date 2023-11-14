@@ -1,9 +1,8 @@
-from ..expression import Expression
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
+from ..expression import Expression
 
 
 class ConditionalExpression(AstNode):
-
     def __init__(self, test: Expression, left: AstNode, right: AstNode) -> None:
         self.test = test
         self.left = left
