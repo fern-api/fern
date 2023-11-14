@@ -216,7 +216,7 @@ types:
 
   ExampleSingleUnionType:
     union:
-      samePropertiesAsObject: ExampleObjectType
+      samePropertiesAsObject: ExampleObjectTypeWithTypeId
       singleProperty: ExampleTypeReference
       noProperties: {}
 
@@ -289,3 +289,8 @@ types:
     properties:
       typeName: DeclaredTypeName
       shape: ExampleTypeShape
+
+  ExampleObjectTypeWithTypeId:
+    properties:
+      typeId: commons.TypeId
+      object: ExampleObjectType

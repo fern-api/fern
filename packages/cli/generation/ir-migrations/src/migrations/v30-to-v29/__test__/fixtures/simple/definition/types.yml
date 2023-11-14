@@ -1,0 +1,9 @@
+types:
+  Car:
+    properties:
+      id: string
+      wheels: set<Wheel>
+  Wheel:
+    properties:
+      size: integer
+      color: string
