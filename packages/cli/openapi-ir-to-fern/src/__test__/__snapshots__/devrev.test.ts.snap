@@ -5205,7 +5205,7 @@ organizations.
     "default-environment": "default",
     "display-name": "DevRev REST API",
     "environments": {
-      "default": "{protocol}://{hostname}",
+      "default": "https://api.devrev.ai",
     },
     "error-discrimination": {
       "strategy": "status-code",
