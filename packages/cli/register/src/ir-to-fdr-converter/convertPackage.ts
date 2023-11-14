@@ -110,7 +110,7 @@ function convertIrEndpointAvailability({
         case "GENERAL_AVAILABILITY":
             return FernRegistry.api.v1.register.Availability.GenerallyAvailable;
         case "IN_DEVELOPMENT":
-            return undefined;
+            return FernRegistry.api.v1.register.Availability.Beta;
         default:
             assertNever(availability.status);
     }
