@@ -512,7 +512,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                         {
                             "path": "/movies/id-123",
                             "pathParameters": {
-                                "undefined": "id-123"
+                                "movieId": "id-123"
                             },
                             "queryParameters": {
                                 "movieName": "hello"
@@ -528,7 +528,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                         {
                             "path": "/movies/id-123",
                             "pathParameters": {
-                                "undefined": "id-123"
+                                "movieId": "id-123"
                             },
                             "queryParameters": {
                                 "movieName": "hello"
