@@ -10,6 +10,7 @@ import {
     ExampleContainer,
     ExampleObjectProperty,
     ExamplePrimitive,
+    ExampleSingleUnionType,
     ExampleSingleUnionTypeProperties,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
@@ -17,9 +18,15 @@ import {
     PrimitiveType,
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
+import { IdGenerator } from "../../IdGenerator";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getSingleUnionTypeProperties, getUnionDiscriminant } from "./convertDiscriminatedUnionTypeDeclaration";
+import {
+    getSingleUnionTypeName,
+    getSingleUnionTypeProperties,
+    getUnionDiscriminant,
+    getUnionDiscriminantName,
+} from "./convertDiscriminatedUnionTypeDeclaration";
 
 export function convertTypeExample({
     typeName,
@@ -88,8 +95,11 @@ export function convertTypeExample({
                     : undefined;
 
             return ExampleTypeShape.union({
-                wireDiscriminantValue: discriminantValueForExample,
-                properties: convertUnionProperties({
+                discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                    name: getUnionDiscriminantName(rawUnion).name,
+                    wireValue: discriminant,
+                }),
+                singleUnionType: convertSingleUnionType({
                     rawValueType,
                     rawSingleUnionType,
                     fileContainingType,
@@ -98,6 +108,7 @@ export function convertTypeExample({
                     exampleResolver,
                     example,
                     discriminant,
+                    discriminantValueForExample,
                 }),
             });
         },
@@ -106,7 +117,10 @@ export function convertTypeExample({
                 throw new Error("Enum example is not a string");
             }
             return ExampleTypeShape.enum({
-                wireValue: example,
+                value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                    name: example,
+                    wireValue: example,
+                }),
             });
         },
         undiscriminatedUnion: () => {
@@ -232,7 +246,11 @@ export function convertTypeReferenceExample({
                 case "boolean":
                     return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean));
                 case "string":
-                    return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(literal.string));
+                    return ExampleTypeReferenceShape.primitive(
+                        ExamplePrimitive.string({
+                            original: literal.string,
+                        })
+                    );
                 default:
                     assertNever(literal);
             }
@@ -287,7 +305,11 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: example,
+                })
+            );
         },
         dateTime: () => {
             if (typeof example !== "string") {
@@ -305,7 +327,11 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: example,
+                })
+            );
         },
         integer: () => {
             if (typeof example !== "number") {
@@ -359,7 +385,7 @@ function convertObject({
     fileContainingExample: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-}): ExampleTypeShape {
+}): ExampleTypeShape.Object_ {
     if (!isPlainObject(example)) {
         throw new Error("Example is not an object");
     }
@@ -392,7 +418,10 @@ function convertObject({
                                   exampleResolver,
                               });
                               exampleProperties.push({
-                                  wireKey,
+                                  name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                      name: wireKey,
+                                      wireValue: wireKey,
+                                  }),
                                   value: valueExample,
                                   originalTypeDeclaration: originalTypeDeclaration.typeName,
                               });
@@ -475,7 +504,7 @@ export function getOriginalTypeDeclarationForPropertyFromExtensions({
     return undefined;
 }
 
-function convertUnionProperties({
+function convertSingleUnionType({
     rawValueType,
     rawSingleUnionType,
     fileContainingType,
@@ -484,6 +513,7 @@ function convertUnionProperties({
     exampleResolver,
     example,
     discriminant,
+    discriminantValueForExample,
 }: {
     rawValueType: string | undefined;
     rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
@@ -493,9 +523,17 @@ function convertUnionProperties({
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
     discriminant: string;
-}): ExampleSingleUnionTypeProperties {
+    discriminantValueForExample: string;
+}): ExampleSingleUnionType {
+    const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
+        name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
+        wireValue: discriminantValueForExample,
+    });
     if (rawValueType == null) {
-        return ExampleSingleUnionTypeProperties.noProperties();
+        return {
+            wireDiscriminantValue,
+            shape: ExampleSingleUnionTypeProperties.noProperties(),
+        };
     }
 
     const parsedSingleUnionTypeProperties = getSingleUnionTypeProperties({
@@ -511,16 +549,19 @@ function convertUnionProperties({
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
             }
-            return ExampleSingleUnionTypeProperties.singleProperty(
-                convertTypeReferenceExample({
-                    example: example[parsedSingleUnionTypeProperties.name.wireValue],
-                    rawTypeBeingExemplified: rawValueType,
-                    typeResolver,
-                    exampleResolver,
-                    fileContainingRawTypeReference: fileContainingType,
-                    fileContainingExample,
-                })
-            );
+            return {
+                wireDiscriminantValue,
+                shape: ExampleSingleUnionTypeProperties.singleProperty(
+                    convertTypeReferenceExample({
+                        example: example[parsedSingleUnionTypeProperties.name.wireValue],
+                        rawTypeBeingExemplified: rawValueType,
+                        typeResolver,
+                        exampleResolver,
+                        fileContainingRawTypeReference: fileContainingType,
+                        fileContainingExample,
+                    })
+                ),
+            };
         }
         case "samePropertiesAsObject": {
             if (!isPlainObject(example)) {
@@ -539,18 +580,21 @@ function convertUnionProperties({
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
                 name: parsedSingleUnionTypeProperties.name,
             };
-            return ExampleSingleUnionTypeProperties.samePropertiesAsObject({
-                typeName,
-                shape: convertObject({
-                    rawObject: rawDeclaration.declaration,
-                    example: nonDiscriminantPropertiesFromExample,
-                    fileContainingType: rawDeclaration.file,
-                    fileContainingExample,
-                    typeResolver,
-                    exampleResolver,
-                    typeName,
+            return {
+                wireDiscriminantValue,
+                shape: ExampleSingleUnionTypeProperties.samePropertiesAsObject({
+                    typeId: IdGenerator.generateTypeId(typeName),
+                    object: convertObject({
+                        rawObject: rawDeclaration.declaration,
+                        example: nonDiscriminantPropertiesFromExample,
+                        fileContainingType: rawDeclaration.file,
+                        fileContainingExample,
+                        typeResolver,
+                        exampleResolver,
+                        typeName,
+                    }),
                 }),
-            });
+            };
         }
         default:
             assertNever(parsedSingleUnionTypeProperties);

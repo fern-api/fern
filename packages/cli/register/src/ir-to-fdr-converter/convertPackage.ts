@@ -336,20 +336,20 @@ function convertExampleEndpointCall(
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["pathParameters"]
         >((pathParameters, irPathParameterExample) => {
-            pathParameters[convertPathParameterKey(irPathParameterExample.key)] =
+            pathParameters[convertPathParameterKey(irPathParameterExample.name.wireValue)] =
                 irPathParameterExample.value.jsonExample;
             return pathParameters;
         }, {}),
         queryParameters: irExample.queryParameters.reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["queryParameters"]
         >((queryParameters, irQueryParameterExample) => {
-            queryParameters[irQueryParameterExample.wireKey] = irQueryParameterExample.value.jsonExample;
+            queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
             return queryParameters;
         }, {}),
         headers: [...irExample.serviceHeaders, ...irExample.endpointHeaders].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["headers"]
         >((headers, irHeaderExample) => {
-            headers[irHeaderExample.wireKey] = irHeaderExample.value.jsonExample;
+            headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
             return headers;
         }, {}),
         requestBody: irExample.request?.jsonExample,

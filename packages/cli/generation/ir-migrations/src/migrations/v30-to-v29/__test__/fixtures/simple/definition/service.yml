@@ -1,0 +1,22 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    check:
+      method: GET
+      path: /check/{id}
+      path-parameters:
+        id: string
+      request:
+        name: CheckRequest
+        query-parameters:
+          filter: string
+        headers:
+          X-API-Version: string
+      examples:
+        - path-parameters:
+            id: id-2sdx82h
+          query-parameters:
+            filter: reverse
+          headers:
+            X-API-Version: "0.0.1"

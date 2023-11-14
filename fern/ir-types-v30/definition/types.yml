@@ -211,10 +211,14 @@ types:
   ExampleUnionType:
     properties:
       discriminant: commons.NameAndWireValue
-      wireDiscriminantValue: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
 
   ExampleSingleUnionType:
+    properties:
+      wireDiscriminantValue: commons.NameAndWireValue
+      shape: ExampleSingleUnionTypeProperties
+
+  ExampleSingleUnionTypeProperties:
     union:
       samePropertiesAsObject: ExampleObjectTypeWithTypeId
       singleProperty: ExampleTypeReference

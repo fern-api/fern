@@ -7,6 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
+    NameAndWireValue,
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -18,7 +19,8 @@ import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions,
 } from "../type-declarations/convertExampleType";
-import { resolvePathParameterOrThrow } from "./convertHttpService";
+import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
+import { getHeaderName, getQueryParameterName, resolvePathParameterOrThrow } from "./convertHttpService";
 
 export function convertExampleEndpointCall({
     service,
@@ -56,7 +58,13 @@ export function convertExampleEndpointCall({
                           throw new Error(`Query parameter ${wireKey} does not exist`);
                       }
                       return {
-                          wireKey,
+                          name: file.casingsGenerator.generateNameAndWireValue({
+                              name: getQueryParameterName({
+                                  queryParameterKey: wireKey,
+                                  queryParameter: queryParameterDeclaration,
+                              }).name,
+                              wireValue: wireKey,
+                          }),
                           value: convertTypeReferenceExample({
                               example: value,
                               rawTypeBeingExemplified:
@@ -98,11 +106,11 @@ function convertPathParameters({
     const endpointPathParameters: ExamplePathParameter[] = [];
 
     const buildExamplePathParameter = ({
-        key,
+        name,
         pathParameterDeclaration,
         examplePathParameter,
     }: {
-        key: string;
+        name: NameAndWireValue;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {
@@ -112,7 +120,7 @@ function convertPathParameters({
             file,
         });
         return {
-            key,
+            name,
             value: convertTypeReferenceExample({
                 example: examplePathParameter,
                 rawTypeBeingExemplified: resolvedPathParameter.rawType,
@@ -133,7 +141,10 @@ function convertPathParameters({
             if (rootPathParameterDeclaration != null) {
                 rootPathParameters.push(
                     buildExamplePathParameter({
-                        key,
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: key,
+                            wireValue: key,
+                        }),
                         pathParameterDeclaration: rootPathParameterDeclaration,
                         examplePathParameter,
                     })
@@ -141,7 +152,10 @@ function convertPathParameters({
             } else if (endpointPathParameterDeclaration != null) {
                 endpointPathParameters.push(
                     buildExamplePathParameter({
-                        key,
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: key,
+                            wireValue: key,
+                        }),
                         pathParameterDeclaration: endpointPathParameterDeclaration,
                         examplePathParameter,
                     })
@@ -149,7 +163,10 @@ function convertPathParameters({
             } else if (servicePathParameterDeclaration != null) {
                 servicePathParameters.push(
                     buildExamplePathParameter({
-                        key,
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: key,
+                            wireValue: key,
+                        }),
                         pathParameterDeclaration: servicePathParameterDeclaration,
                         examplePathParameter,
                     })
@@ -192,7 +209,10 @@ function convertHeaders({
             const serviceHeaderDeclaration = service.headers?.[wireKey];
             if (endpointHeaderDeclaration != null) {
                 endpointHeaders.push({
-                    wireKey,
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
+                        wireValue: wireKey,
+                    }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
@@ -207,7 +227,10 @@ function convertHeaders({
                 });
             } else if (serviceHeaderDeclaration != null) {
                 serviceHeaders.push({
-                    wireKey,
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
+                        wireValue: wireKey,
+                    }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
@@ -271,7 +294,10 @@ function convertExampleRequestBody({
         const inlinedRequestPropertyDeclaration = requestType.properties?.[wireKey];
         if (inlinedRequestPropertyDeclaration != null) {
             exampleProperties.push({
-                wireKey,
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
+                    wireValue: wireKey,
+                }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
@@ -296,7 +322,11 @@ function convertExampleRequestBody({
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
             exampleProperties.push({
-                wireKey,
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
+                        .name,
+                    wireValue: wireKey,
+                }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:

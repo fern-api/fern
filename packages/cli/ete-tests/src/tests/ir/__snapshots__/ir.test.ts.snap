@@ -382,7 +382,28 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "appId",
+                                "name": {
+                                    "name": {
+                                        "originalName": "appId",
+                                        "camelCase": {
+                                            "unsafeName": "appId",
+                                            "safeName": "appId"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "app_id",
+                                            "safeName": "app_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "APP_ID",
+                                            "safeName": "APP_ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "AppId",
+                                            "safeName": "AppId"
+                                        }
+                                    },
+                                    "wireValue": "appId"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "named",
@@ -458,7 +479,9 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
-                                                        "string": "your-app-id"
+                                                        "string": {
+                                                            "original": "your-app-id"
+                                                        }
                                                     }
                                                 },
                                                 "jsonExample": "your-app-id"
@@ -534,13 +557,36 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "property",
+                                "name": {
+                                    "name": {
+                                        "originalName": "property",
+                                        "camelCase": {
+                                            "unsafeName": "property",
+                                            "safeName": "property"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "property",
+                                            "safeName": "property"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PROPERTY",
+                                            "safeName": "PROPERTY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Property",
+                                            "safeName": "Property"
+                                        }
+                                    },
+                                    "wireValue": "property"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "app-secret"
+                                            "string": {
+                                                "original": "app-secret"
+                                            }
                                         }
                                     },
                                     "jsonExample": "app-secret"
@@ -729,7 +775,9 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "your-app-id"
+                                    "string": {
+                                        "original": "your-app-id"
+                                    }
                                 }
                             },
                             "jsonExample": "your-app-id"
@@ -9047,7 +9095,9 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "hello"
+                                    "string": {
+                                        "original": "hello"
+                                    }
                                 }
                             },
                             "jsonExample": "hello"
@@ -9316,7 +9366,28 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "wireKey": "a",
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "a",
+                                                            "camelCase": {
+                                                                "unsafeName": "a",
+                                                                "safeName": "a"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "a",
+                                                                "safeName": "a"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "A",
+                                                                "safeName": "A"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "A",
+                                                                "safeName": "A"
+                                                            }
+                                                        },
+                                                        "wireValue": "a"
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -9334,7 +9405,9 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                                                                             "type": "primitive",
                                                                                             "primitive": {
                                                                                                 "type": "string",
-                                                                                                "string": "b"
+                                                                                                "string": {
+                                                                                                    "original": "b"
+                                                                                                }
                                                                                             }
                                                                                         },
                                                                                         "jsonExample": "b"
@@ -9411,7 +9484,28 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                                                                                 "type": "object",
                                                                                                 "properties": [
                                                                                                     {
-                                                                                                        "wireKey": "c",
+                                                                                                        "name": {
+                                                                                                            "name": {
+                                                                                                                "originalName": "c",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "c",
+                                                                                                                    "safeName": "c"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "c",
+                                                                                                                    "safeName": "c"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "C",
+                                                                                                                    "safeName": "C"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "C",
+                                                                                                                    "safeName": "C"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "wireValue": "c"
+                                                                                                        },
                                                                                                         "value": {
                                                                                                             "shape": {
                                                                                                                 "type": "container",
@@ -13332,7 +13426,9 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "id1"
+                                    "string": {
+                                        "original": "id1"
+                                    }
                                 }
                             },
                             "jsonExample": "id1"
@@ -13350,7 +13446,9 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "id2"
+                                    "string": {
+                                        "original": "id2"
+                                    }
                                 }
                             },
                             "jsonExample": "id2"
@@ -13527,13 +13625,36 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "title",
+                                "name": {
+                                    "name": {
+                                        "originalName": "title",
+                                        "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                        }
+                                    },
+                                    "wireValue": "title"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "Winnie the Pooh"
+                                            "string": {
+                                                "original": "Winnie the Pooh"
+                                            }
                                         }
                                     },
                                     "jsonExample": "Winnie the Pooh"
@@ -13605,7 +13726,28 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "ratings",
+                                "name": {
+                                    "name": {
+                                        "originalName": "ratings",
+                                        "camelCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RATINGS",
+                                            "safeName": "RATINGS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Ratings",
+                                            "safeName": "Ratings"
+                                        }
+                                    },
+                                    "wireValue": "ratings"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -14270,13 +14412,36 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "url": "/movies",
                             "rootPathParameters": [
                                 {
-                                    "key": "rootPathParam",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "rootPathParam",
+                                            "camelCase": {
+                                                "unsafeName": "rootPathParam",
+                                                "safeName": "rootPathParam"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "root_path_param",
+                                                "safeName": "root_path_param"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ROOT_PATH_PARAM",
+                                                "safeName": "ROOT_PATH_PARAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RootPathParam",
+                                                "safeName": "RootPathParam"
+                                            }
+                                        },
+                                        "wireValue": "rootPathParam"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "root"
+                                                "string": {
+                                                    "original": "root"
+                                                }
                                             }
                                         },
                                         "jsonExample": "root"
@@ -14361,13 +14526,36 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                         "type": "object",
                                         "properties": [
                                             {
-                                                "wireKey": "title",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "title",
+                                                        "camelCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TITLE",
+                                                            "safeName": "TITLE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Title",
+                                                            "safeName": "Title"
+                                                        }
+                                                    },
+                                                    "wireValue": "title"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "primitive",
                                                         "primitive": {
                                                             "type": "string",
-                                                            "string": "Shrek"
+                                                            "string": {
+                                                                "original": "Shrek"
+                                                            }
                                                         }
                                                     },
                                                     "jsonExample": "Shrek"
@@ -14439,7 +14627,28 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                                 }
                                             },
                                             {
-                                                "wireKey": "ratings",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "ratings",
+                                                        "camelCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RATINGS",
+                                                            "safeName": "RATINGS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Ratings",
+                                                            "safeName": "Ratings"
+                                                        }
+                                                    },
+                                                    "wireValue": "ratings"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "container",
@@ -14652,7 +14861,9 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
-                                                        "string": "shrek-123"
+                                                        "string": {
+                                                            "original": "shrek-123"
+                                                        }
                                                     }
                                                 },
                                                 "jsonExample": "shrek-123"
@@ -14669,13 +14880,36 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "url": "/movies",
                             "rootPathParameters": [
                                 {
-                                    "key": "rootPathParam",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "rootPathParam",
+                                            "camelCase": {
+                                                "unsafeName": "rootPathParam",
+                                                "safeName": "rootPathParam"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "root_path_param",
+                                                "safeName": "root_path_param"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ROOT_PATH_PARAM",
+                                                "safeName": "ROOT_PATH_PARAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RootPathParam",
+                                                "safeName": "RootPathParam"
+                                            }
+                                        },
+                                        "wireValue": "rootPathParam"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "root"
+                                                "string": {
+                                                    "original": "root"
+                                                }
                                             }
                                         },
                                         "jsonExample": "root"
@@ -14760,13 +14994,36 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                         "type": "object",
                                         "properties": [
                                             {
-                                                "wireKey": "title",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "title",
+                                                        "camelCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TITLE",
+                                                            "safeName": "TITLE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Title",
+                                                            "safeName": "Title"
+                                                        }
+                                                    },
+                                                    "wireValue": "title"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "primitive",
                                                         "primitive": {
                                                             "type": "string",
-                                                            "string": "Winnie the Pooh"
+                                                            "string": {
+                                                                "original": "Winnie the Pooh"
+                                                            }
                                                         }
                                                     },
                                                     "jsonExample": "Winnie the Pooh"
@@ -14838,7 +15095,28 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                                 }
                                             },
                                             {
-                                                "wireKey": "ratings",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "ratings",
+                                                        "camelCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RATINGS",
+                                                            "safeName": "RATINGS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Ratings",
+                                                            "safeName": "Ratings"
+                                                        }
+                                                    },
+                                                    "wireValue": "ratings"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "container",
@@ -15039,7 +15317,9 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
-                                                        "string": "shrek-123"
+                                                        "string": {
+                                                            "original": "shrek-123"
+                                                        }
                                                     }
                                                 },
                                                 "jsonExample": "shrek-123"
@@ -15991,13 +16271,36 @@ exports[`ir {"name":"simple"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "name",
+                                "name": {
+                                    "name": {
+                                        "originalName": "name",
+                                        "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                        }
+                                    },
+                                    "wireValue": "name"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "George the Director"
+                                            "string": {
+                                                "original": "George the Director"
+                                            }
                                         }
                                     },
                                     "jsonExample": "George the Director"
@@ -16069,7 +16372,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "age",
+                                "name": {
+                                    "name": {
+                                        "originalName": "age",
+                                        "camelCase": {
+                                            "unsafeName": "age",
+                                            "safeName": "age"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "age",
+                                            "safeName": "age"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "AGE",
+                                            "safeName": "AGE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Age",
+                                            "safeName": "Age"
+                                        }
+                                    },
+                                    "wireValue": "age"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "named",
@@ -16627,7 +16951,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "$4.50"
+                                    "string": {
+                                        "original": "$4.50"
+                                    }
                                 }
                             },
                             "jsonExample": "$4.50"
@@ -16728,7 +17054,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "id1"
+                                    "string": {
+                                        "original": "id1"
+                                    }
                                 }
                             },
                             "jsonExample": "id1"
@@ -16746,7 +17074,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "type": "primitive",
                                 "primitive": {
                                     "type": "string",
-                                    "string": "id2"
+                                    "string": {
+                                        "original": "id2"
+                                    }
                                 }
                             },
                             "jsonExample": "id2"
@@ -17075,7 +17405,28 @@ exports[`ir {"name":"simple"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "id",
+                                "name": {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                        }
+                                    },
+                                    "wireValue": "id"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "named",
@@ -17151,7 +17502,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
-                                                        "string": "my-movie-id"
+                                                        "string": {
+                                                            "original": "my-movie-id"
+                                                        }
                                                     }
                                                 },
                                                 "jsonExample": "my-movie-id"
@@ -17227,13 +17580,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "title",
+                                "name": {
+                                    "name": {
+                                        "originalName": "title",
+                                        "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                        }
+                                    },
+                                    "wireValue": "title"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "Goodwill Hunting"
+                                            "string": {
+                                                "original": "Goodwill Hunting"
+                                            }
                                         }
                                     },
                                     "jsonExample": "Goodwill Hunting"
@@ -17305,7 +17681,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "rating",
+                                "name": {
+                                    "name": {
+                                        "originalName": "rating",
+                                        "camelCase": {
+                                            "unsafeName": "rating",
+                                            "safeName": "rating"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "rating",
+                                            "safeName": "rating"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RATING",
+                                            "safeName": "RATING"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Rating",
+                                            "safeName": "Rating"
+                                        }
+                                    },
+                                    "wireValue": "rating"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -17559,13 +17956,36 @@ exports[`ir {"name":"simple"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "title",
+                                "name": {
+                                    "name": {
+                                        "originalName": "title",
+                                        "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                        }
+                                    },
+                                    "wireValue": "title"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "Winnie the Pooh"
+                                            "string": {
+                                                "original": "Winnie the Pooh"
+                                            }
                                         }
                                     },
                                     "jsonExample": "Winnie the Pooh"
@@ -17637,7 +18057,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "ratings",
+                                "name": {
+                                    "name": {
+                                        "originalName": "ratings",
+                                        "camelCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RATINGS",
+                                            "safeName": "RATINGS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Ratings",
+                                            "safeName": "Ratings"
+                                        }
+                                    },
+                                    "wireValue": "ratings"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -17940,7 +18381,28 @@ exports[`ir {"name":"simple"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "director",
+                                "name": {
+                                    "name": {
+                                        "originalName": "director",
+                                        "camelCase": {
+                                            "unsafeName": "director",
+                                            "safeName": "director"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "director",
+                                            "safeName": "director"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "DIRECTOR",
+                                            "safeName": "DIRECTOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Director",
+                                            "safeName": "Director"
+                                        }
+                                    },
+                                    "wireValue": "director"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "named",
@@ -18013,13 +18475,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "wireKey": "name",
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "name",
+                                                            "camelCase": {
+                                                                "unsafeName": "name",
+                                                                "safeName": "name"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "name",
+                                                                "safeName": "name"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "NAME",
+                                                                "safeName": "NAME"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Name",
+                                                                "safeName": "Name"
+                                                            }
+                                                        },
+                                                        "wireValue": "name"
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
                                                             "primitive": {
                                                                 "type": "string",
-                                                                "string": "George the Director"
+                                                                "string": {
+                                                                    "original": "George the Director"
+                                                                }
                                                             }
                                                         },
                                                         "jsonExample": "George the Director"
@@ -18091,7 +18576,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     }
                                                 },
                                                 {
-                                                    "wireKey": "age",
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "age",
+                                                            "camelCase": {
+                                                                "unsafeName": "age",
+                                                                "safeName": "age"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "age",
+                                                                "safeName": "age"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "AGE",
+                                                                "safeName": "AGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Age",
+                                                                "safeName": "Age"
+                                                            }
+                                                        },
+                                                        "wireValue": "age"
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "named",
@@ -18716,16 +19222,81 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "shape": {
                         "type": "union",
-                        "wireDiscriminantValue": "actor",
-                        "properties": {
-                            "type": "singleProperty",
+                        "discriminant": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "singleUnionType": {
+                            "wireDiscriminantValue": {
+                                "name": {
+                                    "originalName": "actor",
+                                    "camelCase": {
+                                        "unsafeName": "actor",
+                                        "safeName": "actor"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "actor",
+                                        "safeName": "actor"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ACTOR",
+                                        "safeName": "ACTOR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Actor",
+                                        "safeName": "Actor"
+                                    }
+                                },
+                                "wireValue": "actor"
+                            },
                             "shape": {
-                                "type": "named",
-                                "typeName": {
-                                    "typeId": "type_imdb:ActorId",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
+                                "type": "singleProperty",
+                                "shape": {
+                                    "type": "named",
+                                    "typeName": {
+                                        "typeId": "type_imdb:ActorId",
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "imdb",
+                                                    "camelCase": {
+                                                        "unsafeName": "imdb",
+                                                        "safeName": "imdb"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "imdb",
+                                                        "safeName": "imdb"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "IMDB",
+                                                        "safeName": "IMDB"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Imdb",
+                                                        "safeName": "Imdb"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
                                                 "originalName": "imdb",
                                                 "camelCase": {
                                                     "unsafeName": "imdb",
@@ -18744,63 +19315,45 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     "safeName": "Imdb"
                                                 }
                                             }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "imdb",
+                                        },
+                                        "name": {
+                                            "originalName": "ActorId",
                                             "camelCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
+                                                "unsafeName": "actorId",
+                                                "safeName": "actorId"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
+                                                "unsafeName": "actor_id",
+                                                "safeName": "actor_id"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "IMDB",
-                                                "safeName": "IMDB"
+                                                "unsafeName": "ACTOR_ID",
+                                                "safeName": "ACTOR_ID"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "Imdb",
-                                                "safeName": "Imdb"
+                                                "unsafeName": "ActorId",
+                                                "safeName": "ActorId"
                                             }
                                         }
                                     },
-                                    "name": {
-                                        "originalName": "ActorId",
-                                        "camelCase": {
-                                            "unsafeName": "actorId",
-                                            "safeName": "actorId"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "actor_id",
-                                            "safeName": "actor_id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ACTOR_ID",
-                                            "safeName": "ACTOR_ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ActorId",
-                                            "safeName": "ActorId"
+                                    "shape": {
+                                        "type": "alias",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "Matt Damon"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "Matt Damon"
                                         }
                                     }
                                 },
-                                "shape": {
-                                    "type": "alias",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "Matt Damon"
-                                            }
-                                        },
-                                        "jsonExample": "Matt Damon"
-                                    }
-                                }
-                            },
-                            "jsonExample": "Matt Damon"
+                                "jsonExample": "Matt Damon"
+                            }
                         }
                     },
                     "jsonExample": {
@@ -18813,56 +19366,32 @@ exports[`ir {"name":"simple"} 1`] = `
                     "name": null,
                     "shape": {
                         "type": "union",
-                        "wireDiscriminantValue": "director",
-                        "properties": {
-                            "type": "samePropertiesAsObject",
-                            "typeName": {
-                                "typeId": "type_director:Director",
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
-                                            "originalName": "director",
-                                            "camelCase": {
-                                                "unsafeName": "director",
-                                                "safeName": "director"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "director",
-                                                "safeName": "director"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "DIRECTOR",
-                                                "safeName": "DIRECTOR"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Director",
-                                                "safeName": "Director"
-                                            }
-                                        }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "director",
-                                        "camelCase": {
-                                            "unsafeName": "director",
-                                            "safeName": "director"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "director",
-                                            "safeName": "director"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DIRECTOR",
-                                            "safeName": "DIRECTOR"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Director",
-                                            "safeName": "Director"
-                                        }
-                                    }
+                        "discriminant": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
                                 },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "singleUnionType": {
+                            "wireDiscriminantValue": {
                                 "name": {
-                                    "originalName": "Director",
+                                    "originalName": "director",
                                     "camelCase": {
                                         "unsafeName": "director",
                                         "safeName": "director"
@@ -18879,120 +19408,54 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "unsafeName": "Director",
                                         "safeName": "Director"
                                     }
-                                }
+                                },
+                                "wireValue": "director"
                             },
                             "shape": {
-                                "type": "object",
-                                "properties": [
-                                    {
-                                        "wireKey": "name",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": "George the Directory"
-                                                }
-                                            },
-                                            "jsonExample": "George the Directory"
-                                        },
-                                        "originalTypeDeclaration": {
-                                            "typeId": "type_director:Director",
-                                            "fernFilepath": {
-                                                "allParts": [
-                                                    {
-                                                        "originalName": "director",
-                                                        "camelCase": {
-                                                            "unsafeName": "director",
-                                                            "safeName": "director"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "director",
-                                                            "safeName": "director"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "DIRECTOR",
-                                                            "safeName": "DIRECTOR"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Director",
-                                                            "safeName": "Director"
-                                                        }
-                                                    }
-                                                ],
-                                                "packagePath": [],
-                                                "file": {
-                                                    "originalName": "director",
+                                "type": "samePropertiesAsObject",
+                                "typeId": "type_director:Director",
+                                "object": {
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "name",
                                                     "camelCase": {
-                                                        "unsafeName": "director",
-                                                        "safeName": "director"
+                                                        "unsafeName": "name",
+                                                        "safeName": "name"
                                                     },
                                                     "snakeCase": {
-                                                        "unsafeName": "director",
-                                                        "safeName": "director"
+                                                        "unsafeName": "name",
+                                                        "safeName": "name"
                                                     },
                                                     "screamingSnakeCase": {
-                                                        "unsafeName": "DIRECTOR",
-                                                        "safeName": "DIRECTOR"
+                                                        "unsafeName": "NAME",
+                                                        "safeName": "NAME"
                                                     },
                                                     "pascalCase": {
-                                                        "unsafeName": "Director",
-                                                        "safeName": "Director"
+                                                        "unsafeName": "Name",
+                                                        "safeName": "Name"
                                                     }
-                                                }
+                                                },
+                                                "wireValue": "name"
                                             },
-                                            "name": {
-                                                "originalName": "Director",
-                                                "camelCase": {
-                                                    "unsafeName": "director",
-                                                    "safeName": "director"
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "George the Directory"
+                                                        }
+                                                    }
                                                 },
-                                                "snakeCase": {
-                                                    "unsafeName": "director",
-                                                    "safeName": "director"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "DIRECTOR",
-                                                    "safeName": "DIRECTOR"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Director",
-                                                    "safeName": "Director"
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "wireKey": "age",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_director:Age",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            {
-                                                                "originalName": "director",
-                                                                "camelCase": {
-                                                                    "unsafeName": "director",
-                                                                    "safeName": "director"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "director",
-                                                                    "safeName": "director"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "DIRECTOR",
-                                                                    "safeName": "DIRECTOR"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Director",
-                                                                    "safeName": "Director"
-                                                                }
-                                                            }
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": {
+                                                "jsonExample": "George the Directory"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_director:Director",
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
                                                             "originalName": "director",
                                                             "camelCase": {
                                                                 "unsafeName": "director",
@@ -19011,48 +19474,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                                 "safeName": "Director"
                                                             }
                                                         }
-                                                    },
-                                                    "name": {
-                                                        "originalName": "Age",
-                                                        "camelCase": {
-                                                            "unsafeName": "age",
-                                                            "safeName": "age"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "age",
-                                                            "safeName": "age"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "AGE",
-                                                            "safeName": "AGE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Age",
-                                                            "safeName": "Age"
-                                                        }
-                                                    }
-                                                },
-                                                "shape": {
-                                                    "type": "alias",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "integer",
-                                                                "integer": 100
-                                                            }
-                                                        },
-                                                        "jsonExample": 100
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": 100
-                                        },
-                                        "originalTypeDeclaration": {
-                                            "typeId": "type_director:Director",
-                                            "fernFilepath": {
-                                                "allParts": [
-                                                    {
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
                                                         "originalName": "director",
                                                         "camelCase": {
                                                             "unsafeName": "director",
@@ -19071,10 +19495,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                             "safeName": "Director"
                                                         }
                                                     }
-                                                ],
-                                                "packagePath": [],
-                                                "file": {
-                                                    "originalName": "director",
+                                                },
+                                                "name": {
+                                                    "originalName": "Director",
                                                     "camelCase": {
                                                         "unsafeName": "director",
                                                         "safeName": "director"
@@ -19092,29 +19515,183 @@ exports[`ir {"name":"simple"} 1`] = `
                                                         "safeName": "Director"
                                                     }
                                                 }
-                                            },
+                                            }
+                                        },
+                                        {
                                             "name": {
-                                                "originalName": "Director",
-                                                "camelCase": {
-                                                    "unsafeName": "director",
-                                                    "safeName": "director"
+                                                "name": {
+                                                    "originalName": "age",
+                                                    "camelCase": {
+                                                        "unsafeName": "age",
+                                                        "safeName": "age"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "age",
+                                                        "safeName": "age"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "AGE",
+                                                        "safeName": "AGE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Age",
+                                                        "safeName": "Age"
+                                                    }
                                                 },
-                                                "snakeCase": {
-                                                    "unsafeName": "director",
-                                                    "safeName": "director"
+                                                "wireValue": "age"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "typeId": "type_director:Age",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "director",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "director",
+                                                                        "safeName": "director"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "director",
+                                                                        "safeName": "director"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "DIRECTOR",
+                                                                        "safeName": "DIRECTOR"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Director",
+                                                                        "safeName": "Director"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "director",
+                                                                "camelCase": {
+                                                                    "unsafeName": "director",
+                                                                    "safeName": "director"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "director",
+                                                                    "safeName": "director"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "DIRECTOR",
+                                                                    "safeName": "DIRECTOR"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Director",
+                                                                    "safeName": "Director"
+                                                                }
+                                                            }
+                                                        },
+                                                        "name": {
+                                                            "originalName": "Age",
+                                                            "camelCase": {
+                                                                "unsafeName": "age",
+                                                                "safeName": "age"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "age",
+                                                                "safeName": "age"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "AGE",
+                                                                "safeName": "AGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Age",
+                                                                "safeName": "Age"
+                                                            }
+                                                        }
+                                                    },
+                                                    "shape": {
+                                                        "type": "alias",
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "integer",
+                                                                    "integer": 100
+                                                                }
+                                                            },
+                                                            "jsonExample": 100
+                                                        }
+                                                    }
                                                 },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "DIRECTOR",
-                                                    "safeName": "DIRECTOR"
+                                                "jsonExample": 100
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_director:Director",
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        {
+                                                            "originalName": "director",
+                                                            "camelCase": {
+                                                                "unsafeName": "director",
+                                                                "safeName": "director"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "director",
+                                                                "safeName": "director"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "DIRECTOR",
+                                                                "safeName": "DIRECTOR"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Director",
+                                                                "safeName": "Director"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": {
+                                                        "originalName": "director",
+                                                        "camelCase": {
+                                                            "unsafeName": "director",
+                                                            "safeName": "director"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "director",
+                                                            "safeName": "director"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DIRECTOR",
+                                                            "safeName": "DIRECTOR"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Director",
+                                                            "safeName": "Director"
+                                                        }
+                                                    }
                                                 },
-                                                "pascalCase": {
-                                                    "unsafeName": "Director",
-                                                    "safeName": "Director"
+                                                "name": {
+                                                    "originalName": "Director",
+                                                    "camelCase": {
+                                                        "unsafeName": "director",
+                                                        "safeName": "director"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "director",
+                                                        "safeName": "director"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DIRECTOR",
+                                                        "safeName": "DIRECTOR"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Director",
+                                                        "safeName": "Director"
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
@@ -19129,9 +19706,54 @@ exports[`ir {"name":"simple"} 1`] = `
                     "name": null,
                     "shape": {
                         "type": "union",
-                        "wireDiscriminantValue": "producer",
-                        "properties": {
-                            "type": "noProperties"
+                        "discriminant": {
+                            "name": {
+                                "originalName": "type",
+                                "camelCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "type",
+                                    "safeName": "type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPE",
+                                    "safeName": "TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Type",
+                                    "safeName": "Type"
+                                }
+                            },
+                            "wireValue": "type"
+                        },
+                        "singleUnionType": {
+                            "wireDiscriminantValue": {
+                                "name": {
+                                    "originalName": "producer",
+                                    "camelCase": {
+                                        "unsafeName": "producer",
+                                        "safeName": "producer"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "producer",
+                                        "safeName": "producer"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "PRODUCER",
+                                        "safeName": "PRODUCER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Producer",
+                                        "safeName": "Producer"
+                                    }
+                                },
+                                "wireValue": "producer"
+                            },
+                            "shape": {
+                                "type": "noProperties"
+                            }
                         }
                     },
                     "jsonExample": {
@@ -19496,13 +20118,36 @@ exports[`ir {"name":"simple"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "title",
+                                "name": {
+                                    "name": {
+                                        "originalName": "title",
+                                        "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                        }
+                                    },
+                                    "wireValue": "title"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "The Godfather"
+                                            "string": {
+                                                "original": "The Godfather"
+                                            }
                                         }
                                     },
                                     "jsonExample": "The Godfather"
@@ -19574,7 +20219,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "ratings",
+                                "name": {
+                                    "name": {
+                                        "originalName": "ratings",
+                                        "camelCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RATINGS",
+                                            "safeName": "RATINGS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Ratings",
+                                            "safeName": "Ratings"
+                                        }
+                                    },
+                                    "wireValue": "ratings"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -19687,7 +20353,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "selfReferencing",
+                                "name": {
+                                    "name": {
+                                        "originalName": "selfReferencing",
+                                        "camelCase": {
+                                            "unsafeName": "selfReferencing",
+                                            "safeName": "selfReferencing"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "self_referencing",
+                                            "safeName": "self_referencing"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SELF_REFERENCING",
+                                            "safeName": "SELF_REFERENCING"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SelfReferencing",
+                                            "safeName": "SelfReferencing"
+                                        }
+                                    },
+                                    "wireValue": "selfReferencing"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -19766,13 +20453,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                                             "type": "object",
                                                             "properties": [
                                                                 {
-                                                                    "wireKey": "title",
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "title",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TITLE",
+                                                                                "safeName": "TITLE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Title",
+                                                                                "safeName": "Title"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "title"
+                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "primitive",
                                                                             "primitive": {
                                                                                 "type": "string",
-                                                                                "string": "The Godfather II"
+                                                                                "string": {
+                                                                                    "original": "The Godfather II"
+                                                                                }
                                                                             }
                                                                         },
                                                                         "jsonExample": "The Godfather II"
@@ -19844,7 +20554,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                                     }
                                                                 },
                                                                 {
-                                                                    "wireKey": "ratings",
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "ratings",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "ratings",
+                                                                                "safeName": "ratings"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "ratings",
+                                                                                "safeName": "ratings"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "RATINGS",
+                                                                                "safeName": "RATINGS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Ratings",
+                                                                                "safeName": "Ratings"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "ratings"
+                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "container",
@@ -19946,7 +20677,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                                     }
                                                                 },
                                                                 {
-                                                                    "wireKey": "selfReferencing",
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "selfReferencing",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "selfReferencing",
+                                                                                "safeName": "selfReferencing"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "self_referencing",
+                                                                                "safeName": "self_referencing"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SELF_REFERENCING",
+                                                                                "safeName": "SELF_REFERENCING"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "SelfReferencing",
+                                                                                "safeName": "SelfReferencing"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "selfReferencing"
+                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "container",
@@ -20107,13 +20859,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                                             "type": "object",
                                                             "properties": [
                                                                 {
-                                                                    "wireKey": "title",
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "title",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "title",
+                                                                                "safeName": "title"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TITLE",
+                                                                                "safeName": "TITLE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Title",
+                                                                                "safeName": "Title"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "title"
+                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "primitive",
                                                                             "primitive": {
                                                                                 "type": "string",
-                                                                                "string": "The Godfather III"
+                                                                                "string": {
+                                                                                    "original": "The Godfather III"
+                                                                                }
                                                                             }
                                                                         },
                                                                         "jsonExample": "The Godfather III"
@@ -20185,7 +20960,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                                     }
                                                                 },
                                                                 {
-                                                                    "wireKey": "ratings",
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "ratings",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "ratings",
+                                                                                "safeName": "ratings"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "ratings",
+                                                                                "safeName": "ratings"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "RATINGS",
+                                                                                "safeName": "RATINGS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Ratings",
+                                                                                "safeName": "Ratings"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "ratings"
+                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "container",
@@ -20263,7 +21059,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                                     }
                                                                 },
                                                                 {
-                                                                    "wireKey": "selfReferencing",
+                                                                    "name": {
+                                                                        "name": {
+                                                                            "originalName": "selfReferencing",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "selfReferencing",
+                                                                                "safeName": "selfReferencing"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "self_referencing",
+                                                                                "safeName": "self_referencing"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SELF_REFERENCING",
+                                                                                "safeName": "SELF_REFERENCING"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "SelfReferencing",
+                                                                                "safeName": "SelfReferencing"
+                                                                            }
+                                                                        },
+                                                                        "wireValue": "selfReferencing"
+                                                                    },
                                                                     "value": {
                                                                         "shape": {
                                                                             "type": "container",
@@ -20467,13 +21284,36 @@ exports[`ir {"name":"simple"} 1`] = `
                         "type": "object",
                         "properties": [
                             {
-                                "wireKey": "title",
+                                "name": {
+                                    "name": {
+                                        "originalName": "title",
+                                        "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                        }
+                                    },
+                                    "wireValue": "title"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "Goodfellas"
+                                            "string": {
+                                                "original": "Goodfellas"
+                                            }
                                         }
                                     },
                                     "jsonExample": "Goodfellas"
@@ -20545,7 +21385,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "ratings",
+                                "name": {
+                                    "name": {
+                                        "originalName": "ratings",
+                                        "camelCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "ratings",
+                                            "safeName": "ratings"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RATINGS",
+                                            "safeName": "RATINGS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Ratings",
+                                            "safeName": "Ratings"
+                                        }
+                                    },
+                                    "wireValue": "ratings"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -20658,7 +21519,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             },
                             {
-                                "wireKey": "selfReferencing",
+                                "name": {
+                                    "name": {
+                                        "originalName": "selfReferencing",
+                                        "camelCase": {
+                                            "unsafeName": "selfReferencing",
+                                            "safeName": "selfReferencing"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "self_referencing",
+                                            "safeName": "self_referencing"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SELF_REFERENCING",
+                                            "safeName": "SELF_REFERENCING"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SelfReferencing",
+                                            "safeName": "SelfReferencing"
+                                        }
+                                    },
+                                    "wireValue": "selfReferencing"
+                                },
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -21706,13 +22588,36 @@ exports[`ir {"name":"simple"} 1`] = `
                             "url": "/movies",
                             "rootPathParameters": [
                                 {
-                                    "key": "rootPathParam",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "rootPathParam",
+                                            "camelCase": {
+                                                "unsafeName": "rootPathParam",
+                                                "safeName": "rootPathParam"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "root_path_param",
+                                                "safeName": "root_path_param"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ROOT_PATH_PARAM",
+                                                "safeName": "ROOT_PATH_PARAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RootPathParam",
+                                                "safeName": "RootPathParam"
+                                            }
+                                        },
+                                        "wireValue": "rootPathParam"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "root"
+                                                "string": {
+                                                    "original": "root"
+                                                }
                                             }
                                         },
                                         "jsonExample": "root"
@@ -21797,13 +22702,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "type": "object",
                                         "properties": [
                                             {
-                                                "wireKey": "title",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "title",
+                                                        "camelCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TITLE",
+                                                            "safeName": "TITLE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Title",
+                                                            "safeName": "Title"
+                                                        }
+                                                    },
+                                                    "wireValue": "title"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "primitive",
                                                         "primitive": {
                                                             "type": "string",
-                                                            "string": "Shrek"
+                                                            "string": {
+                                                                "original": "Shrek"
+                                                            }
                                                         }
                                                     },
                                                     "jsonExample": "Shrek"
@@ -21875,7 +22803,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             {
-                                                "wireKey": "ratings",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "ratings",
+                                                        "camelCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RATINGS",
+                                                            "safeName": "RATINGS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Ratings",
+                                                            "safeName": "Ratings"
+                                                        }
+                                                    },
+                                                    "wireValue": "ratings"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "container",
@@ -22088,7 +23037,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
-                                                        "string": "shrek-123"
+                                                        "string": {
+                                                            "original": "shrek-123"
+                                                        }
                                                     }
                                                 },
                                                 "jsonExample": "shrek-123"
@@ -22105,13 +23056,36 @@ exports[`ir {"name":"simple"} 1`] = `
                             "url": "/movies",
                             "rootPathParameters": [
                                 {
-                                    "key": "rootPathParam",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "rootPathParam",
+                                            "camelCase": {
+                                                "unsafeName": "rootPathParam",
+                                                "safeName": "rootPathParam"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "root_path_param",
+                                                "safeName": "root_path_param"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ROOT_PATH_PARAM",
+                                                "safeName": "ROOT_PATH_PARAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RootPathParam",
+                                                "safeName": "RootPathParam"
+                                            }
+                                        },
+                                        "wireValue": "rootPathParam"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "root"
+                                                "string": {
+                                                    "original": "root"
+                                                }
                                             }
                                         },
                                         "jsonExample": "root"
@@ -22196,13 +23170,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "type": "object",
                                         "properties": [
                                             {
-                                                "wireKey": "title",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "title",
+                                                        "camelCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "title",
+                                                            "safeName": "title"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TITLE",
+                                                            "safeName": "TITLE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Title",
+                                                            "safeName": "Title"
+                                                        }
+                                                    },
+                                                    "wireValue": "title"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "primitive",
                                                         "primitive": {
                                                             "type": "string",
-                                                            "string": "Winnie the Pooh"
+                                                            "string": {
+                                                                "original": "Winnie the Pooh"
+                                                            }
                                                         }
                                                     },
                                                     "jsonExample": "Winnie the Pooh"
@@ -22274,7 +23271,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             {
-                                                "wireKey": "ratings",
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "ratings",
+                                                        "camelCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "ratings",
+                                                            "safeName": "ratings"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RATINGS",
+                                                            "safeName": "RATINGS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Ratings",
+                                                            "safeName": "Ratings"
+                                                        }
+                                                    },
+                                                    "wireValue": "ratings"
+                                                },
                                                 "value": {
                                                     "shape": {
                                                         "type": "container",
@@ -22475,7 +23493,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "string",
-                                                        "string": "shrek-123"
+                                                        "string": {
+                                                            "original": "shrek-123"
+                                                        }
                                                     }
                                                 },
                                                 "jsonExample": "shrek-123"
@@ -23064,13 +24084,36 @@ exports[`ir {"name":"simple"} 1`] = `
                             "url": "/movies/id-123",
                             "rootPathParameters": [
                                 {
-                                    "key": "rootPathParam",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "rootPathParam",
+                                            "camelCase": {
+                                                "unsafeName": "rootPathParam",
+                                                "safeName": "rootPathParam"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "root_path_param",
+                                                "safeName": "root_path_param"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ROOT_PATH_PARAM",
+                                                "safeName": "ROOT_PATH_PARAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RootPathParam",
+                                                "safeName": "RootPathParam"
+                                            }
+                                        },
+                                        "wireValue": "rootPathParam"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "root"
+                                                "string": {
+                                                    "original": "root"
+                                                }
                                             }
                                         },
                                         "jsonExample": "root"
@@ -23079,7 +24122,28 @@ exports[`ir {"name":"simple"} 1`] = `
                             ],
                             "endpointPathParameters": [
                                 {
-                                    "key": "movieId",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "movieId",
+                                            "camelCase": {
+                                                "unsafeName": "movieId",
+                                                "safeName": "movieId"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "movie_id",
+                                                "safeName": "movie_id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MOVIE_ID",
+                                                "safeName": "MOVIE_ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MovieId",
+                                                "safeName": "MovieId"
+                                            }
+                                        },
+                                        "wireValue": "movieId"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "named",
@@ -23155,7 +24219,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                         "type": "primitive",
                                                         "primitive": {
                                                             "type": "string",
-                                                            "string": "id-123"
+                                                            "string": {
+                                                                "original": "id-123"
+                                                            }
                                                         }
                                                     },
                                                     "jsonExample": "id-123"
@@ -23171,13 +24237,36 @@ exports[`ir {"name":"simple"} 1`] = `
                             "serviceHeaders": [],
                             "queryParameters": [
                                 {
-                                    "wireKey": "movieName",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "movieName",
+                                            "camelCase": {
+                                                "unsafeName": "movieName",
+                                                "safeName": "movieName"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "movie_name",
+                                                "safeName": "movie_name"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MOVIE_NAME",
+                                                "safeName": "MOVIE_NAME"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MovieName",
+                                                "safeName": "MovieName"
+                                            }
+                                        },
+                                        "wireValue": "movieName"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "hello"
+                                                "string": {
+                                                    "original": "hello"
+                                                }
                                             }
                                         },
                                         "jsonExample": "hello"
@@ -23259,7 +24348,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "wireKey": "id",
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "id",
+                                                            "camelCase": {
+                                                                "unsafeName": "id",
+                                                                "safeName": "id"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "id",
+                                                                "safeName": "id"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "ID",
+                                                                "safeName": "ID"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Id",
+                                                                "safeName": "Id"
+                                                            }
+                                                        },
+                                                        "wireValue": "id"
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "named",
@@ -23335,7 +24445,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                                         "type": "primitive",
                                                                         "primitive": {
                                                                             "type": "string",
-                                                                            "string": "id-123"
+                                                                            "string": {
+                                                                                "original": "id-123"
+                                                                            }
                                                                         }
                                                                     },
                                                                     "jsonExample": "id-123"
@@ -23411,13 +24523,36 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     }
                                                 },
                                                 {
-                                                    "wireKey": "title",
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "title",
+                                                            "camelCase": {
+                                                                "unsafeName": "title",
+                                                                "safeName": "title"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "title",
+                                                                "safeName": "title"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TITLE",
+                                                                "safeName": "TITLE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Title",
+                                                                "safeName": "Title"
+                                                            }
+                                                        },
+                                                        "wireValue": "title"
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
                                                             "primitive": {
                                                                 "type": "string",
-                                                                "string": "Shrek"
+                                                                "string": {
+                                                                    "original": "Shrek"
+                                                                }
                                                             }
                                                         },
                                                         "jsonExample": "Shrek"
@@ -23489,7 +24624,28 @@ exports[`ir {"name":"simple"} 1`] = `
                                                     }
                                                 },
                                                 {
-                                                    "wireKey": "rating",
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "rating",
+                                                            "camelCase": {
+                                                                "unsafeName": "rating",
+                                                                "safeName": "rating"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "rating",
+                                                                "safeName": "rating"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RATING",
+                                                                "safeName": "RATING"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Rating",
+                                                                "safeName": "Rating"
+                                                            }
+                                                        },
+                                                        "wireValue": "rating"
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -23583,13 +24739,36 @@ exports[`ir {"name":"simple"} 1`] = `
                             "url": "/movies/id-123",
                             "rootPathParameters": [
                                 {
-                                    "key": "rootPathParam",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "rootPathParam",
+                                            "camelCase": {
+                                                "unsafeName": "rootPathParam",
+                                                "safeName": "rootPathParam"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "root_path_param",
+                                                "safeName": "root_path_param"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ROOT_PATH_PARAM",
+                                                "safeName": "ROOT_PATH_PARAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RootPathParam",
+                                                "safeName": "RootPathParam"
+                                            }
+                                        },
+                                        "wireValue": "rootPathParam"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "root"
+                                                "string": {
+                                                    "original": "root"
+                                                }
                                             }
                                         },
                                         "jsonExample": "root"
@@ -23598,7 +24777,28 @@ exports[`ir {"name":"simple"} 1`] = `
                             ],
                             "endpointPathParameters": [
                                 {
-                                    "key": "movieId",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "movieId",
+                                            "camelCase": {
+                                                "unsafeName": "movieId",
+                                                "safeName": "movieId"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "movie_id",
+                                                "safeName": "movie_id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MOVIE_ID",
+                                                "safeName": "MOVIE_ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MovieId",
+                                                "safeName": "MovieId"
+                                            }
+                                        },
+                                        "wireValue": "movieId"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "named",
@@ -23674,7 +24874,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                         "type": "primitive",
                                                         "primitive": {
                                                             "type": "string",
-                                                            "string": "id-123"
+                                                            "string": {
+                                                                "original": "id-123"
+                                                            }
                                                         }
                                                     },
                                                     "jsonExample": "id-123"
@@ -23690,13 +24892,36 @@ exports[`ir {"name":"simple"} 1`] = `
                             "serviceHeaders": [],
                             "queryParameters": [
                                 {
-                                    "wireKey": "movieName",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "movieName",
+                                            "camelCase": {
+                                                "unsafeName": "movieName",
+                                                "safeName": "movieName"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "movie_name",
+                                                "safeName": "movie_name"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MOVIE_NAME",
+                                                "safeName": "MOVIE_NAME"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MovieName",
+                                                "safeName": "MovieName"
+                                            }
+                                        },
+                                        "wireValue": "movieName"
+                                    },
                                     "value": {
                                         "shape": {
                                             "type": "primitive",
                                             "primitive": {
                                                 "type": "string",
-                                                "string": "hello"
+                                                "string": {
+                                                    "original": "hello"
+                                                }
                                             }
                                         },
                                         "jsonExample": "hello"
@@ -23776,7 +25001,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "string",
-                                            "string": "id-123"
+                                            "string": {
+                                                "original": "id-123"
+                                            }
                                         }
                                     },
                                     "jsonExample": "id-123"

@@ -322,13 +322,13 @@ class Converter {
 
     private convertExampleUnionType(example: IrVersions.V30.ExampleUnionType): IrVersions.V29.ExampleSingleUnionType {
         return {
-            wireDiscriminantValue: example.wireDiscriminantValue.wireValue,
-            properties: this.convertExampleSingleUnionTypeProperties(example.singleUnionType),
+            wireDiscriminantValue: example.singleUnionType.wireDiscriminantValue.wireValue,
+            properties: this.convertExampleSingleUnionTypeProperties(example.singleUnionType.shape),
         };
     }
 
     private convertExampleSingleUnionTypeProperties(
-        example: IrVersions.V30.ExampleSingleUnionType
+        example: IrVersions.V30.ExampleSingleUnionTypeProperties
     ): IrVersions.V29.ExampleSingleUnionTypeProperties {
         switch (example.type) {
             case "samePropertiesAsObject": {
