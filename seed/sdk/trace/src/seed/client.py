@@ -24,13 +24,14 @@ class SeedTrace:
         environment: SeedTraceEnvironment = SeedTraceEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             x_random_header=x_random_header,
             token=token,
-            httpx_client=httpx.Client(timeout=timeout),
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.v_2 = V2Client(client_wrapper=self._client_wrapper)
         self.admin = AdminClient(client_wrapper=self._client_wrapper)
@@ -50,13 +51,14 @@ class AsyncSeedTrace:
         environment: SeedTraceEnvironment = SeedTraceEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             x_random_header=x_random_header,
             token=token,
-            httpx_client=httpx.AsyncClient(timeout=timeout),
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.v_2 = AsyncV2Client(client_wrapper=self._client_wrapper)
         self.admin = AsyncAdminClient(client_wrapper=self._client_wrapper)

@@ -9,12 +9,24 @@ from .resources.union.client import AsyncUnionClient, UnionClient
 
 
 class SeedUndiscriminatedUnions:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60):
-        self._client_wrapper = SyncClientWrapper(base_url=base_url, httpx_client=httpx.Client(timeout=timeout))
+    def __init__(
+        self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
+    ):
+        self._client_wrapper = SyncClientWrapper(
+            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+        )
         self.union = UnionClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedUndiscriminatedUnions:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60):
-        self._client_wrapper = AsyncClientWrapper(base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout))
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
+    ):
+        self._client_wrapper = AsyncClientWrapper(
+            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+        )
         self.union = AsyncUnionClient(client_wrapper=self._client_wrapper)

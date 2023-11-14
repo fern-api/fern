@@ -18,10 +18,14 @@ class SeedNurseryApi:
         base_url: str,
         api_header: typing_extensions.Literal["api header value"],
         api_test: bool,
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, api_header=api_header, api_test=api_test, httpx_client=httpx.Client(timeout=timeout)
+            base_url=base_url,
+            api_header=api_header,
+            api_test=api_test,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.no_headers = NoHeadersClient(client_wrapper=self._client_wrapper)
         self.only_literal_headers = OnlyLiteralHeadersClient(client_wrapper=self._client_wrapper)
@@ -35,10 +39,14 @@ class AsyncSeedNurseryApi:
         base_url: str,
         api_header: typing_extensions.Literal["api header value"],
         api_test: bool,
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, api_header=api_header, api_test=api_test, httpx_client=httpx.AsyncClient(timeout=timeout)
+            base_url=base_url,
+            api_header=api_header,
+            api_test=api_test,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.no_headers = AsyncNoHeadersClient(client_wrapper=self._client_wrapper)
         self.only_literal_headers = AsyncOnlyLiteralHeadersClient(client_wrapper=self._client_wrapper)

@@ -14,10 +14,13 @@ class SeedApi:
         *,
         base_url: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, token=token, httpx_client=httpx.Client(timeout=timeout)
+            base_url=base_url,
+            token=token,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.imdb = ImdbClient(client_wrapper=self._client_wrapper)
 
@@ -28,9 +31,12 @@ class AsyncSeedApi:
         *,
         base_url: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, token=token, httpx_client=httpx.AsyncClient(timeout=timeout)
+            base_url=base_url,
+            token=token,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.imdb = AsyncImdbClient(client_wrapper=self._client_wrapper)

@@ -10,19 +10,33 @@ from .resources.dummy.client import AsyncDummyClient, DummyClient
 
 class SeedNoEnvironment:
     def __init__(
-        self, *, base_url: str, token: typing.Union[str, typing.Callable[[], str]], timeout: typing.Optional[float] = 60
+        self,
+        *,
+        base_url: str,
+        token: typing.Union[str, typing.Callable[[], str]],
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, token=token, httpx_client=httpx.Client(timeout=timeout)
+            base_url=base_url,
+            token=token,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.dummy = DummyClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedNoEnvironment:
     def __init__(
-        self, *, base_url: str, token: typing.Union[str, typing.Callable[[], str]], timeout: typing.Optional[float] = 60
+        self,
+        *,
+        base_url: str,
+        token: typing.Union[str, typing.Callable[[], str]],
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, token=token, httpx_client=httpx.AsyncClient(timeout=timeout)
+            base_url=base_url,
+            token=token,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.dummy = AsyncDummyClient(client_wrapper=self._client_wrapper)

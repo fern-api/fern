@@ -6,6 +6,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.codegen.ast.nodes.expressions.conditional_expression.conditional_expression import ConditionalExpression
 from fern_python.external_dependencies import HttpX
 from fern_python.generators.pydantic_model import SnippetRegistry
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
@@ -16,6 +17,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ConstructorParameter,
 )
 
+from src.fern_python.external_dependencies import httpx
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
     GeneratedEnvironment,
@@ -42,6 +44,8 @@ class RootClientGenerator:
 
     BASE_URL_CONSTRUCTOR_PARAMETER_NAME = "base_url"
     BASE_URL_MEMBER_NAME = "_base_url"
+
+    HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
 
     RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
@@ -285,6 +289,16 @@ class RootClientGenerator:
                 else AST.Expression(AST.TypeHint.none()),
             )
         )
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint(httpx.HttpX.CLIENT))
+                if not is_async
+                else AST.TypeHint.optional(AST.TypeHint(httpx.HttpX.ASYNC_CLIENT)),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+            )
+        )
         return parameters
 
     def _environment_is_enum(self) -> bool:
@@ -335,15 +349,19 @@ class RootClientGenerator:
                 (
                     ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
                     AST.Expression(
-                        AST.ClassInstantiation(
-                            HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                            kwargs=[
-                                (
-                                    "timeout",
-                                    AST.Expression(f"{self._timeout_constructor_parameter_name}"),
-                                )
-                            ],
-                        )
+                        ConditionalExpression(
+                            left=AST.ClassInstantiation(
+                                HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                kwargs=[
+                                    (
+                                        "timeout",
+                                        AST.Expression(f"{self._timeout_constructor_parameter_name}"),
+                                    )
+                                ],
+                            ),
+                            right=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            test=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"),
+                        ),
                     ),
                 )
             )

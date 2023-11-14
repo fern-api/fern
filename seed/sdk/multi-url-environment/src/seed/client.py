@@ -16,10 +16,13 @@ class SeedMultiUrlEnvironment:
         *,
         environment: SeedMultiUrlEnvironmentEnvironment = SeedMultiUrlEnvironmentEnvironment.PRODUCTION,
         token: typing.Union[str, typing.Callable[[], str]],
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            environment=environment, token=token, httpx_client=httpx.Client(timeout=timeout)
+            environment=environment,
+            token=token,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.ec_2 = Ec2Client(client_wrapper=self._client_wrapper)
         self.s_3 = S3Client(client_wrapper=self._client_wrapper)
@@ -31,10 +34,13 @@ class AsyncSeedMultiUrlEnvironment:
         *,
         environment: SeedMultiUrlEnvironmentEnvironment = SeedMultiUrlEnvironmentEnvironment.PRODUCTION,
         token: typing.Union[str, typing.Callable[[], str]],
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            environment=environment, token=token, httpx_client=httpx.AsyncClient(timeout=timeout)
+            environment=environment,
+            token=token,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.ec_2 = AsyncEc2Client(client_wrapper=self._client_wrapper)
         self.s_3 = AsyncS3Client(client_wrapper=self._client_wrapper)

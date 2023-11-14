@@ -15,10 +15,14 @@ class SeedBasicAuth:
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url, username=username, password=password, httpx_client=httpx.Client(timeout=timeout)
+            base_url=base_url,
+            username=username,
+            password=password,
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.basic_auth = BasicAuthClient(client_wrapper=self._client_wrapper)
 
@@ -30,9 +34,13 @@ class AsyncSeedBasicAuth:
         base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url, username=username, password=password, httpx_client=httpx.AsyncClient(timeout=timeout)
+            base_url=base_url,
+            username=username,
+            password=password,
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.basic_auth = AsyncBasicAuthClient(client_wrapper=self._client_wrapper)

@@ -10,14 +10,26 @@ from .resources.foo.client import AsyncFooClient, FooClient
 
 
 class SeedAudiences:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60):
-        self._client_wrapper = SyncClientWrapper(base_url=base_url, httpx_client=httpx.Client(timeout=timeout))
+    def __init__(
+        self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
+    ):
+        self._client_wrapper = SyncClientWrapper(
+            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+        )
         self.folder_a = FolderAClient(client_wrapper=self._client_wrapper)
         self.foo = FooClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedAudiences:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60):
-        self._client_wrapper = AsyncClientWrapper(base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout))
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
+    ):
+        self._client_wrapper = AsyncClientWrapper(
+            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+        )
         self.folder_a = AsyncFolderAClient(client_wrapper=self._client_wrapper)
         self.foo = AsyncFooClient(client_wrapper=self._client_wrapper)

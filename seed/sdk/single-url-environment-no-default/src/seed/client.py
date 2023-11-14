@@ -16,12 +16,13 @@ class SeedSingleUrlEnvironmentNoDefault:
         base_url: typing.Optional[str] = None,
         environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment] = None,
         token: typing.Union[str, typing.Callable[[], str]],
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.Client] = None
     ):
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
-            httpx_client=httpx.Client(timeout=timeout),
+            httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.dummy = DummyClient(client_wrapper=self._client_wrapper)
 
@@ -33,12 +34,13 @@ class AsyncSeedSingleUrlEnvironmentNoDefault:
         base_url: typing.Optional[str] = None,
         environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment] = None,
         token: typing.Union[str, typing.Callable[[], str]],
-        timeout: typing.Optional[float] = 60
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
-            httpx_client=httpx.AsyncClient(timeout=timeout),
+            httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client,
         )
         self.dummy = AsyncDummyClient(client_wrapper=self._client_wrapper)
 

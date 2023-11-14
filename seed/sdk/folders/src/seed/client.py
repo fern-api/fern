@@ -12,8 +12,12 @@ from .resources.folder.client import AsyncFolderClient, FolderClient
 
 
 class SeedApi:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60):
-        self._client_wrapper = SyncClientWrapper(base_url=base_url, httpx_client=httpx.Client(timeout=timeout))
+    def __init__(
+        self, *, base_url: str, timeout: typing.Optional[float] = 60, httpx_client: typing.Optional[httpx.Client] = None
+    ):
+        self._client_wrapper = SyncClientWrapper(
+            base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
+        )
         self.a = AClient(client_wrapper=self._client_wrapper)
         self.folder = FolderClient(client_wrapper=self._client_wrapper)
 
@@ -31,8 +35,16 @@ class SeedApi:
 
 
 class AsyncSeedApi:
-    def __init__(self, *, base_url: str, timeout: typing.Optional[float] = 60):
-        self._client_wrapper = AsyncClientWrapper(base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout))
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        timeout: typing.Optional[float] = 60,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None
+    ):
+        self._client_wrapper = AsyncClientWrapper(
+            base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
+        )
         self.a = AsyncAClient(client_wrapper=self._client_wrapper)
         self.folder = AsyncFolderClient(client_wrapper=self._client_wrapper)
 
