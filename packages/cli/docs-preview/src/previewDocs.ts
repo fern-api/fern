@@ -138,7 +138,7 @@ async function convertDocsConfiguration({
                     };
                 },
                 _other: (other) => {
-                    throw new Error("Encountered unknown link type ", other);
+                    throw new Error(`Encountered unknown link type ${other.type}`);
                 },
             });
         }),
@@ -307,7 +307,7 @@ async function convertNavigationItem({
             return {
                 type: "page",
                 title: item.title,
-                id: constructPageId(relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath)),
+                id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
                 urlSlugOverride: item.slug,
             };
         case "section":
