@@ -514,7 +514,8 @@ exports[`generate IR 1`] = `
   "types": {
     "type_union:MyUnion": {
       "availability": null,
-      "docs": null,
+      "docs": "Several different types are accepted.
+",
       "examples": [],
       "name": {
         "fernFilepath": {
