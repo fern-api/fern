@@ -69,7 +69,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         declaration = self.get_declaration_for_type_name(type_name)
-        return set(map(HashableDeclaredTypeName.of, declaration.referenced_types))
+        return set(map(HashableDeclaredTypeName.of, self.get_referenced_types_of_type_declaration(declaration)))
 
     def get_declaration_for_type_name(
         self,
@@ -97,6 +97,11 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
         return properties
 
+    def get_referenced_types_of_type_declaration(
+        self, type_declaration: ir_types.TypeDeclaration
+    ) -> List[ir_types.DeclaredTypeName]:
+        return [self.ir.types[type_id].name for type_id in type_declaration.referenced_types]
+
     def get_referenced_types_of_type_reference(
         self, type_reference: ir_types.TypeReference
     ) -> List[ir_types.DeclaredTypeName]:
@@ -112,7 +117,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 literal=lambda literal: [],
             ),
             primitive=lambda primitive: [],
-            named=lambda type_name: self.get_declaration_for_type_name(type_name).referenced_types,
+            named=lambda type_name: self.get_referenced_types_of_type_declaration(
+                self.get_declaration_for_type_name(type_name),
+            ),
             unknown=lambda: [],
         )
 

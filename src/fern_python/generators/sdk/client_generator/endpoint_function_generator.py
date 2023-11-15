@@ -455,13 +455,22 @@ class EndpointFunctionGenerator:
             file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
             if self._is_async
             else AST.TypeHint.iterator(AST.TypeHint.bytes()),
-            json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                json_response.response_body_type,
-            ),
+            json=lambda json_response: self._get_json_response_body_type(json_response),
             streaming=lambda stream_response: self._get_streaming_response_body_type(
                 stream_response=stream_response, is_async=is_async
             ),
             text=lambda _: AST.TypeHint.str_(),
+        )
+
+    def _get_json_response_body_type(
+        self,
+        json_response: ir_types.JsonResponse,
+    ) -> AST.TypeHint:
+        return json_response.visit(
+            response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                response.response_body_type
+            ),
+            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
         )
 
     def _get_streaming_response_body_type(
@@ -681,7 +690,10 @@ class EndpointFunctionGenerator:
                     allow_enum=allow_enum,
                 ),
                 map=lambda x: False,
-                literal=lambda literal: literal.visit(string=lambda x: ir_types.PrimitiveType.STRING in expected),
+                literal=lambda literal: literal.visit(
+                    boolean=lambda x: ir_types.PrimitiveType.BOOLEAN in expected,
+                    string=lambda x: ir_types.PrimitiveType.STRING in expected,
+                ),
             ),
             named=visit_named_type,
             primitive=lambda primitive: primitive in expected,
@@ -741,11 +753,17 @@ class EndpointFunctionGenerator:
                 if resolved_type.type == "container":
                     resolved_container_type = resolved_type.container.get_as_union()
                     if resolved_container_type.type == "literal":
-                        return resolved_container_type.literal.get_as_union().string
+                        return resolved_container_type.literal.visit(
+                            boolean=lambda boolean: "true" if boolean else "false",
+                            string=lambda string: string,
+                        )
         if type.type == "container":
             container_type = type.container.get_as_union()
             if container_type.type == "literal":
-                return container_type.literal.get_as_union().string
+                return container_type.literal.visit(
+                    boolean=lambda boolean: "true" if boolean else "false",
+                    string=lambda string: string,
+                )
         return None
 
 
@@ -762,6 +780,9 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
     return type_reference
 
 
-# TODO: Add support for bytes.
 def raise_bytes_unsupported() -> Never:
     raise RuntimeError("bytes request is not supported")
+
+
+def raise_json_nested_property_as_response_unsupported() -> Never:
+    raise RuntimeError("nested property json response is unsupported")

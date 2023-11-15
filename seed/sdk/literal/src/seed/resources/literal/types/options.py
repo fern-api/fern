@@ -15,7 +15,7 @@ except ImportError:
 
 class Options(pydantic.BaseModel):
     id: typing_extensions.Literal["options"]
-    enabled: bool
+    enabled: typing_extensions.Literal[True]
     values: typing.Dict[str, str]
 
     def json(self, **kwargs: typing.Any) -> str:

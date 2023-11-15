@@ -7,7 +7,13 @@ import typing_extensions
 
 
 class BaseClientWrapper:
-    def __init__(self, *, api_header: typing_extensions.Literal["api header value"], api_test: bool, base_url: str):
+    def __init__(
+        self,
+        *,
+        api_header: typing_extensions.Literal["api header value"],
+        api_test: typing_extensions.Literal[False],
+        base_url: str
+    ):
         self._api_header = api_header
         self._api_test = api_test
         self._base_url = base_url
@@ -31,7 +37,7 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_header: typing_extensions.Literal["api header value"],
-        api_test: bool,
+        api_test: typing_extensions.Literal[False],
         base_url: str,
         httpx_client: httpx.Client
     ):
@@ -44,7 +50,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_header: typing_extensions.Literal["api header value"],
-        api_test: bool,
+        api_test: typing_extensions.Literal[False],
         base_url: str,
         httpx_client: httpx.AsyncClient
     ):

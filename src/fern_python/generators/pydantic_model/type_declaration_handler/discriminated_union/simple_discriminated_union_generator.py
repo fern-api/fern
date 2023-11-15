@@ -35,7 +35,6 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         self._union = union
 
     def generate(self) -> None:
-
         single_union_type_references: List[LocalClassReference] = []
         all_referenced_types: List[ir_types.TypeReference] = []
 
@@ -80,7 +79,6 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 )
 
         for single_union_type in self._union.types:
-
             single_union_type_base = single_union_type.shape.visit(
                 same_properties_as_object=lambda type_name: type_name,
                 single_property=lambda property_: None,
@@ -102,7 +100,6 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 orm_mode=self._custom_config.orm_mode,
                 smart_union=self._custom_config.smart_union,
             ) as internal_pydantic_model_for_single_union_type:
-
                 internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                 single_union_type_references.append(internal_single_union_type)
 
@@ -130,9 +127,9 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 # we assume that the forward-refed types are the ones
                 # that circularly reference this union type
                 referenced_types: List[ir_types.DeclaredTypeName] = single_union_type.shape.visit(
-                    same_properties_as_object=lambda type_name: self._context.get_declaration_for_type_name(
-                        type_name
-                    ).referenced_types,
+                    same_properties_as_object=lambda type_name: self._context.get_referenced_types_of_type_declaration(
+                        self._context.get_declaration_for_type_name(type_name),
+                    ),
                     single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
                         single_property.type
                     ),

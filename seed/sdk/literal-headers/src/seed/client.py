@@ -17,7 +17,7 @@ class SeedNurseryApi:
         *,
         base_url: str,
         api_header: typing_extensions.Literal["api header value"],
-        api_test: bool,
+        api_test: typing_extensions.Literal[False],
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -38,7 +38,7 @@ class AsyncSeedNurseryApi:
         *,
         base_url: str,
         api_header: typing_extensions.Literal["api header value"],
-        api_test: bool,
+        api_test: typing_extensions.Literal[False],
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):

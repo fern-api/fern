@@ -354,11 +354,20 @@ class EndpointGenerator:
     def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
         return response.visit(
             file_download=raise_file_download_unsupported,
-            json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                json_response.response_body_type
-            ),
+            json=lambda json_response: self._get_json_response_body_type(json_response),
             text=lambda _: AST.TypeHint.str_(),
             streaming=lambda _: raise_streaming_unsupported(),
+        )
+
+    def _get_json_response_body_type(
+        self,
+        json_response: ir_types.JsonResponse,
+    ) -> AST.TypeHint:
+        return json_response.visit(
+            response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                response.response_body_type
+            ),
+            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
         )
 
 
@@ -386,3 +395,7 @@ def raise_file_upload_unsupported() -> Never:
 
 def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
     raise RuntimeError("File download is not supported")
+
+
+def raise_json_nested_property_as_response_unsupported() -> Never:
+    raise RuntimeError("nested property json response is unsupported")

@@ -70,6 +70,12 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def get_referenced_types_of_type_declaration(
+        self, declared_type_name: ir_types.TypeDeclaration
+    ) -> List[ir_types.DeclaredTypeName]:
+        ...
+
+    @abstractmethod
     def get_referenced_types_of_type_reference(
         self, type_reference: ir_types.TypeReference
     ) -> List[ir_types.DeclaredTypeName]:

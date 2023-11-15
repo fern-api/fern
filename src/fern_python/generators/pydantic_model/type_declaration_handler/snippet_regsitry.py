@@ -17,12 +17,6 @@ class EndpointExpression:
     expr: AST.Expression
 
 
-@dataclass
-class UnionType:
-    discriminant: ir_types.NameAndWireValue
-    single_union_type: ir_types.SingleUnionType
-
-
 class SnippetRegistry:
     def __init__(
         self,
@@ -165,13 +159,11 @@ class SnippetRegistry:
                 context=context,
                 type=type,
             )
-        for serviceId, service in ir.services.items():
+        for service in ir.services.values():
             for endpoint in service.endpoints:
                 self._snippet_for_endpoint(
                     ir=ir,
                     context=context,
-                    serviceId=serviceId,
-                    service=service,
                     endpoint=endpoint,
                 )
 
@@ -179,8 +171,6 @@ class SnippetRegistry:
         self,
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
-        serviceId: ir_types.ServiceId,
-        service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
     ) -> Optional[AST.Expression]:
         if len(endpoint.examples) == 0:
@@ -193,8 +183,6 @@ class SnippetRegistry:
         return self._snippet_for_example_endpoint_call(
             ir=ir,
             context=context,
-            serviceId=serviceId,
-            service=service,
             endpoint=endpoint,
             example_endpoint_call=example_endpoint_call,
             register=True,
@@ -204,8 +192,6 @@ class SnippetRegistry:
         self,
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
-        serviceId: ir_types.ServiceId,
-        service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         example_endpoint_call: ir_types.ExampleEndpointCall,
         register: bool = False,
@@ -217,10 +203,6 @@ class SnippetRegistry:
             + example_endpoint_call.endpoint_path_parameters
         )
         for property in all_path_parameters:
-            path_parameter_name = self._get_path_parameter_name_from_key(
-                endpoint=endpoint,
-                key=property.key,
-            )
             path_parameter_value = self._snippet_for_example_type_reference(
                 ir=ir,
                 context=context,
@@ -228,18 +210,13 @@ class SnippetRegistry:
             )
             args.append(
                 self._write_named_parameter_for_value(
-                    parameter_name=path_parameter_name,
+                    parameter_name=property.name.snake_case.unsafe_name,
                     value=path_parameter_value,
                 ),
             )
 
         all_headers = example_endpoint_call.service_headers + example_endpoint_call.endpoint_headers
         for header in all_headers:
-            header_parameter_name = self._get_header_name_from_wire_key(
-                service=service,
-                endpoint=endpoint,
-                wire_key=header.wire_key,
-            )
             header_parameter_value = self._snippet_for_example_type_reference(
                 ir=ir,
                 context=context,
@@ -247,16 +224,12 @@ class SnippetRegistry:
             )
             args.append(
                 self._write_named_parameter_for_value(
-                    parameter_name=header_parameter_name,
+                    parameter_name=header.name.name.snake_case.safe_name,
                     value=header_parameter_value,
                 ),
             )
 
         for query_parameter in example_endpoint_call.query_parameters:
-            query_parameter_name = self._get_query_parameter_name_from_wire_key(
-                endpoint=endpoint,
-                wire_key=query_parameter.wire_key,
-            )
             query_parameter_value = self._snippet_for_example_type_reference(
                 ir=ir,
                 context=context,
@@ -264,7 +237,7 @@ class SnippetRegistry:
             )
             args.append(
                 self._write_named_parameter_for_value(
-                    parameter_name=query_parameter_name,
+                    parameter_name=query_parameter.name.name.snake_case.safe_name,
                     value=query_parameter_value,
                 ),
             )
@@ -275,7 +248,6 @@ class SnippetRegistry:
                     inlined_request_body=lambda inlined_request_body: self._snippet_for_inlined_request_body_properties(
                         ir=ir,
                         context=context,
-                        endpoint=endpoint,
                         example_inlined_request_body=inlined_request_body,
                     ),
                     reference=lambda reference: self._snippet_for_request_reference(
@@ -303,23 +275,13 @@ class SnippetRegistry:
         self,
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
-        endpoint: ir_types.HttpEndpoint,
         example_inlined_request_body: ir_types.ExampleInlinedRequestBody,
     ) -> List[AST.Expression]:
-        wire_key_to_property = self._get_inlined_request_properties_for_endpoint(
-            context=context,
-            endpoint=endpoint,
-        )
         snippets: List[AST.Expression] = []
         for example_property in example_inlined_request_body.properties:
-            property = wire_key_to_property[example_property.wire_key]
-            if property is None:
-                raise Exception(
-                    f"internal error: cannot generate snippet - example wire key {example_property.wire_key} did not match a property in endpoint {endpoint.name.get_as_name().original_name}"
-                )
             snippets.append(
                 self._write_named_parameter_for_value(
-                    parameter_name=property.name.name.snake_case.unsafe_name,
+                    parameter_name=example_property.name.name.snake_case.unsafe_name,
                     value=self._snippet_for_example_type_reference(
                         ir=ir,
                         context=context,
@@ -383,7 +345,6 @@ class SnippetRegistry:
                 example=alias,
             ),
             enum=lambda enum: self._snippet_for_enum(
-                ir=ir,
                 context=context,
                 name=name,
                 example=enum,
@@ -419,25 +380,10 @@ class SnippetRegistry:
 
     def _snippet_for_enum(
         self,
-        ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
         example: ir_types.ExampleEnumType,
     ) -> AST.Expression:
-        type_decl = ir.types[name.type_id]
-        value = type_decl.shape.visit(
-            alias=lambda _: None,
-            enum=lambda enum: self._get_enum_value_from_enum(
-                enum=enum,
-                wire_value=example.wire_value,
-            ),
-            object=lambda _: None,
-            union=lambda _: None,
-            undiscriminated_union=lambda _: None,
-        )
-        if value is None:
-            raise Exception(f"internal error: cannot generate snippet - expected an example enum for {name.type_id}")
-
         class_reference = self._get_class_reference_for_declared_type_name(
             context=context,
             name=name,
@@ -445,19 +391,9 @@ class SnippetRegistry:
 
         def write_enum(writer: AST.NodeWriter) -> None:
             writer.write_node(AST.Expression(class_reference))
-            writer.write(f".{value}")
+            writer.write(f".{example.value.name.screaming_snake_case.unsafe_name}")
 
         return AST.Expression(AST.CodeWriter(write_enum))
-
-    def _get_enum_value_from_enum(
-        self,
-        enum: ir_types.EnumTypeDeclaration,
-        wire_value: str,
-    ) -> str:
-        for enum_value in enum.values:
-            if enum_value.name.wire_value == wire_value:
-                return enum_value.name.name.screaming_snake_case.unsafe_name
-        return wire_value
 
     def _snippet_for_object(
         self,
@@ -507,13 +443,9 @@ class SnippetRegistry:
                     example_type_shape=named.shape,
                 ),
             )
-            parameter_name = self._get_property_key(
-                ir=ir,
-                property=property,
-            )
             args.append(
                 self._write_named_parameter_for_value(
-                    parameter_name=parameter_name,
+                    parameter_name=property.name.name.snake_case.safe_name,
                     value=value,
                 ),
             )
@@ -578,8 +510,9 @@ class SnippetRegistry:
 
     def _snippet_for_string_primitive(
         self,
-        string: str,
+        escaped_string: ir_types.EscapedString,
     ) -> AST.Expression:
+        string = escaped_string.original
         if '"' in string:
             # There are literal quotes in the given string.
             # We want to preserve the format and instead surround
@@ -685,88 +618,59 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleSingleUnionType,
+        example: ir_types.ExampleUnionType,
     ) -> AST.Expression:
-        type_decl = ir.types[name.type_id]
-        union_type = type_decl.shape.visit(
-            alias=lambda _: None,
-            enum=lambda _: None,
-            object=lambda _: None,
-            union=lambda union: self._get_union_type_for_example(
-                union=union,
-                example=example,
-            ),
-            undiscriminated_union=lambda _: None,
-        )
-
-        if union_type is None:
-            raise Exception(f"internal error: cannot generate snippet - expected an example union for {name.type_id}")
-
-        snippet = example.properties.visit(
-            same_properties_as_object=lambda named: self._snippet_for_union_with_same_properties_as_object(
+        return example.single_union_type.shape.visit(
+            same_properties_as_object=lambda object: self._snippet_for_union_with_same_properties_as_object(
                 ir=ir,
                 context=context,
                 name=name,
-                union_type=union_type,
-                example=named,
-            )
-            if union_type is not None
-            else None,
+                discriminant=example.discriminant,
+                wire_discriminant_value=example.single_union_type.wire_discriminant_value,
+                example=object,
+            ),
             single_property=lambda example_type_reference: self._snippet_for_union_with_single_property(
                 ir=ir,
                 context=context,
                 name=name,
-                union_type=union_type,
+                discriminant=example.discriminant,
+                wire_discriminant_value=example.single_union_type.wire_discriminant_value,
                 example=example_type_reference,
-            )
-            if union_type is not None
-            else None,
+            ),
             no_properties=lambda: self._snippet_for_union_with_no_properties(
                 context=context,
                 name=name,
             ),
         )
 
-        if snippet is None:
-            raise Exception(f"internal error: cannot generate snippet - expected an example union for {name.type_id}")
-
-        return snippet
-
     def _snippet_for_union_with_same_properties_as_object(
         self,
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
-        union_type: UnionType,
-        example: ir_types.ExampleNamedType,
+        discriminant: ir_types.NameAndWireValue,
+        wire_discriminant_value: ir_types.NameAndWireValue,
+        example: ir_types.ExampleObjectTypeWithTypeId,
     ) -> AST.Expression:
-        object = example.shape.visit(
-            alias=lambda _: None,
-            enum=lambda _: None,
-            object=lambda object: object,
-            union=lambda _: None,
-        )
-        if object is None:
-            raise Exception(f"internal error: cannot generate snippet - expected an example object for {name.type_id}")
-
         args: List[AST.Expression] = []
         args.append(
             self._snippet_for_union_discriminant_parameter(
-                union_type=union_type,
+                discriminant=discriminant,
+                wire_discriminant_value=wire_discriminant_value,
             ),
         )
         args.extend(
             self._snippet_for_object_properties(
                 ir=ir,
                 context=context,
-                example=object,
+                example=example.object,
             ),
         )
 
         union_class_reference = self._get_union_class_reference(
             context=context,
             name=name,
-            single_union_type=union_type.single_union_type,
+            wire_discriminant_value=wire_discriminant_value,
         )
 
         return AST.Expression(
@@ -781,16 +685,18 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
-        union_type: UnionType,
+        discriminant: ir_types.NameAndWireValue,
+        wire_discriminant_value: ir_types.NameAndWireValue,
         example: ir_types.ExampleTypeReference,
     ) -> AST.Expression:
         union_class_reference = self._get_union_class_reference(
             context=context,
             name=name,
-            single_union_type=union_type.single_union_type,
+            wire_discriminant_value=wire_discriminant_value,
         )
         union_discriminant_parameter = self._snippet_for_union_discriminant_parameter(
-            union_type=union_type,
+            discriminant=discriminant,
+            wire_discriminant_value=wire_discriminant_value,
         )
         union_value = self._snippet_for_example_type_reference(
             ir=ir,
@@ -827,31 +733,19 @@ class SnippetRegistry:
 
     def _snippet_for_union_discriminant_parameter(
         self,
-        union_type: UnionType,
+        discriminant: ir_types.NameAndWireValue,
+        wire_discriminant_value: ir_types.NameAndWireValue,
     ) -> AST.Expression:
         return self._write_named_parameter_for_value(
-            parameter_name=union_type.discriminant.name.snake_case.unsafe_name,
-            value=AST.Expression(f'"{union_type.single_union_type.discriminant_value.wire_value}"'),
+            parameter_name=discriminant.name.snake_case.unsafe_name,
+            value=AST.Expression(f'"{wire_discriminant_value.wire_value}"'),
         )
-
-    def _get_union_type_for_example(
-        self,
-        union: ir_types.UnionTypeDeclaration,
-        example: ir_types.ExampleSingleUnionType,
-    ) -> Optional[UnionType]:
-        for single_union_type in union.types:
-            if single_union_type.discriminant_value.wire_value == example.wire_discriminant_value:
-                return UnionType(
-                    discriminant=union.discriminant,
-                    single_union_type=single_union_type,
-                )
-        return None
 
     def _get_union_class_reference(
         self,
         context: PydanticGeneratorContext,
         name: ir_types.DeclaredTypeName,
-        single_union_type: ir_types.SingleUnionType,
+        wire_discriminant_value: ir_types.NameAndWireValue,
     ) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -862,7 +756,7 @@ class SnippetRegistry:
                         name=name,
                     ),
                 ),
-                named_import=f"{name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",
+                named_import=f"{name.name.pascal_case.unsafe_name}_{wire_discriminant_value.name.pascal_case.unsafe_name}",
             ),
         )
 
@@ -883,117 +777,6 @@ class SnippetRegistry:
                 named_import=name.name.pascal_case.unsafe_name,
             ),
         )
-
-    def _get_property_key(
-        self,
-        ir: ir_types.IntermediateRepresentation,
-        property: ir_types.ExampleObjectProperty,
-    ) -> str:
-        type_decl = ir.types[property.original_type_declaration.type_id]
-        snippet = type_decl.shape.visit(
-            alias=lambda _: None,
-            enum=lambda _: None,
-            object=lambda object_: self._get_property_key_from_object(
-                object_=object_,
-                wire_key=property.wire_key,
-            ),
-            union=lambda _: None,
-            undiscriminated_union=lambda _: None,
-        )
-
-        if snippet is None:
-            raise Exception(
-                f"internal error: cannot generate snippet - expected an example object for {property.original_type_declaration.type_id}"
-            )
-
-        return snippet
-
-    def _get_property_key_from_object(
-        self,
-        object_: ir_types.ObjectTypeDeclaration,
-        wire_key: str,
-    ) -> str:
-        for property in object_.properties:
-            if property.name.wire_value == wire_key:
-                return property.name.name.snake_case.safe_name
-        return wire_key
-
-    def _get_path_parameter_name_from_key(
-        self,
-        endpoint: ir_types.HttpEndpoint,
-        key: str,
-    ) -> str:
-        for path_parameter in endpoint.all_path_parameters:
-            if path_parameter.name.original_name == key:
-                return path_parameter.name.snake_case.unsafe_name
-        return key
-
-    def _get_header_name_from_wire_key(
-        self,
-        service: ir_types.HttpService,
-        endpoint: ir_types.HttpEndpoint,
-        wire_key: str,
-    ) -> str:
-        all_headers = service.headers + endpoint.headers
-        for header in all_headers:
-            if header.name.wire_value == wire_key:
-                return header.name.name.snake_case.safe_name
-        return wire_key
-
-    def _get_query_parameter_name_from_wire_key(
-        self,
-        endpoint: ir_types.HttpEndpoint,
-        wire_key: str,
-    ) -> str:
-        for query_parameter in endpoint.query_parameters:
-            if query_parameter.name.wire_value == wire_key:
-                return query_parameter.name.name.snake_case.safe_name
-        return wire_key
-
-    def _get_inlined_request_properties_for_endpoint(
-        self,
-        context: PydanticGeneratorContext,
-        endpoint: ir_types.HttpEndpoint,
-    ) -> Dict[str, ir_types.InlinedRequestBodyProperty]:
-        if endpoint.request_body is None:
-            raise Exception("in-lined request body is referenced but HttpRequestBody is not defined")
-
-        properties = endpoint.request_body.visit(
-            inlined_request_body=lambda inlined_request_body: self._get_properties_for_inlined_request_body(
-                context=context,
-                inlined_request_body=inlined_request_body,
-            ),
-            reference=lambda _: None,
-            file_upload=lambda _: None,
-            bytes=lambda _: None,
-        )
-        if properties is None:
-            raise Exception("in-lined request body is referenced but HttpRequestBody is not an in-lined request")
-
-        wire_key_to_property: Dict[str, ir_types.InlinedRequestBodyProperty] = {}
-        for property in properties:
-            wire_key_to_property[property.name.wire_value] = property
-
-        return wire_key_to_property
-
-    def _get_properties_for_inlined_request_body(
-        self,
-        context: PydanticGeneratorContext,
-        inlined_request_body: ir_types.InlinedRequestBody,
-    ) -> List[ir_types.InlinedRequestBodyProperty]:
-        properties = inlined_request_body.properties.copy()
-        for extension in inlined_request_body.extends:
-            properties.extend(
-                [
-                    ir_types.InlinedRequestBodyProperty(
-                        name=extended_property.name,
-                        value_type=extended_property.value_type,
-                        docs=extended_property.docs,
-                    )
-                    for extended_property in (context.get_all_properties_including_extensions(extension))
-                ]
-            )
-        return properties
 
     def _get_request_parameter_name(
         self,

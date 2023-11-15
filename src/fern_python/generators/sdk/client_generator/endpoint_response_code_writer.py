@@ -1,4 +1,5 @@
 import fern.ir.resources as ir_types
+from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
@@ -65,13 +66,10 @@ class EndpointResponseCodeWriter:
     def _handle_success_json(
         self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
     ) -> None:
-
         writer.write("return ")
         writer.write_node(
             Pydantic.parse_obj_as(
-                self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    json_response.response_body_type
-                ),
+                self._get_json_response_body_type(json_response),
                 AST.Expression(
                     f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}"
                     if use_response_json
@@ -269,11 +267,20 @@ class EndpointResponseCodeWriter:
             file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
             if self._is_async
             else AST.TypeHint.iterator(AST.TypeHint.bytes()),
-            json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                json_response.response_body_type
-            ),
+            json=lambda json_response: self._get_json_response_body_type(json_response),
             streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
             text=lambda _: AST.TypeHint.str_(),
+        )
+
+    def _get_json_response_body_type(
+        self,
+        json_response: ir_types.JsonResponse,
+    ) -> AST.TypeHint:
+        return json_response.visit(
+            response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                response.response_body_type
+            ),
+            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
         )
 
     def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
@@ -283,3 +290,7 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
+
+
+def raise_json_nested_property_as_response_unsupported() -> Never:
+    raise RuntimeError("nested property json response is unsupported")

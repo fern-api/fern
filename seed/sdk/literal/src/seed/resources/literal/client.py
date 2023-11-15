@@ -4,6 +4,8 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
+import typing_extensions
+
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
@@ -43,10 +45,10 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_options(self, *, dry_run: bool) -> Options:
+    def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
         """
         Parameters:
-            - dry_run: bool.
+            - dry_run: typing_extensions.Literal[True].
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -88,10 +90,10 @@ class AsyncLiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_options(self, *, dry_run: bool) -> Options:
+    async def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
         """
         Parameters:
-            - dry_run: bool.
+            - dry_run: typing_extensions.Literal[True].
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

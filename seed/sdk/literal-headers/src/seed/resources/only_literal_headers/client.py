@@ -12,11 +12,7 @@ class OnlyLiteralHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, false_endpoint_header: bool) -> None:
-        """
-        Parameters:
-            - false_endpoint_header: bool.
-        """
+    def get(self) -> None:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "only-literal-headers"),
@@ -25,7 +21,7 @@ class OnlyLiteralHeadersClient:
                     **self._client_wrapper.get_headers(),
                     "literalServiceHeader": "service header",
                     "literalEndpointHeader": "endpoint header",
-                    "falseEndpointHeader": false_endpoint_header,
+                    "falseEndpointHeader": "false",
                 }
             ),
             timeout=60,
@@ -43,11 +39,7 @@ class AsyncOnlyLiteralHeadersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(self, *, false_endpoint_header: bool) -> None:
-        """
-        Parameters:
-            - false_endpoint_header: bool.
-        """
+    async def get(self) -> None:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "only-literal-headers"),
@@ -56,7 +48,7 @@ class AsyncOnlyLiteralHeadersClient:
                     **self._client_wrapper.get_headers(),
                     "literalServiceHeader": "service header",
                     "literalEndpointHeader": "endpoint header",
-                    "falseEndpointHeader": false_endpoint_header,
+                    "falseEndpointHeader": "false",
                 }
             ),
             timeout=60,

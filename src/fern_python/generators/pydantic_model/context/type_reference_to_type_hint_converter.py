@@ -67,7 +67,11 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def visit_literal(self, wrapped_type: ir_types.Literal) -> AST.TypeHint:
-        return AST.TypeHint.literal(AST.Expression(f'"{wrapped_type.get_as_union().string}"'))
+        value = wrapped_type.visit(
+            lambda string: AST.Expression(f'"{string}"'),
+            lambda boolean: AST.Expression(f"{boolean}"),
+        )
+        return AST.TypeHint.literal(value=value)
 
     def _get_type_hint_for_named(
         self,

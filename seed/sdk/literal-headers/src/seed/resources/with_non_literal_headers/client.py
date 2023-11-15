@@ -14,13 +14,7 @@ class WithNonLiteralHeadersClient:
         self._client_wrapper = client_wrapper
 
     def get(
-        self,
-        *,
-        integer: int,
-        maybe_integer: typing.Optional[int] = None,
-        true_service_header: bool,
-        non_literal_endpoint_header: str,
-        true_endpoint_header: bool,
+        self, *, integer: int, maybe_integer: typing.Optional[int] = None, non_literal_endpoint_header: str
     ) -> None:
         """
         Parameters:
@@ -28,11 +22,7 @@ class WithNonLiteralHeadersClient:
 
             - maybe_integer: typing.Optional[int].
 
-            - true_service_header: bool.
-
             - non_literal_endpoint_header: str.
-
-            - true_endpoint_header: bool.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -43,10 +33,10 @@ class WithNonLiteralHeadersClient:
                     "integer": integer,
                     "maybeInteger": maybe_integer,
                     "literalServiceHeader": "service header",
-                    "trueServiceHeader": true_service_header,
+                    "trueServiceHeader": "true",
                     "nonLiteralEndpointHeader": non_literal_endpoint_header,
                     "literalEndpointHeader": "endpoint header",
-                    "trueEndpointHeader": true_endpoint_header,
+                    "trueEndpointHeader": "true",
                 }
             ),
             timeout=60,
@@ -65,13 +55,7 @@ class AsyncWithNonLiteralHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def get(
-        self,
-        *,
-        integer: int,
-        maybe_integer: typing.Optional[int] = None,
-        true_service_header: bool,
-        non_literal_endpoint_header: str,
-        true_endpoint_header: bool,
+        self, *, integer: int, maybe_integer: typing.Optional[int] = None, non_literal_endpoint_header: str
     ) -> None:
         """
         Parameters:
@@ -79,11 +63,7 @@ class AsyncWithNonLiteralHeadersClient:
 
             - maybe_integer: typing.Optional[int].
 
-            - true_service_header: bool.
-
             - non_literal_endpoint_header: str.
-
-            - true_endpoint_header: bool.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -94,10 +74,10 @@ class AsyncWithNonLiteralHeadersClient:
                     "integer": integer,
                     "maybeInteger": maybe_integer,
                     "literalServiceHeader": "service header",
-                    "trueServiceHeader": true_service_header,
+                    "trueServiceHeader": "true",
                     "nonLiteralEndpointHeader": non_literal_endpoint_header,
                     "literalEndpointHeader": "endpoint header",
-                    "trueEndpointHeader": true_endpoint_header,
+                    "trueEndpointHeader": "true",
                 }
             ),
             timeout=60,

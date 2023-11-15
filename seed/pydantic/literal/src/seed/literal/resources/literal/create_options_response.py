@@ -16,7 +16,7 @@ except ImportError:
 
 class CreateOptionsResponse_Ok(pydantic.BaseModel):
     type: typing_extensions.Literal["ok"]
-    value: bool
+    value: typing_extensions.Literal[True]
 
 
 class CreateOptionsResponse_Options(Options):
