@@ -29,6 +29,12 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
             });
         },
         union: (union) => {
+            const baseProperties = union.baseProperties.map((baseProperty) => {
+                return {
+                    key: baseProperty.name.wireValue,
+                    valueType: convertTypeReference(baseProperty.valueType),
+                };
+            });
             return FernRegistry.api.v1.register.TypeShape.discriminatedUnion({
                 discriminant: union.discriminant.wireValue,
                 variants: union.types.map((variant): FernRegistry.api.v1.register.DiscriminatedUnionVariant => {
@@ -41,7 +47,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                                 {
                                     samePropertiesAsObject: (extension) => ({
                                         extends: [convertTypeId(extension.typeId)],
-                                        properties: [],
+                                        properties: baseProperties,
                                     }),
                                     singleProperty: (singleProperty) => ({
                                         extends: [],
@@ -50,11 +56,12 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                                                 key: singleProperty.name.wireValue,
                                                 valueType: convertTypeReference(singleProperty.type),
                                             },
+                                            ...baseProperties,
                                         ],
                                     }),
                                     noProperties: () => ({
                                         extends: [],
-                                        properties: [],
+                                        properties: baseProperties,
                                     }),
                                     _other: () => {
                                         throw new Error(
