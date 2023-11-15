@@ -1,4 +1,4 @@
-irVersion: v28
+irVersion: v29
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript

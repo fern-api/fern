@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@fern-fern/generator-exec-sdk": "^0.0.142",
-    "@fern-fern/ir-sdk": "0.0.2940",
+    "@fern-fern/ir-sdk": "0.0.2941",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

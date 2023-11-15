@@ -5,7 +5,10 @@
 /**
  * @example
  *     {
- *         response: "Initializing..."
+ *         response: {
+ *             "unknown": "Initializing...",
+ *             "type": "unknown"
+ *         }
  *     }
  */
 export interface Response {

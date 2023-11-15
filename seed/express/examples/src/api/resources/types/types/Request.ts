@@ -5,7 +5,10 @@
 /**
  * @example
  *     {
- *         request: {}
+ *         request: {
+ *             "unknown": {},
+ *             "type": "unknown"
+ *         }
  *     }
  */
 export interface Request {
