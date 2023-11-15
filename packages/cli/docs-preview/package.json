@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-configuration": "workspace:*",
-    "@fern-api/fdr-sdk": "0.39.0-2-g8d211ba",
+    "@fern-api/fdr-sdk": "0.39.0-3-g3184cfa",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

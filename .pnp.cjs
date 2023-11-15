@@ -3836,7 +3836,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
-            ["@fern-api/fdr-sdk", "npm:0.39.0-2-g8d211ba"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-3-g3184cfa"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
@@ -3908,14 +3908,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.39.0-2-g8d211ba", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.39.0-2-g8d211ba-28ad50c09b-b1b33e8027.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.39.0-3-g3184cfa", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.39.0-3-g3184cfa-6a5dcccc7c-a794f4b4dd.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.39.0-2-g8d211ba"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-3-g3184cfa"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
             ["lodash", "npm:4.17.21"],\
+            ["marked", "npm:5.1.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -13727,6 +13728,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/markdown-table-npm-3.0.3-b24147eaf5-8fcd3d9018.zip/node_modules/markdown-table/",\
           "packageDependencies": [\
             ["markdown-table", "npm:3.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["marked", [\
+        ["npm:5.1.2", {\
+          "packageLocation": "./.yarn/cache/marked-npm-5.1.2-91f2d658c1-fff8741a1d.zip/node_modules/marked/",\
+          "packageDependencies": [\
+            ["marked", "npm:5.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\

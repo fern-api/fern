@@ -2116,7 +2116,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
-    "@fern-api/fdr-sdk": 0.39.0-2-g8d211ba
+    "@fern-api/fdr-sdk": 0.39.0-3-g3184cfa
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
@@ -2182,16 +2182,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.39.0-2-g8d211ba":
-  version: 0.39.0-2-g8d211ba
-  resolution: "@fern-api/fdr-sdk@npm:0.39.0-2-g8d211ba"
+"@fern-api/fdr-sdk@npm:0.39.0-3-g3184cfa":
+  version: 0.39.0-3-g3184cfa
+  resolution: "@fern-api/fdr-sdk@npm:0.39.0-3-g3184cfa"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     lodash: ^4.17.21
+    marked: ^5.1.0
     url-join: 4.0.1
-  checksum: b1b33e8027e92f607c98bb5f1eb36d543a1dbc1ca511f7fa3d103e70228d1106b77e83667697b17214623f24ca8284af348a903d71560dd6fe954fe8276c4a53
+  checksum: a794f4b4ddd3c832567372237daf6e82715c11148a64f46256b9f441c5cae1c71d4ab7d5f5848bd421e1d24e7ac5f20cf4923025bb8f11c671f3d719e8868eda
   languageName: node
   linkType: hard
 
@@ -10626,6 +10627,15 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.0.3
   resolution: "markdown-table@npm:3.0.3"
   checksum: 8fcd3d9018311120fbb97115987f8b1665a603f3134c93fbecc5d1463380c8036f789e2a62c19432058829e594fff8db9ff81c88f83690b2f8ed6c074f8d9e10
+  languageName: node
+  linkType: hard
+
+"marked@npm:^5.1.0":
+  version: 5.1.2
+  resolution: "marked@npm:5.1.2"
+  bin:
+    marked: bin/marked.js
+  checksum: fff8741a1dc7313f32bea221079a3d6ff55cd485170fade8841b77b48c89ad5b96676e645636e73e50f4b5b6d65cf9d8821072afb16173822505949df2407ffe
   languageName: node
   linkType: hard
 
