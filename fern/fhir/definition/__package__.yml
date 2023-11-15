@@ -61305,5 +61305,3 @@ types:
           Invariant to check against the state of the resource with
           modifications tentatively applied.
         type: optional<string>
-
-errors: {}

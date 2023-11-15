@@ -1,0 +1,1108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate IR 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "extends",
+      "unsafeName": "extends",
+    },
+    "originalName": "extends",
+    "pascalCase": {
+      "safeName": "Extends",
+      "unsafeName": "Extends",
+    },
+    "screamingSnakeCase": {
+      "safeName": "EXTENDS",
+      "unsafeName": "EXTENDS",
+    },
+    "snakeCase": {
+      "safeName": "extends",
+      "unsafeName": "extends",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [],
+    "types": [
+      "type_:ExampleType",
+      "type_:NestedType",
+      "type_:Docs",
+      "type_:JSON",
+    ],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [
+      "type_:ExampleType",
+      "type_:NestedType",
+      "type_:Docs",
+      "type_:JSON",
+    ],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {},
+  "subpackages": {},
+  "types": {
+    "type_:Docs": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "docs": "Types extend this type to include a docs property.",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "wireValue": "docs",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "Docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "typeId": "type_:Docs",
+                },
+                "value": {
+                  "jsonExample": "Types extend this type to include a docs property.",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "Types extend this type to include a docs property.",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "docs",
+            "unsafeName": "docs",
+          },
+          "originalName": "Docs",
+          "pascalCase": {
+            "safeName": "Docs",
+            "unsafeName": "Docs",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DOCS",
+            "unsafeName": "DOCS",
+          },
+          "snakeCase": {
+            "safeName": "docs",
+            "unsafeName": "docs",
+          },
+        },
+        "typeId": "type_:Docs",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "docs",
+                  "unsafeName": "docs",
+                },
+                "originalName": "docs",
+                "pascalCase": {
+                  "safeName": "Docs",
+                  "unsafeName": "Docs",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DOCS",
+                  "unsafeName": "DOCS",
+                },
+                "snakeCase": {
+                  "safeName": "docs",
+                  "unsafeName": "docs",
+                },
+              },
+              "wireValue": "docs",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+    "type_:ExampleType": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "docs": "This is an example type.",
+            "name": "Example",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "wireValue": "docs",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "Docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "typeId": "type_:Docs",
+                },
+                "value": {
+                  "jsonExample": "This is an example type.",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "This is an example type.",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                    "originalName": "name",
+                    "pascalCase": {
+                      "safeName": "Name",
+                      "unsafeName": "Name",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NAME",
+                      "unsafeName": "NAME",
+                    },
+                    "snakeCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                  },
+                  "wireValue": "name",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exampleType",
+                      "unsafeName": "exampleType",
+                    },
+                    "originalName": "ExampleType",
+                    "pascalCase": {
+                      "safeName": "ExampleType",
+                      "unsafeName": "ExampleType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXAMPLE_TYPE",
+                      "unsafeName": "EXAMPLE_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "example_type",
+                      "unsafeName": "example_type",
+                    },
+                  },
+                  "typeId": "type_:ExampleType",
+                },
+                "value": {
+                  "jsonExample": "Example",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "Example",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "exampleType",
+            "unsafeName": "exampleType",
+          },
+          "originalName": "ExampleType",
+          "pascalCase": {
+            "safeName": "ExampleType",
+            "unsafeName": "ExampleType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EXAMPLE_TYPE",
+            "unsafeName": "EXAMPLE_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "example_type",
+            "unsafeName": "example_type",
+          },
+        },
+        "typeId": "type_:ExampleType",
+      },
+      "referencedTypes": [
+        "type_:Docs",
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [
+          {
+            "fernFilepath": {
+              "allParts": [],
+              "file": null,
+              "packagePath": [],
+            },
+            "name": {
+              "camelCase": {
+                "safeName": "docs",
+                "unsafeName": "docs",
+              },
+              "originalName": "Docs",
+              "pascalCase": {
+                "safeName": "Docs",
+                "unsafeName": "Docs",
+              },
+              "screamingSnakeCase": {
+                "safeName": "DOCS",
+                "unsafeName": "DOCS",
+              },
+              "snakeCase": {
+                "safeName": "docs",
+                "unsafeName": "docs",
+              },
+            },
+            "typeId": "type_:Docs",
+          },
+        ],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+    "type_:JSON": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "docs": "Types extend this type to include a docs and json property.",
+            "raw": "{"docs": true, "json": true}",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "wireValue": "docs",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "Docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "typeId": "type_:Docs",
+                },
+                "value": {
+                  "jsonExample": "Types extend this type to include a docs and json property.",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "Types extend this type to include a docs and json property.",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "raw",
+                      "unsafeName": "raw",
+                    },
+                    "originalName": "raw",
+                    "pascalCase": {
+                      "safeName": "Raw",
+                      "unsafeName": "Raw",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "RAW",
+                      "unsafeName": "RAW",
+                    },
+                    "snakeCase": {
+                      "safeName": "raw",
+                      "unsafeName": "raw",
+                    },
+                  },
+                  "wireValue": "raw",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "json",
+                      "unsafeName": "json",
+                    },
+                    "originalName": "JSON",
+                    "pascalCase": {
+                      "safeName": "Json",
+                      "unsafeName": "Json",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "JSON",
+                      "unsafeName": "JSON",
+                    },
+                    "snakeCase": {
+                      "safeName": "json",
+                      "unsafeName": "json",
+                    },
+                  },
+                  "typeId": "type_:JSON",
+                },
+                "value": {
+                  "jsonExample": "{"docs": true, "json": true}",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "{"docs": true, "json": true}",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "json",
+            "unsafeName": "json",
+          },
+          "originalName": "JSON",
+          "pascalCase": {
+            "safeName": "Json",
+            "unsafeName": "Json",
+          },
+          "screamingSnakeCase": {
+            "safeName": "JSON",
+            "unsafeName": "JSON",
+          },
+          "snakeCase": {
+            "safeName": "json",
+            "unsafeName": "json",
+          },
+        },
+        "typeId": "type_:JSON",
+      },
+      "referencedTypes": [
+        "type_:Docs",
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [
+          {
+            "fernFilepath": {
+              "allParts": [],
+              "file": null,
+              "packagePath": [],
+            },
+            "name": {
+              "camelCase": {
+                "safeName": "docs",
+                "unsafeName": "docs",
+              },
+              "originalName": "Docs",
+              "pascalCase": {
+                "safeName": "Docs",
+                "unsafeName": "Docs",
+              },
+              "screamingSnakeCase": {
+                "safeName": "DOCS",
+                "unsafeName": "DOCS",
+              },
+              "snakeCase": {
+                "safeName": "docs",
+                "unsafeName": "docs",
+              },
+            },
+            "typeId": "type_:Docs",
+          },
+        ],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "raw",
+                  "unsafeName": "raw",
+                },
+                "originalName": "raw",
+                "pascalCase": {
+                  "safeName": "Raw",
+                  "unsafeName": "Raw",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RAW",
+                  "unsafeName": "RAW",
+                },
+                "snakeCase": {
+                  "safeName": "raw",
+                  "unsafeName": "raw",
+                },
+              },
+              "wireValue": "raw",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+    "type_:NestedType": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "docs": "This is an example nested type.",
+            "name": "NestedExample",
+            "raw": "{"nested": "example"}",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "wireValue": "docs",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "Docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "typeId": "type_:Docs",
+                },
+                "value": {
+                  "jsonExample": "This is an example nested type.",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "This is an example nested type.",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                    "originalName": "name",
+                    "pascalCase": {
+                      "safeName": "Name",
+                      "unsafeName": "Name",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NAME",
+                      "unsafeName": "NAME",
+                    },
+                    "snakeCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                  },
+                  "wireValue": "name",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "nestedType",
+                      "unsafeName": "nestedType",
+                    },
+                    "originalName": "NestedType",
+                    "pascalCase": {
+                      "safeName": "NestedType",
+                      "unsafeName": "NestedType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NESTED_TYPE",
+                      "unsafeName": "NESTED_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "nested_type",
+                      "unsafeName": "nested_type",
+                    },
+                  },
+                  "typeId": "type_:NestedType",
+                },
+                "value": {
+                  "jsonExample": "NestedExample",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "NestedExample",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "raw",
+                      "unsafeName": "raw",
+                    },
+                    "originalName": "raw",
+                    "pascalCase": {
+                      "safeName": "Raw",
+                      "unsafeName": "Raw",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "RAW",
+                      "unsafeName": "RAW",
+                    },
+                    "snakeCase": {
+                      "safeName": "raw",
+                      "unsafeName": "raw",
+                    },
+                  },
+                  "wireValue": "raw",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "json",
+                      "unsafeName": "json",
+                    },
+                    "originalName": "JSON",
+                    "pascalCase": {
+                      "safeName": "Json",
+                      "unsafeName": "Json",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "JSON",
+                      "unsafeName": "JSON",
+                    },
+                    "snakeCase": {
+                      "safeName": "json",
+                      "unsafeName": "json",
+                    },
+                  },
+                  "typeId": "type_:JSON",
+                },
+                "value": {
+                  "jsonExample": "{"nested": "example"}",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "{"nested": "example"}",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "nestedType",
+            "unsafeName": "nestedType",
+          },
+          "originalName": "NestedType",
+          "pascalCase": {
+            "safeName": "NestedType",
+            "unsafeName": "NestedType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "NESTED_TYPE",
+            "unsafeName": "NESTED_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "nested_type",
+            "unsafeName": "nested_type",
+          },
+        },
+        "typeId": "type_:NestedType",
+      },
+      "referencedTypes": [
+        "type_:JSON",
+        "type_:Docs",
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [
+          {
+            "fernFilepath": {
+              "allParts": [],
+              "file": null,
+              "packagePath": [],
+            },
+            "name": {
+              "camelCase": {
+                "safeName": "json",
+                "unsafeName": "json",
+              },
+              "originalName": "JSON",
+              "pascalCase": {
+                "safeName": "Json",
+                "unsafeName": "Json",
+              },
+              "screamingSnakeCase": {
+                "safeName": "JSON",
+                "unsafeName": "JSON",
+              },
+              "snakeCase": {
+                "safeName": "json",
+                "unsafeName": "json",
+              },
+            },
+            "typeId": "type_:JSON",
+          },
+        ],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+}
+`;
