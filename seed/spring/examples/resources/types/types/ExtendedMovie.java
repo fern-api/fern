@@ -17,6 +17,8 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import resources.commons.types.types.Tag;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(
@@ -31,13 +33,20 @@ public final class ExtendedMovie implements IMovie {
 
   private final double rating;
 
+  private final Tag tag;
+
+  private final Optional<String> book;
+
   private final List<String> cast;
 
-  private ExtendedMovie(MovieId id, String title, String from, double rating, List<String> cast) {
+  private ExtendedMovie(MovieId id, String title, String from, double rating, Tag tag,
+      Optional<String> book, List<String> cast) {
     this.id = id;
     this.title = title;
     this.from = from;
     this.rating = rating;
+    this.tag = tag;
+    this.book = book;
     this.cast = cast;
   }
 
@@ -74,6 +83,18 @@ public final class ExtendedMovie implements IMovie {
     return "movie";
   }
 
+  @JsonProperty("tag")
+  @Override
+  public Tag getTag() {
+    return tag;
+  }
+
+  @JsonProperty("book")
+  @Override
+  public Optional<String> getBook() {
+    return book;
+  }
+
   @JsonProperty("cast")
   public List<String> getCast() {
     return cast;
@@ -86,12 +107,12 @@ public final class ExtendedMovie implements IMovie {
   }
 
   private boolean equalTo(ExtendedMovie other) {
-    return id.equals(other.id) && title.equals(other.title) && from.equals(other.from) && rating == other.rating && cast.equals(other.cast);
+    return id.equals(other.id) && title.equals(other.title) && from.equals(other.from) && rating == other.rating && tag.equals(other.tag) && book.equals(other.book) && cast.equals(other.cast);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.id, this.title, this.from, this.rating, this.cast);
+    return Objects.hash(this.id, this.title, this.from, this.rating, this.tag, this.book, this.cast);
   }
 
   @Override
@@ -118,11 +139,19 @@ public final class ExtendedMovie implements IMovie {
   }
 
   public interface RatingStage {
-    _FinalStage rating(double rating);
+    TagStage rating(double rating);
+  }
+
+  public interface TagStage {
+    _FinalStage tag(Tag tag);
   }
 
   public interface _FinalStage {
     ExtendedMovie build();
+
+    _FinalStage book(Optional<String> book);
+
+    _FinalStage book(String book);
 
     _FinalStage cast(List<String> cast);
 
@@ -134,7 +163,7 @@ public final class ExtendedMovie implements IMovie {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, TitleStage, FromStage, RatingStage, _FinalStage {
+  public static final class Builder implements IdStage, TitleStage, FromStage, RatingStage, TagStage, _FinalStage {
     private MovieId id;
 
     private String title;
@@ -143,7 +172,11 @@ public final class ExtendedMovie implements IMovie {
 
     private double rating;
 
+    private Tag tag;
+
     private List<String> cast = new ArrayList<>();
+
+    private Optional<String> book = Optional.empty();
 
     private Builder() {
     }
@@ -154,6 +187,8 @@ public final class ExtendedMovie implements IMovie {
       title(other.getTitle());
       from(other.getFrom());
       rating(other.getRating());
+      tag(other.getTag());
+      book(other.getBook());
       cast(other.getCast());
       return this;
     }
@@ -185,8 +220,15 @@ public final class ExtendedMovie implements IMovie {
      */
     @Override
     @JsonSetter("rating")
-    public _FinalStage rating(double rating) {
+    public TagStage rating(double rating) {
       this.rating = rating;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("tag")
+    public _FinalStage tag(Tag tag) {
+      this.tag = tag;
       return this;
     }
 
@@ -214,8 +256,24 @@ public final class ExtendedMovie implements IMovie {
     }
 
     @Override
+    public _FinalStage book(String book) {
+      this.book = Optional.of(book);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "book",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage book(Optional<String> book) {
+      this.book = book;
+      return this;
+    }
+
+    @Override
     public ExtendedMovie build() {
-      return new ExtendedMovie(id, title, from, rating, cast);
+      return new ExtendedMovie(id, title, from, rating, tag, book, cast);
     }
   }
 }

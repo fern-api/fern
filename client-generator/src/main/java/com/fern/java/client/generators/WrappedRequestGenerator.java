@@ -16,8 +16,6 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.commons.Availability;
-import com.fern.ir.model.commons.AvailabilityStatus;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.commons.TypeId;
@@ -85,9 +83,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
         httpService.getHeaders().forEach(httpHeader -> {
             headerObjectProperties.add(ObjectProperty.builder()
-                    .availability(Availability.builder()
-                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                            .build())
                     .name(httpHeader.getName())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
@@ -95,9 +90,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         });
         httpEndpoint.getHeaders().forEach(httpHeader -> {
             headerObjectProperties.add(ObjectProperty.builder()
-                    .availability(Availability.builder()
-                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                            .build())
                     .name(httpHeader.getName())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
@@ -105,9 +97,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         });
         httpEndpoint.getQueryParameters().forEach(queryParameter -> {
             queryParameterObjectProperties.add(ObjectProperty.builder()
-                    .availability(Availability.builder()
-                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                            .build())
                     .name(queryParameter.getName())
                     .valueType(queryParameter.getValueType())
                     .docs(queryParameter.getDocs())
@@ -250,9 +239,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         @Override
         public List<ObjectProperty> visitReference(HttpRequestBodyReference reference) {
             return List.of(ObjectProperty.builder()
-                    .availability(Availability.builder()
-                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                            .build())
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
                             .name(Name.builder()
@@ -279,9 +265,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         @Override
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
             return List.of(ObjectProperty.builder()
-                    .availability(Availability.builder()
-                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                            .build())
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
                             .name(Name.builder()

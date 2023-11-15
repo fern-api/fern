@@ -222,6 +222,12 @@ public final class PoetTypeNameMapper {
                     return ClassName.get(String.class);
                 }
 
+                @SuppressWarnings("checkstyle:ParameterName")
+                @Override
+                public TypeName visitBoolean(boolean boolean_) {
+                    return ClassName.get(Boolean.class);
+                }
+
                 @Override
                 public TypeName _visitUnknown(Object unknownType) {
                     throw new RuntimeException("Unsupported literal type: " + unknownType);

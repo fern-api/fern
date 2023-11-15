@@ -9,11 +9,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public final class WeatherReport {
     public static final WeatherReport SUNNY = new WeatherReport(Value.SUNNY, "SUNNY");
 
-    public static final WeatherReport CLOUDY = new WeatherReport(Value.CLOUDY, "CLOUDY");
-
     public static final WeatherReport RAINING = new WeatherReport(Value.RAINING, "RAINING");
 
     public static final WeatherReport SNOWING = new WeatherReport(Value.SNOWING, "SNOWING");
+
+    public static final WeatherReport CLOUDY = new WeatherReport(Value.CLOUDY, "CLOUDY");
 
     private final Value value;
 
@@ -49,12 +49,12 @@ public final class WeatherReport {
         switch (value) {
             case SUNNY:
                 return visitor.visitSunny();
-            case CLOUDY:
-                return visitor.visitCloudy();
             case RAINING:
                 return visitor.visitRaining();
             case SNOWING:
                 return visitor.visitSnowing();
+            case CLOUDY:
+                return visitor.visitCloudy();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -66,12 +66,12 @@ public final class WeatherReport {
         switch (value) {
             case "SUNNY":
                 return SUNNY;
-            case "CLOUDY":
-                return CLOUDY;
             case "RAINING":
                 return RAINING;
             case "SNOWING":
                 return SNOWING;
+            case "CLOUDY":
+                return CLOUDY;
             default:
                 return new WeatherReport(Value.UNKNOWN, value);
         }

@@ -8,7 +8,7 @@ org.immutables:* = 2.8.8
 org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
-com.fern.fern:irV25 = 0.0.2885
+com.fern.fern:irV29 = 0.0.2974
 com.fern.fern:generator-exec-client = 0.0.37
 
 # testing

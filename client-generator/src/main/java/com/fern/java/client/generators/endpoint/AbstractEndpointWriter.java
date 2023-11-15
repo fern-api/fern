@@ -32,6 +32,8 @@ import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.http.InlinedRequestBodyProperty;
 import com.fern.ir.model.http.JsonResponse;
+import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.JsonResponseBodyWithProperty;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.SdkRequest;
 import com.fern.ir.model.http.SdkRequestBodyType;
@@ -439,10 +441,28 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitJson(JsonResponse json) {
+            JsonResponseBody body = json.visit(new JsonResponse.Visitor<JsonResponseBody>() {
+                @Override
+                public JsonResponseBody visitResponse(JsonResponseBody response) {
+                    return response;
+                }
+
+                @Override
+                public JsonResponseBody visitNestedPropertyAsResponse(
+                        JsonResponseBodyWithProperty nestedPropertyAsResponse) {
+                    throw new RuntimeException("Returning nested properties as response is unsupported");
+                }
+
+                @Override
+                public JsonResponseBody _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
+                }
+            });
+
             TypeName returnType =
-                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, json.getResponseBodyType());
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
             endpointMethodBuilder.returns(returnType);
-            if (json.getResponseBodyType().isContainer() || isAliasContainer(json.getResponseBodyType())) {
+            if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
                         "return $T.$L.readValue($L.body().string(), new $T() {})",
                         generatedObjectMapper.getClassName(),

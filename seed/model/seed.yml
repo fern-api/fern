@@ -1,4 +1,4 @@
-irVersion: v25
+irVersion: v29
 docker: java-model:latest
 dockerCommand: ./gradlew :model-generator:dockerTagLatest
 language: java

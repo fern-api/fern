@@ -1,4 +1,4 @@
-irVersion: v25
+irVersion: v29
 docker: java-spring:latest
 dockerCommand: ./gradlew :spring-server-generator:dockerTagLatest
 language: java

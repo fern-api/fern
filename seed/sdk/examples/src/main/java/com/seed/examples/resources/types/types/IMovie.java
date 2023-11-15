@@ -3,6 +3,8 @@
  */
 package com.seed.examples.resources.types.types;
 
+import java.util.Optional;
+
 public interface IMovie {
     String getId();
 
@@ -13,4 +15,8 @@ public interface IMovie {
     double getRating();
 
     String getType();
+
+    String getTag();
+
+    Optional<String> getBook();
 }

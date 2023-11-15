@@ -5,6 +5,8 @@
 package resources.types.types;
 
 import java.lang.String;
+import java.util.Optional;
+import resources.commons.types.types.Tag;
 
 public interface IMovie {
   MovieId getId();
@@ -16,4 +18,8 @@ public interface IMovie {
   double getRating();
 
   String getType();
+
+  Tag getTag();
+
+  Optional<String> getBook();
 }

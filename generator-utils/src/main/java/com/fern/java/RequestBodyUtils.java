@@ -16,8 +16,6 @@
 
 package com.fern.java;
 
-import com.fern.ir.model.commons.Availability;
-import com.fern.ir.model.commons.AvailabilityStatus;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.FileUploadRequest;
@@ -35,9 +33,6 @@ public final class RequestBodyUtils {
     public static List<ObjectProperty> convertToObjectProperties(InlinedRequestBody inlinedRequestBody) {
         return inlinedRequestBody.getProperties().stream()
                 .map(inlinedRequestBodyProperty -> ObjectProperty.builder()
-                        .availability(Availability.builder()
-                                .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                                .build())
                         .name(NameAndWireValue.builder()
                                 .wireValue(inlinedRequestBodyProperty.getName().getWireValue())
                                 .name(Name.builder()
@@ -73,9 +68,6 @@ public final class RequestBodyUtils {
                 .map(FileUploadRequestProperty::getBodyProperty)
                 .flatMap(Optional::stream)
                 .map(fileUploadProperty -> ObjectProperty.builder()
-                        .availability(Availability.builder()
-                                .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                                .build())
                         .name(NameAndWireValue.builder()
                                 .wireValue(fileUploadProperty.getName().getWireValue())
                                 .name(Name.builder()

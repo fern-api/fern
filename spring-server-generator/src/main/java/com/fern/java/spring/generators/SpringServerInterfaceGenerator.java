@@ -28,6 +28,8 @@ import com.fern.ir.model.http.HttpResponse;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.ir.model.http.JsonResponse;
+import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.JsonResponseBodyWithProperty;
 import com.fern.ir.model.http.StreamingResponse;
 import com.fern.ir.model.http.TextResponse;
 import com.fern.java.generators.AbstractFileGenerator;
@@ -121,9 +123,26 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
             httpResponse.get().visit(new HttpResponse.Visitor<Void>() {
                 @Override
                 public Void visitJson(JsonResponse json) {
+                    JsonResponseBody body = json.visit(new JsonResponse.Visitor<JsonResponseBody>() {
+                        @Override
+                        public JsonResponseBody visitResponse(JsonResponseBody response) {
+                            return response;
+                        }
+
+                        @Override
+                        public JsonResponseBody visitNestedPropertyAsResponse(
+                                JsonResponseBodyWithProperty nestedPropertyAsResponse) {
+                            throw new RuntimeException("Returning nested properties as response is unsupported");
+                        }
+
+                        @Override
+                        public JsonResponseBody _visitUnknown(Object unknownType) {
+                            throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
+                        }
+                    });
                     TypeName responseTypeName = generatorContext
                             .getPoetTypeNameMapper()
-                            .convertToTypeName(true, json.getResponseBodyType());
+                            .convertToTypeName(true, body.getResponseBodyType());
                     endpointMethodBuilder.returns(responseTypeName);
                     return null;
                 }
