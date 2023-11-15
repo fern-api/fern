@@ -1,3 +1,4 @@
+name: fhir
 on:
   [push]
   # push:
@@ -24,4 +25,4 @@ jobs:
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
-          fern generate
+          fern register --api fhir

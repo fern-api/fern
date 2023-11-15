@@ -1,3 +1,4 @@
+name: dependabot
 on: pull_request
 
 permissions:
