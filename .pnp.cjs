@@ -3836,6 +3836,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-2-g8d211ba"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
@@ -3904,6 +3905,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/fdr-sdk", [\
+        ["npm:0.39.0-2-g8d211ba", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.39.0-2-g8d211ba-28ad50c09b-b1b33e8027.zip/node_modules/@fern-api/fdr-sdk/",\
+          "packageDependencies": [\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-2-g8d211ba"],\
+            ["@ungap/url-search-params", "npm:0.2.2"],\
+            ["axios", "npm:0.27.2"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["lodash", "npm:4.17.21"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/fs-utils", [\

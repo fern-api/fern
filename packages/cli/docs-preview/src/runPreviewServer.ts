@@ -1,3 +1,4 @@
+import { PathResolver } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import express from "express";
@@ -21,9 +22,21 @@ export async function runPreviewServer({
         res.send(docsDefinition);
     });
 
+    const resolver = new PathResolver({
+        definition: {
+            apis: {},
+            docsConfig: docsDefinition.config,
+        },
+    });
+    const slugs = resolver.getAllSlugs();
+
+    app.post("/docs/preview/urls", async (_, res) => {
+        res.send(slugs);
+    });
+
     app.listen(3000);
 
-    // await infiinitely
+    // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await new Promise(() => {});
 }
