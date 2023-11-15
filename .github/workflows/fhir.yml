@@ -1,0 +1,27 @@
+on:
+  [push]
+  # push:
+  #   branches: main
+  #   paths:
+  #     - "fern/fhir/**"
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Register fhir definition
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          fern generate
