@@ -10,6 +10,8 @@ service:
 
 types:
   MyUnion:
+    docs: |
+      Several different types are accepted.
     discriminated: false
     union:
       - string
