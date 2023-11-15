@@ -1,3 +1,1 @@
 name: fhir
-error-discrimination:
-  strategy: status-code
