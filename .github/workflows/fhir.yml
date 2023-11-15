@@ -1,10 +1,9 @@
 name: fhir
 on:
-  [push]
-  # push:
-  #   branches: main
-  #   paths:
-  #     - "fern/fhir/**"
+  push:
+    branches: main
+    paths:
+      - "fern/fhir/**"
 
 jobs:
   register:
