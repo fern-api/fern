@@ -246,15 +246,25 @@ async function validateVersionedDependencyAndGetDefinition({
         return undefined;
     }
 
+    const hasEndpoints =
+        Object.values(workspaceOfDependency.definition.namedDefinitionFiles).filter((file) => {
+            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
+        }).length > 0 ||
+        Object.values(workspaceOfDependency.definition.packageMarkers).filter((file) => {
+            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
+        }).length > 0;
+
     // ensure root api files are equivalent
-    const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-    if (!equal) {
-        context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
-                ", "
-            )}]`
-        );
-        return undefined;
+    if (hasEndpoints) {
+        const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
+        if (!equal) {
+            context.failWithoutThrowing(
+                `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
+                    ", "
+                )}]`
+            );
+            return undefined;
+        }
     }
 
     return workspaceOfDependency.definition;
