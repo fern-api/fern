@@ -7,6 +7,7 @@ import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getExtension } from "../extensions/getExtension";
 import { getFernEnum } from "../extensions/getFernEnum";
+import { getFernTypeExtension } from "../extensions/getFernTypeExtension";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./example/getExample";
@@ -70,6 +71,11 @@ export function convertSchemaObject(
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
+
+    const fernSchema = getFernTypeExtension({ schema, description });
+    if (fernSchema != null) {
+        return fernSchema;
+    }
 
     // if a schema is null then we should wrap it as nullable
     if (!wrapAsNullable && schema.nullable === true) {

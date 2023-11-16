@@ -32,6 +32,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/openapi-ir-model": "0.0.130",
     "@redocly/openapi-core": "^1.4.0",
     "js-yaml": "^4.1.0",
