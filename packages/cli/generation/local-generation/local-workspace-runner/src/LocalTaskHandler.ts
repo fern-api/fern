@@ -52,34 +52,34 @@ export class LocalTaskHandler {
     }
 
     private async copyGeneratedFilesWithFernIgnore(): Promise<void> {
-        // Step 1: Create temp directory to resolve .fernignore
+        // Create temp directory to resolve .fernignore
         const tmpOutputResolutionDir = AbsoluteFilePath.of((await tmp.dir({})).path);
 
-        // Step 2: Read all .fernignore paths
+        // Read all .fernignore paths
         const absolutePathToFernignore = AbsoluteFilePath.of(
             join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
         );
         const fernIngnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
-        // Step 3: Copy files from local output to tmp directory
+        // Copy files from local output to tmp directory
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
 
-        // Step 3: In tmp directory initialize a `.git` directory
+        // In tmp directory initialize a `.git` directory
         await this.runGitCommand(["init"], tmpOutputResolutionDir);
         await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
-        await this.runGitCommand(["commit", "-m", '"init"'], tmpOutputResolutionDir);
+        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir);
 
-        // Step 4: Stage deletions `git rm -rf .`
+        // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
 
-        // Step 5: Copy all files from generated temp dir
+        // Copy all files from generated temp dir
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
-        // Step 6: Undo changes to fernignore paths
+        // Undo changes to fernignore paths
         await this.runGitCommand(["reset", "--", ...fernIngnorePaths], tmpOutputResolutionDir);
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
-        // Step 8: Delete local output directory and copy all files from the generated directory
+        // Delete local output directory and copy all files from the generated directory
         this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`);
         await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
     }
