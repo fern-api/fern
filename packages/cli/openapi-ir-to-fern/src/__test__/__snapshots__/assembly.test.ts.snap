@@ -1491,9 +1491,9 @@ The default value is 'en_us'.
             "audio_url": "string",
             "completed": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
-            "created": "string",
+            "created": "datetime",
             "id": "string",
             "resource_url": "string",
             "status": {

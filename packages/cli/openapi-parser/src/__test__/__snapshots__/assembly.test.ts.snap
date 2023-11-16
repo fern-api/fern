@@ -3756,9 +3756,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "The timestamp for the partial transcript.",
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -4186,9 +4184,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "Timestamp when this session will expire.",
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -6040,9 +6036,7 @@ The default value is 'en_us'.
           "schema": {
             "description": undefined,
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -6056,16 +6050,10 @@ The default value is 'en_us'.
             "type": "optional",
             "value": {
               "description": undefined,
-              "type": "nullable",
-              "value": {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
+              "schema": {
+                "type": "datetime",
               },
+              "type": "primitive",
             },
           },
         },

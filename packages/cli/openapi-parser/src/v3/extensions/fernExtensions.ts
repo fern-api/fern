@@ -12,6 +12,21 @@ export const FernOpenAPIExtension = {
     SERVER_NAME_V2: "x-fern-server-name",
 
     /**
+     * Used to override the type with fern's type syntax
+     * Bar:
+     *  properties:
+     *    createdDate:
+     *      type: string
+     *      x-fern-type: datetime
+     *      x-fern-type:
+     *        properties:
+     *         a: string
+     *         b: integer
+     *      x-fern-type: optional<map<string, integer>>
+     */
+    TYPE_DEFINITION: "x-fern-type",
+
+    /**
      * Used to specify if an endpoint should be generated
      * as a streaming endpoint.
      *

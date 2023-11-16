@@ -4278,6 +4278,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/openapi-ir-model", "npm:0.0.130"],\
             ["@redocly/openapi-core", "npm:1.4.0"],\
             ["@types/jest", "npm:29.0.3"],\
