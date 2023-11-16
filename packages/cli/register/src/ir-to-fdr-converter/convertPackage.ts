@@ -49,7 +49,9 @@ function convertService(
         (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
             availability:
                 irEndpoint.availability != null
-                    ? convertIrEndpointAvailability({ availability: irEndpoint.availability })
+                    ? convertIrAvailability({ availability: irEndpoint.availability })
+                    : irService.availability != null
+                    ? convertIrAvailability({ availability: irService.availability })
                     : undefined,
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
@@ -97,7 +99,7 @@ function convertService(
     );
 }
 
-function convertIrEndpointAvailability({
+function convertIrAvailability({
     availability,
 }: {
     availability: Ir.Availability;
