@@ -1,7 +1,7 @@
 import { createVenusService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
 import { TaskContext } from "@fern-api/task-context";
-import { OrganizationId } from "@fern-fern/fiddle-sdk/types/api";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import chalk from "chalk";
 
 export async function generateToken({
@@ -14,7 +14,7 @@ export async function generateToken({
     const token = await askToLogin(taskContext);
     const venus = createVenusService({ token: token.value });
     const response = await venus.registry.generateRegistryTokens({
-        organizationId: OrganizationId(orgId),
+        organizationId: FernVenusApi.OrganizationId(orgId),
     });
     if (response.ok) {
         taskContext.logger.info(chalk.green(`Generated a FERN_TOKEN for ${orgId}: ${response.body.npm.token}`));
