@@ -3,7 +3,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { FERNIGNORE_FILENAME, SNIPPET_JSON_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, readdir, readFile, rm, rmdir } from "fs/promises";
 import tmp from "tmp-promise";
 
 export declare namespace LocalTaskHandler {
@@ -80,7 +80,7 @@ export class LocalTaskHandler {
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // Delete local output directory and copy all files from the generated directory
-        this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`);
+        await rmdir(this.absolutePathToLocalOutput, { recursive: true });
         await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
     }
 
@@ -105,10 +105,10 @@ export class LocalTaskHandler {
         if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
             await decompress(
                 join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
-                this.absolutePathToLocalOutput
+                outputPath
             );
         } else {
-            await cp(this.absolutePathToTmpOutputDirectory, this.absolutePathToLocalOutput, { recursive: true });
+            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true });
         }
     }
 
