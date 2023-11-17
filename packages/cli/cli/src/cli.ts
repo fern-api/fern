@@ -26,6 +26,7 @@ import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace
 import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { generateToken } from "./commands/token/token";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
@@ -122,6 +123,7 @@ async function tryRunCli(cliContext: CliContext) {
         .recommendCommands();
 
     addInitCommand(cli, cliContext);
+    addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
@@ -230,6 +232,34 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             }
+        }
+    );
+}
+
+function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "token",
+        "Generate a Fern Token",
+        (yargs) =>
+            yargs.option("organization", {
+                alias: "org",
+                type: "string",
+                description: "The organization to create a token for. Defaults to the one in `fern.config.json`",
+            }),
+        async (argv) => {
+            await cliContext.runTask(async (context) => {
+                await generateToken({
+                    orgId:
+                        argv.organization ??
+                        (
+                            await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                                commandLineApiWorkspace: undefined,
+                                defaultToAllApiWorkspaces: true,
+                            })
+                        ).config.organization,
+                    taskContext: context,
+                });
+            });
         }
     );
 }
