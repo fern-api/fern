@@ -3615,7 +3615,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/latest-version", "npm:4.0.1"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/tar", "npm:6.1.3"],\
+            ["@types/tar", "npm:6.1.7"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.28"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
@@ -3636,7 +3636,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ora", "npm:7.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["tar", "npm:6.1.13"],\
+            ["tar", "npm:6.2.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
@@ -4619,7 +4619,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/tar", "npm:6.1.3"],\
+            ["@types/tar", "npm:6.1.7"],\
             ["axios", "npm:0.27.2"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
@@ -4630,7 +4630,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["tar", "npm:6.1.13"],\
+            ["tar", "npm:6.2.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
@@ -6529,12 +6529,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/tar", [\
-        ["npm:6.1.3", {\
-          "packageLocation": "./.yarn/cache/@types-tar-npm-6.1.3-75acea4291-3a221f74ad.zip/node_modules/@types/tar/",\
+        ["npm:6.1.7", {\
+          "packageLocation": "./.yarn/cache/@types-tar-npm-6.1.7-6b0cf188a2-74a346c86e.zip/node_modules/@types/tar/",\
           "packageDependencies": [\
-            ["@types/tar", "npm:6.1.3"],\
+            ["@types/tar", "npm:6.1.7"],\
             ["@types/node", "npm:18.7.18"],\
-            ["minipass", "npm:3.3.6"]\
+            ["minipass", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14655,6 +14655,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["yallist", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/minipass-npm-5.0.0-c64fb63c92-425dab2887.zip/node_modules/minipass/",\
+          "packageDependencies": [\
+            ["minipass", "npm:5.0.0"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["minipass-collect", [\
@@ -17961,6 +17968,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chownr", "npm:2.0.0"],\
             ["fs-minipass", "npm:2.1.0"],\
             ["minipass", "npm:4.0.0"],\
+            ["minizlib", "npm:2.1.2"],\
+            ["mkdirp", "npm:1.0.4"],\
+            ["yallist", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:6.2.0", {\
+          "packageLocation": "./.yarn/cache/tar-npm-6.2.0-3eb25205a7-db4d9fe74a.zip/node_modules/tar/",\
+          "packageDependencies": [\
+            ["tar", "npm:6.2.0"],\
+            ["chownr", "npm:2.0.0"],\
+            ["fs-minipass", "npm:2.1.0"],\
+            ["minipass", "npm:5.0.0"],\
             ["minizlib", "npm:2.1.2"],\
             ["mkdirp", "npm:1.0.4"],\
             ["yallist", "npm:4.0.0"]\
