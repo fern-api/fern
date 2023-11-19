@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
 import {
@@ -39,6 +39,8 @@ export async function migrateOnlyMultipleAPIs({
 
         const absolutePathToNestedWorkspace = join(absolutePathToApisDirectory, RelativeFilePath.of(workspace));
         await moveFolder({ src: absolutePathToWorkspace, dest: absolutePathToNestedWorkspace });
+
+        await rm(absolutePathToWorkspace, { recursive: true });
     }
 }
 

@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
-import { writeFile } from "fs/promises";
+import { rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import {
     convertLegacyGeneratorsConfiguration,
@@ -24,6 +24,7 @@ export async function migrateOnlySingleAPI({
 }): Promise<void> {
     await migrateAndWriteGeneratorsYml({ absolutePathToWorkspace });
     await moveFolder({ src: absolutePathToWorkspace, dest: absolutePathToFernDirectory });
+    await rmdir(absolutePathToWorkspace, { recursive: true });
 }
 
 async function migrateAndWriteGeneratorsYml({

@@ -1,7 +1,12 @@
-import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
-import { readFile, writeFile } from "fs/promises";
+import { AbsoluteFilePath, moveFolder } from "@fern-api/fs-utils";
+import { rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { DocsURL, LegacyDocs, LegacyDocsSerializers } from "./docs-config";
+import {
+    DocsURL,
+    getAbsolutePathToDocsFolder,
+    getAbsolutePathToDocsYaml,
+    loadRawDocsConfiguration,
+} from "./docs-config";
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
 import { convertLegacyGeneratorsConfiguration } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
@@ -25,7 +30,13 @@ export async function migrateDocsAndSingleAPI({
 }): Promise<void> {
     const docsURLs = await migrateAndWriteGeneratorsYml({ absolutePathToWorkspace });
     await migrateAndWriteDocsYml({ absolutePathToWorkspace, docsURLs });
+
+    const absolutePathToDocsFolder = getAbsolutePathToDocsFolder({ absolutePathToWorkspace });
+    await moveFolder({ src: absolutePathToDocsFolder, dest: absolutePathToFernDirectory });
     await moveFolder({ src: absolutePathToWorkspace, dest: absolutePathToFernDirectory });
+
+    await rm(absolutePathToDocsFolder, { recursive: true });
+    await rm(absolutePathToWorkspace, { recursive: true });
 }
 
 async function migrateAndWriteDocsYml({
@@ -42,34 +53,10 @@ async function migrateAndWriteDocsYml({
     const convertedDocsConfig = convertLegacyDocsConfig({
         docsConfiguration,
         docsURLs,
+        apiName: undefined,
     });
-    const absolutePathToDocsConfig = getAbsolutePathToDocsConfiguration({ absolutePathToWorkspace });
+    const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });
     await writeFile(absolutePathToDocsConfig, yaml.dump(convertedDocsConfig));
-}
-
-async function loadRawDocsConfiguration({
-    absolutePathToWorkspace,
-}: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-}): Promise<LegacyDocs.DocsConfiguration | undefined> {
-    const filepath = getAbsolutePathToDocsConfiguration({ absolutePathToWorkspace });
-    const contentsStr = await readFile(filepath);
-    const contentsParsed = yaml.load(contentsStr.toString());
-    const result = await LegacyDocsSerializers.DocsConfiguration.parse(contentsParsed);
-    if (result.ok) {
-        return result.value;
-    }
-    return undefined;
-}
-
-const DOCS_YML = "docs.yml";
-
-function getAbsolutePathToDocsConfiguration({
-    absolutePathToWorkspace,
-}: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-}) {
-    return join(absolutePathToWorkspace, RelativeFilePath.of(DOCS_YML));
 }
 
 async function migrateAndWriteGeneratorsYml({

@@ -1,5 +1,7 @@
-import { rename } from "fs/promises";
+import { mkdir, rename } from "fs/promises";
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
+import { dirname } from "./dirname";
+import { doesPathExist } from "./doesPathExist";
 import { FileOrDirectory, getDirectoryContents } from "./getDirectoryContents";
 import { join } from "./join";
 import { RelativeFilePath } from "./RelativeFilePath";
@@ -22,6 +24,11 @@ async function moveDirectoryContentsFromFolder({
         if (content.type === "file") {
             const originalPath = join(src, RelativeFilePath.of(content.name));
             const destinationPath = join(dest, RelativeFilePath.of(content.name));
+
+            const destinationParentDir = dirname(destinationPath);
+            if (!(await doesPathExist(destinationParentDir))) {
+                await mkdir(destinationParentDir, { recursive: true });
+            }
             await rename(originalPath, destinationPath);
         } else {
             await moveDirectoryContentsFromFolder({

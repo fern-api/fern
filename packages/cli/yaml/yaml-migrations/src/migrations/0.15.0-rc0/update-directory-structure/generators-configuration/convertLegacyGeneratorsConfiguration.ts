@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { basename } from "path";
 import { LegacyGenerators, MigratedGenerators } from ".";
 import { DocsURL } from "../docs-config";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "./legacy/GeneratorsConfigurationSchema";
@@ -82,7 +81,7 @@ function convertPath({
         case "Nest":
             return join(RelativeFilePath.of("../"), RelativeFilePath.of(path));
         case "MoveUp":
-            return basename(path);
+            return path.startsWith("../") ? path.substring(3) : path;
         default:
             assertNever(pathModificationStrategy);
     }

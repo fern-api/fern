@@ -6,7 +6,9 @@ import { migration } from "../migration";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
-const FIXTURES = ["single-api"].map(RelativeFilePath.of);
+const FIXTURES = ["single-api", "single-api-with-docs", "multiple-apis", "multiple-apis-with-docs"].map(
+    RelativeFilePath.of
+);
 
 describe("update-directory-structure", () => {
     for (const fixture of FIXTURES) {
@@ -22,7 +24,24 @@ describe("update-directory-structure", () => {
                 context: createMockTaskContext(),
             });
 
-            expect(await getDirectoryContents(pathToFixture)).toMatchSnapshot();
+            // eslint-disable-next-line no-console
+            console.log(`Migrated fixture ${fixture} at path ${tmpDir.path}`);
+
+            expect(await getDirectoryContents(AbsoluteFilePath.of(tmpDir.path))).toMatchSnapshot();
         });
     }
+
+    it("multiple-apis-with-multiple-docs", async () => {
+        const pathToFixture = join(FIXTURES_PATH, RelativeFilePath.of("multiple-apis-with-multiple-docs"));
+        const tmpDir = await tmp.dir();
+
+        await cp(pathToFixture, tmpDir.path, { recursive: true });
+        process.chdir(tmpDir.path);
+
+        await expect(
+            migration.run({
+                context: createMockTaskContext(),
+            })
+        ).rejects.toThrow();
+    });
 });

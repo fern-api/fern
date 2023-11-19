@@ -8,11 +8,11 @@ import {
 } from "@fern-api/fs-utils";
 import { findUp } from "find-up";
 import { Migration } from "../../../types/Migration";
+import { getAbsolutePathToDocsYaml } from "./docs-config";
+import { migrateDocsAndMultipleAPIs } from "./migrateDocsAndMultipleAPIs";
 import { migrateDocsAndSingleAPI } from "./migrateDocsAndSingleAPI";
 import { migrateOnlyMultipleAPIs } from "./migrateOnlyMultipleAPIs";
 import { migrateOnlySingleAPI } from "./migrateOnlySingleAPI";
-
-const DOCS_YML = "docs.yml";
 
 export const migration: Migration = {
     name: "flatten-fern-directory-structure",
@@ -40,7 +40,7 @@ export const migration: Migration = {
         // Migrate single workspace
         if (workspaces.length === 1 && workspaces[0] != null) {
             const absolutePathToWorkspace = join(absolutePathToFernDirectory, RelativeFilePath.of(workspaces[0].name));
-            const hasDocs = await doesPathExist(getPathToDocsYaml({ absolutePathToWorkspace }));
+            const hasDocs = await doesPathExist(getAbsolutePathToDocsYaml({ absolutePathToWorkspace }));
             if (hasDocs) {
                 await migrateDocsAndSingleAPI({ absolutePathToFernDirectory, absolutePathToWorkspace });
             } else {
@@ -51,13 +51,17 @@ export const migration: Migration = {
 
         // Migrate multiple workspace
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        const workspacesContainingDocs = workspaces.filter(async (workspace) => {
-            return workspace.contents.find((fileOrDirectory) => {
-                return fileOrDirectory.type === "file" && fileOrDirectory.name === "docs.yml";
+        const workspacesContainingDocs = [];
+        for (const workspace of workspaces) {
+            const absolutePathToDocsYaml = getAbsolutePathToDocsYaml({
+                absolutePathToWorkspace: join(absolutePathToFernDirectory, RelativeFilePath.of(workspace.name)),
             });
-        });
+            if (await doesPathExist(absolutePathToDocsYaml)) {
+                workspacesContainingDocs.push(workspace);
+            }
+        }
 
-        if (workspacesContainingDocs.length === 0) {
+        if (workspacesContainingDocs.length === 0 || workspacesContainingDocs[0] == null) {
             await migrateOnlyMultipleAPIs({
                 absolutePathToFernDirectory,
                 workspaces: workspaces.map((workspace) => workspace.name),
@@ -71,16 +75,14 @@ export const migration: Migration = {
             );
             return;
         }
+
+        await migrateDocsAndMultipleAPIs({
+            absolutePathToFernDirectory,
+            workspaces: workspaces.map((workspace) => workspace.name),
+            workspaceContainingDocs: workspacesContainingDocs[0].name,
+        });
     },
 };
-
-export function getPathToDocsYaml({
-    absolutePathToWorkspace,
-}: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-}): AbsoluteFilePath {
-    return join(absolutePathToWorkspace, RelativeFilePath.of(DOCS_YML));
-}
 
 const FERN_DIRECTORY = "fern";
 async function getFernDirectory(): Promise<AbsoluteFilePath | undefined> {
