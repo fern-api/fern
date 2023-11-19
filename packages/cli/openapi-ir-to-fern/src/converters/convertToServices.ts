@@ -4,6 +4,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { EXTERNAL_AUDIENCE } from "../convertPackage";
 import { Environments } from "../getEnvironments";
+import { OpenApiIrConverterContext } from "../OpenApiIrConverterContext";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
@@ -22,10 +23,12 @@ export function convertToServices({
     openApiFile,
     environments,
     globalHeaderNames,
+    context,
 }: {
     openApiFile: OpenAPIIntermediateRepresentation;
     environments: Environments | undefined;
     globalHeaderNames: Set<string>;
+    context: OpenApiIrConverterContext;
 }): ConvertedServices {
     const { endpoints, schemas, nonRequestReferencedSchemas } = openApiFile;
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
@@ -47,10 +50,11 @@ export function convertToServices({
         const service = services[file];
         if (service != null) {
             if (endpointId in service.value.endpoints) {
-                throw new Error(
-                    `The OpenAPI Spec has conflicting sdk method names. See ${endpoint.method.toUpperCase()} ${
+                const firstEnd = endpoints.find((e) => e.sdkName?.methodName === endpointId);
+                context.logger.error(
+                    `The OpenAPI Spec has conflicting SDK method names. See ${endpoint.method.toUpperCase()} ${
                         endpoint.path
-                    }`
+                    }, ${firstEnd?.method.toUpperCase()} ${firstEnd?.path} already has this method name.`
                 );
             }
             const convertedEndpoint = convertEndpoint({

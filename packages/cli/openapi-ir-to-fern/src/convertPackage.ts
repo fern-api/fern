@@ -36,6 +36,7 @@ export function convertPackage({
         openApiFile,
         environments,
         globalHeaderNames: new Set(Object.keys(rootApiFile.headers ?? {})),
+        context,
     });
     const convertedWebhooks = convertWebhooks({
         openApiFile,
