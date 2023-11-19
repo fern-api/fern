@@ -33,6 +33,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
+    "@fern-fern/legacy-docs-config": "0.0.58",
     "chalk": "^5.0.1",
     "find-up": "^6.3.0",
     "glob": "^7.2.0",
