@@ -58,7 +58,7 @@
     "@types/decompress": "^4.2.4",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.7",
-    "@types/mime-types": "^2.1.2",
+    "@types/mime-types": "^2.1.4",
     "@types/node": "^18.7.18",
     "@types/terminal-link": "^1.2.0",
     "depcheck": "^1.4.6",
