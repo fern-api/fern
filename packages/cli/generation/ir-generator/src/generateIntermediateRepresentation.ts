@@ -140,19 +140,25 @@ export async function generateIntermediateRepresentation({
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
-                    const convertedTypeDeclaration = convertTypeDeclaration({
+                    const convertedTypeDeclarationWithFilepaths = convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
                         typeResolver,
                         exampleResolver,
                     });
+                    const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
+                    const subpackageFilepaths = convertedTypeDeclarationWithFilepaths.descendantFilepaths;
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
-                    irGraph.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
+                    irGraph.addType(
+                        convertedTypeDeclaration.name,
+                        convertedTypeDeclaration.referencedTypes,
+                        subpackageFilepaths
+                    );
                     irGraph.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },
@@ -359,9 +365,7 @@ function filterIntermediateRepresentationForAudiences(
             pickBy(intermediateRepresentation.services, (httpService) => filteredIr.hasService(httpService)),
             (httpService) => ({
                 ...httpService,
-                endpoints: httpService.endpoints.filter((httpEndpoint) =>
-                    filteredIr.hasEndpoint(httpService, httpEndpoint)
-                ),
+                endpoints: httpService.endpoints.filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint)),
             })
         ),
         serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(

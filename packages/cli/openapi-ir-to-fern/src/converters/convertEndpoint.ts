@@ -1,7 +1,17 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint, HttpError, Request, Response, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
+import {
+    Endpoint,
+    EndpointAvailability,
+    EndpointExample,
+    HttpError,
+    Request,
+    Response,
+    Schema,
+} from "@fern-fern/openapi-ir-model/finalIr";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environments } from "../getEnvironments";
+import { convertEndpointExample } from "./convertEndpointExample";
 import { convertHeader } from "./convertHeader";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -200,6 +210,14 @@ export function convertEndpoint({
         }
     }
 
+    if (endpoint.availability === EndpointAvailability.Beta) {
+        convertedEndpoint.availability = "pre-release";
+    } else if (endpoint.availability === EndpointAvailability.GenerallyAvailable) {
+        convertedEndpoint.availability = "generally-available";
+    } else if (endpoint.availability === EndpointAvailability.Deprecated) {
+        convertedEndpoint.availability = "deprecated";
+    }
+
     const errorsThrown: string[] = [];
     endpoint.errorStatusCode.forEach((statusCode) => {
         const errorName = errors[statusCode]?.generatedName;
@@ -209,11 +227,30 @@ export function convertEndpoint({
     });
     convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
 
+    if (endpoint.examples.length > 0) {
+        convertedEndpoint.examples = convertEndpointExamples({
+            endpointExamples: endpoint.examples,
+            globalHeaderNames,
+        });
+    }
+
     return {
         value: convertedEndpoint,
         schemaIdsToExclude,
         additionalTypeDeclarations,
     };
+}
+
+function convertEndpointExamples({
+    endpointExamples,
+    globalHeaderNames,
+}: {
+    endpointExamples: EndpointExample[];
+    globalHeaderNames: Set<string>;
+}): RawSchemas.ExampleEndpointCallSchema[] {
+    return endpointExamples.map((endpointExample) => {
+        return convertEndpointExample({ endpointExample, globalHeaderNames });
+    });
 }
 
 interface ConvertedRequest {

@@ -1,0 +1,21 @@
+instances:
+  - url: dummy.docs.buildwithfern.com
+
+tabs:
+  help:
+    display-name: Help Center
+    icon: "fa-solid fa-cube"
+navigation:
+  - tab: help
+    layout:
+      - section: Dummy Section
+        contents:
+          - page: Dummy Page
+            path: ./dummy-page.mdx
+title: Dummy | Documentation
+colors:
+  accentPrimary: "#a3d3ff"
+logo:
+  dark: logo.png
+  href: https://www.dummy.com/
+favicon: favicon.ico

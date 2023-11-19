@@ -14,6 +14,19 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "Get Job Predictions",
             "docs": "Get the JSON predictions of a completed job.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/predictions",
             "path-parameters": {
@@ -32,6 +45,22 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "List Jobs",
             "docs": "Sort and filter jobs.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "direction": "asc",
+                  "sort_by": "created",
+                  "status": "QUEUED",
+                  "when": "created_before",
+                },
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v0/batch/jobs",
             "request": {

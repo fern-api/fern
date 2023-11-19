@@ -1,6 +1,7 @@
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { HttpError, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
+import { HttpError } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
 import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";
@@ -19,8 +20,8 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public logger: Logger;
     public document: OpenAPIV3.Document;
     public taskContext: TaskContext;
-    public refOccurrences: Record<string, number>;
     public authHeaders: Set<string>;
+    public refOccurrences: Record<string, number>;
 
     constructor({
         document,
@@ -51,13 +52,29 @@ export abstract class AbstractOpenAPIV3ParserContext {
             throw new Error(`Failed to resolve ${schema.$ref}`);
         }
         const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
-        const resolvedSchema = this.document.components.schemas[schemaKey];
-        if (resolvedSchema == null) {
+        const splitSchemaKey = schemaKey.split("/");
+        if (splitSchemaKey[0] == null) {
             throw new Error(`${schema.$ref} is undefined`);
         }
-        if (isReferenceObject(resolvedSchema)) {
-            return this.resolveSchemaReference(resolvedSchema);
+        let resolvedSchema = this.document.components.schemas[splitSchemaKey[0]];
+        if (resolvedSchema == null) {
+            throw new Error(`${splitSchemaKey[0]} is undefined`);
         }
+        if (isReferenceObject(resolvedSchema)) {
+            resolvedSchema = this.resolveSchemaReference(resolvedSchema);
+        }
+
+        if (splitSchemaKey[1] === "properties" && splitSchemaKey[2] != null) {
+            const resolvedProperty = resolvedSchema.properties?.[splitSchemaKey[2]];
+            if (resolvedProperty == null) {
+                throw new Error(`${schema.$ref} is undefiened. Property does not exist on object.`);
+            } else if (isReferenceObject(resolvedProperty)) {
+                resolvedSchema = this.resolveSchemaReference(resolvedProperty);
+            } else {
+                resolvedSchema = resolvedProperty;
+            }
+        }
+
         return resolvedSchema;
     }
 

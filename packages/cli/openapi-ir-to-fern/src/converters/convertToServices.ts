@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { EXTERNAL_AUDIENCE } from "../convertPackage";
 import { Environments } from "../getEnvironments";
 import { convertEndpoint } from "./convertEndpoint";
@@ -23,7 +23,7 @@ export function convertToServices({
     environments,
     globalHeaderNames,
 }: {
-    openApiFile: OpenAPIFile;
+    openApiFile: OpenAPIIntermediateRepresentation;
     environments: Environments | undefined;
     globalHeaderNames: Set<string>;
 }): ConvertedServices {

@@ -52,7 +52,7 @@ exports[`open api parser apiture simple 1`] = `
           ],
           "properties": {
             "start": {
-              "docs": "The opaque cursor that specifies the starting location of this page of items. <span style="white-space: nowrap">\`<= 256 characters\`</span> ",
+              "docs": "The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -65,7 +65,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "integer",
             },
             "nextPage_url": {
-              "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection. <span style="white-space: nowrap">\`<= 8000 characters\`</span> ",
+              "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
               "type": "optional<string>",
             },
           },
@@ -216,7 +216,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "ReadOnlyResourceId",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`. <span style="white-space: nowrap">\`<= 80 characters\`</span> ",
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "string",
             },
             "location": {
@@ -249,7 +249,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "optional<ReadOnlyResourceId>",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`. <span style="white-space: nowrap">\`<= 80 characters\`</span> ",
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "location": {
@@ -281,7 +281,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "ReadOnlyResourceId",
             },
             "name": {
-              "docs": "The full name of the joint owner. <span style="white-space: nowrap">\`<= 50 characters\`</span> ",
+              "docs": "The full name of the joint owner.",
               "type": "string",
             },
           },
@@ -368,7 +368,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "list<AccountItem>",
             },
             "nextPage_url": {
-              "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts. <span style="white-space: nowrap">\`<= 256 characters\`</span> ",
+              "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
               "type": "optional<string>",
             },
             "primaryAccountId": {
@@ -376,7 +376,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<ReadOnlyResourceId>",
             },
             "start": {
-              "docs": "The opaque cursor that specifies the starting location of this page of items. <span style="white-space: nowrap">\`<= 256 characters\`</span> ",
+              "docs": "The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -553,15 +553,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "postalCode": {
-              "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4. <span style="white-space: nowrap">\`<= 10 characters\`</span> ",
+              "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
               "type": "string",
             },
             "regionCode": {
-              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive. <span style="white-space: nowrap">\`<= 2 characters\`</span> ",
+              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
               "type": "optional<string>",
             },
             "regionName": {
-              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive. <span style="white-space: nowrap">\`<= 20 characters\`</span> ",
+              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
               "type": "optional<string>",
             },
           },
@@ -570,19 +570,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Properties of a simple address, used to compose other addresses.",
           "properties": {
             "address1": {
-              "docs": "The first line of the postal address. In the US, this typically includes the building number and street name. <span style="white-space: nowrap">\`<= 35 characters\`</span> ",
+              "docs": "The first line of the postal address. In the US, this typically includes the building number and street name.",
               "type": "string",
             },
             "address2": {
-              "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address. <span style="white-space: nowrap">\`<= 35 characters\`</span> ",
+              "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
               "type": "optional<string>",
             },
             "countryCode": {
-              "docs": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address. <span style="white-space: nowrap">\`<= 2 characters\`</span> ",
+              "docs": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
               "type": "string",
             },
             "locality": {
-              "docs": "The city/town/municipality of the address. <span style="white-space: nowrap">\`<= 20 characters\`</span> ",
+              "docs": "The city/town/municipality of the address.",
               "type": "string",
             },
           },
@@ -720,7 +720,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "challengePromptId",
             },
             "prompt": {
-              "docs": "The text prompt of this security question. <span style="white-space: nowrap">\`<= 50 characters\`</span> ",
+              "docs": "The text prompt of this security question.",
               "type": "string",
             },
           },
@@ -860,11 +860,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "integer",
             },
             "nextPage_url": {
-              "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts. <span style="white-space: nowrap">\`<= 256 characters\`</span> ",
+              "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
               "type": "optional<string>",
             },
             "start": {
-              "docs": "The opaque cursor that specifies the starting location of this page of items. <span style="white-space: nowrap">\`<= 256 characters\`</span> ",
+              "docs": "The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -1046,23 +1046,23 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "optional<boolean>",
             },
             "emailAddress": {
-              "docs": "The invitee's email address. <span style="white-space: nowrap">\`<= 80 characters\`</span> ",
+              "docs": "The invitee's email address.",
               "type": "string",
             },
             "firstName": {
-              "docs": "The invitee's first name. <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 32 characters\`</span> ",
+              "docs": "The invitee's first name.",
               "type": "string",
             },
             "lastName": {
-              "docs": "The invitee's last name name. <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 32 characters\`</span> ",
+              "docs": "The invitee's last name name.",
               "type": "string",
             },
             "sharedSecret": {
-              "docs": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel. <span style="white-space: nowrap">\`<= 100 characters\`</span> ",
+              "docs": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
               "type": "string",
             },
             "taxId": {
-              "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll. <span style="white-space: nowrap">\`<= 4 characters\`</span> ",
+              "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
               "type": "optional<string>",
             },
           },
@@ -1075,7 +1075,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "optional<resourceId>",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`. <span style="white-space: nowrap">\`<= 80 characters\`</span> ",
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "maskedNumber": {
@@ -1122,15 +1122,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "A reference to a banking product.",
           "properties": {
             "code": {
-              "docs": "The product's product code. Codes are unique to the financial institution. <span style="white-space: nowrap">\`<= 16 characters\`</span> ",
+              "docs": "The product's product code. Codes are unique to the financial institution.",
               "type": "string",
             },
             "description": {
-              "docs": "A human-readable description of this banking product. <span style="white-space: nowrap">\`<= 400 characters\`</span> ",
+              "docs": "A human-readable description of this banking product.",
               "type": "string",
             },
             "label": {
-              "docs": "A human-readable label for this banking product. <span style="white-space: nowrap">\`<= 48 characters\`</span> ",
+              "docs": "A human-readable label for this banking product.",
               "type": "string",
             },
             "type": {
@@ -1239,7 +1239,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "Address",
             },
             "locator": {
-              "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property. <span style="white-space: nowrap">\`<= 36 characters\`</span> ",
+              "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
               "type": "string",
             },
             "locatorType": {
@@ -1247,7 +1247,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "InstitutionLocatorType",
             },
             "name": {
-              "docs": "The financial institution's name. <span style="white-space: nowrap">\`<= 35 characters\`</span> ",
+              "docs": "The financial institution's name.",
               "type": "string",
             },
           },
@@ -1278,7 +1278,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "The transaction categorization.",
           "properties": {
             "id": {
-              "docs": "The unique ID of this transaction's category. <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 32 characters\`</span> ",
+              "docs": "The unique ID of this transaction's category.",
               "type": "string",
             },
             "label": {
@@ -1339,11 +1339,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
           "properties": {
             "imageBack_url": {
-              "docs": "The URL for downloading the image of the front of the check. <span style="white-space: nowrap">\`<= 400 characters\`</span> ",
+              "docs": "The URL for downloading the image of the front of the check.",
               "type": "optional<string>",
             },
             "imageFront_url": {
-              "docs": "The URL for downloading the image of the front of the check. <span style="white-space: nowrap">\`<= 400 characters\`</span> ",
+              "docs": "The URL for downloading the image of the front of the check.",
               "type": "optional<string>",
             },
             "number": {
@@ -1376,15 +1376,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "optional<string>",
             },
             "description": {
-              "docs": "The transaction description assigned by the transaction cleansing service. <span style="white-space: nowrap">\`<= 128 characters\`</span> ",
+              "docs": "The transaction description assigned by the transaction cleansing service.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": "This transaction's unique identifier. <span style="white-space: nowrap">\`<= 128 characters\`</span> ",
+              "docs": "This transaction's unique identifier.",
               "type": "string",
             },
             "memo": {
-              "docs": "The user-settable transaction memo. <span style="white-space: nowrap">\`<= 128 characters\`</span> ",
+              "docs": "The user-settable transaction memo.",
               "type": "optional<string>",
             },
             "merchant": {
@@ -1425,15 +1425,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "Describes the merchant associated with a transaction.",
           "properties": {
             "logo_url": {
-              "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters. <span style="white-space: nowrap">\`<= 400 characters\`</span> ",
+              "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": "The merchant\\'s name. <span style="white-space: nowrap">\`<= 32 characters\`</span> ",
+              "docs": "The merchant\\'s name.",
               "type": "optional<string>",
             },
             "website_url": {
-              "docs": "The merchant's website URL. <span style="white-space: nowrap">\`<= 400 characters\`</span> ",
+              "docs": "The merchant's website URL.",
               "type": "optional<string>",
             },
           },
@@ -1549,7 +1549,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "resourceId",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`. <span style="white-space: nowrap">\`<= 80 characters\`</span> ",
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "location": {
@@ -1679,7 +1679,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "optional<monetaryValue>",
             },
             "memo": {
-              "docs": "A customer-defined memo to describe the transfer. <span style="white-space: nowrap">\`<= 128 characters\`</span> ",
+              "docs": "A customer-defined memo to describe the transfer.",
               "type": "optional<string>",
             },
             "sourceAccount": {
@@ -1850,7 +1850,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "TransferState",
             },
             "updatedBy": {
-              "docs": "The full name of the banking customer who last updated the transfer. <span style="white-space: nowrap">\`<= 48 characters\`</span> ",
+              "docs": "The full name of the banking customer who last updated the transfer.",
               "type": "optional<string>",
             },
           },
@@ -2178,7 +2178,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           ],
           "properties": {
             "localClearingCode": {
-              "docs": "The clearing code used to identify the financial institution for select countries. <span style="white-space: nowrap">\`<= 12 characters\`</span> ",
+              "docs": "The clearing code used to identify the financial institution for select countries.",
               "type": "optional<string>",
             },
           },
@@ -2188,11 +2188,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "list<resourceId>",
         },
         "accountNickname": {
-          "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname. <span style="white-space: nowrap">\`<= 50 characters\`</span> ",
+          "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
           "type": "string",
         },
         "accountRoutingNumber": {
-          "docs": "An account ABA routing and transit number. <span style="white-space: nowrap">\`<= 9 characters\`</span> ",
+          "docs": "An account ABA routing and transit number.",
           "type": "string",
         },
         "amountRange": {
@@ -2200,11 +2200,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "challengePromptId": {
-          "docs": "The unique ID of a prompt (such as a security question) in a challenge factor. <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 48 characters\`</span> ",
+          "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
           "type": "string",
         },
         "challengeToken": {
-          "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge. <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
+          "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
           "type": "string",
         },
         "creditOrDebitValue": {
@@ -2216,15 +2216,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "fullAccountNumber": {
-          "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution. <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 32 characters\`</span> ",
+          "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
           "type": "string",
         },
         "institutionId": {
-          "docs": "The unique immutable identifier of a financial institution. <span style="white-space: nowrap">\`<= 9 characters\`</span> ",
+          "docs": "The unique immutable identifier of a financial institution.",
           "type": "string",
         },
         "maskedAccountNumber": {
-          "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`. <span style="white-space: nowrap">\`<= 5 characters\`</span> ",
+          "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
           "type": "string",
         },
         "monetaryValue": {
@@ -2240,15 +2240,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "datetime",
         },
         "resourceId": {
-          "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL. <span style="white-space: nowrap">\`<= 48 characters\`</span> ",
+          "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
           "type": "string",
         },
         "timeZoneId": {
-          "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones). <span style="white-space: nowrap">\`<= 36 characters\`</span> ",
+          "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
           "type": "string",
         },
         "transactionCategoryLabel": {
-          "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`. <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 64 characters\`</span> ",
+          "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
           "type": "string",
         },
       },
@@ -2270,6 +2270,21 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "accountId": "account-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/accounts/{accountId}/jointOwners",
@@ -2329,6 +2344,19 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/accountBalances",
@@ -2515,6 +2543,33 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "institutionId": "TIBURON",
+                },
+                "query-parameters": {
+                  "endsOn": "2022-07-04",
+                  "risk": "early",
+                  "startsOn": "2022-07-04",
+                  "type": "internal",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "restrictedDates": [
+                      {
+                        "creditOn": "2022-07-05",
+                        "debitOn": "2022-07-05",
+                        "occursOn": "2019-04-05",
+                        "reason": "pastDate",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
@@ -2563,6 +2618,31 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "institutionId": "TIBURON",
+                },
+                "query-parameters": {
+                  "direction": "debit",
+                  "endsOn": "2022-07-04",
+                  "frequency": "once",
+                  "startsOn": "2022-07-04",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "effectiveOn": "2022-07-05",
+                        "scheduledOn": "2022-07-04",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/institutions/{institutionId}/transferSchedule",
@@ -2835,6 +2915,19 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/transactionCategories",
             "request": {
@@ -3019,6 +3112,17 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.ConflictError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "transferId": "transfer-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/transfers/{transferId}",

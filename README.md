@@ -66,6 +66,8 @@ If you want to read more about how the Fern specification and OpenAPI differ, re
 
 # Getting Started
 
+_Note: Fern requires **Node 18** or higher_
+
 The Fern tools are available as a command line interface. To install it, simply run:
 
 ```

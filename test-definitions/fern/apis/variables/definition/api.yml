@@ -1,0 +1,4 @@
+name: variables
+
+variables:
+  rootVariable: string

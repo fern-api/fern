@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { DefinitionFileSchema, isRawAliasDefinition, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
-import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
@@ -27,7 +27,7 @@ export function convertPackage({
     openApiFile,
     context,
 }: {
-    openApiFile: OpenAPIFile;
+    openApiFile: OpenAPIIntermediateRepresentation;
     context: OpenApiIrConverterContext;
 }): ConvertedPackage {
     const environments = getEnvironments(openApiFile);
@@ -92,7 +92,10 @@ function getRootImportPrefixFromFile(file: string): string {
     return `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`;
 }
 
-function getRootApiFile(openApiFile: OpenAPIFile, environment: Environments | undefined): RootApiFileSchema {
+function getRootApiFile(
+    openApiFile: OpenAPIIntermediateRepresentation,
+    environment: Environments | undefined
+): RootApiFileSchema {
     const authSchemes = convertSecuritySchemes(openApiFile.securitySchemes);
     const globalHeaders = getGlobalHeaders(openApiFile);
 
@@ -117,6 +120,13 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environments | un
 
     if (authSchemes.authSchemes != null) {
         rootApiFile["auth-schemes"] = authSchemes.authSchemes;
+    }
+
+    for (const [headerKey, headerSchema] of Object.entries(authSchemes.globalHeaders)) {
+        if (rootApiFile.headers == null) {
+            rootApiFile.headers = {};
+        }
+        rootApiFile.headers[headerKey] = headerSchema;
     }
 
     if (environment?.type === "multi") {
@@ -153,7 +163,10 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environments | un
     return rootApiFile;
 }
 
-function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedServices): DefinitionFileSchema {
+function getPackageYml(
+    openApiFile: OpenAPIIntermediateRepresentation,
+    convertedServices: ConvertedServices
+): DefinitionFileSchema {
     let types: Record<string, RawSchemas.TypeDeclarationSchema> = { ...convertedServices.additionalTypeDeclarations };
     for (const [schemaId, schema] of Object.entries(openApiFile.schemas)) {
         if (convertedServices.schemaIdsToExclude.includes(schemaId)) {

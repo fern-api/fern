@@ -47,6 +47,12 @@ function convertService(
 ): FernRegistry.api.v1.register.EndpointDefinition[] {
     return irService.endpoints.map(
         (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
+            availability:
+                irEndpoint.availability != null
+                    ? convertIrAvailability({ availability: irEndpoint.availability })
+                    : irService.availability != null
+                    ? convertIrAvailability({ availability: irService.availability })
+                    : undefined,
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
@@ -87,9 +93,29 @@ function convertService(
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             errors: convertResponseErrors(irEndpoint.errors, ir),
+            errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
+}
+
+function convertIrAvailability({
+    availability,
+}: {
+    availability: Ir.Availability;
+}): FernRegistry.api.v1.register.Availability | undefined {
+    switch (availability.status) {
+        case "DEPRECATED":
+            return FernRegistry.api.v1.register.Availability.Deprecated;
+        case "PRE_RELEASE":
+            return FernRegistry.api.v1.register.Availability.Beta;
+        case "GENERAL_AVAILABILITY":
+            return FernRegistry.api.v1.register.Availability.GenerallyAvailable;
+        case "IN_DEVELOPMENT":
+            return FernRegistry.api.v1.register.Availability.Beta;
+        default:
+            assertNever(availability.status);
+    }
 }
 
 function convertIrEnvironments({
@@ -243,6 +269,65 @@ function convertResponseErrors(
     return errors;
 }
 
+function convertResponseErrorsV2(
+    irResponseErrors: Ir.http.ResponseErrors,
+    ir: Ir.ir.IntermediateRepresentation
+): FernRegistry.api.v1.register.ErrorDeclarationV2[] {
+    const errors: FernRegistry.api.v1.register.ErrorDeclarationV2[] = [];
+    if (ir.errorDiscriminationStrategy.type === "statusCode") {
+        for (const irResponseError of irResponseErrors) {
+            const errorDeclaration = ir.errors[irResponseError.error.errorId];
+            if (errorDeclaration) {
+                errors.push({
+                    type:
+                        errorDeclaration.type == null
+                            ? undefined
+                            : FernRegistry.api.v1.register.TypeShape.alias(convertTypeReference(errorDeclaration.type)),
+                    statusCode: errorDeclaration.statusCode,
+                    description: errorDeclaration.docs ?? undefined,
+                });
+            }
+        }
+    } else {
+        for (const irResponseError of irResponseErrors) {
+            const errorDeclaration = ir.errors[irResponseError.error.errorId];
+            if (errorDeclaration) {
+                const properties: FernRegistry.api.v1.register.ObjectProperty[] = [
+                    {
+                        key: ir.errorDiscriminationStrategy.discriminant.wireValue,
+                        valueType: FernRegistry.api.v1.register.TypeReference.literal(
+                            FernRegistry.api.v1.register.LiteralType.stringLiteral(
+                                errorDeclaration.discriminantValue.name.originalName
+                            )
+                        ),
+                    },
+                ];
+
+                if (errorDeclaration.type != null) {
+                    properties.push({
+                        key: ir.errorDiscriminationStrategy.contentProperty.wireValue,
+                        valueType: convertTypeReference(errorDeclaration.type),
+                    });
+                }
+
+                errors.push({
+                    type:
+                        errorDeclaration.type == null
+                            ? undefined
+                            : FernRegistry.api.v1.register.TypeShape.object({
+                                  extends: [],
+                                  properties,
+                              }),
+                    statusCode: errorDeclaration.statusCode,
+                    description: errorDeclaration.docs ?? undefined,
+                    name: errorDeclaration.name.name.originalName,
+                });
+            }
+        }
+    }
+    return errors;
+}
+
 function convertExampleEndpointCall(
     irExample: Ir.http.ExampleEndpointCall,
     ir: Ir.ir.IntermediateRepresentation
@@ -253,20 +338,20 @@ function convertExampleEndpointCall(
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["pathParameters"]
         >((pathParameters, irPathParameterExample) => {
-            pathParameters[convertPathParameterKey(irPathParameterExample.key)] =
+            pathParameters[convertPathParameterKey(irPathParameterExample.name.originalName)] =
                 irPathParameterExample.value.jsonExample;
             return pathParameters;
         }, {}),
         queryParameters: irExample.queryParameters.reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["queryParameters"]
         >((queryParameters, irQueryParameterExample) => {
-            queryParameters[irQueryParameterExample.wireKey] = irQueryParameterExample.value.jsonExample;
+            queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
             return queryParameters;
         }, {}),
         headers: [...irExample.serviceHeaders, ...irExample.endpointHeaders].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["headers"]
         >((headers, irHeaderExample) => {
-            headers[irHeaderExample.wireKey] = irHeaderExample.value.jsonExample;
+            headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
             return headers;
         }, {}),
         requestBody: irExample.request?.jsonExample,

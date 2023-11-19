@@ -14,6 +14,7 @@ import { FernCliError } from "@fern-api/task-context";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
@@ -22,16 +23,16 @@ import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/g
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
+import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { generateToken } from "./commands/token/token";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
-import { loadOpenAPIFromUrl } from "./utils/loadOpenAPIFromUrl";
-
 interface GlobalCliOptions {
     "log-level": LogLevel;
 }
@@ -122,6 +123,7 @@ async function tryRunCli(cliContext: CliContext) {
         .recommendCommands();
 
     addInitCommand(cli, cliContext);
+    addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
@@ -132,6 +134,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
+    addPreviewCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -188,11 +191,6 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec",
-                })
-                .option("organization", {
-                    alias: "org",
-                    type: "string",
-                    description: "Organization name",
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -209,7 +207,13 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
-                        const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
+                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
+
+                        if (result.status === LoadOpenAPIStatus.Failure) {
+                            cliContext.failAndThrow(result.errorMessage);
+                        }
+
+                        const tmpFilepath = result.filePath;
                         absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
                     } else {
                         absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
@@ -228,6 +232,34 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             }
+        }
+    );
+}
+
+function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "token",
+        "Generate a Fern Token",
+        (yargs) =>
+            yargs.option("organization", {
+                alias: "org",
+                type: "string",
+                description: "The organization to create a token for. Defaults to the one in `fern.config.json`",
+            }),
+        async (argv) => {
+            await cliContext.runTask(async (context) => {
+                await generateToken({
+                    orgId:
+                        argv.organization ??
+                        (
+                            await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                                commandLineApiWorkspace: undefined,
+                                defaultToAllApiWorkspaces: true,
+                            })
+                        ).config.organization,
+                    taskContext: context,
+                });
+            });
         }
     );
 }
@@ -281,6 +313,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("instance", {
                     string: true,
                     description: "The url for the instance of docs (e.g. --instance acme.docs.buildwithfern.com)",
+                })
+                .option("preview", {
+                    boolean: true,
+                    default: false,
+                    description: "Whether to generate a preview link for the docs",
                 })
                 .option("group", {
                     type: "string",
@@ -339,6 +376,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                     instance: argv.instance,
+                    preview: argv.preview,
                 });
             } else {
                 // default to loading api workspace to preserve legacy behavior
@@ -620,6 +658,23 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true,
+                }),
+                cliContext,
+            });
+        }
+    );
+}
+
+function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hide from help message
+        (yargs) => yargs,
+        async () => {
+            await previewDocsWorkspace({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    defaultToAllApiWorkspaces: true,
+                    commandLineApiWorkspace: undefined,
                 }),
                 cliContext,
             });

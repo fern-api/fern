@@ -38,14 +38,19 @@ code .
 yarn
 ```
 
-**Step 4: Use the "workspace" vesion of Typescript**
+**Step 4: Use the "workspace" version of Typescript**
 
 1. Open any TypeScript file in VSCode
-1. Open the Command Palette (Cmd+Shift+P on Mac) and select `Typescript: Select TypeScript Version...`
-1. Choose `Use Workspace Version`
+2. Open the Command Palette (Cmd+Shift+P on Mac) and select `Typescript: Select TypeScript Version...`
+3. Choose `Use Workspace Version`
 
 This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks/typescript`, which
 is modified to work with Yarn PNP.
+
+**Step 5: Install Husky**
+
+Run `yarn husky install` from the root of the repo and this will configure pre-commit hooks that will
+lint your changes.
 
 ### Compiling
 
@@ -75,22 +80,47 @@ To run the locally-generated CLI, run:
 FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 ```
 
-### Docs UI
+## Intermediate Representation
 
-To build and run the NextJS docs UI, run either:
+Fern generators read in IR (Intermediate Representation) and spit out
+generated files. The IR is a JSON data structure that includes information
+about your API and any additional information that may be convenient for a
+code generator. For example, the IR includes all possible casings of every
+string (e.g. `snake_case`, `camelCase`, `PascalCase`) so that the
+generators don't need to implement this individually.
 
-- `yarn workspace @fern-api/fe-bundle dev:fern-dev`. This compiles and runs a NextJS app that communicates with our dev cloud environment.
+### IR Versioning
 
-- `yarn workspace @fern-api/fe-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our cloud production environment.
+As we add more features to the API definition, we introduce new versions
+of the IR. For example, if we wanted to add a new auth mechanism, we would
+eventually need to add it to the IR so that the generators could generate
+relevant code.
 
-The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
+Each generator is pinned to an IR Version. Different versions of the generator,
+can dependend on differnt versions of the IR. For example, the Python SDK generator released
+2 months ago depends on an older IR than the one released this week.
 
-```bash
-# packages/ui/fe-bundle/.env.local
+> Note: The IR schema is modeled as a Fern Definition and you can see several
+> versions of them in the `./fern` folder.
 
-# uncomment the next line when targeting the production cloud environment
-# NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com
+The Fern CLI should be able to run old generators so whenver we
+introduce a new IR version, we write a migration. In other words if you introduce IR V20, then
+you will have to write a migration from IR V20 -> IR V19 so that any generator
+that depends on a lower IR version can continue to be run from our CLI.
 
-# uncomment the next line when targeting the dev cloud environment
-# NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
-```
+### How to add a new IR Version?
+
+**Step 1: Define the new IR**
+
+1. Create a new Fern Definition for the IR version `fern/ir-types-vXXX`.
+   Copy the latest IR Fern Definition as a starting point.
+2. Introduce any changes you want in the new IR Fern Definition.
+3. Generate a TypeScript SDK for the IR by running `fern generate --api ir-types-vXXX`
+4. Update all `package.json` files to use new `ir-sdk` npm version.
+   Run `yarn install`
+5. Run `yarn compile`. You will see compile errors related to your schema changes.
+
+**Step 2: Write a reverse migration**
+
+In the `ir-migrations` package, introduce a new migration.
+You can copy the latest migration as a starting point.

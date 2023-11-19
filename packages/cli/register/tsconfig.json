@@ -4,10 +4,10 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/core-utils" },
+    { "path": "../../core" },
     { "path": "../auth" },
     { "path": "../config-management/commons" },
     { "path": "../generation/ir-generator" },
-    { "path": "../services" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]

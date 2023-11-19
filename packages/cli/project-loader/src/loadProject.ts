@@ -1,13 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    APIS_DIRECTORY,
-    DOCS_CONFIGURATION_FILENAME,
-    FERN_DIRECTORY,
-    getFernDirectory,
-    loadProjectConfig,
-} from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, DocsWorkspace, loadAPIWorkspace, loadDocsDefinition } from "@fern-api/workspace-loader";
+import { APIWorkspace, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 import { handleFailedWorkspaceParserResult } from "./handleFailedWorkspaceParserResult";
@@ -51,38 +45,11 @@ export async function loadProject({
     return {
         config: await loadProjectConfig({ directory: fernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocs({ fernDirectory, context }),
+        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context }),
     };
 }
 
-async function loadDocs({
-    fernDirectory,
-    context,
-}: {
-    fernDirectory: AbsoluteFilePath;
-    context: TaskContext;
-}): Promise<DocsWorkspace | undefined> {
-    const docsConfigurationFile = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
-    if (!(await doesPathExist(docsConfigurationFile))) {
-        return undefined;
-    }
-
-    const docsDefinition = await loadDocsDefinition({
-        absolutePathToDocsDefinition: fernDirectory,
-        context,
-    });
-    if (docsDefinition != null) {
-        return {
-            type: "docs",
-            absoluteFilepath: fernDirectory,
-            docsDefinition,
-            workspaceName: undefined,
-        };
-    }
-    return undefined;
-}
-
-async function loadApis({
+export async function loadApis({
     cliName,
     fernDirectory,
     context,
@@ -133,8 +100,15 @@ async function loadApis({
 
         const apiWorkspaces: APIWorkspace[] = [];
 
+        const filteredWorkspaces =
+            commandLineApiWorkspace != null
+                ? apiWorkspaceDirectoryNames.filter((api) => {
+                      return api === commandLineApiWorkspace;
+                  })
+                : apiWorkspaceDirectoryNames;
+
         await Promise.all(
-            apiWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
+            filteredWorkspaces.map(async (workspaceDirectoryName) => {
                 const workspace = await loadAPIWorkspace({
                     absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,

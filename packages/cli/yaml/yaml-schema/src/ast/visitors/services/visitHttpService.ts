@@ -1,10 +1,10 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { RawSchemas, RootApiFileAstVisitor } from "../../..";
+import { NodePath } from "../../../NodePath";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
 import { isVariablePathParameter } from "../../../utils/visitRawPathParameter";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
-import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
 import { createTypeReferenceVisitor } from "../utils/visitTypeReference";
@@ -228,6 +228,7 @@ async function visitEndpoint({
                             location: TypeReferenceLocation.Response,
                         });
                     },
+                    property: noop,
                 });
             }
         },

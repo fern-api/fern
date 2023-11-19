@@ -5,7 +5,6 @@ export {
     type DefinitionFileAstVisitor,
     type TypeDeclarationName,
 } from "./ast/DefinitionFileAstVisitor";
-export { type NodePath } from "./ast/NodePath";
 export {
     type PackageMarkerAstNodeTypes,
     type PackageMarkerAstNodeVisitor,
@@ -20,6 +19,14 @@ export { visitDefinitionFileYamlAst } from "./ast/visitDefinitionFileYamlAst";
 export { visitPackageMarkerYamlAst } from "./ast/visitPackageMarkerYamlAst";
 export { visitRootApiFileYamlAst } from "./ast/visitRootApiFileYamlAst";
 export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
+export {
+    type DocsConfigFileAstNodeTypes,
+    type DocsConfigFileAstNodeVisitor,
+    type DocsConfigFileAstVisitor,
+} from "./docsAst/DocsConfigFileAstVisitor";
+export { validateVersionConfigFileSchema } from "./docsAst/validateVersionConfig";
+export { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileAst";
+export { type NodePath } from "./NodePath";
 export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export { getRequestBody } from "./utils/getRequestBody";

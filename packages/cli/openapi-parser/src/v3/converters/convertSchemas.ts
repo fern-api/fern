@@ -1,4 +1,5 @@
-import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { LiteralSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
+import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -6,8 +7,10 @@ import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getExtension } from "../extensions/getExtension";
 import { getFernEnum } from "../extensions/getFernEnum";
+import { getFernTypeExtension } from "../extensions/getFernTypeExtension";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
+import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./example/getExample";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./schema/convertDiscriminatedOneOf";
@@ -26,14 +29,14 @@ export function convertSchema(
     breadcrumbs: string[],
     referencedAsRequest = false,
     propertiesToExclude: Set<string> = new Set()
-): Schema {
+): SchemaWithExample {
     if (isReferenceObject(schema)) {
         if (!referencedAsRequest) {
             context.markSchemaAsReferencedByNonRequest(getSchemaIdFromReference(schema));
         } else {
             context.markSchemaAsReferencedByRequest(getSchemaIdFromReference(schema));
         }
-        return convertReferenceObject(schema, wrapAsNullable, breadcrumbs);
+        return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
     } else {
         return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs, propertiesToExclude);
     }
@@ -42,11 +45,14 @@ export function convertSchema(
 export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
     wrapAsNullable: boolean,
+    context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[]
-): Schema {
-    const referenceSchema = Schema.reference(convertToReferencedSchema(schema, breadcrumbs));
+): SchemaWithExample {
+    const referenceSchema = schema.$ref.includes("properties")
+        ? convertSchemaObject(context.resolveSchemaReference(schema), wrapAsNullable, context, breadcrumbs, new Set())
+        : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
     if (wrapAsNullable) {
-        return Schema.nullable({
+        return SchemaWithExample.nullable({
             value: referenceSchema,
             description: undefined,
         });
@@ -61,10 +67,15 @@ export function convertSchemaObject(
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
     propertiesToExclude: Set<string> = new Set()
-): Schema {
+): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
+
+    const fernSchema = getFernTypeExtension({ schema, description });
+    if (fernSchema != null) {
+        return fernSchema;
+    }
 
     // if a schema is null then we should wrap it as nullable
     if (!wrapAsNullable && schema.nullable === true) {
@@ -77,9 +88,10 @@ export function convertSchemaObject(
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
-                primitive: PrimitiveSchemaValue.string({
+                primitive: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
+                    example: getExamplesString(schema),
                 }),
                 wrapAsNullable,
                 description,
@@ -110,7 +122,7 @@ export function convertSchemaObject(
         const firstElement = schema.type[0];
         const secondElement = schema.type[1];
         if (firstElement === "null") {
-            return Schema.nullable({
+            return SchemaWithExample.nullable({
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -124,7 +136,7 @@ export function convertSchemaObject(
                 description: schema.description,
             });
         } else if (secondElement === "null") {
-            return Schema.nullable({
+            return SchemaWithExample.nullable({
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -142,18 +154,35 @@ export function convertSchemaObject(
 
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
+        const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
+        if (literalValue != null) {
+            return wrapLiteral({
+                literal: LiteralSchemaValue.boolean(literalValue),
+                wrapAsNullable,
+                description,
+            });
+        }
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.boolean(),
+            primitive: PrimitiveSchemaValueWithExample.boolean({
+                example: getExampleAsBoolean(schema),
+            }),
             wrapAsNullable,
             description,
         });
     }
     if (schema === "number" || schema.type === "number") {
-        return convertNumber({ format: schema.format, description, wrapAsNullable });
+        return convertNumber({
+            format: schema.format,
+            description,
+            wrapAsNullable,
+            example: getExampleAsNumber(schema),
+        });
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.int(),
+            primitive: PrimitiveSchemaValueWithExample.int({
+                example: getExampleAsNumber(schema),
+            }),
             wrapAsNullable,
             description,
         });
@@ -161,16 +190,28 @@ export function convertSchemaObject(
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
-                primitive: PrimitiveSchemaValue.datetime(),
+                primitive: PrimitiveSchemaValueWithExample.datetime({
+                    example: getExamplesString(schema),
+                }),
+                wrapAsNullable,
+                description,
+            });
+        }
+
+        const maybeConstValue = getProperty<string>(schema, "const");
+        if (maybeConstValue != null) {
+            return wrapLiteral({
+                literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
                 description,
             });
         }
 
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.string({
+            primitive: PrimitiveSchemaValueWithExample.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
+                example: getExamplesString(schema),
             }),
             wrapAsNullable,
             description,
@@ -354,16 +395,23 @@ export function convertSchemaObject(
         return wrapMap({
             description,
             wrapAsNullable,
-            keySchema: PrimitiveSchemaValue.string({
-                minLength: undefined,
-                maxLength: undefined,
-            }),
-            valueSchema: Schema.unknown(),
+            keySchema: {
+                description: undefined,
+                schema: PrimitiveSchemaValueWithExample.string({
+                    minLength: undefined,
+                    maxLength: undefined,
+                    example: undefined,
+                }),
+            },
+            valueSchema: SchemaWithExample.unknown({ description: undefined, example: undefined }),
         });
     }
 
     if (schema.type == null) {
-        return Schema.unknown();
+        return SchemaWithExample.unknown({
+            description,
+            example: undefined,
+        });
     }
 
     throw new Error(
@@ -387,7 +435,6 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
         // TODO(dsinghvi): references may contain files
         generatedName,
         nameOverride,
-        file: undefined,
         schema: getSchemaIdFromReference(schema),
         description: description ?? undefined,
     });
@@ -409,21 +456,21 @@ function isListOfStrings(x: unknown): x is string[] {
     return Array.isArray(x) && x.every((item) => typeof item === "string");
 }
 
-function maybeInjectDescription(schema: Schema, description: string | undefined): Schema {
+function maybeInjectDescription(schema: SchemaWithExample, description: string | undefined): SchemaWithExample {
     if (schema.type === "reference") {
         return Schema.reference({
             ...schema,
             description,
         });
     } else if (schema.type === "optional" && schema.value.type === "reference") {
-        return Schema.optional({
+        return SchemaWithExample.optional({
             value: Schema.reference({
                 ...schema.value,
             }),
             description,
         });
     } else if (schema.type === "nullable" && schema.value.type === "reference") {
-        return Schema.nullable({
+        return SchemaWithExample.nullable({
             value: Schema.reference({
                 ...schema.value,
             }),
@@ -464,25 +511,49 @@ function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.Schem
     return isEqual(keys, DEFAULT_KEY) || isEqual(keys, DESCRIPTION_KEY) || isEqual(keys, DEFAULT_DESCRIPTION_KEYS);
 }
 
+export function wrapLiteral({
+    literal,
+    wrapAsNullable,
+    description,
+}: {
+    literal: LiteralSchemaValue;
+    wrapAsNullable: boolean;
+    description: string | undefined;
+}): SchemaWithExample {
+    if (wrapAsNullable) {
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.literal({
+                value: literal,
+                description,
+            }),
+            description,
+        });
+    }
+    return SchemaWithExample.literal({
+        value: literal,
+        description,
+    });
+}
+
 export function wrapPrimitive({
     primitive,
     wrapAsNullable,
     description,
 }: {
-    primitive: PrimitiveSchemaValue;
+    primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.primitive({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.primitive({
                 schema: primitive,
                 description,
             }),
             description,
         });
     }
-    return Schema.primitive({
+    return SchemaWithExample.primitive({
         schema: primitive,
         description,
     });
@@ -569,6 +640,20 @@ function getPossibleDiscriminants({
         ) {
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
         }
+
+        const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const");
+        if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
+            possibleDiscrimimants[propertyName] = maybeConstValue;
+        }
     }
     return possibleDiscrimimants;
+}
+
+export function getProperty<T>(object: object, property: string): T | undefined {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const extensionValue = (object as any)[property];
+    if (extensionValue != null) {
+        return extensionValue as T;
+    }
+    return undefined;
 }

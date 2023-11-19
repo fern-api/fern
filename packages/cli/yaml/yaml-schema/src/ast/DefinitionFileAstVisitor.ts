@@ -1,4 +1,5 @@
 import { Values } from "@fern-api/core-utils";
+import { NodePath } from "../NodePath";
 import {
     ErrorDeclarationSchema,
     ExampleEndpointCallSchema,
@@ -12,7 +13,6 @@ import {
     HttpServiceSchema,
     TypeDeclarationSchema,
 } from "../schemas";
-import { NodePath } from "./NodePath";
 
 export type DefinitionFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof DefinitionFileAstNodeTypes]: DefinitionFileAstNodeVisitor<K, R>;

@@ -1,0 +1,2253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser assembly simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "Error",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "Error",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "Error",
+        },
+        "ServiceUnavailableError": {
+          "status-code": 503,
+          "type": "unknown",
+        },
+        "TooManyRequestsError": {
+          "status-code": 429,
+          "type": "Error",
+        },
+        "UnauthorizedError": {
+          "status-code": 401,
+          "type": "Error",
+        },
+      },
+      "service": undefined,
+      "types": {
+        "AudioIntelligenceModelStatus": {
+          "docs": "Will be either success, or unavailable in the rare case that the model failed.",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "success",
+              "value": "success",
+            },
+            {
+              "docs": undefined,
+              "name": "unavailable",
+              "value": "unavailable",
+            },
+          ],
+        },
+        "AutoHighlightResult": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": "The total number of times the key phrase appears in the audio file",
+              "type": "integer",
+            },
+            "rank": {
+              "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
+              "type": "double",
+            },
+            "text": {
+              "docs": "The text itself of the key phrase",
+              "type": "string",
+            },
+            "timestamps": {
+              "docs": "The timestamp of the of the key phrase",
+              "type": "list<Timestamp>",
+            },
+          },
+        },
+        "AutoHighlightsResult": {
+          "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
+See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
+",
+          "properties": {
+            "results": {
+              "docs": "A temporally-sequential array of Key Phrases",
+              "type": "list<AutoHighlightResult>",
+            },
+          },
+        },
+        "Chapter": {
+          "docs": "Chapter of the audio file",
+          "properties": {
+            "end": {
+              "docs": "The starting time, in milliseconds, for the chapter",
+              "type": "integer",
+            },
+            "gist": {
+              "docs": "An ultra-short summary (just a few words) of the content spoken in the chapter",
+              "type": "string",
+            },
+            "headline": {
+              "docs": "A single sentence summary of the content spoken during the chapter",
+              "type": "string",
+            },
+            "start": {
+              "docs": "The starting time, in milliseconds, for the chapter",
+              "type": "integer",
+            },
+            "summary": {
+              "docs": "A one paragraph summary of the content spoken during the chapter",
+              "type": "string",
+            },
+          },
+        },
+        "ContentSafetyLabel": {
+          "docs": undefined,
+          "properties": {
+            "confidence": {
+              "docs": "The confidence score for the topic being discussed, from 0 to 1",
+              "type": "double",
+            },
+            "label": {
+              "docs": "The label of the sensitive topic",
+              "type": "string",
+            },
+            "severity": {
+              "docs": "How severely the topic is discussed in the section, from 0 to 1",
+              "type": "double",
+            },
+          },
+        },
+        "ContentSafetyLabelResult": {
+          "docs": undefined,
+          "properties": {
+            "labels": {
+              "docs": "An array of objects, one per sensitive topic that was detected in the section",
+              "type": "list<ContentSafetyLabel>",
+            },
+            "sentences_idx_end": {
+              "docs": "The sentence index at which the section ends",
+              "type": "integer",
+            },
+            "sentences_idx_start": {
+              "docs": "The sentence index at which the section begins",
+              "type": "integer",
+            },
+            "severity_score_summary": {
+              "docs": "A summary of the Content Moderation severity results for the entire audio file",
+              "type": "map<string, SeverityScoreSummary>",
+            },
+            "summary": {
+              "docs": "A summary of the Content Moderation confidence results for the entire audio file",
+              "type": "map<string, double>",
+            },
+            "text": {
+              "docs": "The transcript of the section flagged by the Content Moderation model",
+              "type": "string",
+            },
+            "timestamp": {
+              "docs": "Timestamp information for the section",
+              "type": "Timestamp",
+            },
+          },
+        },
+        "CreateTranscriptOptionalParameters": {
+          "docs": "The parameters for creating a transcript",
+          "properties": {
+            "audio_end_at": {
+              "docs": "The point in time, in milliseconds, to stop transcribing in your media file",
+              "type": "optional<integer>",
+            },
+            "audio_start_from": {
+              "docs": "The point in time, in milliseconds, to begin transcription from in your media file",
+              "type": "optional<integer>",
+            },
+            "auto_chapters": {
+              "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "auto_highlights": {
+              "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "boost_param": {
+              "docs": "The word boost parameter value, if provided in the transcription request.",
+              "type": "optional<TranscriptBoostParam>",
+            },
+            "content_safety": {
+              "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "custom_spelling": {
+              "docs": "Customize how words are spelled and formatted using to and from values",
+              "type": "optional<list<TranscriptCustomSpelling>>",
+            },
+            "custom_topics": {
+              "docs": "Whether custom topics was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "disfluencies": {
+              "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false.",
+              "type": "optional<boolean>",
+            },
+            "dual_channel": {
+              "docs": "Enable [Dual Channel](https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) transcription, can be true or false.",
+              "type": "optional<boolean>",
+            },
+            "entity_detection": {
+              "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "filter_profanity": {
+              "docs": "Filter profanity from the transcribed text, can be true or false.",
+              "type": "optional<boolean>",
+            },
+            "format_text": {
+              "docs": "Enable Text Formatting, can be true or false.",
+              "type": "optional<boolean>",
+            },
+            "iab_categories": {
+              "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "language_code": {
+              "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
+The default value is 'en_us'.
+",
+              "type": "optional<TranscriptLanguageCode>",
+            },
+            "language_detection": {
+              "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
+              "type": "optional<boolean>",
+            },
+            "punctuate": {
+              "docs": "Enable Automatic Punctuation, can be true or false.",
+              "type": "optional<boolean>",
+            },
+            "redact_pii": {
+              "docs": "Redact PII from the transcribed text using the Redact PII model, can be true or false",
+              "type": "optional<boolean>",
+            },
+            "redact_pii_audio": {
+              "docs": "Generate a copy of the original media file with spoken PII "beeped" out, can be true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "type": "optional<boolean>",
+            },
+            "redact_pii_audio_quality": {
+              "docs": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "type": "optional<string>",
+            },
+            "redact_pii_policies": {
+              "docs": "The list of PII Redaction policies to enable. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "type": "optional<list<PiiPolicy>>",
+            },
+            "redact_pii_sub": {
+              "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "type": "optional<SubstitutionPolicy>",
+            },
+            "sentiment_analysis": {
+              "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "speaker_labels": {
+              "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "speakers_expected": {
+              "docs": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
+              "type": "optional<integer>",
+            },
+            "speech_threshold": {
+              "docs": "Reject audio files that contain less than this fraction of speech.
+Valid values are in the range [0, 1] inclusive.
+",
+              "type": "optional<double>",
+            },
+            "summarization": {
+              "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "summary_model": {
+              "docs": "The model to summarize the transcript",
+              "type": "optional<SummaryModel>",
+            },
+            "summary_type": {
+              "docs": "The type of summary",
+              "type": "optional<SummaryType>",
+            },
+            "topics": {
+              "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
+              "type": "optional<list<string>>",
+            },
+            "webhook_auth_header_name": {
+              "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
+              "type": "optional<string>",
+            },
+            "webhook_auth_header_value": {
+              "docs": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
+              "type": "optional<string>",
+            },
+            "webhook_url": {
+              "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
+              "type": "optional<string>",
+            },
+            "word_boost": {
+              "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "Entity": {
+          "docs": "A detected entity",
+          "properties": {
+            "end": {
+              "docs": "The ending time, in milliseconds, for the detected entity in the audio file",
+              "type": "integer",
+            },
+            "entity_type": {
+              "docs": "The type of entity for the detected entity",
+              "type": "EntityType",
+            },
+            "start": {
+              "docs": "The starting time, in milliseconds, at which the detected entity appears in the audio file",
+              "type": "integer",
+            },
+            "text": {
+              "docs": "The text for the detected entity",
+              "type": "string",
+            },
+          },
+        },
+        "EntityType": {
+          "docs": "The type of entity for the detected entity",
+          "enum": [
+            {
+              "docs": "Banking information, including account and routing numbers",
+              "name": "banking_information",
+              "value": "banking_information",
+            },
+            {
+              "docs": "Blood type (e.g., O-, AB positive)",
+              "name": "blood_type",
+              "value": "blood_type",
+            },
+            {
+              "docs": "Credit card verification code (e.g., CVV: 080)
+",
+              "name": "credit_card_cvv",
+              "value": "credit_card_cvv",
+            },
+            {
+              "docs": "Expiration date of a credit card",
+              "name": "credit_card_expiration",
+              "value": "credit_card_expiration",
+            },
+            {
+              "docs": "Credit card number",
+              "name": "credit_card_number",
+              "value": "credit_card_number",
+            },
+            {
+              "docs": "Specific calendar date (e.g., December 18)",
+              "name": "date",
+              "value": "date",
+            },
+            {
+              "docs": "Date of Birth (e.g., Date of Birth: March 7, 1961)
+",
+              "name": "date_of_birth",
+              "value": "date_of_birth",
+            },
+            {
+              "docs": "Driver's license number (e.g., DL #356933-540)
+",
+              "name": "drivers_license",
+              "value": "drivers_license",
+            },
+            {
+              "docs": "Medications, vitamins, or supplements (e.g., Advil, Acetaminophen, Panadol)",
+              "name": "drug",
+              "value": "drug",
+            },
+            {
+              "docs": "Email address (e.g., support@assemblyai.com)",
+              "name": "email_address",
+              "value": "email_address",
+            },
+            {
+              "docs": "Name of an event or holiday (e.g., Olympics, Yom Kippur)",
+              "name": "event",
+              "value": "event",
+            },
+            {
+              "docs": "Bodily injury (e.g., I broke my arm, I have a sprained wrist)",
+              "name": "injury",
+              "value": "injury",
+            },
+            {
+              "docs": "Name of a natural language (e.g., Spanish, French)",
+              "name": "language",
+              "value": "language",
+            },
+            {
+              "docs": "Any location reference including mailing address, postal code, city, state, province, or country",
+              "name": "location",
+              "value": "location",
+            },
+            {
+              "docs": "Name of a medical condition, disease, syndrome, deficit, or disorder (e.g., chronic fatigue syndrome, arrhythmia, depression)",
+              "name": "medical_condition",
+              "value": "medical_condition",
+            },
+            {
+              "docs": "Medical process, including treatments, procedures, and tests (e.g., heart surgery, CT scan)",
+              "name": "medical_process",
+              "value": "medical_process",
+            },
+            {
+              "docs": "Name and/or amount of currency (e.g., 15 pesos, $94.50)",
+              "name": "money_amount",
+              "value": "money_amount",
+            },
+            {
+              "docs": "Terms indicating nationality, ethnicity, or race (e.g., American, Asian, Caucasian)",
+              "name": "nationality",
+              "value": "nationality",
+            },
+            {
+              "docs": "Job title or profession (e.g., professor, actors, engineer, CPA)",
+              "name": "occupation",
+              "value": "occupation",
+            },
+            {
+              "docs": "Name of an organization (e.g., CNN, McDonalds, University of Alaska)",
+              "name": "organization",
+              "value": "organization",
+            },
+            {
+              "docs": "Account passwords, PINs, access keys, or verification answers (e.g., 27%alfalfa, temp1234, My mother's maiden name is Smith)",
+              "name": "password",
+              "value": "password",
+            },
+            {
+              "docs": "Number associated with an age (e.g., 27, 75)",
+              "name": "person_age",
+              "value": "person_age",
+            },
+            {
+              "docs": "Name of a person (e.g., Bob, Doug Jones)",
+              "name": "person_name",
+              "value": "person_name",
+            },
+            {
+              "docs": "Telephone or fax number",
+              "name": "phone_number",
+              "value": "phone_number",
+            },
+            {
+              "docs": "Terms referring to a political party, movement, or ideology (e.g., Republican, Liberal)",
+              "name": "political_affiliation",
+              "value": "political_affiliation",
+            },
+            {
+              "docs": "Terms indicating religious affiliation (e.g., Hindu, Catholic)",
+              "name": "religion",
+              "value": "religion",
+            },
+            {
+              "docs": "Expressions indicating clock times (e.g., 19:37:28, 10pm EST)",
+              "name": "time",
+              "value": "time",
+            },
+            {
+              "docs": "Internet addresses (e.g., www.assemblyai.com)",
+              "name": "url",
+              "value": "url",
+            },
+            {
+              "docs": "Social Security Number or equivalent",
+              "name": "us_social_security_number",
+              "value": "us_social_security_number",
+            },
+          ],
+        },
+        "Error": {
+          "docs": undefined,
+          "properties": {
+            "error": {
+              "docs": "Error message",
+              "type": "string",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "optional<literal<"error">>",
+            },
+          },
+        },
+        "LemurActionItemsParameters": {
+          "docs": undefined,
+          "type": "LemurBaseParameters",
+        },
+        "LemurActionItemsResponse": {
+          "docs": undefined,
+          "extends": [
+            "LemurBaseResponse",
+          ],
+          "properties": {
+            "response": {
+              "docs": "The response generated by LeMUR.",
+              "type": "string",
+            },
+          },
+        },
+        "LemurBaseParameters": {
+          "docs": undefined,
+          "properties": {
+            "context": {
+              "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
+              "type": "optional<LemurBaseParametersContext>",
+            },
+            "final_model": {
+              "docs": undefined,
+              "type": "optional<LemurModel>",
+            },
+            "max_output_size": {
+              "docs": "Max output size in tokens. Up to 4000 allowed.",
+              "type": "optional<integer>",
+            },
+            "temperature": {
+              "docs": "The temperature to use for the model.
+Higher values result in answers that are more creative, lower values are more conservative.
+Can be any value between 0.0 and 1.0 inclusive.
+",
+              "type": "optional<double>",
+            },
+            "transcript_ids": {
+              "docs": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
+              "type": "list<string>",
+            },
+          },
+        },
+        "LemurBaseParametersContext": {
+          "discriminated": false,
+          "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
+          "union": [
+            "string",
+            {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          ],
+        },
+        "LemurBaseResponse": {
+          "docs": undefined,
+          "properties": {
+            "request_id": {
+              "docs": "The ID of the LeMUR request",
+              "type": "string",
+            },
+          },
+        },
+        "LemurModel": {
+          "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
+",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "default",
+              "value": "default",
+            },
+            {
+              "docs": undefined,
+              "name": "basic",
+              "value": "basic",
+            },
+          ],
+        },
+        "LemurQuestion": {
+          "docs": undefined,
+          "properties": {
+            "answer_format": {
+              "docs": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: "short sentence", "bullet points"
+",
+              "type": "optional<string>",
+            },
+            "answer_options": {
+              "docs": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: ["Yes", "No"]
+",
+              "type": "optional<list<string>>",
+            },
+            "context": {
+              "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+              "type": "optional<LemurQuestionContext>",
+            },
+            "question": {
+              "docs": "The question you wish to ask. For more complex questions use default model.",
+              "type": "string",
+            },
+          },
+        },
+        "LemurQuestionAnswer": {
+          "docs": "An answer generated by LeMUR and its question.",
+          "properties": {
+            "answer": {
+              "docs": "The answer generated by LeMUR.",
+              "type": "string",
+            },
+            "question": {
+              "docs": "The question for LeMUR to answer.",
+              "type": "string",
+            },
+          },
+        },
+        "LemurQuestionAnswerResponse": {
+          "docs": undefined,
+          "extends": [
+            "LemurBaseResponse",
+          ],
+          "properties": {
+            "response": {
+              "docs": "The answers generated by LeMUR and their questions.",
+              "type": "list<LemurQuestionAnswer>",
+            },
+          },
+        },
+        "LemurQuestionContext": {
+          "discriminated": false,
+          "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+          "union": [
+            "string",
+            {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          ],
+        },
+        "LemurSummaryResponse": {
+          "docs": undefined,
+          "extends": [
+            "LemurBaseResponse",
+          ],
+          "properties": {
+            "response": {
+              "docs": "The response generated by LeMUR.",
+              "type": "string",
+            },
+          },
+        },
+        "LemurTaskResponse": {
+          "docs": undefined,
+          "extends": [
+            "LemurBaseResponse",
+          ],
+          "properties": {
+            "response": {
+              "docs": "The response generated by LeMUR.",
+              "type": "string",
+            },
+          },
+        },
+        "PageDetails": {
+          "docs": undefined,
+          "properties": {
+            "current_url": "string",
+            "limit": "integer",
+            "next_url": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "prev_url": "string",
+            "result_count": "integer",
+          },
+        },
+        "ParagraphsResponse": {
+          "docs": undefined,
+          "properties": {
+            "audio_duration": "double",
+            "confidence": "double",
+            "id": "string",
+            "paragraphs": {
+              "docs": undefined,
+              "type": "list<TranscriptParagraph>",
+            },
+          },
+        },
+        "PiiPolicy": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "medical_process",
+              "value": "medical_process",
+            },
+            {
+              "docs": undefined,
+              "name": "medical_condition",
+              "value": "medical_condition",
+            },
+            {
+              "docs": undefined,
+              "name": "blood_type",
+              "value": "blood_type",
+            },
+            {
+              "docs": undefined,
+              "name": "drug",
+              "value": "drug",
+            },
+            {
+              "docs": undefined,
+              "name": "injury",
+              "value": "injury",
+            },
+            {
+              "docs": undefined,
+              "name": "number_sequence",
+              "value": "number_sequence",
+            },
+            {
+              "docs": undefined,
+              "name": "email_address",
+              "value": "email_address",
+            },
+            {
+              "docs": undefined,
+              "name": "date_of_birth",
+              "value": "date_of_birth",
+            },
+            {
+              "docs": undefined,
+              "name": "phone_number",
+              "value": "phone_number",
+            },
+            {
+              "docs": undefined,
+              "name": "us_social_security_number",
+              "value": "us_social_security_number",
+            },
+            {
+              "docs": undefined,
+              "name": "credit_card_number",
+              "value": "credit_card_number",
+            },
+            {
+              "docs": undefined,
+              "name": "credit_card_expiration",
+              "value": "credit_card_expiration",
+            },
+            {
+              "docs": undefined,
+              "name": "credit_card_cvv",
+              "value": "credit_card_cvv",
+            },
+            {
+              "docs": undefined,
+              "name": "date",
+              "value": "date",
+            },
+            {
+              "docs": undefined,
+              "name": "nationality",
+              "value": "nationality",
+            },
+            {
+              "docs": undefined,
+              "name": "event",
+              "value": "event",
+            },
+            {
+              "docs": undefined,
+              "name": "language",
+              "value": "language",
+            },
+            {
+              "docs": undefined,
+              "name": "location",
+              "value": "location",
+            },
+            {
+              "docs": undefined,
+              "name": "money_amount",
+              "value": "money_amount",
+            },
+            {
+              "docs": undefined,
+              "name": "person_name",
+              "value": "person_name",
+            },
+            {
+              "docs": undefined,
+              "name": "person_age",
+              "value": "person_age",
+            },
+            {
+              "docs": undefined,
+              "name": "organization",
+              "value": "organization",
+            },
+            {
+              "docs": undefined,
+              "name": "political_affiliation",
+              "value": "political_affiliation",
+            },
+            {
+              "docs": undefined,
+              "name": "occupation",
+              "value": "occupation",
+            },
+            {
+              "docs": undefined,
+              "name": "religion",
+              "value": "religion",
+            },
+            {
+              "docs": undefined,
+              "name": "drivers_license",
+              "value": "drivers_license",
+            },
+            {
+              "docs": undefined,
+              "name": "banking_information",
+              "value": "banking_information",
+            },
+          ],
+        },
+        "PurgeLemurRequestDataResponse": {
+          "docs": undefined,
+          "properties": {
+            "deleted": {
+              "docs": "Whether the request data was deleted.",
+              "type": "boolean",
+            },
+            "request_id": {
+              "docs": "The ID of the LeMUR request",
+              "type": "string",
+            },
+            "request_id_to_purge": {
+              "docs": "The ID of the deletion request of the LeMUR request",
+              "type": "string",
+            },
+          },
+        },
+        "RealtimeTemporaryTokenResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": "The temporary authentication token for real-time transcription",
+              "type": "string",
+            },
+          },
+        },
+        "RedactedAudioResponse": {
+          "docs": undefined,
+          "properties": {
+            "redacted_audio_url": {
+              "docs": "The URL of the redacted audio file",
+              "type": "string",
+            },
+            "status": {
+              "docs": "The status of the redacted audio",
+              "type": "RedactedAudioStatus",
+            },
+          },
+        },
+        "RedactedAudioStatus": "literal<"redacted_audio_ready">",
+        "SentencesResponse": {
+          "docs": undefined,
+          "properties": {
+            "audio_duration": "double",
+            "confidence": "double",
+            "id": "string",
+            "sentences": {
+              "docs": undefined,
+              "type": "list<TranscriptSentence>",
+            },
+          },
+        },
+        "Sentiment": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "POSITIVE",
+              "value": "POSITIVE",
+            },
+            {
+              "docs": undefined,
+              "name": "NEUTRAL",
+              "value": "NEUTRAL",
+            },
+            {
+              "docs": undefined,
+              "name": "NEGATIVE",
+              "value": "NEGATIVE",
+            },
+          ],
+        },
+        "SentimentAnalysisResult": {
+          "docs": "The result of the sentiment analysis model.",
+          "properties": {
+            "confidence": {
+              "docs": "The confidence score for the detected sentiment of the sentence, from 0 to 1",
+              "type": "double",
+            },
+            "end": {
+              "docs": "The ending time, in milliseconds, of the sentence",
+              "type": "integer",
+            },
+            "sentiment": {
+              "docs": "The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE",
+              "type": "Sentiment",
+            },
+            "speaker": {
+              "docs": "The speaker of the sentence if Speaker Diarization is enabled, else null",
+              "type": "optional<string>",
+            },
+            "start": {
+              "docs": "The starting time, in milliseconds, of the sentence",
+              "type": "integer",
+            },
+            "text": {
+              "docs": "The transcript of the sentence",
+              "type": "string",
+            },
+          },
+        },
+        "SeverityScoreSummary": {
+          "docs": undefined,
+          "properties": {
+            "high": "double",
+            "low": "double",
+            "medium": "double",
+          },
+        },
+        "SubstitutionPolicy": {
+          "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "entity_type",
+              "value": "entity_type",
+            },
+            {
+              "docs": undefined,
+              "name": "hash",
+              "value": "hash",
+            },
+          ],
+        },
+        "SubtitleFormat": {
+          "docs": "Format of the subtitles",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "srt",
+              "value": "srt",
+            },
+            {
+              "docs": undefined,
+              "name": "vtt",
+              "value": "vtt",
+            },
+          ],
+        },
+        "SummaryModel": {
+          "docs": "The model to summarize the transcript",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "informative",
+              "value": "informative",
+            },
+            {
+              "docs": undefined,
+              "name": "conversational",
+              "value": "conversational",
+            },
+            {
+              "docs": undefined,
+              "name": "catchy",
+              "value": "catchy",
+            },
+          ],
+        },
+        "SummaryType": {
+          "docs": "The type of summary",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "bullets",
+              "value": "bullets",
+            },
+            {
+              "docs": undefined,
+              "name": "bullets_verbose",
+              "value": "bullets_verbose",
+            },
+            {
+              "docs": undefined,
+              "name": "gist",
+              "value": "gist",
+            },
+            {
+              "docs": undefined,
+              "name": "headline",
+              "value": "headline",
+            },
+            {
+              "docs": undefined,
+              "name": "paragraph",
+              "value": "paragraph",
+            },
+          ],
+        },
+        "Timestamp": {
+          "docs": "Timestamp containing a start and end property in milliseconds.",
+          "properties": {
+            "end": {
+              "docs": "The end time in milliseconds",
+              "type": "integer",
+            },
+            "start": {
+              "docs": "The start time in milliseconds",
+              "type": "integer",
+            },
+          },
+        },
+        "TopicDetectionResult": {
+          "docs": "THe result of the topic detection model.",
+          "properties": {
+            "labels": {
+              "docs": undefined,
+              "type": "optional<list<TopicDetectionResultLabelsItem>>",
+            },
+            "text": {
+              "docs": "The text in the transcript in which a detected topic occurs",
+              "type": "string",
+            },
+            "timestamp": {
+              "docs": undefined,
+              "type": "optional<Timestamp>",
+            },
+          },
+        },
+        "TopicDetectionResultLabelsItem": {
+          "docs": undefined,
+          "properties": {
+            "label": {
+              "docs": "The IAB taxonomical label for the label of the detected topic, where > denotes supertopic/subtopic relationship",
+              "type": "string",
+            },
+            "relevance": {
+              "docs": "How relevant the detected topic is of a detected topic",
+              "type": "double",
+            },
+          },
+        },
+        "Transcript": {
+          "docs": "A transcript object",
+          "properties": {
+            "acoustic_model": {
+              "docs": "The acoustic model that was used for the transcription",
+              "type": "string",
+            },
+            "audio_duration": {
+              "docs": "The duration of this transcript object's media file, in seconds",
+              "type": "optional<double>",
+            },
+            "audio_end_at": {
+              "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
+              "type": "optional<integer>",
+            },
+            "audio_start_from": {
+              "docs": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
+              "type": "optional<integer>",
+            },
+            "audio_url": {
+              "docs": "The URL of the media that was transcribed",
+              "type": "string",
+            },
+            "auto_chapters": {
+              "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "auto_highlights": {
+              "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
+              "type": "boolean",
+            },
+            "auto_highlights_result": {
+              "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
+See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
+",
+              "type": "optional<AutoHighlightsResult>",
+            },
+            "boost_param": {
+              "docs": "The word boost parameter value, if provided in the transcription request",
+              "type": "optional<string>",
+            },
+            "chapters": {
+              "docs": "An array of temporally sequential chapters for the audio file",
+              "type": "optional<list<Chapter>>",
+            },
+            "confidence": {
+              "docs": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
+              "type": "optional<double>",
+            },
+            "content_safety": {
+              "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "content_safety_labels": {
+              "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
+See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
+",
+              "type": "optional<TranscriptContentSafetyLabels>",
+            },
+            "custom_spelling": {
+              "docs": "Customize how words are spelled and formatted using to and from values",
+              "type": "optional<list<TranscriptCustomSpelling>>",
+            },
+            "custom_topics": {
+              "docs": "Whether custom topics was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "disfluencies": {
+              "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
+              "type": "optional<boolean>",
+            },
+            "dual_channel": {
+              "docs": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "entities": {
+              "docs": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
+See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
+",
+              "type": "optional<list<Entity>>",
+            },
+            "entity_detection": {
+              "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "error": {
+              "docs": "Error message of why the transcript failed",
+              "type": "optional<string>",
+            },
+            "filter_profanity": {
+              "docs": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "format_text": {
+              "docs": "Whether Text Formatting was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "iab_categories": {
+              "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "iab_categories_result": {
+              "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
+See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
+",
+              "type": "optional<TranscriptIabCategoriesResult>",
+            },
+            "id": {
+              "docs": "The unique identifier of your transcription",
+              "type": "string",
+            },
+            "language_code": {
+              "docs": "The language of your audio file.
+Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
+The default value is 'en_us'.
+",
+              "type": "optional<TranscriptLanguageCode>",
+            },
+            "language_detection": {
+              "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
+              "type": "optional<boolean>",
+            },
+            "language_model": {
+              "docs": "The language model that was used for the transcription",
+              "type": "string",
+            },
+            "punctuate": {
+              "docs": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
+              "type": "optional<boolean>",
+            },
+            "redact_pii": {
+              "docs": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
+              "type": "boolean",
+            },
+            "redact_pii_audio": {
+              "docs": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
+either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
+",
+              "type": "optional<boolean>",
+            },
+            "redact_pii_audio_quality": {
+              "docs": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
+See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
+",
+              "type": "optional<string>",
+            },
+            "redact_pii_policies": {
+              "docs": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
+See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
+",
+              "type": "optional<list<PiiPolicy>>",
+            },
+            "redact_pii_sub": {
+              "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "type": "optional<SubstitutionPolicy>",
+            },
+            "sentiment_analysis": {
+              "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "sentiment_analysis_results": {
+              "docs": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
+See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
+",
+              "type": "optional<list<SentimentAnalysisResult>>",
+            },
+            "speaker_labels": {
+              "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
+              "type": "optional<boolean>",
+            },
+            "speakers_expected": {
+              "docs": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
+              "type": "optional<integer>",
+            },
+            "speech_threshold": {
+              "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
+Valid values are in the range [0, 1] inclusive.
+",
+              "type": "optional<double>",
+            },
+            "speed_boost": {
+              "docs": "Whether speed boost was enabled in the transcription request",
+              "type": "optional<boolean>",
+            },
+            "status": {
+              "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
+              "type": "TranscriptStatus",
+            },
+            "summarization": {
+              "docs": "Whether [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request, either true or false",
+              "type": "boolean",
+            },
+            "summary": {
+              "docs": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
+              "type": "optional<string>",
+            },
+            "summary_model": {
+              "docs": "The Summarization model used to generate the summary,
+if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
+",
+              "type": "optional<string>",
+            },
+            "summary_type": {
+              "docs": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
+              "type": "optional<string>",
+            },
+            "text": {
+              "docs": "The textual transcript of your media file",
+              "type": "optional<string>",
+            },
+            "throttled": {
+              "docs": "True while a request is throttled and false when a request is no longer throttled",
+              "type": "optional<boolean>",
+            },
+            "topics": {
+              "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
+              "type": "optional<list<string>>",
+            },
+            "utterances": {
+              "docs": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
+See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
+",
+              "type": "optional<list<TranscriptUtterance>>",
+            },
+            "webhook_auth": {
+              "docs": "Whether webhook authentication details were provided in the transcription request",
+              "type": "boolean",
+            },
+            "webhook_auth_header_name": {
+              "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request",
+              "type": "optional<string>",
+            },
+            "webhook_status_code": {
+              "docs": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
+              "type": "optional<integer>",
+            },
+            "webhook_url": {
+              "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
+              "type": "optional<string>",
+            },
+            "word_boost": {
+              "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
+              "type": "optional<list<string>>",
+            },
+            "words": {
+              "docs": "An array of temporally-sequential word objects, one for each word in the transcript.
+See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
+",
+              "type": "optional<list<TranscriptWord>>",
+            },
+          },
+        },
+        "TranscriptBoostParam": {
+          "docs": "The word boost parameter value, if provided in the transcription request.",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "low",
+              "value": "low",
+            },
+            {
+              "docs": undefined,
+              "name": "default",
+              "value": "default",
+            },
+            {
+              "docs": undefined,
+              "name": "high",
+              "value": "high",
+            },
+          ],
+        },
+        "TranscriptContentSafetyLabels": {
+          "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
+See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
+",
+          "properties": {
+            "results": {
+              "docs": undefined,
+              "type": "list<ContentSafetyLabelResult>",
+            },
+            "status": {
+              "docs": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
+              "type": "AudioIntelligenceModelStatus",
+            },
+          },
+        },
+        "TranscriptCustomSpelling": {
+          "docs": "Object containing words or phrases to replace, and the word or phrase to replace with",
+          "properties": {
+            "from": {
+              "docs": "Words or phrases to replace",
+              "type": "list<string>",
+            },
+            "to": {
+              "docs": "Word or phrase to replace with",
+              "type": "string",
+            },
+          },
+        },
+        "TranscriptIabCategoriesResult": {
+          "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
+See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
+",
+          "properties": {
+            "results": {
+              "docs": "An array of results for the Topic Detection model.",
+              "type": "list<TopicDetectionResult>",
+            },
+            "status": {
+              "docs": "Will be either success, or unavailable in the rare case that the Content Moderation model failed.",
+              "type": "AudioIntelligenceModelStatus",
+            },
+            "summary": {
+              "docs": "The overall relevance of topic to the entire audio file",
+              "type": "map<string, double>",
+            },
+          },
+        },
+        "TranscriptLanguageCode": {
+          "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
+The default value is 'en_us'.
+",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "en",
+              "value": "en",
+            },
+            {
+              "docs": undefined,
+              "name": "en_au",
+              "value": "en_au",
+            },
+            {
+              "docs": undefined,
+              "name": "en_uk",
+              "value": "en_uk",
+            },
+            {
+              "docs": undefined,
+              "name": "en_us",
+              "value": "en_us",
+            },
+            {
+              "docs": undefined,
+              "name": "es",
+              "value": "es",
+            },
+            {
+              "docs": undefined,
+              "name": "fr",
+              "value": "fr",
+            },
+            {
+              "docs": undefined,
+              "name": "de",
+              "value": "de",
+            },
+            {
+              "docs": undefined,
+              "name": "it",
+              "value": "it",
+            },
+            {
+              "docs": undefined,
+              "name": "pt",
+              "value": "pt",
+            },
+            {
+              "docs": undefined,
+              "name": "nl",
+              "value": "nl",
+            },
+            {
+              "docs": undefined,
+              "name": "hi",
+              "value": "hi",
+            },
+            {
+              "docs": undefined,
+              "name": "ja",
+              "value": "ja",
+            },
+            {
+              "docs": undefined,
+              "name": "zh",
+              "value": "zh",
+            },
+            {
+              "docs": undefined,
+              "name": "fi",
+              "value": "fi",
+            },
+            {
+              "docs": undefined,
+              "name": "ko",
+              "value": "ko",
+            },
+            {
+              "docs": undefined,
+              "name": "pl",
+              "value": "pl",
+            },
+            {
+              "docs": undefined,
+              "name": "ru",
+              "value": "ru",
+            },
+            {
+              "docs": undefined,
+              "name": "tr",
+              "value": "tr",
+            },
+            {
+              "docs": undefined,
+              "name": "uk",
+              "value": "uk",
+            },
+            {
+              "docs": undefined,
+              "name": "vi",
+              "value": "vi",
+            },
+          ],
+        },
+        "TranscriptList": {
+          "docs": undefined,
+          "properties": {
+            "page_details": {
+              "docs": undefined,
+              "type": "PageDetails",
+            },
+            "transcripts": {
+              "docs": undefined,
+              "type": "list<TranscriptListItem>",
+            },
+          },
+        },
+        "TranscriptListItem": {
+          "docs": undefined,
+          "properties": {
+            "audio_url": "string",
+            "completed": {
+              "docs": undefined,
+              "type": "optional<datetime>",
+            },
+            "created": "datetime",
+            "id": "string",
+            "resource_url": "string",
+            "status": {
+              "docs": undefined,
+              "type": "TranscriptStatus",
+            },
+          },
+        },
+        "TranscriptListParameters": {
+          "docs": undefined,
+          "properties": {
+            "after_id": {
+              "docs": "Get transcripts that were created after this transcript ID",
+              "type": "optional<string>",
+            },
+            "before_id": {
+              "docs": "Get transcripts that were created before this transcript ID",
+              "type": "optional<string>",
+            },
+            "created_on": {
+              "docs": "Only get transcripts created on this date",
+              "type": "optional<string>",
+            },
+            "limit": {
+              "docs": "Maximum amount of transcripts to retrieve",
+              "type": "optional<integer>",
+            },
+            "status": {
+              "docs": "Filter by transcript status",
+              "type": "optional<TranscriptStatus>",
+            },
+            "throttled_only": {
+              "docs": "Only get throttled transcripts, overrides the status filter",
+              "type": "optional<boolean>",
+            },
+          },
+        },
+        "TranscriptListRequestStatus": {
+          "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
+          "enum": [
+            {
+              "docs": "The audio file is in the queue to be processed by the API.",
+              "name": "queued",
+              "value": "queued",
+            },
+            {
+              "docs": "The audio file is being processed by the API.",
+              "name": "processing",
+              "value": "processing",
+            },
+            {
+              "docs": "The transcription job has been completed successfully.",
+              "name": "completed",
+              "value": "completed",
+            },
+            {
+              "docs": "An error occurred while processing the audio file.",
+              "name": "error",
+              "value": "error",
+            },
+          ],
+        },
+        "TranscriptParagraph": {
+          "docs": undefined,
+          "properties": {
+            "confidence": "double",
+            "end": "integer",
+            "start": "integer",
+            "text": "string",
+            "words": {
+              "docs": undefined,
+              "type": "list<TranscriptWord>",
+            },
+          },
+        },
+        "TranscriptSentence": {
+          "docs": undefined,
+          "properties": {
+            "confidence": "double",
+            "end": "integer",
+            "start": "integer",
+            "text": "string",
+            "words": {
+              "docs": undefined,
+              "type": "list<TranscriptWord>",
+            },
+          },
+        },
+        "TranscriptStatus": {
+          "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
+          "enum": [
+            {
+              "docs": "The audio file is in the queue to be processed by the API.",
+              "name": "queued",
+              "value": "queued",
+            },
+            {
+              "docs": "The audio file is being processed by the API.",
+              "name": "processing",
+              "value": "processing",
+            },
+            {
+              "docs": "The transcription job has been completed successfully.",
+              "name": "completed",
+              "value": "completed",
+            },
+            {
+              "docs": "An error occurred while processing the audio file.",
+              "name": "error",
+              "value": "error",
+            },
+          ],
+        },
+        "TranscriptUtterance": {
+          "docs": undefined,
+          "properties": {
+            "channel": "string",
+            "confidence": "double",
+            "end": "integer",
+            "start": "integer",
+            "text": "string",
+            "words": {
+              "docs": undefined,
+              "type": "list<TranscriptWord>",
+            },
+          },
+        },
+        "TranscriptWord": {
+          "docs": undefined,
+          "properties": {
+            "confidence": "double",
+            "end": "integer",
+            "speaker": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "start": "integer",
+            "text": "string",
+          },
+        },
+        "UploadedFile": {
+          "docs": undefined,
+          "properties": {
+            "upload_url": {
+              "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
+              "type": "string",
+            },
+          },
+        },
+        "WordSearchMatch": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": "The total amount of times the word is in the transcript",
+              "type": "integer",
+            },
+            "indexes": {
+              "docs": "An array of all index locations for that word within the \`words\` array of the completed transcript",
+              "type": "list<integer>",
+            },
+            "text": {
+              "docs": "The matched word",
+              "type": "string",
+            },
+            "timestamps": {
+              "docs": "An array of timestamps",
+              "type": "list<WordSearchTimestamp>",
+            },
+          },
+        },
+        "WordSearchResponse": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the transcript",
+              "type": "string",
+            },
+            "matches": {
+              "docs": "The matches of the search",
+              "type": "list<WordSearchMatch>",
+            },
+            "total_count": {
+              "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
+              "type": "integer",
+            },
+          },
+        },
+        "WordSearchTimestamp": {
+          "docs": "An array of timestamps structured as [\`start_time\`, \`end_time\`] in milliseconds",
+          "type": "list<integer>",
+        },
+      },
+    },
+    "files.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "upload": {
+            "auth": true,
+            "display-name": "Upload an audio or video file which can be transcribed.",
+            "docs": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/v2/upload",
+            "request": {
+              "body": "bytes",
+              "content-type": "application/octet-stream",
+            },
+            "response": {
+              "docs": "File uploaded successfully",
+              "type": "root.UploadedFile",
+            },
+          },
+        },
+      },
+    },
+    "lemur.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "actionItems": {
+            "auth": true,
+            "display-name": "Extract action items from one or more meeting transcripts.",
+            "docs": "Use LeMUR to generate a list of Action Items from a transcript",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/lemur/v3/generate/action-items",
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.LemurBaseParameters",
+              },
+            },
+            "response": {
+              "docs": "LeMUR action items response",
+              "type": "root.LemurActionItemsResponse",
+            },
+          },
+          "purgeRequestData": {
+            "auth": true,
+            "display-name": "Delete the data for a previously submitted LeMUR request.",
+            "docs": "Delete the data for a previously submitted LeMUR request.
+The LLM response data, as well as any context provided in the original request will be removed.
+",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "DELETE",
+            "path": "/lemur/v3/{request_id}",
+            "path-parameters": {
+              "request_id": {
+                "docs": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "LeMUR request data deleted.",
+              "type": "root.PurgeLemurRequestDataResponse",
+            },
+          },
+          "questionAnswer": {
+            "auth": true,
+            "display-name": "Create answers to one or more questions about one or more transcripts.",
+            "docs": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/lemur/v3/generate/question-answer",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
+                "properties": {
+                  "questions": {
+                    "docs": "A list of questions to ask.",
+                    "type": "list<root.LemurQuestion>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LemurQuestionAnswerParameters",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "LeMUR question & answer response",
+              "type": "root.LemurQuestionAnswerResponse",
+            },
+          },
+          "summary": {
+            "auth": true,
+            "display-name": "Generate a custom summary from one or more transcripts.",
+            "docs": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/lemur/v3/generate/summary",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
+                "properties": {
+                  "answer_format": {
+                    "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LemurSummaryParameters",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "LeMUR summary response",
+              "type": "root.LemurSummaryResponse",
+            },
+          },
+          "task": {
+            "auth": true,
+            "display-name": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
+            "docs": "Use LeMUR to ask anything with Custom Task",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/lemur/v3/generate/task",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.LemurBaseParameters",
+                ],
+                "properties": {
+                  "prompt": {
+                    "docs": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LemurTaskParameters",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "LeMUR task response",
+              "type": "root.LemurTaskResponse",
+            },
+          },
+        },
+      },
+    },
+    "realtime.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "createTemporaryToken": {
+            "auth": true,
+            "display-name": "Create a temporary authentication token for real-time transcription",
+            "docs": "Create a temporary authentication token for real-time transcription",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/v2/realtime/token",
+            "request": {
+              "body": {
+                "properties": {
+                  "expires_in": {
+                    "docs": "The amount of time until the token expires in seconds.",
+                    "type": "integer",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateRealtimeTemporaryTokenParameters",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Temporary authentication token generated.",
+              "type": "root.RealtimeTemporaryTokenResponse",
+            },
+          },
+        },
+      },
+    },
+    "transcript.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": true,
+            "display-name": "Create a transcript from an audio file",
+            "docs": "Create a transcript from an audio or video file that is accessible via a URL.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "POST",
+            "path": "/v2/transcript",
+            "request": {
+              "body": {
+                "extends": [
+                  "root.CreateTranscriptOptionalParameters",
+                ],
+                "properties": {
+                  "audio_url": {
+                    "docs": "The URL of the audio or video file to transcribe.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateTranscriptParameters",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Transcript created and queued for processing.",
+              "type": "root.Transcript",
+            },
+          },
+          "delete": {
+            "auth": true,
+            "display-name": "Delete the transcript",
+            "docs": "Delete the transcript",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "DELETE",
+            "path": "/v2/transcript/{transcript_id}",
+            "path-parameters": {
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "The deleted transcript response.",
+              "type": "root.Transcript",
+            },
+          },
+          "get": {
+            "auth": true,
+            "display-name": "Get the transcript",
+            "docs": "Get the transcript resource. The transcript is ready when the "status" is "completed".",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "GET",
+            "path": "/v2/transcript/{transcript_id}",
+            "path-parameters": {
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "The transcript resource",
+              "type": "root.Transcript",
+            },
+          },
+          "getParagraphs": {
+            "auth": true,
+            "display-name": "Get the transcript split by paragraphs",
+            "docs": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "GET",
+            "path": "/v2/transcript/{transcript_id}/paragraphs",
+            "path-parameters": {
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Exported paragraphs",
+              "type": "root.ParagraphsResponse",
+            },
+          },
+          "getRedactedAudio": {
+            "auth": true,
+            "display-name": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
+            "docs": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "GET",
+            "path": "/v2/transcript/{transcript_id}/redacted-audio",
+            "path-parameters": {
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "The redacted audio object containing the status and URL to the redacted audio.",
+              "type": "root.RedactedAudioResponse",
+            },
+          },
+          "getSentences": {
+            "auth": true,
+            "display-name": "Get the transcript split by sentences",
+            "docs": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "GET",
+            "path": "/v2/transcript/{transcript_id}/sentences",
+            "path-parameters": {
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Exported sentences",
+              "type": "root.SentencesResponse",
+            },
+          },
+          "getSubtitles": {
+            "auth": true,
+            "display-name": "Export transcript as SRT or VTT captions.",
+            "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
+            "errors": [],
+            "method": "GET",
+            "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
+            "path-parameters": {
+              "subtitle_format": {
+                "docs": "The format of the captions.",
+                "type": "root.SubtitleFormat",
+              },
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "TranscriptGetSubtitlesRequest",
+              "query-parameters": {
+                "chars_per_caption": {
+                  "allow-multiple": undefined,
+                  "docs": "The maximum number of characters per caption",
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "The exported captions as text",
+              "type": "text",
+            },
+          },
+          "list": {
+            "auth": true,
+            "display-name": "List transcripts",
+            "docs": "Retrieve a list of transcripts you have created.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "GET",
+            "path": "/v2/transcript",
+            "request": {
+              "name": "TranscriptListRequest",
+              "query-parameters": {
+                "after_id": {
+                  "allow-multiple": undefined,
+                  "docs": "Get transcripts that were created after this transcript ID",
+                  "type": "optional<string>",
+                },
+                "before_id": {
+                  "allow-multiple": undefined,
+                  "docs": "Get transcripts that were created before this transcript ID",
+                  "type": "optional<string>",
+                },
+                "created_on": {
+                  "allow-multiple": undefined,
+                  "docs": "Only get transcripts created on this date",
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": "Maximum amount of transcripts to retrieve",
+                  "type": "optional<integer>",
+                },
+                "status": {
+                  "allow-multiple": undefined,
+                  "docs": "Filter by transcript status",
+                  "type": "optional<root.TranscriptListRequestStatus>",
+                },
+                "throttled_only": {
+                  "allow-multiple": undefined,
+                  "docs": "Only get throttled transcripts, overrides the status filter",
+                  "type": "optional<boolean>",
+                },
+              },
+            },
+            "response": {
+              "docs": "A list of transcripts filtered by \`limit\` and \`status\`",
+              "type": "root.TranscriptList",
+            },
+          },
+          "wordSearch": {
+            "auth": true,
+            "display-name": "Search the given transcript for words, numbers, or phrases",
+            "docs": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
+            "method": "GET",
+            "path": "/v2/transcript/{transcript_id}/word-search",
+            "path-parameters": {
+              "transcript_id": {
+                "docs": "ID of the transcript",
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "TranscriptWordSearchRequest",
+              "query-parameters": {
+                "words": {
+                  "allow-multiple": true,
+                  "docs": "Keywords to search for",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Word search response",
+              "type": "root.WordSearchResponse",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "ApiKey",
+    "auth-schemes": {
+      "ApiKey": {
+        "header": "Authorization",
+        "name": "apiKey",
+        "prefix": undefined,
+        "type": "string",
+      },
+    },
+    "default-environment": "default",
+    "display-name": "AssemblyAI API",
+    "environments": {
+      "default": "https://api.assemblyai.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -1,8 +1,10 @@
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { FIXTURES, runTests } from "./commands/test/test";
+import { testCustomFixture } from "./commands/test/testCustomFixture";
+import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
+import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
 
 void tryRunCli();
 
@@ -22,33 +24,22 @@ function addTestCommand(cli: Argv) {
         "Run all snapshot tests",
         (yargs) =>
             yargs
-                .option("irVersion", {
+                .option("workspace", {
                     type: "string",
-                    demandOption: false,
                 })
-                .option("language", {
-                    type: "string",
-                    choices: Object.values(GenerationLanguage),
-                    demandOption: true,
-                })
-                .option("parallel-dockers", {
+                .option("parallel", {
                     type: "number",
                     default: 4,
                 })
-                .option("docker", {
+                .option("custom-fixture", {
                     type: "string",
-                    demandOption: true,
+                    demandOption: false,
                 })
                 .option("fixture", {
                     type: "string",
                     choices: Object.values(FIXTURES),
                     demandOption: false,
                     description: "Runs on all fixtures if not provided",
-                })
-                .options("compile-command", {
-                    type: "string",
-                    demandOption: false,
-                    description: "User inputted command to compile generated code with",
                 })
                 .option("update", {
                     type: "boolean",
@@ -59,27 +50,50 @@ function addTestCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS,
-                })
-                .option("output-directory", {
-                    type: "string",
-                    alias: "output-dir",
-                    description:
-                        "The output directory of the generated code, useful for generators with multiple dockers",
-                    demandOption: false,
-                    default: "seed",
                 }),
         async (argv) => {
-            const parsedDockerImage = validateAndParseDockerImage(argv.docker);
-            await runTests({
-                fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
-                irVersion: argv.irVersion,
-                language: argv.language,
-                docker: parsedDockerImage,
-                compileCommand: argv["compile-command"],
-                logLevel: argv["log-level"],
-                outputDir: argv.outputDirectory,
-                numDockers: argv.parallelDockers,
+            const workspaces = await loadSeedWorkspaces();
+
+            const filteredWorkspace = workspaces.filter((workspace) => {
+                return workspace.workspaceName === argv.workspace;
             });
+
+            if (filteredWorkspace[0] == null) {
+                throw new Error(`Failed to find workspace ${argv.workspace}`);
+            }
+
+            const workspace = filteredWorkspace[0];
+
+            const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
+
+            if (argv.customFixture != null) {
+                await testCustomFixture({
+                    pathToFixture: argv.customFixture.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.customFixture)
+                        : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
+                    workspace,
+                    irVersion: workspace.workspaceConfig.irVersion,
+                    language: workspace.workspaceConfig.language,
+                    generatorType: workspace.workspaceConfig.generatorType,
+                    docker: parsedDockerImage,
+                    compileCommand: undefined,
+                    logLevel: argv["log-level"],
+                    numDockers: argv.parallel,
+                });
+            } else {
+                await testWorkspaceFixtures({
+                    workspace,
+                    fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
+                    irVersion: workspace.workspaceConfig.irVersion,
+                    language: workspace.workspaceConfig.language,
+                    generatorType: workspace.workspaceConfig.generatorType,
+                    docker: parsedDockerImage,
+                    dockerCommand: workspace.workspaceConfig.dockerCommand,
+                    compileCommand: undefined,
+                    logLevel: argv["log-level"],
+                    numDockers: argv.parallel,
+                });
+            }
         }
     );
 }

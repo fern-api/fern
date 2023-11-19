@@ -1,0 +1,43 @@
+types:
+  Tag:
+    type: string
+    examples:
+      - name: One
+        value: tag-wf9as23d
+
+  Metadata:
+    properties:
+      id: string
+      data: optional<map<string, string>>
+      jsonString: optional<string>
+    examples:
+      - name: One
+        value:
+          id: metadata-js8dg24b
+          data:
+            foo: bar
+            baz: qux
+          jsonString: '{"foo": "bar", "baz": "qux"}'
+
+  EventInfo:
+    union:
+      metadata: Metadata
+      tag: Tag
+    examples:
+      - name: Metadata
+        value:
+          type: metadata
+          id: metadata-alskjfg8
+          data:
+            one: two
+          jsonString: '{"one": "two"}'
+
+  Data:
+    union:
+      string: string
+      base64: base64
+    examples:
+      - name: String
+        value:
+          type: string
+          value: data

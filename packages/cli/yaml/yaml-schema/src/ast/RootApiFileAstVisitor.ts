@@ -1,3 +1,4 @@
+import { NodePath } from "../NodePath";
 import {
     ErrorDiscriminationSchema,
     HttpPathParameterSchema,
@@ -6,7 +7,6 @@ import {
     SingleBaseUrlEnvironmentSchema,
 } from "../schemas";
 import { VariableDeclarationSchema } from "../schemas/VariableDeclarationSchema";
-import { NodePath } from "./NodePath";
 
 export type RootApiFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof RootApiFileAstNodeTypes]: RootApiFileAstNodeVisitor<K, R>;

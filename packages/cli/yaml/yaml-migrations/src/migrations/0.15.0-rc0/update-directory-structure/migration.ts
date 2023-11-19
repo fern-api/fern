@@ -15,10 +15,6 @@ import yaml from "js-yaml";
 import { Migration } from "../../../types/Migration";
 import { GeneratorsConfigurationSchema } from "./generators-config-schemas/GeneratorsConfigurationSchema";
 
-const WORKSPACE_TYPE = (
-    SINGLE_API = "single",
-);
-
 export const migration: Migration = {
     name: "flatten-fern-directory-structure",
     summary: "Flattens your fern directory structure. If you have one API, you no longer need an API folder.",

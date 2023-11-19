@@ -1,3 +1,4 @@
+import { createFiddleService } from "@fern-api/core";
 import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import {
     DependenciesConfiguration,
@@ -8,7 +9,6 @@ import {
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
-import { createFiddleService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -246,15 +246,25 @@ async function validateVersionedDependencyAndGetDefinition({
         return undefined;
     }
 
+    const hasEndpoints =
+        Object.values(workspaceOfDependency.definition.namedDefinitionFiles).filter((file) => {
+            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
+        }).length > 0 ||
+        Object.values(workspaceOfDependency.definition.packageMarkers).filter((file) => {
+            return Object.keys(file.contents.service?.endpoints ?? {}).length > 0;
+        }).length > 0;
+
     // ensure root api files are equivalent
-    const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-    if (!equal) {
-        context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
-                ", "
-            )}]`
-        );
-        return undefined;
+    if (hasEndpoints) {
+        const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
+        if (!equal) {
+            context.failWithoutThrowing(
+                `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
+                    ", "
+                )}]`
+            );
+            return undefined;
+        }
     }
 
     return workspaceOfDependency.definition;

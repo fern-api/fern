@@ -1,4 +1,4 @@
-import { PrimitiveType } from "@fern-fern/ir-sdk/api";
+import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -6,7 +6,7 @@ export const FernContainerRegex = {
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
     OPTIONAL: /^optional<\s*(.*)\s*>$/,
-    LITERAL: /^literal<\s*"(.*)"\s*>$/,
+    LITERAL: /^literal<\s*(?:"(.*)"|(true|false))\s*>$/,
 };
 
 export interface RawTypeReferenceVisitor<R> {
@@ -15,7 +15,7 @@ export interface RawTypeReferenceVisitor<R> {
     list: (valueType: string) => R;
     set: (valueType: string) => R;
     optional: (valueType: string) => R;
-    literal: (literalValue: string) => R;
+    literal: (literal: Literal) => R;
     named: (named: string) => R;
     unknown: () => R;
 }
@@ -69,7 +69,18 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
 
     const literalMatch = type.match(FernContainerRegex.LITERAL);
     if (literalMatch?.[1] != null) {
-        return visitor.literal(literalMatch[1]);
+        return visitor.literal(Literal.string(literalMatch[1]));
+    }
+    if (literalMatch?.[2] != null) {
+        const group = literalMatch[2];
+        switch (group) {
+            case "false":
+                return visitor.literal(Literal.boolean(false));
+            case "true":
+                return visitor.literal(Literal.boolean(true));
+            default:
+                throw new Error(`Unsupported literal value: ${group}`);
+        }
     }
 
     return visitor.named(type);

@@ -8,20 +8,20 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2",
         output: {
             location: "local-file-system",
-            path: "../../src/fern",
+            path: "../src/fern",
         },
     },
     [GeneratorName.JAVA_MODEL]: {
-        version: "0.4.3",
+        version: "0.5.7",
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "0.4.3",
+        version: "0.5.7",
     },
     [GeneratorName.JAVA_SPRING]: {
-        version: "0.4.3",
+        version: "0.5.7",
         output: {
             location: "local-file-system",
-            path: "../../src/main/java/com/fern",
+            path: "../src/main/java/com/fern",
         },
         config: {
             "package-prefix": "com.fern",
@@ -40,26 +40,29 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2",
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
-        version: "0.4.0",
+        version: "0.6.0",
     },
     [GeneratorName.PYTHON_FASTAPI]: {
-        version: "0.4.0",
+        version: "0.6.0",
         output: {
             location: "local-file-system",
-            path: "../../src/fern",
+            path: "../src/fern",
         },
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.4.0",
+        version: "0.6.0",
+    },
+    [GeneratorName.GO_FIBER]: {
+        version: "0.9.0",
     },
     [GeneratorName.GO_MODEL]: {
-        version: "0.2.0",
+        version: "0.9.0",
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.2.0",
+        version: "0.9.0",
         output: {
             location: "local-file-system",
-            path: "../../generated/go",
+            path: "../generated/go",
         },
         config: {
             importPath: "go-mod-path/generated/go",
@@ -70,6 +73,10 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         config: {
             format: "yaml",
         },
+        output: {
+            location: "local-file-system",
+            path: "../generated/openapi",
+        },
     },
     [GeneratorName.STOPLIGHT]: {
         version: "0.0.24",
@@ -78,13 +85,17 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         },
     },
     [GeneratorName.POSTMAN]: {
-        version: "0.0.25",
+        version: "0.0.45",
+        output: {
+            location: "local-file-system",
+            path: "../generated/postman",
+        },
     },
     [GeneratorName.OPENAPI_PYTHON_CLIENT]: {
         version: "0.0.11",
         output: {
             location: "local-file-system",
-            path: "../../generated/python",
+            path: "../generated/python",
         },
         config: {
             format: "yaml",

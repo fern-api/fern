@@ -21,6 +21,9 @@ export declare namespace RemoteTaskHandler {
         interactiveTaskContext: InteractiveTaskContext;
         generatorInvocation: GeneratorInvocation;
     }
+    export interface Response {
+        createdSnippets: boolean;
+    }
 }
 
 export class RemoteTaskHandler {
@@ -33,7 +36,9 @@ export class RemoteTaskHandler {
         this.generatorInvocation = generatorInvocation;
     }
 
-    public async processUpdate(remoteTask: FernFiddle.remoteGen.Task | undefined): Promise<void> {
+    public async processUpdate(
+        remoteTask: FernFiddle.remoteGen.Task | undefined
+    ): Promise<RemoteTaskHandler.Response | undefined> {
         if (remoteTask == null) {
             this.context.failAndThrow("Task is missing on job status");
         }
@@ -94,16 +99,24 @@ export class RemoteTaskHandler {
                     this.context.logger.info(`Published ${coordinate}`);
                 }
                 this.#isFinished = true;
+                this.#createdSnippets = finishedStatus.createdSnippets != null ? finishedStatus.createdSnippets : false;
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
             },
         });
+
+        return this.#isFinished ? { createdSnippets: this.#createdSnippets } : undefined;
     }
 
     #isFinished = false;
     public get isFinished(): boolean {
         return this.#isFinished;
+    }
+
+    #createdSnippets = false;
+    public get createdSnippets(): boolean {
+        return this.#createdSnippets;
     }
 }
 

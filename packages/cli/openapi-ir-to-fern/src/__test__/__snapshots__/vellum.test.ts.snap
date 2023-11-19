@@ -86,6 +86,34 @@ Generate a completion using a previously defined deployment.
               "NotFoundError",
               "InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "options": {
+                    "logprobs": "ALL",
+                  },
+                  "requests": [
+                    {
+                      "input_values": {},
+                    },
+                  ],
+                },
+                "response": {
+                  "body": {
+                    "results": [
+                      {
+                        "data": {
+                          "completions": [],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/generate",
             "request": {
@@ -195,7 +223,7 @@ Perform a search against a document index.
                     "type": "optional<SearchRequestOptionsRequest>",
                   },
                   "query": {
-                    "docs": "The query to search for. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The query to search for.",
                     "type": "string",
                   },
                 },
@@ -221,6 +249,17 @@ Used to submit feedback regarding the quality of previously generated completion
               "BadRequestError",
               "NotFoundError",
               "InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "actuals": [],
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/v1/submit-completion-actuals",
@@ -285,10 +324,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "ChatMessageRole",
             },
-            "text": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "text": "string",
           },
         },
         "ChatMessageRequest": {
@@ -298,10 +334,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "ChatMessageRole",
             },
-            "text": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "text": "string",
           },
         },
         "ChatMessageRole": {
@@ -382,10 +415,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<string>",
             },
-            "output_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "output_id": "string",
             "text": {
               "docs": undefined,
               "type": "optional<string>",
@@ -399,10 +429,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "list<string>",
             },
-            "created": {
-              "docs": undefined,
-              "type": "datetime",
-            },
+            "created": "datetime",
             "environment": {
               "docs": "The environment this deployment is used in
 
@@ -411,18 +438,12 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`PRODUCTION\` - Production",
               "type": "optional<EnvironmentEnum>",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
             "label": {
-              "docs": "A human-readable label for the deployment <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+              "docs": "A human-readable label for the deployment",
               "type": "string",
             },
-            "last_deployed_on": {
-              "docs": undefined,
-              "type": "datetime",
-            },
+            "last_deployed_on": "datetime",
             "model_type": {
               "docs": "The type of model this deployment serves
 
@@ -431,7 +452,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "ModelTypeEnum",
             },
             "name": {
-              "docs": "A name that uniquely identifies this deployment within its workspace <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+              "docs": "A name that uniquely identifies this deployment within its workspace",
               "type": "string",
             },
             "status": {
@@ -478,7 +499,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "The human-readable name for the document. <span style="white-space: nowrap">\`<= 1000 characters\`</span> ",
+              "docs": "The human-readable name for the document.",
               "type": "string",
             },
           },
@@ -509,10 +530,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "DocumentIndexRead": {
           "docs": undefined,
           "properties": {
-            "created": {
-              "docs": undefined,
-              "type": "datetime",
-            },
+            "created": "datetime",
             "environment": {
               "docs": "The environment this document index is used in
 
@@ -521,20 +539,17 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`PRODUCTION\` - Production",
               "type": "optional<EnvironmentEnum>",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
             "indexing_config": {
               "docs": "Configuration representing how documents should be indexed",
               "type": "map<string, unknown>",
             },
             "label": {
-              "docs": "A human-readable label for the document index <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+              "docs": "A human-readable label for the document index",
               "type": "string",
             },
             "name": {
-              "docs": "A name that uniquely identifies this index within its workspace <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+              "docs": "A name that uniquely identifies this index within its workspace",
               "type": "string",
             },
             "status": {
@@ -759,10 +774,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<GenerateResultError>",
             },
-            "request_index": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "request_index": "integer",
           },
         },
         "GenerateStreamResultData": {
@@ -772,10 +784,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "EnrichedNormalizedCompletion",
             },
-            "completion_index": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "completion_index": "integer",
           },
         },
         "IndexingStateEnum": {
@@ -907,38 +916,23 @@ Used to submit feedback regarding the quality of previously generated completion
         "ModelVersionExecConfigParameters": {
           "docs": undefined,
           "properties": {
-            "frequency_penalty": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "frequency_penalty": "double",
             "logit_bias": {
               "docs": undefined,
               "type": "optional<map<string, optional<double>>>",
             },
-            "max_tokens": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "presence_penalty": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "max_tokens": "integer",
+            "presence_penalty": "double",
             "stop": {
               "docs": undefined,
               "type": "optional<list<string>>",
             },
-            "temperature": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "temperature": "double",
             "top_k": {
               "docs": undefined,
               "type": "optional<double>",
             },
-            "top_p": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "top_p": "double",
           },
         },
         "ModelVersionRead": {
@@ -957,7 +951,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "ModelVersionExecConfig",
             },
             "external_id": {
-              "docs": "The unique id of this model version as it exists in the above provider's system. <span style="white-space: nowrap">\`<= 250 characters\`</span> ",
+              "docs": "The unique id of this model version as it exists in the above provider's system.",
               "type": "string",
             },
             "id": {
@@ -965,7 +959,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "Human-friendly name for this model version. <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+              "docs": "Human-friendly name for this model version.",
               "type": "string",
             },
             "model_type": {
@@ -1063,14 +1057,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<double>",
             },
-            "text_offset": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "token": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "text_offset": "integer",
+            "token": "string",
             "top_logprobs": {
               "docs": undefined,
               "type": "optional<map<string, optional<double>>>",
@@ -1143,10 +1131,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<string>",
             },
-            "output_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "output_id": "string",
             "text": {
               "docs": undefined,
               "type": "optional<string>",
@@ -1160,10 +1145,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "BlockTypeEnum",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
             "properties": {
               "docs": undefined,
               "type": "PromptTemplateBlockProperties",
@@ -1177,10 +1159,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "list<PromptTemplateBlock>",
             },
-            "version": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "version": "integer",
           },
         },
         "PromptTemplateBlockDataRequest": {
@@ -1190,10 +1169,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "list<PromptTemplateBlockRequest>",
             },
-            "version": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "version": "integer",
           },
         },
         "PromptTemplateBlockProperties": {
@@ -1249,11 +1225,11 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<ChatMessageRole>",
             },
             "function_description": {
-              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "function_name": {
-              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "function_parameters": {
@@ -1277,10 +1253,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "BlockTypeEnum",
             },
-            "id": {
-              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
-              "type": "string",
-            },
+            "id": "string",
             "properties": {
               "docs": undefined,
               "type": "PromptTemplateBlockPropertiesRequest",
@@ -1300,7 +1273,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "key": {
-              "docs": "The name of the input variable. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the input variable.",
               "type": "string",
             },
           },
@@ -1369,38 +1342,23 @@ Used to submit feedback regarding the quality of previously generated completion
         "RegisterPromptModelParametersRequest": {
           "docs": undefined,
           "properties": {
-            "frequency_penalty": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "frequency_penalty": "double",
             "logit_bias": {
               "docs": undefined,
               "type": "optional<map<string, optional<double>>>",
             },
-            "max_tokens": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "presence_penalty": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "max_tokens": "integer",
+            "presence_penalty": "double",
             "stop": {
               "docs": undefined,
               "type": "optional<list<string>>",
             },
-            "temperature": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "temperature": "double",
             "top_k": {
               "docs": undefined,
               "type": "optional<double>",
             },
-            "top_p": {
-              "docs": undefined,
-              "type": "double",
-            },
+            "top_p": "double",
           },
         },
         "RegisterPromptPrompt": {
@@ -1544,10 +1502,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<string>",
             },
-            "output_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "output_id": "string",
             "text": {
               "docs": undefined,
               "type": "optional<string>",
@@ -1582,10 +1537,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<list<ChatMessage>>",
             },
-            "key": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "key": "string",
             "type": {
               "docs": undefined,
               "type": "optional<ScenarioInputTypeEnum>",
@@ -1603,10 +1555,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<list<ChatMessageRequest>>",
             },
-            "key": {
-              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
-              "type": "string",
-            },
+            "key": "string",
             "type": {
               "docs": undefined,
               "type": "optional<ScenarioInputTypeEnum>",
@@ -1667,10 +1616,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "list<map<string, unknown>>",
             },
-            "results_output_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "results_output_id": "string",
             "text": {
               "docs": undefined,
               "type": "optional<string>",
@@ -1774,7 +1720,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<list<string>>",
             },
             "label": {
-              "docs": "Human-friendly name for this document. <span style="white-space: nowrap">\`<= 1000 characters\`</span> ",
+              "docs": "Human-friendly name for this document.",
               "type": "string",
             },
             "last_uploaded_at": {
@@ -1833,10 +1779,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "SubmitCompletionActualsErrorResponse": {
           "docs": undefined,
           "properties": {
-            "detail": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "detail": "string",
           },
         },
         "TerminalNodeChatHistoryResult": {
@@ -1909,10 +1852,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": "The unique name given to the terminal node that produced this output.",
               "type": "string",
             },
-            "value": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "value": "string",
           },
         },
         "TestSuiteTestCase": {
@@ -1939,10 +1879,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "UploadDocumentErrorResponse": {
           "docs": undefined,
           "properties": {
-            "detail": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "detail": "string",
           },
         },
         "UploadDocumentResponse": {
@@ -1961,10 +1898,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "WorkflowExecutionEventErrorCode",
             },
-            "message": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "message": "string",
           },
         },
         "WorkflowExecutionEventErrorCode": {
@@ -1994,10 +1928,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<string>",
             },
-            "run_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "run_id": "string",
           },
         },
         "WorkflowExecutionWorkflowResultEvent": {
@@ -2011,10 +1942,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<string>",
             },
-            "run_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "run_id": "string",
           },
         },
         "WorkflowNodeResultData": {
@@ -2059,18 +1987,9 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<WorkflowEventError>",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "node_id": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "node_result_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
+            "node_id": "string",
+            "node_result_id": "string",
             "state": {
               "docs": undefined,
               "type": "WorkflowNodeResultEventState",
@@ -2113,7 +2032,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "The variable's name, as defined in the Workflow. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The variable's name, as defined in the Workflow.",
               "type": "string",
             },
             "value": {
@@ -2145,7 +2064,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "The variable's name, as defined in the Workflow. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The variable's name, as defined in the Workflow.",
               "type": "string",
             },
             "value": {
@@ -2158,13 +2077,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "The variable's name, as defined in the Workflow. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The variable's name, as defined in the Workflow.",
               "type": "string",
             },
-            "value": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "value": "string",
           },
         },
         "WorkflowResultEvent": {
@@ -2174,10 +2090,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "optional<WorkflowEventError>",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
             "output": {
               "docs": undefined,
               "type": "optional<WorkflowResultEventOutputData>",
@@ -2186,10 +2099,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "type": "WorkflowNodeResultEventState",
             },
-            "ts": {
-              "docs": undefined,
-              "type": "datetime",
-            },
+            "ts": "datetime",
           },
         },
         "WorkflowResultEventOutputData": {
@@ -2218,14 +2128,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
               "type": "optional<string>",
             },
-            "name": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "node_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "name": "string",
+            "node_id": "string",
             "state": {
               "docs": undefined,
               "type": "WorkflowNodeResultEventState",
@@ -2243,14 +2147,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
               "type": "optional<string>",
             },
-            "name": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "node_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "name": "string",
+            "node_id": "string",
             "state": {
               "docs": undefined,
               "type": "WorkflowNodeResultEventState",
@@ -2268,14 +2166,8 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
               "type": "optional<string>",
             },
-            "name": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "node_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "name": "string",
+            "node_id": "string",
             "state": {
               "docs": undefined,
               "type": "WorkflowNodeResultEventState",
@@ -2372,11 +2264,11 @@ Creates a new document index.",
                     "type": "map<string, unknown>",
                   },
                   "label": {
-                    "docs": "A human-readable label for the document index <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+                    "docs": "A human-readable label for the document index",
                     "type": "string",
                   },
                   "name": {
-                    "docs": "A name that uniquely identifies this index within its workspace <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
+                    "docs": "A name that uniquely identifies this index within its workspace",
                     "type": "string",
                   },
                   "status": {
@@ -2417,6 +2309,21 @@ Creates a new document index.",
 Used to list documents. Optionally filter on supported fields.
 ",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?offset=400&limit=100",
+                    "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v1/documents",
             "request": {
@@ -2481,7 +2388,7 @@ Upload a document to be indexed and used for search.
                     "type": "optional<list<string>>",
                   },
                   "label": {
-                    "docs": "A human-friendly name for this document. Typically the filename. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "A human-friendly name for this document. Typically the filename.",
                     "type": "string",
                   },
                 },
@@ -2590,7 +2497,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "body": {
                 "properties": {
                   "label": {
-                    "docs": "A human-friendly label for corresponding entities created in Vellum. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "A human-friendly label for corresponding entities created in Vellum.",
                     "type": "string",
                   },
                   "meta": {
@@ -2598,11 +2505,11 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "type": "optional<map<string, unknown>>",
                   },
                   "model": {
-                    "docs": "The initial model to use for this prompt <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The initial model to use for this prompt",
                     "type": "string",
                   },
                   "name": {
-                    "docs": "A uniquely-identifying name for corresponding entities created in Vellum. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
                     "type": "string",
                   },
                   "parameters": {
@@ -2655,6 +2562,18 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                  "scenario_id": "scenario-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
@@ -2705,7 +2624,7 @@ or overwritten with default values.",
                     "type": "optional<root.SandboxMetricInputParamsRequest>",
                   },
                   "scenario_id": {
-                    "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
                     "type": "optional<string>",
                   },
                 },
@@ -2737,6 +2656,18 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                  "test_case_id": "test-case-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
@@ -2763,6 +2694,25 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "evaluation_params": {},
+                  "input_values": {},
+                },
+                "response": {
+                  "body": {
+                    "evaluation_params": {},
+                    "input_values": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {
@@ -2787,7 +2737,7 @@ or overwritten with default values.",
                     "type": "optional<string>",
                   },
                   "test_case_id": {
-                    "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
                     "type": "optional<string>",
                   },
                 },

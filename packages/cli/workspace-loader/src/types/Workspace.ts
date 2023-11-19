@@ -1,8 +1,8 @@
 import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
-import { DocsConfiguration } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
+import { DocsConfiguration } from "@fern-fern/docs-config/api";
 import { ParsedFernFile } from "./FernFile";
 
 export type Workspace = DocsWorkspace | APIWorkspace;
@@ -11,7 +11,8 @@ export interface DocsWorkspace {
     type: "docs";
     workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
-    docsDefinition: DocsDefinition;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    config: DocsConfiguration;
 }
 
 export type APIWorkspace = FernWorkspace | OpenAPIWorkspace;
@@ -22,19 +23,17 @@ export interface OpenAPIWorkspace {
     name: string;
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
-    definition: OpenAPIDefinition;
-}
-
-export interface OpenAPIDefinition {
-    absolutePath: AbsoluteFilePath;
-    file: OpenAPIFile;
-    subDirectories: OpenAPIDefinition[];
+    absolutePathToOpenAPI: AbsoluteFilePath;
+    absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
 }
 
 export interface OpenAPIFile {
     absoluteFilepath: AbsoluteFilePath;
-    /* relative filepath from the root of the definition */
-    relativeFilepath: RelativeFilePath;
+    contents: string;
+}
+
+export interface AsyncAPIFile {
+    absoluteFilepath: AbsoluteFilePath;
     contents: string;
 }
 
@@ -58,10 +57,4 @@ export interface FernDefinition {
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
     absoluteFilepath: AbsoluteFilePath;
-}
-
-export interface DocsDefinition {
-    absoluteFilepath: AbsoluteFilePath;
-    config: DocsConfiguration;
-    pages: Record<RelativeFilePath, string>;
 }

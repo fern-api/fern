@@ -1,10 +1,11 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
+import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listFiles } from "./listFiles";
-import { loadAndValidateOpenAPIDefinition } from "./loadAndValidateOpenAPIWorkspace";
+import { getValidAbsolutePathToAsyncAPI, getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
+import { getValidAbsolutePathToOpenAPI, getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
@@ -23,11 +24,21 @@ export async function loadAPIWorkspace({
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
 
-    const absolutePathToOpenAPIDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
-    const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
+    const absolutePathToOpenAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
+    const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIFolder);
 
-    if (openApiDirectoryExists) {
-        const openApiDefinition = await loadAndValidateOpenAPIDefinition(context, absolutePathToOpenAPIDefinition);
+    const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
+    const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
+
+    if (generatorsConfiguration.absolutePathToOpenAPI != null) {
+        const absolutePathToAsyncAPI =
+            generatorsConfiguration.absolutePathToAsyncAPI != null
+                ? await getValidAbsolutePathToAsyncAPI(context, generatorsConfiguration.absolutePathToAsyncAPI)
+                : undefined;
+        const absolutePathToOpenAPI = await getValidAbsolutePathToOpenAPI(
+            context,
+            generatorsConfiguration.absolutePathToOpenAPI
+        );
         return {
             didSucceed: true,
             workspace: {
@@ -36,7 +47,29 @@ export async function loadAPIWorkspace({
                 workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
-                definition: openApiDefinition,
+                absolutePathToOpenAPI,
+                absolutePathToAsyncAPI,
+            },
+        };
+    }
+    if (openApiDirectoryExists) {
+        const absolutePathToAsyncAPI = asyncApiDirectoryExists
+            ? await getValidAbsolutePathToAsyncAPIFromFolder(context, absolutePathToAsyncAPIFolder)
+            : undefined;
+        const absolutePathToOpenAPI = await getValidAbsolutePathToOpenAPIFromFolder(
+            context,
+            absolutePathToOpenAPIFolder
+        );
+        return {
+            didSucceed: true,
+            workspace: {
+                type: "openapi",
+                name: "api",
+                workspaceName,
+                absoluteFilepath: absolutePathToWorkspace,
+                generatorsConfiguration,
+                absolutePathToOpenAPI,
+                absolutePathToAsyncAPI,
             },
         };
     }

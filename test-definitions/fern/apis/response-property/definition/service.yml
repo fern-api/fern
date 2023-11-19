@@ -1,0 +1,81 @@
+imports:
+  root: __package__.yml
+
+types:
+  WithDocs:
+    properties:
+      docs: string
+
+  OptionalWithDocs: optional<WithDocs>
+
+  Movie:
+    properties:
+      id: string
+      name: string
+
+  Response:
+    extends:
+      - root.WithMetadata
+      - WithDocs
+    properties:
+      data: Movie
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getMovie:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: Response
+        property: data
+
+    getMovieDocs:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: Response
+        property: docs
+
+    getMovieName:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: root.StringResponse
+        property: data
+
+    getMovieMetadata:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: Response
+        property: metadata
+
+    getOptionalMovie:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: optional<Response>
+        property: data
+
+    getOptionalMovieDocs:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: OptionalWithDocs
+        property: docs
+
+    getOptionalMovieName:
+      method: POST
+      path: /movie
+      request: string
+      response:
+        type: root.OptionalStringResponse
+        property: data

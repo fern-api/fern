@@ -1,0 +1,463 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate IR 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "enum",
+      "unsafeName": "enum",
+    },
+    "originalName": "enum",
+    "pascalCase": {
+      "safeName": "Enum",
+      "unsafeName": "Enum",
+    },
+    "screamingSnakeCase": {
+      "safeName": "ENUM",
+      "unsafeName": "ENUM",
+    },
+    "snakeCase": {
+      "safeName": "enum",
+      "unsafeName": "enum",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [],
+    "types": [
+      "type_:Enum",
+      "type_:One",
+    ],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [
+      "type_:Enum",
+      "type_:One",
+    ],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {},
+  "subpackages": {},
+  "types": {
+    "type_:Enum": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": "THREE",
+          "name": {
+            "camelCase": {
+              "safeName": "three",
+              "unsafeName": "three",
+            },
+            "originalName": "Three",
+            "pascalCase": {
+              "safeName": "Three",
+              "unsafeName": "Three",
+            },
+            "screamingSnakeCase": {
+              "safeName": "THREE",
+              "unsafeName": "THREE",
+            },
+            "snakeCase": {
+              "safeName": "three",
+              "unsafeName": "three",
+            },
+          },
+          "shape": {
+            "type": "enum",
+            "value": {
+              "name": {
+                "camelCase": {
+                  "safeName": "three",
+                  "unsafeName": "three",
+                },
+                "originalName": "THREE",
+                "pascalCase": {
+                  "safeName": "Three",
+                  "unsafeName": "Three",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "THREE",
+                  "unsafeName": "THREE",
+                },
+                "snakeCase": {
+                  "safeName": "three",
+                  "unsafeName": "three",
+                },
+              },
+              "wireValue": "THREE",
+            },
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "enum",
+            "unsafeName": "enum",
+          },
+          "originalName": "Enum",
+          "pascalCase": {
+            "safeName": "Enum",
+            "unsafeName": "Enum",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ENUM",
+            "unsafeName": "ENUM",
+          },
+          "snakeCase": {
+            "safeName": "enum",
+            "unsafeName": "enum",
+          },
+        },
+        "typeId": "type_:Enum",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "enum",
+        "values": [
+          {
+            "availability": null,
+            "docs": "The first enum value.",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+                "originalName": "ONE",
+                "pascalCase": {
+                  "safeName": "One",
+                  "unsafeName": "One",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ONE",
+                  "unsafeName": "ONE",
+                },
+                "snakeCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+              },
+              "wireValue": "ONE",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "two",
+                  "unsafeName": "two",
+                },
+                "originalName": "TWO",
+                "pascalCase": {
+                  "safeName": "Two",
+                  "unsafeName": "Two",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TWO",
+                  "unsafeName": "TWO",
+                },
+                "snakeCase": {
+                  "safeName": "two",
+                  "unsafeName": "two",
+                },
+              },
+              "wireValue": "TWO",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "three",
+                  "unsafeName": "three",
+                },
+                "originalName": "THREE",
+                "pascalCase": {
+                  "safeName": "Three",
+                  "unsafeName": "Three",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "THREE",
+                  "unsafeName": "THREE",
+                },
+                "snakeCase": {
+                  "safeName": "three",
+                  "unsafeName": "three",
+                },
+              },
+              "wireValue": "THREE",
+            },
+          },
+        ],
+      },
+    },
+    "type_:One": {
+      "availability": null,
+      "docs": "Represents a variety of casing conventions that
+could collide without special care.
+",
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": "One",
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "type": "enum",
+            "value": {
+              "name": {
+                "camelCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+                "originalName": "One",
+                "pascalCase": {
+                  "safeName": "One",
+                  "unsafeName": "One",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ONE",
+                  "unsafeName": "ONE",
+                },
+                "snakeCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+              },
+              "wireValue": "One",
+            },
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": null,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "one",
+            "unsafeName": "one",
+          },
+          "originalName": "One",
+          "pascalCase": {
+            "safeName": "One",
+            "unsafeName": "One",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ONE",
+            "unsafeName": "ONE",
+          },
+          "snakeCase": {
+            "safeName": "one",
+            "unsafeName": "one",
+          },
+        },
+        "typeId": "type_:One",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "enum",
+        "values": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+                "originalName": "one",
+                "pascalCase": {
+                  "safeName": "One",
+                  "unsafeName": "One",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ONE",
+                  "unsafeName": "ONE",
+                },
+                "snakeCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+              },
+              "wireValue": "one",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+                "originalName": "One",
+                "pascalCase": {
+                  "safeName": "One",
+                  "unsafeName": "One",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ONE",
+                  "unsafeName": "ONE",
+                },
+                "snakeCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+              },
+              "wireValue": "One",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "oNe",
+                  "unsafeName": "oNe",
+                },
+                "originalName": "ONe",
+                "pascalCase": {
+                  "safeName": "ONe",
+                  "unsafeName": "ONe",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "O_NE",
+                  "unsafeName": "O_NE",
+                },
+                "snakeCase": {
+                  "safeName": "o_ne",
+                  "unsafeName": "o_ne",
+                },
+              },
+              "wireValue": "ONe",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+                "originalName": "ONE",
+                "pascalCase": {
+                  "safeName": "One",
+                  "unsafeName": "One",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ONE",
+                  "unsafeName": "ONE",
+                },
+                "snakeCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+              },
+              "wireValue": "ONE",
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+}
+`;

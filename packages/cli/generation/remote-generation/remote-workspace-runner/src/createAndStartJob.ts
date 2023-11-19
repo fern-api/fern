@@ -1,8 +1,8 @@
 import { FernToken } from "@fern-api/auth";
+import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
-import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";

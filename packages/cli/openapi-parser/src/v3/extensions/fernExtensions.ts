@@ -3,13 +3,56 @@ import { Values } from "@fern-api/core-utils";
 export const FernOpenAPIExtension = {
     SDK_METHOD_NAME: "x-fern-sdk-method-name",
     SDK_GROUP_NAME: "x-fern-sdk-group-name",
-    STREAMING: "x-fern-streaming",
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
+    BOOLEAN_LITERAL: "x-fern-boolean-literal",
 
     SERVER_NAME_V1: "x-name",
     SERVER_NAME_V2: "x-fern-server-name",
+
+    /**
+     * Used to override the type with fern's type syntax
+     * Bar:
+     *  properties:
+     *    createdDate:
+     *      type: string
+     *      x-fern-type: datetime
+     *      x-fern-type:
+     *        properties:
+     *         a: string
+     *         b: integer
+     *      x-fern-type: optional<map<string, integer>>
+     */
+    TYPE_DEFINITION: "x-fern-type",
+
+    /**
+     * Used to specify if an endpoint should be generated
+     * as a streaming endpoint.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming: true
+     *
+     * Alternatively, you can annotate the endpoint so that
+     * it generates both a traditional unary endpoint,
+     * as well as its streaming equivalent. The stream
+     * condition property is included to specify a boolean
+     * propetry that tells the server whether or not the
+     * response should be streamed or not.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming:
+     *         stream-condition: $request.stream
+     *         response:
+     *           $ref: ./path/to/response/type.yaml
+     *         response-stream:
+     *           $ref: ./path/to/response-stream/type.yaml
+     */
+    STREAMING: "x-fern-streaming",
 
     /**
      * Used to specify if an endpoint is actually
@@ -73,6 +116,16 @@ export const FernOpenAPIExtension = {
     BEARER_TOKEN_VARIABLE_NAME: "x-fern-token-variable-name",
 
     /**
+     * securitySchemes:
+     *   Bearer:
+     *     type: apiKey
+     *     in: header
+     *     name: X-API-KEY-ID
+     *     x-fern-header-variable-name: apiKeyId
+     */
+    HEADER_VARIABLE_NAME: "x-fern-header-variable-name",
+
+    /**
      * The x-fern-enum allows you to specify docs for the enum value.
      * If your enum is not codegen friendly (not alphanumeric), then you can specify a codegen name as well.
      *
@@ -106,6 +159,14 @@ export const FernOpenAPIExtension = {
      *       x-fern-ignore: true
      */
     IGNORE: "x-fern-ignore",
+
+    /**
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-availability: ga # or beta, generally-available, deprecated,
+     */
+    AVAILABILITY: "x-fern-availability",
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

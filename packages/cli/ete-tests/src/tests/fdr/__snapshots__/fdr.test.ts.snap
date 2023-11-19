@@ -362,6 +362,12 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "statusCode": 400
                         }
                     ],
+                    "errorsV2": [
+                        {
+                            "statusCode": 400,
+                            "name": "BadRequestError"
+                        }
+                    ],
                     "examples": [
                         {
                             "path": "/movies",
@@ -467,6 +473,41 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "statusCode": 400
                         }
                     ],
+                    "errorsV2": [
+                        {
+                            "type": {
+                                "extends": [],
+                                "properties": [
+                                    {
+                                        "key": "error",
+                                        "valueType": {
+                                            "value": {
+                                                "value": "NotFoundError",
+                                                "type": "stringLiteral"
+                                            },
+                                            "type": "literal"
+                                        }
+                                    },
+                                    {
+                                        "key": "content",
+                                        "valueType": {
+                                            "value": {
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        }
+                                    }
+                                ],
+                                "type": "object"
+                            },
+                            "statusCode": 404,
+                            "name": "NotFoundError"
+                        },
+                        {
+                            "statusCode": 400,
+                            "name": "BadRequestError"
+                        }
+                    ],
                     "examples": [
                         {
                             "path": "/movies/id-123",
@@ -539,6 +580,12 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "statusCode": 400
                         }
                     ],
+                    "errorsV2": [
+                        {
+                            "statusCode": 400,
+                            "name": "BadRequestError"
+                        }
+                    ],
                     "examples": []
                 },
                 {
@@ -582,6 +629,12 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "statusCode": 400
                         }
                     ],
+                    "errorsV2": [
+                        {
+                            "statusCode": 400,
+                            "name": "BadRequestError"
+                        }
+                    ],
                     "examples": []
                 }
             ],
@@ -608,6 +661,7 @@ exports[`fdr {"name":"simple"} 1`] = `
             "subpackage_director",
             "subpackage_imdb"
         ]
-    }
+    },
+    "snippetsConfiguration": {}
 }"
 `;

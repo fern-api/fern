@@ -1,7 +1,10 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     EnumSchema,
+    LiteralSchemaValue,
     MapSchema,
     NullableSchema,
     ObjectSchema,
@@ -11,8 +14,7 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
-    SchemaId,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import {
     convertEnumToTypeDeclaration,
     convertObjectToTypeDeclaration,
@@ -74,44 +76,17 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
-    const docsSuffix = PrimitiveSchemaValue._visit<string[]>(primitiveSchema.schema, {
-        int: () => [],
-        int64: () => [],
-        float: () => [],
-        double: () => [],
-        string: (value) => {
-            const prefixes = [];
-            if (value.minLength != null && value.minLength === 1) {
-                prefixes.push("non-empty");
-            }
-            if (value.maxLength != null) {
-                prefixes.push(`<= ${value.maxLength} characters`);
-            }
-            return prefixes;
-        },
-        datetime: () => [],
-        date: () => [],
-        base64: () => [],
-        boolean: () => [],
-        _unknown: () => [],
-    });
-
-    const suffixMarkdown = docsSuffix
-        .map((prefix) => `<span style="white-space: nowrap">\`${prefix}\`</span>`)
-        .join(" ");
-    let docs = undefined;
-    if (primitiveSchema.description != null && docsSuffix.length > 0) {
-        docs = `${primitiveSchema.description} ${suffixMarkdown} `;
-    } else if (primitiveSchema.description != null) {
-        docs = `${primitiveSchema.description}`;
-    } else if (docsSuffix.length > 0) {
-        docs = `${suffixMarkdown}`;
+    if (primitiveSchema.description != null) {
+        return {
+            typeReference: {
+                type: typeReference,
+                docs: primitiveSchema.description,
+            },
+            additionalTypeDeclarations: {},
+        };
     }
     return {
-        typeReference: {
-            type: typeReference,
-            docs,
-        },
+        typeReference,
         additionalTypeDeclarations: {},
     };
 }
@@ -170,12 +145,7 @@ export function convertMapToTypeReference({
     prefix?: string;
     schemas: Record<SchemaId, Schema>;
 }): TypeReference {
-    const keyTypeReference = convertPrimitiveToTypeReference(
-        Schema.primitive({
-            schema: schema.key,
-            description: undefined,
-        })
-    );
+    const keyTypeReference = convertPrimitiveToTypeReference(schema.key);
     const valueTypeReference = convertToTypeReference({
         schema: schema.value,
         prefix,
@@ -253,11 +223,21 @@ export function convertUnknownToTypeReference(): TypeReference {
     };
 }
 
-export function convertLiteralToTypeReference(value: string): TypeReference {
-    return {
-        typeReference: `literal<"${value}">`,
-        additionalTypeDeclarations: {},
-    };
+export function convertLiteralToTypeReference(value: LiteralSchemaValue): TypeReference {
+    switch (value.type) {
+        case "boolean":
+            return {
+                typeReference: `literal<${value.boolean}>`,
+                additionalTypeDeclarations: {},
+            };
+        case "string":
+            return {
+                typeReference: `literal<"${value.string}">`,
+                additionalTypeDeclarations: {},
+            };
+        default:
+            assertNever(value);
+    }
 }
 
 export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSchema; prefix?: string }): TypeReference {

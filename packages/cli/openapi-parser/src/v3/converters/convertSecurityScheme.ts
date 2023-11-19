@@ -1,4 +1,4 @@
-import { SecurityScheme } from "@fern-fern/openapi-ir-model/ir";
+import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
@@ -21,6 +21,7 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
         return SecurityScheme.header({
             headerName: securityScheme.name,
             prefix: bearerFormat != null ? "Bearer" : undefined,
+            headerVariableName: getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
         const tokenVariableName = getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME);

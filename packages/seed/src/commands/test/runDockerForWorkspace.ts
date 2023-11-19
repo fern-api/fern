@@ -7,27 +7,32 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo } from "@fern-fern/fiddle-sdk/types/api";
+import { GeneratorType } from "@fern-fern/seed-config/api";
 import { ParsedDockerName } from "../../cli";
 
 const DUMMY_ORGANIZATION = "seed";
 const ALL_AUDIENCES: Audiences = { type: "all" };
 
 export async function runDockerForWorkspace({
+    generatorType,
     absolutePathToOutput,
     docker,
     language,
     workspace,
     taskContext,
+    customConfig,
     irVersion,
 }: {
+    generatorType: GeneratorType;
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
-    language: GenerationLanguage;
+    language: GenerationLanguage | undefined;
     workspace: FernWorkspace;
     taskContext: TaskContext;
+    customConfig: unknown;
     irVersion?: string;
 }): Promise<void> {
-    const publishInfo = getPublishInfo(language);
+    const publishInfo = language != null ? getPublishInfo(language) : undefined;
 
     const generatorGroup: GeneratorGroup = {
         groupName: "DUMMY",
@@ -36,12 +41,15 @@ export async function runDockerForWorkspace({
             {
                 name: docker.name,
                 version: docker.version,
-                config: undefined,
-                outputMode: FernFiddle.remoteGen.OutputMode.github({
-                    repo: `seed-${language}`,
-                    owner: "fern-api",
-                    publishInfo,
-                }),
+                config: customConfig,
+                outputMode:
+                    generatorType === "Server"
+                        ? FernFiddle.remoteGen.OutputMode.downloadFiles()
+                        : FernFiddle.remoteGen.OutputMode.github({
+                              repo: `seed-${language}`,
+                              owner: "fern-api",
+                              publishInfo,
+                          }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
             },

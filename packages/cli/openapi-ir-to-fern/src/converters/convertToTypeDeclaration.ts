@@ -1,7 +1,9 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     ArraySchema,
     EnumSchema,
+    LiteralSchemaValue,
     MapSchema,
     ObjectProperty,
     ObjectSchema,
@@ -10,8 +12,7 @@ import {
     PrimitiveSchema,
     ReferencedSchema,
     Schema,
-    SchemaId,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import {
     convertArrayToTypeReference,
     convertLiteralToTypeReference,
@@ -280,7 +281,7 @@ export function convertUnknownToTypeDeclaration(): TypeDeclarations {
     };
 }
 
-export function convertLiteralToTypeDeclaration(value: string): TypeDeclarations {
+export function convertLiteralToTypeDeclaration(value: LiteralSchemaValue): TypeDeclarations {
     const literalTypeReference = convertLiteralToTypeReference(value);
     return {
         typeDeclaration: literalTypeReference.typeReference,

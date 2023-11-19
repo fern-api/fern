@@ -28,28 +28,16 @@ exports[`open api parser superagent simple 1`] = `
               "docs": undefined,
               "type": "list<ValidationErrorLocItem>",
             },
-            "msg": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "msg": "string",
+            "type": "string",
           },
         },
         "ValidationErrorLocItem": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "string",
+            "integer",
           ],
         },
       },
@@ -86,10 +74,7 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "optional<map<string, unknown>>",
                   },
-                  "name": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "name": "string",
                   "promptId": {
                     "docs": undefined,
                     "type": "optional<string>",
@@ -98,10 +83,7 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "optional<string>",
                   },
-                  "type": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "type": "string",
                 },
               },
               "headers": undefined,
@@ -251,10 +233,7 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "description": "string",
                 },
               },
               "headers": undefined,
@@ -341,14 +320,8 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "email": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "password": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "email": "string",
+                  "password": "string",
                 },
               },
               "headers": undefined,
@@ -372,10 +345,7 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "email": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "email": "string",
                   "metadata": {
                     "docs": undefined,
                     "type": "optional<map<string, unknown>>",
@@ -384,10 +354,7 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "optional<string>",
                   },
-                  "password": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "password": "string",
                 },
               },
               "headers": undefined,
@@ -430,10 +397,7 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "optional<integer>",
                   },
-                  "name": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "name": "string",
                   "splitter": {
                     "docs": undefined,
                     "type": "optional<map<string, unknown>>",
@@ -442,14 +406,8 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "optional<integer>",
                   },
-                  "type": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "url": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "type": "string",
+                  "url": "string",
                 },
               },
               "headers": undefined,
@@ -540,14 +498,8 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "list<unknown>",
                   },
-                  "name": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "template": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "name": "string",
+                  "template": "string",
                 },
               },
               "headers": undefined,
@@ -664,14 +616,8 @@ exports[`open api parser superagent simple 1`] = `
                     "docs": undefined,
                     "type": "optional<map<string, unknown>>",
                   },
-                  "name": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "type": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "name": "string",
+                  "type": "string",
                 },
               },
               "headers": undefined,

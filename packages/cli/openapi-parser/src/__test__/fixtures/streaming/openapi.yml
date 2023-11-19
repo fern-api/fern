@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: Streaming API
+  version: 1.0.0
+paths:
+  /v1/users:
+    post:
+      operationId: user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: ""
+                  type: string
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/BaseUser"
+        response-stream:
+          $ref: "#/components/schemas/BaseStreamUser"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseUser"
+  /v2/users:
+    post:
+      operationId: user_v2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: ""
+                  type: string
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          $ref: "./User.yml"
+        response-stream:
+          $ref: "./StreamUser.yml"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseUser"
+  /v3/users:
+    post:
+      operationId: user_v3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: ""
+                  type: string
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            inline:
+              type: boolean
+        response-stream:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            inline:
+              type: boolean
+            streamed:
+              type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BaseUser"
+components:
+  schemas:
+    BaseUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+    BaseStreamUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid

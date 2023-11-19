@@ -8,10 +8,8 @@ exports[`validate petstore 1`] = `
 types:
   Pet:
     properties:
-      id:
-        type: integer
-      name:
-        type: string
+      id: integer
+      name: string
       tag:
         type: optional<string>
 
@@ -20,10 +18,8 @@ types:
 
   Error:
     properties:
-      code:
-        type: integer
-      message:
-        type: string
+      code: integer
+      message: string
 
 errors: {}
 ",
@@ -69,6 +65,9 @@ service:
         docs: A paged array of pets
         type: root.Pets
       errors: []
+      examples:
+        - response:
+            body: []
 
     createPets:
       path: /pets
@@ -76,6 +75,8 @@ service:
       auth: false
       display-name: Create a pet
       errors: []
+      examples:
+        - {}
 
     showPetById:
       path: /pets/{petId}

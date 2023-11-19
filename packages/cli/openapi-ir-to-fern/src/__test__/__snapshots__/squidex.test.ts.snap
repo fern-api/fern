@@ -60,7 +60,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "The name of the field. Must be unique within the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the field. Must be unique within the schema.",
               "type": "string",
             },
             "partitioning": {
@@ -77,11 +77,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "The API key to grant access to Squidex. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The API key to grant access to Squidex.",
               "type": "string",
             },
             "appId": {
-              "docs": "The application ID. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The application ID.",
               "type": "string",
             },
             "delete": {
@@ -93,7 +93,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "indexName": {
-              "docs": "The name of the index. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the index.",
               "type": "string",
             },
           },
@@ -656,7 +656,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "contributorId": {
-              "docs": "The id or email of the user to add to the app. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The id or email of the user to add to the app.",
               "type": "string",
             },
             "invite": {
@@ -673,7 +673,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "connectionString": {
-              "docs": "The connection string to the storage account. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The connection string to the storage account.",
               "type": "string",
             },
             "payload": {
@@ -681,7 +681,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "queue": {
-              "docs": "The name of the queue. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the queue.",
               "type": "string",
             },
           },
@@ -1007,7 +1007,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "planId": {
-              "docs": "The new plan id. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The new plan id.",
               "type": "string",
             },
           },
@@ -1093,7 +1093,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "text": {
-              "docs": "The comment text. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The comment text.",
               "type": "string",
             },
           },
@@ -1349,7 +1349,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "data": {
-              "docs": "The content data. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The content data.",
               "type": "string",
             },
             "publish": {
@@ -1357,7 +1357,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "schema": {
-              "docs": "The name of the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the schema.",
               "type": "string",
             },
           },
@@ -1455,11 +1455,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "The api key to authenticate to your discourse server. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The api key to authenticate to your discourse server.",
               "type": "string",
             },
             "apiUsername": {
-              "docs": "The api username to authenticate to your discourse server. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The api username to authenticate to your discourse server.",
               "type": "string",
             },
             "category": {
@@ -1467,7 +1467,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<integer>",
             },
             "text": {
-              "docs": "The text as markdown. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The text as markdown.",
               "type": "string",
             },
             "title": {
@@ -1479,7 +1479,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<integer>",
             },
             "url": {
-              "docs": "The url to the discourse server. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The url to the discourse server.",
               "type": "string",
             },
           },
@@ -1509,11 +1509,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "host": {
-              "docs": "The url to the instance or cluster. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The url to the instance or cluster.",
               "type": "string",
             },
             "indexName": {
-              "docs": "The name of the index. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the index.",
               "type": "string",
             },
             "password": {
@@ -1530,27 +1530,27 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "messageBody": {
-              "docs": "The message body. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The message body.",
               "type": "string",
             },
             "messageFrom": {
-              "docs": "The email sending address. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The email sending address.",
               "type": "string",
             },
             "messageSubject": {
-              "docs": "The subject line for this email message. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The subject line for this email message.",
               "type": "string",
             },
             "messageTo": {
-              "docs": "The email message will be sent to. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The email message will be sent to.",
               "type": "string",
             },
             "serverHost": {
-              "docs": "The IP address or host to the SMTP server. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The IP address or host to the SMTP server.",
               "type": "string",
             },
             "serverPassword": {
-              "docs": "The password for the SMTP server. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The password for the SMTP server.",
               "type": "string",
             },
             "serverPort": {
@@ -1558,7 +1558,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "integer",
             },
             "serverUsername": {
-              "docs": "The username for the SMTP server. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The username for the SMTP server.",
               "type": "string",
             },
           },
@@ -1575,7 +1575,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "message": {
-              "docs": "Error message. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "Error message.",
               "type": "string",
             },
             "statusCode": {
@@ -1615,7 +1615,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "The name of the event consumer. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the event consumer.",
               "type": "string",
             },
             "position": {
@@ -1644,11 +1644,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "The API key to grant access to Squidex. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The API key to grant access to Squidex.",
               "type": "string",
             },
             "serviceId": {
-              "docs": "The ID of the fastly service. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The ID of the fastly service.",
               "type": "string",
             },
           },
@@ -1702,7 +1702,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "The name of the field. Must be unique within the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the field. Must be unique within the schema.",
               "type": "string",
             },
             "nested": {
@@ -1710,7 +1710,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<NestedFieldDto>>",
             },
             "partitioning": {
-              "docs": "Defines the partitioning of the field. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "Defines the partitioning of the field.",
               "type": "string",
             },
             "properties": {
@@ -1843,7 +1843,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "field": {
-              "docs": "The field to update. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The field to update.",
               "type": "string",
             },
           },
@@ -2020,7 +2020,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "docs": "The self issued access token. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The self issued access token.",
               "type": "string",
             },
             "canonicalUrl": {
@@ -2028,7 +2028,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "content": {
-              "docs": "The content, either html or markdown. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The content, either html or markdown.",
               "type": "string",
             },
             "isHtml": {
@@ -2044,7 +2044,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "title": {
-              "docs": "The title, used for the url. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The title, used for the url.",
               "type": "string",
             },
           },
@@ -2072,7 +2072,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "The name of the field. Must be unique within the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the field. Must be unique within the schema.",
               "type": "string",
             },
             "properties": {
@@ -2089,7 +2089,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "text": {
-              "docs": "The text to send. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The text to send.",
               "type": "string",
             },
             "url": {
@@ -2097,7 +2097,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "user": {
-              "docs": "The user id or email. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The user id or email.",
               "type": "string",
             },
           },
@@ -2176,11 +2176,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "host": {
-              "docs": "The url to the instance or cluster. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The url to the instance or cluster.",
               "type": "string",
             },
             "indexName": {
-              "docs": "The name of the index. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the index.",
               "type": "string",
             },
             "password": {
@@ -2326,11 +2326,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "token": {
-              "docs": "The prerender token from your account. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The prerender token from your account.",
               "type": "string",
             },
             "url": {
-              "docs": "The url to recache. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The url to recache.",
               "type": "string",
             },
           },
@@ -2371,26 +2371,14 @@ exports[`open api parser squidex simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "random": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "skip": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "random": "integer",
+            "skip": "integer",
             "sort": {
               "docs": undefined,
               "type": "optional<list<SortNode>>",
             },
-            "take": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "top": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "take": "integer",
+            "top": "integer",
           },
         },
         "ReferencesFieldEditor": {
@@ -2467,18 +2455,9 @@ exports[`open api parser squidex simple 1`] = `
         "ReferralInfo": {
           "docs": undefined,
           "properties": {
-            "code": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "condition": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "earned": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "code": "string",
+            "condition": "string",
+            "earned": "string",
           },
         },
         "ReorderFieldsDto": {
@@ -2543,7 +2522,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "href": {
-              "docs": "The link url. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The link url.",
               "type": "string",
             },
             "metadata": {
@@ -2551,7 +2530,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "method": {
-              "docs": "The link method. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The link method.",
               "type": "string",
             },
           },
@@ -3090,10 +3069,7 @@ exports[`open api parser squidex simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "schemaId": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "schemaId": "string",
           },
         },
         "SchemaDto": {
@@ -3111,7 +3087,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "datetime",
             },
             "createdBy": {
-              "docs": "The user that has created the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The user that has created the schema.",
               "type": "string",
             },
             "fieldRules": {
@@ -3147,11 +3123,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "datetime",
             },
             "lastModifiedBy": {
-              "docs": "The user that has updated the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The user that has updated the schema.",
               "type": "string",
             },
             "name": {
-              "docs": "The name of the schema. Unique within the app. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the schema. Unique within the app.",
               "type": "string",
             },
             "previewUrls": {
@@ -3274,7 +3250,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "script": {
-              "docs": "The script to render. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The script to render.",
               "type": "string",
             },
           },
@@ -3344,11 +3320,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "ActionTypeEnum",
             },
             "connectionString": {
-              "docs": "The connection string to the Azure SignalR. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The connection string to the Azure SignalR.",
               "type": "string",
             },
             "hubName": {
-              "docs": "The name of the hub. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the hub.",
               "type": "string",
             },
             "methodName": {
@@ -3386,11 +3362,11 @@ exports[`open api parser squidex simple 1`] = `
             },
             "event": "unknown",
             "eventId": {
-              "docs": "The unique event id. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The unique event id.",
               "type": "string",
             },
             "eventName": {
-              "docs": "The name of the event. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the event.",
               "type": "string",
             },
             "skipReasons": {
@@ -3398,7 +3374,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<SkipReason>",
             },
             "uniqueId": {
-              "docs": "The the unique id of the simulated event. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The the unique id of the simulated event.",
               "type": "string",
             },
           },
@@ -3483,11 +3459,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "text": {
-              "docs": "The text that is sent as message to slack. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The text that is sent as message to slack.",
               "type": "string",
             },
             "webhookUrl": {
-              "docs": "The slack webhook url. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The slack webhook url.",
               "type": "string",
             },
           },
@@ -3891,15 +3867,15 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessSecret": {
-              "docs": " The generated access secret. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": " The generated access secret.",
               "type": "string",
             },
             "accessToken": {
-              "docs": " The generated access token. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": " The generated access token.",
               "type": "string",
             },
             "text": {
-              "docs": "The text that is sent as tweet to twitter. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The text that is sent as tweet to twitter.",
               "type": "string",
             },
           },
@@ -3908,7 +3884,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "The api key. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The api key.",
               "type": "string",
             },
             "delete": {
@@ -3920,11 +3896,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "host": {
-              "docs": "The url to the instance or cluster. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The url to the instance or cluster.",
               "type": "string",
             },
             "indexName": {
-              "docs": "The name of the index. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the index.",
               "type": "string",
             },
           },
@@ -3971,7 +3947,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "text": {
-              "docs": "The comment text. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The comment text.",
               "type": "string",
             },
             "url": {
@@ -4037,7 +4013,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "The name of the field. Must be unique within the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the field. Must be unique within the schema.",
               "type": "string",
             },
             "nested": {
@@ -4070,7 +4046,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "The name of the field. Must be unique within the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The name of the field. Must be unique within the schema.",
               "type": "string",
             },
             "properties": {
@@ -4123,14 +4099,8 @@ exports[`open api parser squidex simple 1`] = `
         "UserProperty": {
           "docs": undefined,
           "properties": {
-            "name": {
-              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
-              "type": "string",
-            },
-            "value": {
-              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
-              "type": "string",
-            },
+            "name": "string",
+            "value": "string",
           },
         },
         "UsersDto": {
@@ -4203,7 +4173,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "url": {
-              "docs": "The url to the webhook. <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "docs": "The url to the webhook.",
               "type": "string",
             },
           },
@@ -4313,6 +4283,17 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}",
             "path-parameters": {
@@ -4330,6 +4311,23 @@ exports[`open api parser squidex simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/clients/{id}",
@@ -4405,6 +4403,23 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "language": "language",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
@@ -4453,6 +4468,23 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "roleName": "role-name",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
@@ -4478,6 +4510,28 @@ exports[`open api parser squidex simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "errors": [],
+                    "items": [
+                      {
+                        "_links": {},
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/workflows/{id}",
@@ -4525,6 +4579,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps",
             "response": {
@@ -4560,6 +4625,22 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/clients",
@@ -4621,6 +4702,22 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
@@ -4642,6 +4739,19 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/roles/permissions",
             "path-parameters": {
@@ -4662,6 +4772,22 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/roles",
@@ -4705,6 +4831,19 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "team": "team",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/apps",
             "path-parameters": {
@@ -4725,6 +4864,27 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "errors": [],
+                    "items": [
+                      {
+                        "_links": {},
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/workflows",
@@ -4755,7 +4915,7 @@ You will be assigned as owner of the new app automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "The name of the app. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the app.",
                     "type": "string",
                   },
                   "template": {
@@ -4795,7 +4955,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "The ID of the client. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The ID of the client.",
                     "type": "string",
                   },
                 },
@@ -4858,7 +5018,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "language": {
-                    "docs": "The language to add. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The language to add.",
                     "type": "string",
                   },
                 },
@@ -4893,7 +5053,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "The role name. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The role name.",
                     "type": "string",
                   },
                 },
@@ -4928,7 +5088,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "The name of the workflow. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the workflow.",
                     "type": "string",
                   },
                 },
@@ -5084,6 +5244,23 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
@@ -5139,6 +5316,23 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "language": "language",
+                },
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
@@ -5185,6 +5379,25 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "roleName": "role-name",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "permissions": [],
+                },
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/roles/{roleName}",
@@ -5292,7 +5505,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "initial": {
-                    "docs": "The initial step. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The initial step.",
                     "type": "string",
                   },
                   "name": {
@@ -5370,6 +5583,25 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "jobs": [
+                    {
+                      "type": "Annotate",
+                    },
+                  ],
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/bulk",
             "path-parameters": {
@@ -5417,6 +5649,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
@@ -5453,6 +5697,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/assets/folders/{id}",
@@ -5819,6 +6075,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/tags",
             "path-parameters": {
@@ -5902,7 +6171,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "docs": "The name of the folder. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the folder.",
                     "type": "string",
                   },
                   "parentId": {
@@ -6085,7 +6354,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "docs": "The name of the folder. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the folder.",
                     "type": "string",
                   },
                 },
@@ -6202,7 +6471,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "tagName": {
-                    "docs": "The new name for the tag. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The new name for the tag.",
                     "type": "string",
                   },
                 },
@@ -6235,6 +6504,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/backups/{id}",
@@ -6312,6 +6593,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
@@ -6348,6 +6645,17 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
@@ -6375,7 +6683,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<string>",
                   },
                   "url": {
-                    "docs": "The url to the restore file. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The url to the restore file.",
                     "type": "string",
                   },
                 },
@@ -6404,6 +6712,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "commentId": "comment-id",
+                  "commentsId": "comments-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -6464,6 +6785,19 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/watching/{resource}",
@@ -6566,6 +6900,26 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "jobs": [
+                    {
+                      "type": "Upsert",
+                    },
+                  ],
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/bulk",
             "path-parameters": {
@@ -6658,6 +7012,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}",
@@ -6798,6 +7165,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/validity",
@@ -7091,6 +7471,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "datas": [],
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
@@ -7260,7 +7656,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<datetime>",
                   },
                   "status": {
-                    "docs": "The new status. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The new status.",
                     "type": "string",
                   },
                 },
@@ -7293,6 +7689,15 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
               "root.NotImplementedError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/api/diagnostics/dump",
           },
@@ -7303,6 +7708,15 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
               "root.NotImplementedError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/diagnostics/gcdump",
@@ -7324,6 +7738,20 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/event-consumers",
@@ -7417,6 +7845,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/history",
             "path-parameters": {
@@ -7447,6 +7888,19 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "team": "team",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/history",
@@ -7488,6 +7942,17 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": "Provide a list of supported language codes, following the ISO2Code standard.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/languages",
@@ -7551,6 +8016,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "commentId": "comment-id",
+                  "userId": "user-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
@@ -7612,6 +8089,17 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/api/ping/{app}",
             "path-parameters": {
@@ -7628,6 +8116,17 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/info",
             "response": {
@@ -7641,6 +8140,15 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": "Can be used to test, if the Squidex API is alive and responding.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/ping",
@@ -7664,6 +8172,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "locked": "None",
+                    "plans": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
@@ -7684,6 +8208,22 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "team": "team",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "locked": "None",
+                    "plans": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/plans",
@@ -7774,6 +8314,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
@@ -7795,6 +8347,17 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
@@ -7812,6 +8375,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}",
@@ -7834,6 +8409,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
@@ -7854,6 +8441,17 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/run",
@@ -7923,6 +8521,17 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/rules/actions",
             "response": {
@@ -7957,6 +8566,17 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/rules/eventtypes",
@@ -8014,6 +8634,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
@@ -8063,6 +8699,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/events/{id}",
@@ -8135,6 +8783,18 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/run",
@@ -8220,6 +8880,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/trigger",
@@ -8317,6 +8989,18 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "schema": "schema",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}",
@@ -8491,6 +9175,22 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/schemas",
@@ -8731,7 +9431,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "boolean",
                   },
                   "name": {
-                    "docs": "The name of the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the schema.",
                     "type": "string",
                   },
                   "type": {
@@ -9322,6 +10022,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/search",
             "path-parameters": {
@@ -9385,6 +10098,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/log",
             "path-parameters": {
@@ -9405,6 +10131,21 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "fromDate": "from-date",
+                  "toDate": "to-date",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
@@ -9434,6 +10175,21 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "fromDate": "from-date",
+                  "team": "team",
+                  "toDate": "to-date",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
@@ -9644,6 +10400,17 @@ You will retrieve all teams, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/teams",
             "response": {
@@ -9695,7 +10462,7 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "The name of the team. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the team.",
                     "type": "string",
                   },
                 },
@@ -9730,7 +10497,7 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "The name of the team. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The name of the team.",
                     "type": "string",
                   },
                 },
@@ -9783,6 +10550,20 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/templates",
             "response": {
@@ -9825,11 +10606,11 @@ You will be assigned as owner of the new team automatically.",
                     "type": "optional<string>",
                   },
                   "targetLanguage": {
-                    "docs": "The target language. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The target language.",
                     "type": "string",
                   },
                   "text": {
-                    "docs": "The text to translate. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The text to translate.",
                     "type": "string",
                   },
                 },
@@ -9863,6 +10644,17 @@ You will be assigned as owner of the new team automatically.",
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "DELETE",
             "path": "/api/user-management/{id}",
@@ -9965,15 +10757,15 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "docs": "The display name (usually first name and last name) of the user. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The display name (usually first name and last name) of the user.",
                     "type": "string",
                   },
                   "email": {
-                    "docs": "The email of the user. Unique value. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The email of the user. Unique value.",
                     "type": "string",
                   },
                   "password": {
-                    "docs": "The password of the user. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The password of the user.",
                     "type": "string",
                   },
                   "permissions": {
@@ -10012,11 +10804,11 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "docs": "The display name (usually first name and last name) of the user. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The display name (usually first name and last name) of the user.",
                     "type": "string",
                   },
                   "email": {
-                    "docs": "The email of the user. Unique value. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "The email of the user. Unique value.",
                     "type": "string",
                   },
                   "password": {
@@ -10118,6 +10910,19 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api",
             "response": {
@@ -10131,6 +10936,17 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Search the user by query that contains the email address or the part of the email address.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/users",

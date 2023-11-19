@@ -111,10 +111,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_y:IntegerAlias": {
@@ -196,10 +193,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imported/x:StringAlias": {
@@ -320,20 +314,14 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
     "errors": {},
     "services": {
         "service_imported": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -390,6 +378,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_imported.rootEndpoint",
                     "name": {
                         "originalName": "rootEndpoint",
                         "camelCase": {
@@ -430,10 +419,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -777,4 +763,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `902877`;
+exports[`dependencies file dependencies 1`] = `797261`;

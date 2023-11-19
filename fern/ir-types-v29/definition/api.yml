@@ -1,0 +1,4 @@
+name: ir-v29
+docs: |
+  Changes in this version of IR include:
+  - ReferencedTypes is now a set of TypeIds instead of a list of DeclaredTypeNames to reduce overall size of IR

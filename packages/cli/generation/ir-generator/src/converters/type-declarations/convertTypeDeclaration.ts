@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -13,6 +13,11 @@ import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
 import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
 
+export interface TypeDeclarationWithDescendantFilepaths {
+    typeDeclaration: TypeDeclaration;
+    descendantFilepaths: Set<FernFilepath>;
+}
+
 export function convertTypeDeclaration({
     typeName,
     typeDeclaration,
@@ -25,39 +30,43 @@ export function convertTypeDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-}): TypeDeclaration {
+}): TypeDeclarationWithDescendantFilepaths {
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
         file,
     });
+    const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
     return {
-        ...declaration,
-        name: declaredTypeName,
-        shape: convertType({ typeDeclaration, file, typeResolver }),
-        referencedTypes: getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver }),
-        examples:
-            typeof typeDeclaration !== "string" && typeDeclaration.examples != null
-                ? typeDeclaration.examples.map(
-                      (example): ExampleType => ({
-                          name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
-                          docs: example.docs,
-                          jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
-                              example: example.value,
-                              file,
-                          }).resolvedExample,
-                          shape: convertTypeExample({
-                              typeName: declaredTypeName,
-                              example: example.value,
-                              typeResolver,
-                              exampleResolver,
-                              typeDeclaration,
-                              fileContainingType: file,
-                              fileContainingExample: file,
-                          }),
-                      })
-                  )
-                : [],
+        typeDeclaration: {
+            ...declaration,
+            name: declaredTypeName,
+            shape: convertType({ typeDeclaration, file, typeResolver }),
+            referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
+            examples:
+                typeof typeDeclaration !== "string" && typeDeclaration.examples != null
+                    ? typeDeclaration.examples.map(
+                          (example): ExampleType => ({
+                              name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                              docs: example.docs,
+                              jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                                  example: example.value,
+                                  file,
+                              }).resolvedExample,
+                              shape: convertTypeExample({
+                                  typeName: declaredTypeName,
+                                  example: example.value,
+                                  typeResolver,
+                                  exampleResolver,
+                                  typeDeclaration,
+                                  fileContainingType: file,
+                                  fileContainingExample: file,
+                              }),
+                          })
+                      )
+                    : [],
+        },
+        descendantFilepaths: new Set(referencedTypes.map((referencedType) => referencedType.fernFilepath)),
     };
 }
 

@@ -1,0 +1,30 @@
+types:
+  SeedWorkspaceConfiguration:
+    properties:
+      irVersion: string
+      language: optional<Language>
+      generatorType: GeneratorType
+      docker: string
+      dockerCommand: optional<string>
+      fixtures:
+        type: optional<map<string, list<FixtureConfigurations>>>
+      compileCommands: optional<list<string>>
+
+  Language:
+    enum:
+      - python
+      - java
+      - typescript
+      - go
+
+  GeneratorType:
+    enum:
+      - SDK
+      - Model
+      - Server
+      - Documentation
+
+  FixtureConfigurations:
+    properties:
+      customConfig: unknown
+      outputFolder: string

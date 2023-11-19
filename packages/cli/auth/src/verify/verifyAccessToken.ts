@@ -1,4 +1,4 @@
-import { createVenusService } from "@fern-api/services";
+import { createVenusService } from "@fern-api/core";
 import { FernOrganizationToken } from "../FernToken";
 
 export async function verifyAccessToken(token: FernOrganizationToken): Promise<boolean> {

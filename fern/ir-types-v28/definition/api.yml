@@ -1,0 +1,4 @@
+name: ir-v28
+docs: |
+  Changes in this version of IR include:
+  - Adds support for boolean literals (e.g. literal<true>)

@@ -1,4 +1,4 @@
-import { HttpError, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { HttpError, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { ErrorBodyCollector } from "../ErrorBodyCollector";
 import { convertSchema } from "./convertSchemas";

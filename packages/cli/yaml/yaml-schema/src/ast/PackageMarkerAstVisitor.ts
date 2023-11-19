@@ -1,4 +1,4 @@
-import { NodePath } from "./NodePath";
+import { NodePath } from "../NodePath";
 
 export type PackageMarkerAstVisitor<R = void | Promise<void>> = {
     [K in keyof PackageMarkerAstNodeTypes]: PackageMarkerAstNodeVisitor<K, R>;

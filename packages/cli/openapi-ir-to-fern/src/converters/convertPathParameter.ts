@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { PathParameter, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
+import { PathParameter, Schema } from "@fern-fern/openapi-ir-model/finalIr";
 import { ROOT_PREFIX } from "../convertPackage";
 import { convertToTypeReference } from "./convertToTypeReference";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";

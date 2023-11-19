@@ -1,4 +1,4 @@
-import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { mapValues } from "lodash-es";
 
 export type Environments = SingleUrlEnvironments | MultiUrlEnvironments;
@@ -15,7 +15,7 @@ export interface MultiUrlEnvironments {
     defaultUrl: string;
 }
 
-export function getEnvironments(openApiFile: OpenAPIFile): Environments | undefined {
+export function getEnvironments(openApiFile: OpenAPIIntermediateRepresentation): Environments | undefined {
     let endpointUrlOverrides = false;
 
     const defaultUrls: Record<string, string> = {};

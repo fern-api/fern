@@ -43,12 +43,16 @@ export class IrGraph {
         this.audiences = audiencesFromConfig(audiences);
     }
 
-    public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
+    public addType(
+        declaredTypeName: DeclaredTypeName,
+        descendantTypeIds: Set<string>,
+        descendantFilepaths: Set<FernFilepath>
+    ): void {
         const typeId = IdGenerator.generateTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
-            descendants: new Set(descendants.map((declaredTypeName) => IdGenerator.generateTypeId(declaredTypeName))),
-            referencedSubpackages: new Set(descendants.map((declaredTypeName) => declaredTypeName.fernFilepath)),
+            descendants: descendantTypeIds,
+            referencedSubpackages: descendantFilepaths,
         };
         this.types[typeId] = typeNode;
         if (this.typesReferencedByService[typeId] == null) {
@@ -88,7 +92,7 @@ export class IrGraph {
 
     public addEndpoint(service: HttpService, httpEndpoint: HttpEndpoint): void {
         const serviceId = IdGenerator.generateServiceId(service.name);
-        const endpointId = IdGenerator.generateEndpointId(service.name, httpEndpoint);
+        const endpointId = httpEndpoint.id;
         const referencedTypes = new Set<TypeId>();
         const referencedErrors = new Set<ErrorId>();
         const referencedSubpackages = new Set<FernFilepath>();
@@ -187,7 +191,7 @@ export class IrGraph {
             const serviceId = IdGenerator.generateServiceId(declaredServiceName);
             this.servicesNeededForAudience.add(serviceId);
             httpEndpoints.forEach((httpEndpoint) => {
-                const endpointId = IdGenerator.generateEndpointId(declaredServiceName, httpEndpoint);
+                const endpointId = httpEndpoint.id;
                 this.endpointsNeededForAudience.add(endpointId);
                 this.endpoints[endpointId]?.referencedSubpackages.forEach((fernFilePath) => {
                     this.addSubpackages(fernFilePath);

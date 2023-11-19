@@ -10,6 +10,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     context,
     token,
     instanceUrl,
+    preview,
 }: {
     organization: string;
     fernWorkspaces: FernWorkspace[];
@@ -17,8 +18,9 @@ export async function runRemoteGenerationForDocsWorkspace({
     context: TaskContext;
     token: FernToken;
     instanceUrl: string | undefined;
+    preview: boolean;
 }): Promise<void> {
-    const instances = docsWorkspace.docsDefinition.config.instances;
+    const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
@@ -29,7 +31,7 @@ export async function runRemoteGenerationForDocsWorkspace({
         const instance = instances[0];
         await context.runInteractiveTask({ name: instance.url }, async () => {
             await publishDocs({
-                docsDefinition: docsWorkspace.docsDefinition,
+                docsWorkspace,
                 customDomains: instance.customDomain != null ? [instance.customDomain] : [],
                 domain: instance.url,
                 token,
@@ -37,6 +39,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 fernWorkspaces,
                 version: "",
+                preview,
             });
         });
         return;
@@ -56,7 +59,7 @@ export async function runRemoteGenerationForDocsWorkspace({
 
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         await publishDocs({
-            docsDefinition: docsWorkspace.docsDefinition,
+            docsWorkspace,
             customDomains: maybeInstance.customDomain != null ? [maybeInstance.customDomain] : [],
             domain: maybeInstance.url,
             token,
@@ -64,6 +67,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             context,
             fernWorkspaces,
             version: "",
+            preview,
         });
     });
     return;

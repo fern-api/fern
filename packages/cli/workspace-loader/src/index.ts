@@ -1,10 +1,10 @@
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
-export { loadDocsDefinition } from "./loadDocsDefinition";
+export { loadDocsWorkspace } from "./loadDocsWorkspace";
+export { getValidAbsolutePathToOpenAPI as loadOpenAPIFile } from "./loadOpenAPIFile";
 export { type FernFile, type ParsedFernFile } from "./types/FernFile";
 export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result";
 export {
     type APIWorkspace,
-    type DocsDefinition,
     type DocsWorkspace,
     type FernDefinition,
     type FernWorkspace,
