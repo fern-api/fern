@@ -6,12 +6,12 @@ The following versions of Fern are currently being supported with security updat
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.14.x   | :white_check_mark: |
-| 0.15.x   | :white_check_mark: |
+| 0.14.x  | :white_check_mark: |
+| 0.15.x  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
-If you find a vulnerability in Fern, we ask that you alert us via email at security@buildwithfern.com. 
+If you find a vulnerability in Fern, we ask that you alert us via email at security@buildwithfern.com.
 You'll get a reply acknowledging the report from a core maintainer at Fern within 24 hours.
 
 ## Bug Bounty
