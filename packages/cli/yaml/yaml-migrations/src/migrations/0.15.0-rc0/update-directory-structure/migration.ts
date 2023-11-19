@@ -50,7 +50,6 @@ export const migration: Migration = {
         }
 
         // Migrate multiple workspace
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const workspacesContainingDocs = [];
         for (const workspace of workspaces) {
             const absolutePathToDocsYaml = getAbsolutePathToDocsYaml({
