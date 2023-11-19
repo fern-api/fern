@@ -1860,7 +1860,7 @@ __metadata:
     jsonwebtoken: ^9.0.0
     jwks-rsa: ^3.0.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -1928,7 +1928,7 @@ __metadata:
     lodash-es: ^4.17.21
     ora: ^7.0.1
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tar: ^6.2.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
@@ -1989,7 +1989,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2006,7 +2006,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -2023,7 +2023,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     strip-ansi: ^7.1.0
     typescript: 4.6.4
     ua-parser-js: ^1.0.37
@@ -2043,7 +2043,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2064,7 +2064,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -2083,7 +2083,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2106,7 +2106,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2130,7 +2130,7 @@ __metadata:
     express: ^4.18.2
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2151,7 +2151,7 @@ __metadata:
     jest: ^29.7.0
     next-mdx-remote: ^4.4.1
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     remark-gfm: ^3.0.1
     typescript: 4.6.4
   languageName: unknown
@@ -2175,7 +2175,7 @@ __metadata:
     js-yaml: ^4.1.0
     node-fetch: ^3.3.2
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     strip-ansi: ^7.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
@@ -2194,7 +2194,7 @@ __metadata:
     jest: ^29.7.0
     json-stream-stringify: ^3.0.1
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
@@ -2219,7 +2219,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -2253,7 +2253,7 @@ __metadata:
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
@@ -2284,7 +2284,7 @@ __metadata:
     jest-specific-snapshot: ^8.0.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     url-join: ^5.0.0
   languageName: unknown
@@ -2340,7 +2340,7 @@ __metadata:
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2353,12 +2353,12 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/prettier": ^2.7.2
+    "@types/prettier": ^3.0.0
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
     zod-to-json-schema: 3.14.1
@@ -2376,7 +2376,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2406,7 +2406,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
@@ -2424,7 +2424,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2441,7 +2441,7 @@ __metadata:
     execa: ^5.1.1
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
@@ -2469,7 +2469,7 @@ __metadata:
     jest: ^29.7.0
     open: ^8.4.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     qs: ^6.11.1
     typescript: 4.6.4
   languageName: unknown
@@ -2488,7 +2488,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2513,7 +2513,7 @@ __metadata:
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2542,7 +2542,7 @@ __metadata:
     lodash-es: ^4.17.21
     openapi-types: ^12.0.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     swagger2openapi: 7.0.8
     typescript: 4.6.4
   languageName: unknown
@@ -2563,7 +2563,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     posthog-node: ^3.1.2
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     uuid: ^9.0.1
   languageName: unknown
@@ -2583,7 +2583,7 @@ __metadata:
     find-up: ^6.3.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -2608,7 +2608,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -2635,7 +2635,7 @@ __metadata:
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2677,7 +2677,7 @@ __metadata:
     lodash-es: ^4.17.21
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
@@ -2707,7 +2707,7 @@ __metadata:
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     yargs: ^17.4.1
   bin:
@@ -2746,7 +2746,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     yargs: ^17.4.1
@@ -2765,7 +2765,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     semver-diff: ^4.0.0
     typescript: 4.6.4
   languageName: unknown
@@ -2782,7 +2782,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2809,7 +2809,7 @@ __metadata:
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     strip-ansi: ^7.1.0
     typescript: 4.6.4
   languageName: unknown
@@ -2858,7 +2858,7 @@ __metadata:
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tar: ^6.2.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
@@ -2877,13 +2877,13 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/prettier": ^2.7.2
+    "@types/prettier": ^3.0.0
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2913,7 +2913,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     yaml: ^2.3.2
@@ -2937,7 +2937,7 @@ __metadata:
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     typescript: 4.6.4
     zod: ^3.22.3
   languageName: unknown
@@ -4393,10 +4393,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:^2.7.2":
-  version: 2.7.2
-  resolution: "@types/prettier@npm:2.7.2"
-  checksum: b47d76a5252265f8d25dd2fe2a5a61dc43ba0e6a96ffdd00c594cb4fd74c1982c2e346497e3472805d97915407a09423804cc2110a0b8e1b22cffcab246479b7
+"@types/prettier@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/prettier@npm:3.0.0"
+  dependencies:
+    prettier: "*"
+  checksum: a2a512d304e5bcf78f38089dc88ad19215e6ab871d435a17aef3ce538a63b07c0e359c18db23989dc1ed9fff96d99eee1f680416080184df5c7e0e3bf767e165
   languageName: node
   linkType: hard
 
@@ -7928,7 +7930,7 @@ env-cmd@toddbluhm/env-cmd:
     lodash-es: ^4.17.21
     mrlint: ^0.0.125
     organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
+    prettier: ^3.1.0
     react: ^18.2.0
     stylelint: ^14.11.0
     stylelint-config-prettier-scss: ^0.0.1
@@ -12582,12 +12584,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.7.1":
-  version: 2.7.1
-  resolution: "prettier@npm:2.7.1"
+"prettier@npm:*, prettier@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "prettier@npm:3.1.0"
   bin:
-    prettier: bin-prettier.js
-  checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
+    prettier: bin/prettier.cjs
+  checksum: 44b556bd56f74d7410974fbb2418bb4e53a894d3e7b42f6f87779f69f27a6c272fa7fc27cec0118cd11730ef3246478052e002cbd87e9a253f9cd04a56aa7d9b
   languageName: node
   linkType: hard
 
