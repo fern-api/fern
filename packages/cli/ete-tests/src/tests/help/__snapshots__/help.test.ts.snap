@@ -5,6 +5,7 @@ exports[`help no arguments 1`] = `
 
 Commands:
   fern-dev init             Initialize a Fern API
+  fern-dev token            Generate a Fern Token
   fern-dev add <generator>  Add a code generator to generators.yml
   fern-dev generate         Generate all generators in the specified group
   fern-dev check            Validates your Fern Definition

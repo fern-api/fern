@@ -92,6 +92,7 @@ exports[`generate IR 1`] = `
     "typesReferencedOnlyByService": {
       "service_literal": [
         "type_literal:Options",
+        "type_literal:UndiscriminatedOptions",
         "type_literal:CreateOptionsResponse",
       ],
     },
@@ -585,6 +586,244 @@ exports[`generate IR 1`] = `
             },
           },
         },
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "/options",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_literal.getUndiscriminatedOptions",
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "getUndiscriminatedOptions",
+              "unsafeName": "getUndiscriminatedOptions",
+            },
+            "originalName": "getUndiscriminatedOptions",
+            "pascalCase": {
+              "safeName": "GetUndiscriminatedOptions",
+              "unsafeName": "GetUndiscriminatedOptions",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_UNDISCRIMINATED_OPTIONS",
+              "unsafeName": "GET_UNDISCRIMINATED_OPTIONS",
+            },
+            "snakeCase": {
+              "safeName": "get_undiscriminated_options",
+              "unsafeName": "get_undiscriminated_options",
+            },
+          },
+          "path": {
+            "head": "/options",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "extends": [],
+            "name": {
+              "camelCase": {
+                "safeName": "getUndiscriminatedOptionsRequest",
+                "unsafeName": "getUndiscriminatedOptionsRequest",
+              },
+              "originalName": "GetUndiscriminatedOptionsRequest",
+              "pascalCase": {
+                "safeName": "GetUndiscriminatedOptionsRequest",
+                "unsafeName": "GetUndiscriminatedOptionsRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
+                "unsafeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "get_undiscriminated_options_request",
+                "unsafeName": "get_undiscriminated_options_request",
+              },
+            },
+            "properties": [
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "dryRun",
+                      "unsafeName": "dryRun",
+                    },
+                    "originalName": "dryRun",
+                    "pascalCase": {
+                      "safeName": "DryRun",
+                      "unsafeName": "DryRun",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DRY_RUN",
+                      "unsafeName": "DRY_RUN",
+                    },
+                    "snakeCase": {
+                      "safeName": "dry_run",
+                      "unsafeName": "dry_run",
+                    },
+                  },
+                  "wireValue": "dryRun",
+                },
+                "valueType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "literal",
+                    "literal": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                  },
+                },
+              },
+            ],
+            "type": "inlinedRequestBody",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "literal",
+                        "unsafeName": "literal",
+                      },
+                      "originalName": "literal",
+                      "pascalCase": {
+                        "safeName": "Literal",
+                        "unsafeName": "Literal",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LITERAL",
+                        "unsafeName": "LITERAL",
+                      },
+                      "snakeCase": {
+                        "safeName": "literal",
+                        "unsafeName": "literal",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "literal",
+                      "unsafeName": "literal",
+                    },
+                    "originalName": "literal",
+                    "pascalCase": {
+                      "safeName": "Literal",
+                      "unsafeName": "Literal",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "LITERAL",
+                      "unsafeName": "LITERAL",
+                    },
+                    "snakeCase": {
+                      "safeName": "literal",
+                      "unsafeName": "literal",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "undiscriminatedOptions",
+                    "unsafeName": "undiscriminatedOptions",
+                  },
+                  "originalName": "UndiscriminatedOptions",
+                  "pascalCase": {
+                    "safeName": "UndiscriminatedOptions",
+                    "unsafeName": "UndiscriminatedOptions",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "UNDISCRIMINATED_OPTIONS",
+                    "unsafeName": "UNDISCRIMINATED_OPTIONS",
+                  },
+                  "snakeCase": {
+                    "safeName": "undiscriminated_options",
+                    "unsafeName": "undiscriminated_options",
+                  },
+                },
+                "typeId": "type_literal:UndiscriminatedOptions",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "getUndiscriminatedOptionsRequest",
+                  "unsafeName": "getUndiscriminatedOptionsRequest",
+                },
+                "originalName": "GetUndiscriminatedOptionsRequest",
+                "pascalCase": {
+                  "safeName": "GetUndiscriminatedOptionsRequest",
+                  "unsafeName": "GetUndiscriminatedOptionsRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
+                  "unsafeName": "GET_UNDISCRIMINATED_OPTIONS_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "get_undiscriminated_options_request",
+                  "unsafeName": "get_undiscriminated_options_request",
+                },
+              },
+            },
+          },
+        },
       ],
       "headers": [],
       "name": {
@@ -707,6 +946,7 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [
         "type_literal:Options",
+        "type_literal:UndiscriminatedOptions",
         "type_literal:CreateOptionsResponse",
       ],
       "webhooks": null,
@@ -1138,6 +1378,125 @@ exports[`generate IR 1`] = `
               "wireValue": "values",
             },
             "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "map",
+                "keyType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+                "valueType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+    "type_literal:UndiscriminatedOptions": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "literal",
+                "unsafeName": "literal",
+              },
+              "originalName": "literal",
+              "pascalCase": {
+                "safeName": "Literal",
+                "unsafeName": "Literal",
+              },
+              "screamingSnakeCase": {
+                "safeName": "LITERAL",
+                "unsafeName": "LITERAL",
+              },
+              "snakeCase": {
+                "safeName": "literal",
+                "unsafeName": "literal",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "literal",
+              "unsafeName": "literal",
+            },
+            "originalName": "literal",
+            "pascalCase": {
+              "safeName": "Literal",
+              "unsafeName": "Literal",
+            },
+            "screamingSnakeCase": {
+              "safeName": "LITERAL",
+              "unsafeName": "LITERAL",
+            },
+            "snakeCase": {
+              "safeName": "literal",
+              "unsafeName": "literal",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "undiscriminatedOptions",
+            "unsafeName": "undiscriminatedOptions",
+          },
+          "originalName": "UndiscriminatedOptions",
+          "pascalCase": {
+            "safeName": "UndiscriminatedOptions",
+            "unsafeName": "UndiscriminatedOptions",
+          },
+          "screamingSnakeCase": {
+            "safeName": "UNDISCRIMINATED_OPTIONS",
+            "unsafeName": "UNDISCRIMINATED_OPTIONS",
+          },
+          "snakeCase": {
+            "safeName": "undiscriminated_options",
+            "unsafeName": "undiscriminated_options",
+          },
+        },
+        "typeId": "type_literal:UndiscriminatedOptions",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "undiscriminatedUnion",
+        "members": [
+          {
+            "docs": null,
+            "type": {
+              "_type": "container",
+              "container": {
+                "_type": "literal",
+                "literal": {
+                  "string": "options",
+                  "type": "string",
+                },
+              },
+            },
+          },
+          {
+            "docs": null,
+            "type": {
+              "_type": "container",
+              "container": {
+                "_type": "literal",
+                "literal": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+              },
+            },
+          },
+          {
+            "docs": null,
+            "type": {
               "_type": "container",
               "container": {
                 "_type": "map",

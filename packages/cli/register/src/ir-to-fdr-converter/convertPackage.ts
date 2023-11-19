@@ -49,7 +49,9 @@ function convertService(
         (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
             availability:
                 irEndpoint.availability != null
-                    ? convertIrEndpointAvailability({ availability: irEndpoint.availability })
+                    ? convertIrAvailability({ availability: irEndpoint.availability })
+                    : irService.availability != null
+                    ? convertIrAvailability({ availability: irService.availability })
                     : undefined,
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
@@ -97,7 +99,7 @@ function convertService(
     );
 }
 
-function convertIrEndpointAvailability({
+function convertIrAvailability({
     availability,
 }: {
     availability: Ir.Availability;
@@ -110,7 +112,7 @@ function convertIrEndpointAvailability({
         case "GENERAL_AVAILABILITY":
             return FernRegistry.api.v1.register.Availability.GenerallyAvailable;
         case "IN_DEVELOPMENT":
-            return undefined;
+            return FernRegistry.api.v1.register.Availability.Beta;
         default:
             assertNever(availability.status);
     }
@@ -336,20 +338,20 @@ function convertExampleEndpointCall(
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["pathParameters"]
         >((pathParameters, irPathParameterExample) => {
-            pathParameters[convertPathParameterKey(irPathParameterExample.key)] =
+            pathParameters[convertPathParameterKey(irPathParameterExample.name.originalName)] =
                 irPathParameterExample.value.jsonExample;
             return pathParameters;
         }, {}),
         queryParameters: irExample.queryParameters.reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["queryParameters"]
         >((queryParameters, irQueryParameterExample) => {
-            queryParameters[irQueryParameterExample.wireKey] = irQueryParameterExample.value.jsonExample;
+            queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
             return queryParameters;
         }, {}),
         headers: [...irExample.serviceHeaders, ...irExample.endpointHeaders].reduce<
             FernRegistry.api.v1.register.ExampleEndpointCall["headers"]
         >((headers, irHeaderExample) => {
-            headers[irHeaderExample.wireKey] = irHeaderExample.value.jsonExample;
+            headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
             return headers;
         }, {}),
         requestBody: irExample.request?.jsonExample,

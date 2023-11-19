@@ -46,9 +46,18 @@ describe("fern generate --local", () => {
 
         await expectPathExists(absolutePathToFernignore);
         await expectPathExists(absolutePathToFernJs);
-        await expectPathExists(absolutePathToDummyText);
+        await expectPathDoesNotExist(absolutePathToDummyText);
+
+        // rerun and make sure no issues if there are no changes
+        await runFernCli(["generate", "--local", "--keepDocker"], {
+            cwd: pathOfDirectory,
+        });
     }, 180_000);
 });
+
+async function expectPathDoesNotExist(absoluteFilePath: AbsoluteFilePath): Promise<void> {
+    expect(await doesPathExist(absoluteFilePath)).toBe(false);
+}
 
 async function expectPathExists(absoluteFilePath: AbsoluteFilePath): Promise<void> {
     expect(await doesPathExist(absoluteFilePath)).toBe(true);

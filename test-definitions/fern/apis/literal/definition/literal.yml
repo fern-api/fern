@@ -5,6 +5,13 @@ types:
       enabled: literal<true>
       values: map<string, string>
 
+  UndiscriminatedOptions:
+    discriminated: false
+    union:
+      - literal<"options">
+      - literal<true>
+      - map<string, string>
+
   CreateOptionsResponse:
     union:
       ok: literal<true>
@@ -35,3 +42,14 @@ service:
           properties:
             dryRun: literal<true>
       response: Options
+
+    getUndiscriminatedOptions:
+      auth: false
+      path: /options
+      method: POST
+      request:
+        name: GetUndiscriminatedOptionsRequest
+        body:
+          properties:
+            dryRun: literal<true>
+      response: UndiscriminatedOptions

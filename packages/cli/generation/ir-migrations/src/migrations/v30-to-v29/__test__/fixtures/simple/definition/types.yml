@@ -1,0 +1,38 @@
+types:
+  Exception:
+    union:
+      info: ExceptionInfo
+      status:
+        type: ExceptionStatus
+        key: status
+    examples:
+      - name: One
+        value:
+          type: info
+          exceptionType: Unavailable
+          exceptionMessage: This component is unavailable!
+          exceptionStacktrace: <logs>
+
+  ExceptionInfo:
+    properties:
+      exceptionType: string
+      exceptionMessage: string
+      exceptionStacktrace: string
+    examples:
+      - name: One
+        value:
+          exceptionType: Unavailable
+          exceptionMessage: This component is unavailable!
+          exceptionStacktrace: <logs>
+
+  ExceptionStatus:
+    enum:
+      - value: INTERNAL
+        docs: There was an internal exception.
+      - value: USER
+        docs: There was a user-influenced exception.
+    examples:
+      - name: Internal
+        value: INTERNAL
+      - name: User
+        value: USER

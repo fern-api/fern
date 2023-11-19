@@ -1,0 +1,2051 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migrateFromV30ToV29 snapshot 1`] = `
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "simpleApi",
+      "unsafeName": "simpleApi",
+    },
+    "originalName": "simple-api",
+    "pascalCase": {
+      "safeName": "SimpleApi",
+      "unsafeName": "SimpleApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "SIMPLE_API",
+      "unsafeName": "SIMPLE_API",
+    },
+    "snakeCase": {
+      "safeName": "simple_api",
+      "unsafeName": "simple_api",
+    },
+  },
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": undefined,
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": undefined,
+    "service": undefined,
+    "subpackages": [
+      "subpackage_service",
+      "subpackage_types",
+    ],
+    "types": [],
+    "webhooks": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [
+      "type_types:Exception",
+      "type_types:ExceptionInfo",
+      "type_types:ExceptionStatus",
+    ],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_service": {
+      "availability": undefined,
+      "basePath": {
+        "head": "/",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [
+            {
+              "availability": undefined,
+              "docs": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "STRING",
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "auth": false,
+          "availability": undefined,
+          "baseUrl": undefined,
+          "displayName": undefined,
+          "docs": undefined,
+          "errors": [],
+          "examples": [
+            {
+              "docs": undefined,
+              "endpointHeaders": [
+                {
+                  "value": {
+                    "jsonExample": "0.0.1",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": "0.0.1",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "wireKey": "X-API-Version",
+                },
+              ],
+              "endpointPathParameters": [
+                {
+                  "key": "id",
+                  "value": {
+                    "jsonExample": "id-2sdx82h",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": "id-2sdx82h",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "name": undefined,
+              "queryParameters": [
+                {
+                  "value": {
+                    "jsonExample": "reverse",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": "reverse",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "wireKey": "filter",
+                },
+              ],
+              "request": undefined,
+              "response": {
+                "_visit": [Function],
+                "body": undefined,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [],
+              "servicePathParameters": [],
+              "url": "//check/id-2sdx82h",
+            },
+          ],
+          "fullPath": {
+            "head": "/check/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [
+            {
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "xApiVersion",
+                    "unsafeName": "xApiVersion",
+                  },
+                  "originalName": "X-API-Version",
+                  "pascalCase": {
+                    "safeName": "XApiVersion",
+                    "unsafeName": "XApiVersion",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "X_API_VERSION",
+                    "unsafeName": "X_API_VERSION",
+                  },
+                  "snakeCase": {
+                    "safeName": "x_api_version",
+                    "unsafeName": "x_api_version",
+                  },
+                },
+                "wireValue": "X-API-Version",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "STRING",
+                "type": "primitive",
+              },
+            },
+          ],
+          "id": "endpoint_service.check",
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "check",
+              "unsafeName": "check",
+            },
+            "originalName": "check",
+            "pascalCase": {
+              "safeName": "Check",
+              "unsafeName": "Check",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CHECK",
+              "unsafeName": "CHECK",
+            },
+            "snakeCase": {
+              "safeName": "check",
+              "unsafeName": "check",
+            },
+          },
+          "path": {
+            "head": "/check/",
+            "parts": [
+              {
+                "pathParameter": "id",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "docs": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "STRING",
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "filter",
+                    "unsafeName": "filter",
+                  },
+                  "originalName": "filter",
+                  "pascalCase": {
+                    "safeName": "Filter",
+                    "unsafeName": "Filter",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FILTER",
+                    "unsafeName": "FILTER",
+                  },
+                  "snakeCase": {
+                    "safeName": "filter",
+                    "unsafeName": "filter",
+                  },
+                },
+                "wireValue": "filter",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "STRING",
+                "type": "primitive",
+              },
+            },
+          ],
+          "requestBody": undefined,
+          "response": undefined,
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "_visit": [Function],
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "checkRequest",
+                  "unsafeName": "checkRequest",
+                },
+                "originalName": "CheckRequest",
+                "pascalCase": {
+                  "safeName": "CheckRequest",
+                  "unsafeName": "CheckRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CHECK_REQUEST",
+                  "unsafeName": "CHECK_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "check_request",
+                  "unsafeName": "check_request",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_service": {
+      "docs": undefined,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "service",
+            "unsafeName": "service",
+          },
+          "originalName": "service",
+          "pascalCase": {
+            "safeName": "Service",
+            "unsafeName": "Service",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SERVICE",
+            "unsafeName": "SERVICE",
+          },
+          "snakeCase": {
+            "safeName": "service",
+            "unsafeName": "service",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "service",
+          "unsafeName": "service",
+        },
+        "originalName": "service",
+        "pascalCase": {
+          "safeName": "Service",
+          "unsafeName": "Service",
+        },
+        "screamingSnakeCase": {
+          "safeName": "SERVICE",
+          "unsafeName": "SERVICE",
+        },
+        "snakeCase": {
+          "safeName": "service",
+          "unsafeName": "service",
+        },
+      },
+      "navigationConfig": undefined,
+      "service": "service_service",
+      "subpackages": [],
+      "types": [],
+      "webhooks": undefined,
+    },
+    "subpackage_types": {
+      "docs": undefined,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "types",
+            "unsafeName": "types",
+          },
+          "originalName": "types",
+          "pascalCase": {
+            "safeName": "Types",
+            "unsafeName": "Types",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TYPES",
+            "unsafeName": "TYPES",
+          },
+          "snakeCase": {
+            "safeName": "types",
+            "unsafeName": "types",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": false,
+      "name": {
+        "camelCase": {
+          "safeName": "types",
+          "unsafeName": "types",
+        },
+        "originalName": "types",
+        "pascalCase": {
+          "safeName": "Types",
+          "unsafeName": "Types",
+        },
+        "screamingSnakeCase": {
+          "safeName": "TYPES",
+          "unsafeName": "TYPES",
+        },
+        "snakeCase": {
+          "safeName": "types",
+          "unsafeName": "types",
+        },
+      },
+      "navigationConfig": undefined,
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "type_types:Exception",
+        "type_types:ExceptionInfo",
+        "type_types:ExceptionStatus",
+      ],
+      "webhooks": undefined,
+    },
+  },
+  "types": {
+    "type_types:Exception": {
+      "availability": undefined,
+      "docs": undefined,
+      "examples": [
+        {
+          "docs": undefined,
+          "jsonExample": {
+            "exceptionMessage": "This component is unavailable!",
+            "exceptionStacktrace": "<logs>",
+            "exceptionType": "Unavailable",
+            "type": "info",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "_visit": [Function],
+            "properties": {
+              "_visit": [Function],
+              "shape": {
+                "_visit": [Function],
+                "properties": [
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "exceptionType",
+                          "unsafeName": "exceptionType",
+                        },
+                        "originalName": "exceptionType",
+                        "pascalCase": {
+                          "safeName": "ExceptionType",
+                          "unsafeName": "ExceptionType",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EXCEPTION_TYPE",
+                          "unsafeName": "EXCEPTION_TYPE",
+                        },
+                        "snakeCase": {
+                          "safeName": "exception_type",
+                          "unsafeName": "exception_type",
+                        },
+                      },
+                      "wireValue": "exceptionType",
+                    },
+                    "originalTypeDeclaration": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "exceptionInfo",
+                          "unsafeName": "exceptionInfo",
+                        },
+                        "originalName": "ExceptionInfo",
+                        "pascalCase": {
+                          "safeName": "ExceptionInfo",
+                          "unsafeName": "ExceptionInfo",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EXCEPTION_INFO",
+                          "unsafeName": "EXCEPTION_INFO",
+                        },
+                        "snakeCase": {
+                          "safeName": "exception_info",
+                          "unsafeName": "exception_info",
+                        },
+                      },
+                      "typeId": "type_types:ExceptionInfo",
+                    },
+                    "value": {
+                      "jsonExample": "Unavailable",
+                      "shape": {
+                        "_visit": [Function],
+                        "primitive": {
+                          "_visit": [Function],
+                          "string": "Unavailable",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "wireKey": "exceptionType",
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "exceptionMessage",
+                          "unsafeName": "exceptionMessage",
+                        },
+                        "originalName": "exceptionMessage",
+                        "pascalCase": {
+                          "safeName": "ExceptionMessage",
+                          "unsafeName": "ExceptionMessage",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EXCEPTION_MESSAGE",
+                          "unsafeName": "EXCEPTION_MESSAGE",
+                        },
+                        "snakeCase": {
+                          "safeName": "exception_message",
+                          "unsafeName": "exception_message",
+                        },
+                      },
+                      "wireValue": "exceptionMessage",
+                    },
+                    "originalTypeDeclaration": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "exceptionInfo",
+                          "unsafeName": "exceptionInfo",
+                        },
+                        "originalName": "ExceptionInfo",
+                        "pascalCase": {
+                          "safeName": "ExceptionInfo",
+                          "unsafeName": "ExceptionInfo",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EXCEPTION_INFO",
+                          "unsafeName": "EXCEPTION_INFO",
+                        },
+                        "snakeCase": {
+                          "safeName": "exception_info",
+                          "unsafeName": "exception_info",
+                        },
+                      },
+                      "typeId": "type_types:ExceptionInfo",
+                    },
+                    "value": {
+                      "jsonExample": "This component is unavailable!",
+                      "shape": {
+                        "_visit": [Function],
+                        "primitive": {
+                          "_visit": [Function],
+                          "string": "This component is unavailable!",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "wireKey": "exceptionMessage",
+                  },
+                  {
+                    "name": {
+                      "name": {
+                        "camelCase": {
+                          "safeName": "exceptionStacktrace",
+                          "unsafeName": "exceptionStacktrace",
+                        },
+                        "originalName": "exceptionStacktrace",
+                        "pascalCase": {
+                          "safeName": "ExceptionStacktrace",
+                          "unsafeName": "ExceptionStacktrace",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EXCEPTION_STACKTRACE",
+                          "unsafeName": "EXCEPTION_STACKTRACE",
+                        },
+                        "snakeCase": {
+                          "safeName": "exception_stacktrace",
+                          "unsafeName": "exception_stacktrace",
+                        },
+                      },
+                      "wireValue": "exceptionStacktrace",
+                    },
+                    "originalTypeDeclaration": {
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "exceptionInfo",
+                          "unsafeName": "exceptionInfo",
+                        },
+                        "originalName": "ExceptionInfo",
+                        "pascalCase": {
+                          "safeName": "ExceptionInfo",
+                          "unsafeName": "ExceptionInfo",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EXCEPTION_INFO",
+                          "unsafeName": "EXCEPTION_INFO",
+                        },
+                        "snakeCase": {
+                          "safeName": "exception_info",
+                          "unsafeName": "exception_info",
+                        },
+                      },
+                      "typeId": "type_types:ExceptionInfo",
+                    },
+                    "value": {
+                      "jsonExample": "<logs>",
+                      "shape": {
+                        "_visit": [Function],
+                        "primitive": {
+                          "_visit": [Function],
+                          "string": "<logs>",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "wireKey": "exceptionStacktrace",
+                  },
+                ],
+                "type": "object",
+              },
+              "type": "samePropertiesAsObject",
+              "typeName": {
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "exceptionInfo",
+                    "unsafeName": "exceptionInfo",
+                  },
+                  "originalName": "ExceptionInfo",
+                  "pascalCase": {
+                    "safeName": "ExceptionInfo",
+                    "unsafeName": "ExceptionInfo",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "EXCEPTION_INFO",
+                    "unsafeName": "EXCEPTION_INFO",
+                  },
+                  "snakeCase": {
+                    "safeName": "exception_info",
+                    "unsafeName": "exception_info",
+                  },
+                },
+                "typeId": "type_types:ExceptionInfo",
+              },
+            },
+            "type": "union",
+            "wireDiscriminantValue": "info",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "exception",
+            "unsafeName": "exception",
+          },
+          "originalName": "Exception",
+          "pascalCase": {
+            "safeName": "Exception",
+            "unsafeName": "Exception",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EXCEPTION",
+            "unsafeName": "EXCEPTION",
+          },
+          "snakeCase": {
+            "safeName": "exception",
+            "unsafeName": "exception",
+          },
+        },
+        "typeId": "type_types:Exception",
+      },
+      "referencedTypes": Set {
+        "type_types:ExceptionInfo",
+        "type_types:ExceptionStatus",
+      },
+      "shape": {
+        "_visit": [Function],
+        "baseProperties": [],
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
+        "extends": [],
+        "type": "union",
+        "types": [
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "info",
+                  "unsafeName": "info",
+                },
+                "originalName": "info",
+                "pascalCase": {
+                  "safeName": "Info",
+                  "unsafeName": "Info",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "INFO",
+                  "unsafeName": "INFO",
+                },
+                "snakeCase": {
+                  "safeName": "info",
+                  "unsafeName": "info",
+                },
+              },
+              "wireValue": "info",
+            },
+            "docs": undefined,
+            "shape": {
+              "_visit": [Function],
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "exceptionInfo",
+                  "unsafeName": "exceptionInfo",
+                },
+                "originalName": "ExceptionInfo",
+                "pascalCase": {
+                  "safeName": "ExceptionInfo",
+                  "unsafeName": "ExceptionInfo",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EXCEPTION_INFO",
+                  "unsafeName": "EXCEPTION_INFO",
+                },
+                "snakeCase": {
+                  "safeName": "exception_info",
+                  "unsafeName": "exception_info",
+                },
+              },
+              "propertiesType": "samePropertiesAsObject",
+              "type": "named",
+              "typeId": "type_types:ExceptionInfo",
+            },
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+                "originalName": "status",
+                "pascalCase": {
+                  "safeName": "Status",
+                  "unsafeName": "Status",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+              },
+              "wireValue": "status",
+            },
+            "docs": undefined,
+            "shape": {
+              "_visit": [Function],
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "status",
+                    "unsafeName": "status",
+                  },
+                  "originalName": "status",
+                  "pascalCase": {
+                    "safeName": "Status",
+                    "unsafeName": "Status",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "STATUS",
+                    "unsafeName": "STATUS",
+                  },
+                  "snakeCase": {
+                    "safeName": "status",
+                    "unsafeName": "status",
+                  },
+                },
+                "wireValue": "status",
+              },
+              "propertiesType": "singleProperty",
+              "type": {
+                "_visit": [Function],
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "exceptionStatus",
+                    "unsafeName": "exceptionStatus",
+                  },
+                  "originalName": "ExceptionStatus",
+                  "pascalCase": {
+                    "safeName": "ExceptionStatus",
+                    "unsafeName": "ExceptionStatus",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "EXCEPTION_STATUS",
+                    "unsafeName": "EXCEPTION_STATUS",
+                  },
+                  "snakeCase": {
+                    "safeName": "exception_status",
+                    "unsafeName": "exception_status",
+                  },
+                },
+                "type": "named",
+                "typeId": "type_types:ExceptionStatus",
+              },
+            },
+          },
+        ],
+      },
+    },
+    "type_types:ExceptionInfo": {
+      "availability": undefined,
+      "docs": undefined,
+      "examples": [
+        {
+          "docs": undefined,
+          "jsonExample": {
+            "exceptionMessage": "This component is unavailable!",
+            "exceptionStacktrace": "<logs>",
+            "exceptionType": "Unavailable",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+            "originalName": "One",
+            "pascalCase": {
+              "safeName": "One",
+              "unsafeName": "One",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONE",
+              "unsafeName": "ONE",
+            },
+            "snakeCase": {
+              "safeName": "one",
+              "unsafeName": "one",
+            },
+          },
+          "shape": {
+            "_visit": [Function],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exceptionType",
+                      "unsafeName": "exceptionType",
+                    },
+                    "originalName": "exceptionType",
+                    "pascalCase": {
+                      "safeName": "ExceptionType",
+                      "unsafeName": "ExceptionType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXCEPTION_TYPE",
+                      "unsafeName": "EXCEPTION_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "exception_type",
+                      "unsafeName": "exception_type",
+                    },
+                  },
+                  "wireValue": "exceptionType",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exceptionInfo",
+                      "unsafeName": "exceptionInfo",
+                    },
+                    "originalName": "ExceptionInfo",
+                    "pascalCase": {
+                      "safeName": "ExceptionInfo",
+                      "unsafeName": "ExceptionInfo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXCEPTION_INFO",
+                      "unsafeName": "EXCEPTION_INFO",
+                    },
+                    "snakeCase": {
+                      "safeName": "exception_info",
+                      "unsafeName": "exception_info",
+                    },
+                  },
+                  "typeId": "type_types:ExceptionInfo",
+                },
+                "value": {
+                  "jsonExample": "Unavailable",
+                  "shape": {
+                    "_visit": [Function],
+                    "primitive": {
+                      "_visit": [Function],
+                      "string": "Unavailable",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "wireKey": "exceptionType",
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exceptionMessage",
+                      "unsafeName": "exceptionMessage",
+                    },
+                    "originalName": "exceptionMessage",
+                    "pascalCase": {
+                      "safeName": "ExceptionMessage",
+                      "unsafeName": "ExceptionMessage",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXCEPTION_MESSAGE",
+                      "unsafeName": "EXCEPTION_MESSAGE",
+                    },
+                    "snakeCase": {
+                      "safeName": "exception_message",
+                      "unsafeName": "exception_message",
+                    },
+                  },
+                  "wireValue": "exceptionMessage",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exceptionInfo",
+                      "unsafeName": "exceptionInfo",
+                    },
+                    "originalName": "ExceptionInfo",
+                    "pascalCase": {
+                      "safeName": "ExceptionInfo",
+                      "unsafeName": "ExceptionInfo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXCEPTION_INFO",
+                      "unsafeName": "EXCEPTION_INFO",
+                    },
+                    "snakeCase": {
+                      "safeName": "exception_info",
+                      "unsafeName": "exception_info",
+                    },
+                  },
+                  "typeId": "type_types:ExceptionInfo",
+                },
+                "value": {
+                  "jsonExample": "This component is unavailable!",
+                  "shape": {
+                    "_visit": [Function],
+                    "primitive": {
+                      "_visit": [Function],
+                      "string": "This component is unavailable!",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "wireKey": "exceptionMessage",
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exceptionStacktrace",
+                      "unsafeName": "exceptionStacktrace",
+                    },
+                    "originalName": "exceptionStacktrace",
+                    "pascalCase": {
+                      "safeName": "ExceptionStacktrace",
+                      "unsafeName": "ExceptionStacktrace",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXCEPTION_STACKTRACE",
+                      "unsafeName": "EXCEPTION_STACKTRACE",
+                    },
+                    "snakeCase": {
+                      "safeName": "exception_stacktrace",
+                      "unsafeName": "exception_stacktrace",
+                    },
+                  },
+                  "wireValue": "exceptionStacktrace",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exceptionInfo",
+                      "unsafeName": "exceptionInfo",
+                    },
+                    "originalName": "ExceptionInfo",
+                    "pascalCase": {
+                      "safeName": "ExceptionInfo",
+                      "unsafeName": "ExceptionInfo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXCEPTION_INFO",
+                      "unsafeName": "EXCEPTION_INFO",
+                    },
+                    "snakeCase": {
+                      "safeName": "exception_info",
+                      "unsafeName": "exception_info",
+                    },
+                  },
+                  "typeId": "type_types:ExceptionInfo",
+                },
+                "value": {
+                  "jsonExample": "<logs>",
+                  "shape": {
+                    "_visit": [Function],
+                    "primitive": {
+                      "_visit": [Function],
+                      "string": "<logs>",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "wireKey": "exceptionStacktrace",
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "exceptionInfo",
+            "unsafeName": "exceptionInfo",
+          },
+          "originalName": "ExceptionInfo",
+          "pascalCase": {
+            "safeName": "ExceptionInfo",
+            "unsafeName": "ExceptionInfo",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EXCEPTION_INFO",
+            "unsafeName": "EXCEPTION_INFO",
+          },
+          "snakeCase": {
+            "safeName": "exception_info",
+            "unsafeName": "exception_info",
+          },
+        },
+        "typeId": "type_types:ExceptionInfo",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "exceptionType",
+                  "unsafeName": "exceptionType",
+                },
+                "originalName": "exceptionType",
+                "pascalCase": {
+                  "safeName": "ExceptionType",
+                  "unsafeName": "ExceptionType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EXCEPTION_TYPE",
+                  "unsafeName": "EXCEPTION_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "exception_type",
+                  "unsafeName": "exception_type",
+                },
+              },
+              "wireValue": "exceptionType",
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": "STRING",
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "exceptionMessage",
+                  "unsafeName": "exceptionMessage",
+                },
+                "originalName": "exceptionMessage",
+                "pascalCase": {
+                  "safeName": "ExceptionMessage",
+                  "unsafeName": "ExceptionMessage",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EXCEPTION_MESSAGE",
+                  "unsafeName": "EXCEPTION_MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "exception_message",
+                  "unsafeName": "exception_message",
+                },
+              },
+              "wireValue": "exceptionMessage",
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": "STRING",
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "exceptionStacktrace",
+                  "unsafeName": "exceptionStacktrace",
+                },
+                "originalName": "exceptionStacktrace",
+                "pascalCase": {
+                  "safeName": "ExceptionStacktrace",
+                  "unsafeName": "ExceptionStacktrace",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EXCEPTION_STACKTRACE",
+                  "unsafeName": "EXCEPTION_STACKTRACE",
+                },
+                "snakeCase": {
+                  "safeName": "exception_stacktrace",
+                  "unsafeName": "exception_stacktrace",
+                },
+              },
+              "wireValue": "exceptionStacktrace",
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": "STRING",
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_types:ExceptionStatus": {
+      "availability": undefined,
+      "docs": undefined,
+      "examples": [
+        {
+          "docs": undefined,
+          "jsonExample": "INTERNAL",
+          "name": {
+            "camelCase": {
+              "safeName": "internal",
+              "unsafeName": "internal",
+            },
+            "originalName": "Internal",
+            "pascalCase": {
+              "safeName": "Internal",
+              "unsafeName": "Internal",
+            },
+            "screamingSnakeCase": {
+              "safeName": "INTERNAL",
+              "unsafeName": "INTERNAL",
+            },
+            "snakeCase": {
+              "safeName": "internal",
+              "unsafeName": "internal",
+            },
+          },
+          "shape": {
+            "_visit": [Function],
+            "type": "enum",
+            "wireValue": "INTERNAL",
+          },
+        },
+        {
+          "docs": undefined,
+          "jsonExample": "USER",
+          "name": {
+            "camelCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+            "originalName": "User",
+            "pascalCase": {
+              "safeName": "User",
+              "unsafeName": "User",
+            },
+            "screamingSnakeCase": {
+              "safeName": "USER",
+              "unsafeName": "USER",
+            },
+            "snakeCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+          },
+          "shape": {
+            "_visit": [Function],
+            "type": "enum",
+            "wireValue": "USER",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "exceptionStatus",
+            "unsafeName": "exceptionStatus",
+          },
+          "originalName": "ExceptionStatus",
+          "pascalCase": {
+            "safeName": "ExceptionStatus",
+            "unsafeName": "ExceptionStatus",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EXCEPTION_STATUS",
+            "unsafeName": "EXCEPTION_STATUS",
+          },
+          "snakeCase": {
+            "safeName": "exception_status",
+            "unsafeName": "exception_status",
+          },
+        },
+        "typeId": "type_types:ExceptionStatus",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "docs": "There was an internal exception.",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "internal",
+                  "unsafeName": "internal",
+                },
+                "originalName": "INTERNAL",
+                "pascalCase": {
+                  "safeName": "Internal",
+                  "unsafeName": "Internal",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "INTERNAL",
+                  "unsafeName": "INTERNAL",
+                },
+                "snakeCase": {
+                  "safeName": "internal",
+                  "unsafeName": "internal",
+                },
+              },
+              "wireValue": "INTERNAL",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "There was a user-influenced exception.",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+                "originalName": "USER",
+                "pascalCase": {
+                  "safeName": "User",
+                  "unsafeName": "User",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER",
+                  "unsafeName": "USER",
+                },
+                "snakeCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+              },
+              "wireValue": "USER",
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+}
+`;

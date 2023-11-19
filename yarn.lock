@@ -1761,10 +1761,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/colors@npm:^4.1.4":
-  version: 4.1.8
-  resolution: "@blueprintjs/colors@npm:4.1.8"
-  checksum: a9fb3363d19c95a752f66476aeb233f1e4f75e8d8daad992cff5dfa8f42f8fe215442e3e642b98feca9d5784a0ff3c5cb55779cee84958343b74004dac4985d4
+"@blueprintjs/colors@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "@blueprintjs/colors@npm:5.0.5"
+  dependencies:
+    tslib: ~2.6.2
+  checksum: 406dc1b45991bffb4301ac14bef214236661b0715c36adf499096b9c78b40f35740712c21d20afbed0fbe1913aaedb6a46c19f390141900e62cab5e52edd688e
   languageName: node
   linkType: hard
 
@@ -1778,17 +1780,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@blueprintjs/stylelint-plugin@npm:^2.0.8":
-  version: 2.0.8
-  resolution: "@blueprintjs/stylelint-plugin@npm:2.0.8"
+"@blueprintjs/stylelint-plugin@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "@blueprintjs/stylelint-plugin@npm:4.1.3"
   dependencies:
-    "@blueprintjs/colors": "npm:^4.1.4"
-    postcss: "npm:^8.4.12"
-    postcss-selector-parser: "npm:^6.0.10"
-    postcss-value-parser: "npm:^4.2.0"
+    "@blueprintjs/colors": ^5.0.5
+    postcss: ^8.4.21
+    postcss-selector-parser: ^6.0.10
+    postcss-value-parser: ^4.2.0
   peerDependencies:
-    stylelint: ^14.6.1
-  checksum: 884f1dda616fd5117f5641e75ace79b0b9a5880d2beff6e573188b4acfaa9008e336885fab31e8ff36a23d4dd1b758e3403b0692013c206f93ecca6872bd1623
+    stylelint: ^14.12.1 || ^15.10.3
+  checksum: e18470a463304481669c88f32515ac6516388e844c089be19241b23d231aa0300e30be5b013a9eca099a2a8f3d1f01c535e8ed053b0dad342c986335f3f365ad
   languageName: node
   linkType: hard
 
@@ -1893,12 +1895,13 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
+    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.2
@@ -1907,7 +1910,7 @@ __metadata:
     "@types/latest-version": ^4.0.1
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
-    "@types/tar": ^6.1.3
+    "@types/tar": ^6.1.7
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -1928,7 +1931,7 @@ __metadata:
     ora: ^7.0.1
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    tar: ^6.1.13
+    tar: ^6.2.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     validate-npm-package-name: ^4.0.0
@@ -2271,7 +2274,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@types/jest": ^29.0.3
     "@types/jest-specific-snapshot": ^0.5.7
     "@types/lodash-es": ^4.17.7
@@ -2301,7 +2304,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@fern-fern/ir-v1-model": 0.0.1
     "@fern-fern/ir-v10-model": 0.0.1
     "@fern-fern/ir-v11-model": 0.0.2
@@ -2323,6 +2326,7 @@ __metadata:
     "@fern-fern/ir-v26-sdk": 0.0.1
     "@fern-fern/ir-v27-sdk": 0.0.1
     "@fern-fern/ir-v28-sdk": 0.0.3
+    "@fern-fern/ir-v29-sdk": 0.0.1
     "@fern-fern/ir-v3-model": 0.0.4
     "@fern-fern/ir-v4-model": 0.0.4
     "@fern-fern/ir-v5-model": 0.0.3
@@ -2525,6 +2529,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.130
     "@redocly/openapi-core": ^1.4.0
     "@types/jest": ^29.0.3
@@ -2622,7 +2627,7 @@ __metadata:
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -2656,12 +2661,12 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
-    "@types/mime-types": ^2.1.2
+    "@types/mime-types": ^2.1.4
     "@types/node": ^18.7.18
     "@types/terminal-link": ^1.2.0
     axios: ^0.27.2
@@ -2796,7 +2801,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2845,7 +2850,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
-    "@types/tar": ^6.1.3
+    "@types/tar": ^6.1.7
     axios: ^0.27.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2856,7 +2861,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    tar: ^6.1.13
+    tar: ^6.2.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     zod: ^3.22.3
@@ -2894,6 +2899,8 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-fern/docs-config": 0.0.53
+    "@fern-fern/legacy-docs-config": 0.0.58
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -2923,7 +2930,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/ir-sdk": 0.0.2941
+    "@fern-fern/ir-sdk": 0.0.2966
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2973,10 +2980,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-sdk@npm:0.0.2941":
-  version: 0.0.2941
-  resolution: "@fern-fern/ir-sdk@npm:0.0.2941"
-  checksum: 1c4f43340f12f58e8b1cd00cd9d6b318fcd4f3213806aaf00ff2306256d77e454af2c4572c9efa7e340384c54909188183114dce5be7b35aec083e11ff3f5f54
+"@fern-fern/ir-sdk@npm:0.0.2966":
+  version: 0.0.2966
+  resolution: "@fern-fern/ir-sdk@npm:0.0.2966"
+  checksum: 410b49156757e3727adced9b6b480e62a6a1854bcb4cfcad25477094e9cd9d8248418efd9a7153c41d131711a00c02b10be95a3fa6e6849bcadbe03769849600
   languageName: node
   linkType: hard
 
@@ -3127,6 +3134,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/ir-v29-sdk@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v29-sdk@npm:0.0.1"
+  checksum: 432bb6c0d2a8435dd9239606027bd950ffbc1d2b887759a0774fb3219002611340c6d84edcec6d633f4d49718da92256b991102668f10d7575a0838251e10d47
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-v3-model@npm:0.0.4":
   version: 0.0.4
   resolution: "@fern-fern/ir-v3-model@npm:0.0.4"
@@ -3173,6 +3187,13 @@ __metadata:
   version: 0.0.1
   resolution: "@fern-fern/ir-v9-model@npm:0.0.1"
   checksum: 2ad92a96c74fdf5a36bb786342b08fb91f5068b2130e40bfa90d05cf3ce391d355ed3cbadb21bf0d34323e2fc0d71761308c01849f6ef18c26191d07eabf51ea
+  languageName: node
+  linkType: hard
+
+"@fern-fern/legacy-docs-config@npm:0.0.58":
+  version: 0.0.58
+  resolution: "@fern-fern/legacy-docs-config@npm:0.0.58"
+  checksum: 976d56d4b82e981034c8425d04345fbb4db707af8e1742b76cb1325600407945abb3a92639a9b952652131ebab27bc35186588d044c24cc77d5d240dd4d92ef0
   languageName: node
   linkType: hard
 
@@ -4304,10 +4325,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mime-types@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@types/mime-types@npm:2.1.2"
-  checksum: 9e3c78f1c63211e0450901212566a046da68d4438a5e543333ec9b0be3259bd5d01532734dc51ead40104889b98d12c7663b65212a318aafad3e34c98204e9e1
+"@types/mime-types@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "@types/mime-types@npm:2.1.4"
+  checksum: f8c521c54ee0c0b9f90a65356a80b1413ed27ccdc94f5c7ebb3de5d63cedb559cd2610ea55b4100805c7349606a920d96e54f2d16b2f0afa6b7cd5253967ccc9
   languageName: node
   linkType: hard
 
@@ -4489,13 +4510,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tar@npm:^6.1.3":
-  version: 6.1.3
-  resolution: "@types/tar@npm:6.1.3"
+"@types/tar@npm:^6.1.7":
+  version: 6.1.7
+  resolution: "@types/tar@npm:6.1.7"
   dependencies:
     "@types/node": "*"
-    minipass: ^3.3.5
-  checksum: 3a221f74adfcef8555b9c4cc951907dfd567630744ffe5211da1b44caf2a4c3b02297b73c9fb02d171e93a7a7c74fb15c1826e3f0438f0e5e8f4c790db59ddcf
+    minipass: ^4.0.0
+  checksum: 74a346c86eb9fd1d7849b675e019ec784accf2f4a2abedc607e5449809f5205db6c31a7c0e7ac34e1ae5beabc3d260dbf82d7829398791397b971a56de4028b9
   languageName: node
   linkType: hard
 
@@ -7883,7 +7904,7 @@ env-cmd@toddbluhm/env-cmd:
     "@babel/preset-env": ^7.22.15
     "@babel/preset-typescript": ^7.23.0
     "@blueprintjs/eslint-plugin": ^2.1.2
-    "@blueprintjs/stylelint-plugin": ^2.0.8
+    "@blueprintjs/stylelint-plugin": ^4.1.3
     "@types/is-ci": ^3.0.2
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
@@ -11486,7 +11507,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"minipass@npm:^3.0.0, minipass@npm:^3.1.1, minipass@npm:^3.1.6, minipass@npm:^3.3.5":
+"minipass@npm:^3.0.0, minipass@npm:^3.1.1, minipass@npm:^3.1.6":
   version: 3.3.6
   resolution: "minipass@npm:3.3.6"
   dependencies:
@@ -11501,6 +11522,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     yallist: ^4.0.0
   checksum: 7a609afbf394abfcf9c48e6c90226f471676c8f2a67f07f6838871afb03215ede431d1433feffe1b855455bcb13ef0eb89162841b9796109d6fed8d89790f381
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "minipass@npm:5.0.0"
+  checksum: 425dab288738853fded43da3314a0b5c035844d6f3097a8e3b5b29b328da8f3c1af6fc70618b32c29ff906284cf6406b6841376f21caaadd0793c1d5a6a620ea
   languageName: node
   linkType: hard
 
@@ -12528,7 +12556,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss@npm:*, postcss@npm:^8.1.10, postcss@npm:^8.4.12, postcss@npm:^8.4.17, postcss@npm:^8.4.23, postcss@npm:^8.4.4":
+"postcss@npm:*, postcss@npm:^8.1.10, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.23, postcss@npm:^8.4.4":
   version: 8.4.31
   resolution: "postcss@npm:8.4.31"
   dependencies:
@@ -14417,7 +14445,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tar@npm:^6.1.11, tar@npm:^6.1.13, tar@npm:^6.1.2":
+"tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.13
   resolution: "tar@npm:6.1.13"
   dependencies:
@@ -14428,6 +14456,20 @@ env-cmd@toddbluhm/env-cmd:
     mkdirp: ^1.0.3
     yallist: ^4.0.0
   checksum: 8a278bed123aa9f53549b256a36b719e317c8b96fe86a63406f3c62887f78267cea9b22dc6f7007009738509800d4a4dccc444abd71d762287c90f35b002eb1c
+  languageName: node
+  linkType: hard
+
+"tar@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "tar@npm:6.2.0"
+  dependencies:
+    chownr: ^2.0.0
+    fs-minipass: ^2.0.0
+    minipass: ^5.0.0
+    minizlib: ^2.1.1
+    mkdirp: ^1.0.3
+    yallist: ^4.0.0
+  checksum: db4d9fe74a2082c3a5016630092c54c8375ff3b280186938cfd104f2e089c4fd9bad58688ef6be9cf186a889671bf355c7cda38f09bbf60604b281715ca57f5c
   languageName: node
   linkType: hard
 
@@ -14666,6 +14708,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:~2.6.2":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
   languageName: node
   linkType: hard
 

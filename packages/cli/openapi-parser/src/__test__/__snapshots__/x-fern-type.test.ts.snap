@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-type x-fern-type parse open api 1`] = `
+{
+  "description": undefined,
+  "endpoints": [],
+  "errors": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "BaseUser": {
+      "description": undefined,
+      "key": {
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+      "type": "map",
+      "value": {
+        "description": undefined,
+        "schema": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {},
+  "title": "Test extension \`x-fern-type\`",
+  "variables": {},
+  "webhooks": [],
+}
+`;
