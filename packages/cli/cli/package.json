@@ -61,7 +61,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
-    "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
+    "@fern-api/venus-api-sdk": "0.0.36",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
