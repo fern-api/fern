@@ -36,11 +36,7 @@ describe("fern generate", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("overlap-methods")),
         });
 
-        expect(
-            stripAnsi(stdout)
-                // for some reason, locally the output contains a newline that Circle doesn't
-                .trim()
-        ).toContain("[api]: Multiple endpoints have conflicting names for 'hello':");
+        expect(stripAnsi(stdout).trim()).toContain("[api]: Multiple endpoints have conflicting names for 'hello':");
     }, 100_000);
 
     // if (process.env.CIRCLE_BRANCH === "main") {
