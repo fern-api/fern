@@ -2531,7 +2531,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.130
-    "@redocly/openapi-core": ^1.4.0
+    "@redocly/openapi-core": ^1.4.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
@@ -3764,9 +3764,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@redocly/openapi-core@npm:1.4.0"
+"@redocly/openapi-core@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@redocly/openapi-core@npm:1.4.1"
   dependencies:
     "@redocly/ajv": ^8.11.0
     "@types/node": ^14.11.8
@@ -3778,7 +3778,7 @@ __metadata:
     node-fetch: ^2.6.1
     pluralize: ^8.0.0
     yaml-ast-parser: 0.0.43
-  checksum: 8419256d797fb9aaf9b72447ea414c47ebfccd9f731894081c73ac476de446466369b72ec2a420ef029b69b11f0bfcdf70366517f194ce6ca80095afd815099d
+  checksum: 503a022f75fff28de693909d5bfcf241e712a479319cb50e46f59cc42ae66cf58449b1f57a7665e6daf4974d12a46241cf88e1a8c24c82d1805146f120abb4c7
   languageName: node
   linkType: hard
 

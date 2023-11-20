@@ -4282,7 +4282,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/openapi-ir-model", "npm:0.0.130"],\
-            ["@redocly/openapi-core", "npm:1.4.0"],\
+            ["@redocly/openapi-core", "npm:1.4.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5678,10 +5678,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@redocly/openapi-core", [\
-        ["npm:1.4.0", {\
-          "packageLocation": "./.yarn/cache/@redocly-openapi-core-npm-1.4.0-79d8edaae1-8419256d79.zip/node_modules/@redocly/openapi-core/",\
+        ["npm:1.4.1", {\
+          "packageLocation": "./.yarn/cache/@redocly-openapi-core-npm-1.4.1-4695414351-503a022f75.zip/node_modules/@redocly/openapi-core/",\
           "packageDependencies": [\
-            ["@redocly/openapi-core", "npm:1.4.0"],\
+            ["@redocly/openapi-core", "npm:1.4.1"],\
             ["@redocly/ajv", "npm:8.11.0"],\
             ["@types/node", "npm:14.18.63"],\
             ["colorette", "npm:1.4.0"],\
@@ -5689,7 +5689,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["lodash.isequal", "npm:4.5.0"],\
             ["minimatch", "npm:5.1.0"],\
-            ["node-fetch", "virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9"],\
+            ["node-fetch", "virtual:46954143511abe760c249cc6f6eca8dfbb4d0a70acd1425fac297b068ec1d9e178a3f3a5f59aea8900d72d85d307205a6f8beee192f64f0c004b157e2420ea88#npm:2.6.9"],\
             ["pluralize", "npm:8.0.0"],\
             ["yaml-ast-parser", "npm:0.0.43"]\
           ],\
@@ -14902,10 +14902,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9", {\
-          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-3f403f341c/0/cache/node-fetch-npm-2.6.9-9fc9a54529-acb04f9ce7.zip/node_modules/node-fetch/",\
+        ["virtual:46954143511abe760c249cc6f6eca8dfbb4d0a70acd1425fac297b068ec1d9e178a3f3a5f59aea8900d72d85d307205a6f8beee192f64f0c004b157e2420ea88#npm:2.6.9", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-1036f039b3/0/cache/node-fetch-npm-2.6.9-9fc9a54529-acb04f9ce7.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
-            ["node-fetch", "virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9"],\
+            ["node-fetch", "virtual:46954143511abe760c249cc6f6eca8dfbb4d0a70acd1425fac297b068ec1d9e178a3f3a5f59aea8900d72d85d307205a6f8beee192f64f0c004b157e2420ea88#npm:2.6.9"],\
             ["@types/encoding", null],\
             ["encoding", null],\
             ["whatwg-url", "npm:5.0.0"]\
@@ -17886,7 +17886,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["swagger2openapi", "npm:7.0.8"],\
             ["call-me-maybe", "npm:1.0.2"],\
-            ["node-fetch", "virtual:79d8edaae17cf78dad1b3f6c0876d5b4f6fac6f5f48ee5ff2ade1c1f4b119946c4db6eeab8a91125bf695d3a21eac6efd3190790f019e3b5b63b2a85f1f07646#npm:2.6.9"],\
+            ["node-fetch", "virtual:46954143511abe760c249cc6f6eca8dfbb4d0a70acd1425fac297b068ec1d9e178a3f3a5f59aea8900d72d85d307205a6f8beee192f64f0c004b157e2420ea88#npm:2.6.9"],\
             ["node-fetch-h2", "npm:2.3.0"],\
             ["node-readfiles", "npm:0.2.0"],\
             ["oas-kit-common", "npm:1.0.8"],\
