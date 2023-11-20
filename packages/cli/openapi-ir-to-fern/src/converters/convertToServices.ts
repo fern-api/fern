@@ -35,7 +35,7 @@ export function convertToServices({
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
     const services: Record<RelativeFilePath, ConvertedService> = {};
-    const methodOverlaps: { [key: string]: Endpoint[] } = {};
+    const methodOverlaps: Record<string, Endpoint[]> = {};
     for (const endpoint of endpoints) {
         const { endpointId, file, tag } = getEndpointLocation(endpoint);
         if (!(file in services)) {
@@ -53,7 +53,6 @@ export function convertToServices({
         if (service != null) {
             if (endpointId in service.value.endpoints && methodOverlaps[endpointId] === undefined) {
                 methodOverlaps[endpointId] = endpoints.filter((e) => e.sdkName?.methodName === endpointId);
-                context.logger.debug(JSON.stringify(methodOverlaps));
             }
             const convertedEndpoint = convertEndpoint({
                 endpoint,
@@ -101,13 +100,11 @@ function getEmptyService(): RawSchemas.HttpServiceSchema {
     };
 }
 
-function logOverlappingMethodNames(context: OpenApiIrConverterContext, endpoints: { [key: string]: Endpoint[] }) {
-    context.logger.debug("in log func");
+function logOverlappingMethodNames(context: OpenApiIrConverterContext, endpoints: Record<string, Endpoint[]>) {
     if (!endpoints) {
         return;
     }
 
-    context.logger.debug(JSON.stringify(endpoints));
     for (const key in endpoints) {
         const value = endpoints[key];
         context.logger.error(`Multiple endpoints have conflicting names for '${key}':`);
