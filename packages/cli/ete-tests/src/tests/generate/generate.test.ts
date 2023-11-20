@@ -31,6 +31,18 @@ describe("fern generate", () => {
         ).toMatchSnapshot();
     });
 
+    it("overlapping methods", async () => {
+        const { stdout } = await runFernCli(["generate"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("overlap-methods")),
+        });
+
+        expect(
+            stripAnsi(stdout)
+                // for some reason, locally the output contains a newline that Circle doesn't
+                .trim()
+        ).toContain("[api]: Multiple endpoints have conflicting names for 'hello':");
+    }, 100_000);
+
     // if (process.env.CIRCLE_BRANCH === "main") {
     //     for (const fixtureName of FIXTURES) {
     //         // eslint-disable-next-line jest/expect-expect, jest/no-commented-out-tests

@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: Minimal API
+  version: 1.0.0
+paths:
+  /hello:
+    get:
+      x-fern-sdk-method-name: hello
+      summary: Get a friendly greeting
+  /helloV2:
+    get:
+      x-fern-sdk-method-name: hello
+      summary: Get a friendly greeting
