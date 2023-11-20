@@ -101,10 +101,6 @@ function getEmptyService(): RawSchemas.HttpServiceSchema {
 }
 
 function logOverlappingMethodNames(context: OpenApiIrConverterContext, endpoints: Record<string, Endpoint[]>) {
-    if (!endpoints) {
-        return;
-    }
-
     for (const key in endpoints) {
         const value = endpoints[key];
         context.logger.error(`Multiple endpoints have conflicting names for '${key}':`);
