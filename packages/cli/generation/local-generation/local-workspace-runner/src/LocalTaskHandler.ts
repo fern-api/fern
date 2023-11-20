@@ -123,6 +123,10 @@ export class LocalTaskHandler {
         await loggingExeca(this.context.logger, "git", options, {
             cwd,
             doNotPipeOutput: true,
+            env: {
+                GIT_AUTHOR_EMAIL: "info@buildwithfern.com",
+                GIT_AUTHOR_NAME: "fern-api",
+            },
         });
     }
 }
