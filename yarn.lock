@@ -1852,7 +1852,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
+    "@fern-api/venus-api-sdk": 0.0.36
     "@types/jest": ^29.0.3
     "@types/jsonwebtoken": ^9.0.0
     "@types/node": ^18.7.18
@@ -1895,7 +1895,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
+    "@fern-api/venus-api-sdk": 0.0.36
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
@@ -2037,7 +2037,7 @@ __metadata:
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
     "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
+    "@fern-api/venus-api-sdk": 0.0.36
     "@fern-fern/fiddle-sdk": ^0.0.351
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2831,15 +2831,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/venus-api-sdk@npm:0.0.20-7-g6ea8dc4":
-  version: 0.0.20-7-g6ea8dc4
-  resolution: "@fern-api/venus-api-sdk@npm:0.0.20-7-g6ea8dc4"
+"@fern-api/venus-api-sdk@npm:0.0.36":
+  version: 0.0.36
+  resolution: "@fern-api/venus-api-sdk@npm:0.0.36"
   dependencies:
     "@types/url-join": 4.0.1
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 62dcc24a63abcbabc969016a5a6279b79f774f1859826fb2902ad9c3c04047ed8f06789102d1c602894fb3577566464b49e2d412c5aa77b4c104c724859fe573
+  checksum: 2a108f60e2c30324683e308294bf640f5f08615ae32f030042ee2719a7f2c4a24c592c78976f4c639d8126d853261f3015bf676efe36127548ee4ce937423264
   languageName: node
   linkType: hard
 

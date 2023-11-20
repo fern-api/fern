@@ -3556,7 +3556,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.36"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/jsonwebtoken", "npm:9.0.0"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3601,7 +3601,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.36"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-migrations", "workspace:packages/cli/yaml/yaml-migrations"],\
@@ -3728,7 +3728,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.36"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4601,10 +4601,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/venus-api-sdk", [\
-        ["npm:0.0.20-7-g6ea8dc4", {\
-          "packageLocation": "./.yarn/cache/@fern-api-venus-api-sdk-npm-0.0.20-7-g6ea8dc4-ac05290a6c-62dcc24a63.zip/node_modules/@fern-api/venus-api-sdk/",\
+        ["npm:0.0.36", {\
+          "packageLocation": "./.yarn/cache/@fern-api-venus-api-sdk-npm-0.0.36-e83b94768f-2a108f60e2.zip/node_modules/@fern-api/venus-api-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.36"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
