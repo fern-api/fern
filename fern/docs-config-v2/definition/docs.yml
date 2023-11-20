@@ -1,0 +1,322 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  DocsConfiguration:
+    properties:
+      instances: list<DocsInstances>
+      navigation:
+        type: optional<NavigationConfig>
+        docs: The navigation config is skipped when multiple versions are present.
+      tabs:
+        type: optional<map<TabId, TabConfig>>
+      versions: optional<list<VersionConfig>>
+      title:
+        type: optional<string>
+        docs: Used as tab bar title, and in the Header if no logo is defined
+      logo: optional<LogoConfiguration>
+      favicon:
+        type: optional<string>
+        docs: Path to the favicon image
+      background-image-path:
+        type: optional<ImageConfig>
+        docs: This background image is used to customize the appearance of your docs site.
+      colors: optional<DocsColorsConfig>
+      header: optional<HeaderConfig>
+      layout: optional<LayoutConfig>
+      typography: optional<DocsTypographyConfig>
+
+  TabId: string
+
+  TabConfig:
+    properties:
+      display-name: string
+      icon: string
+
+  DocsInstances:
+    properties:
+      url: string
+      custom-domain: optional<string>
+
+  VersionConfig:
+    properties:
+      display-name: string
+      path: string
+      slug: optional<string>
+      availability: optional<VersionAvailability>
+
+  VersionAvailability:
+    enum:
+      - deprecated
+      - ga
+      - stable
+      - beta
+
+  VersionFileConfig:
+    properties:
+      navigation: NavigationConfig
+
+  NavigationConfig:
+    discriminated: false
+    union:
+      - UntabbedNavigationConifg
+      - TabbedNavigationConfig
+
+  UntabbedNavigationConifg: list<NavigationItem>
+
+  TabbedNavigationConfig:
+    type: list<TabbedNavigationItem>
+
+  TabbedNavigationItem:
+    properties:
+      tab: TabId
+      layout: list<NavigationItem>
+
+  NavigationItem:
+    discriminated: false
+    union:
+      - PageConfiguration
+      - SectionConfiguration
+      - ApiSectionConfiguration
+
+  LogoConfiguration:
+    properties:
+      image-path: optional<ImageConfig>
+      href:
+        type: optional<string>
+        docs: If defined, the logo will be wrapped in an anchor tag with this href
+
+  DocsTypographyConfig:
+    properties:
+      headings: optional<FontConfig>
+      body: optional<FontConfig>
+      code: optional<FontConfig>
+
+  FontConfig:
+    properties:
+      font-path:
+        type: string
+        docs: The relative path of the font file.
+      name:
+        type: optional<string>
+        docs: |
+          If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
+
+  PageConfiguration:
+    properties:
+      page: string
+      path: string
+      slug: optional<string>
+
+  SectionConfiguration:
+    properties:
+      section: string
+      contents: list<NavigationItem>
+      collapsed: optional<boolean>
+      slug: optional<string>
+
+  ApiSectionConfiguration:
+    properties:
+      api: string
+      api-name:
+        type: optional<string>
+        docs: Name of API that we are referencing
+      audiences: optional<list<string>>
+      display-errors:
+        type: optional<boolean>
+        docs: Defaults to false
+      snippets: optional<SnippetsConfiguration>
+
+  SnippetsConfiguration:
+    properties:
+      python: optional<string>
+      typescript: optional<string>
+      go: optional<string>
+      java: optional<string>
+
+  DocsColorsConfig:
+    properties:
+      accent-primary: optional<ColorConfig>
+      background: optional<ColorConfig>
+      foreground:
+        type: optional<ColorConfig>
+        docs: Defaults to transparent
+      snippets-background:
+        type: optional<ColorConfig>
+        docs: Defaults to colors.foreground
+      border:
+        type: optional<ColorConfig>
+        docs: Defaults to white/10 in dark mode, and black/10 in light mode
+
+  ColorConfig:
+    discriminated: false
+    union:
+      - string
+      - ThemedColorConfig
+
+  ThemedColorConfig:
+    properties:
+      dark: optional<string>
+      light: optional<string>
+
+  ImageConfig:
+    discriminated: false
+    union:
+      - string
+      - ThemedImageConfig
+
+  ThemedImageConfig:
+    properties:
+      dark: optional<string>
+      light: optional<string>
+    docs: Path to the image.
+
+  HeaderConfig:
+    properties:
+      position:
+        type: optional<HeaderPosition>
+        docs: Defaults to "sticky"
+      render-mode: optional<HeaderRenderMode>
+      header-height-rem:
+        type: optional<double>
+        docs: Defaults to 4rem (64px)
+      border-radius-rem:
+        type: optional<double>
+        docs: If set, the header will have rounded corners, and a border around the entire header.
+      links: optional<list<HeaderLink>>
+
+  HeaderRenderMode:
+    union:
+      border-bottom: HeaderRenderModeBorderBottom
+      rounded: HeaderRenderModeRounded
+      no-border: HeaderRenderModeNoBorder
+
+  HeaderRenderModeBorderBottom:
+    properties:
+      border-thickness-px:
+        type: optional<integer>
+        docs: Defaults to 1px
+      border-color: optional<ColorConfig>
+
+  HeaderRenderModeRounded:
+    docs: |
+      The header will have a border around the entire header, and its corners will be rounded.
+    properties:
+      border-radius-rem:
+        type: optional<double>
+        docs: Defaults to 0.5rem (8px)
+      border-thickness-px:
+        type: optional<integer>
+        docs: Defaults to 1px
+      border-color: optional<ColorConfig>
+      shadow-size:
+        type: optional<ShadowSize>
+        docs: Defaults to none
+
+  ShadowSize:
+    enum:
+      - none
+      - small
+      - default
+      - medium
+      - large
+      - xlarge
+      - name: xxlarge
+        value: 2xlarge
+
+  HeaderRenderModeNoBorder:
+    properties: {}
+
+  HeaderPosition:
+    union:
+      sticky: HeaderStickyBackdrop
+      static: HeaderStaticBackdrop
+
+  HeaderStickyBackdrop:
+    union:
+      solid: HeaderBackdropSolid
+      blur: HeaderBackdropBlur
+    docs: Defaults to blur
+
+  HeaderStaticBackdrop:
+    union:
+      solid: HeaderBackdropSolid
+    docs: Defaults to transparent
+
+  HeaderBackdropTransparent:
+    properties: {}
+
+  HeaderBackdropSolid:
+    properties:
+      background-color:
+        type: optional<ColorConfig>
+        docs: Defaults to colors.foreground
+
+  HeaderBackdropBlur:
+    properties:
+      backdrop-blur-rem:
+        type: optional<double>
+        docs: Defaults to 2rem (32px).
+      backdrop-blur-color:
+        type: optional<ColorConfig>
+        docs: Defaults to transparent
+
+  HeaderLink:
+    properties:
+      render: HeaderLinkRender
+      url: string
+      text: string
+
+  HeaderLinkRender:
+    union:
+      primary: HeaderLinkRenderPrimary
+      secondary: HeaderLinkRenderSecondary
+
+  HeaderLinkRenderPrimary:
+    properties: {}
+
+  HeaderLinkRenderSecondary:
+    properties: {}
+
+  LayoutConfig:
+    properties:
+      sizing:
+        type: optional<LayoutConfigSizing>
+        docs: Defaults to fixed
+      sidebar-width-rem:
+        type: optional<double>
+        docs: Defaults to 18rem (288px)
+      density: optional<DensityConfig>
+
+  LayoutConfigSizing:
+    union:
+      fixed: LayoutConfigSizingFixed
+      full: {}
+
+  LayoutConfigSizingFixed:
+    properties:
+      max-width-rem:
+        type: optional<double>
+        docs: Defaults to 88rem (1408px)
+      alignment:
+        type: optional<LayoutConfigSizingFixedAlignment>
+        docs: Defaults to center
+
+  LayoutConfigSizingFixedAlignment:
+    union:
+      center: {}
+      left: {}
+
+  DensityConfig:
+    union:
+      comfortable:
+        type: {}
+        docs: |
+          The comfortable density is the default density.
+          - Gutter sizes: 1.5rem for mobile, 2rem for desktop
+          - Rounded corners: 0.5rem
+      compact:
+        type: {}
+        docs: |
+          Increases the data density of the docs site.
+          - Gutter sizes: 1rem for mobile, 1.5rem for desktop
+          - Rounded corners: 0.25rem
