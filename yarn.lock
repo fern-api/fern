@@ -2536,7 +2536,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
-    "@types/swagger2openapi": ^7.0.0
+    "@types/swagger2openapi": ^7.0.4
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -4500,13 +4500,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/swagger2openapi@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@types/swagger2openapi@npm:7.0.0"
+"@types/swagger2openapi@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@types/swagger2openapi@npm:7.0.4"
   dependencies:
     "@types/node": "*"
     openapi-types: ^12.1.0
-  checksum: c97e40f0bad96d7e8a65e1eea71d83a05eb265ebf9947b2b4470852a6c302dcff8e8e67d1ad25f55ecb615199aac4ab60daeea89ca7073510bb4065b20422d8c
+  checksum: e024802da721ee51ad5653802418f4c1b540739699ef8e35bd4983d08abc88d7e40e1cbd579e90efbbc4ca41fcd5edc7f08250f8a80abf09ab05db3922701c45
   languageName: node
   linkType: hard
 

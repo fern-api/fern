@@ -4287,7 +4287,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/swagger2openapi", "npm:7.0.0"],\
+            ["@types/swagger2openapi", "npm:7.0.4"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -6519,10 +6519,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/swagger2openapi", [\
-        ["npm:7.0.0", {\
-          "packageLocation": "./.yarn/cache/@types-swagger2openapi-npm-7.0.0-7a24a4b2eb-c97e40f0ba.zip/node_modules/@types/swagger2openapi/",\
+        ["npm:7.0.4", {\
+          "packageLocation": "./.yarn/cache/@types-swagger2openapi-npm-7.0.4-8b75312359-e024802da7.zip/node_modules/@types/swagger2openapi/",\
           "packageDependencies": [\
-            ["@types/swagger2openapi", "npm:7.0.0"],\
+            ["@types/swagger2openapi", "npm:7.0.4"],\
             ["@types/node", "npm:18.7.18"],\
             ["openapi-types", "npm:12.1.0"]\
           ],\
