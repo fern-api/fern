@@ -1,7 +1,7 @@
 import { Audiences } from "@fern-api/config-management-commons";
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsInstances, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
-import type { FernRegistry } from "@fern-fern/registry-node";
 
 export interface ParsedDocsConfiguration {
     absoluteFilepath: AbsoluteFilePath;
@@ -13,7 +13,7 @@ export interface ParsedDocsConfiguration {
     favicon: ImageReference | undefined;
     backgroundImage: ImageReference | undefined;
     colors: DocsColorsConfiguration | undefined;
-    navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
+    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
@@ -27,19 +27,19 @@ export interface DocsColorsConfiguration {
 export type ColorConfiguration =
     | {
           type: "themed";
-          dark: FernRegistry.docs.v1.write.RgbColor | undefined;
-          light: FernRegistry.docs.v1.write.RgbColor | undefined;
+          dark: DocsV1Write.RgbColor | undefined;
+          light: DocsV1Write.RgbColor | undefined;
       }
     | {
           type: "unthemed";
-          color: FernRegistry.docs.v1.write.RgbColor | undefined;
+          color: DocsV1Write.RgbColor | undefined;
       };
 
 export interface Logo {
     dark: ImageReference | undefined;
     light: ImageReference | undefined;
-    height: FernRegistry.docs.v1.write.Height | undefined;
-    href: FernRegistry.docs.v1.write.Url | undefined;
+    height: DocsV1Write.Height | undefined;
+    href: DocsV1Write.Url | undefined;
 }
 
 export interface FontConfig {

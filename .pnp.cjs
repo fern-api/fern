@@ -3727,9 +3727,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/core/",\
           "packageDependencies": [\
             ["@fern-api/core", "workspace:packages/core"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -3813,10 +3813,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3838,11 +3838,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/express", "npm:4.17.20"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3906,6 +3906,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/fdr-sdk", [\
+        ["npm:0.39.0-5-g77b7d2c", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.39.0-5-g77b7d2c-644aff6163-5b974c0f90.zip/node_modules/@fern-api/fdr-sdk/",\
+          "packageDependencies": [\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
+            ["@ungap/url-search-params", "npm:0.2.2"],\
+            ["axios", "npm:0.27.2"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["lodash", "npm:4.17.21"],\
+            ["marked", "npm:5.1.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/fs-utils", [\
@@ -4383,11 +4398,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2966"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4412,6 +4427,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
@@ -4423,7 +4439,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.53"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2966"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5045,20 +5060,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.130-d07d4dd2c2-916d736eff.zip/node_modules/@fern-fern/openapi-ir-model/",\
           "packageDependencies": [\
             ["@fern-fern/openapi-ir-model", "npm:0.0.130"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-fern/registry-node", [\
-        ["npm:0.33.3-2-gddc733d", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.33.3-2-gddc733d-a06145647c-5ad1f15d52.zip/node_modules/@fern-fern/registry-node/",\
-          "packageDependencies": [\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
-            ["@types/url-join", "npm:4.0.1"],\
-            ["@ungap/url-search-params", "npm:0.2.2"],\
-            ["axios", "npm:0.27.2"],\
-            ["js-base64", "npm:3.7.2"],\
-            ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13711,6 +13712,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/markdown-table-npm-3.0.3-b24147eaf5-8fcd3d9018.zip/node_modules/markdown-table/",\
           "packageDependencies": [\
             ["markdown-table", "npm:3.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["marked", [\
+        ["npm:5.1.2", {\
+          "packageLocation": "./.yarn/cache/marked-npm-5.1.2-91f2d658c1-fff8741a1d.zip/node_modules/marked/",\
+          "packageDependencies": [\
+            ["marked", "npm:5.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
