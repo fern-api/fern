@@ -411,7 +411,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["convert-source-map", "npm:1.8.0"],\
             ["debug", "virtual:4758feee42453c0e31b0d2032a7b1362d6b06281699830d2da9a056f2cca72bd2c5cfdb74005fdf03a64876be8eaca2dd7b0fc2dc59d14318badf19cb22ba18e#npm:4.3.4"],\
             ["gensync", "npm:1.0.0-beta.2"],\
-            ["json5", "npm:2.2.1"],\
+            ["json5", "npm:2.2.2"],\
             ["semver", "npm:6.3.0"]\
           ],\
           "linkType": "HARD"\
@@ -433,7 +433,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["convert-source-map", "npm:2.0.0"],\
             ["debug", "virtual:4758feee42453c0e31b0d2032a7b1362d6b06281699830d2da9a056f2cca72bd2c5cfdb74005fdf03a64876be8eaca2dd7b0fc2dc59d14318badf19cb22ba18e#npm:4.3.4"],\
             ["gensync", "npm:1.0.0-beta.2"],\
-            ["json5", "npm:2.2.3"],\
+            ["json5", "npm:2.2.2"],\
             ["semver", "npm:6.3.1"]\
           ],\
           "linkType": "HARD"\
@@ -9215,7 +9215,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ignore", "npm:5.2.4"],\
             ["is-core-module", "npm:2.10.0"],\
             ["js-yaml", "npm:3.14.1"],\
-            ["json5", "npm:2.2.1"],\
+            ["json5", "npm:2.2.2"],\
             ["lodash", "npm:4.17.21"],\
             ["minimatch", "npm:3.1.2"],\
             ["multimatch", "npm:5.0.0"],\
@@ -13140,25 +13140,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["json5", [\
-        ["npm:1.0.2", {\
-          "packageLocation": "./.yarn/cache/json5-npm-1.0.2-9607f93e30-866458a8c5.zip/node_modules/json5/",\
+        ["npm:2.2.2", {\
+          "packageLocation": "./.yarn/cache/json5-npm-2.2.2-b047c53fcb-9a878d66b7.zip/node_modules/json5/",\
           "packageDependencies": [\
-            ["json5", "npm:1.0.2"],\
-            ["minimist", "npm:1.2.6"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:2.2.1", {\
-          "packageLocation": "./.yarn/cache/json5-npm-2.2.1-44675c859c-74b8a23b10.zip/node_modules/json5/",\
-          "packageDependencies": [\
-            ["json5", "npm:2.2.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:2.2.3", {\
-          "packageLocation": "./.yarn/cache/json5-npm-2.2.3-9962c55073-2a7436a933.zip/node_modules/json5/",\
-          "packageDependencies": [\
-            ["json5", "npm:2.2.3"]\
+            ["json5", "npm:2.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -18285,7 +18270,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["tsconfig-paths", "npm:3.14.2"],\
             ["@types/json5", "npm:0.0.29"],\
-            ["json5", "npm:1.0.2"],\
+            ["json5", "npm:2.2.2"],\
             ["minimist", "npm:1.2.6"],\
             ["strip-bom", "npm:3.0.0"]\
           ],\
