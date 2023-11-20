@@ -54,7 +54,9 @@
   },
   "resolutions": {
     "json5": "2.2.2",
-    "webpack": "5.76.0"
+    "webpack": "5.76.0",
+    "editorconfig": "2.0.0",
+    "semver": "6.3.1"
   },
   "packageManager": "yarn@3.2.3"
 }
