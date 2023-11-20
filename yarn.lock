@@ -2036,9 +2036,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2096,10 +2096,10 @@ __metadata:
   dependencies:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2119,11 +2119,11 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2183,6 +2183,20 @@ __metadata:
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
+
+"@fern-api/fdr-sdk@npm:0.39.0-5-g77b7d2c":
+  version: 0.39.0-5-g77b7d2c
+  resolution: "@fern-api/fdr-sdk@npm:0.39.0-5-g77b7d2c"
+  dependencies:
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
+    js-base64: 3.7.2
+    lodash: ^4.17.21
+    marked: ^5.1.0
+    url-join: 4.0.1
+  checksum: 5b974c0f901be3ebd203c5c9c5add12a6d63fc4489028c73e0afd01b859ad41b33f254e91cced232db2a2474485ed317d2d583095f294527228c43ff04576022
+  languageName: node
+  linkType: hard
 
 "@fern-api/fs-utils@workspace:*, @fern-api/fs-utils@workspace:packages/commons/fs-utils":
   version: 0.0.0-use.local
@@ -2624,11 +2638,11 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.2966
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2651,6 +2665,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -2662,7 +2677,6 @@ __metadata:
     "@fern-fern/docs-config": 0.0.53
     "@fern-fern/fiddle-sdk": ^0.0.351
     "@fern-fern/ir-sdk": 0.0.2966
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3201,19 +3215,6 @@ __metadata:
   version: 0.0.130
   resolution: "@fern-fern/openapi-ir-model@npm:0.0.130"
   checksum: 916d736eff165515bc71b7bc3d39e4f7e7915541569fdae92046ae22f3052ec3b5542fef171484e63610a6a269c53c3ba4deab5fd7ff0326c258e5b321e1fadb
-  languageName: node
-  linkType: hard
-
-"@fern-fern/registry-node@npm:0.33.3-2-gddc733d":
-  version: 0.33.3-2-gddc733d
-  resolution: "@fern-fern/registry-node@npm:0.33.3-2-gddc733d"
-  dependencies:
-    "@types/url-join": 4.0.1
-    "@ungap/url-search-params": 0.2.2
-    axios: 0.27.2
-    js-base64: 3.7.2
-    url-join: 4.0.1
-  checksum: 5ad1f15d52809cba9829959095e0cc07d82d9b315b08dfacd9a2bda092be0daed2cbd587db85dbd6b31081289f4aae089e54d7bea3fa8319c84bb647bc1b494a
   languageName: node
   linkType: hard
 
@@ -10605,6 +10606,15 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.0.3
   resolution: "markdown-table@npm:3.0.3"
   checksum: 8fcd3d9018311120fbb97115987f8b1665a603f3134c93fbecc5d1463380c8036f789e2a62c19432058829e594fff8db9ff81c88f83690b2f8ed6c074f8d9e10
+  languageName: node
+  linkType: hard
+
+"marked@npm:^5.1.0":
+  version: 5.1.2
+  resolution: "marked@npm:5.1.2"
+  bin:
+    marked: bin/marked.js
+  checksum: fff8741a1dc7313f32bea221079a3d6ff55cd485170fade8841b77b48c89ad5b96676e645636e73e50f4b5b6d65cf9d8821072afb16173822505949df2407ffe
   languageName: node
   linkType: hard
 

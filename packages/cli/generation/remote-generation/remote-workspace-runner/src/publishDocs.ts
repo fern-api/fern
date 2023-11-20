@@ -11,13 +11,12 @@ import {
     TypographyConfig,
     UnversionedNavigationConfiguration,
 } from "@fern-api/docs-configuration";
-import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
-import { FernRegistry } from "@fern-fern/registry-node";
-import { VersionedNavigationConfigData } from "@fern-fern/registry-node/api/resources/docs/resources/v1/resources/write";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -65,7 +64,7 @@ export async function publishDocs({
     let startDocsRegisterResponse;
     if (preview) {
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
-            orgId: FernRegistry.OrgId(organization),
+            orgId: organization,
             filepaths: relativeFilepathsToUpload,
         });
         if (startDocsRegisterResponse.ok) {
@@ -75,28 +74,25 @@ export async function publishDocs({
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
             domain,
             customDomains,
-            apiId: FernRegistry.ApiId(""),
-            orgId: FernRegistry.OrgId(organization),
+            apiId: "",
+            orgId: organization,
             filepaths: relativeFilepathsToUpload,
         });
     }
 
     if (!startDocsRegisterResponse.ok) {
-        return startDocsRegisterResponse.error._visit<never>({
-            _other: (error) => {
-                return context.failAndThrow("Failed to publish docs.", error);
-            },
-            invalidDomainError: () => {
+        switch (startDocsRegisterResponse.error.error) {
+            case "InvalidCustomDomainError":
                 return context.failAndThrow(
                     `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com"}`
                 );
-            },
-            invalidCustomDomainError: () => {
+            case "InvalidDomainError":
                 return context.failAndThrow(
                     "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
                 );
-            },
-        });
+            default:
+                return context.failAndThrow("Failed to publish docs.", startDocsRegisterResponse.error);
+        }
     }
 
     const { docsRegistrationId, uploadUrls } = startDocsRegisterResponse.body;
@@ -132,24 +128,18 @@ export async function publishDocs({
         const url = wrapWithHttps(urlToOutput);
         context.logger.info(chalk.green(`Published docs to ${url}`));
     } else {
-        registerDocsResponse.error._visit<never>({
-            unauthorizedError: () => {
+        switch (registerDocsResponse.error.error) {
+            case "UnauthorizedError":
+            case "UserNotInOrgError":
                 return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
-            },
-            userNotInOrgError: () => {
-                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
-            },
-            docsRegistrationIdNotFound: () => {
+            case "DocsRegistrationIdNotFound":
                 return context.failAndThrow(
                     "Failed to publish docs to " + domain,
                     `Docs registration ID ${docsRegistrationId} does not exist.`
                 );
-            },
-            _other: (error) => {
-                return context.failAndThrow("Failed to publish docs to " + domain, error);
-            },
-        });
-        return context.failAndThrow();
+            default:
+                return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
+        }
     }
 }
 
@@ -167,15 +157,15 @@ async function constructRegisterDocsRequest({
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     token: FernToken;
-    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v2.write.RegisterDocsRequest> {
+}): Promise<DocsV2Write.RegisterDocsRequest> {
     return {
         docsDefinition: {
             pages: entries(parsedDocsConfig.pages).reduce(
                 (pages, [pageFilepath, pageContents]) => ({
                     ...pages,
-                    [constructPageId(pageFilepath)]: { markdown: pageContents },
+                    [pageFilepath]: { markdown: pageContents },
                 }),
                 {}
             ),
@@ -206,9 +196,9 @@ async function convertDocsConfiguration({
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     token: FernToken;
-    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v1.write.DocsConfig> {
+}): Promise<DocsV1Write.DocsConfig> {
     return {
         title: parsedDocsConfig.title,
         logoV2: {
@@ -265,27 +255,31 @@ async function convertDocsConfiguration({
             accentPrimary:
                 parsedDocsConfig.colors?.accentPrimary != null
                     ? parsedDocsConfig.colors.accentPrimary.type === "themed"
-                        ? FernRegistry.docs.v1.write.ColorConfig.themed({
+                        ? {
+                              type: "themed",
                               dark: parsedDocsConfig.colors.accentPrimary.dark,
                               light: parsedDocsConfig.colors.accentPrimary.light,
-                          })
+                          }
                         : parsedDocsConfig.colors.accentPrimary.color != null
-                        ? FernRegistry.docs.v1.write.ColorConfig.unthemed({
+                        ? {
+                              type: "unthemed",
                               color: parsedDocsConfig.colors.accentPrimary.color,
-                          })
+                          }
                         : undefined
                     : undefined,
             background:
                 parsedDocsConfig.colors?.background != null
                     ? parsedDocsConfig.colors.background.type === "themed"
-                        ? FernRegistry.docs.v1.write.ColorConfig.themed({
+                        ? {
+                              type: "themed",
                               dark: parsedDocsConfig.colors.background.dark,
                               light: parsedDocsConfig.colors.background.light,
-                          })
+                          }
                         : parsedDocsConfig.colors.background.color != null
-                        ? FernRegistry.docs.v1.write.ColorConfig.unthemed({
+                        ? {
+                              type: "unthemed",
                               color: parsedDocsConfig.colors.background.color,
-                          })
+                          }
                         : undefined
                     : undefined,
         },
@@ -317,7 +311,7 @@ async function convertNavigationConfig({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v1.write.NavigationConfig> {
+}): Promise<DocsV1Write.NavigationConfig> {
     switch (navigationConfig.type) {
         case "untabbed":
             return {
@@ -366,23 +360,27 @@ async function convertNavigationConfig({
         case "versioned":
             return {
                 versions: await Promise.all(
-                    navigationConfig.versions.map(async (version): Promise<VersionedNavigationConfigData> => {
-                        return {
-                            version: version.version,
-                            config: await convertUnversionedNavigationConfig({
-                                navigationConfig: version.navigation,
-                                parsedDocsConfig,
-                                organization,
-                                fernWorkspaces,
-                                context,
-                                token,
+                    navigationConfig.versions.map(
+                        async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
+                            return {
                                 version: version.version,
-                            }),
-                            availability:
-                                version.availability != null ? convertAvailability(version.availability) : undefined,
-                            urlSlugOverride: version.slug,
-                        };
-                    })
+                                config: await convertUnversionedNavigationConfig({
+                                    navigationConfig: version.navigation,
+                                    parsedDocsConfig,
+                                    organization,
+                                    fernWorkspaces,
+                                    context,
+                                    token,
+                                    version: version.version,
+                                }),
+                                availability:
+                                    version.availability != null
+                                        ? convertAvailability(version.availability)
+                                        : undefined,
+                                urlSlugOverride: version.slug,
+                            };
+                        }
+                    )
                 ),
             };
         default:
@@ -390,16 +388,16 @@ async function convertNavigationConfig({
     }
 }
 
-function convertAvailability(availability: VersionAvailability): FernRegistry.docs.v1.write.VersionAvailability {
+function convertAvailability(availability: VersionAvailability): DocsV1Write.VersionAvailability {
     switch (availability) {
         case "beta":
-            return FernRegistry.docs.v1.write.VersionAvailability.Beta;
+            return DocsV1Write.VersionAvailability.Beta;
         case "deprecated":
-            return FernRegistry.docs.v1.write.VersionAvailability.Deprecated;
+            return DocsV1Write.VersionAvailability.Deprecated;
         case "ga":
-            return FernRegistry.docs.v1.write.VersionAvailability.GenerallyAvailable;
+            return DocsV1Write.VersionAvailability.GenerallyAvailable;
         case "stable":
-            return FernRegistry.docs.v1.write.VersionAvailability.Stable;
+            return DocsV1Write.VersionAvailability.Stable;
         default:
             assertNever(availability);
     }
@@ -423,7 +421,7 @@ async function convertUnversionedNavigationConfig({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v1.write.UnversionedNavigationConfig> {
+}): Promise<DocsV1Write.UnversionedNavigationConfig> {
     switch (navigationConfig.type) {
         case "untabbed":
             return {
@@ -482,13 +480,13 @@ function convertDocsTypographyConfiguration({
 }: {
     typographyConfiguration?: TypographyConfig;
     parsedDocsConfig: ParsedDocsConfiguration;
-    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
-}): FernRegistry.docs.v1.write.DocsTypographyConfig | undefined {
+}): DocsV1Write.DocsTypographyConfig | undefined {
     if (typographyConfiguration == null) {
         return;
     }
-    const result: FernRegistry.docs.v1.write.DocsTypographyConfig = {
+    const result: DocsV1Write.DocsTypographyConfig = {
         headingsFont: convertFont({
             font: typographyConfiguration.headingsFont,
             context,
@@ -523,10 +521,10 @@ function convertFont({
 }: {
     font: FontConfig | undefined;
     parsedDocsConfig: ParsedDocsConfiguration;
-    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
     label: string;
-}): FernRegistry.docs.v1.write.FontConfig | undefined {
+}): DocsV1Write.FontConfig | undefined {
     if (font == null) {
         return;
     }
@@ -552,9 +550,9 @@ async function convertImageReference({
 }: {
     imageReference: ImageReference;
     parsedDocsConfig: ParsedDocsConfiguration;
-    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
-}): Promise<FernRegistry.docs.v1.write.FileId> {
+}): Promise<DocsV1Write.FileId> {
     const filepath = convertAbsoluteFilepathToFdrFilepath(imageReference.filepath, parsedDocsConfig);
     const file = uploadUrls[filepath];
     if (file == null) {
@@ -579,16 +577,18 @@ async function convertNavigationItem({
     context: TaskContext;
     token: FernToken;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v1.write.NavigationItem> {
+}): Promise<DocsV1Write.NavigationItem> {
     switch (item.type) {
         case "page":
-            return FernRegistry.docs.v1.write.NavigationItem.page({
+            return {
+                type: "page",
                 title: item.title,
-                id: constructPageId(relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath)),
+                id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
                 urlSlugOverride: item.slug,
-            });
+            };
         case "section":
-            return FernRegistry.docs.v1.write.NavigationItem.section({
+            return {
+                type: "section",
                 title: item.title,
                 items: await Promise.all(
                     item.contents.map((nestedItem) =>
@@ -605,7 +605,7 @@ async function convertNavigationItem({
                 ),
                 urlSlugOverride: item.slug,
                 collapsed: item.collapsed,
-            });
+            };
         case "apiSection": {
             const apiDefinitionId = await registerApi({
                 organization,
@@ -617,11 +617,12 @@ async function convertNavigationItem({
                     snippetsConfiguration: item.snippetsConfiguration ?? {},
                 }),
             });
-            return FernRegistry.docs.v1.write.NavigationItem.api({
+            return {
+                type: "api",
                 title: item.title,
                 api: apiDefinitionId,
                 showErrors: item.showErrors,
-            });
+            };
         }
         default:
             assertNever(item);
@@ -632,7 +633,7 @@ function convertDocsSnippetsConfigurationToFdr({
     snippetsConfiguration,
 }: {
     snippetsConfiguration: SnippetsConfiguration;
-}): FernRegistry.api.v1.register.SnippetsConfig {
+}): APIV1Write.SnippetsConfig {
     return {
         pythonSdk:
             snippetsConfiguration.python != null
@@ -681,10 +682,6 @@ function getFernWorkspaceForApiSection({
     throw new Error("Failed to load API Definition referenced in docs");
 }
 
-function constructPageId(pathToPage: RelativeFilePath): FernRegistry.docs.v1.write.PageId {
-    return FernRegistry.docs.v1.write.PageId(pathToPage);
-}
-
 function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): AbsoluteFilePath[] {
     const filepaths: AbsoluteFilePath[] = [];
 
@@ -720,7 +717,7 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
 }
 
 function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, parsedDocsConfig: ParsedDocsConfiguration) {
-    return FernRegistry.docs.v1.write.FilePath(relative(dirname(parsedDocsConfig.absoluteFilepath), filepath));
+    return relative(dirname(parsedDocsConfig.absoluteFilepath), filepath);
 }
 
 function wrapWithHttps(url: string): string {
