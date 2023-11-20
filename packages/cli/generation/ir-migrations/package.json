@@ -50,7 +50,7 @@
     "@fern-fern/ir-v2-model": "0.0.2",
     "@fern-fern/ir-v20-model": "0.0.2",
     "@fern-fern/ir-v21-model": "0.0.1",
-    "@fern-fern/ir-v22-model": "0.0.1",
+    "@fern-fern/ir-v22-model": "0.0.22",
     "@fern-fern/ir-v23-sdk": "0.0.1",
     "@fern-fern/ir-v24-sdk": "0.0.1",
     "@fern-fern/ir-v25-sdk": "0.0.1",
