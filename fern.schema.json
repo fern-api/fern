@@ -20,7 +20,10 @@
                       "docs": { "type": "string" },
                       "availability": {
                         "anyOf": [
-                          { "type": "string", "enum": ["in-development", "pre-release", "deprecated"] },
+                          {
+                            "type": "string",
+                            "enum": ["in-development", "pre-release", "deprecated", "generally-available"]
+                          },
                           {
                             "type": "object",
                             "properties": {
@@ -465,7 +468,8 @@
                         "type": "object",
                         "properties": {
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                          "type": { "type": "string" }
+                          "type": { "type": "string" },
+                          "property": { "type": "string" }
                         },
                         "required": ["type"],
                         "additionalProperties": false
@@ -556,24 +560,78 @@
         },
         "webhooks": {
           "type": "object",
-          "properties": {
-            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-            "availability": {
-              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+              "availability": {
+                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+              },
+              "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
+              "method": { "type": "string", "enum": ["GET", "POST"] },
+              "display-name": { "type": "string" },
+              "headers": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                }
+              },
+              "payload": {
+                "anyOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                      "type": { "type": "string" }
+                    },
+                    "required": ["type"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "extends": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                            }
+                          }
+                        },
+                        "required": ["name", "extends"],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "extends": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                            }
+                          }
+                        },
+                        "required": ["name", "properties"],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                ]
+              }
             },
-            "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
-            "method": { "type": "string", "enum": ["GET", "POST"] },
-            "display-name": { "type": "string" },
-            "path": { "type": "string" },
-            "payload": {
-              "anyOf": [
-                { "type": "string" },
-                { "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/request/anyOf/1" }
-              ]
-            }
-          },
-          "required": ["path"],
-          "additionalProperties": false
+            "required": ["method", "payload"],
+            "additionalProperties": false
+          }
         },
         "errors": {
           "type": "object",
