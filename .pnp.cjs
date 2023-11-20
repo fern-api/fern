@@ -4692,7 +4692,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["yaml", "npm:2.3.2"],\
+            ["yaml", "npm:2.3.3"],\
             ["zod", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
@@ -8810,7 +8810,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["import-fresh", "npm:3.3.0"],\
             ["parse-json", "npm:5.2.0"],\
             ["path-type", "npm:4.0.0"],\
-            ["yaml", "npm:1.10.2"]\
+            ["yaml", "npm:2.3.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13363,7 +13363,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["object-inspect", "npm:1.12.2"],\
             ["pidtree", "npm:0.6.0"],\
             ["string-argv", "npm:0.3.1"],\
-            ["yaml", "npm:2.1.1"]\
+            ["yaml", "npm:2.3.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15081,7 +15081,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["oas-linter", "npm:3.2.2"],\
             ["@exodus/schemasafe", "npm:1.0.0"],\
             ["should", "npm:13.2.3"],\
-            ["yaml", "npm:1.10.2"]\
+            ["yaml", "npm:2.3.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15094,7 +15094,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["node-fetch-h2", "npm:2.3.0"],\
             ["oas-kit-common", "npm:1.0.8"],\
             ["reftools", "npm:1.1.9"],\
-            ["yaml", "npm:1.10.2"],\
+            ["yaml", "npm:2.3.3"],\
             ["yargs", "npm:17.7.2"]\
           ],\
           "linkType": "HARD"\
@@ -15121,7 +15121,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["oas-schema-walker", "npm:1.1.5"],\
             ["reftools", "npm:1.1.9"],\
             ["should", "npm:13.2.3"],\
-            ["yaml", "npm:1.10.2"]\
+            ["yaml", "npm:2.3.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15818,7 +15818,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lilconfig", "npm:2.0.6"],\
             ["postcss", "npm:8.4.31"],\
             ["ts-node", null],\
-            ["yaml", "npm:2.1.1"]\
+            ["yaml", "npm:2.3.3"]\
           ],\
           "packagePeers": [\
             "@types/postcss",\
@@ -17894,7 +17894,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["oas-schema-walker", "npm:1.1.5"],\
             ["oas-validator", "npm:5.0.8"],\
             ["reftools", "npm:1.1.9"],\
-            ["yaml", "npm:1.10.2"],\
+            ["yaml", "npm:2.3.3"],\
             ["yargs", "npm:17.7.2"]\
           ],\
           "linkType": "HARD"\
@@ -19128,24 +19128,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["yaml", [\
-        ["npm:1.10.2", {\
-          "packageLocation": "./.yarn/cache/yaml-npm-1.10.2-0e780aebdf-ce4ada136e.zip/node_modules/yaml/",\
+        ["npm:2.3.3", {\
+          "packageLocation": "./.yarn/cache/yaml-npm-2.3.3-c5a47b9f8f-cdfd132e7e.zip/node_modules/yaml/",\
           "packageDependencies": [\
-            ["yaml", "npm:1.10.2"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:2.1.1", {\
-          "packageLocation": "./.yarn/cache/yaml-npm-2.1.1-e717f9b915-f48bb20991.zip/node_modules/yaml/",\
-          "packageDependencies": [\
-            ["yaml", "npm:2.1.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:2.3.2", {\
-          "packageLocation": "./.yarn/cache/yaml-npm-2.3.2-b844830a8b-acd80cc24d.zip/node_modules/yaml/",\
-          "packageDependencies": [\
-            ["yaml", "npm:2.3.2"]\
+            ["yaml", "npm:2.3.3"]\
           ],\
           "linkType": "HARD"\
         }]\
