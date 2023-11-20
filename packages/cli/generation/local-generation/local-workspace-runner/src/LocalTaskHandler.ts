@@ -67,7 +67,10 @@ export class LocalTaskHandler {
         // In tmp directory initialize a `.git` directory
         await this.runGitCommand(["init"], tmpOutputResolutionDir);
         await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
-        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir);
+        await this.runGitCommand(
+            ["commit", "--author", "fern-api <info@buildwithfern.com>", "--allow-empty", "-m", '"init"'],
+            tmpOutputResolutionDir
+        );
 
         // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
@@ -123,10 +126,6 @@ export class LocalTaskHandler {
         await loggingExeca(this.context.logger, "git", options, {
             cwd,
             doNotPipeOutput: true,
-            env: {
-                GIT_AUTHOR_EMAIL: "info@buildwithfern.com",
-                GIT_AUTHOR_NAME: "fern-api",
-            },
         });
     }
 }
