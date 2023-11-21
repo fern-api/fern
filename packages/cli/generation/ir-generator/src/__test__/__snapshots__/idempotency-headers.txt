@@ -141,70 +141,8 @@ exports[`generate IR 1`] = `
         "wireValue": "Idempotency-Expiration",
       },
       "valueType": {
-        "_type": "named",
-        "fernFilepath": {
-          "allParts": [
-            {
-              "camelCase": {
-                "safeName": "",
-                "unsafeName": "",
-              },
-              "originalName": ".",
-              "pascalCase": {
-                "safeName": "",
-                "unsafeName": "",
-              },
-              "screamingSnakeCase": {
-                "safeName": "",
-                "unsafeName": "",
-              },
-              "snakeCase": {
-                "safeName": "",
-                "unsafeName": "",
-              },
-            },
-          ],
-          "file": {
-            "camelCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-            "originalName": ".",
-            "pascalCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-            "screamingSnakeCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-            "snakeCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-          },
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "int",
-            "unsafeName": "int",
-          },
-          "originalName": "int",
-          "pascalCase": {
-            "safeName": "Int",
-            "unsafeName": "Int",
-          },
-          "screamingSnakeCase": {
-            "safeName": "INT",
-            "unsafeName": "INT",
-          },
-          "snakeCase": {
-            "safeName": "int",
-            "unsafeName": "int",
-          },
-        },
-        "typeId": "type_.:int",
+        "_type": "primitive",
+        "primitive": "INTEGER",
       },
     },
   ],
