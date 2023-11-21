@@ -6,6 +6,8 @@
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../config-management/docs-configuration" },
+    { "path": "../generation/ir-generator" },
+    { "path": "../register" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]

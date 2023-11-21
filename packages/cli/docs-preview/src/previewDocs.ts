@@ -6,38 +6,123 @@ import {
     parseDocsConfiguration,
     UnversionedNavigationConfiguration,
 } from "@fern-api/docs-configuration";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
+import {
+    APIV1Read,
+    convertAPIDefinitionToDb,
+    convertDbAPIDefinitionToRead,
+    convertDbDocsConfigToRead,
+    convertDocsDefinitionToDb,
+    DocsV1Read,
+    DocsV1Write,
+    FdrAPI,
+    SDKSnippetHolder,
+} from "@fern-api/fdr-sdk";
 import { dirname, relative } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
+import { v4 as uuidv4 } from "uuid";
 
-export async function previewDocs({
+export async function getPreviewDocsDefinition({
     docsWorkspace,
+    apiWorkspaces,
     context,
 }: {
     docsWorkspace: DocsWorkspace;
+    apiWorkspaces: APIWorkspace[];
     context: TaskContext;
-}): Promise<DocsV1Write.DocsDefinition> {
+}): Promise<DocsV1Read.DocsDefinition> {
     const parsedDocsConfig = await parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig,
     });
+    const apiCollector = new ReferencedAPICollector(apiWorkspaces, context);
     const writeDocsDefinition = await constructWriteDocsDefinition({
         parsedDocsConfig,
         context,
+        apiCollector,
     });
-    return writeDocsDefinition;
+    const dbDocsDefinition = convertDocsDefinitionToDb({
+        writeShape: writeDocsDefinition,
+        files: {},
+    });
+    const readDocsConfig = convertDbDocsConfigToRead({
+        dbShape: dbDocsDefinition.config,
+    });
+    return {
+        apis: await apiCollector.getAPIsForDefinition(),
+        config: readDocsConfig,
+        files: {},
+        pages: dbDocsDefinition.pages,
+        search: {
+            type: "legacyMultiAlgoliaIndex",
+            algoliaIndex: "fake",
+        },
+    };
+}
+
+type APIDefinitionID = string;
+
+class ReferencedAPICollector {
+    private readonly apis: Record<APIDefinitionID, DocsNavigationItem.ApiSection> = {};
+
+    constructor(private readonly apiWorkspaces: APIWorkspace[], private readonly context: TaskContext) {}
+
+    public addReferencedAPI(api: DocsNavigationItem.ApiSection): APIDefinitionID {
+        const id = uuidv4();
+        this.apis[id] = api;
+        return id;
+    }
+
+    public async getAPIsForDefinition(): Promise<Promise<Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition>>> {
+        const result: Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> = {};
+        for (const [id, api] of Object.entries(this.apis)) {
+            let workspace = this.apiWorkspaces[0];
+            if (api.apiName != null) {
+                workspace = this.apiWorkspaces.find((workspace) => workspace.workspaceName);
+            }
+            if (workspace == null) {
+                this.context.logger.error(`Failed to load API workspace ${api.apiName}`);
+                continue;
+            }
+            const fernWorkspace =
+                workspace.type === "openapi"
+                    ? await convertOpenApiWorkspaceToFernWorkspace(workspace, this.context)
+                    : workspace;
+            const ir = await generateIntermediateRepresentation({
+                workspace: fernWorkspace,
+                audiences: api.audiences,
+                generationLanguage: undefined,
+            });
+            const apiDefinition = convertIrToFdrApi(ir, {});
+            const dbApiDefinition = convertAPIDefinitionToDb(
+                apiDefinition,
+                "",
+                new SDKSnippetHolder({
+                    packageToSdkId: {},
+                    snippetsBySdkId: {},
+                    snippetsConfiguration: {},
+                })
+            );
+            const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
+            result[id] = readApiDefinition;
+        }
+        return result;
+    }
 }
 
 async function constructWriteDocsDefinition({
     parsedDocsConfig,
     context,
+    apiCollector,
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     context: TaskContext;
+    apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.DocsDefinition> {
     return {
         pages: entries(parsedDocsConfig.pages).reduce(
@@ -50,6 +135,7 @@ async function constructWriteDocsDefinition({
         config: await convertDocsConfiguration({
             parsedDocsConfig,
             context,
+            apiCollector,
         }),
     };
 }
@@ -57,9 +143,11 @@ async function constructWriteDocsDefinition({
 async function convertDocsConfiguration({
     parsedDocsConfig,
     context,
+    apiCollector,
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     context: TaskContext;
+    apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.DocsConfig> {
     return {
         title: parsedDocsConfig.title,
@@ -73,6 +161,7 @@ async function convertDocsConfiguration({
             tabs: parsedDocsConfig.tabs,
             parsedDocsConfig,
             context,
+            apiCollector,
         }),
         colorsV2: {
             accentPrimary:
@@ -116,12 +205,13 @@ async function convertNavigationConfig({
     tabs,
     parsedDocsConfig,
     context,
+    apiCollector,
 }: {
     navigationConfig: DocsNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
     parsedDocsConfig: ParsedDocsConfiguration;
-
     context: TaskContext;
+    apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.NavigationConfig> {
     switch (navigationConfig.type) {
         case "untabbed":
@@ -131,8 +221,8 @@ async function convertNavigationConfig({
                         convertNavigationItem({
                             item,
                             parsedDocsConfig,
-
                             context,
+                            apiCollector,
                         })
                     )
                 ),
@@ -153,8 +243,8 @@ async function convertNavigationConfig({
                                     convertNavigationItem({
                                         item,
                                         parsedDocsConfig,
-
                                         context,
+                                        apiCollector,
                                     })
                                 )
                             ),
@@ -174,6 +264,7 @@ async function convertNavigationConfig({
                                     parsedDocsConfig,
                                     context,
                                     version: version.version,
+                                    apiCollector,
                                 }),
                                 availability:
                                     version.availability != null
@@ -210,13 +301,14 @@ async function convertUnversionedNavigationConfig({
     tabs,
     parsedDocsConfig,
     context,
+    apiCollector,
 }: {
     navigationConfig: UnversionedNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
     parsedDocsConfig: ParsedDocsConfiguration;
-
     context: TaskContext;
     version: string | undefined;
+    apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.UnversionedNavigationConfig> {
     switch (navigationConfig.type) {
         case "untabbed":
@@ -226,8 +318,8 @@ async function convertUnversionedNavigationConfig({
                         convertNavigationItem({
                             item,
                             parsedDocsConfig,
-
                             context,
+                            apiCollector,
                         })
                     )
                 ),
@@ -248,8 +340,8 @@ async function convertUnversionedNavigationConfig({
                                     convertNavigationItem({
                                         item,
                                         parsedDocsConfig,
-
                                         context,
+                                        apiCollector,
                                     })
                                 )
                             ),
@@ -266,10 +358,12 @@ async function convertNavigationItem({
     item,
     parsedDocsConfig,
     context,
+    apiCollector,
 }: {
     item: DocsNavigationItem;
     parsedDocsConfig: ParsedDocsConfiguration;
     context: TaskContext;
+    apiCollector: ReferencedAPICollector;
 }): Promise<DocsV1Write.NavigationItem> {
     switch (item.type) {
         case "page":
@@ -288,8 +382,8 @@ async function convertNavigationItem({
                         convertNavigationItem({
                             item: nestedItem,
                             parsedDocsConfig,
-
                             context,
+                            apiCollector,
                         })
                     )
                 ),
@@ -297,10 +391,11 @@ async function convertNavigationItem({
                 collapsed: item.collapsed,
             };
         case "apiSection": {
+            const apiId = apiCollector.addReferencedAPI(item);
             return {
                 type: "api",
                 title: item.title,
-                api: item.apiName ?? "api",
+                api: apiId,
                 showErrors: item.showErrors,
             };
         }
