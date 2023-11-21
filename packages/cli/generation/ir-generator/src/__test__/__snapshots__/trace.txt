@@ -446,6 +446,7 @@ exports[`generate IR 1`] = `
       },
     },
   ],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -831,6 +832,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.updateTestSubmissionStatus",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1232,6 +1234,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.sendTestSubmissionUpdate",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1633,6 +1636,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.updateWorkspaceSubmissionStatus",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2034,6 +2038,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.sendWorkspaceSubmissionUpdate",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2467,6 +2472,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.storeTracedTestCase",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3143,6 +3149,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.storeTracedTestCaseV2",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3689,6 +3696,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.storeTracedWorkspace",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4200,6 +4208,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_admin.storeTracedWorkspaceV2",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4574,6 +4583,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_homepage.getHomepageProblems",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -4697,6 +4707,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_homepage.setHomepageProblems",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -5006,6 +5017,7 @@ exports[`generate IR 1`] = `
             },
           ],
           "id": "endpoint_migration.getAttemptedMigrations",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -5286,6 +5298,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_playlist.createPlaylist",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -5637,6 +5650,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_playlist.getPlaylists",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -6256,6 +6270,7 @@ description
           },
           "headers": [],
           "id": "endpoint_playlist.getPlaylist",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -6666,6 +6681,7 @@ description
           },
           "headers": [],
           "id": "endpoint_playlist.updatePlaylist",
+          "idempotent": false,
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -7189,6 +7205,7 @@ description
           },
           "headers": [],
           "id": "endpoint_playlist.deletePlaylist",
+          "idempotent": false,
           "method": "DELETE",
           "name": {
             "camelCase": {
@@ -7416,6 +7433,7 @@ description
           },
           "headers": [],
           "id": "endpoint_problem.createProblem",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -7793,6 +7811,7 @@ description
           },
           "headers": [],
           "id": "endpoint_problem.updateProblem",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8266,6 +8285,7 @@ description
           },
           "headers": [],
           "id": "endpoint_problem.deleteProblem",
+          "idempotent": false,
           "method": "DELETE",
           "name": {
             "camelCase": {
@@ -8407,6 +8427,7 @@ description
           },
           "headers": [],
           "id": "endpoint_problem.getDefaultStarterFiles",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8986,6 +9007,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_submission.createExecutionSession",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9233,6 +9255,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_submission.getExecutionSession",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -9424,6 +9447,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_submission.stopExecutionSession",
+          "idempotent": false,
           "method": "DELETE",
           "name": {
             "camelCase": {
@@ -9503,6 +9527,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_submission.getExecutionSessionsState",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -9805,6 +9830,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_sysprop.setNumWarmInstances",
+          "idempotent": false,
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -9978,6 +10004,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_sysprop.getNumWarmInstances",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -10162,6 +10189,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2.test",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -10266,6 +10294,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/problem.getLightweightProblems",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -10428,6 +10457,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/problem.getProblems",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -10686,6 +10716,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/problem.getLatestProblem",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -11066,6 +11097,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/problem.getProblemVersion",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -11446,6 +11478,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/v3/problem.getLightweightProblems",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -11646,6 +11679,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/v3/problem.getProblems",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -11942,6 +11976,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/v3/problem.getLatestProblem",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -12360,6 +12395,7 @@ The method name cannot include the following characters:
           },
           "headers": [],
           "id": "endpoint_v2/v3/problem.getProblemVersion",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {

@@ -342,6 +342,7 @@ exports[`generate IR 1`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -470,6 +471,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_custom-auth.getWithCustomAuth",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -662,6 +664,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_custom-auth.postWithCustomAuth",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

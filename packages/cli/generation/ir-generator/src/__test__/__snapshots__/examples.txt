@@ -235,6 +235,7 @@ exports[`generate IR 1`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -356,6 +357,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_.echo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -995,6 +997,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_file/notification/service.getException",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -1542,6 +1545,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_file/service.getFile",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -1966,6 +1970,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_health/service.check",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -2071,6 +2076,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_health/service.ping",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -3316,6 +3322,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getMovie",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -4505,6 +4512,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.createMovie",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -5103,6 +5111,7 @@ exports[`generate IR 1`] = `
             },
           ],
           "id": "endpoint_service.getMetadata",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {

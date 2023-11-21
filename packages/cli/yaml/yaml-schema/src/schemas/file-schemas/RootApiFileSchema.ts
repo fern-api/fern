@@ -22,6 +22,7 @@ export const RootApiFileSchema = z.strictObject({
     errors: z.optional(z.array(z.string())),
     "base-path": z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
+    "idempotency-headers": z.optional(z.record(z.string(), HttpHeaderSchema)),
     variables: z.optional(z.record(VariableDeclarationSchema)),
 });
 

@@ -1,0 +1,98 @@
+import { GeneratorName } from "@fern-api/generators-configuration";
+import { IrSerialization } from "../../ir-serialization";
+import { IrVersions } from "../../ir-versions";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
+
+export const V31_TO_V30_MIGRATION: IrMigration<
+    IrVersions.V31.ir.IntermediateRepresentation,
+    IrVersions.V30.ir.IntermediateRepresentation
+> = {
+    laterVersion: "v31",
+    earlierVersion: "v30",
+    firstGeneratorVersionToConsumeNewIR: {
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+    },
+    jsonifyEarlierVersion: (ir) =>
+        IrSerialization.V30.IntermediateRepresentation.jsonOrThrow(ir, {
+            unrecognizedObjectKeys: "strip",
+            skipValidation: true,
+        }),
+    migrateBackwards: (v31): IrVersions.V30.ir.IntermediateRepresentation => {
+        return {
+            apiName: v31.apiName,
+            apiDisplayName: v31.apiDisplayName,
+            apiDocs: v31.apiDocs,
+            auth: v31.auth,
+            headers: v31.headers,
+            types: v31.types,
+            webhookGroups: v31.webhookGroups,
+            errors: v31.errors,
+            subpackages: v31.subpackages,
+            rootPackage: v31.rootPackage,
+            constants: v31.constants,
+            environments: v31.environments,
+            basePath: v31.basePath,
+            pathParameters: v31.pathParameters,
+            errorDiscriminationStrategy: v31.errorDiscriminationStrategy,
+            sdkConfig: v31.sdkConfig,
+            variables: v31.variables,
+            serviceTypeReferenceInfo: v31.serviceTypeReferenceInfo,
+            services: Object.fromEntries(
+                Object.entries(v31.services).map(([id, service]) => {
+                    return [
+                        id,
+                        {
+                            availability: service.availability,
+                            name: service.name,
+                            displayName: service.displayName,
+                            basePath: service.basePath,
+                            endpoints: service.endpoints.map((endpoint) => {
+                                return {
+                                    id: endpoint.id,
+                                    docs: endpoint.docs,
+                                    availability: endpoint.availability,
+                                    name: endpoint.name,
+                                    displayName: endpoint.displayName,
+                                    method: endpoint.method,
+                                    headers: endpoint.headers,
+                                    baseUrl: endpoint.baseUrl,
+                                    path: endpoint.path,
+                                    fullPath: endpoint.fullPath,
+                                    pathParameters: endpoint.pathParameters,
+                                    allPathParameters: endpoint.allPathParameters,
+                                    queryParameters: endpoint.queryParameters,
+                                    requestBody: endpoint.requestBody,
+                                    sdkRequest: endpoint.sdkRequest,
+                                    response: endpoint.response,
+                                    errors: endpoint.errors,
+                                    auth: endpoint.auth,
+                                    examples: endpoint.examples,
+                                };
+                            }),
+                            headers: service.headers,
+                            pathParameters: service.pathParameters,
+                        },
+                    ];
+                })
+            ),
+        };
+    },
+};

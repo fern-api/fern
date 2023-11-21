@@ -59,6 +59,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -130,6 +131,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getMovie",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -379,6 +381,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getMovieDocs",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -566,6 +569,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getMovieName",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -715,6 +719,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getMovieMetadata",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -912,6 +917,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getOptionalMovie",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1167,6 +1173,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getOptionalMovieDocs",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1354,6 +1361,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getOptionalMovieName",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

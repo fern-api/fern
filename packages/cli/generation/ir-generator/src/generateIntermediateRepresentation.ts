@@ -83,6 +83,12 @@ export async function generateIntermediateRepresentation({
                       convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
+        idempotencyHeaders:
+            workspace.definition.rootApiFile.contents["idempotency-headers"] != null
+                ? Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                      ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                  )
+                : [],
         types: {},
         errors: {},
         services: {},

@@ -299,6 +299,7 @@ async function getAreRootApiFilesEquivalent(
         },
         docs: noop,
         headers: noop,
+        "idempotency-headers": noop,
         "default-environment": noop,
         environments: noop,
         "error-discrimination": (errorDiscrimination) => {

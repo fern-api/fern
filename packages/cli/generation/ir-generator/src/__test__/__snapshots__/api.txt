@@ -242,6 +242,7 @@ exports[`generate IR 1`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -304,6 +305,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_imdb.createMovie",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -750,6 +752,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_imdb.getMovie",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -1594,6 +1597,7 @@ exports[`generate IR 2`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -3289,6 +3293,7 @@ exports[`generate IR 3`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -3348,6 +3353,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3412,6 +3418,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_a/b.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3554,6 +3561,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_a/c.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3696,6 +3704,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_folder.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3800,6 +3809,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_folder/service.endpoint",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -3953,6 +3963,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_folder/service.unknownRequest",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
