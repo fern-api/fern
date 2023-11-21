@@ -8,9 +8,9 @@ groups:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
         output:
-          location: python
-          url: pypi.buildwithfern.com
-          package-name: "@fern-fern/ir-v31"
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/ir-sdk"
   sdks:
     generators:
       - name: fernapi/java-model
@@ -30,7 +30,7 @@ groups:
           include_union_utils: true
           frozen: true
         output:
-          location: python
+          location: pypi
           url: pypi.buildwithfern.com
           package-name: fern_fern_ir_v31
 
