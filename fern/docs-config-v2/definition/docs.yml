@@ -148,23 +148,11 @@ types:
         docs: Defaults to white/10 in dark mode, and black/10 in light mode
 
   ColorConfig:
-    discriminated: false
-    union:
-      - string
-      - ThemedColorConfig
-
-  ThemedColorConfig:
     properties:
       dark: optional<string>
       light: optional<string>
 
   ImageConfig:
-    discriminated: false
-    union:
-      - string
-      - ThemedImageConfig
-
-  ThemedImageConfig:
     properties:
       dark: optional<string>
       light: optional<string>
