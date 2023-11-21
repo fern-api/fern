@@ -225,9 +225,9 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             throw new Error("Example is not for an enum");
         }
 
-        const enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.wireValue);
+        const enumValue = this.shape.values.find((enumValue) => enumValue.name.wireValue === example.value.wireValue);
         if (enumValue == null) {
-            throw new Error("No enum with wire value: " + example.wireValue);
+            throw new Error("No enum with wire value: " + example.value.wireValue);
         }
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToSelf(context).getExpression(opts),

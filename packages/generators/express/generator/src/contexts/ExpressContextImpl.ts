@@ -50,7 +50,7 @@ export declare namespace ExpressContextImpl {
         dependencyManager: DependencyManager;
         coreUtilitiesManager: CoreUtilitiesManager;
         fernConstants: Constants;
-
+        
         typeResolver: TypeResolver;
         typeGenerator: TypeGenerator;
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;

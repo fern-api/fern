@@ -78,7 +78,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return [
             ...this.request.getEndpointParameters(context),
             getRequestOptionsParameter({
-                requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(),
+                requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint),
             }),
         ];
     }

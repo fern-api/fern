@@ -4,6 +4,7 @@ import {
     HttpRequestBody,
     HttpService,
     InlinedRequestBody,
+    IntermediateRepresentation,
     SdkRequest,
     SdkRequestShape,
 } from "@fern-fern/ir-sdk/api";
@@ -22,6 +23,7 @@ import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
 export declare namespace GeneratedDefaultEndpointRequest {
     export interface Init {
+        ir: IntermediateRepresentation;
         packageId: PackageId;
         sdkRequest: SdkRequest | undefined;
         service: HttpService;
@@ -37,6 +39,7 @@ interface LiteralPropertyValue {
 }
 
 export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest {
+    private ir: IntermediateRepresentation;
     private packageId: PackageId;
     private requestParameter: RequestParameter | undefined;
     private queryParams: GeneratedQueryParams;
@@ -46,6 +49,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
 
     constructor({
+        ir,
         packageId,
         sdkRequest,
         service,
@@ -53,12 +57,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         requestBody,
         generatedSdkClientClass,
     }: GeneratedDefaultEndpointRequest.Init) {
+        this.ir = ir;
         this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
-
         this.requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
@@ -133,6 +137,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             context,
             requestParameter: this.requestParameter,
             generatedSdkClientClass: this.generatedSdkClientClass,
+            idempotencyHeaders: this.ir.idempotencyHeaders,
             service: this.service,
             endpoint: this.endpoint,
         });

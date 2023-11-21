@@ -22,6 +22,14 @@ export class TypeResolver {
         }
     }
 
+    public getTypeDeclarationFromId(typeId: TypeId): TypeDeclaration {
+        const type = this.allTypes[typeId];
+        if (type == null) {
+            throw new Error("Type not found: " + typeId);
+        }
+        return type;
+    }
+
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): TypeDeclaration {
         const type = this.allTypes[typeName.typeId];
         if (type == null) {

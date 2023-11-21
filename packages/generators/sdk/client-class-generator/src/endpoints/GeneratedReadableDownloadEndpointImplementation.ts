@@ -66,7 +66,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
-                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(),
+                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint),
                 }),
             ],
             returnTypeWithoutPromise: this.includeContentHeadersOnResponse

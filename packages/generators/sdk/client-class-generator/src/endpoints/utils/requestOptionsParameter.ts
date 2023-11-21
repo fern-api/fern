@@ -1,7 +1,7 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
-const REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
+export const REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
 
 export const getRequestOptionsParameter = ({
     requestOptionsReference,

@@ -120,4 +120,57 @@ export class Literal {
                 });
         }
     }
+
+    public async getUndiscriminatedOptions(
+        request: SeedLiteral.GetUndiscriminatedOptionsRequest,
+        requestOptions?: Literal.RequestOptions
+    ): Promise<SeedLiteral.UndiscriminatedOptions> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/options"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Version": "0.0.1",
+            },
+            contentType: "application/json",
+            body: {
+                ...(await serializers.GetUndiscriminatedOptionsRequest.jsonOrThrow(request, {
+                    unrecognizedObjectKeys: "strip",
+                })),
+                dryRun: true,
+            },
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.UndiscriminatedOptions.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedLiteralError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedLiteralError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedLiteralTimeoutError();
+            case "unknown":
+                throw new errors.SeedLiteralError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
 }

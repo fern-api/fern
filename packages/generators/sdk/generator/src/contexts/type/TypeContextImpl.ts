@@ -96,6 +96,11 @@ export class TypeContextImpl implements TypeContext {
         return this.typeResolver.resolveTypeName(typeName);
     }
 
+    public getGeneratedTypeById(typeId: string): GeneratedType {
+        const typeDeclaration = this.typeResolver.getTypeDeclarationFromId(typeId);
+        return this.getGeneratedType(typeDeclaration.name);
+    }
+
     public getGeneratedType(typeName: DeclaredTypeName): GeneratedType {
         const typeDeclaration = this.typeResolver.getTypeDeclarationFromName(typeName);
         return this.typeGenerator.generateType({

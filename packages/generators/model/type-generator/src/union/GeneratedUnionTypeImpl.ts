@@ -89,24 +89,27 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
         }
 
         return this.generatedUnion.build({
-            discriminantValueToBuild: example.wireDiscriminantValue,
-            builderArgument: ExampleSingleUnionTypeProperties._visit<ts.Expression | undefined>(example.properties, {
-                singleProperty: (property) => context.type.getGeneratedExample(property).build(context, opts),
-                samePropertiesAsObject: (exampleNamedType) =>
-                    context.type
-                        .getGeneratedType(exampleNamedType.typeName)
-                        .buildExample(exampleNamedType.shape, context, opts),
-                noProperties: () => undefined,
-                _other: () => {
-                    throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.properties.type);
-                },
-            }),
+            discriminantValueToBuild: example.discriminant.wireValue,
+            builderArgument: ExampleSingleUnionTypeProperties._visit<ts.Expression | undefined>(
+                example.singleUnionType.shape,
+                {
+                    singleProperty: (property) => context.type.getGeneratedExample(property).build(context, opts),
+                    samePropertiesAsObject: (exampleNamedType) =>
+                        context.type
+                            .getGeneratedTypeById(exampleNamedType.typeId)
+                            .buildExample(ExampleTypeShape.object(exampleNamedType.object), context, opts),
+                    noProperties: () => undefined,
+                    _other: () => {
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
+                    },
+                }
+            ),
             nonDiscriminantProperties: ExampleSingleUnionTypeProperties._visit<ts.ObjectLiteralElementLike[]>(
-                example.properties,
+                example.singleUnionType.shape,
                 {
                     singleProperty: (property) => {
                         const unionMember = this.shape.types.find(
-                            (member) => member.discriminantValue.wireValue === example.wireDiscriminantValue
+                            (member) => member.discriminantValue.wireValue === example.discriminant.wireValue
                         );
                         if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
                             throw new Error(
@@ -123,17 +126,21 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         ];
                     },
                     samePropertiesAsObject: (exampleNamedType) => {
-                        const generatedType = context.type.getGeneratedType(exampleNamedType.typeName);
+                        const generatedType = context.type.getGeneratedTypeById(exampleNamedType.typeId);
                         if (generatedType.type !== "object") {
                             throw new Error(
-                                `Cannot generate union example because ${exampleNamedType.typeName.typeId} is not an object`
+                                `Cannot generate union example because ${exampleNamedType.typeId} is not an object`
                             );
                         }
-                        return generatedType.buildExampleProperties(exampleNamedType.shape, context, opts);
+                        return generatedType.buildExampleProperties(
+                            ExampleTypeShape.object(exampleNamedType.object),
+                            context,
+                            opts
+                        );
                     },
                     noProperties: () => [],
                     _other: () => {
-                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.properties.type);
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
                     },
                 }
             ),

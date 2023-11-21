@@ -76,7 +76,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
             if (originalTypeForProperty.type !== "object") {
                 throw new Error("Property does not come from an object");
             }
-            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.wireKey });
+            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
             return ts.factory.createPropertyAssignment(
                 key,
                 context.type.getGeneratedExample(property.value).build(context, opts)

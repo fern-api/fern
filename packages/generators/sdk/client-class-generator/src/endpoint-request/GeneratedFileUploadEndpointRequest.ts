@@ -1,5 +1,5 @@
 import { noop } from "@fern-api/core-utils";
-import { FileProperty, HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-sdk/api";
+import { FileProperty, HttpEndpoint, HttpRequestBody, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
     getTextOfTsNode,
@@ -21,6 +21,7 @@ import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
 
 export declare namespace GeneratedFileUploadEndpointRequest {
     export interface Init {
+        ir: IntermediateRepresentation;
         packageId: PackageId;
         service: HttpService;
         endpoint: HttpEndpoint;
@@ -35,6 +36,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private static OPTS_PARAMETER_NAME = "opts";
     private static ON_UPLOAD_PROGRESS_OPT_NAME = "onUploadProgress";
 
+    private ir: IntermediateRepresentation;
     private requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
     private service: HttpService;
@@ -44,6 +46,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private targetRuntime: JavaScriptRuntime;
 
     constructor({
+        ir,
         packageId,
         service,
         endpoint,
@@ -51,6 +54,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         generatedSdkClientClass,
         targetRuntime,
     }: GeneratedFileUploadEndpointRequest.Init) {
+        this.ir = ir;
         this.service = service;
         this.endpoint = endpoint;
         this.requestBody = requestBody;
@@ -230,6 +234,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return generateHeaders({
             context,
             requestParameter: this.requestParameter,
+            idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
             endpoint: this.endpoint,

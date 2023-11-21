@@ -28,7 +28,7 @@
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-sdk": "0.0.2941",
+    "@fern-fern/ir-sdk": "0.0.3088",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/endpoint-error-union-generator": "workspace:*",

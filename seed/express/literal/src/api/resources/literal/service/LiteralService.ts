@@ -24,6 +24,19 @@ export interface LiteralServiceMethods {
             locals: any;
         }
     ): void | Promise<void>;
+    getUndiscriminatedOptions(
+        req: express.Request<
+            never,
+            SeedLiteral.UndiscriminatedOptions,
+            SeedLiteral.GetUndiscriminatedOptionsRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedLiteral.UndiscriminatedOptions) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        }
+    ): void | Promise<void>;
 }
 
 export class LiteralService {
@@ -104,6 +117,46 @@ export class LiteralService {
                     if (error instanceof errors.SeedLiteralError) {
                         console.warn(
                             `Endpoint 'getOptions' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/options", async (req, res, next) => {
+            const request = await serializers.GetUndiscriminatedOptionsRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getUndiscriminatedOptions(req as any, {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.UndiscriminatedOptions.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    });
+                    next();
+                } catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.SeedLiteralError) {
+                        console.warn(
+                            `Endpoint 'getUndiscriminatedOptions' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition."
                         );

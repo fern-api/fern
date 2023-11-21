@@ -3,6 +3,7 @@ import {
     ExampleTypeReference,
     ResolvedTypeReference,
     TypeDeclaration,
+    TypeId,
     TypeReference,
 } from "@fern-fern/ir-sdk/api";
 import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
@@ -22,5 +23,6 @@ export interface TypeContext {
     resolveTypeName: (typeName: DeclaredTypeName) => ResolvedTypeReference;
     getTypeDeclaration: (typeName: DeclaredTypeName) => TypeDeclaration;
     getGeneratedType: (typeName: DeclaredTypeName) => GeneratedType;
+    getGeneratedTypeById: (typeId: TypeId) => GeneratedType;
     getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
 }

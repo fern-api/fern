@@ -60,6 +60,7 @@ export declare namespace GeneratedSdkClientClassImpl {
 
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
+    private static IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
     private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
@@ -124,6 +125,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
+                            ir: this.intermediateRepresentation,
                             packageId,
                             service,
                             endpoint,
@@ -133,6 +135,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
+                            ir: this.intermediateRepresentation,
                             packageId,
                             sdkRequest: endpoint.sdkRequest ?? undefined,
                             service,
@@ -319,10 +322,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ],
         });
 
+        let isIdempotent = false;
+
         for (const endpoint of this.generatedEndpointImplementations) {
             const signature = endpoint.getSignature(context);
             const docs = endpoint.getDocs(context);
             const overloads = endpoint.getOverloads(context);
+
+            if (!isIdempotent && endpoint.endpoint.idempotent) {
+                isIdempotent = true;
+            }
 
             const method = serviceClass.addMethod({
                 name: endpoint.endpoint.name.camelCase.unsafeName,
@@ -345,6 +354,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (overloads.length === 0) {
                 maybeAddDocs(method, docs);
             }
+        }
+
+        if (isIdempotent) {
+            serviceModule.addInterface(this.generateIdempotentRequestOptionsInterface(context));
         }
 
         for (const wrappedService of this.generatedWrappedServices) {
@@ -431,7 +444,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ? ts.factory.createStringLiteral(literalValue.toString())
                                 : context.type.stringify(
                                       context.coreUtilities.fetcher.Supplier.get(
-                                          this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))
+                                          this.getReferenceToOption(this.getOptionKeyForNonLiteralHeader(header))
                                       ),
                                       header.valueType,
                                       { includeNullCheckIfOptional: true }
@@ -487,6 +500,31 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     hasQuestionToken: true,
                 },
             ],
+        };
+    }
+
+    /******************************
+     * IDEMPOTENT REQUEST OPTIONS *
+     ******************************/
+
+    private generateIdempotentRequestOptionsInterface(
+        context: SdkContext
+    ): OptionalKind<InterfaceDeclarationStructure> {
+        const properties: OptionalKind<PropertySignatureStructure>[] = [];
+        for (const header of this.intermediateRepresentation.idempotencyHeaders) {
+            if (!isLiteralHeader(header, context)) {
+                const type = context.type.getReferenceToType(header.valueType);
+                properties.push({
+                    name: this.getOptionKeyForNonLiteralHeader(header),
+                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
+                    hasQuestionToken: type.isOptional,
+                });
+            }
+        }
+        return {
+            name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
+            extends: [GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME],
+            properties,
         };
     }
 
@@ -600,7 +638,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (!isLiteralHeader(header, context)) {
                 const type = context.type.getReferenceToType(header.valueType);
                 properties.push({
-                    name: this.getOptionKeyForNonLiteralGlobalHeader(header),
+                    name: this.getOptionKeyForNonLiteralHeader(header),
                     type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
                     hasQuestionToken: type.isOptional,
                 });
@@ -658,11 +696,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToRequestOptions(): ts.TypeReferenceNode {
+    public getReferenceToRequestOptions(endpoint: HttpEndpoint): ts.TypeReferenceNode {
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 ts.factory.createIdentifier(this.serviceClassName),
-                ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME)
+                ts.factory.createIdentifier(
+                    endpoint.idempotent
+                        ? GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME
+                        : GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME
+                )
             )
         );
     }
@@ -744,7 +786,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
     }
 
-    private getOptionKeyForNonLiteralGlobalHeader(header: HttpHeader): string {
+    private getOptionKeyForNonLiteralHeader(header: HttpHeader): string {
         return header.name.name.camelCase.unsafeName;
     }
 
@@ -987,7 +1029,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             case "authScheme":
                 return this.getOptionKeyForAuthHeader(header.header);
             case "global":
-                return this.getOptionKeyForNonLiteralGlobalHeader(header.header);
+                return this.getOptionKeyForNonLiteralHeader(header.header);
             default:
                 assertNever(header);
         }

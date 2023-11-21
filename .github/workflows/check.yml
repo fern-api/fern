@@ -82,7 +82,7 @@ jobs:
         run: yarn install
 
       - name: Install Seed
-        run: npm install -g @fern-api/seed-cli@0.15.0-rc77
+        run: npm install -g @fern-api/seed-cli@0.15.2-8-g043902f22 
 
       - name: Seed Test
         run: seed test --workspace sdk --parallel 10
@@ -105,7 +105,7 @@ jobs:
         run: yarn install
 
       - name: Install Seed
-        run: npm install -g @fern-api/seed-cli@0.15.0-rc77
+        run: npm install -g @fern-api/seed-cli@0.15.2-8-g043902f22 
 
       - name: Seed Test
         run: seed test --workspace express --parallel 10

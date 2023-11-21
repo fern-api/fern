@@ -38,7 +38,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         return ExampleTypeReferenceShape._visit(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
-                    string: (stringExample) => ts.factory.createStringLiteral(stringExample),
+                    string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
                     long: (longExample) => ts.factory.createNumericLiteral(longExample),
@@ -116,7 +116,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
-                    string: (stringExample) => ts.factory.createStringLiteral(stringExample),
+                    string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) => ts.factory.createNumericLiteral(integerExample),
                     double: (doubleExample) => ts.factory.createNumericLiteral(doubleExample),
                     long: (longExample) => ts.factory.createNumericLiteral(longExample),
