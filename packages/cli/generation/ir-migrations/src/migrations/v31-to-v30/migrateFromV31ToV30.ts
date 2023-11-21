@@ -37,17 +37,58 @@ export const V31_TO_V30_MIGRATION: IrMigration<
         }),
     migrateBackwards: (v31): IrVersions.V30.ir.IntermediateRepresentation => {
         return {
-            ...v31,
+            apiName: v31.apiName,
+            apiDisplayName: v31.apiDisplayName,
+            apiDocs: v31.apiDocs,
+            auth: v31.auth,
+            headers: v31.headers,
+            types: v31.types,
+            webhookGroups: v31.webhookGroups,
+            errors: v31.errors,
+            subpackages: v31.subpackages,
+            rootPackage: v31.rootPackage,
+            constants: v31.constants,
+            environments: v31.environments,
+            basePath: v31.basePath,
+            pathParameters: v31.pathParameters,
+            errorDiscriminationStrategy: v31.errorDiscriminationStrategy,
+            sdkConfig: v31.sdkConfig,
+            variables: v31.variables,
+            serviceTypeReferenceInfo: v31.serviceTypeReferenceInfo,
             services: Object.fromEntries(
                 Object.entries(v31.services).map(([id, service]) => {
                     return [
                         id,
                         {
-                            ...service,
-                            idempotent: undefined,
+                            availability: service.availability,
+                            name: service.name,
+                            displayName: service.displayName,
+                            basePath: service.basePath,
                             endpoints: service.endpoints.map((endpoint) => {
-                                return { ...endpoint, idempotent: undefined };
+                                return {
+                                    id: endpoint.id,
+                                    docs: endpoint.docs,
+                                    availability: endpoint.availability,
+                                    name: endpoint.name,
+                                    displayName: endpoint.displayName,
+                                    method: endpoint.method,
+                                    headers: endpoint.headers,
+                                    baseUrl: endpoint.baseUrl,
+                                    path: endpoint.path,
+                                    fullPath: endpoint.fullPath,
+                                    pathParameters: endpoint.pathParameters,
+                                    allPathParameters: endpoint.allPathParameters,
+                                    queryParameters: endpoint.queryParameters,
+                                    requestBody: endpoint.requestBody,
+                                    sdkRequest: endpoint.sdkRequest,
+                                    response: endpoint.response,
+                                    errors: endpoint.errors,
+                                    auth: endpoint.auth,
+                                    examples: endpoint.examples,
+                                };
                             }),
+                            headers: service.headers,
+                            pathParameters: service.pathParameters,
                         },
                     ];
                 })
