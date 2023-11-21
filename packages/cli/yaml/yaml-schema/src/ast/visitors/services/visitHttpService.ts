@@ -49,6 +49,7 @@ export async function visitHttpService({
                 await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
+        idempotent: noop,
     });
 }
 
@@ -73,6 +74,7 @@ async function visitEndpoint({
         "display-name": noop,
         availability: noop,
         path: noop,
+        idempotent: noop,
         url: async (baseUrl) => {
             await visitor.endpointBaseUrl?.({ baseUrl, service }, [...nodePathForEndpoint, "url"]);
         },

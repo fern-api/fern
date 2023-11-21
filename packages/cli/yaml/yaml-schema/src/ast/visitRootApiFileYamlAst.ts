@@ -13,6 +13,7 @@ export async function visitRootApiFileYamlAst(
         "display-name": noop,
         imports: noop,
         auth: noop,
+        "idempotency-headers": noop,
         "auth-schemes": noop,
         "default-environment": async (defaultEnvironment) => {
             await visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);

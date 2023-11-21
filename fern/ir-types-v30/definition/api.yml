@@ -1,4 +1,4 @@
-name: ir
+name: ir-v30
 docs: |
   Changes in this version of IR include:
   - Adds the new ExampleUnionType.
