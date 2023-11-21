@@ -35,7 +35,23 @@ export const V31_TO_V30_MIGRATION: IrMigration<
             unrecognizedObjectKeys: "strip",
             skipValidation: true,
         }),
-    migrateBackwards: (v31): IrVersions.V31.ir.IntermediateRepresentation => {
-        return v31;
+    migrateBackwards: (v31): IrVersions.V30.ir.IntermediateRepresentation => {
+        return {
+            ...v31,
+            services: Object.fromEntries(
+                Object.entries(v31.services).map(([id, service]) => {
+                    return [
+                        id,
+                        {
+                            ...service,
+                            idempotent: undefined,
+                            endpoints: service.endpoints.map((endpoint) => {
+                                return { ...endpoint, idempotent: undefined };
+                            }),
+                        },
+                    ];
+                })
+            ),
+        };
     },
 };

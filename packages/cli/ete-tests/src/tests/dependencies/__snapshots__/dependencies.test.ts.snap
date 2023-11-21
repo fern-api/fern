@@ -29,6 +29,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_imported:RootString": {
             "name": {
@@ -400,6 +401,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -763,4 +765,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `797261`;
+exports[`dependencies file dependencies 1`] = `797660`;
