@@ -22,14 +22,14 @@ export async function runPreviewServer({
     });
     const response: DocsV2Read.LoadDocsForUrlResponse = {
         baseUrl: {
-            domain: "localhost",
+            domain: "localhost:3000",
             basePath: "",
         },
         definition: docsDefinition,
         lightModeEnabled: docsDefinition.config.colorsV3.type !== "dark",
     };
 
-    app.post("/docs/preview/load", async (_, res) => {
+    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         res.send(response);
     });
     app.listen(3000);
