@@ -1,6 +1,7 @@
 import { DocsV2Read } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
+import cors from "cors";
 import express from "express";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
@@ -14,6 +15,7 @@ export async function runPreviewServer({
     context: TaskContext;
 }): Promise<void> {
     const app = express();
+    app.use(cors());
 
     const docsDefinition = await getPreviewDocsDefinition({
         docsWorkspace,
@@ -33,6 +35,8 @@ export async function runPreviewServer({
         res.send(response);
     });
     app.listen(3000);
+
+    context.logger.info("Running server on https://localhost:3000");
 
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
