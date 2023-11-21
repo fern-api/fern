@@ -4444,7 +4444,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.53"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3088"],\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5075,20 +5074,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.130-d07d4dd2c2-916d736eff.zip/node_modules/@fern-fern/openapi-ir-model/",\
           "packageDependencies": [\
             ["@fern-fern/openapi-ir-model", "npm:0.0.130"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-fern/registry-node", [\
-        ["npm:0.33.3-2-gddc733d", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.33.3-2-gddc733d-a06145647c-5ad1f15d52.zip/node_modules/@fern-fern/registry-node/",\
-          "packageDependencies": [\
-            ["@fern-fern/registry-node", "npm:0.33.3-2-gddc733d"],\
-            ["@types/url-join", "npm:4.0.1"],\
-            ["@ungap/url-search-params", "npm:0.2.2"],\
-            ["axios", "npm:0.27.2"],\
-            ["js-base64", "npm:3.7.2"],\
-            ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

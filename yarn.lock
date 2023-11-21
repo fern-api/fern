@@ -2682,7 +2682,6 @@ __metadata:
     "@fern-fern/docs-config": 0.0.53
     "@fern-fern/fiddle-sdk": ^0.0.351
     "@fern-fern/ir-sdk": 0.0.3088
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3228,19 +3227,6 @@ __metadata:
   version: 0.0.130
   resolution: "@fern-fern/openapi-ir-model@npm:0.0.130"
   checksum: 916d736eff165515bc71b7bc3d39e4f7e7915541569fdae92046ae22f3052ec3b5542fef171484e63610a6a269c53c3ba4deab5fd7ff0326c258e5b321e1fadb
-  languageName: node
-  linkType: hard
-
-"@fern-fern/registry-node@npm:0.33.3-2-gddc733d":
-  version: 0.33.3-2-gddc733d
-  resolution: "@fern-fern/registry-node@npm:0.33.3-2-gddc733d"
-  dependencies:
-    "@types/url-join": 4.0.1
-    "@ungap/url-search-params": 0.2.2
-    axios: 0.27.2
-    js-base64: 3.7.2
-    url-join: 4.0.1
-  checksum: 5ad1f15d52809cba9829959095e0cc07d82d9b315b08dfacd9a2bda092be0daed2cbd587db85dbd6b31081289f4aae089e54d7bea3fa8319c84bb647bc1b494a
   languageName: node
   linkType: hard
 
