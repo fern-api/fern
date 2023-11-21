@@ -12,7 +12,7 @@ describe("fern preview", () => {
 
         await sleep(5000);
 
-        const response = await fetch("http://localhost:3000/docs/preview/load", {
+        const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
             method: "POST",
         });
 
