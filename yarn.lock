@@ -1852,7 +1852,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
+    "@fern-api/venus-api-sdk": 0.0.36
     "@types/jest": ^29.0.3
     "@types/jsonwebtoken": ^9.0.0
     "@types/node": ^18.7.18
@@ -1895,7 +1895,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/validator": "workspace:*"
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
+    "@fern-api/venus-api-sdk": 0.0.36
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
@@ -2036,9 +2036,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
+    "@fern-api/venus-api-sdk": 0.0.36
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2096,10 +2096,10 @@ __metadata:
   dependencies:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -2119,14 +2119,17 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
+    "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
     eslint: ^8.26.0
     express: ^4.18.2
@@ -2134,6 +2137,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
+    uuid: ^9.0.1
   languageName: unknown
   linkType: soft
 
@@ -2183,6 +2187,20 @@ __metadata:
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
+
+"@fern-api/fdr-sdk@npm:0.39.0-5-g77b7d2c":
+  version: 0.39.0-5-g77b7d2c
+  resolution: "@fern-api/fdr-sdk@npm:0.39.0-5-g77b7d2c"
+  dependencies:
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
+    js-base64: 3.7.2
+    lodash: ^4.17.21
+    marked: ^5.1.0
+    url-join: 4.0.1
+  checksum: 5b974c0f901be3ebd203c5c9c5add12a6d63fc4489028c73e0afd01b859ad41b33f254e91cced232db2a2474485ed317d2d583095f294527228c43ff04576022
+  languageName: node
+  linkType: hard
 
 "@fern-api/fs-utils@workspace:*, @fern-api/fs-utils@workspace:packages/commons/fs-utils":
   version: 0.0.0-use.local
@@ -2532,12 +2550,12 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.130
-    "@redocly/openapi-core": ^1.4.0
+    "@redocly/openapi-core": ^1.4.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
-    "@types/swagger2openapi": ^7.0.0
+    "@types/swagger2openapi": ^7.0.4
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -2560,7 +2578,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.6
+    "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -2625,11 +2643,11 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3088
-    "@fern-fern/registry-node": 0.33.3-2-gddc733d
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2652,6 +2670,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
+    "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -2818,15 +2837,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/venus-api-sdk@npm:0.0.20-7-g6ea8dc4":
-  version: 0.0.20-7-g6ea8dc4
-  resolution: "@fern-api/venus-api-sdk@npm:0.0.20-7-g6ea8dc4"
+"@fern-api/venus-api-sdk@npm:0.0.36":
+  version: 0.0.36
+  resolution: "@fern-api/venus-api-sdk@npm:0.0.36"
   dependencies:
     "@types/url-join": 4.0.1
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 62dcc24a63abcbabc969016a5a6279b79f774f1859826fb2902ad9c3c04047ed8f06789102d1c602894fb3577566464b49e2d412c5aa77b4c104c724859fe573
+  checksum: 2a108f60e2c30324683e308294bf640f5f08615ae32f030042ee2719a7f2c4a24c592c78976f4c639d8126d853261f3015bf676efe36127548ee4ce937423264
   languageName: node
   linkType: hard
 
@@ -3772,9 +3791,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "@redocly/openapi-core@npm:1.4.0"
+"@redocly/openapi-core@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "@redocly/openapi-core@npm:1.4.1"
   dependencies:
     "@redocly/ajv": ^8.11.0
     "@types/node": ^14.11.8
@@ -3786,7 +3805,7 @@ __metadata:
     node-fetch: ^2.6.1
     pluralize: ^8.0.0
     yaml-ast-parser: 0.0.43
-  checksum: 8419256d797fb9aaf9b72447ea414c47ebfccd9f731894081c73ac476de446466369b72ec2a420ef029b69b11f0bfcdf70366517f194ce6ca80095afd815099d
+  checksum: 503a022f75fff28de693909d5bfcf241e712a479319cb50e46f59cc42ae66cf58449b1f57a7665e6daf4974d12a46241cf88e1a8c24c82d1805146f120abb4c7
   languageName: node
   linkType: hard
 
@@ -4508,13 +4527,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/swagger2openapi@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@types/swagger2openapi@npm:7.0.0"
+"@types/swagger2openapi@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@types/swagger2openapi@npm:7.0.4"
   dependencies:
     "@types/node": "*"
     openapi-types: ^12.1.0
-  checksum: c97e40f0bad96d7e8a65e1eea71d83a05eb265ebf9947b2b4470852a6c302dcff8e8e67d1ad25f55ecb615199aac4ab60daeea89ca7073510bb4065b20422d8c
+  checksum: e024802da721ee51ad5653802418f4c1b540739699ef8e35bd4983d08abc88d7e40e1cbd579e90efbbc4ca41fcd5edc7f08250f8a80abf09ab05db3922701c45
   languageName: node
   linkType: hard
 
@@ -4574,10 +4593,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^9.0.6":
-  version: 9.0.6
-  resolution: "@types/uuid@npm:9.0.6"
-  checksum: 739dcb2e620ff097fa916edeab455eb75640c4883a850784fdb15b32f67b719e05275c6d6419bb6da11350d26bd14ed05ba5e992ff228411cdd98cbc772d71ef
+"@types/uuid@npm:^9.0.7":
+  version: 9.0.7
+  resolution: "@types/uuid@npm:9.0.7"
+  checksum: c7321194aeba9ea173efd1e721403bdf4e7ae6945f8f8cdbc87c791f4b505ccf3dbc4a8883d90b394ef13b7c2dc778045792b05dbb23b3c746f8ea347804d448
   languageName: node
   linkType: hard
 
@@ -10097,32 +10116,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"json5@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "json5@npm:1.0.2"
-  dependencies:
-    minimist: ^1.2.0
+"json5@npm:2.2.2":
+  version: 2.2.2
+  resolution: "json5@npm:2.2.2"
   bin:
     json5: lib/cli.js
-  checksum: 866458a8c58a95a49bef3adba929c625e82532bcff1fe93f01d29cb02cac7c3fe1f4b79951b7792c2da9de0b32871a8401a6e3c5b36778ad852bf5b8a61165d7
-  languageName: node
-  linkType: hard
-
-"json5@npm:^2.1.3, json5@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "json5@npm:2.2.1"
-  bin:
-    json5: lib/cli.js
-  checksum: 74b8a23b102a6f2bf2d224797ae553a75488b5adbaee9c9b6e5ab8b510a2fc6e38f876d4c77dea672d4014a44b2399e15f2051ac2b37b87f74c0c7602003543b
-  languageName: node
-  linkType: hard
-
-"json5@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "json5@npm:2.2.3"
-  bin:
-    json5: lib/cli.js
-  checksum: 2a7436a93393830bce797d4626275152e37e877b265e94ca69c99e3d20c2b9dab021279146a39cdb700e71b2dd32a4cebd1514cd57cee102b1af906ce5040349
+  checksum: 9a878d66b72157b073cf0017f3e5d93ec209fa5943abcb38d37a54b208917c166bd473c26a24695e67a016ce65759aeb89946592991f8f9174fb96c8e2492683
   languageName: node
   linkType: hard
 
@@ -10633,6 +10632,15 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.0.3
   resolution: "markdown-table@npm:3.0.3"
   checksum: 8fcd3d9018311120fbb97115987f8b1665a603f3134c93fbecc5d1463380c8036f789e2a62c19432058829e594fff8db9ff81c88f83690b2f8ed6c074f8d9e10
+  languageName: node
+  linkType: hard
+
+"marked@npm:^5.1.0":
+  version: 5.1.2
+  resolution: "marked@npm:5.1.2"
+  bin:
+    marked: bin/marked.js
+  checksum: fff8741a1dc7313f32bea221079a3d6ff55cd485170fade8841b77b48c89ad5b96676e645636e73e50f4b5b6d65cf9d8821072afb16173822505949df2407ffe
   languageName: node
   linkType: hard
 
@@ -15453,24 +15461,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.10.0":
-  version: 1.10.2
-  resolution: "yaml@npm:1.10.2"
-  checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f
-  languageName: node
-  linkType: hard
-
-"yaml@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "yaml@npm:2.1.1"
-  checksum: f48bb209918aa57cfaf78ef6448d1a1f8187f45c746f933268b7023dc59e5456004611879126c9bb5ea55b0a2b1c2b392dfde436931ece0c703a3d754562bb96
-  languageName: node
-  linkType: hard
-
-"yaml@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "yaml@npm:2.3.2"
-  checksum: acd80cc24df12c808c6dec8a0176d404ef9e6f08ad8786f746ecc9d8974968c53c6e8a67fdfabcc5f99f3dc59b6bb0994b95646ff03d18e9b1dcd59eccc02146
+"yaml@npm:2.3.3":
+  version: 2.3.3
+  resolution: "yaml@npm:2.3.3"
+  checksum: cdfd132e7e0259f948929efe8835923df05c013c273c02bb7a2de9b46ac3af53c2778a35b32c7c0f877cc355dc9340ed564018c0242bfbb1278c2a3e53a0e99e
   languageName: node
   linkType: hard
 

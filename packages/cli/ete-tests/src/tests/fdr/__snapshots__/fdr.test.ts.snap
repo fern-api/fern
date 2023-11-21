@@ -6,221 +6,222 @@ exports[`fdr {"name":"simple"} 1`] = `
         "type_commons:UndiscriminatedUnion": {
             "name": "UndiscriminatedUnion",
             "shape": {
+                "type": "undiscriminatedUnion",
                 "variants": [
                     {
                         "type": {
+                            "type": "primitive",
                             "value": {
                                 "type": "string"
-                            },
-                            "type": "primitive"
+                            }
                         }
                     },
                     {
                         "type": {
+                            "type": "list",
                             "itemType": {
+                                "type": "primitive",
                                 "value": {
                                     "type": "string"
-                                },
-                                "type": "primitive"
-                            },
-                            "type": "list"
+                                }
+                            }
                         }
                     },
                     {
                         "type": {
+                            "type": "primitive",
                             "value": {
                                 "type": "integer"
-                            },
-                            "type": "primitive"
+                            }
                         }
                     },
                     {
                         "type": {
+                            "type": "list",
                             "itemType": {
+                                "type": "list",
                                 "itemType": {
+                                    "type": "primitive",
                                     "value": {
                                         "type": "integer"
-                                    },
-                                    "type": "primitive"
-                                },
-                                "type": "list"
-                            },
-                            "type": "list"
+                                    }
+                                }
+                            }
                         }
                     }
-                ],
-                "type": "undiscriminatedUnion"
+                ]
             }
         },
         "type_director:Director": {
             "name": "Director",
             "shape": {
+                "type": "object",
                 "extends": [],
                 "properties": [
                     {
                         "key": "name",
                         "valueType": {
+                            "type": "primitive",
                             "value": {
                                 "type": "string"
-                            },
-                            "type": "primitive"
+                            }
                         }
                     },
                     {
                         "key": "age",
                         "valueType": {
-                            "value": "type_director:Age",
-                            "type": "id"
+                            "type": "id",
+                            "value": "type_director:Age"
                         }
                     }
-                ],
-                "type": "object"
+                ]
             }
         },
         "type_director:Age": {
             "name": "Age",
             "shape": {
+                "type": "alias",
                 "value": {
+                    "type": "primitive",
                     "value": {
                         "type": "integer"
-                    },
-                    "type": "primitive"
-                },
-                "type": "alias"
+                    }
+                }
             }
         },
         "type_director:LiteralString": {
             "name": "LiteralString",
             "shape": {
+                "type": "alias",
                 "value": {
+                    "type": "literal",
                     "value": {
-                        "value": "hello",
-                        "type": "stringLiteral"
-                    },
-                    "type": "literal"
-                },
-                "type": "alias"
+                        "type": "stringLiteral",
+                        "value": "hello"
+                    }
+                }
             }
         },
         "type_imdb:CurrencyAmount": {
             "name": "CurrencyAmount",
             "shape": {
+                "type": "alias",
                 "value": {
+                    "type": "primitive",
                     "value": {
                         "type": "string"
-                    },
-                    "type": "primitive"
-                },
-                "type": "alias"
+                    }
+                }
             }
         },
         "type_imdb:MovieId": {
             "name": "MovieId",
             "shape": {
+                "type": "alias",
                 "value": {
+                    "type": "primitive",
                     "value": {
                         "type": "string"
-                    },
-                    "type": "primitive"
-                },
-                "type": "alias"
+                    }
+                }
             }
         },
         "type_imdb:ActorId": {
             "name": "ActorId",
             "shape": {
+                "type": "alias",
                 "value": {
+                    "type": "primitive",
                     "value": {
                         "type": "string"
-                    },
-                    "type": "primitive"
-                },
-                "type": "alias"
+                    }
+                }
             }
         },
         "type_imdb:Movie": {
             "name": "Movie",
             "shape": {
+                "type": "object",
                 "extends": [],
                 "properties": [
                     {
                         "key": "id",
                         "valueType": {
-                            "value": "type_imdb:MovieId",
-                            "type": "id"
+                            "type": "id",
+                            "value": "type_imdb:MovieId"
                         }
                     },
                     {
                         "key": "title",
                         "valueType": {
+                            "type": "primitive",
                             "value": {
                                 "type": "string"
-                            },
-                            "type": "primitive"
+                            }
                         }
                     },
                     {
                         "key": "rating",
                         "valueType": {
+                            "type": "primitive",
                             "value": {
                                 "type": "double"
-                            },
-                            "type": "primitive"
+                            }
                         }
                     }
-                ],
-                "type": "object"
+                ]
             }
         },
         "type_imdb:CreateMovieRequest": {
             "name": "CreateMovieRequest",
             "shape": {
+                "type": "object",
                 "extends": [],
                 "properties": [
                     {
                         "key": "title",
                         "valueType": {
+                            "type": "primitive",
                             "value": {
                                 "type": "string"
-                            },
-                            "type": "primitive"
+                            }
                         }
                     },
                     {
                         "key": "ratings",
                         "valueType": {
+                            "type": "list",
                             "itemType": {
+                                "type": "primitive",
                                 "value": {
                                     "type": "double"
-                                },
-                                "type": "primitive"
-                            },
-                            "type": "list"
+                                }
+                            }
                         }
                     }
-                ],
-                "type": "object"
+                ]
             }
         },
         "type_imdb:DirectorWrapper": {
             "name": "DirectorWrapper",
             "shape": {
+                "type": "object",
                 "extends": [],
                 "properties": [
                     {
                         "key": "director",
                         "valueType": {
-                            "value": "type_director:Director",
-                            "type": "id"
+                            "type": "id",
+                            "value": "type_director:Director"
                         }
                     }
-                ],
-                "type": "object"
+                ]
             }
         },
         "type_imdb:Person": {
             "name": "Person",
             "shape": {
+                "type": "discriminatedUnion",
                 "discriminant": "type",
                 "variants": [
                     {
@@ -231,8 +232,8 @@ exports[`fdr {"name":"simple"} 1`] = `
                                 {
                                     "key": "value",
                                     "valueType": {
-                                        "value": "type_imdb:ActorId",
-                                        "type": "id"
+                                        "type": "id",
+                                        "value": "type_imdb:ActorId"
                                     }
                                 }
                             ]
@@ -262,13 +263,13 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "properties": []
                         }
                     }
-                ],
-                "type": "discriminatedUnion"
+                ]
             }
         },
         "type_imdb:RecursiveType": {
             "name": "RecursiveType",
             "shape": {
+                "type": "object",
                 "extends": [
                     "type_imdb:CreateMovieRequest"
                 ],
@@ -276,15 +277,14 @@ exports[`fdr {"name":"simple"} 1`] = `
                     {
                         "key": "selfReferencing",
                         "valueType": {
+                            "type": "list",
                             "itemType": {
-                                "value": "type_imdb:RecursiveType",
-                                "type": "id"
-                            },
-                            "type": "list"
+                                "type": "id",
+                                "value": "type_imdb:RecursiveType"
+                            }
                         }
                     }
-                ],
-                "type": "object"
+                ]
             }
         }
     },
@@ -324,12 +324,12 @@ exports[`fdr {"name":"simple"} 1`] = `
                         "pathParameters": [],
                         "parts": [
                             {
-                                "value": "/movies",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/movies"
                             },
                             {
-                                "value": "",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": ""
                             }
                         ]
                     },
@@ -337,24 +337,24 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "headers": [],
                     "request": {
                         "type": {
+                            "type": "json",
                             "contentType": "application/json",
                             "shape": {
+                                "type": "reference",
                                 "value": {
-                                    "value": "type_imdb:CreateMovieRequest",
-                                    "type": "id"
-                                },
-                                "type": "reference"
-                            },
-                            "type": "json"
+                                    "type": "id",
+                                    "value": "type_imdb:CreateMovieRequest"
+                                }
+                            }
                         }
                     },
                     "response": {
                         "type": {
+                            "type": "reference",
                             "value": {
-                                "value": "type_imdb:MovieId",
-                                "type": "id"
-                            },
-                            "type": "reference"
+                                "type": "id",
+                                "value": "type_imdb:MovieId"
+                            }
                         }
                     },
                     "errors": [
@@ -414,27 +414,27 @@ exports[`fdr {"name":"simple"} 1`] = `
                             {
                                 "key": "movieId",
                                 "type": {
-                                    "value": "type_imdb:MovieId",
-                                    "type": "id"
+                                    "type": "id",
+                                    "value": "type_imdb:MovieId"
                                 }
                             }
                         ],
                         "parts": [
                             {
-                                "value": "/movies",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/movies"
                             },
                             {
-                                "value": "/",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/"
                             },
                             {
-                                "value": "movieId",
-                                "type": "pathParameter"
+                                "type": "pathParameter",
+                                "value": "movieId"
                             },
                             {
-                                "value": "",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": ""
                             }
                         ]
                     },
@@ -442,30 +442,30 @@ exports[`fdr {"name":"simple"} 1`] = `
                         {
                             "key": "movieName",
                             "type": {
+                                "type": "primitive",
                                 "value": {
                                     "type": "string"
-                                },
-                                "type": "primitive"
+                                }
                             }
                         }
                     ],
                     "headers": [],
                     "response": {
                         "type": {
+                            "type": "reference",
                             "value": {
-                                "value": "type_imdb:Movie",
-                                "type": "id"
-                            },
-                            "type": "reference"
+                                "type": "id",
+                                "value": "type_imdb:Movie"
+                            }
                         }
                     },
                     "errors": [
                         {
                             "type": {
+                                "type": "primitive",
                                 "value": {
                                     "type": "string"
-                                },
-                                "type": "primitive"
+                                }
                             },
                             "statusCode": 404
                         },
@@ -476,29 +476,29 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "type": {
+                                "type": "object",
                                 "extends": [],
                                 "properties": [
                                     {
                                         "key": "error",
                                         "valueType": {
+                                            "type": "literal",
                                             "value": {
-                                                "value": "NotFoundError",
-                                                "type": "stringLiteral"
-                                            },
-                                            "type": "literal"
+                                                "type": "stringLiteral",
+                                                "value": "NotFoundError"
+                                            }
                                         }
                                     },
                                     {
                                         "key": "content",
                                         "valueType": {
+                                            "type": "primitive",
                                             "value": {
                                                 "type": "string"
-                                            },
-                                            "type": "primitive"
+                                            }
                                         }
                                     }
-                                ],
-                                "type": "object"
+                                ]
                             },
                             "statusCode": 404,
                             "name": "NotFoundError"
@@ -549,27 +549,27 @@ exports[`fdr {"name":"simple"} 1`] = `
                             {
                                 "key": "movieId",
                                 "type": {
-                                    "value": "type_imdb:MovieId",
-                                    "type": "id"
+                                    "type": "id",
+                                    "value": "type_imdb:MovieId"
                                 }
                             }
                         ],
                         "parts": [
                             {
-                                "value": "/movies",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/movies"
                             },
                             {
-                                "value": "/",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/"
                             },
                             {
-                                "value": "movieId",
-                                "type": "pathParameter"
+                                "type": "pathParameter",
+                                "value": "movieId"
                             },
                             {
-                                "value": "",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": ""
                             }
                         ]
                     },
@@ -598,27 +598,27 @@ exports[`fdr {"name":"simple"} 1`] = `
                             {
                                 "key": "movieId",
                                 "type": {
-                                    "value": "type_imdb:MovieId",
-                                    "type": "id"
+                                    "type": "id",
+                                    "value": "type_imdb:MovieId"
                                 }
                             }
                         ],
                         "parts": [
                             {
-                                "value": "/movies",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/movies"
                             },
                             {
-                                "value": "/upload/",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": "/upload/"
                             },
                             {
-                                "value": "movieId",
-                                "type": "pathParameter"
+                                "type": "pathParameter",
+                                "value": "movieId"
                             },
                             {
-                                "value": "",
-                                "type": "literal"
+                                "type": "literal",
+                                "value": ""
                             }
                         ]
                     },

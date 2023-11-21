@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { NavigationConfig, VersionConfig } from "@fern-fern/docs-config/api";
 import { VersionFileConfig as RawVersionFileConfigSerializer } from "@fern-fern/docs-config/serialization";
-import { FernRegistry } from "@fern-fern/registry-node";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { getAllPages } from "./getAllPages";
@@ -78,7 +78,7 @@ export async function parseDocsConfiguration({
                                 })
                               : undefined,
                       height: logo.height,
-                      href: logo.href != null ? FernRegistry.docs.v1.write.Url(logo.href) : undefined,
+                      href: logo.href != null ? logo.href : undefined,
                   }
                 : undefined,
         favicon:
@@ -101,7 +101,8 @@ export async function parseDocsConfiguration({
                               dark: convertedColors.accentPrimary.dark,
                               light: convertedColors.accentPrimary.light,
                           }
-                        : convertedColors.accentPrimary.type === "unthemed"
+                        : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        convertedColors.accentPrimary.type === "unthemed"
                         ? {
                               type: "unthemed",
                               color: convertedColors.accentPrimary.color,
@@ -116,7 +117,8 @@ export async function parseDocsConfiguration({
                               dark: convertedColors.background.dark,
                               light: convertedColors.background.light,
                           }
-                        : convertedColors.background.type === "unthemed"
+                        : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                        convertedColors.background.type === "unthemed"
                         ? {
                               type: "unthemed",
                               color: convertedColors.background.color,
@@ -374,7 +376,7 @@ async function convertImageReference({
 function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext
-): FernRegistry.docs.v1.write.ColorsConfigV2 {
+): DocsV1Write.ColorsConfigV2 {
     return {
         accentPrimary:
             rawConfig.accentPrimary != null
@@ -391,15 +393,16 @@ function convertColorConfiguration(
     raw: RawDocs.ColorConfig,
     context: TaskContext,
     key: string
-): FernRegistry.docs.v1.write.ColorConfig {
+): DocsV1Write.ColorConfig {
     if (typeof raw === "string") {
         const rgb = hexToRgb(raw);
         if (rgb == null) {
             context.failAndThrow(`'${key}' should be a hex color of the format #FFFFFF`);
         }
-        return FernRegistry.docs.v1.write.ColorConfig.unthemed({
+        return {
+            type: "unthemed",
             color: rgb,
-        });
+        };
     }
 
     let rgbDark = undefined;
@@ -421,16 +424,17 @@ function convertColorConfiguration(
         rgbLight = rgb;
     }
 
-    return FernRegistry.docs.v1.write.ColorConfig.themed({
+    return {
+        type: "themed",
         dark: rgbDark,
         light: rgbLight,
-    });
+    };
 }
 
 const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 
 // https://stackoverflow.com/a/5624139/4238485
-function hexToRgb(hexString: string): FernRegistry.docs.v1.write.RgbColor | undefined {
+function hexToRgb(hexString: string): DocsV1Write.RgbColor | undefined {
     const result = HEX_COLOR_REGEX.exec(hexString);
     if (result != null) {
         const [_, rAsString, gAsString, bAsString] = result;
@@ -455,19 +459,21 @@ function parseHexColorCode(value: string | undefined): number | undefined {
     return valueAsNumber;
 }
 
-function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.v1.write.NavbarLink[] {
+function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): DocsV1Write.NavbarLink[] {
     return rawConfig.map((rawNavbarLink) => {
         switch (rawNavbarLink.type) {
             case "primary":
-                return FernRegistry.docs.v1.write.NavbarLink.primary({
+                return {
+                    type: "primary",
                     text: rawNavbarLink.text,
                     url: rawNavbarLink.url,
-                });
+                };
             case "secondary":
-                return FernRegistry.docs.v1.write.NavbarLink.secondary({
+                return {
+                    type: "secondary",
                     text: rawNavbarLink.text,
                     url: rawNavbarLink.url,
-                });
+                };
             default:
                 assertNever(rawNavbarLink);
         }

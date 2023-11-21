@@ -31,11 +31,11 @@
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "0.39.0-5-g77b7d2c",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-sdk": "0.0.3088",
-    "@fern-fern/registry-node": "0.33.3-2-gddc733d",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

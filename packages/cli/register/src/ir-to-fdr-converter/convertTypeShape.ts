@@ -1,32 +1,37 @@
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-fern/ir-sdk";
-import { FernRegistry } from "@fern-fern/registry-node";
 
-export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.register.TypeShape {
-    return irType._visit<FernRegistry.api.v1.register.TypeShape>({
+export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
+    return irType._visit<APIV1Write.TypeShape>({
         alias: (alias) => {
-            return FernRegistry.api.v1.register.TypeShape.alias(convertTypeReference(alias.aliasOf));
+            return {
+                type: "alias",
+                value: convertTypeReference(alias.aliasOf),
+            };
         },
         enum: (enum_) => {
-            return FernRegistry.api.v1.register.TypeShape.enum({
+            return {
+                type: "enum",
                 values: enum_.values.map(
-                    (value): FernRegistry.api.v1.register.EnumValue => ({
+                    (value): APIV1Write.EnumValue => ({
                         description: value.docs ?? undefined,
                         value: value.name.wireValue,
                     })
                 ),
-            });
+            };
         },
         object: (object) => {
-            return FernRegistry.api.v1.register.TypeShape.object({
-                extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
+            return {
+                type: "object",
+                extends: object.extends.map((extension) => extension.typeId),
                 properties: object.properties.map(
-                    (property): FernRegistry.api.v1.register.ObjectProperty => ({
+                    (property): APIV1Write.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
                         valueType: convertTypeReference(property.valueType),
                     })
                 ),
-            });
+            };
         },
         union: (union) => {
             const baseProperties = union.baseProperties.map((baseProperty) => {
@@ -35,55 +40,56 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                     valueType: convertTypeReference(baseProperty.valueType),
                 };
             });
-            return FernRegistry.api.v1.register.TypeShape.discriminatedUnion({
+            return {
+                type: "discriminatedUnion",
                 discriminant: union.discriminant.wireValue,
-                variants: union.types.map((variant): FernRegistry.api.v1.register.DiscriminatedUnionVariant => {
+                variants: union.types.map((variant): APIV1Write.DiscriminatedUnionVariant => {
                     return {
                         description: variant.docs ?? undefined,
                         discriminantValue: variant.discriminantValue.wireValue,
-                        additionalProperties:
-                            Ir.types.SingleUnionTypeProperties._visit<FernRegistry.api.v1.register.ObjectType>(
-                                variant.shape,
-                                {
-                                    samePropertiesAsObject: (extension) => ({
-                                        extends: [convertTypeId(extension.typeId)],
-                                        properties: baseProperties,
-                                    }),
-                                    singleProperty: (singleProperty) => ({
-                                        extends: [],
-                                        properties: [
-                                            {
-                                                key: singleProperty.name.wireValue,
-                                                valueType: convertTypeReference(singleProperty.type),
-                                            },
-                                            ...baseProperties,
-                                        ],
-                                    }),
-                                    noProperties: () => ({
-                                        extends: [],
-                                        properties: baseProperties,
-                                    }),
-                                    _other: () => {
-                                        throw new Error(
-                                            "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
-                                        );
-                                    },
-                                }
-                            ),
+                        additionalProperties: Ir.types.SingleUnionTypeProperties._visit<APIV1Write.ObjectType>(
+                            variant.shape,
+                            {
+                                samePropertiesAsObject: (extension) => ({
+                                    extends: [extension.typeId],
+                                    properties: baseProperties,
+                                }),
+                                singleProperty: (singleProperty) => ({
+                                    extends: [],
+                                    properties: [
+                                        {
+                                            key: singleProperty.name.wireValue,
+                                            valueType: convertTypeReference(singleProperty.type),
+                                        },
+                                        ...baseProperties,
+                                    ],
+                                }),
+                                noProperties: () => ({
+                                    extends: [],
+                                    properties: baseProperties,
+                                }),
+                                _other: () => {
+                                    throw new Error(
+                                        "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
+                                    );
+                                },
+                            }
+                        ),
                     };
                 }),
-            });
+            };
         },
         undiscriminatedUnion: (union) => {
-            return FernRegistry.api.v1.register.TypeShape.undiscriminatedUnion({
-                variants: union.members.map((variant): FernRegistry.api.v1.register.UndiscriminatedUnionVariant => {
+            return {
+                type: "undiscriminatedUnion",
+                variants: union.members.map((variant): APIV1Write.UndiscriminatedUnionVariant => {
                     return {
                         typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                     };
                 }),
-            });
+            };
         },
         _other: () => {
             throw new Error("Unknown Type shape: " + irType.type);
@@ -91,44 +97,55 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
     });
 }
 
-export function convertTypeReference(
-    irTypeReference: Ir.types.TypeReference
-): FernRegistry.api.v1.register.TypeReference {
-    return irTypeReference._visit<FernRegistry.api.v1.register.TypeReference>({
+export function convertTypeReference(irTypeReference: Ir.types.TypeReference): APIV1Write.TypeReference {
+    return irTypeReference._visit<APIV1Write.TypeReference>({
         container: (container) => {
-            return Ir.types.ContainerType._visit<FernRegistry.api.v1.register.TypeReference>(container, {
+            return Ir.types.ContainerType._visit<APIV1Write.TypeReference>(container, {
                 list: (itemType) => {
-                    return FernRegistry.api.v1.register.TypeReference.list({
+                    return {
+                        type: "list",
                         itemType: convertTypeReference(itemType),
-                    });
+                    };
                 },
                 map: ({ keyType, valueType }) => {
-                    return FernRegistry.api.v1.register.TypeReference.map({
+                    return {
+                        type: "map",
                         keyType: convertTypeReference(keyType),
                         valueType: convertTypeReference(valueType),
-                    });
+                    };
                 },
                 optional: (itemType) => {
-                    return FernRegistry.api.v1.register.TypeReference.optional({
+                    return {
+                        type: "optional",
                         itemType: convertTypeReference(itemType),
-                    });
+                    };
                 },
                 set: (itemType) => {
-                    return FernRegistry.api.v1.register.TypeReference.set({
+                    return {
+                        type: "set",
                         itemType: convertTypeReference(itemType),
-                    });
+                    };
                 },
                 literal: (literal) => {
-                    return Ir.types.Literal._visit(literal, {
-                        boolean: (booleanLiteral) =>
-                            // TODO: Refactor this when the FernRegsitry API supports boolean literals.
-                            FernRegistry.api.v1.register.TypeReference.literal(
-                                FernRegistry.api.v1.register.LiteralType.stringLiteral(booleanLiteral.toString())
-                            ),
-                        string: (stringLiteral) =>
-                            FernRegistry.api.v1.register.TypeReference.literal(
-                                FernRegistry.api.v1.register.LiteralType.stringLiteral(stringLiteral)
-                            ),
+                    return Ir.types.Literal._visit<APIV1Write.TypeReference>(literal, {
+                        boolean: (booleanLiteral) => {
+                            return {
+                                type: "literal",
+                                value: {
+                                    type: "booleanLiteral",
+                                    value: booleanLiteral,
+                                },
+                            };
+                        },
+                        string: (stringLiteral) => {
+                            return {
+                                type: "literal",
+                                value: {
+                                    type: "stringLiteral",
+                                    value: stringLiteral,
+                                },
+                            };
+                        },
                         _other: () => {
                             throw new Error("Unknown literal type: " + literal.type);
                         },
@@ -140,35 +157,73 @@ export function convertTypeReference(
             });
         },
         named: (name) => {
-            return FernRegistry.api.v1.register.TypeReference.id(convertTypeId(name.typeId));
+            return {
+                type: "id",
+                value: name.typeId,
+            };
         },
         primitive: (primitive) => {
-            return FernRegistry.api.v1.register.TypeReference.primitive(
-                Ir.types.PrimitiveType._visit<FernRegistry.api.v1.register.PrimitiveType>(primitive, {
-                    integer: FernRegistry.api.v1.register.PrimitiveType.integer,
-                    double: FernRegistry.api.v1.register.PrimitiveType.double,
-                    long: FernRegistry.api.v1.register.PrimitiveType.long,
-                    string: FernRegistry.api.v1.register.PrimitiveType.string,
-                    boolean: FernRegistry.api.v1.register.PrimitiveType.boolean,
-                    dateTime: FernRegistry.api.v1.register.PrimitiveType.datetime,
-                    date: FernRegistry.api.v1.register.PrimitiveType.date,
-                    base64: FernRegistry.api.v1.register.PrimitiveType.base64,
-                    uuid: FernRegistry.api.v1.register.PrimitiveType.uuid,
+            return {
+                type: "primitive",
+                value: Ir.types.PrimitiveType._visit<APIV1Write.PrimitiveType>(primitive, {
+                    integer: () => {
+                        return {
+                            type: "integer",
+                        };
+                    },
+                    double: () => {
+                        return {
+                            type: "double",
+                        };
+                    },
+                    string: () => {
+                        return {
+                            type: "string",
+                        };
+                    },
+                    long: () => {
+                        return {
+                            type: "long",
+                        };
+                    },
+                    boolean: () => {
+                        return {
+                            type: "boolean",
+                        };
+                    },
+                    dateTime: () => {
+                        return {
+                            type: "datetime",
+                        };
+                    },
+                    date: () => {
+                        return {
+                            type: "date",
+                        };
+                    },
+                    uuid: () => {
+                        return {
+                            type: "uuid",
+                        };
+                    },
+                    base64: () => {
+                        return {
+                            type: "base64",
+                        };
+                    },
                     _other: () => {
                         throw new Error("Unknown primitive: " + primitive);
                     },
-                })
-            );
+                }),
+            };
         },
         unknown: () => {
-            return FernRegistry.api.v1.register.TypeReference.unknown();
+            return {
+                type: "unknown",
+            };
         },
         _other: () => {
             throw new Error("Unknown Type reference: " + irTypeReference.type);
         },
     });
-}
-
-export function convertTypeId(irTypeId: Ir.commons.TypeId): FernRegistry.api.v1.register.TypeId {
-    return FernRegistry.api.v1.register.TypeId(irTypeId);
 }

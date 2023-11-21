@@ -1,26 +1,37 @@
+import { DocsV2Read } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import express from "express";
-import { previewDocs } from "./previewDocs";
+import { getPreviewDocsDefinition } from "./previewDocs";
 
 export async function runPreviewServer({
     docsWorkspace,
+    apiWorkspaces,
     context,
 }: {
     docsWorkspace: DocsWorkspace;
+    apiWorkspaces: APIWorkspace[];
     context: TaskContext;
 }): Promise<void> {
     const app = express();
 
-    const docsDefinition = await previewDocs({
+    const docsDefinition = await getPreviewDocsDefinition({
         docsWorkspace,
+        apiWorkspaces,
         context,
     });
+    const response: DocsV2Read.LoadDocsForUrlResponse = {
+        baseUrl: {
+            domain: "localhost",
+            basePath: "",
+        },
+        definition: docsDefinition,
+        lightModeEnabled: docsDefinition.config.colorsV3.type !== "dark",
+    };
 
     app.post("/docs/preview/load", async (_, res) => {
-        res.send(docsDefinition);
+        res.send(response);
     });
-
     app.listen(3000);
 
     // await infiinitely
