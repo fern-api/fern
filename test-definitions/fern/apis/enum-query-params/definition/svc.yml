@@ -1,0 +1,21 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    test:
+      path: /test
+      method: GET
+      request:
+        name: TEST
+        query-parameters:
+          some-enum:
+            type: optional<myEnum>
+            allow-multiple: true
+      response: string
+types:
+  myEnum:
+    enum:
+      - one
+      - two
+      - three
+      - four
