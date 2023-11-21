@@ -59,6 +59,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -121,6 +122,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_literal.createOptions",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -363,6 +365,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_literal.getOptions",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -601,6 +604,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_literal.getUndiscriminatedOptions",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

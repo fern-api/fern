@@ -261,6 +261,7 @@ exports[`generate IR 1`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -389,6 +390,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_property-based-error.ThrowError",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {

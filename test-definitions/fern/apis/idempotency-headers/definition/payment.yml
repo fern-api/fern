@@ -1,0 +1,27 @@
+types:
+  Currency:
+    enum:
+      - USD
+      - YEN
+
+service:
+  auth: true
+  base-path: /payment
+  endpoints:
+    create:
+      method: POST
+      path: ""
+      idempotent: true
+      request:
+        name: CreatePaymentRequest
+        body:
+          properties:
+            amount: integer
+            currency: Currency
+      response: uuid
+
+    delete:
+      method: DELETE
+      path: /{paymentId}
+      path-parameters:
+        paymentId: string

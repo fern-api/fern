@@ -103,6 +103,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -162,6 +163,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_package.test",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -805,6 +807,7 @@ exports[`generate IR 2`] = `
       },
     },
   ],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -863,6 +866,7 @@ exports[`generate IR 2`] = `
           },
           "headers": [],
           "id": "endpoint_no-headers.get",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1038,6 +1042,7 @@ exports[`generate IR 2`] = `
             },
           ],
           "id": "endpoint_only-literal-headers.get",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1280,6 +1285,7 @@ exports[`generate IR 2`] = `
             },
           ],
           "id": "endpoint_with-non-literal-headers.get",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

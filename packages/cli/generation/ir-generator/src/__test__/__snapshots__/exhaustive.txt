@@ -1652,6 +1652,7 @@ exports[`generate IR 1`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -1724,6 +1725,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnListOfPrimitives",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1837,6 +1839,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnListOfObjects",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2253,6 +2256,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnSetOfPrimitives",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2366,6 +2370,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnSetOfObjects",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2782,6 +2787,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnMapPrimToPrim",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2907,6 +2913,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3335,6 +3342,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/container.getAndReturnOptional",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3847,6 +3855,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/enum.getAndReturnEnum",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4375,6 +4384,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/http-methods.testGet",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -4464,6 +4474,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/http-methods.testPost",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4896,6 +4907,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/http-methods.testPut",
+          "idempotent": false,
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -5362,6 +5374,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/http-methods.testPatch",
+          "idempotent": false,
           "method": "PATCH",
           "name": {
             "camelCase": {
@@ -5828,6 +5841,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/http-methods.testDelete",
+          "idempotent": false,
           "method": "DELETE",
           "name": {
             "camelCase": {
@@ -6013,6 +6027,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/object.getAndReturnWithOptionalField",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6411,6 +6426,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/object.getAndReturnWithRequiredField",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6809,6 +6825,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -7207,6 +7224,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -7735,6 +7753,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/params.getWithPath",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7824,6 +7843,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/params.getWithQuery",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7993,6 +8013,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/params.getWithAllowMultipleQuery",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -8196,6 +8217,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/params.getWithPathAndQuery",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -8402,6 +8424,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/params.modifyWithPath",
+          "idempotent": false,
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -8627,6 +8650,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnString",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8722,6 +8746,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnInt",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8817,6 +8842,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnLong",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8912,6 +8938,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnDouble",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9007,6 +9034,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnBool",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9102,6 +9130,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnDatetime",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9197,6 +9226,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnDate",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9292,6 +9322,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnUUID",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9387,6 +9418,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/primitive.getAndReturnBase64",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9578,6 +9610,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_endpoints/union.getAndReturnUnion",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -10141,6 +10174,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_inlined-requests.postWithObjectBodyandResponse",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -10697,6 +10731,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_no-auth.postWithNoAuth",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -10847,6 +10882,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_no-req-body.getWithNoRequestBody",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -11003,6 +11039,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_no-req-body.postWithNoRequestBody",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -11146,6 +11183,7 @@ exports[`generate IR 1`] = `
             },
           ],
           "id": "endpoint_req-with-headers.getWithCustomHeader",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
