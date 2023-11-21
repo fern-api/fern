@@ -2121,12 +2121,15 @@ __metadata:
     "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fdr-sdk": 0.39.0-5-g77b7d2c
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
+    "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
     eslint: ^8.26.0
     express: ^4.18.2
@@ -2134,6 +2137,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
+    uuid: ^9.0.1
   languageName: unknown
   linkType: soft
 
@@ -2573,7 +2577,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.6
+    "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.7.0
@@ -4567,10 +4571,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^9.0.6":
-  version: 9.0.6
-  resolution: "@types/uuid@npm:9.0.6"
-  checksum: 739dcb2e620ff097fa916edeab455eb75640c4883a850784fdb15b32f67b719e05275c6d6419bb6da11350d26bd14ed05ba5e992ff228411cdd98cbc772d71ef
+"@types/uuid@npm:^9.0.7":
+  version: 9.0.7
+  resolution: "@types/uuid@npm:9.0.7"
+  checksum: c7321194aeba9ea173efd1e721403bdf4e7ae6945f8f8cdbc87c791f4b505ccf3dbc4a8883d90b394ef13b7c2dc778045792b05dbb23b3c746f8ea347804d448
   languageName: node
   linkType: hard
 

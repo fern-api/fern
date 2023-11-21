@@ -3840,19 +3840,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/fdr-sdk", "npm:0.39.0-5-g77b7d2c"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
+            ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
             ["@types/express", "npm:4.17.20"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/uuid", "npm:9.0.7"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["express", "npm:4.18.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["uuid", "npm:9.0.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -4327,7 +4331,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/uuid", "npm:9.0.6"],\
+            ["@types/uuid", "npm:9.0.7"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -6598,10 +6602,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/uuid", [\
-        ["npm:9.0.6", {\
-          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.6-741993c9d3-739dcb2e62.zip/node_modules/@types/uuid/",\
+        ["npm:9.0.7", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.7-c380bb8654-c7321194ae.zip/node_modules/@types/uuid/",\
           "packageDependencies": [\
-            ["@types/uuid", "npm:9.0.6"]\
+            ["@types/uuid", "npm:9.0.7"]\
           ],\
           "linkType": "HARD"\
         }]\

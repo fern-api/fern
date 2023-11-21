@@ -26,6 +26,7 @@ export async function previewDocsWorkspace({
         await runPreviewServer({
             docsWorkspace,
             context,
+            apiWorkspaces: project.apiWorkspaces,
         });
     });
 }
