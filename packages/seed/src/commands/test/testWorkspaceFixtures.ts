@@ -48,6 +48,7 @@ export const FIXTURES = {
     UNKNOWN: "unknown",
     VARIABLES: "variables",
     RESERVED_KEYWORDS: "reserved-keywords",
+    IDEMPOTENCY_HEADERS: "idempotency-headers",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
