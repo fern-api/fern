@@ -20,7 +20,7 @@ describe("fern preview", () => {
         const responseBody = await response.json();
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect(Object.keys(responseBody as any)).toEqual(["pages", "config"]);
+        expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
     }, 180_000);
 });
 
