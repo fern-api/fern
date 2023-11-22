@@ -1,13 +1,12 @@
 <br/>
 <div align="center">
-  <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-python&utm_content=logo">
+  <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-typescript&utm_content=logo">
     <img src="fern.png" height="120" align="center" alt="header" />
   </a>
-  
+
   <br/>
 
-=======
-Generate Python models, clients, and server interface from your Fern API Definition.
+# Python  Generator
 
 [![Contributors](https://img.shields.io/github/contributors/fern-api/fern-python.svg)](https://GitHub.com/dotnet/docs/graphs/contributors/)
 [![Pulls-opened](https://img.shields.io/github/issues-pr/fern-api/fern-python.svg)](https://GitHub.com/dotnet/docs/pulls?q=is%3Aissue+is%3Aopened)
@@ -17,7 +16,13 @@ Generate Python models, clients, and server interface from your Fern API Definit
 
 </div>
 
-This repository contains the source for the [Fern](https://buildwithfern.com) generator that produces Python artifacts. The generator is written in Python, and produces idiomatic code that feels hand-written and is friendly to read.
+This repository contains the source for the various generators that produce Python artifacts for [Fern](https://github.com/fern-api/fern):
+
+- `fernapi/fern-python-sdk`
+- `fernapi/fern-pydandic-model`
+- `fernapi/fern-fastapi-server`
+
+The Python generators are written in Python. We strongly emphasize idiomatic code generation that feels hand-written and is friendly to read.
 
 Fern handles transforming an API definition -- either an OpenAPI or Fern specification -- into Fern _intermediate representation_. IR is a normalized, Fern-specific definition of an API containing its endpoints, models, errors, authentication scheme, version, and more. Then the Python generator takes over and turns the IR into production-ready code.
 
@@ -32,29 +37,14 @@ Head over to the [official Fern website](https://www.buildwithfern.com/?utm_sour
 This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by defining one of the aforementioned Python artifacts as a generator:
 
 ```yml
-- name: fernapi/fern-python
+- name: fernapi/fern-python-sdk
   version: 0.3.7
   output:
     location: local-file-system
-    path: ../../generated/python
+    path: ../generated/python
 ```
 
 By default, Fern runs the generators in the cloud. To run a generator on your local machine, using the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
-
-## Dependencies
-
-The generated Python code has the following dependencies:
-
-- [Python Poetry](https://python-poetry.org/docs/#installing-with-the-official-installer)
-
-After you have installed Poetry:
-
-1. `poetry --local config virtualenvs.in-project true`
-2. `poetry install`
-3. `poetry shell`
-4. `code .`
-
-To check types: `poetry run mypy`
 
 ## Configuration
 
@@ -73,23 +63,67 @@ groups:
 
 ### SDK Configuration
 
-The Python SDK supports the following options:
+The Python SDK generator supports the following options:
 
-#### ✨ `include_validators`
+#### ✨ `timeout_in_seconds`
+
+**Type:** integer
+
+**Default:** 60
+
+By default, the generator generates a client that times out after 60 seconds.
+You can customize this value by providing a different number or setting to `infinity`
+to get rid of timeouts.
+
+#### ✨ `client_class_name`
 
 **Type:** boolean
 
-**Default:** `false`
+**Default:** `{organization}{api-name}`
 
-When enabled, includes validators in the generated code.
+By default, the generator will concatenate your organization and API name to generate the
+name of the client class. You can customize it by overriding this value.
 
-#### ✨ `forbid_extra_fields`
+#### ✨ `include_union_utils`
 
 **Type:** boolean
 
-**Default:** `false`
+**Default:** `False`
 
-When enabled, forbids the extra fields.
+When enabled, the generator will output a Pydantic `__root__` class that will contain
+utilities to visit the union. For example, for the following union type:
+
+```yaml
+types:
+  Shape:
+    union:
+      circle: Circle
+      triangle: Triangle
+```
+
+you will get a generated `Shape` class that has a factory and visitor
+
+```python
+
+# Use a factory to instantiate the union
+Shape.factory.circle(Circle(...))
+
+# Visit every case in the union
+shape = get_shape()
+shape.visit(
+  circle: lambda circle: do_something_with_circle(circle),
+  triangle: lambda triangle: do_something_with_circle(circle),
+)
+```
+
+#### ✨ `skip_formatting`
+
+**Type:** boolean
+
+**Default:** `true`
+
+When enabled, the python generator will not run Black formatting in the generated code.
+Black is slow so this can potentially speed up code generation quite a bit.
 
 #### ✨ `wrapped_aliases`
 
@@ -97,35 +131,8 @@ When enabled, forbids the extra fields.
 
 **Default:** `false`
 
-When enabled, an alias wraps the underlying class.
-
-#### ✨ `skip_formatting`
-
-**Type:** boolean
-
-**Default:** `false`
-
-When enabled, skips formatting.
-
-#### ✨ `include_union_utils`
-
-**Type:** boolean
-
-**Default:** `false`
-
-When enabled, the generated code will include union utilities.
-
-#### ✨ `frozen`
-
-**Type:** boolean
-
-**Default:** `false`
-
-#### ✨ `orm_mode`
-
-**Type:** boolean
-
-**Default:** `false`
+When enabled, any alias types defined in your Fern Definition will be generated
+as an individual class.
 
 ## Releases
 
@@ -139,10 +146,10 @@ groups:
   local:
     generators:
       - name: fernapi/fern-python
-        version: 0.3.7
+        version: 0.3.7 # <--- generator version
         output:
           location: local-file-system
-          path: ../../generated/python
+          path: ../generated/python
 ```
 
 Fern will handle the rest automatically.
