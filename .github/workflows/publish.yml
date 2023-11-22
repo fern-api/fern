@@ -1,0 +1,101 @@
+name: publish
+
+on:
+  release:
+    types: [released]
+  push:
+    branches:
+      - main
+
+jobs:
+  check:
+    uses: ./.github/workflows/check.yml
+  publish-fastapi-docker:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install
+        run: poetry install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Print Version
+        run: ./scripts/git-version.sh
+
+      - name: Publish fernapi/fern-fastapi-server docker
+        run: |
+          projectVersion=$(./scripts/git-version.sh)
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/fastapi/Dockerfile -t fernapi/fern-fastapi-server:${projectVersion} . --push
+
+  publish-sdk-docker:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install
+        run: poetry install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Print Version
+        run: ./scripts/git-version.sh
+
+      - name: Publish fernapi/fern-python-sdk docker
+        run: |
+          projectVersion=$(./scripts/git-version.sh)
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:${projectVersion} . --push
+
+  publish-pydantic-docker:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install
+        run: poetry install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Print Version
+        run: ./scripts/git-version.sh
+
+      - name: Publish fernapi/fern-pydantic-model docker
+        run: |
+          projectVersion=$(./scripts/git-version.sh)
+          docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/pydantic-model/Dockerfile -t fernapi/fern-pydantic-model:${projectVersion} . --push
