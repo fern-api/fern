@@ -8,7 +8,7 @@ All contributions start with [an issue](https://github.com/fern-api/fern-python/
 
 ## How can you help?
 
-Review [our documentation](https://buildwithfern.com/docs)! We appreciate any help we can get that makes our documentation more digestible.
+Review [our documentation](https://buildwithfern.com/docs?utm_source=github&utm_medium=readme&utm_campaign=fern-python&utm_content=contributing)! We appreciate any help we can get that makes our documentation more digestible.
 
 Talk about Fern in your local meetups! Even our users aren't always aware of some of our features. Learn, then share your knowledge with your own circles.
 
