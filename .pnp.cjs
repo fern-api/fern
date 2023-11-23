@@ -238,7 +238,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/jest-specific-snapshot", "npm:0.5.6"],\
+            ["@types/jest-specific-snapshot", "npm:0.5.9"],\
             ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.38.1"],\
@@ -5488,10 +5488,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/jest-specific-snapshot", [\
-        ["npm:0.5.6", {\
-          "packageLocation": "./.yarn/cache/@types-jest-specific-snapshot-npm-0.5.6-08a194ee08-3acfe6f586.zip/node_modules/@types/jest-specific-snapshot/",\
+        ["npm:0.5.9", {\
+          "packageLocation": "./.yarn/cache/@types-jest-specific-snapshot-npm-0.5.9-9806487307-b452e423a0.zip/node_modules/@types/jest-specific-snapshot/",\
           "packageDependencies": [\
-            ["@types/jest-specific-snapshot", "npm:0.5.6"],\
+            ["@types/jest-specific-snapshot", "npm:0.5.9"],\
             ["@types/jest", "npm:29.5.2"]\
           ],\
           "linkType": "HARD"\
@@ -8564,7 +8564,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/jest-specific-snapshot", "npm:0.5.6"],\
+            ["@types/jest-specific-snapshot", "npm:0.5.9"],\
             ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.38.1"],\

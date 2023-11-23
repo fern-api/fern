@@ -3660,12 +3660,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest-specific-snapshot@npm:^0.5.6":
-  version: 0.5.6
-  resolution: "@types/jest-specific-snapshot@npm:0.5.6"
+"@types/jest-specific-snapshot@npm:^0.5.9":
+  version: 0.5.9
+  resolution: "@types/jest-specific-snapshot@npm:0.5.9"
   dependencies:
     "@types/jest": "*"
-  checksum: 3acfe6f586e478b17245443cd5f8b91b3e6be86969b32a3de7e2b7fcc34ad9a6718d8aecf493a8537fb5d42f9bd14be7e13ff16fa8fbc16fc2becd987e643586
+  checksum: b452e423a024d20aa1091cb962f4b0c81c04fc5065af7e1ecb2b4b46f90255ebefd18463d9c39fcd2a15ba34c4ab09bfc4f03e35d8227da5f1bb73f79b9836d1
   languageName: node
   linkType: hard
 
@@ -6062,7 +6062,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@types/is-ci": ^3.0.3
     "@types/jest": ^28.1.6
-    "@types/jest-specific-snapshot": ^0.5.6
+    "@types/jest-specific-snapshot": ^0.5.9
     "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     "@typescript-eslint/eslint-plugin": ^5.38.1
