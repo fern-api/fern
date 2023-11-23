@@ -38,7 +38,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
 
 ```yml
 - name: fernapi/fern-python-sdk
-  version: 0.3.7
+  version: 0.6.6
   output:
     location: local-file-system
     path: ../generated/python
@@ -56,7 +56,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-python
-      version: 0.3.7
+      version: 0.6.6
       config: # <--
         include_validators: true
 ```
