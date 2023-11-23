@@ -61,7 +61,7 @@ groups:
         include_validators: true
 ```
 
-### SDK Configuration
+### SDK Generator Configuration
 
 The Python SDK generator supports the following options:
 
@@ -134,7 +134,7 @@ Black is slow so this can potentially speed up code generation quite a bit.
 When enabled, any alias types defined in your Fern Definition will be generated
 as an individual class.
 
-### FastAPI Configuration
+### FastAPI Generator Configuration
 
 The FastAPI generator supports the following options:
 
@@ -153,7 +153,7 @@ config:
     version: v1 # or v2 or "both"
 ```
 
-### FastAPI Configuration
+### Pydantic Generator Configuration
 
 The Pydantic generator supports the following options:
 
