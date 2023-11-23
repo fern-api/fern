@@ -1852,6 +1852,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-api/core-utils@npm:0.4.23":
+  version: 0.4.23
+  resolution: "@fern-api/core-utils@npm:0.4.23"
+  dependencies:
+    lodash-es: ^4.17.21
+    strip-ansi: ^7.0.1
+  checksum: d70b2ed85e4f2c0177a6ac59bf5ee013bcf69ab71c9517e1c7078b821c10bd5bb8051119654cd96807f283f3c79471f9169751de1b9981b1472acd276d4ad94d
+  languageName: node
+  linkType: hard
+
 "@fern-api/fs-utils@npm:0.0.248-7-gb4189be0":
   version: 0.0.248-7-gb4189be0
   resolution: "@fern-api/fs-utils@npm:0.0.248-7-gb4189be0"
@@ -1866,6 +1876,16 @@ __metadata:
     "@fern-api/core-utils": 0.0.248-7-gb4189be0
     chalk: ^5.0.1
   checksum: 30cdc3fbaffb24550a73f8005bf30fd743bc0a0cc7874446e7b887dcf369aa109d7f88904b467a27e9a1e87e8642df99dfb54c793606e25417b7d46ba5710032
+  languageName: node
+  linkType: hard
+
+"@fern-api/logger@npm:0.4.23":
+  version: 0.4.23
+  resolution: "@fern-api/logger@npm:0.4.23"
+  dependencies:
+    "@fern-api/core-utils": 0.4.23
+    chalk: ^5.0.1
+  checksum: c03f608018eaf8150daa82e3e8f2ed5b9012898f87b986a33d759939822bc972ec4d2a0f9b2c7ca932a2f4e0a52fcd393d900e7a493d4ab69223da74c10842e3
   languageName: node
   linkType: hard
 
@@ -1938,7 +1958,7 @@ __metadata:
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-api/logger": 0.0.248-7-gb4189be0
+    "@fern-api/logger": 0.4.23
     "@fern-fern/generator-exec-sdk": ^0.0.142
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/commons": "workspace:*"
@@ -2040,7 +2060,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": 0.0.248-7-gb4189be0
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-api/logger": 0.0.248-7-gb4189be0
+    "@fern-api/logger": 0.4.23
     "@fern-api/logging-execa": 0.0.248-7-gb4189be0
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/fetcher": "workspace:*"
@@ -2079,7 +2099,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.18.6
-    "@fern-api/logger": 0.0.248-7-gb4189be0
+    "@fern-api/logger": 0.4.23
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^28.1.6

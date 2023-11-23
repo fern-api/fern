@@ -26,7 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/logger": "0.0.248-7-gb4189be0",
+    "@fern-api/logger": "0.4.23",
     "@fern-fern/ir-sdk": "0.0.3088",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "^15.1.0"

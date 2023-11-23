@@ -3489,6 +3489,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["strip-ansi", "npm:7.0.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:0.4.23", {\
+          "packageLocation": "./.yarn/cache/@fern-api-core-utils-npm-0.4.23-39baf016e0-d70b2ed85e.zip/node_modules/@fern-api/core-utils/",\
+          "packageDependencies": [\
+            ["@fern-api/core-utils", "npm:0.4.23"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["strip-ansi", "npm:7.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/fs-utils", [\
@@ -3506,6 +3515,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
+            ["chalk", "npm:5.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:0.4.23", {\
+          "packageLocation": "./.yarn/cache/@fern-api-logger-npm-0.4.23-bd3dcfae57-c03f608018.zip/node_modules/@fern-api/logger/",\
+          "packageDependencies": [\
+            ["@fern-api/logger", "npm:0.4.23"],\
+            ["@fern-api/core-utils", "npm:0.4.23"],\
             ["chalk", "npm:5.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -3588,7 +3606,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
+            ["@fern-api/logger", "npm:0.4.23"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.142"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3088"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
@@ -3700,7 +3718,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
+            ["@fern-api/logger", "npm:0.4.23"],\
             ["@fern-api/logging-execa", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3088"],\
             ["@fern-typescript/fetcher", "workspace:packages/core-utilities/fetcher"],\
@@ -3741,7 +3759,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
+            ["@fern-api/logger", "npm:0.4.23"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3088"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@types/jest", "npm:28.1.6"],\
