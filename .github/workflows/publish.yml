@@ -33,12 +33,22 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Print Version
-        run: ./scripts/git-version.sh
-
-      - name: Publish fernapi/fern-fastapi-server docker
         run: |
+          ./scripts/git-version.sh
           projectVersion=$(./scripts/git-version.sh)
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/fastapi/Dockerfile -t fernapi/fern-fastapi-server:${projectVersion} . --push
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./docker/fastapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-fastapi-server:${{env.VERSION}}
 
   publish-sdk-docker:
     needs: check
@@ -63,12 +73,22 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Print Version
-        run: ./scripts/git-version.sh
-
-      - name: Publish fernapi/fern-python-sdk docker
         run: |
+          ./scripts/git-version.sh
           projectVersion=$(./scripts/git-version.sh)
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:${projectVersion} . --push
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./docker/fastapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-python-sdk:${{env.VERSION}}
 
   publish-pydantic-docker:
     needs: check
@@ -93,9 +113,19 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Print Version
-        run: ./scripts/git-version.sh
-
-      - name: Publish fernapi/fern-pydantic-model docker
         run: |
+          ./scripts/git-version.sh
           projectVersion=$(./scripts/git-version.sh)
-          docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/pydantic-model/Dockerfile -t fernapi/fern-pydantic-model:${projectVersion} . --push
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./docker/fastapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-pydantic-model:${{env.VERSION}}
