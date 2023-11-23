@@ -3706,7 +3706,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/fetcher", "workspace:packages/core-utilities/fetcher"],\
             ["@fern-typescript/streaming-fetcher", "workspace:packages/core-utilities/streaming-fetcher"],\
             ["@fern-typescript/zurg", "workspace:packages/core-utilities/zurg"],\
-            ["@types/decompress", "npm:4.2.4"],\
+            ["@types/decompress", "npm:4.2.7"],\
             ["@types/esutils", "npm:2.0.0"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -5333,10 +5333,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/decompress", [\
-        ["npm:4.2.4", {\
-          "packageLocation": "./.yarn/cache/@types-decompress-npm-4.2.4-b2bc0638c0-e47960f863.zip/node_modules/@types/decompress/",\
+        ["npm:4.2.7", {\
+          "packageLocation": "./.yarn/cache/@types-decompress-npm-4.2.7-8d638f0648-f2fcc588e0.zip/node_modules/@types/decompress/",\
           "packageDependencies": [\
-            ["@types/decompress", "npm:4.2.4"],\
+            ["@types/decompress", "npm:4.2.7"],\
             ["@types/node", "npm:18.6.0"]\
           ],\
           "linkType": "HARD"\
