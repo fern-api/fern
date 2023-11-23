@@ -93,6 +93,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 base_models.append(class_reference_for_base)
 
             with PydanticModel(
+                version=self._custom_config.version,
                 name=f"{self._name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",
                 source_file=self._source_file,
                 base_models=base_models,

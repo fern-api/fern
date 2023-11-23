@@ -61,6 +61,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
             for single_union_type in self._union.types:
                 with PydanticModel(
+                    version=self._custom_config.version,
                     name=single_union_type.discriminant_value.name.pascal_case.safe_name,
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
@@ -232,7 +233,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 root_type=root_type,
                 annotation=AST.Expression(
                     AST.FunctionInvocation(
-                        function_definition=Pydantic.Field,
+                        function_definition=Pydantic.Field(self._custom_config.version),
                         kwargs=[
                             (
                                 "discriminator",

@@ -10,3 +10,11 @@ fixtures:
     - customConfig:
         skip_formatting: True
       outputFolder: skip-formatting
+    - customConfig:
+        pydantic_config: 
+          version: v1
+      outputFolder: pydantic-v1
+    - customConfig:
+        pydantic_config: 
+          version: v2
+      outputFolder: pydantic-v2

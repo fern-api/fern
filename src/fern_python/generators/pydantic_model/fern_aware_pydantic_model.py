@@ -52,6 +52,7 @@ class FernAwarePydanticModel:
         self._source_file = source_file
         self._extends = extends
         self._pydantic_model = PydanticModel(
+            version=self._custom_config.version,
             name=class_name,
             source_file=source_file,
             should_export=should_export,

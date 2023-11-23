@@ -1,61 +1,102 @@
+import enum
+
 from fern_python.codegen import AST
 
 PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2, < 2.5.0")
 
 
-def _export(*export: str) -> AST.ClassReference:
-    return AST.ClassReference(
-        import_=AST.ReferenceImport(
-            module=AST.Module.external(
-                dependency=PYDANTIC_DEPENDENCY,
-                module_path=("pydantic", "v1"),
-            ),
-            alias="pydantic",
-            alternative_import=AST.ReferenceImport(
+class PydanticVersionCompatibility(str, enum.Enum):
+    V1 = "v1"
+    V2 = "v2"
+    Both = "both"
+
+
+def _export(version: PydanticVersionCompatibility, *export: str) -> AST.ClassReference:
+    if version == PydanticVersionCompatibility.V1:
+        return AST.ClassReference(
+            import_=AST.ReferenceImport(
                 module=AST.Module.external(
                     dependency=PYDANTIC_DEPENDENCY,
                     module_path=("pydantic",),
                 ),
+            ),
+            qualified_name_excluding_import=export,
+        )
+    elif version == PydanticVersionCompatibility.V2:
+        return AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=AST.Module.external(
+                    dependency=PYDANTIC_DEPENDENCY,
+                    module_path=("pydantic", "v1"),
+                ),
+                alias="pydantic",
+            ),
+            qualified_name_excluding_import=export,
+        )
+    elif version == PydanticVersionCompatibility.Both:
+        return AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=AST.Module.external(
+                    dependency=PYDANTIC_DEPENDENCY,
+                    module_path=("pydantic", "v1"),
+                ),
+                alias="pydantic",
+                alternative_import=AST.ReferenceImport(
+                    module=AST.Module.external(
+                        dependency=PYDANTIC_DEPENDENCY,
+                        module_path=("pydantic",),
+                    ),
+                    mypy_ignore=True,
+                ),
                 mypy_ignore=True,
             ),
-            mypy_ignore=True,
-        ),
-        qualified_name_excluding_import=export,
-    )
+            qualified_name_excluding_import=export,
+        )
+    else:
+        raise AssertionError(f"Encountered unknown pydnatic version compatibility type: {version}")
 
 
 class Pydantic:
-
-    Field = _export("Field")
-
-    BaseModel = _export("BaseModel")
-
-    PrivateAttr = _export("PrivateAttr")
-
-    class Extra:
-        forbid = AST.Expression(_export("Extra", "forbid"))
+    @staticmethod
+    def Field(version: PydanticVersionCompatibility) -> AST.ClassReference:
+        return _export(version, "Field")
 
     @staticmethod
-    def root_validator(pre: bool = False) -> AST.FunctionInvocation:
+    def BaseModel(version: PydanticVersionCompatibility) -> AST.ClassReference:
+        return _export(version, "BaseModel")
+
+    @staticmethod
+    def PrivateAttr(version: PydanticVersionCompatibility) -> AST.ClassReference:
+        return _export(version, "PrivateAttr")
+
+    class Extra:
+        @staticmethod
+        def forbid(version: PydanticVersionCompatibility) -> AST.Expression:
+            return AST.Expression(_export(version, "Extra", "forbid"))
+
+    @staticmethod
+    def root_validator(version: PydanticVersionCompatibility, pre: bool = False) -> AST.FunctionInvocation:
         return AST.FunctionInvocation(
-            function_definition=_export("root_validator"),
+            function_definition=_export(version, "root_validator"),
             args=[AST.Expression(expression=f'pre={"True" if pre else "False"}')],
         )
 
     @staticmethod
-    def validator(field_name: str, pre: bool = False) -> AST.FunctionInvocation:
+    def validator(version: PydanticVersionCompatibility, field_name: str, pre: bool = False) -> AST.FunctionInvocation:
         return AST.FunctionInvocation(
-            function_definition=_export("validator"),
+            function_definition=_export(version, "validator"),
             args=[AST.Expression(expression=f'"{field_name}", pre={"True" if pre else "False"}')],
         )
 
     @staticmethod
-    def parse_obj_as(type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+    def parse_obj_as(
+        version: PydanticVersionCompatibility, type_of_obj: AST.TypeHint, obj: AST.Expression
+    ) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
                 AST.Expression(
                     AST.FunctionInvocation(
-                        function_definition=_export("parse_obj_as"),
+                        function_definition=_export(version, "parse_obj_as"),
                         args=[AST.Expression(type_of_obj), obj],
                     )
                 )

@@ -134,6 +134,43 @@ Black is slow so this can potentially speed up code generation quite a bit.
 When enabled, any alias types defined in your Fern Definition will be generated
 as an individual class.
 
+### FastAPI Configuration
+
+The FastAPI generator supports the following options:
+
+#### ✨ `pydantic_config.version`
+
+**Type:** "v1" or "v2" or "both"
+
+**Default:** "both"
+
+By default, the generator generates pydantic models that are v1 and v2 compatible.
+However you can override them to strictly for v1 or v2.
+
+```
+config:
+  pydantic_config:
+    version: v1 # or v2 or "both"
+```
+
+### FastAPI Configuration
+
+The Pydantic generator supports the following options:
+
+#### ✨ `version`
+
+**Type:** "v1" or "v2" or "both"
+
+**Default:** "both"
+
+By default, the generator generates pydantic models that are v1 and v2 compatible.
+However you can override them to strictly for v1 or v2.
+
+```
+config:
+  version: v1 # or v2 or "both"
+```
+
 ## Releases
 
 All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-python/releases). You can directly use these version numbers in your generator configuration files.

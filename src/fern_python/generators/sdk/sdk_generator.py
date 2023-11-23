@@ -7,6 +7,7 @@ from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeReques
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import (
     PydanticModelCustomConfig,
@@ -81,6 +82,7 @@ class SdkGenerator(AbstractGenerator):
             orm_mode=False,
             frozen=True,
             smart_union=True,
+            version=PydanticVersionCompatibility.Both,
         )
 
         context = SdkGeneratorContextImpl(

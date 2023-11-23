@@ -7,7 +7,7 @@ from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 from pydantic import BaseModel
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
-from fern_python.external_dependencies import Pydantic
+from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 
 from .pydantic_field import PydanticField
 
@@ -28,6 +28,7 @@ class PydanticModel:
         frozen: bool,
         orm_mode: bool,
         smart_union: bool,
+        version: PydanticVersionCompatibility,
         should_export: bool = None,
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
@@ -38,7 +39,7 @@ class PydanticModel:
         self._source_file = source_file
         self._class_declaration = AST.ClassDeclaration(
             name=name,
-            extends=base_models or [Pydantic.BaseModel],
+            extends=base_models or [Pydantic.BaseModel(version)],
             docstring=AST.Docstring(docstring) if docstring is not None else None,
             snippet=snippet,
         )
@@ -47,6 +48,7 @@ class PydanticModel:
             declaration=self._class_declaration, should_export=should_export
         )
         self._has_aliases = False
+        self._version = version
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._forbid_extra_fields = forbid_extra_fields
@@ -74,6 +76,7 @@ class PydanticModel:
             default_factory=field.default_factory,
             description=field.description,
             default=field.default_value,
+            version=self._version,
         )
 
         self._class_declaration.add_class_var(
@@ -98,7 +101,7 @@ class PydanticModel:
                 type_hint=type_hint,
                 initializer=AST.Expression(
                     AST.ClassInstantiation(
-                        Pydantic.PrivateAttr,
+                        Pydantic.PrivateAttr(self._version),
                         kwargs=[("default_factory", default_factory)] if default_factory is not None else None,
                     )
                 ),
@@ -175,7 +178,7 @@ class PydanticModel:
                     return_type=field_type,
                 ),
                 body=body,
-                decorators=[Pydantic.validator(field_name, pre)],
+                decorators=[Pydantic.validator(self._version, field_name, pre)],
             ),
         )
 
@@ -199,7 +202,7 @@ class PydanticModel:
                     return_type=value_type,
                 ),
                 body=body,
-                decorators=[Pydantic.root_validator(pre=pre)],
+                decorators=[Pydantic.root_validator(pre=pre, version=self._version)],
             ),
         )
 
@@ -309,7 +312,7 @@ class PydanticModel:
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="extra",
-                    initializer=Pydantic.Extra.forbid,
+                    initializer=Pydantic.Extra.forbid(self._version),
                 )
             )
 
@@ -340,6 +343,7 @@ class PydanticModel:
 
 def get_field_name_initializer(
     *,
+    version: PydanticVersionCompatibility,
     alias: Optional[str],
     default: Optional[AST.Expression],
     default_factory: Optional[AST.Expression],
@@ -350,7 +354,7 @@ def get_field_name_initializer(
         return default
 
     def write(writer: AST.NodeWriter) -> None:
-        writer.write_reference(Pydantic.Field)
+        writer.write_reference(Pydantic.Field(version=version))
         writer.write("(")
         arg_present = False
         if alias is not None:
