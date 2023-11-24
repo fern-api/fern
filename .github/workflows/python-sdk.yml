@@ -26,4 +26,4 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           NPM_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          fern generate --group publish --version ${{ inputs.version }} --log-level debug
+          fern generate --api public-api --group publish --version ${{ inputs.version }} --log-level debug
