@@ -28,12 +28,12 @@ export const V31_TO_V30_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V30.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "strip",
-            skipValidation: true,
+            skipValidation: true
         }),
     migrateBackwards: (v31): IrVersions.V30.ir.IntermediateRepresentation => {
         return {
@@ -84,15 +84,15 @@ export const V31_TO_V30_MIGRATION: IrMigration<
                                     response: endpoint.response,
                                     errors: endpoint.errors,
                                     auth: endpoint.auth,
-                                    examples: endpoint.examples,
+                                    examples: endpoint.examples
                                 };
                             }),
                             headers: service.headers,
-                            pathParameters: service.pathParameters,
-                        },
+                            pathParameters: service.pathParameters
+                        }
                     ];
                 })
-            ),
+            )
         };
-    },
+    }
 };

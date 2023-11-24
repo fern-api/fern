@@ -12,7 +12,7 @@ import { createTypeReferenceVisitor } from "../utils/visitTypeReference";
 export async function visitHttpService({
     service,
     visitor,
-    nodePath,
+    nodePath
 }: {
     service: HttpServiceSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -31,7 +31,7 @@ export async function visitHttpService({
             await visitHeaders({
                 headers,
                 visitor,
-                nodePath: [...nodePath, "headers"],
+                nodePath: [...nodePath, "headers"]
             });
         },
         audiences: noop,
@@ -40,7 +40,7 @@ export async function visitHttpService({
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: [...nodePath, "path-parameters"],
+                nodePath: [...nodePath, "path-parameters"]
             });
         },
         endpoints: async (endpoints) => {
@@ -49,7 +49,7 @@ export async function visitHttpService({
                 await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
-        idempotent: noop,
+        idempotent: noop
     });
 }
 
@@ -58,7 +58,7 @@ async function visitEndpoint({
     endpoint,
     service,
     visitor,
-    nodePathForEndpoint,
+    nodePathForEndpoint
 }: {
     endpointId: string;
     endpoint: HttpEndpointSchema;
@@ -82,7 +82,7 @@ async function visitEndpoint({
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: [...nodePathForEndpoint, "path-parameters"],
+                nodePath: [...nodePathForEndpoint, "path-parameters"]
             });
         },
         request: async (request) => {
@@ -92,7 +92,7 @@ async function visitEndpoint({
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
             if (typeof request === "string") {
                 await visitTypeReference(request, nodePathForRequest, {
-                    location: "requestReference",
+                    location: "requestReference"
                 });
                 return;
             }
@@ -106,7 +106,7 @@ async function visitEndpoint({
                         const nodePathForQueryParameter = [
                             ...nodePathForRequest,
                             "query-parameters",
-                            queryParameterKey,
+                            queryParameterKey
                         ];
                         await visitor.queryParameter?.(
                             { queryParameterKey, queryParameter },
@@ -124,7 +124,7 @@ async function visitEndpoint({
                                     await visitTypeReference(type, [...nodePathForQueryParameter, "type"]);
                                 },
                                 "allow-multiple": noop,
-                                audiences: noop,
+                                audiences: noop
                             });
                         }
                     }
@@ -134,7 +134,7 @@ async function visitEndpoint({
                     await visitHeaders({
                         headers,
                         visitor,
-                        nodePath: [...nodePathForRequest, "headers"],
+                        nodePath: [...nodePathForRequest, "headers"]
                     });
                 },
                 body: async (body) => {
@@ -145,7 +145,7 @@ async function visitEndpoint({
 
                     if (typeof body === "string") {
                         await visitTypeReference(body, nodePathForRequestBody, {
-                            location: "requestReference",
+                            location: "requestReference"
                         });
                     } else if (isInlineRequestBody(body)) {
                         await visitor.typeDeclaration?.(
@@ -173,7 +173,7 @@ async function visitEndpoint({
                                     const nodePathForProperty = [...nodePathForRequestBody, "properties", propertyKey];
                                     if (typeof property === "string") {
                                         await visitTypeReference(property, nodePathForProperty, {
-                                            location: TypeReferenceLocation.InlinedRequestProperty,
+                                            location: TypeReferenceLocation.InlinedRequestProperty
                                         });
                                     } else {
                                         await visitObject(property, {
@@ -182,20 +182,20 @@ async function visitEndpoint({
                                             availability: noop,
                                             type: async (type) => {
                                                 await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                                    location: TypeReferenceLocation.InlinedRequestProperty,
+                                                    location: TypeReferenceLocation.InlinedRequestProperty
                                                 });
                                             },
-                                            audiences: noop,
+                                            audiences: noop
                                         });
                                     }
                                 }
-                            },
+                            }
                         });
                     } else {
                         await createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);
                         await visitTypeReference(body.type, nodePathForRequestBody);
                     }
-                },
+                }
             });
         },
         audiences: noop,
@@ -207,11 +207,11 @@ async function visitEndpoint({
             }
             if (typeof responseStream === "string") {
                 await visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"], {
-                    location: TypeReferenceLocation.StreamingResponse,
+                    location: TypeReferenceLocation.StreamingResponse
                 });
             } else {
                 await visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"], {
-                    location: TypeReferenceLocation.StreamingResponse,
+                    location: TypeReferenceLocation.StreamingResponse
                 });
             }
         },
@@ -227,10 +227,10 @@ async function visitEndpoint({
                     docs: createDocsVisitor(visitor, nodePathForResponse),
                     type: async (type) => {
                         await visitTypeReference(type, [...nodePathForResponse, "type"], {
-                            location: TypeReferenceLocation.Response,
+                            location: TypeReferenceLocation.Response
                         });
                     },
-                    property: noop,
+                    property: noop
                 });
             }
         },
@@ -242,7 +242,7 @@ async function visitEndpoint({
                 const nodePathForError = [
                     ...nodePathForEndpoint,
                     "errors",
-                    typeof error === "string" ? error : error.error,
+                    typeof error === "string" ? error : error.error
                 ];
                 if (typeof error === "string") {
                     await visitor.errorReference?.(error, nodePathForError);
@@ -251,7 +251,7 @@ async function visitEndpoint({
                         docs: createDocsVisitor(visitor, nodePathForError),
                         error: async (error) => {
                             await visitor.errorReference?.(error, [...nodePathForError, "error"]);
-                        },
+                        }
                     });
                 }
             }
@@ -266,10 +266,10 @@ async function visitEndpoint({
                     visitor,
                     service,
                     endpoint,
-                    example,
+                    example
                 });
             }
-        },
+        }
     });
 }
 
@@ -278,7 +278,7 @@ async function visitExampleEndpointCall({
     visitor,
     service,
     endpoint,
-    example,
+    example
 }: {
     nodePathForExample: NodePath;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -290,7 +290,7 @@ async function visitExampleEndpointCall({
         {
             service,
             endpoint,
-            example,
+            example
         },
         nodePathForExample
     );
@@ -300,7 +300,7 @@ async function visitExampleEndpointCall({
         {
             service,
             endpoint,
-            examples: example.headers,
+            examples: example.headers
         },
         nodePathForHeaders
     );
@@ -309,7 +309,7 @@ async function visitExampleEndpointCall({
             await visitAllReferencesInExample({
                 example: exampleHeader,
                 visitor,
-                nodePath: nodePathForHeaders,
+                nodePath: nodePathForHeaders
             });
         }
     }
@@ -319,7 +319,7 @@ async function visitExampleEndpointCall({
         {
             service,
             endpoint,
-            examples: example["path-parameters"],
+            examples: example["path-parameters"]
         },
         nodePathForPathParameters
     );
@@ -328,7 +328,7 @@ async function visitExampleEndpointCall({
             await visitAllReferencesInExample({
                 example: examplePathParameter,
                 visitor,
-                nodePath: nodePathForPathParameters,
+                nodePath: nodePathForPathParameters
             });
         }
     }
@@ -338,7 +338,7 @@ async function visitExampleEndpointCall({
         {
             service,
             endpoint,
-            examples: example["query-parameters"],
+            examples: example["query-parameters"]
         },
         nodePathForQueryParameters
     );
@@ -347,7 +347,7 @@ async function visitExampleEndpointCall({
             await visitAllReferencesInExample({
                 example: exampleQueryParameter,
                 visitor,
-                nodePath: nodePathForQueryParameters,
+                nodePath: nodePathForQueryParameters
             });
         }
     }
@@ -357,7 +357,7 @@ async function visitExampleEndpointCall({
         {
             service,
             endpoint,
-            example: example.request,
+            example: example.request
         },
         nodePathForRequest
     );
@@ -365,7 +365,7 @@ async function visitExampleEndpointCall({
         await visitAllReferencesInExample({
             example: example.request,
             visitor,
-            nodePath: nodePathForRequest,
+            nodePath: nodePathForRequest
         });
     }
 
@@ -374,7 +374,7 @@ async function visitExampleEndpointCall({
         {
             service,
             endpoint,
-            example: example.response,
+            example: example.response
         },
         nodePathForResponse
     );
@@ -383,7 +383,7 @@ async function visitExampleEndpointCall({
             await visitAllReferencesInExample({
                 example: example.response.body,
                 visitor,
-                nodePath: nodePathForResponse,
+                nodePath: nodePathForResponse
             });
         }
         if (example.response.error != null) {
@@ -395,7 +395,7 @@ async function visitExampleEndpointCall({
 export async function visitPathParameters({
     pathParameters,
     visitor,
-    nodePath,
+    nodePath
 }: {
     pathParameters: Record<string, HttpPathParameterSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor> | Partial<RootApiFileAstVisitor>;
@@ -417,7 +417,7 @@ export async function visitPathParameters({
                 await visitObject(pathParameter, {
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
                     variable: async (variable) =>
-                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"]),
+                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"])
                 });
             }
         } else {
@@ -428,7 +428,7 @@ export async function visitPathParameters({
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
                     type: async (type) => {
                         await visitTypeReference(type, [...nodePathForPathParameter, "type"]);
-                    },
+                    }
                 });
             }
         }
@@ -438,7 +438,7 @@ export async function visitPathParameters({
 async function visitHeaders({
     headers,
     visitor,
-    nodePath,
+    nodePath
 }: {
     headers: Record<string, HttpHeaderSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -465,7 +465,7 @@ async function visitHeaders({
                     await visitTypeReference(type, nodePathForHeader);
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
-                audiences: noop,
+                audiences: noop
             });
         }
     }

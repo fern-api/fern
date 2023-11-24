@@ -15,7 +15,7 @@ describe("rename-alias-key-to-type", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newBlogYml = (

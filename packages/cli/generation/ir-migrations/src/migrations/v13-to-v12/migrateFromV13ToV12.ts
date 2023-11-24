@@ -4,7 +4,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V13_TO_V12_MIGRATION: IrMigration<
@@ -32,7 +32,7 @@ export const V13_TO_V12_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v13): IrVersions.V12.ir.IntermediateRepresentation => {
@@ -42,15 +42,15 @@ export const V13_TO_V12_MIGRATION: IrMigration<
                 if (type.shape._type !== "undiscriminatedUnion") {
                     return {
                         ...type,
-                        shape: type.shape,
+                        shape: type.shape
                     };
                 }
                 return {
                     ...type,
                     shape: IrVersions.V12.types.Type.undiscriminatedUnion({
                         docs: undefined,
-                        members: type.shape.members,
-                    }),
+                        members: type.shape.members
+                    })
                 };
             }),
             auth: {
@@ -62,10 +62,10 @@ export const V13_TO_V12_MIGRATION: IrMigration<
                     return {
                         ...scheme,
                         name: scheme.name.name,
-                        header: scheme.name.wireValue,
+                        header: scheme.name.wireValue
                     };
-                }),
-            },
+                })
+            }
         };
-    },
+    }
 };

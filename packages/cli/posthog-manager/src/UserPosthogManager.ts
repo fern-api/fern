@@ -24,7 +24,7 @@ export class UserPosthogManager implements PosthogManager {
         if (this.userId != null) {
             this.posthog.alias({
                 distinctId: this.userId,
-                alias: await this.getPersistedDistinctId(),
+                alias: await this.getPersistedDistinctId()
             });
         }
     }
@@ -36,8 +36,8 @@ export class UserPosthogManager implements PosthogManager {
             properties: {
                 version: process.env.CLI_VERSION,
                 ...event,
-                ...event.properties,
-            },
+                ...event.properties
+            }
         });
     }
 

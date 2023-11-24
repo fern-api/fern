@@ -42,8 +42,8 @@ export const ValidNavigationRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: `${navigation} does not exist.`,
-                                },
+                                    message: `${navigation} does not exist.`
+                                }
                             ];
                         }
                     }
@@ -60,17 +60,17 @@ export const ValidNavigationRule: Rule = {
                         if (actualItem === FERN_PACKAGE_MARKER_FILENAME) {
                             violations.push({
                                 severity: "error",
-                                message: `${FERN_PACKAGE_MARKER_FILENAME} cannot be specified in navigation.`,
+                                message: `${FERN_PACKAGE_MARKER_FILENAME} cannot be specified in navigation.`
                             });
                         } else if (!expectedItems.has(actualItem)) {
                             violations.push({
                                 severity: "error",
-                                message: `Unexpected item: ${actualItem}`,
+                                message: `Unexpected item: ${actualItem}`
                             });
                         } else if (seen.has(actualItem)) {
                             violations.push({
                                 severity: "error",
-                                message: `${actualItem} is specified more than once.`,
+                                message: `${actualItem} is specified more than once.`
                             });
                         }
                         seen.add(actualItem);
@@ -80,14 +80,14 @@ export const ValidNavigationRule: Rule = {
                         if (!seen.has(expectedItem)) {
                             violations.push({
                                 severity: "error",
-                                message: `Missing ${expectedItem}`,
+                                message: `Missing ${expectedItem}`
                             });
                         }
                     }
 
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

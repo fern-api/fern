@@ -7,7 +7,7 @@ import {
     PackageMarkerAstNodeTypes,
     PackageMarkerFileSchema,
     RootApiFileAstNodeTypes,
-    RootApiFileSchema,
+    RootApiFileSchema
 } from "@fern-api/yaml-schema";
 
 export interface Rule {

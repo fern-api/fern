@@ -10,7 +10,7 @@ export async function generateIrForFernWorkspace({
     workspace,
     context,
     generationLanguage,
-    audiences,
+    audiences
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
@@ -21,6 +21,6 @@ export async function generateIrForFernWorkspace({
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,
-        audiences,
+        audiences
     });
 }

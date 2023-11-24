@@ -8,7 +8,7 @@ import {
     RootApiFileSchema,
     visitDefinitionFileYamlAst,
     visitPackageMarkerYamlAst,
-    visitRootApiFileYamlAst,
+    visitRootApiFileYamlAst
 } from "@fern-api/yaml-schema";
 import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
 import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";
@@ -25,7 +25,7 @@ export async function validateFernWorkspace(workspace: FernWorkspace, logger: Lo
 export async function runRulesOnWorkspace({
     workspace,
     rules,
-    logger,
+    logger
 }: {
     workspace: FernWorkspace;
     rules: Rule[];
@@ -37,7 +37,7 @@ export async function runRulesOnWorkspace({
 
     const violationsForRoot = await validateRootApiFile({
         contents: workspace.definition.rootApiFile.contents,
-        allRuleVisitors,
+        allRuleVisitors
     });
     violations.push(...violationsForRoot);
 
@@ -45,7 +45,7 @@ export async function runRulesOnWorkspace({
         const violationsForFile = await validateDefinitionFile({
             relativeFilepath,
             contents: file,
-            allRuleVisitors,
+            allRuleVisitors
         });
         violations.push(...violationsForFile);
     });
@@ -54,7 +54,7 @@ export async function runRulesOnWorkspace({
         const violationsForFile = await validatePackageMarker({
             relativeFilepath,
             contents: file,
-            allRuleVisitors,
+            allRuleVisitors
         });
         violations.push(...violationsForFile);
     });
@@ -65,7 +65,7 @@ export async function runRulesOnWorkspace({
 async function validateDefinitionFile({
     relativeFilepath,
     contents,
-    allRuleVisitors,
+    allRuleVisitors
 }: {
     relativeFilepath: RelativeFilePath;
     contents: DefinitionFileSchema;
@@ -79,7 +79,7 @@ async function validateDefinitionFile({
         allRuleVisitors,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
-        },
+        }
     });
     await visitDefinitionFileYamlAst(contents, astVisitor);
 
@@ -88,7 +88,7 @@ async function validateDefinitionFile({
 
 async function validateRootApiFile({
     contents,
-    allRuleVisitors,
+    allRuleVisitors
 }: {
     contents: RootApiFileSchema;
     allRuleVisitors: RuleVisitors[];
@@ -101,7 +101,7 @@ async function validateRootApiFile({
         allRuleVisitors,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
-        },
+        }
     });
     await visitRootApiFileYamlAst(contents, astVisitor);
 
@@ -111,7 +111,7 @@ async function validateRootApiFile({
 async function validatePackageMarker({
     relativeFilepath,
     contents,
-    allRuleVisitors,
+    allRuleVisitors
 }: {
     relativeFilepath: RelativeFilePath;
     contents: PackageMarkerFileSchema;
@@ -125,7 +125,7 @@ async function validatePackageMarker({
         allRuleVisitors,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
-        },
+        }
     });
     await visitPackageMarkerYamlAst(contents, astVisitor);
 

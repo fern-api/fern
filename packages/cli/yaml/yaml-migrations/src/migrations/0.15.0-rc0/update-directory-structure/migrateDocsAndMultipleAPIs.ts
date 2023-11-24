@@ -5,13 +5,13 @@ import {
     DocsURL,
     getAbsolutePathToDocsFolder,
     getAbsolutePathToDocsYaml,
-    loadRawDocsConfiguration,
+    loadRawDocsConfiguration
 } from "./docs-config";
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import {
     convertLegacyGeneratorsConfiguration,
     getAbsolutePathToGeneratorsConfiguration,
-    loadRawGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
 } from "./generators-configuration";
 import { PathModificationStrategy } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
 
@@ -38,7 +38,7 @@ type NewType = AbsoluteFilePath;
 export async function migrateDocsAndMultipleAPIs({
     absolutePathToFernDirectory,
     workspaces,
-    workspaceContainingDocs,
+    workspaceContainingDocs
 }: {
     absolutePathToFernDirectory: NewType;
     workspaces: string[];
@@ -65,7 +65,7 @@ export async function migrateDocsAndMultipleAPIs({
 }
 
 async function migrateAndWriteGeneratorsYml({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<DocsURL[]> {
@@ -76,7 +76,7 @@ async function migrateAndWriteGeneratorsYml({
     const absolutePathToGeneratorsConfiguration = getAbsolutePathToGeneratorsConfiguration({ absolutePathToWorkspace });
     const convertedResponse = convertLegacyGeneratorsConfiguration({
         generatorsConfiguration,
-        pathModificationStrategy: PathModificationStrategy.Nest,
+        pathModificationStrategy: PathModificationStrategy.Nest
     });
     await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
     return convertedResponse.docsURLs;
@@ -85,7 +85,7 @@ async function migrateAndWriteGeneratorsYml({
 async function migrateAndWriteDocsYml({
     absolutePathToWorkspace,
     docsURLs,
-    apiName,
+    apiName
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     docsURLs: DocsURL[];
@@ -98,7 +98,7 @@ async function migrateAndWriteDocsYml({
     const convertedDocsConfig = convertLegacyDocsConfig({
         docsConfiguration,
         docsURLs,
-        apiName,
+        apiName
     });
     const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });
     await writeFile(absolutePathToDocsConfig, yaml.dump(convertedDocsConfig));

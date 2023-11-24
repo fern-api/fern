@@ -11,8 +11,8 @@ describe("parseYamlFiles", () => {
                 filepath: FILEPATH,
                 fileContents: `
 key: hello
-key: world`,
-            },
+key: world`
+            }
         ]);
 
         if (result.didSucceed) {

@@ -5,7 +5,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V12_TO_V11_MIGRATION: IrMigration<
@@ -33,7 +33,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v12, { taskContext, targetGenerator }): IrVersions.V11.ir.IntermediateRepresentation => {
@@ -60,22 +60,22 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                                                     return taskContext.failAndThrow(
                                                         getUndiscriminatedUnionsErrorMessage({
                                                             taskContext,
-                                                            targetGenerator,
+                                                            targetGenerator
                                                         })
                                                     );
                                                 } else {
                                                     return IrVersions.V11.types.ResolvedTypeReference.named({
                                                         shape: namedType.shape,
-                                                        name: namedType.name,
+                                                        name: namedType.name
                                                     });
                                                 }
                                             },
                                             unknown: IrVersions.V11.types.ResolvedTypeReference.unknown,
                                             _unknown: () => {
                                                 throw new Error("Encountered unknown alias");
-                                            },
+                                            }
                                         }
-                                    ),
+                                    )
                             });
                         },
                         undiscriminatedUnion: () => {
@@ -85,8 +85,8 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                         },
                         _unknown: () => {
                             throw new Error("Encountered unknown shape");
-                        },
-                    }),
+                        }
+                    })
                 };
             }
         );
@@ -94,9 +94,9 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         return {
             ...v12,
             types: v11Types,
-            services: mapValues(v12.services, (service) => convertService(service, { taskContext, targetGenerator })),
+            services: mapValues(v12.services, (service) => convertService(service, { taskContext, targetGenerator }))
         };
-    },
+    }
 };
 
 function getUndiscriminatedUnionsErrorMessage(context: IrMigrationContext): string {
@@ -118,7 +118,7 @@ function convertService(
 ): IrVersions.V11.http.HttpService {
     return {
         ...service,
-        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context)),
+        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context))
     };
 }
 
@@ -158,13 +158,13 @@ function convertEndpoint(
                           },
                           _unknown: () => {
                               throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type);
-                          },
+                          }
                       }
                   )
                 : undefined,
         response:
             endpoint.response != null
                 ? { docs: endpoint.response.docs, type: endpoint.response.responseBodyType }
-                : { docs: undefined, type: undefined },
+                : { docs: undefined, type: undefined }
     };
 }

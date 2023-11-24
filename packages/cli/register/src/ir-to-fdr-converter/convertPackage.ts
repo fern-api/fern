@@ -15,7 +15,7 @@ export function convertPackage(
         webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         types: irPackage.types.map((typeId) => typeId),
         subpackages: irPackage.subpackages.map((subpackageId) => subpackageId),
-        pointsTo: irPackage.navigationConfig != null ? irPackage.navigationConfig.pointsTo : undefined,
+        pointsTo: irPackage.navigationConfig != null ? irPackage.navigationConfig.pointsTo : undefined
     };
 }
 
@@ -31,11 +31,11 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): APIV1Write
                 (header): APIV1Write.Header => ({
                     description: header.docs ?? undefined,
                     key: header.name.wireValue,
-                    type: convertTypeReference(header.valueType),
+                    type: convertTypeReference(header.valueType)
                 })
             ),
             payload: convertWebhookPayload(webhook.payload),
-            examples: [],
+            examples: []
         };
     });
 }
@@ -68,36 +68,36 @@ function convertService(
                     (pathParameter): APIV1Write.PathParameter => ({
                         description: pathParameter.docs ?? undefined,
                         key: pathParameter.name.originalName,
-                        type: convertTypeReference(pathParameter.valueType),
+                        type: convertTypeReference(pathParameter.valueType)
                     })
                 ),
-                parts: [...convertHttpPath(irService.basePath), ...convertHttpPath(irEndpoint.path)],
+                parts: [...convertHttpPath(irService.basePath), ...convertHttpPath(irEndpoint.path)]
             },
             queryParameters: irEndpoint.queryParameters.map(
                 (queryParameter): APIV1Write.QueryParameter => ({
                     description: queryParameter.docs ?? undefined,
                     key: queryParameter.name.wireValue,
-                    type: convertTypeReference(queryParameter.valueType),
+                    type: convertTypeReference(queryParameter.valueType)
                 })
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
                 (header): APIV1Write.Header => ({
                     description: header.docs ?? undefined,
                     key: header.name.wireValue,
-                    type: convertTypeReference(header.valueType),
+                    type: convertTypeReference(header.valueType)
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             errors: convertResponseErrors(irEndpoint.errors, ir),
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
-            examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
+            examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir))
         })
     );
 }
 
 function convertIrAvailability({
-    availability,
+    availability
 }: {
     availability: Ir.Availability;
 }): APIV1Write.Availability | undefined {
@@ -117,7 +117,7 @@ function convertIrAvailability({
 
 function convertIrEnvironments({
     environmentsConfig,
-    endpoint,
+    endpoint
 }: {
     environmentsConfig: Ir.environment.EnvironmentsConfig;
     endpoint: Ir.http.HttpEndpoint;
@@ -129,7 +129,7 @@ function convertIrEnvironments({
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 return {
                     id: singleBaseUrlEnvironment.id,
-                    baseUrl: singleBaseUrlEnvironment.url,
+                    baseUrl: singleBaseUrlEnvironment.url
                 };
             });
         case "multipleBaseUrls":
@@ -145,7 +145,7 @@ function convertIrEnvironments({
                 }
                 return {
                     id: singleBaseUrlEnvironment.id,
-                    baseUrl: endpointBaseUrl,
+                    baseUrl: endpointBaseUrl
                 };
             });
         default:
@@ -162,7 +162,7 @@ function convertHttpMethod(method: Ir.http.HttpMethod): APIV1Write.HttpMethod {
         delete: () => APIV1Write.HttpMethod.Delete,
         _other: () => {
             throw new Error("Unknown http method: " + method);
-        },
+        }
     });
 }
 
@@ -170,19 +170,19 @@ function convertHttpPath(irPath: Ir.http.HttpPath): APIV1Write.EndpointPathPart[
     const endpointPaths: APIV1Write.EndpointPathPart[] = irPath.parts.flatMap((part) => [
         {
             type: "pathParameter",
-            value: part.pathParameter,
+            value: part.pathParameter
         },
         {
             type: "literal",
-            value: part.tail,
-        },
+            value: part.tail
+        }
     ]);
     return [
         {
             type: "literal",
-            value: irPath.head,
+            value: irPath.head
         },
-        ...endpointPaths,
+        ...endpointPaths
     ];
 }
 
@@ -199,10 +199,10 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                         (property): APIV1Write.ObjectProperty => ({
                             description: property.docs ?? undefined,
                             key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType),
+                            valueType: convertTypeReference(property.valueType)
                         })
-                    ),
-                },
+                    )
+                }
             };
         },
         reference: (reference) => {
@@ -211,13 +211,13 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                 contentType: reference.contentType ?? "application/json",
                 shape: {
                     type: "reference",
-                    value: convertTypeReference(reference.requestBodyType),
-                },
+                    value: convertTypeReference(reference.requestBodyType)
+                }
             };
         },
         fileUpload: () => {
             return {
-                type: "fileUpload",
+                type: "fileUpload"
             };
         },
         bytes: () => {
@@ -225,7 +225,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         },
         _other: () => {
             throw new Error("Unknown HttpRequestBody: " + irRequest.type);
-        },
+        }
     });
     return requestBodyShape != null ? { type: requestBodyShape } : undefined;
 }
@@ -234,27 +234,27 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
     const type = Ir.http.HttpResponse._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse, {
         fileDownload: () => {
             return {
-                type: "fileDownload",
+                type: "fileDownload"
             };
         },
         json: (jsonResponse) => {
             return {
                 type: "reference",
-                value: convertTypeReference(jsonResponse.responseBodyType),
+                value: convertTypeReference(jsonResponse.responseBodyType)
             };
         },
         text: () => undefined, // TODO: support text/plain in FDR
         streaming: (streamingResponse) => {
             if (streamingResponse.dataEventType.type === "text") {
                 return {
-                    type: "streamingText",
+                    type: "streamingText"
                 };
             }
             return undefined;
         },
         _other: () => {
             throw new Error("Unknown HttpResponse: " + irResponse.type);
-        },
+        }
     });
     if (type != null) {
         return { type };
@@ -274,7 +274,7 @@ function convertResponseErrors(
             errors.push({
                 type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
                 statusCode: errorDeclaration.statusCode,
-                description: errorDeclaration.docs ?? undefined,
+                description: errorDeclaration.docs ?? undefined
             });
         }
     }
@@ -296,10 +296,10 @@ function convertResponseErrorsV2(
                             ? undefined
                             : {
                                   type: "alias",
-                                  value: convertTypeReference(errorDeclaration.type),
+                                  value: convertTypeReference(errorDeclaration.type)
                               },
                     statusCode: errorDeclaration.statusCode,
-                    description: errorDeclaration.docs ?? undefined,
+                    description: errorDeclaration.docs ?? undefined
                 });
             }
         }
@@ -314,16 +314,16 @@ function convertResponseErrorsV2(
                             type: "literal",
                             value: {
                                 type: "stringLiteral",
-                                value: errorDeclaration.discriminantValue.name.originalName,
-                            },
-                        },
-                    },
+                                value: errorDeclaration.discriminantValue.name.originalName
+                            }
+                        }
+                    }
                 ];
 
                 if (errorDeclaration.type != null) {
                     properties.push({
                         key: ir.errorDiscriminationStrategy.contentProperty.wireValue,
-                        valueType: convertTypeReference(errorDeclaration.type),
+                        valueType: convertTypeReference(errorDeclaration.type)
                     });
                 }
 
@@ -334,11 +334,11 @@ function convertResponseErrorsV2(
                             : {
                                   type: "object",
                                   extends: [],
-                                  properties,
+                                  properties
                               },
                     statusCode: errorDeclaration.statusCode,
                     description: errorDeclaration.docs ?? undefined,
-                    name: errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.name.name.originalName
                 });
             }
         }
@@ -384,9 +384,9 @@ function convertExampleEndpointCall(
             },
             _other: () => {
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
-            },
+            }
         }),
-        responseBody: irExample.response.body?.jsonExample,
+        responseBody: irExample.response.body?.jsonExample
     };
 }
 
@@ -401,17 +401,17 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): AP
                         (property): APIV1Write.ObjectProperty => ({
                             description: property.docs ?? undefined,
                             key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType),
+                            valueType: convertTypeReference(property.valueType)
                         })
-                    ),
-                },
+                    )
+                }
             };
         case "reference":
             return {
                 type: {
                     type: "reference",
-                    value: convertTypeReference(irWebhookPayload.payloadType),
-                },
+                    value: convertTypeReference(irWebhookPayload.payloadType)
+                }
             };
         default:
             assertNever(irWebhookPayload);

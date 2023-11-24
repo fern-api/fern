@@ -20,18 +20,18 @@ export const migration: Migration = {
                 context.failWithoutThrowing("Failed to migrate generators configuration", error);
             }
         }
-    },
+    }
 };
 
 async function migrateWorkspace(pathToWorkspace: AbsoluteFilePath, context: TaskContext) {
     const absolutePathToGeneratorsConfiguration = join(pathToWorkspace, RelativeFilePath.of("generators.yml"));
     const oldRawConfiguration = await oldConfigurationUtils.loadRawGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration,
-        context,
+        context
     });
     const oldConfiguration = oldConfigurationUtils.convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration,
-        rawGeneratorsConfiguration: oldRawConfiguration,
+        rawGeneratorsConfiguration: oldRawConfiguration
     });
     const migratedConfiguration = migrateConfiguration(oldConfiguration);
     await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(migratedConfiguration));
@@ -42,7 +42,7 @@ function migrateConfiguration(
 ): newConfigurationUtils.GeneratorsConfigurationSchema {
     return {
         draft: oldConfiguration.generators.map(migrateGeneratorInvocation),
-        release: [],
+        release: []
     };
 }
 
@@ -53,6 +53,6 @@ function migrateGeneratorInvocation(
         name: oldGenerator.name,
         version: oldGenerator.version,
         "local-output": oldGenerator.generate?.absolutePathToLocalOutput,
-        config: oldGenerator.config,
+        config: oldGenerator.config
     };
 }

@@ -3,7 +3,7 @@ import {
     getEnumName,
     getSingleUnionTypeName,
     getUnionDiscriminantName,
-    TypeResolverImpl,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
@@ -12,7 +12,7 @@ import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
     convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject,
+    getAllPropertiesForObject
 } from "../../utils/getAllPropertiesForObject";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
@@ -37,7 +37,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
                                     severity: "error",
-                                    message: `Name "${duplicateName}" is used by multiple values.`,
+                                    message: `Name "${duplicateName}" is used by multiple values.`
                                 });
                             }
                         },
@@ -50,7 +50,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 filepathOfDeclaration: relativeFilepath,
                                 definitionFile: contents,
                                 workspace,
-                                typeResolver,
+                                typeResolver
                             });
                             const propertiesGroupedByName = groupBy(allProperties, (property) => property.name);
                             for (const [propertyName, propertiesWithName] of Object.entries(propertiesGroupedByName)) {
@@ -61,13 +61,13 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             (property) =>
                                                 `  - ${convertObjectPropertyWithPathToString({
                                                     property,
-                                                    prefixBreadcrumbs: [typeNameString],
+                                                    prefixBreadcrumbs: [typeNameString]
                                                 })}`
-                                        ),
+                                        )
                                     ].join("\n");
                                     violations.push({
                                         severity: "error",
-                                        message,
+                                        message
                                     });
                                 }
                             }
@@ -84,7 +84,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             for (const duplicateName of duplicateNames) {
                                 violations.push({
                                     severity: "error",
-                                    message: `Name ${duplicateName} is used by multiple subtypes of this union.`,
+                                    message: `Name ${duplicateName} is used by multiple subtypes of this union.`
                                 });
                             }
 
@@ -103,8 +103,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             relativeFilepath,
                                             definitionFile: contents,
                                             casingsGenerator: CASINGS_GENERATOR,
-                                            rootApiFile: workspace.definition.rootApiFile.contents,
-                                        }),
+                                            rootApiFile: workspace.definition.rootApiFile.contents
+                                        })
                                     });
 
                                     if (resolvedType == null) {
@@ -127,7 +127,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             filepathOfDeclaration: resolvedType.filepath,
                                             definitionFile,
                                             workspace,
-                                            typeResolver,
+                                            typeResolver
                                         });
                                         const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
                                             (property) => property.name === discriminantName
@@ -143,26 +143,26 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                                     (property) =>
                                                         `  - ${convertObjectPropertyWithPathToString({
                                                             property,
-                                                            prefixBreadcrumbs: [unionKey, specifiedType],
+                                                            prefixBreadcrumbs: [unionKey, specifiedType]
                                                         })}`
-                                                ),
+                                                )
                                             ].join("\n");
                                             violations.push({
                                                 severity: "error",
-                                                message,
+                                                message
                                             });
                                         }
                                     }
                                 }
                             }
-                        },
+                        }
                     });
 
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 function getDuplicateNames<T>(items: T[], getName: (item: T) => string): string[] {

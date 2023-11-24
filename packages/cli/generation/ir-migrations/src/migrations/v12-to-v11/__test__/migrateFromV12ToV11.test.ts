@@ -10,7 +10,7 @@ describe("migrateFromV12ToV11", () => {
     it("works for non-streaming APIs", async () => {
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/non-streaming")),
+                pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/non-streaming"))
             })
         ).resolves.toBeTruthy();
     });
@@ -20,14 +20,14 @@ describe("migrateFromV12ToV11", () => {
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
                 output += logs.join(" ");
-            }),
+            })
         });
         await expect(
             runMigration({
                 pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/streaming")),
                 context: {
-                    taskContext: context,
-                },
+                    taskContext: context
+                }
             })
         ).rejects.toBeTruthy();
         expect(output).toContain("does not support streaming responses");

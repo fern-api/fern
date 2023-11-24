@@ -8,7 +8,7 @@ export const ExampleEndpointCallSchema = WithNameAndDocsSchema.extend({
     "query-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     headers: z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     request: z.optional(ExampleTypeReferenceSchema),
-    response: z.optional(ExampleResponseSchema),
+    response: z.optional(ExampleResponseSchema)
 });
 
 export type ExampleEndpointCallSchema = z.infer<typeof ExampleEndpointCallSchema>;

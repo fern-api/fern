@@ -6,7 +6,7 @@ import {
     ObjectSchema,
     OpenAPIIntermediateRepresentation,
     Schema,
-    Webhook,
+    Webhook
 } from "@fern-fern/openapi-ir-model/finalIr";
 import { EndpointWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
@@ -93,21 +93,21 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 request?.type === "json"
                     ? {
                           ...request,
-                          schema: convertSchemaWithExampleToSchema(request.schema),
+                          schema: convertSchemaWithExampleToSchema(request.schema)
                       }
                     : request,
             response:
                 response?.type === "json"
                     ? {
                           ...response,
-                          schema: convertSchemaWithExampleToSchema(response.schema),
+                          schema: convertSchemaWithExampleToSchema(response.schema)
                       }
                     : response,
             queryParameters: endpointWithExample.queryParameters.map((queryParameter) => {
                 return {
                     description: queryParameter.description,
                     name: queryParameter.name,
-                    schema: convertSchemaWithExampleToSchema(queryParameter.schema),
+                    schema: convertSchemaWithExampleToSchema(queryParameter.schema)
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -115,17 +115,17 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     description: pathParameter.description,
                     name: pathParameter.name,
                     schema: convertSchemaWithExampleToSchema(pathParameter.schema),
-                    variableReference: pathParameter.variableReference,
+                    variableReference: pathParameter.variableReference
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
                 return {
                     description: header.description,
                     name: header.name,
-                    schema: convertSchemaWithExampleToSchema(header.schema),
+                    schema: convertSchemaWithExampleToSchema(header.schema)
                 };
             }),
-            examples: endpointExample == null ? [] : [endpointExample],
+            examples: endpointExample == null ? [] : [endpointExample]
         };
     });
 
@@ -152,7 +152,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         errors: context.getErrors(),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
-        variables,
+        variables
     };
 
     return ir;
@@ -169,7 +169,7 @@ function maybeRemoveDiscriminantsFromSchemas(
             continue;
         }
         const referenceToSchema: OpenAPIV3.ReferenceObject = {
-            $ref: `#/components/schemas/${schemaId}`,
+            $ref: `#/components/schemas/${schemaId}`
         };
         const discriminatedUnionReference = context.getReferencesFromDiscriminatedUnion(referenceToSchema);
         if (discriminatedUnionReference == null) {
@@ -184,7 +184,7 @@ function maybeRemoveDiscriminantsFromSchemas(
             }),
             allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                 return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
-            }),
+            })
         });
         result[schemaId] = schemaWithoutDiscriminants;
 
@@ -201,7 +201,7 @@ function maybeRemoveDiscriminantsFromSchemas(
                 }),
                 allOfPropertyConflicts: parentSchema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                     return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
-                }),
+                })
             });
         }
     }
@@ -210,7 +210,7 @@ function maybeRemoveDiscriminantsFromSchemas(
 
 function getAllParentSchemaIds({
     schema,
-    schemas,
+    schemas
 }: {
     schema: ObjectSchema;
     schemas: Record<string, Schema>;

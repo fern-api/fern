@@ -166,7 +166,7 @@ export const FernOpenAPIExtension = {
      *    get:
      *      x-fern-availability: ga # or beta, generally-available, deprecated,
      */
-    AVAILABILITY: "x-fern-availability",
+    AVAILABILITY: "x-fern-availability"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

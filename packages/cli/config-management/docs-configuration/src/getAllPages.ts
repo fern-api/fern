@@ -5,7 +5,7 @@ import { DocsNavigationConfiguration, DocsNavigationItem } from "./ParsedDocsCon
 
 export async function getAllPages({
     navigation,
-    absolutePathToFernFolder,
+    absolutePathToFernFolder
 }: {
     navigation: DocsNavigationConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -20,7 +20,7 @@ export async function getAllPages({
                                 tab.layout.map(async (item) => {
                                     return await getAllPagesFromNavigationItem({
                                         item,
-                                        absolutePathToFernFolder,
+                                        absolutePathToFernFolder
                                     });
                                 })
                             )
@@ -34,7 +34,7 @@ export async function getAllPages({
                     navigation.items.map(async (item) => {
                         return await getAllPagesFromNavigationItem({
                             item,
-                            absolutePathToFernFolder,
+                            absolutePathToFernFolder
                         });
                     })
                 )
@@ -45,7 +45,7 @@ export async function getAllPages({
                     navigation.versions.map(async (version) => {
                         return await getAllPages({
                             navigation: version.navigation,
-                            absolutePathToFernFolder,
+                            absolutePathToFernFolder
                         });
                     })
                 )
@@ -57,7 +57,7 @@ export async function getAllPages({
 
 export async function getAllPagesFromNavigationItem({
     item,
-    absolutePathToFernFolder,
+    absolutePathToFernFolder
 }: {
     item: DocsNavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -69,7 +69,7 @@ export async function getAllPagesFromNavigationItem({
             return {
                 [await relativize(absolutePathToFernFolder, item.absolutePath)]: (
                     await readFile(item.absolutePath)
-                ).toString(),
+                ).toString()
             };
         case "section":
             return combineMaps(

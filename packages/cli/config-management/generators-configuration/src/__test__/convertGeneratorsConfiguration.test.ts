@@ -14,13 +14,13 @@ describe("convertGeneratorsConfiguration", () => {
                                 version: "0.0.1",
                                 output: {
                                     location: "local-file-system",
-                                    path: "/path/to/output",
-                                },
-                            },
-                        ],
-                    },
-                },
-            },
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         });
 
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
@@ -38,13 +38,13 @@ describe("convertGeneratorsConfiguration", () => {
                                 version: "0.0.1",
                                 output: {
                                     location: "local-file-system",
-                                    path: "../../output",
-                                },
-                            },
-                        ],
-                    },
-                },
-            },
+                                    path: "../../output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         });
 
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/repo/output");
@@ -62,13 +62,13 @@ describe("convertGeneratorsConfiguration", () => {
                                 version: "0.0.1",
                                 github: {
                                     repository: "fern-api/fern",
-                                    license: "MIT",
-                                },
-                            },
-                        ],
-                    },
-                },
-            },
+                                    license: "MIT"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
@@ -86,13 +86,13 @@ describe("convertGeneratorsConfiguration", () => {
                                 version: "0.0.1",
                                 github: {
                                     repository: "fern-api/fern",
-                                    license: "Apache-2.0",
-                                },
-                            },
-                        ],
-                    },
-                },
-            },
+                                    license: "Apache-2.0"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
@@ -111,14 +111,14 @@ describe("convertGeneratorsConfiguration", () => {
                                 github: {
                                     repository: "fern-api/fern",
                                     license: {
-                                        custom: "testdata/LICENSE",
-                                    },
-                                },
-                            },
-                        ],
-                    },
-                },
-            },
+                                        custom: "testdata/LICENSE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");

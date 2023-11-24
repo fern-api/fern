@@ -6,7 +6,7 @@ import { GeneratorNameAndVersion } from "./IrMigrationContext";
 export function migrateIntermediateRepresentationForGenerator({
     intermediateRepresentation,
     context,
-    targetGenerator,
+    targetGenerator
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
@@ -15,7 +15,7 @@ export function migrateIntermediateRepresentationForGenerator({
     const migrated = getIntermediateRepresentationMigrator().migrateForGenerator({
         intermediateRepresentation,
         context,
-        targetGenerator,
+        targetGenerator
     });
     return migrated.jsonify();
 }

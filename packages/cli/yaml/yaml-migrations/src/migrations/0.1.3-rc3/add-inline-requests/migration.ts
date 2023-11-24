@@ -17,7 +17,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
@@ -150,7 +150,7 @@ function parseRequestBody(
         const docs = requestBody.get("docs", true);
         return {
             requestBodyType: type,
-            docs,
+            docs
         };
     }
 

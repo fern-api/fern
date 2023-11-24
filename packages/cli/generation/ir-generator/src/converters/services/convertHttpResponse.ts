@@ -9,7 +9,7 @@ import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/con
 export function convertHttpResponse({
     endpoint,
     file,
-    typeResolver,
+    typeResolver
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
@@ -23,11 +23,11 @@ export function convertHttpResponse({
 
         if (parseRawFileType(responseType) != null) {
             return HttpResponse.fileDownload({
-                docs,
+                docs
             });
         } else if (parseRawTextType(responseType) != null) {
             return HttpResponse.text({
-                docs,
+                docs
             });
         } else {
             return convertJsonResponse(response, docs, file, typeResolver);
@@ -38,7 +38,7 @@ export function convertHttpResponse({
         return HttpResponse.streaming({
             docs: typeof responseStream !== "string" ? responseStream.docs : undefined,
             dataEventType: constructStreamingResponseChunkType(responseStream, file),
-            terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+            terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
         });
     }
 
@@ -66,7 +66,7 @@ function convertJsonResponse(
     const responseBodyType = file.parseTypeReference(response);
     const resolvedType = typeResolver.resolveTypeOrThrow({
         type: typeof response !== "string" ? response.type : response,
-        file,
+        file
     });
     const responseProperty = typeof response !== "string" ? response.property : undefined;
     if (responseProperty != null) {
@@ -74,14 +74,14 @@ function convertJsonResponse(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty: getObjectPropertyFromResolvedType(resolvedType, responseProperty, file, typeResolver),
+                responseProperty: getObjectPropertyFromResolvedType(resolvedType, responseProperty, file, typeResolver)
             })
         );
     }
     return HttpResponse.json(
         JsonResponse.response({
             docs,
-            responseBodyType,
+            responseBodyType
         })
     );
 }
@@ -164,7 +164,7 @@ function getAllPropertiesForExtendedType(
 ): Record<string, ObjectProperty> {
     const resolvedType = typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
-        file,
+        file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);

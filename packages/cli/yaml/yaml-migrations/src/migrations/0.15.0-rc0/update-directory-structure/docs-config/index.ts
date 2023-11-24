@@ -5,5 +5,5 @@ export * as LegacyDocsSerializers from "@fern-fern/legacy-docs-config/serializat
 export {
     getAbsolutePathToDocsFolder,
     getAbsolutePathToDocsYaml,
-    loadRawDocsConfiguration,
+    loadRawDocsConfiguration
 } from "./loadRawDocsConfiguration";

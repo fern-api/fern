@@ -19,9 +19,9 @@ describe("parse inline types", () => {
                 definitionFile: {},
                 casingsGenerator,
                 rootApiFile: {
-                    name: "api",
-                },
-            }),
+                    name: "api"
+                }
+            })
         });
         const expectedTypeReference = TypeReference.container(
             ContainerType.optional(
@@ -31,9 +31,9 @@ describe("parse inline types", () => {
                             typeId: "type_a/b/c:Dummy",
                             fernFilepath: convertToFernFilepath({
                                 relativeFilepath: dummyFilepath,
-                                casingsGenerator,
+                                casingsGenerator
                             }),
-                            name: casingsGenerator.generateName(dummyTypeName),
+                            name: casingsGenerator.generateName(dummyTypeName)
                         })
                     )
                 )

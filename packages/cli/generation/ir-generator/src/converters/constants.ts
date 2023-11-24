@@ -5,7 +5,7 @@ export function generateFernConstants(casingsGenerator: CasingsGenerator): Const
     return {
         errorInstanceIdKey: casingsGenerator.generateNameAndWireValue({
             wireValue: "errorInstanceId",
-            name: "errorInstanceId",
-        }),
+            name: "errorInstanceId"
+        })
     };
 }

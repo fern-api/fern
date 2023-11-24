@@ -25,7 +25,7 @@ export interface ConvertedPackage {
 
 export function convertPackage({
     openApiFile,
-    context,
+    context
 }: {
     openApiFile: OpenAPIIntermediateRepresentation;
     context: OpenApiIrConverterContext;
@@ -35,11 +35,11 @@ export function convertPackage({
     const convertedServices = convertToServices({
         openApiFile,
         environments,
-        globalHeaderNames: new Set(Object.keys(rootApiFile.headers ?? {})),
+        globalHeaderNames: new Set(Object.keys(rootApiFile.headers ?? {}))
     });
     const convertedWebhooks = convertWebhooks({
         openApiFile,
-        context,
+        context
     });
     const onlyWebhookFiles = Object.fromEntries(
         Object.entries(convertedWebhooks?.webhooks ?? {}).filter(([file, _webhook]) => {
@@ -53,9 +53,9 @@ export function convertPackage({
                 Object.entries(convertedServices.services).map(([file, service]) => {
                     const definitionFile: DefinitionFileSchema = {
                         imports: {
-                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file),
+                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
                         },
-                        service: service.value,
+                        service: service.value
                     };
                     const maybeWebhooks = convertedWebhooks?.webhooks[RelativeFilePath.of(file)];
                     if (maybeWebhooks != null) {
@@ -71,15 +71,15 @@ export function convertPackage({
                 Object.entries(onlyWebhookFiles).map(([file, webhooks]) => {
                     const definitionFile: DefinitionFileSchema = {
                         imports: {
-                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file),
+                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
                         },
-                        webhooks,
+                        webhooks
                     };
                     return [file, definitionFile];
                 })
             ),
-            [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices),
-        },
+            [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices)
+        }
     };
 }
 
@@ -101,13 +101,13 @@ function getRootApiFile(
 
     const rootApiFile: RootApiFileSchema = {
         imports: {
-            root: "__package__.yml",
+            root: "__package__.yml"
         },
         name: "api",
         "display-name": openApiFile.title ?? undefined,
         "error-discrimination": {
-            strategy: "status-code",
-        },
+            strategy: "status-code"
+        }
     };
 
     if (Object.keys(globalHeaders).length > 0) {
@@ -132,7 +132,7 @@ function getRootApiFile(
     if (environment?.type === "multi") {
         rootApiFile["default-environment"] = PRODUCTION_ENVIRONMENT;
         rootApiFile.environments = {
-            [PRODUCTION_ENVIRONMENT]: { urls: environment.serviceToUrl },
+            [PRODUCTION_ENVIRONMENT]: { urls: environment.serviceToUrl }
         };
     }
 
@@ -149,8 +149,8 @@ function getRootApiFile(
                     variableName,
                     {
                         type: getTypeFromTypeReference(convertedSchema.typeReference),
-                        docs: variableSchema.description ?? undefined,
-                    },
+                        docs: variableSchema.description ?? undefined
+                    }
                 ];
             })
         );
@@ -186,20 +186,20 @@ function getPackageYml(
         types = {
             ...types,
             [typeDeclaration.name ?? schemaId]: typeDeclaration.typeDeclaration,
-            ...typeDeclaration.additionalTypeDeclarations,
+            ...typeDeclaration.additionalTypeDeclarations
         };
     }
     const errors: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
     for (const [statusCode, httpError] of Object.entries(openApiFile.errors)) {
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            "status-code": parseInt(statusCode),
+            "status-code": parseInt(statusCode)
         };
         if (httpError.schema != null) {
             const typeReference = convertToTypeReference({ schema: httpError.schema, schemas: openApiFile.schemas });
             errorDeclaration.type = getTypeFromTypeReference(typeReference.typeReference);
             types = {
                 ...types,
-                ...typeReference.additionalTypeDeclarations,
+                ...typeReference.additionalTypeDeclarations
             };
         }
         errors[httpError.generatedName] = errorDeclaration;
@@ -207,6 +207,6 @@ function getPackageYml(
     return {
         types,
         service: convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]?.value,
-        errors,
+        errors
     };
 }

@@ -6,8 +6,8 @@ export async function runSeedCli(args: string[], options?: Options): Promise<Exe
     return loggingExeca(undefined, "node", [path.join(__dirname, "../../../../seed/dist/cli.cjs"), ...args], {
         ...options,
         env: {
-            ...options?.env,
+            ...options?.env
         },
-        doNotPipeOutput: options?.reject === false,
+        doNotPipeOutput: options?.reject === false
     });
 }

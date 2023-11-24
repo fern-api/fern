@@ -19,6 +19,6 @@ export function convertToHttpMethod(httpMethod: HttpMethod): RawSchemas.HttpMeth
         },
         _unknown: () => {
             throw new Error("Unkown http method is unsupported");
-        },
+        }
     });
 }

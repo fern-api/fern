@@ -15,8 +15,8 @@ export function getAllNamedDefinitionFiles(
                 ...acc,
                 ...mapKeys(getAllNamedDefinitionFiles(definition), (_file, path) =>
                     join(pathToImportedDefinition, RelativeFilePath.of(path))
-                ),
+                )
             };
-        }, {}),
+        }, {})
     };
 }

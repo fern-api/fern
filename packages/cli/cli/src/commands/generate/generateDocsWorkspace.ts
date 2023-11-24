@@ -10,7 +10,7 @@ export async function generateDocsWorkspace({
     project,
     cliContext,
     instance,
-    preview,
+    preview
 }: {
     project: Project;
     cliContext: CliContext;
@@ -31,14 +31,14 @@ export async function generateDocsWorkspace({
             await createOrganizationIfDoesNotExist({
                 organization: project.config.organization,
                 token,
-                context,
+                context
             });
         });
     }
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern generate --docs",
+        command: "fern generate --docs"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
@@ -59,7 +59,7 @@ export async function generateDocsWorkspace({
             context,
             token,
             instanceUrl: instance,
-            preview,
+            preview
         });
     });
 }

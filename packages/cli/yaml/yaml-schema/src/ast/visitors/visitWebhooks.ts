@@ -10,7 +10,7 @@ import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 export async function visitWebhooks({
     webhook,
     visitor,
-    nodePathForWebhook,
+    nodePathForWebhook
 }: {
     webhook: WebhookSchema;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -25,21 +25,21 @@ export async function visitWebhooks({
             await visitHeaders({
                 headers,
                 visitor,
-                nodePath: [...nodePathForWebhook, "headers"],
+                nodePath: [...nodePathForWebhook, "headers"]
             });
         },
         payload: async (payload) => {
             const nodePathForPayload = [...nodePathForWebhook, "payload"];
             if (typeof payload === "string") {
                 await visitTypeReference(payload, nodePathForPayload, {
-                    location: "requestReference",
+                    location: "requestReference"
                 });
                 return;
             }
 
             if (isRawDiscriminatedUnionDefinition(payload)) {
                 await visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
-                    location: "requestReference",
+                    location: "requestReference"
                 });
                 return;
             }
@@ -70,7 +70,7 @@ export async function visitWebhooks({
                         const nodePathForProperty = [...nodePathForInlinedPayload, "properties", propertyKey];
                         if (typeof property === "string") {
                             await visitTypeReference(property, nodePathForProperty, {
-                                location: TypeReferenceLocation.InlinedRequestProperty,
+                                location: TypeReferenceLocation.InlinedRequestProperty
                             });
                         } else {
                             await visitObject(property, {
@@ -79,26 +79,26 @@ export async function visitWebhooks({
                                 availability: noop,
                                 type: async (type) => {
                                     await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                        location: TypeReferenceLocation.InlinedRequestProperty,
+                                        location: TypeReferenceLocation.InlinedRequestProperty
                                     });
                                 },
-                                audiences: noop,
+                                audiences: noop
                             });
                         }
                     }
-                },
+                }
             });
         },
         audiences: noop,
         availability: noop,
-        docs: createDocsVisitor(visitor, nodePathForWebhook),
+        docs: createDocsVisitor(visitor, nodePathForWebhook)
     });
 }
 
 async function visitHeaders({
     headers,
     visitor,
-    nodePath,
+    nodePath
 }: {
     headers: Record<string, HttpHeaderSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -125,7 +125,7 @@ async function visitHeaders({
                     await visitTypeReference(type, nodePathForHeader);
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
-                audiences: noop,
+                audiences: noop
             });
         }
     }

@@ -18,13 +18,13 @@ export function recursivelyVisitRawTypeReference<R>(type: string, visitor: Recur
         map: ({ keyType, valueType }) =>
             visitor.map({
                 keyType: recursivelyVisitRawTypeReference(keyType, visitor),
-                valueType: recursivelyVisitRawTypeReference(valueType, visitor),
+                valueType: recursivelyVisitRawTypeReference(valueType, visitor)
             }),
         list: (valueType) => visitor.list(recursivelyVisitRawTypeReference(valueType, visitor)),
         set: (valueType) => visitor.set(recursivelyVisitRawTypeReference(valueType, visitor)),
         optional: (valueType) => visitor.optional(recursivelyVisitRawTypeReference(valueType, visitor)),
         literal: visitor.literal,
         named: visitor.named,
-        unknown: visitor.unknown,
+        unknown: visitor.unknown
     });
 }

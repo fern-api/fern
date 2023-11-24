@@ -38,7 +38,7 @@ export async function loadSeedWorkspaces(): Promise<SeedWorkspace[]> {
             absolutePathToWorkspace,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             workspaceConfig: yaml.load(seedConfig.toString()) as any as FernSeedConfig.SeedWorkspaceConfiguration,
-            workspaceName: workspace,
+            workspaceName: workspace
         });
     }
 

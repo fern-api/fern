@@ -9,14 +9,14 @@ export async function waitUntilPathExists(filepath: AbsoluteFilePath, timeoutMs:
         delay(timeoutMs).then(() => {
             controller.abort();
             return false;
-        }),
+        })
     ]);
 }
 
 async function waitUntilPathExistsWithExponentialBackoff({
     filepath,
     controller,
-    delayMs = 50,
+    delayMs = 50
 }: {
     filepath: AbsoluteFilePath;
     controller: AbortController;
@@ -33,6 +33,6 @@ async function waitUntilPathExistsWithExponentialBackoff({
         filepath,
         controller,
         // exponential backoff
-        delayMs: delayMs * 2,
+        delayMs: delayMs * 2
     });
 }

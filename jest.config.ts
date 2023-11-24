@@ -6,7 +6,7 @@ import defaultConfig from "./shared/jest.config.shared";
 export default async (): Promise<Config> => {
     const packages = await getAllPackages({
         // in PRs, only run tests on the changed packages
-        since: isBranchInCi(),
+        since: isBranchInCi()
     });
 
     return {
@@ -19,9 +19,9 @@ export default async (): Promise<Config> => {
             return {
                 ...defaultConfig,
                 displayName: p.name,
-                rootDir: `${p.location}/src`,
+                rootDir: `${p.location}/src`
             };
-        }),
+        })
     };
 };
 

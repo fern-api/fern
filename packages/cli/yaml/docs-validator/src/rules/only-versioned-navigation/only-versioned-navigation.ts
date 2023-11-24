@@ -10,12 +10,12 @@ export const OnlyVersionedNavigation: Rule = {
                         {
                             severity: "error",
                             message:
-                                "Cannot contain both navigation and versions. If you want versioned docs, use versions. Otherwise use navigation.",
-                        },
+                                "Cannot contain both navigation and versions. If you want versioned docs, use versions. Otherwise use navigation."
+                        }
                     ];
                 }
                 return [];
-            },
+            }
         };
-    },
+    }
 };

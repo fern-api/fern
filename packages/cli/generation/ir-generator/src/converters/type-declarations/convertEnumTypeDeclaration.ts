@@ -5,7 +5,7 @@ import { convertDeclaration } from "../convertDeclaration";
 
 export function convertEnumTypeDeclaration({
     _enum,
-    file,
+    file
 }: {
     _enum: RawSchemas.EnumSchema;
     file: FernFileContext;
@@ -15,9 +15,9 @@ export function convertEnumTypeDeclaration({
             ...convertDeclaration(value),
             name: file.casingsGenerator.generateNameAndWireValue({
                 wireValue: typeof value === "string" ? value : value.value,
-                name: getEnumName(value).name,
-            }),
-        })),
+                name: getEnumName(value).name
+            })
+        }))
     });
 }
 
@@ -28,19 +28,19 @@ export function getEnumName(enumValue: string | RawSchemas.EnumValueSchema): {
     if (typeof enumValue === "string") {
         return {
             name: enumValue,
-            wasExplicitlySet: false,
+            wasExplicitlySet: false
         };
     }
 
     if (enumValue.name == null) {
         return {
             name: enumValue.value,
-            wasExplicitlySet: false,
+            wasExplicitlySet: false
         };
     }
 
     return {
         name: enumValue.name,
-        wasExplicitlySet: true,
+        wasExplicitlySet: true
     };
 }

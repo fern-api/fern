@@ -4,7 +4,7 @@ import {
     ExampleResolverImpl,
     resolvePathParameter,
     TypeResolverImpl,
-    VariableResolverImpl,
+    VariableResolverImpl
 } from "@fern-api/ir-generator";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
@@ -26,7 +26,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                     return validateExampleEndpointCallParameters({
                         allDeclarations: {
                             ...service.headers,
-                            ...(typeof endpoint.request !== "string" ? endpoint.request?.headers : undefined),
+                            ...(typeof endpoint.request !== "string" ? endpoint.request?.headers : undefined)
                         },
                         examples,
                         parameterDisplayName: "header",
@@ -38,10 +38,10 @@ export const ValidExampleEndpointCallRule: Rule = {
                                 relativeFilepath,
                                 definitionFile,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents,
+                                rootApiFile: workspace.definition.rootApiFile.contents
                             }),
-                            rawType: typeof header === "string" ? header : header.type,
-                        }),
+                            rawType: typeof header === "string" ? header : header.type
+                        })
                     });
                 },
                 examplePathParameters: (
@@ -52,7 +52,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         allDeclarations: {
                             ...workspace.definition.rootApiFile.contents["path-parameters"],
                             ...service["path-parameters"],
-                            ...endpoint["path-parameters"],
+                            ...endpoint["path-parameters"]
                         },
                         examples,
                         parameterDisplayName: "path parameter",
@@ -67,9 +67,9 @@ export const ValidExampleEndpointCallRule: Rule = {
                                     relativeFilepath,
                                     definitionFile,
                                     casingsGenerator: CASINGS_GENERATOR,
-                                    rootApiFile: workspace.definition.rootApiFile.contents,
-                                }),
-                            }),
+                                    rootApiFile: workspace.definition.rootApiFile.contents
+                                })
+                            })
                     });
                 },
                 exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
@@ -86,10 +86,10 @@ export const ValidExampleEndpointCallRule: Rule = {
                                 relativeFilepath,
                                 definitionFile,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents,
+                                rootApiFile: workspace.definition.rootApiFile.contents
                             }),
-                            rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type,
-                        }),
+                            rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type
+                        })
                     });
                 },
                 exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
@@ -102,9 +102,9 @@ export const ValidExampleEndpointCallRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents,
+                            rootApiFile: workspace.definition.rootApiFile.contents
                         }),
-                        workspace,
+                        workspace
                     });
                 },
                 exampleResponse: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
@@ -117,13 +117,13 @@ export const ValidExampleEndpointCallRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents,
+                            rootApiFile: workspace.definition.rootApiFile.contents
                         }),
                         workspace,
-                        errorResolver,
+                        errorResolver
                     });
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

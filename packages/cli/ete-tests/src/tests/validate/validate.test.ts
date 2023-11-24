@@ -21,7 +21,7 @@ function itFixture(fixtureName: string) {
 
             const { stdout } = await runFernCli(["check"], {
                 cwd: fixturePath,
-                reject: false,
+                reject: false
             });
 
             expect(

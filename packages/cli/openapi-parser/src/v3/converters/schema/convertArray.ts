@@ -8,7 +8,7 @@ export function convertArray({
     item,
     description,
     wrapAsNullable,
-    context,
+    context
 }: {
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
@@ -23,14 +23,14 @@ export function convertArray({
     return wrapArray({
         itemSchema,
         wrapAsNullable,
-        description,
+        description
     });
 }
 
 export function wrapArray({
     itemSchema,
     wrapAsNullable,
-    description,
+    description
 }: {
     itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
@@ -40,13 +40,13 @@ export function wrapArray({
         return SchemaWithExample.nullable({
             value: SchemaWithExample.array({
                 value: itemSchema,
-                description,
+                description
             }),
-            description,
+            description
         });
     }
     return SchemaWithExample.array({
         value: itemSchema,
-        description,
+        description
     });
 }

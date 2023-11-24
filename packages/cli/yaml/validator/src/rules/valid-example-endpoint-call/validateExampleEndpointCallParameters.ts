@@ -11,7 +11,7 @@ export function validateExampleEndpointCallParameters<T>({
     typeResolver,
     exampleResolver,
     workspace,
-    getRawType,
+    getRawType
 }: {
     allDeclarations: Record<string, T> | undefined;
     examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined;
@@ -31,7 +31,7 @@ export function validateExampleEndpointCallParameters<T>({
         if (rawType != null) {
             const resolvedType = typeResolver.resolveType({
                 type: rawType.rawType,
-                file: rawType.file,
+                file: rawType.file
             });
 
             const isOptional =
@@ -51,7 +51,7 @@ export function validateExampleEndpointCallParameters<T>({
         if (examples?.[requiredKey] == null) {
             violations.push({
                 severity: "error",
-                message: `Example is missing required ${parameterDisplayName} "${requiredKey}"`,
+                message: `Example is missing required ${parameterDisplayName} "${requiredKey}"`
             });
         }
     }
@@ -62,7 +62,7 @@ export function validateExampleEndpointCallParameters<T>({
             if (expectedType == null) {
                 violations.push({
                     severity: "error",
-                    message: `Unexpected ${parameterDisplayName} "${key}"`,
+                    message: `Unexpected ${parameterDisplayName} "${key}"`
                 });
             } else {
                 const rawType = getRawType(expectedType);
@@ -77,7 +77,7 @@ export function validateExampleEndpointCallParameters<T>({
                             file: rawType.file,
                             workspace,
                             typeResolver,
-                            exampleResolver,
+                            exampleResolver
                         })
                     );
                 }

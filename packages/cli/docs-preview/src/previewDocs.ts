@@ -4,7 +4,7 @@ import {
     DocsNavigationItem,
     ParsedDocsConfiguration,
     parseDocsConfiguration,
-    UnversionedNavigationConfiguration,
+    UnversionedNavigationConfiguration
 } from "@fern-api/docs-configuration";
 import {
     APIV1Read,
@@ -15,7 +15,7 @@ import {
     DocsV1Read,
     DocsV1Write,
     FdrAPI,
-    SDKSnippetHolder,
+    SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import { dirname, relative } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -28,7 +28,7 @@ import { v4 as uuidv4 } from "uuid";
 export async function getPreviewDocsDefinition({
     docsWorkspace,
     apiWorkspaces,
-    context,
+    context
 }: {
     docsWorkspace: DocsWorkspace;
     apiWorkspaces: APIWorkspace[];
@@ -38,20 +38,20 @@ export async function getPreviewDocsDefinition({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
-        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig,
+        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
     const apiCollector = new ReferencedAPICollector(apiWorkspaces, context);
     const writeDocsDefinition = await constructWriteDocsDefinition({
         parsedDocsConfig,
         context,
-        apiCollector,
+        apiCollector
     });
     const dbDocsDefinition = convertDocsDefinitionToDb({
         writeShape: writeDocsDefinition,
-        files: {},
+        files: {}
     });
     const readDocsConfig = convertDbDocsConfigToRead({
-        dbShape: dbDocsDefinition.config,
+        dbShape: dbDocsDefinition.config
     });
     return {
         apis: await apiCollector.getAPIsForDefinition(),
@@ -60,8 +60,8 @@ export async function getPreviewDocsDefinition({
         pages: dbDocsDefinition.pages,
         search: {
             type: "legacyMultiAlgoliaIndex",
-            algoliaIndex: "fake",
-        },
+            algoliaIndex: "fake"
+        }
     };
 }
 
@@ -96,7 +96,7 @@ class ReferencedAPICollector {
             const ir = await generateIntermediateRepresentation({
                 workspace: fernWorkspace,
                 audiences: api.audiences,
-                generationLanguage: undefined,
+                generationLanguage: undefined
             });
             const apiDefinition = convertIrToFdrApi(ir, {});
             const dbApiDefinition = convertAPIDefinitionToDb(
@@ -105,7 +105,7 @@ class ReferencedAPICollector {
                 new SDKSnippetHolder({
                     packageToSdkId: {},
                     snippetsBySdkId: {},
-                    snippetsConfiguration: {},
+                    snippetsConfiguration: {}
                 })
             );
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
@@ -118,7 +118,7 @@ class ReferencedAPICollector {
 async function constructWriteDocsDefinition({
     parsedDocsConfig,
     context,
-    apiCollector,
+    apiCollector
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     context: TaskContext;
@@ -128,22 +128,22 @@ async function constructWriteDocsDefinition({
         pages: entries(parsedDocsConfig.pages).reduce(
             (pages, [pageFilepath, pageContents]) => ({
                 ...pages,
-                [pageFilepath]: { markdown: pageContents },
+                [pageFilepath]: { markdown: pageContents }
             }),
             {}
         ),
         config: await convertDocsConfiguration({
             parsedDocsConfig,
             context,
-            apiCollector,
-        }),
+            apiCollector
+        })
     };
 }
 
 async function convertDocsConfiguration({
     parsedDocsConfig,
     context,
-    apiCollector,
+    apiCollector
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     context: TaskContext;
@@ -161,7 +161,7 @@ async function convertDocsConfiguration({
             tabs: parsedDocsConfig.tabs,
             parsedDocsConfig,
             context,
-            apiCollector,
+            apiCollector
         }),
         colorsV2: {
             accentPrimary:
@@ -170,12 +170,12 @@ async function convertDocsConfiguration({
                         ? {
                               type: "themed",
                               dark: parsedDocsConfig.colors.accentPrimary.dark,
-                              light: parsedDocsConfig.colors.accentPrimary.light,
+                              light: parsedDocsConfig.colors.accentPrimary.light
                           }
                         : parsedDocsConfig.colors.accentPrimary.color != null
                         ? {
                               type: "unthemed",
-                              color: parsedDocsConfig.colors.accentPrimary.color,
+                              color: parsedDocsConfig.colors.accentPrimary.color
                           }
                         : undefined
                     : undefined,
@@ -185,18 +185,18 @@ async function convertDocsConfiguration({
                         ? {
                               type: "themed",
                               dark: parsedDocsConfig.colors.background.dark,
-                              light: parsedDocsConfig.colors.background.light,
+                              light: parsedDocsConfig.colors.background.light
                           }
                         : parsedDocsConfig.colors.background.color != null
                         ? {
                               type: "unthemed",
-                              color: parsedDocsConfig.colors.background.color,
+                              color: parsedDocsConfig.colors.background.color
                           }
                         : undefined
-                    : undefined,
+                    : undefined
         },
         navbarLinks: parsedDocsConfig.navbarLinks,
-        typography: undefined,
+        typography: undefined
     };
 }
 
@@ -205,7 +205,7 @@ async function convertNavigationConfig({
     tabs,
     parsedDocsConfig,
     context,
-    apiCollector,
+    apiCollector
 }: {
     navigationConfig: DocsNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
@@ -222,10 +222,10 @@ async function convertNavigationConfig({
                             item,
                             parsedDocsConfig,
                             context,
-                            apiCollector,
+                            apiCollector
                         })
                     )
-                ),
+                )
             };
         case "tabbed":
             return {
@@ -244,13 +244,13 @@ async function convertNavigationConfig({
                                         item,
                                         parsedDocsConfig,
                                         context,
-                                        apiCollector,
+                                        apiCollector
                                     })
                                 )
-                            ),
+                            )
                         };
                     })
-                ),
+                )
             };
         case "versioned":
             return {
@@ -264,17 +264,17 @@ async function convertNavigationConfig({
                                     parsedDocsConfig,
                                     context,
                                     version: version.version,
-                                    apiCollector,
+                                    apiCollector
                                 }),
                                 availability:
                                     version.availability != null
                                         ? convertAvailability(version.availability)
                                         : undefined,
-                                urlSlugOverride: version.slug,
+                                urlSlugOverride: version.slug
                             };
                         }
                     )
-                ),
+                )
             };
         default:
             assertNever(navigationConfig);
@@ -301,7 +301,7 @@ async function convertUnversionedNavigationConfig({
     tabs,
     parsedDocsConfig,
     context,
-    apiCollector,
+    apiCollector
 }: {
     navigationConfig: UnversionedNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
@@ -319,10 +319,10 @@ async function convertUnversionedNavigationConfig({
                             item,
                             parsedDocsConfig,
                             context,
-                            apiCollector,
+                            apiCollector
                         })
                     )
-                ),
+                )
             };
         case "tabbed":
             return {
@@ -341,13 +341,13 @@ async function convertUnversionedNavigationConfig({
                                         item,
                                         parsedDocsConfig,
                                         context,
-                                        apiCollector,
+                                        apiCollector
                                     })
                                 )
-                            ),
+                            )
                         };
                     })
-                ),
+                )
             };
         default:
             assertNever(navigationConfig);
@@ -358,7 +358,7 @@ async function convertNavigationItem({
     item,
     parsedDocsConfig,
     context,
-    apiCollector,
+    apiCollector
 }: {
     item: DocsNavigationItem;
     parsedDocsConfig: ParsedDocsConfiguration;
@@ -371,7 +371,7 @@ async function convertNavigationItem({
                 type: "page",
                 title: item.title,
                 id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
-                urlSlugOverride: item.slug,
+                urlSlugOverride: item.slug
             };
         case "section":
             return {
@@ -383,12 +383,12 @@ async function convertNavigationItem({
                             item: nestedItem,
                             parsedDocsConfig,
                             context,
-                            apiCollector,
+                            apiCollector
                         })
                     )
                 ),
                 urlSlugOverride: item.slug,
-                collapsed: item.collapsed,
+                collapsed: item.collapsed
             };
         case "apiSection": {
             const apiId = apiCollector.addReferencedAPI(item);
@@ -396,7 +396,7 @@ async function convertNavigationItem({
                 type: "api",
                 title: item.title,
                 api: apiId,
-                showErrors: item.showErrors,
+                showErrors: item.showErrors
             };
         }
         default:

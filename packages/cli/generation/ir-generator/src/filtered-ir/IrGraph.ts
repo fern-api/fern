@@ -12,7 +12,7 @@ import {
     HttpResponse,
     HttpService,
     StreamingResponseChunkType,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { IdGenerator } from "../IdGenerator";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
@@ -25,7 +25,7 @@ import {
     ServiceId,
     SubpackageId,
     TypeId,
-    TypeNode,
+    TypeNode
 } from "./ids";
 
 export class IrGraph {
@@ -52,7 +52,7 @@ export class IrGraph {
         const typeNode: TypeNode = {
             typeId,
             descendants: descendantTypeIds,
-            referencedSubpackages: descendantFilepaths,
+            referencedSubpackages: descendantFilepaths
         };
         this.types[typeId] = typeNode;
         if (this.typesReferencedByService[typeId] == null) {
@@ -85,7 +85,7 @@ export class IrGraph {
         const errorNode: ErrorNode = {
             errorId,
             referencedTypes,
-            referencedSubpackages,
+            referencedSubpackages
         };
         this.errors[errorId] = errorNode;
     }
@@ -127,7 +127,7 @@ export class IrGraph {
                             },
                             _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
-                            },
+                            }
                         });
                     }
                 },
@@ -136,7 +136,7 @@ export class IrGraph {
                 },
                 _other: () => {
                     throw new Error("Unknown HttpRequestBody: " + httpEndpoint.requestBody?.type);
-                },
+                }
             });
         }
         if (httpEndpoint.response != null) {
@@ -158,13 +158,13 @@ export class IrGraph {
                             throw new Error(
                                 "Unknown StreamingResponseChunkType: " + streamingResponse.dataEventType.type
                             );
-                        },
+                        }
                     });
                 },
                 text: noop,
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
-                },
+                }
             });
         }
         httpEndpoint.errors.forEach((responseError) => {
@@ -178,7 +178,7 @@ export class IrGraph {
             endpointId,
             referencedTypes,
             referencedErrors,
-            referencedSubpackages,
+            referencedSubpackages
         };
     }
 
@@ -223,7 +223,7 @@ export class IrGraph {
             errors: errorIds,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
-            subpackages: this.subpackagesNeededForAudience,
+            subpackages: this.subpackagesNeededForAudience
         });
     }
 
@@ -293,7 +293,7 @@ export class IrGraph {
         for (let i = 1; i <= fernFilePath.allParts.length; ++i) {
             const packageFilePath = {
                 ...fernFilePath,
-                allParts: fernFilePath.allParts.slice(0, i),
+                allParts: fernFilePath.allParts.slice(0, i)
             };
             this.subpackagesNeededForAudience.add(IdGenerator.generateSubpackageId(packageFilePath));
         }
@@ -336,7 +336,7 @@ function populateReferencesFromTypeReference(
         },
         primitive: noop,
         unknown: noop,
-        _other: noop,
+        _other: noop
     });
 }
 
@@ -369,6 +369,6 @@ function populateReferencesFromContainer(
             populateReferencesFromTypeReference(setType, referencedTypes, referencedSubpackages);
         },
         literal: noop,
-        _other: noop,
+        _other: noop
     });
 }

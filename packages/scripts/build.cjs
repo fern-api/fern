@@ -18,8 +18,8 @@ async function main() {
         plugins: [pnpPlugin()],
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-scripts"),
-            "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
-        },
+            "process.env.CLI_VERSION": JSON.stringify(packageJson.version)
+        }
     };
 
     await build(options).catch(() => process.exit(1));

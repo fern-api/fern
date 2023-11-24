@@ -46,8 +46,8 @@ export class VariableResolverImpl implements VariableResolver {
             declaration,
             file: constructRootApiFileContext({
                 casingsGenerator: file.casingsGenerator,
-                rootApiFile: file.rootApiFile,
-            }),
+                rootApiFile: file.rootApiFile
+            })
         };
     }
 

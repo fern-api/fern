@@ -8,7 +8,7 @@ export function getRuleViolationsForMisshapenExample(
     return [
         {
             severity: "error",
-            message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${JSON.stringify(example)}`,
-        },
+            message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${JSON.stringify(example)}`
+        }
     ];
 }

@@ -25,7 +25,7 @@ export class FilteredIrImpl implements FilteredIr {
         errors,
         services,
         endpoints,
-        subpackages,
+        subpackages
     }: {
         types: Set<TypeId>;
         errors: Set<ErrorId>;

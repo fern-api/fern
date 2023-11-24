@@ -26,7 +26,7 @@ export async function loadProject({
     cliVersion,
     commandLineApiWorkspace,
     defaultToAllApiWorkspaces,
-    context,
+    context
 }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
@@ -39,13 +39,13 @@ export async function loadProject({
         cliVersion,
         context,
         commandLineApiWorkspace,
-        defaultToAllApiWorkspaces,
+        defaultToAllApiWorkspaces
     });
 
     return {
         config: await loadProjectConfig({ directory: fernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context }),
+        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
     };
 }
 
@@ -55,7 +55,7 @@ export async function loadApis({
     context,
     cliVersion,
     commandLineApiWorkspace,
-    defaultToAllApiWorkspaces,
+    defaultToAllApiWorkspaces
 }: {
     cliName: string;
     fernDirectory: AbsoluteFilePath;
@@ -113,7 +113,7 @@ export async function loadApis({
                     absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,
                     cliVersion,
-                    workspaceName: workspaceDirectoryName,
+                    workspaceName: workspaceDirectoryName
                 });
                 if (workspace.didSucceed) {
                     apiWorkspaces.push(workspace.workspace);
@@ -131,7 +131,7 @@ export async function loadApis({
         absolutePathToWorkspace: fernDirectory,
         context,
         cliVersion,
-        workspaceName: undefined,
+        workspaceName: undefined
     });
     if (workspace.didSucceed) {
         return [workspace.workspace];

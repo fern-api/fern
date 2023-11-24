@@ -10,7 +10,7 @@ describe("no-undefined-example-reference", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -22,11 +22,11 @@ describe("no-undefined-example-reference", () => {
                     "MyType",
                     {
                         arrayIndex: 0,
-                        key: "examples",
-                    },
+                        key: "examples"
+                    }
                 ],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Example $a.MissingType.Example is not defined.",
@@ -35,11 +35,11 @@ describe("no-undefined-example-reference", () => {
                     "MyType",
                     {
                         arrayIndex: 0,
-                        key: "examples",
-                    },
+                        key: "examples"
+                    }
                 ],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Example $other.OtherType.OtherExample2 is not defined.",
@@ -48,12 +48,12 @@ describe("no-undefined-example-reference", () => {
                     "NestedType",
                     {
                         arrayIndex: 0,
-                        key: "examples",
-                    },
+                        key: "examples"
+                    }
                 ],
                 relativeFilepath: RelativeFilePath.of("folder/nested.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

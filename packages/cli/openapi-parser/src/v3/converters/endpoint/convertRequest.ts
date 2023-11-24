@@ -36,21 +36,21 @@ export function getApplicationJsonRequest(
 ): ParsedApplicationJsonRequest | undefined {
     const applicationJsonSchema = getSchemaForContentType({
         contentType: APPLICATION_JSON_CONTENT,
-        media: requestBody.content,
+        media: requestBody.content
     });
     if (applicationJsonSchema != null) {
         return {
-            schema: applicationJsonSchema,
+            schema: applicationJsonSchema
         };
     }
 
     const applicationJsonUtf8Schema = getSchemaForContentType({
         contentType: APPLICATION_JSON_UTF_8_CONTENT,
-        media: requestBody.content,
+        media: requestBody.content
     });
     if (applicationJsonUtf8Schema != null) {
         return {
-            schema: applicationJsonUtf8Schema,
+            schema: applicationJsonUtf8Schema
         };
     }
     return undefined;
@@ -58,7 +58,7 @@ export function getApplicationJsonRequest(
 
 function getSchemaForContentType({
     contentType,
-    media,
+    media
 }: {
     contentType: string;
     media: Record<string, OpenAPIV3.MediaTypeObject>;
@@ -74,7 +74,7 @@ function multipartRequestHasFile(
         ? resolveSchema(multipartSchema, document)
         : {
               id: undefined,
-              schema: multipartSchema,
+              schema: multipartSchema
           };
     return (
         Object.entries(resolvedMultipartSchema.schema.properties ?? {}).find(([_, definition]) => {
@@ -87,7 +87,7 @@ export function convertRequest({
     requestBody,
     document,
     context,
-    requestBreadcrumbs,
+    requestBreadcrumbs
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
@@ -105,7 +105,7 @@ export function convertRequest({
     // convert as application/octet-stream
     if (octetStreamSchema != null) {
         return Request.octetStream({
-            description: undefined,
+            description: undefined
         });
     }
 
@@ -118,7 +118,7 @@ export function convertRequest({
             ? resolveSchema(multipartSchema, document)
             : {
                   id: undefined,
-                  schema: multipartSchema,
+                  schema: multipartSchema
               };
 
         return Request.multipart({
@@ -132,16 +132,16 @@ export function convertRequest({
                     return {
                         key,
                         schema: MultipartSchema.file(),
-                        description: undefined,
+                        description: undefined
                     };
                 }
                 const schemaWithExample = convertSchema(definition, false, context, []);
                 return {
                     key,
                     schema: MultipartSchema.json(convertSchemaWithExampleToSchema(schemaWithExample)),
-                    description: undefined,
+                    description: undefined
                 };
-            }),
+            })
         });
     }
 
@@ -153,7 +153,7 @@ export function convertRequest({
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
-        contentType: jsonSchema.overridenContentType,
+        contentType: jsonSchema.overridenContentType
     });
 }
 
@@ -176,6 +176,6 @@ function resolveSchema(schema: OpenAPIV3.ReferenceObject, document: OpenAPIV3.Do
     }
     return {
         id: schemaId,
-        schema: resolvedSchema,
+        schema: resolvedSchema
     };
 }

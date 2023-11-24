@@ -8,7 +8,7 @@ export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): 
 
     const filepaths = (
         await glob(`**/*.${extensionGlob}`, {
-            cwd: root,
+            cwd: root
         })
     ).map(RelativeFilePath.of);
 
@@ -16,7 +16,7 @@ export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): 
         files.push(
             await createFernFile({
                 relativeFilepath: filepath,
-                absoluteFilepath: join(root, filepath),
+                absoluteFilepath: join(root, filepath)
             })
         );
     }
@@ -26,13 +26,13 @@ export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): 
 
 async function createFernFile({
     relativeFilepath,
-    absoluteFilepath,
+    absoluteFilepath
 }: {
     relativeFilepath: RelativeFilePath;
     absoluteFilepath: AbsoluteFilePath;
 }): Promise<FernFile> {
     return {
         filepath: relativeFilepath,
-        fileContents: (await readFile(absoluteFilepath)).toString(),
+        fileContents: (await readFile(absoluteFilepath)).toString()
     };
 }

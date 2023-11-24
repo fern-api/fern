@@ -9,11 +9,11 @@ export const SingleUnionTypeSchema = z.union([
             z.union([
                 z.string(),
                 // allow "{}" as syntactic sugar for null
-                z.record(z.never()),
+                z.record(z.never())
             ])
         ),
-        key: z.optional(z.union([z.string(), SingleUnionTypeKeySchema])),
-    }),
+        key: z.optional(z.union([z.string(), SingleUnionTypeKeySchema]))
+    })
 ]);
 
 export type SingleUnionTypeSchema = z.infer<typeof SingleUnionTypeSchema>;

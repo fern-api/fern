@@ -14,14 +14,14 @@ export function convertIrToFdrApi(
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
         auth: convertAuth(ir.auth),
-        snippetsConfiguration: snippetsConfig,
+        snippetsConfiguration: snippetsConfig
     };
 
     for (const [typeId, type] of entries(ir.types)) {
         fdrApi.types[typeId] = {
             description: type.docs ?? undefined,
             name: type.name.name.originalName,
-            shape: convertTypeShape(type.shape),
+            shape: convertTypeShape(type.shape)
         };
     }
 
@@ -31,7 +31,7 @@ export function convertIrToFdrApi(
             subpackageId,
             name: service?.displayName ?? subpackage.name.originalName,
             description: subpackage.docs ?? undefined,
-            ...convertPackage(subpackage, ir),
+            ...convertPackage(subpackage, ir)
         };
     }
 

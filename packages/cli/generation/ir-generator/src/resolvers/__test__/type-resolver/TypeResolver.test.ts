@@ -14,7 +14,7 @@ describe("TypeResolver", () => {
             ),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
-            workspaceName: undefined,
+            workspaceName: undefined
         });
         if (!parseResult.didSucceed) {
             throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
@@ -34,19 +34,19 @@ describe("TypeResolver", () => {
             relativeFilepath: fooFilepath,
             definitionFile: fooFile.contents,
             casingsGenerator: constructCasingsGenerator(undefined),
-            rootApiFile: parseResult.workspace.definition.rootApiFile.contents,
+            rootApiFile: parseResult.workspace.definition.rootApiFile.contents
         });
 
         const resolvedFooType = typeResolver.resolveType({
             type: "Foo",
-            file: fernFileContext,
+            file: fernFileContext
         });
         expect(resolvedFooType).toBeUndefined();
 
         // to make sure the file is being parsed correctly
         const resolvedBazType = typeResolver.resolveType({
             type: "Baz",
-            file: fernFileContext,
+            file: fernFileContext
         });
         expect(resolvedBazType?._type).toBe("primitive");
     });

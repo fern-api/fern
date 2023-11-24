@@ -7,6 +7,6 @@ export function createLogger(log: (level: LogLevel, ...args: string[]) => void):
         info: (...args) => log(LogLevel.Info, ...args),
         warn: (...args) => log(LogLevel.Warn, ...args),
         error: (...args) => log(LogLevel.Error, ...args),
-        log,
+        log
     };
 }

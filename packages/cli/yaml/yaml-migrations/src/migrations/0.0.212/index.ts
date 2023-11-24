@@ -3,7 +3,7 @@ import AddPublishingToReleaseGeneratorsMigration from "./add-publishing-to-relea
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.212",
-    migrations: [AddPublishingToReleaseGeneratorsMigration],
+    migrations: [AddPublishingToReleaseGeneratorsMigration]
 };
 
 export default versionMigrations;

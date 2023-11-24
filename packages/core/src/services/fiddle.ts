@@ -12,6 +12,6 @@ export function getFiddleOrigin(): string {
 export function createFiddleService({ token }: { token?: string } = {}): FernFiddleClient {
     return new FernFiddleClient({
         environment: FIDDLE_ORIGIN,
-        token,
+        token
     });
 }

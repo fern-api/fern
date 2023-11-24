@@ -4,7 +4,7 @@ import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
     OPENAPI_DIRECTORY,
-    ROOT_API_FILENAME,
+    ROOT_API_FILENAME
 } from "@fern-api/project-configuration";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
@@ -14,7 +14,7 @@ import path from "path";
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
 export async function createFernWorkspace({
-    directoryOfWorkspace,
+    directoryOfWorkspace
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
 }): Promise<void> {
@@ -22,17 +22,17 @@ export async function createFernWorkspace({
         await mkdir(directoryOfWorkspace);
     }
     await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await writeSampleApiDefinition({
-        directoryOfDefinition,
+        directoryOfDefinition
     });
 }
 
 export async function createOpenAPIWorkspace({
     directoryOfWorkspace,
-    openAPIFilePath,
+    openAPIFilePath
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
@@ -41,7 +41,7 @@ export async function createOpenAPIWorkspace({
         await mkdir(directoryOfWorkspace);
     }
     await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
     });
     const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     await mkdir(openapiDirectory);
@@ -60,12 +60,12 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                     version: "0.7.2",
                     output: {
                         location: "local-file-system",
-                        path: "../generated/typescript",
-                    },
-                },
-            ],
-        },
-    },
+                        path: "../generated/typescript"
+                    }
+                }
+            ]
+        }
+    }
 };
 
 async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFilePath }): Promise<void> {
@@ -75,12 +75,12 @@ async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFi
 const ROOT_API: RootApiFileSchema = {
     name: "api",
     "error-discrimination": {
-        strategy: "status-code",
-    },
+        strategy: "status-code"
+    }
 };
 
 async function writeSampleApiDefinition({
-    directoryOfDefinition,
+    directoryOfDefinition
 }: {
     directoryOfDefinition: AbsoluteFilePath;
 }): Promise<void> {
@@ -91,7 +91,7 @@ async function writeSampleApiDefinition({
     await writeFile(
         absoluteFilepathToImdbYaml,
         formatDefinitionFile({
-            fileContents: SAMPLE_IMDB_API,
+            fileContents: SAMPLE_IMDB_API
         })
     );
 }

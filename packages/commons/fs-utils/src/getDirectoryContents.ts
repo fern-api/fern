@@ -46,13 +46,13 @@ export async function getDirectoryContents(
                 contents.push({
                     type: "directory",
                     name: item.name,
-                    contents: await getDirectoryContents(join(absolutePath, RelativeFilePath.of(item.name)), options),
+                    contents: await getDirectoryContents(join(absolutePath, RelativeFilePath.of(item.name)), options)
                 });
             } else if (fileExtensionsWithPeriods == null || fileExtensionsWithPeriods.has(path.extname(item.name))) {
                 contents.push({
                     type: "file",
                     name: item.name,
-                    contents: (await readFile(path.join(absolutePath, item.name))).toString(),
+                    contents: (await readFile(path.join(absolutePath, item.name))).toString()
                 });
             }
         })

@@ -12,7 +12,7 @@ export function convertEnum({
     enumVarNames,
     enumValues,
     description,
-    wrapAsNullable,
+    wrapAsNullable
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -32,7 +32,7 @@ export function convertEnum({
             nameOverride: fernEnumValue?.name ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
-            description: fernEnumValue?.description,
+            description: fernEnumValue?.description
         };
     });
     return wrapEnum({
@@ -40,7 +40,7 @@ export function convertEnum({
         nameOverride,
         generatedName,
         values,
-        description,
+        description
     });
 }
 
@@ -49,7 +49,7 @@ export function wrapEnum({
     nameOverride,
     generatedName,
     values,
-    description,
+    description
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -64,9 +64,9 @@ export function wrapEnum({
                 generatedName,
                 values,
                 description,
-                example: undefined,
+                example: undefined
             }),
-            description,
+            description
         });
     }
     return SchemaWithExample.enum({
@@ -74,7 +74,7 @@ export function wrapEnum({
         generatedName,
         values,
         description,
-        example: undefined,
+        example: undefined
     });
 }
 
@@ -135,7 +135,7 @@ export function convertNumberToSnakeCase(number: number): string | undefined {
         "sixteen",
         "seventeen",
         "eighteen",
-        "nineteen",
+        "nineteen"
     ];
 
     const tensNumbers = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];

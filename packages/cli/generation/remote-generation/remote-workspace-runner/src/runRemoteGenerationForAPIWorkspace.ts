@@ -15,7 +15,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     generatorGroup,
     version,
     shouldLogS3Url,
-    token,
+    token
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -44,7 +44,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     version,
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
-                    token,
+                    token
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);
@@ -59,6 +59,6 @@ export async function runRemoteGenerationForAPIWorkspace({
     }
 
     return {
-        snippetsProducedBy,
+        snippetsProducedBy
     };
 }

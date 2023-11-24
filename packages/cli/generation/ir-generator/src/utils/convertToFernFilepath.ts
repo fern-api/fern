@@ -6,7 +6,7 @@ import { CasingsGenerator } from "../casings/CasingsGenerator";
 
 export function convertToFernFilepath({
     relativeFilepath,
-    casingsGenerator,
+    casingsGenerator
 }: {
     relativeFilepath: RelativeFilePath;
     casingsGenerator: CasingsGenerator;
@@ -31,6 +31,6 @@ export function convertToFernFilepath({
     return {
         allParts,
         packagePath,
-        file,
+        file
     };
 }

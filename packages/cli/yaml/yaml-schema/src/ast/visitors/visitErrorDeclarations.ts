@@ -9,7 +9,7 @@ import { visitTypeDeclaration } from "./visitTypeDeclarations";
 export async function visitErrorDeclarations({
     errorDeclarations,
     visitor,
-    nodePath,
+    nodePath
 }: {
     errorDeclarations: Record<string, ErrorDeclarationSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -29,7 +29,7 @@ async function visitErrorDeclaration({
     errorName,
     declaration,
     visitor,
-    nodePathForError,
+    nodePathForError
 }: {
     errorName: string;
     declaration: ErrorDeclarationSchema;
@@ -56,10 +56,10 @@ async function visitErrorDeclaration({
                         typeName: errorName,
                         declaration: type,
                         visitor,
-                        nodePathForType: nodePathForErrorType,
+                        nodePathForType: nodePathForErrorType
                     });
                 }
-            },
+            }
         });
     }
 }

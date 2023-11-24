@@ -4,7 +4,7 @@ import yaml from "js-yaml";
 import { LegacyGenerators } from ".";
 
 export async function loadRawGeneratorsConfiguration({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<LegacyGenerators.GeneratorsConfigurationSchema | undefined> {
@@ -21,7 +21,7 @@ export async function loadRawGeneratorsConfiguration({
 const GENERATORS_YML = "generators.yml";
 
 export function getAbsolutePathToGeneratorsConfiguration({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): AbsoluteFilePath {

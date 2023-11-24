@@ -6,7 +6,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
         alias: (alias) => {
             return {
                 type: "alias",
-                value: convertTypeReference(alias.aliasOf),
+                value: convertTypeReference(alias.aliasOf)
             };
         },
         enum: (enum_) => {
@@ -15,9 +15,9 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                 values: enum_.values.map(
                     (value): APIV1Write.EnumValue => ({
                         description: value.docs ?? undefined,
-                        value: value.name.wireValue,
+                        value: value.name.wireValue
                     })
-                ),
+                )
             };
         },
         object: (object) => {
@@ -28,16 +28,16 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                     (property): APIV1Write.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
-                        valueType: convertTypeReference(property.valueType),
+                        valueType: convertTypeReference(property.valueType)
                     })
-                ),
+                )
             };
         },
         union: (union) => {
             const baseProperties = union.baseProperties.map((baseProperty) => {
                 return {
                     key: baseProperty.name.wireValue,
-                    valueType: convertTypeReference(baseProperty.valueType),
+                    valueType: convertTypeReference(baseProperty.valueType)
                 };
             });
             return {
@@ -52,31 +52,31 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                             {
                                 samePropertiesAsObject: (extension) => ({
                                     extends: [extension.typeId],
-                                    properties: baseProperties,
+                                    properties: baseProperties
                                 }),
                                 singleProperty: (singleProperty) => ({
                                     extends: [],
                                     properties: [
                                         {
                                             key: singleProperty.name.wireValue,
-                                            valueType: convertTypeReference(singleProperty.type),
+                                            valueType: convertTypeReference(singleProperty.type)
                                         },
-                                        ...baseProperties,
-                                    ],
+                                        ...baseProperties
+                                    ]
                                 }),
                                 noProperties: () => ({
                                     extends: [],
-                                    properties: baseProperties,
+                                    properties: baseProperties
                                 }),
                                 _other: () => {
                                     throw new Error(
                                         "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
                                     );
-                                },
+                                }
                             }
-                        ),
+                        )
                     };
-                }),
+                })
             };
         },
         undiscriminatedUnion: (union) => {
@@ -86,14 +86,14 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                     return {
                         typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
-                        type: convertTypeReference(variant.type),
+                        type: convertTypeReference(variant.type)
                     };
-                }),
+                })
             };
         },
         _other: () => {
             throw new Error("Unknown Type shape: " + irType.type);
-        },
+        }
     });
 }
 
@@ -104,26 +104,26 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                 list: (itemType) => {
                     return {
                         type: "list",
-                        itemType: convertTypeReference(itemType),
+                        itemType: convertTypeReference(itemType)
                     };
                 },
                 map: ({ keyType, valueType }) => {
                     return {
                         type: "map",
                         keyType: convertTypeReference(keyType),
-                        valueType: convertTypeReference(valueType),
+                        valueType: convertTypeReference(valueType)
                     };
                 },
                 optional: (itemType) => {
                     return {
                         type: "optional",
-                        itemType: convertTypeReference(itemType),
+                        itemType: convertTypeReference(itemType)
                     };
                 },
                 set: (itemType) => {
                     return {
                         type: "set",
-                        itemType: convertTypeReference(itemType),
+                        itemType: convertTypeReference(itemType)
                     };
                 },
                 literal: (literal) => {
@@ -133,8 +133,8 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                                 type: "literal",
                                 value: {
                                     type: "booleanLiteral",
-                                    value: booleanLiteral,
-                                },
+                                    value: booleanLiteral
+                                }
                             };
                         },
                         string: (stringLiteral) => {
@@ -142,24 +142,24 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                                 type: "literal",
                                 value: {
                                     type: "stringLiteral",
-                                    value: stringLiteral,
-                                },
+                                    value: stringLiteral
+                                }
                             };
                         },
                         _other: () => {
                             throw new Error("Unknown literal type: " + literal.type);
-                        },
+                        }
                     });
                 },
                 _other: () => {
                     throw new Error("Unknown container reference: " + container.type);
-                },
+                }
             });
         },
         named: (name) => {
             return {
                 type: "id",
-                value: name.typeId,
+                value: name.typeId
             };
         },
         primitive: (primitive) => {
@@ -168,62 +168,62 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                 value: Ir.types.PrimitiveType._visit<APIV1Write.PrimitiveType>(primitive, {
                     integer: () => {
                         return {
-                            type: "integer",
+                            type: "integer"
                         };
                     },
                     double: () => {
                         return {
-                            type: "double",
+                            type: "double"
                         };
                     },
                     string: () => {
                         return {
-                            type: "string",
+                            type: "string"
                         };
                     },
                     long: () => {
                         return {
-                            type: "long",
+                            type: "long"
                         };
                     },
                     boolean: () => {
                         return {
-                            type: "boolean",
+                            type: "boolean"
                         };
                     },
                     dateTime: () => {
                         return {
-                            type: "datetime",
+                            type: "datetime"
                         };
                     },
                     date: () => {
                         return {
-                            type: "date",
+                            type: "date"
                         };
                     },
                     uuid: () => {
                         return {
-                            type: "uuid",
+                            type: "uuid"
                         };
                     },
                     base64: () => {
                         return {
-                            type: "base64",
+                            type: "base64"
                         };
                     },
                     _other: () => {
                         throw new Error("Unknown primitive: " + primitive);
-                    },
-                }),
+                    }
+                })
             };
         },
         unknown: () => {
             return {
-                type: "unknown",
+                type: "unknown"
             };
         },
         _other: () => {
             throw new Error("Unknown Type reference: " + irTypeReference.type);
-        },
+        }
     });
 }

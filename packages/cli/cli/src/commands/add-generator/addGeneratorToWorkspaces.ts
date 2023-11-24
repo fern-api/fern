@@ -10,7 +10,7 @@ export async function addGeneratorToWorkspaces({
     project: { apiWorkspaces },
     generatorName,
     groupName,
-    cliContext,
+    cliContext
 }: {
     project: Project;
     generatorName: string;
@@ -22,7 +22,7 @@ export async function addGeneratorToWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const generatorsConfiguration = await loadRawGeneratorsConfiguration({
                     absolutePathToWorkspace: workspace.absoluteFilepath,
-                    context,
+                    context
                 });
 
                 const newConfiguration = addGenerator({ generatorName, generatorsConfiguration, groupName, context });

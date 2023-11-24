@@ -29,12 +29,12 @@ export const V29_TO_V28_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V28.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "strip",
-            skipValidation: true,
+            skipValidation: true
         }),
     migrateBackwards: (v29): IrVersions.V28.ir.IntermediateRepresentation => {
         return {
@@ -43,14 +43,14 @@ export const V29_TO_V28_MIGRATION: IrMigration<
                 Object.keys(v29.types).map((key) => {
                     return [key, getV28TypeDeclarationFromId({ typeId: key, allTypes: v29.types })];
                 })
-            ),
+            )
         };
-    },
+    }
 };
 
 function getV28TypeDeclarationFromId({
     typeId,
-    allTypes,
+    allTypes
 }: {
     typeId: commons.TypeId;
     allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>;
@@ -67,15 +67,15 @@ function getV28TypeDeclarationFromId({
             return {
                 typeId: referencedTypeId,
                 fernFilepath: referencedTypeDeclaration.name.fernFilepath,
-                name: referencedTypeDeclaration.name.name,
+                name: referencedTypeDeclaration.name.name
             };
-        }),
+        })
     };
 }
 
 function getTypeDeclarationOrThrow({
     typeId,
-    allTypes,
+    allTypes
 }: {
     typeId: commons.TypeId;
     allTypes: Record<IrVersions.V29.TypeId, IrVersions.V29.TypeDeclaration>;

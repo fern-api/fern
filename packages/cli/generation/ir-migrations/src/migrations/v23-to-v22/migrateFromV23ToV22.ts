@@ -29,7 +29,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v23, context): IrVersions.V22.ir.IntermediateRepresentation => {
@@ -49,7 +49,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
                 ...service,
                 endpoints: v22Endpoints,
                 headers: service.headers.map((header) => convertHeader(header)),
-                pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
+                pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter))
             };
         }
 
@@ -74,7 +74,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
             ...v23,
             auth: {
                 ...v23.auth,
-                schemes: v23.auth.schemes.map((scheme) => convertAuthScheme(scheme)),
+                schemes: v23.auth.schemes.map((scheme) => convertAuthScheme(scheme))
             },
             headers: v23.headers.map((header) => convertHeader(header)),
             types: mapValues(v23.types, (type) => convertType(type)),
@@ -82,9 +82,9 @@ export const V23_TO_V22_MIGRATION: IrMigration<
             errors: mapValues(v23.errors, (error) => convertError(error)),
             subpackages: v23.subpackages,
             pathParameters: v23.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
-            variables: v23.variables.map((variable) => convertVariable(variable)),
+            variables: v23.variables.map((variable) => convertVariable(variable))
         };
-    },
+    }
 };
 
 function convertEndpoint(endpoint: IrVersions.V23.HttpEndpoint): IrVersions.V22.http.HttpEndpoint | undefined {
@@ -107,11 +107,11 @@ function convertEndpoint(endpoint: IrVersions.V23.HttpEndpoint): IrVersions.V22.
             endpoint.sdkRequest != null
                 ? {
                       requestParameterName: endpoint.sdkRequest.requestParameterName,
-                      shape: convertSdkRequestShape(endpoint.sdkRequest.shape),
+                      shape: convertSdkRequestShape(endpoint.sdkRequest.shape)
                   }
                 : undefined,
         response: endpoint.response != null ? convertResponse(endpoint.response) : undefined,
-        examples: endpoint.examples.map((exampleEndpointCall) => convertExampleEndpointCall(exampleEndpointCall)),
+        examples: endpoint.examples.map((exampleEndpointCall) => convertExampleEndpointCall(exampleEndpointCall))
     };
 }
 
@@ -124,17 +124,17 @@ function convertRequestBody(
         case "fileUpload":
             return IrVersions.V22.http.HttpRequestBody.fileUpload({
                 ...requestBody,
-                properties: requestBody.properties.map((property) => convertFileUploadRequestBodyProperty(property)),
+                properties: requestBody.properties.map((property) => convertFileUploadRequestBodyProperty(property))
             });
         case "inlinedRequestBody":
             return IrVersions.V22.http.HttpRequestBody.inlinedRequestBody({
                 ...requestBody,
-                properties: requestBody.properties.map((property) => convertInlinedRequestBodyProperty(property)),
+                properties: requestBody.properties.map((property) => convertInlinedRequestBodyProperty(property))
             });
         case "reference":
             return IrVersions.V22.http.HttpRequestBody.reference({
                 ...requestBody,
-                requestBodyType: convertTypeReference(requestBody.requestBodyType),
+                requestBodyType: convertTypeReference(requestBody.requestBodyType)
             });
         default:
             assertNever(requestBody);
@@ -144,7 +144,7 @@ function convertRequestBody(
 function convertHeader(header: IrVersions.V23.HttpHeader): IrVersions.V22.http.HttpHeader {
     return {
         ...header,
-        valueType: convertTypeReference(header.valueType),
+        valueType: convertTypeReference(header.valueType)
     };
 }
 
@@ -155,11 +155,11 @@ function convertAuthScheme(authScheme: IrVersions.V23.AuthScheme): IrVersions.V2
         header: (header) =>
             IrVersions.V22.auth.AuthScheme.header({
                 ...header,
-                valueType: convertTypeReference(header.valueType),
+                valueType: convertTypeReference(header.valueType)
             }),
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
-        },
+        }
     });
 }
 
@@ -167,7 +167,7 @@ function convertType(type: IrVersions.V23.TypeDeclaration): IrVersions.V22.types
     return {
         ...type,
         shape: convertTypeShape(type.shape),
-        examples: type.examples.map((example) => convertTypeExample(example)),
+        examples: type.examples.map((example) => convertTypeExample(example))
     };
 }
 
@@ -177,13 +177,13 @@ function convertTypeShape(typeShape: IrVersions.V23.Type): IrVersions.V22.types.
             IrVersions.V22.types.Type.alias({
                 ...alias,
                 aliasOf: convertTypeReference(alias.aliasOf),
-                resolvedType: convertResolvedTypeReference(alias.resolvedType),
+                resolvedType: convertResolvedTypeReference(alias.resolvedType)
             }),
         enum: IrVersions.V22.types.Type.enum,
         object: (object) =>
             IrVersions.V22.types.Type.object({
                 ...object,
-                properties: object.properties.map((property) => convertObjectProperty(property)),
+                properties: object.properties.map((property) => convertObjectProperty(property))
             }),
         union: (union) =>
             IrVersions.V22.types.Type.union({
@@ -191,27 +191,27 @@ function convertTypeShape(typeShape: IrVersions.V23.Type): IrVersions.V22.types.
                 baseProperties: union.baseProperties.map((property) => convertObjectProperty(property)),
                 types: union.types.map((variant) => ({
                     ...variant,
-                    shape: convertSingleUnionTypeProperties(variant.shape),
-                })),
+                    shape: convertSingleUnionTypeProperties(variant.shape)
+                }))
             }),
         undiscriminatedUnion: (union) =>
             IrVersions.V22.types.Type.undiscriminatedUnion({
                 ...union,
                 members: union.members.map((member) => ({
                     ...member,
-                    type: convertTypeReference(member.type),
-                })),
+                    type: convertTypeReference(member.type)
+                }))
             }),
         _other: () => {
             throw new Error("Unknown type shape: " + typeShape.type);
-        },
+        }
     });
 }
 
 function convertTypeExample(typeExample: IrVersions.V23.ExampleType): IrVersions.V22.types.ExampleType {
     return {
         ...typeExample,
-        shape: convertExampleTypeShape(typeExample.shape),
+        shape: convertExampleTypeShape(typeExample.shape)
     };
 }
 
@@ -222,7 +222,7 @@ function convertExampleTypeShape(
         alias: (alias) =>
             IrVersions.V22.types.ExampleTypeShape.alias({
                 ...alias,
-                value: convertExampleTypeReference(alias.value),
+                value: convertExampleTypeReference(alias.value)
             }),
         enum: IrVersions.V22.types.ExampleTypeShape.enum,
         object: (object) =>
@@ -230,17 +230,17 @@ function convertExampleTypeShape(
                 ...object,
                 properties: object.properties.map((property) => ({
                     ...property,
-                    value: convertExampleTypeReference(property.value),
-                })),
+                    value: convertExampleTypeReference(property.value)
+                }))
             }),
         union: (union) =>
             IrVersions.V22.types.ExampleTypeShape.union({
                 ...union,
-                properties: convertExampleSingleUnionTypeProperties(union.properties),
+                properties: convertExampleSingleUnionTypeProperties(union.properties)
             }),
         _other: () => {
             throw new Error("Unknown example type shape: " + exampleTypeShape.type);
-        },
+        }
     });
 }
 
@@ -249,7 +249,7 @@ function convertExampleTypeReference(
 ): IrVersions.V22.types.ExampleTypeReference {
     return {
         ...exampleTypeReference,
-        shape: convertExampleTypeReferenceShape(exampleTypeReference.shape),
+        shape: convertExampleTypeReferenceShape(exampleTypeReference.shape)
     };
 }
 
@@ -270,13 +270,13 @@ function convertExampleTypeReferenceShape(
                     uuid: IrVersions.V22.types.ExamplePrimitive.uuid,
                     _other: () => {
                         throw new Error("Unknown example primitive: " + primitive.type);
-                    },
+                    }
                 })
             ),
         named: (named) =>
             IrVersions.V22.types.ExampleTypeReferenceShape.named({
                 ...named,
-                shape: convertExampleTypeShape(named.shape),
+                shape: convertExampleTypeShape(named.shape)
             }),
         container: (container) =>
             IrVersions.V22.types.ExampleTypeReferenceShape.container(
@@ -297,18 +297,18 @@ function convertExampleTypeReferenceShape(
                         IrVersions.V22.types.ExampleContainer.map(
                             pairs.map((pair) => ({
                                 key: convertExampleTypeReference(pair.key),
-                                value: convertExampleTypeReference(pair.value),
+                                value: convertExampleTypeReference(pair.value)
                             }))
                         ),
                     _other: () => {
                         throw new Error("Unknown example container: " + container.type);
-                    },
+                    }
                 })
             ),
         unknown: IrVersions.V22.types.ExampleTypeReferenceShape.unknown,
         _other: () => {
             throw new Error("Unknown example type reference shape: " + exampleTypeReferenceShape.type);
-        },
+        }
     });
 }
 
@@ -319,17 +319,17 @@ function convertExampleSingleUnionTypeProperties(
         singleProperty: (singleProperty) =>
             IrVersions.V22.types.ExampleSingleUnionTypeProperties.singleProperty({
                 ...singleProperty,
-                shape: convertExampleTypeReferenceShape(singleProperty.shape),
+                shape: convertExampleTypeReferenceShape(singleProperty.shape)
             }),
         noProperties: IrVersions.V22.types.ExampleSingleUnionTypeProperties.noProperties,
         samePropertiesAsObject: (samePropertiesAsObject) =>
             IrVersions.V22.types.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
                 ...samePropertiesAsObject,
-                shape: convertExampleTypeShape(samePropertiesAsObject.shape),
+                shape: convertExampleTypeShape(samePropertiesAsObject.shape)
             }),
         _other: () => {
             throw new Error("Unknown example single union type properties: " + exampleSingleUnionTypeProperties.type);
-        },
+        }
     });
 }
 
@@ -341,7 +341,7 @@ function convertTypeReference(typeReference: IrVersions.V23.TypeReference): IrVe
         unknown: IrVersions.V22.types.TypeReference.unknown,
         _other: () => {
             throw new Error("Unknown type reference: " + typeReference.type);
-        },
+        }
     });
 }
 
@@ -353,12 +353,12 @@ function convertContainerType(container: IrVersions.V23.ContainerType): IrVersio
         map: (mapType) =>
             IrVersions.V22.types.ContainerType.map({
                 keyType: convertTypeReference(mapType.keyType),
-                valueType: convertTypeReference(mapType.valueType),
+                valueType: convertTypeReference(mapType.valueType)
             }),
         literal: IrVersions.V22.types.ContainerType.literal,
         _other: () => {
             throw new Error("Unknown container type: " + container.type);
-        },
+        }
     });
 }
 
@@ -372,14 +372,14 @@ function convertResolvedTypeReference(
         unknown: IrVersions.V22.types.ResolvedTypeReference.unknown,
         _other: () => {
             throw new Error("Unknown resolved type reference: " + resolvedTypeReference.type);
-        },
+        }
     });
 }
 
 function convertObjectProperty(property: IrVersions.V23.ObjectProperty): IrVersions.V22.types.ObjectProperty {
     return {
         ...property,
-        valueType: convertTypeReference(property.valueType),
+        valueType: convertTypeReference(property.valueType)
     };
 }
 
@@ -391,40 +391,40 @@ function convertSingleUnionTypeProperties(
         singleProperty: (singleProperty) =>
             IrVersions.V22.types.SingleUnionTypeProperties.singleProperty({
                 ...singleProperty,
-                type: convertTypeReference(singleProperty.type),
+                type: convertTypeReference(singleProperty.type)
             }),
         samePropertiesAsObject: IrVersions.V22.types.SingleUnionTypeProperties.samePropertiesAsObject,
         _other: () => {
             throw new Error("Unknown single union type properties: " + properties.propertiesType);
-        },
+        }
     });
 }
 
 function convertError(error: IrVersions.V23.ErrorDeclaration): IrVersions.V22.errors.ErrorDeclaration {
     return {
         ...error,
-        type: error.type != null ? convertTypeReference(error.type) : undefined,
+        type: error.type != null ? convertTypeReference(error.type) : undefined
     };
 }
 
 function convertVariable(variable: IrVersions.V23.VariableDeclaration): IrVersions.V22.variables.VariableDeclaration {
     return {
         ...variable,
-        type: convertTypeReference(variable.type),
+        type: convertTypeReference(variable.type)
     };
 }
 
 function convertPathParameter(pathParameter: IrVersions.V23.PathParameter): IrVersions.V22.http.PathParameter {
     return {
         ...pathParameter,
-        valueType: convertTypeReference(pathParameter.valueType),
+        valueType: convertTypeReference(pathParameter.valueType)
     };
 }
 
 function convertQueryParameter(queryParameter: IrVersions.V23.QueryParameter): IrVersions.V22.http.QueryParameter {
     return {
         ...queryParameter,
-        valueType: convertTypeReference(queryParameter.valueType),
+        valueType: convertTypeReference(queryParameter.valueType)
     };
 }
 
@@ -433,12 +433,12 @@ function convertSdkRequestShape(sdkRequestShape: IrVersions.V23.SdkRequestShape)
         justRequestBody: (justRequestBody) =>
             IrVersions.V22.http.SdkRequestShape.justRequestBody({
                 ...justRequestBody,
-                requestBodyType: convertTypeReference(justRequestBody.requestBodyType),
+                requestBodyType: convertTypeReference(justRequestBody.requestBodyType)
             }),
         wrapper: IrVersions.V22.http.SdkRequestShape.wrapper,
         _other: () => {
             throw new Error("Unknown SDK request shape: " + sdkRequestShape.type);
-        },
+        }
     });
 }
 
@@ -447,7 +447,7 @@ function convertResponse(response: IrVersions.V23.HttpResponse): IrVersions.V22.
         json: (json) =>
             IrVersions.V22.http.HttpResponse.json({
                 ...json,
-                responseBodyType: convertTypeReference(json.responseBodyType),
+                responseBodyType: convertTypeReference(json.responseBodyType)
             }),
         fileDownload: IrVersions.V22.http.HttpResponse.fileDownload,
         streaming: (streaming) =>
@@ -458,12 +458,12 @@ function convertResponse(response: IrVersions.V23.HttpResponse): IrVersions.V22.
                     text: IrVersions.V22.http.StreamingResponseChunkType.text,
                     _other: () => {
                         throw new Error("Unknown streaming data event type: " + streaming.dataEventType.type);
-                    },
-                }),
+                    }
+                })
             }),
         _other: () => {
             throw new Error("Unknown response: " + response.type);
-        },
+        }
     });
 }
 
@@ -494,34 +494,34 @@ function convertExampleEndpointCall(
                               ...inlinedRequestBody,
                               properties: inlinedRequestBody.properties.map((property) => ({
                                   ...property,
-                                  value: convertExampleTypeReference(property.value),
-                              })),
+                                  value: convertExampleTypeReference(property.value)
+                              }))
                           }),
                       reference: (reference) =>
                           IrVersions.V22.http.ExampleRequestBody.reference({
                               ...reference,
-                              shape: convertExampleTypeReferenceShape(reference.shape),
+                              shape: convertExampleTypeReferenceShape(reference.shape)
                           }),
                       _other: () => {
                           throw new Error("Unknown example request body: " + exampleEndpointCall.request?.type);
-                      },
+                      }
                   })
                 : undefined,
         response: exampleEndpointCall.response._visit<IrVersions.V22.http.ExampleResponse>({
             ok: (okResponse) =>
                 IrVersions.V22.http.ExampleResponse.ok({
                     ...okResponse,
-                    body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined,
+                    body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined
                 }),
             error: (errorResponse) =>
                 IrVersions.V22.http.ExampleResponse.error({
                     ...errorResponse,
-                    body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined,
+                    body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
                 }),
             _other: () => {
                 throw new Error("Unknown example response: " + exampleEndpointCall.response.type);
-            },
-        }),
+            }
+        })
     };
 }
 
@@ -530,7 +530,7 @@ function convertExamplePathParameter(
 ): IrVersions.V22.http.ExamplePathParameter {
     return {
         ...examplePathParameter,
-        value: convertExampleTypeReference(examplePathParameter.value),
+        value: convertExampleTypeReference(examplePathParameter.value)
     };
 }
 
@@ -539,14 +539,14 @@ function convertExampleQueryParameter(
 ): IrVersions.V22.http.ExampleQueryParameter {
     return {
         ...exampleQueryParameter,
-        value: convertExampleTypeReference(exampleQueryParameter.value),
+        value: convertExampleTypeReference(exampleQueryParameter.value)
     };
 }
 
 function convertExampleHeader(exampleHeader: IrVersions.V23.ExampleHeader): IrVersions.V22.http.ExampleHeader {
     return {
         ...exampleHeader,
-        value: convertExampleTypeReference(exampleHeader.value),
+        value: convertExampleTypeReference(exampleHeader.value)
     };
 }
 
@@ -558,11 +558,11 @@ function convertFileUploadRequestBodyProperty(
         bodyProperty: (bodyProperty) =>
             IrVersions.V22.http.FileUploadRequestProperty.bodyProperty({
                 ...bodyProperty,
-                valueType: convertTypeReference(bodyProperty.valueType),
+                valueType: convertTypeReference(bodyProperty.valueType)
             }),
         _other: () => {
             throw new Error("Unknown file upload request body property: " + fileUploadRequestBodyProperty.type);
-        },
+        }
     });
 }
 
@@ -571,6 +571,6 @@ function convertInlinedRequestBodyProperty(
 ): IrVersions.V22.http.InlinedRequestBodyProperty {
     return {
         ...inlinedRequestBodyProperty,
-        valueType: convertTypeReference(inlinedRequestBodyProperty.valueType),
+        valueType: convertTypeReference(inlinedRequestBodyProperty.valueType)
     };
 }

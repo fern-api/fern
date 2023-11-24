@@ -10,7 +10,7 @@ describe("no-circular-imports", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,20 +18,20 @@ describe("no-circular-imports", () => {
                 message: "A file cannot import itself",
                 nodePath: ["imports", "b"],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Circular import detected: c/c.yml -> d/d.yml -> e.yml -> c/c.yml",
                 nodePath: ["imports", "d"],
                 relativeFilepath: RelativeFilePath.of("c/c.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Circular import detected: d/d.yml -> e.yml -> d/d.yml",
                 nodePath: ["imports", "e"],
                 relativeFilepath: RelativeFilePath.of("d/d.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

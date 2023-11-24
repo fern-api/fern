@@ -32,7 +32,7 @@ const SUCCESS_PAGE = `
 export async function doAuth0LoginFlow({
     auth0Domain,
     auth0ClientId,
-    audience,
+    audience
 }: {
     auth0Domain: string;
     auth0ClientId: string;
@@ -50,7 +50,7 @@ function getCode({
     auth0Domain,
     auth0ClientId,
     origin,
-    audience,
+    audience
 }: {
     server: Server;
     auth0Domain: string;
@@ -85,7 +85,7 @@ async function getTokenFromCode({
     auth0Domain,
     auth0ClientId,
     code,
-    origin,
+    origin
 }: {
     auth0Domain: string;
     auth0ClientId: string;
@@ -98,10 +98,10 @@ async function getTokenFromCode({
             grant_type: "authorization_code",
             client_id: auth0ClientId,
             code,
-            redirect_uri: origin,
+            redirect_uri: origin
         }).toString(),
         {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
         }
     );
     const { access_token: token } = response.data;
@@ -115,7 +115,7 @@ function constructAuth0Url({
     origin,
     auth0Domain,
     auth0ClientId,
-    audience,
+    audience
 }: {
     origin: string;
     auth0Domain: string;
@@ -128,7 +128,7 @@ function constructAuth0Url({
         connection: "github",
         scope: "openid profile email offline_access",
         redirect_uri: origin,
-        audience,
+        audience
     });
     return `https://${auth0Domain}/authorize?${queryParams.toString()}`;
 }

@@ -8,6 +8,6 @@ export function convertHeader(header: IrVersions.V5.http.HttpHeader): IrVersions
         nameV2: convertNameAndWireValueToV2(header.name),
         valueType: convertTypeReference(header.valueType),
         availability: header.availability,
-        docs: header.docs,
+        docs: header.docs
     };
 }

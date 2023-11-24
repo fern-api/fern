@@ -15,7 +15,7 @@ describe("add-value-key-to-type-examples", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newBlogYml = (

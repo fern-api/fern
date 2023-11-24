@@ -29,7 +29,7 @@ export declare namespace validateStructureOfYamlFiles {
 
 export function validateStructureOfYamlFiles({
     files,
-    absolutePathToDefinition,
+    absolutePathToDefinition
 }: {
     files: Record<RelativeFilePath, ParsedFernFile<unknown>>;
     absolutePathToDefinition: AbsoluteFilePath;
@@ -49,7 +49,7 @@ export function validateStructureOfYamlFiles({
         const addFailure = (error: ZodError) => {
             failures[relativeFilepath] = {
                 type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION,
-                error,
+                error
             };
         };
 
@@ -58,7 +58,7 @@ export function validateStructureOfYamlFiles({
             if (maybeValidFileContents.success) {
                 rootApiFile = {
                     contents: maybeValidFileContents.data,
-                    rawContents: file.rawContents,
+                    rawContents: file.rawContents
                 };
             } else {
                 addFailure(maybeValidFileContents.error);
@@ -68,7 +68,7 @@ export function validateStructureOfYamlFiles({
             if (maybeValidFileContents.success) {
                 packageMarkers[relativeFilepath] = {
                     contents: maybeValidFileContents.data,
-                    rawContents: file.rawContents,
+                    rawContents: file.rawContents
                 };
             } else {
                 addFailure(maybeValidFileContents.error);
@@ -79,7 +79,7 @@ export function validateStructureOfYamlFiles({
                 namesDefinitionFiles[relativeFilepath] = {
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents,
-                    absoluteFilepath: join(absolutePathToDefinition, relativeFilepath),
+                    absoluteFilepath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
                 addFailure(maybeValidFileContents.error);
@@ -92,24 +92,24 @@ export function validateStructureOfYamlFiles({
             didSucceed: false,
             failures: {
                 [RelativeFilePath.of(ROOT_API_FILENAME)]: {
-                    type: WorkspaceLoaderFailureType.FILE_MISSING,
+                    type: WorkspaceLoaderFailureType.FILE_MISSING
                 },
-                ...failures,
-            },
+                ...failures
+            }
         };
     }
 
     if (Object.keys(failures).length > 0) {
         return {
             didSucceed: false,
-            failures,
+            failures
         };
     } else {
         return {
             didSucceed: true,
             namedDefinitionFiles: namesDefinitionFiles,
             rootApiFile,
-            packageMarkers,
+            packageMarkers
         };
     }
 }

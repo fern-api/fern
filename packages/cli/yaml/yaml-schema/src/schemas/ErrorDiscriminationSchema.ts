@@ -4,7 +4,7 @@ import { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscrimina
 
 export const ErrorDiscriminationSchema = z.union([
     PropertyErrorDiscriminationSchema,
-    StatusCodeErrorDiscriminationSchema,
+    StatusCodeErrorDiscriminationSchema
 ]);
 
 export type ErrorDiscriminationSchema = z.infer<typeof ErrorDiscriminationSchema>;

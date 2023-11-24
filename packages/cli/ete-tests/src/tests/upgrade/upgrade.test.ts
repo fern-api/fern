@@ -15,37 +15,37 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                     version: "0.0.15",
                     output: {
                         location: "local-file-system",
-                        path: "./generated-postman",
-                    },
+                        path: "./generated-postman"
+                    }
                 },
                 {
                     name: "fernapi/fern-openapi",
                     version: "0.0.3",
                     output: {
                         location: "local-file-system",
-                        path: "./generated-openapi",
+                        path: "./generated-openapi"
                     },
                     config: {
-                        format: "yaml",
-                    },
+                        format: "yaml"
+                    }
                 },
                 {
                     name: "fernapi/fern-java-sdk",
                     version: "0.0.50",
                     output: {
                         location: "maven",
-                        coordinate: "",
-                    },
+                        coordinate: ""
+                    }
                 },
                 {
                     name: "fernapi/fern-typescript-sdk",
                     version: "0.0.11",
                     output: {
                         location: "npm",
-                        "package-name": "",
-                    },
-                },
-            ],
+                        "package-name": ""
+                    }
+                }
+            ]
         },
         external: {
             generators: [
@@ -54,39 +54,39 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                     version: "0.0.20",
                     output: {
                         location: "local-file-system",
-                        path: "./generated-postman",
-                    },
+                        path: "./generated-postman"
+                    }
                 },
                 {
                     name: "fernapi/fern-openapi",
                     version: "0.0.2",
                     output: {
                         location: "local-file-system",
-                        path: "./generated-openapi",
+                        path: "./generated-openapi"
                     },
                     config: {
-                        format: "yaml",
-                    },
+                        format: "yaml"
+                    }
                 },
                 {
                     name: "fernapi/fern-java-sdk",
                     version: "0.0.81",
                     output: {
                         location: "maven",
-                        coordinate: "",
-                    },
+                        coordinate: ""
+                    }
                 },
                 {
                     name: "fernapi/fern-typescript-sdk",
                     version: "0.0.14",
                     output: {
                         location: "npm",
-                        "package-name": "",
-                    },
-                },
-            ],
-        },
-    },
+                        "package-name": ""
+                    }
+                }
+            ]
+        }
+    }
 };
 
 describe("fern upgrade", () => {
@@ -104,8 +104,8 @@ describe("fern upgrade", () => {
             cwd: directory,
             env: {
                 // this env var needs to be defined so the CLI thinks we're mid-upgrade
-                FERN_PRE_UPGRADE_VERSION: "0.0.0",
-            },
+                FERN_PRE_UPGRADE_VERSION: "0.0.0"
+            }
         });
         const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
         expect(generatorsConfiguration).toMatchSnapshot();

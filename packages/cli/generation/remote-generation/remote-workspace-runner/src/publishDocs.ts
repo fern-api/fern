@@ -9,7 +9,7 @@ import {
     ParsedDocsConfiguration,
     parseDocsConfiguration,
     TypographyConfig,
-    UnversionedNavigationConfiguration,
+    UnversionedNavigationConfiguration
 } from "@fern-api/docs-configuration";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
@@ -31,7 +31,7 @@ export async function publishDocs({
     fernWorkspaces,
     context,
     version,
-    preview,
+    preview
 }: {
     token: FernToken;
     organization: string;
@@ -49,7 +49,7 @@ export async function publishDocs({
         rawDocsConfiguration: docsWorkspace.config,
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
-        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig,
+        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 
     const filepathsToUpload = getFilepathsToUpload(parsedDocsConfig);
@@ -65,7 +65,7 @@ export async function publishDocs({
     if (preview) {
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
             orgId: organization,
-            filepaths: relativeFilepathsToUpload,
+            filepaths: relativeFilepathsToUpload
         });
         if (startDocsRegisterResponse.ok) {
             urlToOutput = startDocsRegisterResponse.body.previewUrl;
@@ -76,7 +76,7 @@ export async function publishDocs({
             customDomains,
             apiId: "",
             orgId: organization,
-            filepaths: relativeFilepathsToUpload,
+            filepaths: relativeFilepathsToUpload
         });
     }
 
@@ -106,8 +106,8 @@ export async function publishDocs({
                 const mimeType = mime.lookup(filepathToUpload);
                 await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
                     headers: {
-                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType,
-                    },
+                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                    }
                 });
             }
         })
@@ -120,7 +120,7 @@ export async function publishDocs({
         context,
         token,
         uploadUrls,
-        version,
+        version
     });
     context.logger.debug("Calling registerDocs... ", JSON.stringify(registerDocsRequest, undefined, 4));
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
@@ -150,7 +150,7 @@ async function constructRegisterDocsRequest({
     context,
     token,
     uploadUrls,
-    version,
+    version
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     organization: string;
@@ -165,7 +165,7 @@ async function constructRegisterDocsRequest({
             pages: entries(parsedDocsConfig.pages).reduce(
                 (pages, [pageFilepath, pageContents]) => ({
                     ...pages,
-                    [pageFilepath]: { markdown: pageContents },
+                    [pageFilepath]: { markdown: pageContents }
                 }),
                 {}
             ),
@@ -176,9 +176,9 @@ async function constructRegisterDocsRequest({
                 context,
                 token,
                 uploadUrls,
-                version,
-            }),
-        },
+                version
+            })
+        }
     };
 }
 
@@ -189,7 +189,7 @@ async function convertDocsConfiguration({
     context,
     token,
     uploadUrls,
-    version,
+    version
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     organization: string;
@@ -208,7 +208,7 @@ async function convertDocsConfiguration({
                           imageReference: parsedDocsConfig.logo.dark,
                           parsedDocsConfig,
                           uploadUrls,
-                          context,
+                          context
                       })
                     : undefined,
             light:
@@ -217,9 +217,9 @@ async function convertDocsConfiguration({
                           imageReference: parsedDocsConfig.logo.light,
                           parsedDocsConfig,
                           uploadUrls,
-                          context,
+                          context
                       })
-                    : undefined,
+                    : undefined
         },
         logoHeight: parsedDocsConfig.logo?.height,
         logoHref: parsedDocsConfig.logo?.href,
@@ -229,7 +229,7 @@ async function convertDocsConfiguration({
                       imageReference: parsedDocsConfig.favicon,
                       parsedDocsConfig,
                       uploadUrls,
-                      context,
+                      context
                   })
                 : undefined,
         backgroundImage:
@@ -238,7 +238,7 @@ async function convertDocsConfiguration({
                       imageReference: parsedDocsConfig.backgroundImage,
                       parsedDocsConfig,
                       uploadUrls,
-                      context,
+                      context
                   })
                 : undefined,
         navigation: await convertNavigationConfig({
@@ -249,7 +249,7 @@ async function convertDocsConfiguration({
             fernWorkspaces,
             context,
             token,
-            version,
+            version
         }),
         colorsV2: {
             accentPrimary:
@@ -258,12 +258,12 @@ async function convertDocsConfiguration({
                         ? {
                               type: "themed",
                               dark: parsedDocsConfig.colors.accentPrimary.dark,
-                              light: parsedDocsConfig.colors.accentPrimary.light,
+                              light: parsedDocsConfig.colors.accentPrimary.light
                           }
                         : parsedDocsConfig.colors.accentPrimary.color != null
                         ? {
                               type: "unthemed",
-                              color: parsedDocsConfig.colors.accentPrimary.color,
+                              color: parsedDocsConfig.colors.accentPrimary.color
                           }
                         : undefined
                     : undefined,
@@ -273,23 +273,23 @@ async function convertDocsConfiguration({
                         ? {
                               type: "themed",
                               dark: parsedDocsConfig.colors.background.dark,
-                              light: parsedDocsConfig.colors.background.light,
+                              light: parsedDocsConfig.colors.background.light
                           }
                         : parsedDocsConfig.colors.background.color != null
                         ? {
                               type: "unthemed",
-                              color: parsedDocsConfig.colors.background.color,
+                              color: parsedDocsConfig.colors.background.color
                           }
                         : undefined
-                    : undefined,
+                    : undefined
         },
         navbarLinks: parsedDocsConfig.navbarLinks,
         typography: convertDocsTypographyConfiguration({
             typographyConfiguration: parsedDocsConfig.typography,
             parsedDocsConfig,
             uploadUrls,
-            context,
-        }),
+            context
+        })
     };
 }
 
@@ -301,7 +301,7 @@ async function convertNavigationConfig({
     fernWorkspaces,
     context,
     token,
-    version,
+    version
 }: {
     navigationConfig: DocsNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
@@ -324,10 +324,10 @@ async function convertNavigationConfig({
                             fernWorkspaces,
                             context,
                             token,
-                            version,
+                            version
                         })
                     )
-                ),
+                )
             };
         case "tabbed":
             return {
@@ -349,13 +349,13 @@ async function convertNavigationConfig({
                                         fernWorkspaces,
                                         context,
                                         token,
-                                        version,
+                                        version
                                     })
                                 )
-                            ),
+                            )
                         };
                     })
-                ),
+                )
             };
         case "versioned":
             return {
@@ -371,17 +371,17 @@ async function convertNavigationConfig({
                                     fernWorkspaces,
                                     context,
                                     token,
-                                    version: version.version,
+                                    version: version.version
                                 }),
                                 availability:
                                     version.availability != null
                                         ? convertAvailability(version.availability)
                                         : undefined,
-                                urlSlugOverride: version.slug,
+                                urlSlugOverride: version.slug
                             };
                         }
                     )
-                ),
+                )
             };
         default:
             assertNever(navigationConfig);
@@ -411,7 +411,7 @@ async function convertUnversionedNavigationConfig({
     fernWorkspaces,
     context,
     token,
-    version,
+    version
 }: {
     navigationConfig: UnversionedNavigationConfiguration;
     tabs?: Record<string, TabConfig>;
@@ -434,10 +434,10 @@ async function convertUnversionedNavigationConfig({
                             fernWorkspaces,
                             context,
                             token,
-                            version,
+                            version
                         })
                     )
-                ),
+                )
             };
         case "tabbed":
             return {
@@ -459,13 +459,13 @@ async function convertUnversionedNavigationConfig({
                                         fernWorkspaces,
                                         context,
                                         token,
-                                        version,
+                                        version
                                     })
                                 )
-                            ),
+                            )
                         };
                     })
-                ),
+                )
             };
         default:
             assertNever(navigationConfig);
@@ -476,7 +476,7 @@ function convertDocsTypographyConfiguration({
     typographyConfiguration,
     parsedDocsConfig,
     uploadUrls,
-    context,
+    context
 }: {
     typographyConfiguration?: TypographyConfig;
     parsedDocsConfig: ParsedDocsConfiguration;
@@ -492,22 +492,22 @@ function convertDocsTypographyConfiguration({
             context,
             parsedDocsConfig,
             label: "headings",
-            uploadUrls,
+            uploadUrls
         }),
         bodyFont: convertFont({
             font: typographyConfiguration.bodyFont,
             context,
             parsedDocsConfig,
             label: "body",
-            uploadUrls,
+            uploadUrls
         }),
         codeFont: convertFont({
             font: typographyConfiguration.codeFont,
             context,
             parsedDocsConfig,
             label: "code",
-            uploadUrls,
-        }),
+            uploadUrls
+        })
     };
     return result;
 }
@@ -517,7 +517,7 @@ function convertFont({
     parsedDocsConfig,
     uploadUrls,
     context,
-    label,
+    label
 }: {
     font: FontConfig | undefined;
     parsedDocsConfig: ParsedDocsConfiguration;
@@ -538,7 +538,7 @@ function convertFont({
 
     return {
         name: font.name ?? `font:${label}:${file.fileId}`,
-        fontFile: file.fileId,
+        fontFile: file.fileId
     };
 }
 
@@ -546,7 +546,7 @@ async function convertImageReference({
     imageReference,
     parsedDocsConfig,
     uploadUrls,
-    context,
+    context
 }: {
     imageReference: ImageReference;
     parsedDocsConfig: ParsedDocsConfiguration;
@@ -568,7 +568,7 @@ async function convertNavigationItem({
     fernWorkspaces,
     context,
     token,
-    version,
+    version
 }: {
     item: DocsNavigationItem;
     parsedDocsConfig: ParsedDocsConfiguration;
@@ -584,7 +584,7 @@ async function convertNavigationItem({
                 type: "page",
                 title: item.title,
                 id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
-                urlSlugOverride: item.slug,
+                urlSlugOverride: item.slug
             };
         case "section":
             return {
@@ -599,12 +599,12 @@ async function convertNavigationItem({
                             fernWorkspaces,
                             context,
                             token,
-                            version,
+                            version
                         })
                     )
                 ),
                 urlSlugOverride: item.slug,
-                collapsed: item.collapsed,
+                collapsed: item.collapsed
             };
         case "apiSection": {
             const apiDefinitionId = await registerApi({
@@ -614,14 +614,14 @@ async function convertNavigationItem({
                 token,
                 audiences: item.audiences,
                 snippetsConfig: convertDocsSnippetsConfigurationToFdr({
-                    snippetsConfiguration: item.snippetsConfiguration ?? {},
-                }),
+                    snippetsConfiguration: item.snippetsConfiguration ?? {}
+                })
             });
             return {
                 type: "api",
                 title: item.title,
                 api: apiDefinitionId,
-                showErrors: item.showErrors,
+                showErrors: item.showErrors
             };
         }
         default:
@@ -630,7 +630,7 @@ async function convertNavigationItem({
 }
 
 function convertDocsSnippetsConfigurationToFdr({
-    snippetsConfiguration,
+    snippetsConfiguration
 }: {
     snippetsConfiguration: SnippetsConfiguration;
 }): APIV1Write.SnippetsConfig {
@@ -638,33 +638,33 @@ function convertDocsSnippetsConfigurationToFdr({
         pythonSdk:
             snippetsConfiguration.python != null
                 ? {
-                      package: snippetsConfiguration.python,
+                      package: snippetsConfiguration.python
                   }
                 : undefined,
         typescriptSdk:
             snippetsConfiguration.typescript != null
                 ? {
-                      package: snippetsConfiguration.typescript,
+                      package: snippetsConfiguration.typescript
                   }
                 : undefined,
         goSdk:
             snippetsConfiguration.go != null
                 ? {
-                      githubRepo: snippetsConfiguration.go,
+                      githubRepo: snippetsConfiguration.go
                   }
                 : undefined,
         javaSdk:
             snippetsConfiguration.java != null
                 ? {
-                      coordinate: snippetsConfiguration.java,
+                      coordinate: snippetsConfiguration.java
                   }
-                : undefined,
+                : undefined
     };
 }
 
 function getFernWorkspaceForApiSection({
     apiSection,
-    fernWorkspaces,
+    fernWorkspaces
 }: {
     apiSection: DocsNavigationItem.ApiSection;
     fernWorkspaces: FernWorkspace[];

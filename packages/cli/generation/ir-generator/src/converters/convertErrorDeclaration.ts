@@ -6,7 +6,7 @@ import { parseErrorName } from "../utils/parseErrorName";
 export function convertErrorDeclaration({
     errorName,
     errorDeclaration,
-    file,
+    file
 }: {
     errorName: string;
     errorDeclaration: RawSchemas.ErrorDeclarationSchema;
@@ -15,14 +15,14 @@ export function convertErrorDeclaration({
     return {
         name: parseErrorName({
             errorName,
-            file,
+            file
         }),
         discriminantValue: file.casingsGenerator.generateNameAndWireValue({
             wireValue: errorName,
-            name: errorName,
+            name: errorName
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
-        type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
+        type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined
     };
 }

@@ -8,7 +8,7 @@ import { getExtensionsAsList, getPropertyName } from "./type-declarations/conver
 
 export function convertWebhookGroup({
     webhooks,
-    file,
+    file
 }: {
     webhooks: Record<string, RawSchemas.WebhookSchema>;
     file: FernFileContext;
@@ -27,7 +27,7 @@ export function convertWebhookGroup({
                           convertHttpHeader({ headerKey, header, file })
                       )
                     : [],
-            payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            payload: convertWebhookPayloadSchema({ payload: webhook.payload, file })
         });
     }
     return webhookGroup;
@@ -35,7 +35,7 @@ export function convertWebhookGroup({
 
 function convertWebhookPayloadSchema({
     payload,
-    file,
+    file
 }: {
     payload: RawSchemas.WebhookPayloadSchema;
     file: FernFileContext;
@@ -43,12 +43,12 @@ function convertWebhookPayloadSchema({
     if (typeof payload === "string") {
         return WebhookPayload.reference({
             docs: undefined,
-            payloadType: file.parseTypeReference(payload),
+            payloadType: file.parseTypeReference(payload)
         });
     } else if (isReferencedWebhookPayloadSchema(payload)) {
         return WebhookPayload.reference({
             docs: undefined,
-            payloadType: file.parseTypeReference(payload.type),
+            payloadType: file.parseTypeReference(payload.type)
         });
     } else {
         return WebhookPayload.inlinedPayload({
@@ -63,10 +63,10 @@ function convertWebhookPayloadSchema({
                               propertyKey,
                               propertyDefinition,
                               docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                              file,
+                              file
                           })
                       )
-                    : [],
+                    : []
         });
     }
 }
@@ -75,7 +75,7 @@ function convertInlinedRequestProperty({
     propertyKey,
     propertyDefinition,
     docs,
-    file,
+    file
 }: {
     propertyKey: string;
     propertyDefinition: RawSchemas.ObjectPropertySchema;
@@ -86,9 +86,9 @@ function convertInlinedRequestProperty({
         docs,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
-        valueType: file.parseTypeReference(propertyDefinition),
+        valueType: file.parseTypeReference(propertyDefinition)
     };
 }
 

@@ -12,7 +12,7 @@ export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<st
 function getReferenceOccurrencesHelper({
     obj,
     occurrences,
-    breadcrumbs,
+    breadcrumbs
 }: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     obj: any;
@@ -28,7 +28,7 @@ function getReferenceOccurrencesHelper({
             getReferenceOccurrencesHelper({
                 obj: element,
                 occurrences,
-                breadcrumbs,
+                breadcrumbs
             });
         }
         return;
@@ -51,7 +51,7 @@ function getReferenceOccurrencesHelper({
         getReferenceOccurrencesHelper({
             obj: obj[key],
             occurrences,
-            breadcrumbs: [...breadcrumbs, key],
+            breadcrumbs: [...breadcrumbs, key]
         });
     }
 }
@@ -84,11 +84,11 @@ function removeApplicationJsonAndMultipartConflictsFromDocument(document: OpenAP
                         delete:
                             pathItem?.delete != null
                                 ? removeApplicationJsonAndMultipartConflictsFromOperationObject(pathItem.delete)
-                                : undefined,
-                    },
+                                : undefined
+                    }
                 ];
             })
-        ),
+        )
     };
 }
 
@@ -102,7 +102,7 @@ function removeApplicationJsonAndMultipartConflictsFromOperationObject(
                 ? isReferenceObject(operationObject.requestBody)
                     ? operationObject.requestBody
                     : removeApplicationJsonAndMultipartConflictsFromRequestBody(operationObject.requestBody)
-                : undefined,
+                : undefined
     };
 }
 
@@ -115,8 +115,8 @@ function removeApplicationJsonAndMultipartConflictsFromRequestBody(
         return {
             ...requestBody,
             content: {
-                MULTIPART_CONTENT: multipartContent,
-            },
+                MULTIPART_CONTENT: multipartContent
+            }
         };
     }
     return requestBody;

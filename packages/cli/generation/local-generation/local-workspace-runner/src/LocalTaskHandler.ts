@@ -25,7 +25,7 @@ export class LocalTaskHandler {
         context,
         absolutePathToTmpOutputDirectory,
         absolutePathToTmpSnippetJSON,
-        absolutePathToLocalOutput,
+        absolutePathToLocalOutput
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -128,7 +128,7 @@ export class LocalTaskHandler {
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
         const response = await loggingExeca(this.context.logger, "git", options, {
             cwd,
-            doNotPipeOutput: true,
+            doNotPipeOutput: true
         });
         return response.stdout;
     }
@@ -137,7 +137,7 @@ export class LocalTaskHandler {
 const NEW_LINE_REGEX = /\r?\n/;
 
 async function getFernIgnorePaths({
-    absolutePathToFernignore,
+    absolutePathToFernignore
 }: {
     absolutePathToFernignore: AbsoluteFilePath;
 }): Promise<string[]> {
@@ -147,6 +147,6 @@ async function getFernIgnorePaths({
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
-            .filter((line) => !line.startsWith("#") && line.length > 0),
+            .filter((line) => !line.startsWith("#") && line.length > 0)
     ];
 }

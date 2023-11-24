@@ -6,7 +6,7 @@ export const PypiOutputLocationSchema = z.strictObject({
     "package-name": z.string(),
     token: z.optional(z.string()),
     username: z.optional(z.string()),
-    password: z.optional(z.string()),
+    password: z.optional(z.string())
 });
 
 export type PostmanOutputLocationSchema = z.infer<typeof PypiOutputLocationSchema>;

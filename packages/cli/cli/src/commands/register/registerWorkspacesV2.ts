@@ -7,7 +7,7 @@ import { CliContext } from "../../cli-context/CliContext";
 export async function registerWorkspacesV2({
     project,
     cliContext,
-    token,
+    token
 }: {
     project: Project;
     cliContext: CliContext;
@@ -25,7 +25,7 @@ export async function registerWorkspacesV2({
                         context,
                         token,
                         audiences: { type: "all" },
-                        snippetsConfig: {},
+                        snippetsConfig: {}
                     });
                     context.logger.info(chalk.green("Registered API"));
                 }

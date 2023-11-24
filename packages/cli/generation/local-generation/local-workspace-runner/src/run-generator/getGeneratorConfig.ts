@@ -23,7 +23,7 @@ export function getGeneratorConfig({
     customConfig,
     workspaceName,
     organization,
-    absolutePathToSnippet,
+    absolutePathToSnippet
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -36,16 +36,16 @@ export function getGeneratorConfig({
         downloadFiles: () => {
             return {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
             };
         },
         github: (value) => {
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
-                    version: "0.0.1",
+                    version: "0.0.1"
                 }),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
             };
             if (absolutePathToSnippet !== undefined) {
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
@@ -55,7 +55,7 @@ export function getGeneratorConfig({
         },
         _other: () => {
             throw new Error("Output type did not match any of the types supported by Fern");
-        },
+        }
     });
     return {
         binds,
@@ -67,8 +67,8 @@ export function getGeneratorConfig({
             workspaceName,
             organization,
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
-            dryRun: false,
-        },
+            dryRun: false
+        }
     };
 }
 
@@ -79,13 +79,13 @@ const DUMMY_PUBLISH_OUTPUT_CONFIG = {
                 group: "",
                 password: "",
                 registryUrl: "",
-                username: "",
+                username: ""
             },
             npm: {
                 registryUrl: "",
                 scope: "",
-                token: "",
-            },
+                token: ""
+            }
         },
         publishTarget: undefined,
         registriesV2: {
@@ -93,21 +93,21 @@ const DUMMY_PUBLISH_OUTPUT_CONFIG = {
                 password: "",
                 registryUrl: "",
                 username: "",
-                coordinate: "",
+                coordinate: ""
             },
             npm: {
                 registryUrl: "",
                 token: "",
-                packageName: "",
+                packageName: ""
             },
             pypi: {
                 packageName: "",
                 password: "",
                 registryUrl: "",
-                username: "",
-            },
+                username: ""
+            }
         },
-        version: "0.0.1",
+        version: "0.0.1"
     }),
-    path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
 };

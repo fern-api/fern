@@ -30,11 +30,11 @@ export const V28_TO_V27_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: "0.9.0-2-g6b0be0e",
         [GeneratorName.GO_MODEL]: "0.9.0-2-g6b0be0e",
-        [GeneratorName.GO_SDK]: "0.9.0-2-g6b0be0e",
+        [GeneratorName.GO_SDK]: "0.9.0-2-g6b0be0e"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V27.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v28): IrVersions.V27.ir.IntermediateRepresentation => {
         return {
@@ -62,9 +62,9 @@ export const V28_TO_V27_MIGRATION: IrMigration<
                 })
             ),
             pathParameters: convertPathParameters(v28.pathParameters),
-            variables: convertVariableDeclarations(v28.variables),
+            variables: convertVariableDeclarations(v28.variables)
         };
-    },
+    }
 };
 
 function convertVariableDeclarations(val: IrVersions.V28.VariableDeclaration[]): IrVersions.V27.VariableDeclaration[] {
@@ -76,14 +76,14 @@ function convertVariableDeclarations(val: IrVersions.V28.VariableDeclaration[]):
 function convertVariableDeclaration(val: IrVersions.V28.VariableDeclaration): IrVersions.V27.VariableDeclaration {
     return {
         ...val,
-        type: maybeConvertBooleanLiteralForTypeReference(val.type),
+        type: maybeConvertBooleanLiteralForTypeReference(val.type)
     };
 }
 
 function convertErrorDeclaration(val: IrVersions.V28.ErrorDeclaration): IrVersions.V27.ErrorDeclaration {
     return {
         ...val,
-        type: val.type != null ? maybeConvertBooleanLiteralForTypeReference(val.type) : undefined,
+        type: val.type != null ? maybeConvertBooleanLiteralForTypeReference(val.type) : undefined
     };
 }
 
@@ -97,7 +97,7 @@ function convertWebhook(val: IrVersions.V28.Webhook): IrVersions.V27.Webhook {
     return {
         ...val,
         headers: convertHttpHeaders(val.headers),
-        payload: convertWebhookPayload(val.payload),
+        payload: convertWebhookPayload(val.payload)
     };
 }
 
@@ -108,7 +108,7 @@ function convertWebhookPayload(val: IrVersions.V28.WebhookPayload): IrVersions.V
         case "reference":
             return IrVersions.V27.WebhookPayload.reference({
                 ...val,
-                payloadType: maybeConvertBooleanLiteralForTypeReference(val.payloadType),
+                payloadType: maybeConvertBooleanLiteralForTypeReference(val.payloadType)
             });
     }
 }
@@ -116,7 +116,7 @@ function convertWebhookPayload(val: IrVersions.V28.WebhookPayload): IrVersions.V
 function convertInlinedWebhookPayload(val: IrVersions.V28.InlinedWebhookPayload): IrVersions.V27.InlinedWebhookPayload {
     return {
         ...val,
-        properties: convertInlinedWebhookPayloadProperties(val.properties),
+        properties: convertInlinedWebhookPayloadProperties(val.properties)
     };
 }
 
@@ -133,7 +133,7 @@ function convertInlinedWebhookPayloadProperty(
 ): IrVersions.V27.InlinedWebhookPayloadProperty {
     return {
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     };
 }
 
@@ -142,7 +142,7 @@ function convertHttpService(val: IrVersions.V28.HttpService): IrVersions.V27.Htt
         ...val,
         endpoints: convertHttpEndpoints(val.endpoints),
         headers: convertHttpHeaders(val.headers),
-        pathParameters: convertPathParameters(val.pathParameters),
+        pathParameters: convertPathParameters(val.pathParameters)
     };
 }
 
@@ -161,7 +161,7 @@ function convertHttpEndpoint(val: IrVersions.V28.HttpEndpoint): IrVersions.V27.H
         queryParameters: convertQueryParameters(val.queryParameters),
         requestBody: val.requestBody != null ? convertHttpRequestBody(val.requestBody) : undefined,
         sdkRequest: val.sdkRequest != null ? convertSdkRequest(val.sdkRequest) : undefined,
-        response: val.response != null ? convertHttpResponse(val.response) : undefined,
+        response: val.response != null ? convertHttpResponse(val.response) : undefined
     };
 }
 
@@ -183,7 +183,7 @@ function convertHttpResponse(val: IrVersions.V28.HttpResponse): IrVersions.V27.H
 function convertStreamingResponse(val: IrVersions.V28.StreamingResponse): IrVersions.V27.StreamingResponse {
     return {
         ...val,
-        dataEventType: convertStreamingResponseChunkType(val.dataEventType),
+        dataEventType: convertStreamingResponseChunkType(val.dataEventType)
     };
 }
 
@@ -205,14 +205,13 @@ function convertJsonResponse(val: IrVersions.V28.JsonResponse): IrVersions.V27.J
         case "response":
             return IrVersions.V27.JsonResponse.response({
                 ...val,
-                responseBodyType: maybeConvertBooleanLiteralForTypeReference(val.responseBodyType),
+                responseBodyType: maybeConvertBooleanLiteralForTypeReference(val.responseBodyType)
             });
         case "nestedPropertyAsResponse":
             return IrVersions.V27.JsonResponse.nestedPropertyAsResponse({
                 ...val,
                 responseBodyType: maybeConvertBooleanLiteralForTypeReference(val.responseBodyType),
-                responseProperty:
-                    val.responseProperty != null ? convertObjectProperty(val.responseProperty) : undefined,
+                responseProperty: val.responseProperty != null ? convertObjectProperty(val.responseProperty) : undefined
             });
         default:
             assertNever(val);
@@ -222,7 +221,7 @@ function convertJsonResponse(val: IrVersions.V28.JsonResponse): IrVersions.V27.J
 function convertSdkRequest(val: IrVersions.V28.SdkRequest): IrVersions.V27.SdkRequest {
     return {
         ...val,
-        shape: convertSdkRequestShape(val.shape),
+        shape: convertSdkRequestShape(val.shape)
     };
 }
 
@@ -266,7 +265,7 @@ function convertHttpRequestBody(val: IrVersions.V28.HttpRequestBody): IrVersions
 function convertFileUploadRequest(val: IrVersions.V28.FileUploadRequest): IrVersions.V27.FileUploadRequest {
     return {
         ...val,
-        properties: convertFileUploadRequestProperties(val.properties),
+        properties: convertFileUploadRequestProperties(val.properties)
     };
 }
 
@@ -296,14 +295,14 @@ function convertHttpRequestBodyReference(
 ): IrVersions.V27.HttpRequestBodyReference {
     return {
         ...val,
-        requestBodyType: maybeConvertBooleanLiteralForTypeReference(val.requestBodyType),
+        requestBodyType: maybeConvertBooleanLiteralForTypeReference(val.requestBodyType)
     };
 }
 
 function convertInlinedRequestBody(val: IrVersions.V28.InlinedRequestBody): IrVersions.V27.InlinedRequestBody {
     return {
         ...val,
-        properties: convertInlinedRequestBodyProperties(val.properties),
+        properties: convertInlinedRequestBodyProperties(val.properties)
     };
 }
 
@@ -320,7 +319,7 @@ function convertInlinedRequestBodyProperty(
 ): IrVersions.V27.InlinedRequestBodyProperty {
     return {
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     };
 }
 
@@ -333,7 +332,7 @@ function convertPathParameters(val: IrVersions.V28.PathParameter[]): IrVersions.
 function convertPathParameter(val: IrVersions.V28.PathParameter): IrVersions.V27.PathParameter {
     return {
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     };
 }
 
@@ -346,14 +345,14 @@ function convertQueryParameters(val: IrVersions.V28.QueryParameter[]): IrVersion
 function convertQueryParameter(val: IrVersions.V28.QueryParameter): IrVersions.V27.QueryParameter {
     return {
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     };
 }
 
 function convertAuth(val: IrVersions.V28.ApiAuth): IrVersions.V27.ApiAuth {
     return {
         ...val,
-        schemes: convertAuthSchemes(val.schemes),
+        schemes: convertAuthSchemes(val.schemes)
     };
 }
 
@@ -379,7 +378,7 @@ function convertAuthScheme(val: IrVersions.V28.AuthScheme): IrVersions.V27.AuthS
 function convertHeaderAuthScheme(val: IrVersions.V28.AuthScheme.Header): IrVersions.V27.AuthScheme.Header {
     return IrVersions.V27.AuthScheme.header({
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     });
 }
 
@@ -392,14 +391,14 @@ function convertHttpHeaders(val: IrVersions.V28.HttpHeader[]): IrVersions.V27.Ht
 function convertHttpHeader(val: IrVersions.V28.HttpHeader): IrVersions.V27.HttpHeader {
     return {
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     };
 }
 
 function convertTypeDeclaration(val: IrVersions.V28.TypeDeclaration): IrVersions.V27.TypeDeclaration {
     return {
         ...val,
-        shape: convertType(val.shape),
+        shape: convertType(val.shape)
     };
 }
 
@@ -423,14 +422,14 @@ function convertType(val: IrVersions.V28.Type): IrVersions.V27.Type {
 function convertAliasTypeDeclaration(val: IrVersions.V28.AliasTypeDeclaration): IrVersions.V27.AliasTypeDeclaration {
     return {
         aliasOf: maybeConvertBooleanLiteralForTypeReference(val.aliasOf),
-        resolvedType: convertResolvedTypeReference(val.resolvedType),
+        resolvedType: convertResolvedTypeReference(val.resolvedType)
     };
 }
 
 function convertObjectTypeDeclaration(val: IrVersions.V28.ObjectTypeDeclaration): IrVersions.V27.ObjectTypeDeclaration {
     return {
         ...val,
-        properties: convertObjectProperties(val.properties),
+        properties: convertObjectProperties(val.properties)
     };
 }
 
@@ -438,7 +437,7 @@ function convertUnionTypeDeclaration(val: IrVersions.V28.UnionTypeDeclaration): 
     return {
         ...val,
         types: convertSingleUnionTypes(val.types),
-        baseProperties: convertObjectProperties(val.baseProperties),
+        baseProperties: convertObjectProperties(val.baseProperties)
     };
 }
 
@@ -446,7 +445,7 @@ function convertUndiscriminatedUnionTypeDeclaration(
     val: IrVersions.V28.UndiscriminatedUnionTypeDeclaration
 ): IrVersions.V27.UndiscriminatedUnionTypeDeclaration {
     return {
-        members: convertUndiscriminatedUnionMembers(val.members),
+        members: convertUndiscriminatedUnionMembers(val.members)
     };
 }
 
@@ -459,7 +458,7 @@ function convertObjectProperties(val: IrVersions.V28.ObjectProperty[]): IrVersio
 function convertObjectProperty(val: IrVersions.V28.ObjectProperty): IrVersions.V27.ObjectProperty {
     return {
         ...val,
-        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType),
+        valueType: maybeConvertBooleanLiteralForTypeReference(val.valueType)
     };
 }
 
@@ -467,7 +466,7 @@ function convertSingleUnionTypes(val: IrVersions.V28.SingleUnionType[]): IrVersi
     return val.map((singleUnionType) => {
         return {
             ...singleUnionType,
-            shape: convertSingleUnionTypeProperties(singleUnionType.shape),
+            shape: convertSingleUnionTypeProperties(singleUnionType.shape)
         };
     });
 }
@@ -481,7 +480,7 @@ function convertSingleUnionTypeProperties(
         case "singleProperty":
             return IrVersions.V27.SingleUnionTypeProperties.singleProperty({
                 name: val.name,
-                type: maybeConvertBooleanLiteralForTypeReference(val.type),
+                type: maybeConvertBooleanLiteralForTypeReference(val.type)
             });
         case "noProperties":
             return IrVersions.V27.SingleUnionTypeProperties.noProperties();
@@ -496,7 +495,7 @@ function convertUndiscriminatedUnionMembers(
     return val.map((member) => {
         return {
             ...member,
-            type: maybeConvertBooleanLiteralForTypeReference(member.type),
+            type: maybeConvertBooleanLiteralForTypeReference(member.type)
         };
     });
 }
@@ -556,7 +555,7 @@ function maybeConvertBooleanLiteralForContainer(container: IrVersions.V28.Contai
         case "map":
             return IrVersions.V27.ContainerType.map({
                 keyType: maybeConvertBooleanLiteralForTypeReference(container.keyType),
-                valueType: maybeConvertBooleanLiteralForTypeReference(container.valueType),
+                valueType: maybeConvertBooleanLiteralForTypeReference(container.valueType)
             });
         case "optional":
             return IrVersions.V27.ContainerType.optional(

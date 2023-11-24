@@ -5,7 +5,7 @@ import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentat
 export function migrateIntermediateRepresentationThroughVersion({
     intermediateRepresentation,
     context,
-    version,
+    version
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
@@ -14,7 +14,7 @@ export function migrateIntermediateRepresentationThroughVersion({
     const migrated = getIntermediateRepresentationMigrator().migrateThroughVersion({
         version,
         intermediateRepresentation,
-        context,
+        context
     });
     return migrated.jsonify();
 }

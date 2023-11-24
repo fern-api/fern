@@ -22,8 +22,8 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     ...event,
                     ...event.properties,
                     version: process.env.CLI_VERSION,
-                    usingAccessToken: true,
-                },
+                    usingAccessToken: true
+                }
             });
         }
     }

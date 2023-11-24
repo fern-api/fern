@@ -6,7 +6,7 @@ import { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 export const AuthSchemeDeclarationSchema = z.union([
     HeaderAuthSchemeSchema,
     BasicAuthSchemeSchema,
-    BearerAuthSchemeSchema,
+    BearerAuthSchemeSchema
 ]);
 
 export type AuthSchemeDeclarationSchema = z.infer<typeof AuthSchemeDeclarationSchema>;

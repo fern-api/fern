@@ -21,26 +21,26 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
         return SecurityScheme.header({
             headerName: securityScheme.name,
             prefix: bearerFormat != null ? "Bearer" : undefined,
-            headerVariableName: getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
+            headerVariableName: getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME)
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
         const tokenVariableName = getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME);
         return SecurityScheme.bearer({
-            tokenVariableName: tokenVariableName ?? undefined,
+            tokenVariableName: tokenVariableName ?? undefined
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
             usernameVariableName: basicSecuritySchemeNaming.usernameVariable ?? undefined,
-            passwordVariableName: basicSecuritySchemeNaming.passwordVariable ?? undefined,
+            passwordVariableName: basicSecuritySchemeNaming.passwordVariable ?? undefined
         });
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({
-            tokenVariableName: undefined,
+            tokenVariableName: undefined
         });
     } else if (securityScheme.type === "oauth2") {
         return SecurityScheme.bearer({
-            tokenVariableName: undefined,
+            tokenVariableName: undefined
         });
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);

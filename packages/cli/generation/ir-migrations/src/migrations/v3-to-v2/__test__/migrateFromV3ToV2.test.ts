@@ -7,7 +7,7 @@ const runMigration = createMigrationTester(V3_TO_V2_MIGRATION);
 describe("migrateFromV3ToV2", () => {
     it("adds discriminantValue to errors", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,8 +24,8 @@ describe("migrateFromV3ToV2", () => {
                         originalValue: "blog",
                         pascalCase: "Blog",
                         screamingSnakeCase: "BLOG",
-                        snakeCase: "blog",
-                    },
+                        snakeCase: "blog"
+                    }
                 ],
                 fernFilepathV2: [
                     {
@@ -34,16 +34,16 @@ describe("migrateFromV3ToV2", () => {
                             originalValue: "blog",
                             pascalCase: "Blog",
                             screamingSnakeCase: "BLOG",
-                            snakeCase: "blog",
+                            snakeCase: "blog"
                         },
                         unsafeName: {
                             camelCase: "blog",
                             originalValue: "blog",
                             pascalCase: "Blog",
                             screamingSnakeCase: "BLOG",
-                            snakeCase: "blog",
-                        },
-                    },
+                            snakeCase: "blog"
+                        }
+                    }
                 ],
                 name: "Blog",
                 nameV2: {
@@ -51,7 +51,7 @@ describe("migrateFromV3ToV2", () => {
                     originalValue: "Blog",
                     pascalCase: "Blog",
                     screamingSnakeCase: "BLOG",
-                    snakeCase: "blog",
+                    snakeCase: "blog"
                 },
                 nameV3: {
                     safeName: {
@@ -59,16 +59,16 @@ describe("migrateFromV3ToV2", () => {
                         originalValue: "Blog",
                         pascalCase: "Blog",
                         screamingSnakeCase: "BLOG",
-                        snakeCase: "blog",
+                        snakeCase: "blog"
                     },
                     unsafeName: {
                         camelCase: "blog",
                         originalValue: "Blog",
                         pascalCase: "Blog",
                         screamingSnakeCase: "BLOG",
-                        snakeCase: "blog",
-                    },
-                },
+                        snakeCase: "blog"
+                    }
+                }
             },
             typeV2: {
                 _type: "named",
@@ -78,8 +78,8 @@ describe("migrateFromV3ToV2", () => {
                         originalValue: "blog",
                         pascalCase: "Blog",
                         screamingSnakeCase: "BLOG",
-                        snakeCase: "blog",
-                    },
+                        snakeCase: "blog"
+                    }
                 ],
                 fernFilepathV2: [
                     {
@@ -88,16 +88,16 @@ describe("migrateFromV3ToV2", () => {
                             originalValue: "blog",
                             pascalCase: "Blog",
                             screamingSnakeCase: "BLOG",
-                            snakeCase: "blog",
+                            snakeCase: "blog"
                         },
                         unsafeName: {
                             camelCase: "blog",
                             originalValue: "blog",
                             pascalCase: "Blog",
                             screamingSnakeCase: "BLOG",
-                            snakeCase: "blog",
-                        },
-                    },
+                            snakeCase: "blog"
+                        }
+                    }
                 ],
                 name: "Blog",
                 nameV2: {
@@ -105,7 +105,7 @@ describe("migrateFromV3ToV2", () => {
                     originalValue: "Blog",
                     pascalCase: "Blog",
                     screamingSnakeCase: "BLOG",
-                    snakeCase: "blog",
+                    snakeCase: "blog"
                 },
                 nameV3: {
                     safeName: {
@@ -113,17 +113,17 @@ describe("migrateFromV3ToV2", () => {
                         originalValue: "Blog",
                         pascalCase: "Blog",
                         screamingSnakeCase: "BLOG",
-                        snakeCase: "blog",
+                        snakeCase: "blog"
                     },
                     unsafeName: {
                         camelCase: "blog",
                         originalValue: "Blog",
                         pascalCase: "Blog",
                         screamingSnakeCase: "BLOG",
-                        snakeCase: "blog",
-                    },
-                },
-            },
+                        snakeCase: "blog"
+                    }
+                }
+            }
         });
     });
 });

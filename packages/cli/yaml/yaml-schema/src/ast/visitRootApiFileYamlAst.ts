@@ -44,7 +44,7 @@ export async function visitRootApiFileYamlAst(
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: ["path-parameters"],
+                nodePath: ["path-parameters"]
             });
         },
         variables: async (variables) => {
@@ -53,12 +53,12 @@ export async function visitRootApiFileYamlAst(
                     await visitor.variableDeclaration?.(
                         {
                             variableId,
-                            variable,
+                            variable
                         },
                         ["variables", variableId]
                     );
                 }
             }
-        },
+        }
     });
 }

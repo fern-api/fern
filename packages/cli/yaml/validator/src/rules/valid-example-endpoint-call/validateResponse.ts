@@ -12,7 +12,7 @@ export function validateResponse({
     exampleResolver,
     file,
     workspace,
-    errorResolver,
+    errorResolver
 }: {
     example: RawSchemas.ExampleResponseSchema | undefined;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -33,14 +33,14 @@ export function validateResponse({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace,
+                    workspace
                 })
             );
         } else if (example?.body != null) {
             violations.push({
                 severity: "error",
                 message:
-                    "Unexpected response in example. If you're adding an example of an error response, set the \"error\" property to the error's name",
+                    "Unexpected response in example. If you're adding an example of an error response, set the \"error\" property to the error's name"
             });
         }
     } else {
@@ -61,7 +61,7 @@ export function validateResponse({
                         example.error
                     )} is not specified as an allowed error for this endpoint. Add ${chalk.bold(
                         example.error
-                    )} to the endpoint's "errors" list.`,
+                    )} to the endpoint's "errors" list.`
                 });
             }
 
@@ -73,13 +73,13 @@ export function validateResponse({
                         typeResolver,
                         exampleResolver,
                         file: errorDeclaration.file,
-                        workspace,
+                        workspace
                     })
                 );
             } else if (example.body != null) {
                 violations.push({
                     severity: "error",
-                    message: `Unexpected response in example. ${chalk.bold(example.error)} does not have a body.`,
+                    message: `Unexpected response in example. ${chalk.bold(example.error)} does not have a body.`
                 });
             }
         }

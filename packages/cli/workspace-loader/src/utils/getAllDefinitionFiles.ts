@@ -10,6 +10,6 @@ export function getAllDefinitionFiles(
 ): Record<RelativeFilePath, ParsedFernFile<DefinitionFileSchema>> {
     return {
         ...getAllPackageMarkers(definition),
-        ...getAllNamedDefinitionFiles(definition),
+        ...getAllNamedDefinitionFiles(definition)
     };
 }

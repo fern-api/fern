@@ -15,7 +15,7 @@ export function validateTypeExample({
     typeResolver,
     exampleResolver,
     example,
-    workspace,
+    workspace
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -33,13 +33,13 @@ export function validateTypeExample({
                 typeResolver,
                 exampleResolver,
                 example,
-                workspace,
+                workspace
             });
         },
         enum: (rawEnum) => {
             return validateEnumExample({
                 rawEnum,
-                example,
+                example
             });
         },
         object: (rawObject) => {
@@ -51,7 +51,7 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 exampleResolver,
-                workspace,
+                workspace
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -62,7 +62,7 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 exampleResolver,
-                workspace,
+                workspace
             });
         },
         undiscriminatedUnion: (rawUnion) => {
@@ -72,8 +72,8 @@ export function validateTypeExample({
                 file,
                 typeResolver,
                 exampleResolver,
-                workspace,
+                workspace
             });
-        },
+        }
     });
 }

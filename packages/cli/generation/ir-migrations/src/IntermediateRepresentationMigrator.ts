@@ -88,7 +88,7 @@ class IntermediateRepresentationMigratorBuilderImpl<LaterVersion>
     ): BuildableIntermediateRepresentationMigratorBuilder<EarlierVersion> {
         return new BuildaleIntermediateRepresentationMigratorBuilderImpl<EarlierVersion>([
             ...this.migrations,
-            migration,
+            migration
         ]);
     }
 }
@@ -109,7 +109,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     public migrateForGenerator({
         intermediateRepresentation,
         context,
-        targetGenerator,
+        targetGenerator
     }: {
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
@@ -119,7 +119,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             intermediateRepresentation,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, targetGenerator }),
             context,
-            targetGenerator,
+            targetGenerator
         });
     }
 
@@ -127,7 +127,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         migration,
         intermediateRepresentation,
         context,
-        targetGenerator,
+        targetGenerator
     }: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
@@ -138,7 +138,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             version: migration.earlierVersion,
             intermediateRepresentation,
             context,
-            targetGenerator,
+            targetGenerator
         });
     }
 
@@ -146,7 +146,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         version,
         intermediateRepresentation,
         context,
-        targetGenerator,
+        targetGenerator
     }: {
         version: string;
         intermediateRepresentation: IntermediateRepresentation;
@@ -162,9 +162,9 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 jsonify: () =>
                     Promise.resolve().then(() =>
                         IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
-                            unrecognizedObjectKeys: "strip",
+                            unrecognizedObjectKeys: "strip"
                         })
-                    ),
+                    )
             };
         }
 
@@ -176,7 +176,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 return isEncounteringMigration || !hasEncouneredMigrationYet;
             },
             context,
-            targetGenerator,
+            targetGenerator
         });
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -191,7 +191,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation,
         shouldMigrate,
         context,
-        targetGenerator,
+        targetGenerator
     }: {
         intermediateRepresentation: IntermediateRepresentation;
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
@@ -201,7 +201,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         let migrated: unknown = intermediateRepresentation;
         let jsonify: () => Promise<unknown> = () =>
             IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "strip"
             });
 
         for (const migration of this.migrations) {
@@ -211,20 +211,20 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             context.logger.debug(`Migrating IR from ${migration.laterVersion} to ${migration.earlierVersion}`);
             migrated = migration.migrateBackwards(migrated, {
                 taskContext: context,
-                targetGenerator,
+                targetGenerator
             });
             jsonify = () => Promise.resolve().then(() => migration.jsonifyEarlierVersion(migrated));
         }
 
         return {
             ir: migrated as Migrated,
-            jsonify,
+            jsonify
         };
     }
 
     private shouldRunMigration({
         migration,
-        targetGenerator,
+        targetGenerator
     }: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         migration: IrMigration<any, any>;
@@ -254,7 +254,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
 }
 
 const IntermediateRepresentationMigrator = {
-    Builder: new IntermediateRepresentationMigratorBuilderImpl<IntermediateRepresentation>([]),
+    Builder: new IntermediateRepresentationMigratorBuilderImpl<IntermediateRepresentation>([])
 };
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder

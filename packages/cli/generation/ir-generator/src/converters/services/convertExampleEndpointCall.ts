@@ -7,7 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
-    Name,
+    Name
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -17,7 +17,7 @@ import { VariableResolver } from "../../resolvers/VariableResolver";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
-    getOriginalTypeDeclarationForPropertyFromExtensions,
+    getOriginalTypeDeclarationForPropertyFromExtensions
 } from "../type-declarations/convertExampleType";
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, getQueryParameterName, resolvePathParameterOrThrow } from "./convertHttpService";
@@ -30,7 +30,7 @@ export function convertExampleEndpointCall({
     errorResolver,
     exampleResolver,
     variableResolver,
-    file,
+    file
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -61,9 +61,9 @@ export function convertExampleEndpointCall({
                           name: file.casingsGenerator.generateNameAndWireValue({
                               name: getQueryParameterName({
                                   queryParameterKey: wireKey,
-                                  queryParameter: queryParameterDeclaration,
+                                  queryParameter: queryParameterDeclaration
                               }).name,
-                              wireValue: wireKey,
+                              wireValue: wireKey
                           }),
                           value: convertTypeReferenceExample({
                               example: value,
@@ -74,13 +74,13 @@ export function convertExampleEndpointCall({
                               typeResolver,
                               exampleResolver,
                               fileContainingRawTypeReference: file,
-                              fileContainingExample: file,
-                          }),
+                              fileContainingExample: file
+                          })
                       };
                   })
                 : [],
         request: convertExampleRequestBody({ endpoint, example, typeResolver, exampleResolver, file }),
-        response: convertExampleResponse({ endpoint, example, typeResolver, errorResolver, exampleResolver, file }),
+        response: convertExampleResponse({ endpoint, example, typeResolver, errorResolver, exampleResolver, file })
     };
 }
 
@@ -91,7 +91,7 @@ function convertPathParameters({
     typeResolver,
     exampleResolver,
     variableResolver,
-    file,
+    file
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -108,7 +108,7 @@ function convertPathParameters({
     const buildExamplePathParameter = ({
         name,
         pathParameterDeclaration,
-        examplePathParameter,
+        examplePathParameter
     }: {
         name: Name;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
@@ -117,7 +117,7 @@ function convertPathParameters({
         const resolvedPathParameter = resolvePathParameterOrThrow({
             parameter: pathParameterDeclaration,
             variableResolver,
-            file,
+            file
         });
         return {
             name,
@@ -127,8 +127,8 @@ function convertPathParameters({
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: resolvedPathParameter.file,
-                fileContainingExample: file,
-            }),
+                fileContainingExample: file
+            })
         };
     };
 
@@ -143,7 +143,7 @@ function convertPathParameters({
                     buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: rootPathParameterDeclaration,
-                        examplePathParameter,
+                        examplePathParameter
                     })
                 );
             } else if (endpointPathParameterDeclaration != null) {
@@ -151,7 +151,7 @@ function convertPathParameters({
                     buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: endpointPathParameterDeclaration,
-                        examplePathParameter,
+                        examplePathParameter
                     })
                 );
             } else if (servicePathParameterDeclaration != null) {
@@ -159,7 +159,7 @@ function convertPathParameters({
                     buildExamplePathParameter({
                         name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration: servicePathParameterDeclaration,
-                        examplePathParameter,
+                        examplePathParameter
                     })
                 );
             } else {
@@ -171,7 +171,7 @@ function convertPathParameters({
     return {
         rootPathParameters,
         endpointPathParameters,
-        servicePathParameters,
+        servicePathParameters
     };
 }
 
@@ -181,7 +181,7 @@ function convertHeaders({
     example,
     typeResolver,
     exampleResolver,
-    file,
+    file
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -202,7 +202,7 @@ function convertHeaders({
                 endpointHeaders.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
-                        wireValue: wireKey,
+                        wireValue: wireKey
                     }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
@@ -213,14 +213,14 @@ function convertHeaders({
                         typeResolver,
                         exampleResolver,
                         fileContainingRawTypeReference: file,
-                        fileContainingExample: file,
-                    }),
+                        fileContainingExample: file
+                    })
                 });
             } else if (serviceHeaderDeclaration != null) {
                 serviceHeaders.push({
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
-                        wireValue: wireKey,
+                        wireValue: wireKey
                     }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
@@ -231,8 +231,8 @@ function convertHeaders({
                         typeResolver,
                         exampleResolver,
                         fileContainingRawTypeReference: file,
-                        fileContainingExample: file,
-                    }),
+                        fileContainingExample: file
+                    })
                 });
             } else {
                 throw new Error(`Heder ${wireKey} does not exist`);
@@ -242,7 +242,7 @@ function convertHeaders({
 
     return {
         endpointHeaders,
-        serviceHeaders,
+        serviceHeaders
     };
 }
 
@@ -251,7 +251,7 @@ function convertExampleRequestBody({
     example,
     typeResolver,
     exampleResolver,
-    file,
+    file
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
@@ -271,7 +271,7 @@ function convertExampleRequestBody({
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: file,
-                fileContainingExample: file,
+                fileContainingExample: file
             })
         );
     }
@@ -287,7 +287,7 @@ function convertExampleRequestBody({
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
-                    wireValue: wireKey,
+                    wireValue: wireKey
                 }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
@@ -298,16 +298,16 @@ function convertExampleRequestBody({
                     typeResolver,
                     exampleResolver,
                     fileContainingRawTypeReference: file,
-                    fileContainingExample: file,
+                    fileContainingExample: file
                 }),
-                originalTypeDeclaration: undefined,
+                originalTypeDeclaration: undefined
             });
         } else {
             const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
                 extends_: requestType.extends,
                 wirePropertyKey: wireKey,
                 typeResolver,
-                file,
+                file
             });
             if (originalTypeDeclaration == null) {
                 throw new Error("Could not find original type declaration for property: " + wireKey);
@@ -316,7 +316,7 @@ function convertExampleRequestBody({
                 name: file.casingsGenerator.generateNameAndWireValue({
                     name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
                         .name,
-                    wireValue: wireKey,
+                    wireValue: wireKey
                 }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
@@ -327,9 +327,9 @@ function convertExampleRequestBody({
                     typeResolver,
                     exampleResolver,
                     fileContainingRawTypeReference: file,
-                    fileContainingExample: file,
+                    fileContainingExample: file
                 }),
-                originalTypeDeclaration: originalTypeDeclaration.typeName,
+                originalTypeDeclaration: originalTypeDeclaration.typeName
             });
         }
     }
@@ -337,7 +337,7 @@ function convertExampleRequestBody({
     return ExampleRequestBody.inlinedRequestBody({
         jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({ example: example.request, file })
             .resolvedExample,
-        properties: exampleProperties,
+        properties: exampleProperties
     });
 }
 
@@ -347,7 +347,7 @@ function convertExampleResponse({
     typeResolver,
     errorResolver,
     exampleResolver,
-    file,
+    file
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
@@ -361,7 +361,7 @@ function convertExampleResponse({
         return ExampleResponse.error({
             error: parseErrorName({
                 errorName: example.response.error,
-                file,
+                file
             }),
             body:
                 errorDeclaration.declaration.type != null
@@ -371,14 +371,14 @@ function convertExampleResponse({
                           typeResolver,
                           exampleResolver,
                           fileContainingRawTypeReference: errorDeclaration.file,
-                          fileContainingExample: file,
+                          fileContainingExample: file
                       })
-                    : undefined,
+                    : undefined
         });
     }
 
     return ExampleResponse.ok({
-        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file }),
+        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file })
     });
 }
 
@@ -387,7 +387,7 @@ function convertExampleResponseBody({
     example,
     typeResolver,
     exampleResolver,
-    file,
+    file
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
@@ -405,14 +405,14 @@ function convertExampleResponseBody({
         typeResolver,
         exampleResolver,
         fileContainingRawTypeReference: file,
-        fileContainingExample: file,
+        fileContainingExample: file
     });
 }
 
 function buildUrl({
     service,
     endpoint,
-    example,
+    example
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;

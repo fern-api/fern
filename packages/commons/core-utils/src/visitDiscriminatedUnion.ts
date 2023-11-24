@@ -17,6 +17,6 @@ export function visitDiscriminatedUnion<T extends Record<Discriminant, string>, 
             } else {
                 return visitor._other(item);
             }
-        },
+        }
     };
 }

@@ -3,7 +3,7 @@ import {
     DocsConfigFileAstNodeTypes,
     DocsConfigFileAstNodeVisitor,
     DocsConfigFileAstVisitor,
-    NodePath,
+    NodePath
 } from "@fern-api/yaml-schema";
 import { RuleVisitor } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -11,7 +11,7 @@ import { ValidationViolation } from "./ValidationViolation";
 export function createDocsConfigFileAstVisitorForRules({
     relativeFilepath,
     allRuleVisitors,
-    addViolations,
+    addViolations
 }: {
     relativeFilepath: RelativeFilePath;
     allRuleVisitors: RuleVisitor<DocsConfigFileAstNodeTypes>[];
@@ -33,7 +33,7 @@ export function createDocsConfigFileAstVisitorForRules({
                             severity: violation.severity,
                             relativeFilepath,
                             nodePath,
-                            message: violation.message,
+                            message: violation.message
                         }))
                     );
                 }
@@ -47,6 +47,6 @@ export function createDocsConfigFileAstVisitorForRules({
         ...createAstNodeVisitor("file"),
         ...createAstNodeVisitor("filepath"),
         ...createAstNodeVisitor("markdownPage"),
-        ...createAstNodeVisitor("versionFile"),
+        ...createAstNodeVisitor("versionFile")
     };
 }

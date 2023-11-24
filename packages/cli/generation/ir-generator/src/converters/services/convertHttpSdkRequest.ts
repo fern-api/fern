@@ -12,7 +12,7 @@ export function convertHttpSdkRequest({
     request,
     service,
     file,
-    typeResolver,
+    typeResolver
 }: {
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     service: RawSchemas.HttpServiceSchema;
@@ -25,7 +25,7 @@ export function convertHttpSdkRequest({
     }
     return {
         shape,
-        requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
+        requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME)
     };
 }
 
@@ -33,7 +33,7 @@ function convertHttpSdkRequestShape({
     service,
     request,
     file,
-    typeResolver,
+    typeResolver
 }: {
     service: RawSchemas.HttpServiceSchema;
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
@@ -46,7 +46,7 @@ function convertHttpSdkRequestShape({
         }
         return SdkRequestShape.wrapper({
             wrapperName: file.casingsGenerator.generateName(request.name),
-            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER),
+            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER)
         });
     };
 
@@ -80,7 +80,7 @@ function convertHttpSdkRequestShape({
 export function getSdkJustRequestBodyType({
     requestBody,
     file,
-    contentType,
+    contentType
 }: {
     requestBody: RawSchemas.HttpReferencedRequestBodySchema | string;
     file: FernFileContext;
@@ -91,14 +91,14 @@ export function getSdkJustRequestBodyType({
     if (rawBytes != null) {
         return SdkRequestBodyType.bytes({
             isOptional: rawBytes.isOptional,
-            contentType,
+            contentType
         });
     }
     return SdkRequestBodyType.typeReference(
         convertReferenceHttpRequestBody({
             requestBody,
             file,
-            contentType,
+            contentType
         })
     );
 }
@@ -106,7 +106,7 @@ export function getSdkJustRequestBodyType({
 export function doesRequestHaveNonBodyProperties({
     request,
     file,
-    typeResolver,
+    typeResolver
 }: {
     request: RawSchemas.HttpRequestSchema;
     file: FernFileContext;
@@ -120,7 +120,7 @@ export function doesRequestHaveNonBodyProperties({
 function areAllHeadersLiteral({
     headers,
     file,
-    typeResolver,
+    typeResolver
 }: {
     headers: Record<string, string | RawSchemas.HttpHeaderSchema>;
     file: FernFileContext;
@@ -131,7 +131,7 @@ function areAllHeadersLiteral({
             const headerType = typeof header === "string" ? header : header.type;
             const resolvedType = typeResolver.resolveTypeOrThrow({
                 type: headerType,
-                file,
+                file
             });
             const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal";
             return !isLiteral;

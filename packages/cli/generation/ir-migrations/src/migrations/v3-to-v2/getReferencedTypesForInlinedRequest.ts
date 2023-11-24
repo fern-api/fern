@@ -5,7 +5,7 @@ type StringifiedTypeId = string;
 
 export function getReferencedTypesForInlinedRequest({
     inlinedRequest,
-    allTypes,
+    allTypes
 }: {
     inlinedRequest: IrVersions.V3.services.http.InlinedRequestBody;
     allTypes: IrVersions.V2.types.TypeDeclaration[];
@@ -14,7 +14,7 @@ export function getReferencedTypesForInlinedRequest({
     const typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration> = allTypes.reduce(
         (acc, type) => ({
             ...acc,
-            [stringifyTypeName(type.name)]: type,
+            [stringifyTypeName(type.name)]: type
         }),
         {}
     );
@@ -27,7 +27,7 @@ export function getReferencedTypesForInlinedRequest({
         getReferencedTypesFromReference({
             reference: property.valueType,
             typeNameToDeclaration,
-            referencedTypes,
+            referencedTypes
         });
     }
 
@@ -43,7 +43,7 @@ export function getReferencedTypesForInlinedRequest({
 function getReferencedTypesFromReference({
     reference,
     typeNameToDeclaration,
-    referencedTypes,
+    referencedTypes
 }: {
     reference: IrVersions.V2.types.TypeReference;
     typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration>;
@@ -61,14 +61,14 @@ function getReferencedTypesFromReference({
         void: noop,
         _unknown: () => {
             throw new Error("Unknown TypeRefrence: " + reference._type);
-        },
+        }
     });
 }
 
 function getReferencedTypesFromContainer({
     container,
     typeNameToDeclaration,
-    referencedTypes,
+    referencedTypes
 }: {
     container: IrVersions.V2.types.ContainerType;
     typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration>;
@@ -91,14 +91,14 @@ function getReferencedTypesFromContainer({
         literal: noop,
         _unknown: () => {
             throw new Error("Unknown ContainerType: " + container._type);
-        },
+        }
     });
 }
 
 function getReferencedTypesFromTypeName({
     typeName,
     typeNameToDeclaration,
-    referencedTypes,
+    referencedTypes
 }: {
     typeName: IrVersions.V2.types.DeclaredTypeName;
     typeNameToDeclaration: Record<StringifiedTypeId, IrVersions.V2.types.TypeDeclaration>;
@@ -118,6 +118,6 @@ function getReferencedTypesFromTypeName({
 function stringifyTypeName(typeName: IrVersions.V2.types.DeclaredTypeName): string {
     return [
         ...typeName.fernFilepathV2.map((part) => part.unsafeName.originalValue),
-        typeName.nameV3.unsafeName.originalValue,
+        typeName.nameV3.unsafeName.originalValue
     ].join(".");
 }

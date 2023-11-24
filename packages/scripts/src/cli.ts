@@ -15,7 +15,7 @@ void yargs(hideBin(process.argv))
         (yargs) =>
             yargs.positional("filepath", {
                 type: "string",
-                demandOption: true,
+                demandOption: true
             }),
         async (argv) => {
             await writeFernJsonSchema(resolve(cwd(), argv.filepath));
@@ -27,11 +27,11 @@ void yargs(hideBin(process.argv))
         (argv) =>
             argv.option("fix", {
                 boolean: true,
-                default: false,
+                default: false
             }),
         async (argv) => {
             await checkRootPackage({
-                shouldFix: argv.fix,
+                shouldFix: argv.fix
             });
         }
     )

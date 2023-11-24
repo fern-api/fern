@@ -5,7 +5,7 @@ import {
     DocsURL,
     getAbsolutePathToDocsFolder,
     getAbsolutePathToDocsYaml,
-    loadRawDocsConfiguration,
+    loadRawDocsConfiguration
 } from "./docs-config";
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
@@ -23,7 +23,7 @@ import { convertLegacyGeneratorsConfiguration } from "./generators-configuration
  */
 export async function migrateDocsAndSingleAPI({
     absolutePathToFernDirectory,
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
@@ -41,7 +41,7 @@ export async function migrateDocsAndSingleAPI({
 
 async function migrateAndWriteDocsYml({
     absolutePathToWorkspace,
-    docsURLs,
+    docsURLs
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     docsURLs: DocsURL[];
@@ -53,14 +53,14 @@ async function migrateAndWriteDocsYml({
     const convertedDocsConfig = convertLegacyDocsConfig({
         docsConfiguration,
         docsURLs,
-        apiName: undefined,
+        apiName: undefined
     });
     const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });
     await writeFile(absolutePathToDocsConfig, yaml.dump(convertedDocsConfig));
 }
 
 async function migrateAndWriteGeneratorsYml({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<DocsURL[]> {
@@ -71,7 +71,7 @@ async function migrateAndWriteGeneratorsYml({
     const absolutePathToGeneratorsConfiguration = getAbsolutePathToGeneratorsConfiguration({ absolutePathToWorkspace });
     const convertedResponse = convertLegacyGeneratorsConfiguration({
         generatorsConfiguration,
-        pathModificationStrategy: "MoveUp",
+        pathModificationStrategy: "MoveUp"
     });
     await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
     return convertedResponse.docsURLs;

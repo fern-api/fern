@@ -11,7 +11,7 @@ describe("no-extensions-with-file-upload", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,8 +19,8 @@ describe("no-extensions-with-file-upload", () => {
                 message: "Request body extensions are not supported for file-upload requests.",
                 nodePath: ["service", "endpoints", "extendsAndFile"],
                 relativeFilepath: RelativeFilePath.of("file-upload.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

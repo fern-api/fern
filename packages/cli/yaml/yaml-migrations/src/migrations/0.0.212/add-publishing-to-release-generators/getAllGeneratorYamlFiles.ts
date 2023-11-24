@@ -12,7 +12,7 @@ export async function getAllGeneratorYamlFiles(context: TaskContext): Promise<Ab
     }
     const filepaths = await glob("*/generators.yml", {
         cwd: fernDirectory,
-        absolute: true,
+        absolute: true
     });
     return filepaths.map(AbsoluteFilePath.of);
 }

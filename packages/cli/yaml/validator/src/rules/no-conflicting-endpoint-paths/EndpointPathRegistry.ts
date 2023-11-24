@@ -32,7 +32,7 @@ export class EndpointPathRegistry {
     private getPathPartsForEndpoint(endpointReference: EndpointReference): PathPart[] {
         return getFullEndpointPath({
             service: endpointReference.service,
-            endpoint: endpointReference.endpoint,
+            endpoint: endpointReference.endpoint
         })
             .split("/")
             .filter((part) => part.length > 0);

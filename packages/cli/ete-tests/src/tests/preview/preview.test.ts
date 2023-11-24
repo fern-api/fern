@@ -7,13 +7,13 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 describe("fern preview", () => {
     it("preview basic docs", async () => {
         void runFernCli(["preview"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
+            cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
         await sleep(5000);
 
         const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
-            method: "POST",
+            method: "POST"
         });
 
         expect(response.body != null).toEqual(true);

@@ -10,6 +10,6 @@ export function convertDeclaredTypeName(
         fernFilepathV2: convertFernFilepathV2(typeName.fernFilepath),
         name: typeName.name.originalName,
         nameV2: convertNameToV1(typeName.name),
-        nameV3: convertNameToV2(typeName.name),
+        nameV3: convertNameToV2(typeName.name)
     };
 }

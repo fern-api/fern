@@ -29,7 +29,7 @@ export async function processPackageMarkers({
     dependenciesConfiguration,
     structuralValidationResult,
     context,
-    cliVersion,
+    cliVersion
 }: {
     dependenciesConfiguration: DependenciesConfiguration;
     structuralValidationResult: validateStructureOfYamlFiles.SuccessfulResult;
@@ -49,7 +49,7 @@ export async function processPackageMarkers({
                 if (size(otherPackageMarkerKeys) > 0) {
                     failures[pathOfPackageMarker] = {
                         type: WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS,
-                        pathOfPackageMarker,
+                        pathOfPackageMarker
                     };
                 } else {
                     const pathToPackage = dirname(pathOfPackageMarker);
@@ -59,7 +59,7 @@ export async function processPackageMarkers({
                     if (areDefinitionsDefinedInPackage) {
                         failures[pathOfPackageMarker] = {
                             type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS,
-                            pathToPackage,
+                            pathToPackage
                         };
                     } else {
                         const loadDependencyResult = await loadDependency({
@@ -67,7 +67,7 @@ export async function processPackageMarkers({
                             dependenciesConfiguration,
                             context,
                             rootApiFile: structuralValidationResult.rootApiFile.contents,
-                            cliVersion,
+                            cliVersion
                         });
                         if (loadDependencyResult.didSucceed) {
                             importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;
@@ -83,13 +83,13 @@ export async function processPackageMarkers({
     if (size(failures) > 0) {
         return {
             didSucceed: false,
-            failures,
+            failures
         };
     } else {
         return {
             didSucceed: true,
             packageMarkers,
-            importedDefinitions,
+            importedDefinitions
         };
     }
 }

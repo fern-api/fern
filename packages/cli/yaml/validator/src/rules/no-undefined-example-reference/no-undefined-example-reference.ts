@@ -19,8 +19,8 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                                     exampleReference
                                 )} is malformed. Examples should be formatted like ${chalk.bold(
                                     "$YourType.ExampleName"
-                                )}`,
-                            },
+                                )}`
+                            }
                         ];
                     }
 
@@ -31,8 +31,8 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                                 relativeFilepath,
                                 definitionFile: contents,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents,
-                            }),
+                                rootApiFile: workspace.definition.rootApiFile.contents
+                            })
                         }) != null;
 
                     if (doesExist) {
@@ -41,12 +41,12 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: `Example ${chalk.bold(exampleReference)} is not defined.`,
-                            },
+                                message: `Example ${chalk.bold(exampleReference)} is not defined.`
+                            }
                         ];
                     }
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

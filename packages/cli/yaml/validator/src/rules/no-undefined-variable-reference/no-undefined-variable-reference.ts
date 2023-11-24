@@ -2,7 +2,7 @@ import {
     constructFernFileContext,
     constructRootApiFileContext,
     FernFileContext,
-    VariableResolverImpl,
+    VariableResolverImpl
 } from "@fern-api/ir-generator";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
@@ -17,8 +17,8 @@ export const NoUndefinedVariableReferenceRule: Rule = {
                 return [
                     {
                         severity: "error",
-                        message: `Variable reference must start with ${VariableResolverImpl.VARIABLE_PREFIX}`,
-                    },
+                        message: `Variable reference must start with ${VariableResolverImpl.VARIABLE_PREFIX}`
+                    }
                 ];
             }
 
@@ -29,8 +29,8 @@ export const NoUndefinedVariableReferenceRule: Rule = {
             return [
                 {
                     severity: "error",
-                    message: `Variable ${variableReference} is not defined.`,
-                },
+                    message: `Variable ${variableReference} is not defined.`
+                }
             ];
         };
 
@@ -41,10 +41,10 @@ export const NoUndefinedVariableReferenceRule: Rule = {
                         variableReference,
                         constructRootApiFileContext({
                             casingsGenerator: CASINGS_GENERATOR,
-                            rootApiFile: workspace.definition.rootApiFile.contents,
+                            rootApiFile: workspace.definition.rootApiFile.contents
                         })
                     );
-                },
+                }
             },
             definitionFile: {
                 variableReference: (variableReference, { relativeFilepath, contents }) => {
@@ -54,11 +54,11 @@ export const NoUndefinedVariableReferenceRule: Rule = {
                             casingsGenerator: CASINGS_GENERATOR,
                             relativeFilepath,
                             definitionFile: contents,
-                            rootApiFile: workspace.definition.rootApiFile.contents,
+                            rootApiFile: workspace.definition.rootApiFile.contents
                         })
                     );
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

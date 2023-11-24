@@ -14,7 +14,7 @@ export interface ProjectConfig {
 
 export async function loadProjectConfig({
     directory,
-    context,
+    context
 }: {
     directory: AbsoluteFilePath;
     context: TaskContext;
@@ -27,12 +27,12 @@ export async function loadProjectConfig({
         schema: ProjectConfigSchema,
         value: projectConfigParsed,
         context,
-        filepathBeingParsed: pathToConfig,
+        filepathBeingParsed: pathToConfig
     });
     return {
         _absolutePath: pathToConfig,
         rawConfig: rawProjectConfig,
         organization: rawProjectConfig.organization,
-        version: rawProjectConfig.version,
+        version: rawProjectConfig.version
     };
 }

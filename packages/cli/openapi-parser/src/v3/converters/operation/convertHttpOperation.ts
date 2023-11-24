@@ -18,7 +18,7 @@ export function convertHttpOperation({
     context,
     responseStatusCode,
     suffix,
-    streamingResponse,
+    streamingResponse
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -30,7 +30,7 @@ export function convertHttpOperation({
 
     const requestNameOverride = getExtension<string>(operation, [
         FernOpenAPIExtension.REQUEST_NAME_V1,
-        FernOpenAPIExtension.REQUEST_NAME_V2,
+        FernOpenAPIExtension.REQUEST_NAME_V2
     ]);
     const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
     const convertedParameters = convertParameters({
@@ -38,7 +38,7 @@ export function convertHttpOperation({
         context,
         requestBreadcrumbs,
         path,
-        httpMethod: method,
+        httpMethod: method
     });
     let convertedRequest =
         operation.requestBody != null
@@ -47,9 +47,9 @@ export function convertHttpOperation({
                   document,
                   context: new DummyOpenAPIV3ParserContext({
                       document: context.document,
-                      taskContext: context.taskContext,
+                      taskContext: context.taskContext
                   }),
-                  requestBreadcrumbs,
+                  requestBreadcrumbs
               })
             : undefined;
 
@@ -65,14 +65,14 @@ export function convertHttpOperation({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+            requestBreadcrumbs: [...requestBreadcrumbs, "Body"]
         });
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs],
+            requestBreadcrumbs: [...requestBreadcrumbs]
         });
     }
 
@@ -83,7 +83,7 @@ export function convertHttpOperation({
         responses: operation.responses,
         context,
         responseBreadcrumbs,
-        responseStatusCode,
+        responseStatusCode
     });
 
     const availability = getFernAvailability(operation);
@@ -111,7 +111,7 @@ export function convertHttpOperation({
         authed: isEndpointAuthed(operation, document),
         availability,
         method,
-        path,
+        path
     };
 }
 

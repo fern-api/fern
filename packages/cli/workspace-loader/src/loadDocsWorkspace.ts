@@ -11,7 +11,7 @@ import { DocsWorkspace } from "./types/Workspace";
 
 export async function loadDocsWorkspace({
     fernDirectory,
-    context,
+    context
 }: {
     fernDirectory: AbsoluteFilePath;
     context: TaskContext;
@@ -23,7 +23,7 @@ export async function loadDocsWorkspace({
 
     const docsConfiguration = await loadDocsConfiguration({
         absolutePathToDocsDefinition: fernDirectory,
-        context,
+        context
     });
     if (docsConfiguration != null) {
         return {
@@ -31,7 +31,7 @@ export async function loadDocsWorkspace({
             absoluteFilepath: fernDirectory,
             config: docsConfiguration,
             workspaceName: undefined,
-            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
+            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME))
         };
     }
     return undefined;
@@ -39,7 +39,7 @@ export async function loadDocsWorkspace({
 
 export async function loadDocsConfiguration({
     absolutePathToDocsDefinition,
-    context,
+    context
 }: {
     absolutePathToDocsDefinition: AbsoluteFilePath;
     context: TaskContext;
@@ -53,13 +53,13 @@ export async function loadDocsConfiguration({
     );
     return await loadRawDocsConfiguration({
         absolutePathOfConfiguration,
-        context,
+        context
     });
 }
 
 export async function loadRawDocsConfiguration({
     absolutePathOfConfiguration,
-    context,
+    context
 }: {
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
@@ -69,14 +69,14 @@ export async function loadRawDocsConfiguration({
     return await validateSchema({
         value: contentsJson,
         context,
-        filepathBeingParsed: absolutePathOfConfiguration,
+        filepathBeingParsed: absolutePathOfConfiguration
     });
 }
 
 export async function validateSchema({
     value,
     context,
-    filepathBeingParsed,
+    filepathBeingParsed
 }: {
     value: unknown;
     context: TaskContext;
@@ -91,7 +91,7 @@ export async function validateSchema({
         const message = issue.path.length > 0 ? `${issue.message} at "${issue.path.join(" -> ")}"` : issue.message;
         return addPrefixToString({
             content: message,
-            prefix: "  - ",
+            prefix: "  - "
         });
     });
 

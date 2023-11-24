@@ -7,7 +7,7 @@ import {
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
-    visitDefinitionFileYamlAst,
+    visitDefinitionFileYamlAst
 } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
@@ -44,8 +44,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                                 return [
                                     {
                                         severity: "error",
-                                        message: "File response cannot be optional",
-                                    },
+                                        message: "File response cannot be optional"
+                                    }
                                 ];
                             } else {
                                 return [];
@@ -61,8 +61,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: "The bytes type can only be used as a request",
-                                },
+                                    message: "The bytes type can only be used as a request"
+                                }
                             ];
                         }
                     }
@@ -76,8 +76,8 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: "The text type can only be used as a response or response-stream.",
-                                },
+                                    message: "The text type can only be used as a response or response-stream."
+                                }
                             ];
                         }
                     }
@@ -85,35 +85,35 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     const namedTypes = getAllNamedTypes({
                         type: typeReference,
                         relativeFilepath,
-                        imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
+                        imports: mapValues(contents.imports ?? {}, RelativeFilePath.of)
                     });
 
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
                         if (namedType.parsed?.typeName != null && parseRawFileType(namedType.parsed.typeName) != null) {
                             violations.push({
                                 severity: "error",
-                                message: "The file type can only be used as properties in inlined requests.",
+                                message: "The file type can only be used as properties in inlined requests."
                             });
                         } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
                             violations.push({
                                 severity: "error",
-                                message: "The text type can only be used as a response-stream or response.",
+                                message: "The text type can only be used as a response-stream or response."
                             });
                         } else if (!doesTypeExist(namedType)) {
                             violations.push({
                                 severity: "error",
                                 message: `Type ${chalk.bold(
                                     namedType.parsed?.typeName ?? namedType.fullyQualifiedName
-                                )} is not defined.`,
+                                )} is not defined.`
                             });
                         }
 
                         return violations;
                     }, []);
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 async function getTypesByFilepath(workspace: FernWorkspace) {
@@ -127,7 +127,7 @@ async function getTypesByFilepath(workspace: FernWorkspace) {
                 if (!typeName.isInlined) {
                     typesForFile.add(typeName.name);
                 }
-            },
+            }
         });
     });
     return typesByFilepath;
@@ -146,7 +146,7 @@ interface ReferenceToTypeName {
 function getAllNamedTypes({
     type,
     relativeFilepath,
-    imports,
+    imports
 }: {
     type: string;
     relativeFilepath: RelativeFilePath;
@@ -166,7 +166,7 @@ function getAllNamedTypes({
             const reference = parseReferenceToTypeName({
                 reference: named,
                 referencedIn: relativeFilepath,
-                imports,
+                imports
             });
             return [
                 {
@@ -175,11 +175,11 @@ function getAllNamedTypes({
                         reference != null
                             ? {
                                   typeName: reference.typeName,
-                                  relativeFilepath: reference.relativeFilepath,
+                                  relativeFilepath: reference.relativeFilepath
                               }
-                            : undefined,
-                },
+                            : undefined
+                }
             ];
-        },
+        }
     });
 }

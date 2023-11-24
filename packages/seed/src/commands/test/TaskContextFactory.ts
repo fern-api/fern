@@ -46,7 +46,7 @@ export class TaskContextFactory {
             instrumentPostHogEvent: () => {
                 return;
             },
-            logPrefix: prefixWithColor,
+            logPrefix: prefixWithColor
         });
     }
 }

@@ -28,11 +28,11 @@ export const V26_TO_V25_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "0.5.0-rc2-16-g4177fafd",
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V25.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v26): IrVersions.V25.ir.IntermediateRepresentation => {
         return {
@@ -52,9 +52,9 @@ export const V26_TO_V25_MIGRATION: IrMigration<
                 Object.entries(v26.services).map(([key, val]) => {
                     return [key, convertHttpService(val)];
                 })
-            ),
+            )
         };
-    },
+    }
 };
 
 function convertWebhook(val: IrVersions.V26.Webhook): IrVersions.V25.Webhook {
@@ -65,9 +65,9 @@ function convertWebhook(val: IrVersions.V26.Webhook): IrVersions.V25.Webhook {
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -80,9 +80,9 @@ function convertHttpService(val: IrVersions.V26.HttpService): IrVersions.V25.Htt
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -95,9 +95,9 @@ function convertEndpoint(val: IrVersions.V26.HttpEndpoint): IrVersions.V25.HttpE
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -108,9 +108,9 @@ function convertHeader(val: IrVersions.V26.HttpHeader): IrVersions.V25.HttpHeade
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -121,9 +121,9 @@ function convertQueryParameter(val: IrVersions.V26.QueryParameter): IrVersions.V
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -134,31 +134,31 @@ function convertTypeDeclaration(val: IrVersions.V26.TypeDeclaration): IrVersions
             union: (val) =>
                 IrVersions.V25.Type.union({
                     ...val,
-                    baseProperties: val.baseProperties.map((baseProperty) => convertObjectProperty(baseProperty)),
+                    baseProperties: val.baseProperties.map((baseProperty) => convertObjectProperty(baseProperty))
                 }),
             object: (val) =>
                 IrVersions.V25.Type.object({
                     ...val,
-                    properties: val.properties.map((property) => convertObjectProperty(property)),
+                    properties: val.properties.map((property) => convertObjectProperty(property))
                 }),
             enum: (val) =>
                 IrVersions.V25.Type.enum({
                     ...val,
-                    values: val.values.map((enumValue) => convertEnumValue(enumValue)),
+                    values: val.values.map((enumValue) => convertEnumValue(enumValue))
                 }),
             alias: (val) => IrVersions.V25.Type.alias(val),
             undiscriminatedUnion: (val) => IrVersions.V25.Type.undiscriminatedUnion(val),
             _other: () => {
                 throw new Error("Encountered unknown shape");
-            },
+            }
         }),
         availability:
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -169,9 +169,9 @@ function convertObjectProperty(val: IrVersions.V26.ObjectProperty): IrVersions.V
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }
 
@@ -182,8 +182,8 @@ function convertEnumValue(val: IrVersions.V26.EnumValue): IrVersions.V25.EnumVal
             val.availability == null
                 ? {
                       status: IrVersions.V25.AvailabilityStatus.GeneralAvailability,
-                      message: undefined,
+                      message: undefined
                   }
-                : val.availability,
+                : val.availability
     };
 }

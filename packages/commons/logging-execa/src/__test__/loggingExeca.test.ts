@@ -30,7 +30,7 @@ describe("loggingExeca", () => {
         const tmpdir = (await tmp.dir()).path;
         const pathToTouch = path.join(tmpdir, "ABC123.txt");
         await loggingExeca(logger, "touch", [pathToTouch], {
-            substitutions: { ABC123: "new-value" },
+            substitutions: { ABC123: "new-value" }
         });
 
         expect(lines).toEqual([`+ touch ${path.join(tmpdir, "new-value.txt")}`]);
@@ -43,7 +43,7 @@ describe("loggingExeca", () => {
         const tmpdir = (await tmp.dir()).path;
         const pathToTouch = path.join(tmpdir, "test.txt");
         await loggingExeca(logger, "touch", [pathToTouch], {
-            secrets: ["test"],
+            secrets: ["test"]
         });
 
         expect(lines).toEqual([`+ touch ${path.join(tmpdir, "<redacted>.txt")}`]);

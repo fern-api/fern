@@ -11,7 +11,7 @@ describe("valid-type-name", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,8 +19,8 @@ describe("valid-type-name", () => {
                 message: "Type name must begin with a letter",
                 nodePath: ["types", "_InvalidType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

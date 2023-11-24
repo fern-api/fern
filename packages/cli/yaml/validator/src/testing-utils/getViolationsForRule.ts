@@ -16,13 +16,13 @@ export declare namespace getViolationsForRule {
 
 export async function getViolationsForRule({
     rule,
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
     const parseResult = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context: createMockTaskContext(),
         cliVersion: "0.0.0",
-        workspaceName: undefined,
+        workspaceName: undefined
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
@@ -35,11 +35,11 @@ export async function getViolationsForRule({
     const violations = await runRulesOnWorkspace({
         workspace: parseResult.workspace,
         logger: CONSOLE_LOGGER,
-        rules: [rule],
+        rules: [rule]
     });
 
     return violations.map((violation) => ({
         ...violation,
-        message: stripAnsi(violation.message),
+        message: stripAnsi(violation.message)
     }));
 }

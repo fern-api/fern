@@ -40,7 +40,7 @@ export class TypeResolverImpl implements TypeResolver {
 
     public getDeclarationOfNamedTypeOrThrow({
         referenceToNamedType,
-        file,
+        file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
@@ -54,7 +54,7 @@ export class TypeResolverImpl implements TypeResolver {
 
     public getDeclarationOfNamedType({
         referenceToNamedType,
-        file,
+        file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
@@ -62,7 +62,7 @@ export class TypeResolverImpl implements TypeResolver {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToNamedType,
             referencedIn: file.relativeFilepath,
-            imports: file.imports,
+            imports: file.imports
         });
         if (parsedReference == null) {
             return undefined;
@@ -84,15 +84,15 @@ export class TypeResolverImpl implements TypeResolver {
                 relativeFilepath: parsedReference.relativeFilepath,
                 definitionFile,
                 casingsGenerator: file.casingsGenerator,
-                rootApiFile: this.workspace.definition.rootApiFile.contents,
-            }),
+                rootApiFile: this.workspace.definition.rootApiFile.contents
+            })
         };
     }
 
     public resolveType({
         type,
         file,
-        objectPath = [],
+        objectPath = []
     }: {
         type: string;
         file: FernFileContext;
@@ -102,7 +102,7 @@ export class TypeResolverImpl implements TypeResolver {
             primitive: (primitive) => ({
                 _type: "primitive",
                 primitive,
-                originalTypeReference: TypeReference.primitive(primitive),
+                originalTypeReference: TypeReference.primitive(primitive)
             }),
             unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
             map: ({ keyType, valueType }) =>
@@ -112,14 +112,14 @@ export class TypeResolverImpl implements TypeResolver {
                           container: {
                               _type: "map",
                               keyType,
-                              valueType,
+                              valueType
                           },
                           originalTypeReference: TypeReference.container(
                               ContainerType.map({
                                   keyType: keyType.originalTypeReference,
-                                  valueType: valueType.originalTypeReference,
+                                  valueType: valueType.originalTypeReference
                               })
-                          ),
+                          )
                       }
                     : undefined,
             list: (itemType) =>
@@ -128,11 +128,11 @@ export class TypeResolverImpl implements TypeResolver {
                           _type: "container",
                           container: {
                               _type: "list",
-                              itemType,
+                              itemType
                           },
                           originalTypeReference: TypeReference.container(
                               ContainerType.list(itemType.originalTypeReference)
-                          ),
+                          )
                       }
                     : undefined,
             optional: (itemType) =>
@@ -141,11 +141,11 @@ export class TypeResolverImpl implements TypeResolver {
                           _type: "container",
                           container: {
                               _type: "optional",
-                              itemType,
+                              itemType
                           },
                           originalTypeReference: TypeReference.container(
                               ContainerType.optional(itemType.originalTypeReference)
-                          ),
+                          )
                       }
                     : undefined,
             set: (itemType) =>
@@ -154,25 +154,25 @@ export class TypeResolverImpl implements TypeResolver {
                           _type: "container",
                           container: {
                               _type: "set",
-                              itemType,
+                              itemType
                           },
                           originalTypeReference: TypeReference.container(
                               ContainerType.set(itemType.originalTypeReference)
-                          ),
+                          )
                       }
                     : undefined,
             literal: (literal) => ({
                 _type: "container",
                 container: {
                     _type: "literal",
-                    literal,
+                    literal
                 },
-                originalTypeReference: TypeReference.container(ContainerType.literal(literal)),
+                originalTypeReference: TypeReference.container(ContainerType.literal(literal))
             }),
             named: (referenceToNamedType) => {
                 const maybeDeclaration = this.getDeclarationOfNamedType({
                     referenceToNamedType,
-                    file,
+                    file
                 });
                 if (maybeDeclaration == null) {
                     return undefined;
@@ -181,7 +181,7 @@ export class TypeResolverImpl implements TypeResolver {
                 const newObjectPathItem: ObjectPathItem = {
                     typeName: maybeDeclaration.typeName,
                     file: maybeDeclaration.file.relativeFilepath,
-                    reference: referenceToNamedType,
+                    reference: referenceToNamedType
                 };
 
                 // detect infinite loop
@@ -198,15 +198,15 @@ export class TypeResolverImpl implements TypeResolver {
                     referenceToNamedType,
                     referencedIn: file,
                     rawDeclaration: maybeDeclaration,
-                    objectPath: [...objectPath, newObjectPathItem],
+                    objectPath: [...objectPath, newObjectPathItem]
                 });
-            },
+            }
         });
     }
 
     public resolveNamedTypeOrThrow({
         referenceToNamedType,
-        file,
+        file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
@@ -220,14 +220,14 @@ export class TypeResolverImpl implements TypeResolver {
 
     public resolveNamedType({
         referenceToNamedType,
-        file,
+        file
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
     }): ResolvedType | undefined {
         const maybeDeclaration = this.getDeclarationOfNamedType({
             referenceToNamedType,
-            file,
+            file
         });
         if (maybeDeclaration == null) {
             return undefined;
@@ -235,7 +235,7 @@ export class TypeResolverImpl implements TypeResolver {
         return this.resolveNamedTypeFromDeclaration({
             referenceToNamedType,
             referencedIn: file,
-            rawDeclaration: maybeDeclaration,
+            rawDeclaration: maybeDeclaration
         });
     }
 
@@ -243,7 +243,7 @@ export class TypeResolverImpl implements TypeResolver {
         referenceToNamedType,
         referencedIn,
         rawDeclaration,
-        objectPath = [],
+        objectPath = []
     }: {
         referencedIn: FernFileContext;
         referenceToNamedType: string;
@@ -256,7 +256,7 @@ export class TypeResolverImpl implements TypeResolver {
             return this.resolveType({
                 type: typeof declaration === "string" ? declaration : declaration.type,
                 file: fileOfResolvedDeclaration,
-                objectPath,
+                objectPath
             });
         }
 
@@ -278,7 +278,7 @@ export class TypeResolverImpl implements TypeResolver {
             filepath: fileOfResolvedDeclaration.relativeFilepath,
             objectPath,
             originalTypeReference: parsedTypeReference,
-            file: fileOfResolvedDeclaration,
+            file: fileOfResolvedDeclaration
         };
     }
 }

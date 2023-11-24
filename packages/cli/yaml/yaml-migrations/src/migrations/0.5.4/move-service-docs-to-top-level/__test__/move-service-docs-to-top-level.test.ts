@@ -15,7 +15,7 @@ describe("change-services-key-to-service", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newBlogYml = (

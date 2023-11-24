@@ -32,6 +32,6 @@ export async function visitDefinitionFileYamlAst(
         },
         errors: async (errors) => {
             await visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });
-        },
+        }
     });
 }

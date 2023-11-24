@@ -4,7 +4,7 @@ import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMiss
 
 export function validateEnumExample({
     rawEnum,
-    example,
+    example
 }: {
     rawEnum: RawSchemas.EnumSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -23,7 +23,7 @@ export function validateEnumExample({
     return [
         {
             severity: "error",
-            message: `"${example}" is not a valid example for this enum. Enum values are:\n` + validEnumValuesLines,
-        },
+            message: `"${example}" is not a valid example for this enum. Enum values are:\n` + validEnumValuesLines
+        }
     ];
 }

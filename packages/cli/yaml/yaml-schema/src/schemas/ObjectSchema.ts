@@ -8,13 +8,13 @@ export const ObjectSchema = z.union([
     BaseTypeDeclarationSchema.extend({
         extensions: z.optional(z.record(z.string(), z.any())),
         extends: ObjectExtendsSchema,
-        properties: z.optional(z.record(ObjectPropertySchema)),
+        properties: z.optional(z.record(ObjectPropertySchema))
     }),
     BaseTypeDeclarationSchema.extend({
         extensions: z.optional(z.record(z.string(), z.any())),
         extends: z.optional(ObjectExtendsSchema),
-        properties: z.record(ObjectPropertySchema),
-    }),
+        properties: z.record(ObjectPropertySchema)
+    })
 ]);
 
 export type ObjectSchema = z.infer<typeof ObjectSchema>;

@@ -6,7 +6,7 @@ import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLog
 
 export async function validateWorkspaces({
     project,
-    cliContext,
+    cliContext
 }: {
     project: Project;
     cliContext: CliContext;

@@ -9,7 +9,7 @@ export async function writeFernJsonSchema(filepath: AbsoluteFilePath): Promise<v
     const jsonSchemaStr = JSON.stringify(jsonSchema);
     const jsonSchemaFormatted = prettier.format(jsonSchemaStr, {
         ...(await prettier.resolveConfig(filepath)),
-        filepath,
+        filepath
     });
     await writeFile(filepath, jsonSchemaFormatted);
 }

@@ -5,14 +5,14 @@ import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     getAllPropertiesForObject,
     getAllPropertiesForType,
-    ObjectPropertyWithPath,
+    ObjectPropertyWithPath
 } from "./getAllPropertiesForObject";
 
 export function getAllPropertiesForRequest({
     endpoint,
     filepath,
     definitionFile,
-    workspace,
+    workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     filepath: RelativeFilePath;
@@ -31,7 +31,7 @@ export function getAllPropertiesForRequest({
             filepathOfDeclaration: filepath,
             definitionFile,
             workspace,
-            typeResolver,
+            typeResolver
         });
     }
 
@@ -45,7 +45,7 @@ export function getAllPropertiesForRequest({
             filepathOfDeclaration: filepath,
             definitionFile,
             workspace,
-            typeResolver,
+            typeResolver
         });
     }
 
@@ -53,11 +53,11 @@ export function getAllPropertiesForRequest({
         typeName: undefined,
         objectDeclaration: {
             extends: endpoint.request.body.extends,
-            properties: endpoint.request.body.properties ?? {},
+            properties: endpoint.request.body.properties ?? {}
         },
         filepathOfDeclaration: filepath,
         definitionFile,
         workspace,
-        typeResolver,
+        typeResolver
     });
 }

@@ -3,7 +3,7 @@ import { CliEnvironment } from "../CliEnvironment";
 
 export async function getLatestVersionOfCli({
     cliEnvironment,
-    includePreReleases = false,
+    includePreReleases = false
 }: {
     cliEnvironment: CliEnvironment;
     includePreReleases?: boolean;
@@ -14,6 +14,6 @@ export async function getLatestVersionOfCli({
         return cliEnvironment.packageVersion;
     }
     return latestVersion(cliEnvironment.packageName, {
-        version: includePreReleases ? "prerelease" : "latest",
+        version: includePreReleases ? "prerelease" : "latest"
     });
 }

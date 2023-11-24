@@ -18,7 +18,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
 
                     const getViolationsForVariant = ({
                         discriminantValue,
-                        singleUnionType,
+                        singleUnionType
                     }: {
                         discriminantValue: string;
                         singleUnionType: RawSchemas.SingleUnionTypeSchema;
@@ -31,8 +31,8 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                                 return [
                                     {
                                         severity: "error",
-                                        message: `Union variant ${discriminantValue} has no type, so "key" cannot be defined`,
-                                    },
+                                        message: `Union variant ${discriminantValue} has no type, so "key" cannot be defined`
+                                    }
                                 ];
                             } else {
                                 return [];
@@ -45,8 +45,8 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                                 relativeFilepath,
                                 definitionFile: contents,
                                 casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents,
-                            }),
+                                rootApiFile: workspace.definition.rootApiFile.contents
+                            })
                         });
 
                         if (resolvedType == null) {
@@ -61,14 +61,14 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                         violations.push(
                             ...getViolationsForVariant({
                                 discriminantValue,
-                                singleUnionType,
+                                singleUnionType
                             })
                         );
                     }
 
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

@@ -14,7 +14,7 @@ export async function moveFolder({ src, dest }: { src: AbsoluteFilePath; dest: A
 async function moveDirectoryContentsFromFolder({
     src,
     dest,
-    contents,
+    contents
 }: {
     src: AbsoluteFilePath;
     dest: AbsoluteFilePath;
@@ -34,7 +34,7 @@ async function moveDirectoryContentsFromFolder({
             await moveDirectoryContentsFromFolder({
                 src: join(src, RelativeFilePath.of(content.name)),
                 dest: join(dest, RelativeFilePath.of(content.name)),
-                contents: content.contents,
+                contents: content.contents
             });
         }
     }

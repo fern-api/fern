@@ -8,7 +8,7 @@ describe("migrateFromV28ToV27", () => {
     it("snapshot", async () => {
         const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/literal"));
         const migrated = await runMigration({
-            pathToFixture,
+            pathToFixture
         });
         expect(migrated).toMatchSnapshot();
     });

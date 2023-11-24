@@ -17,8 +17,8 @@ export const NoMissingRequestNameRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: "Request name is required because request body is defined inline",
-                                },
+                                    message: "Request name is required because request body is defined inline"
+                                }
                             ];
                         }
 
@@ -29,8 +29,8 @@ export const NoMissingRequestNameRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: "Request name is required because request has query parameters",
-                                },
+                                    message: "Request name is required because request has query parameters"
+                                }
                             ];
                         }
 
@@ -38,8 +38,8 @@ export const NoMissingRequestNameRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: "Request name is required because request has headers",
-                                },
+                                    message: "Request name is required because request has headers"
+                                }
                             ];
                         }
                     }
@@ -48,14 +48,14 @@ export const NoMissingRequestNameRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "Request name is required because service has headers",
-                            },
+                                message: "Request name is required because service has headers"
+                            }
                         ];
                     }
 
                     return [];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

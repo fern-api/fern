@@ -12,5 +12,5 @@ export const migration: Migration = {
             const newContents = contents.toString().replaceAll(" alias:", " type:");
             await writeFile(filepath, newContents);
         }
-    },
+    }
 };

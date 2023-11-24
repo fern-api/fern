@@ -7,7 +7,7 @@ export const GeneratorInvocationSchema = z.strictObject({
     version: z.string(),
     output: z.optional(GeneratorOutputSchema),
     github: z.optional(GithubConfigurationSchema),
-    config: z.unknown(),
+    config: z.unknown()
 });
 
 export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>;

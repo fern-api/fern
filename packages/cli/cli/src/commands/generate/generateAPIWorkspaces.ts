@@ -12,7 +12,7 @@ export async function generateAPIWorkspaces({
     groupName,
     shouldLogS3Url,
     keepDocker,
-    useLocalDocker,
+    useLocalDocker
 }: {
     project: Project;
     cliContext: CliContext;
@@ -31,7 +31,7 @@ export async function generateAPIWorkspaces({
             await createOrganizationIfDoesNotExist({
                 organization: project.config.organization,
                 token,
-                context,
+                context
             });
         });
     }
@@ -52,13 +52,13 @@ export async function generateAPIWorkspaces({
                                     name: generator.name,
                                     version: generator.version,
                                     outputMode: generator.outputMode.type,
-                                    config: generator.config,
+                                    config: generator.config
                                 };
                             });
-                        }),
+                        })
                 };
-            }),
-        },
+            })
+        }
     });
 
     await Promise.all(
@@ -78,7 +78,7 @@ export async function generateAPIWorkspaces({
                     shouldLogS3Url,
                     token,
                     useLocalDocker,
-                    keepDocker,
+                    keepDocker
                 });
             });
         })

@@ -15,7 +15,7 @@ describe("add-inline-requests", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newBlogYml = (

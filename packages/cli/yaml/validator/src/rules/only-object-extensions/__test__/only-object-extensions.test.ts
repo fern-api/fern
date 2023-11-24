@@ -11,7 +11,7 @@ describe("only-object-extensions", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,20 +19,20 @@ describe("only-object-extensions", () => {
                 message: "Objects can only extend other objects, and commons.CommonString is not an object.",
                 nodePath: ["types", "MyObject", "extends", "commons.CommonString"],
                 relativeFilepath: RelativeFilePath.of("types.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Objects can only extend other objects, and LocalString is not an object.",
                 nodePath: ["types", "MyObject", "extends", "LocalString"],
                 relativeFilepath: RelativeFilePath.of("types.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Objects can only extend other objects, and LocalString is not an object.",
                 nodePath: ["service", "endpoints", "get", "request", "body", "extends", "LocalString"],
                 relativeFilepath: RelativeFilePath.of("types.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

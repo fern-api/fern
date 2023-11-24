@@ -25,7 +25,7 @@ async function askForConfirmation(message: string) {
     const question: ConfirmQuestion<{ [name]: boolean }> = {
         type: "confirm",
         name,
-        message,
+        message
     };
     const answers = await inquirer.prompt(question);
     return answers[name];

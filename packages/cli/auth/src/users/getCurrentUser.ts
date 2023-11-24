@@ -5,7 +5,7 @@ import { FernUserToken } from "../FernToken";
 
 export async function getCurrentUser({
     token,
-    context,
+    context
 }: {
     token: FernUserToken;
     context: TaskContext;

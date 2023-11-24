@@ -8,9 +8,9 @@ describe("constructHttpPath", () => {
             parts: [
                 {
                     pathParameter: "world",
-                    tail: "",
-                },
-            ],
+                    tail: ""
+                }
+            ]
         };
         const actual = constructHttpPath("/hello/{world}");
         expect(actual).toEqual(expected);
@@ -22,13 +22,13 @@ describe("constructHttpPath", () => {
             parts: [
                 {
                     pathParameter: "hello",
-                    tail: "/",
+                    tail: "/"
                 },
                 {
                     pathParameter: "world",
-                    tail: "",
-                },
-            ],
+                    tail: ""
+                }
+            ]
         };
         const actual = constructHttpPath("{hello}/{world}");
         expect(actual).toEqual(expected);
@@ -40,13 +40,13 @@ describe("constructHttpPath", () => {
             parts: [
                 {
                     pathParameter: "hello",
-                    tail: "/",
+                    tail: "/"
                 },
                 {
                     pathParameter: "world",
-                    tail: "/hello",
-                },
-            ],
+                    tail: "/hello"
+                }
+            ]
         };
         const actual = constructHttpPath("{hello}/{world}/hello");
         expect(actual).toEqual(expected);

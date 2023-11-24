@@ -16,13 +16,13 @@ const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     429: "TooManyRequestsError",
     500: "InternalServerError",
     501: "NotImplementedError",
-    503: "ServiceUnavailableError",
+    503: "ServiceUnavailableError"
 };
 
 export function convertToError({
     statusCode,
     errorBodyCollector,
-    context,
+    context
 }: {
     statusCode: number;
     errorBodyCollector: ErrorBodyCollector;
@@ -40,13 +40,13 @@ export function convertToError({
             generatedName: errorName,
             nameOverride: null,
             schema,
-            description: undefined,
+            description: undefined
         };
     }
     return {
         generatedName: errorName,
         nameOverride: null,
         schema: Schema.unknown(),
-        description: undefined,
+        description: undefined
     };
 }

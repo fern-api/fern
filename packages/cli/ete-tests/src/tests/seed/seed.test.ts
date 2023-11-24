@@ -7,7 +7,7 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 describe("seed", () => {
     it("python", async () => {
         const { exitCode, stdout } = await runSeedCli(["test", "--workspace", "sdk", "--log-level", "info"], {
-            cwd: FIXTURES_DIR,
+            cwd: FIXTURES_DIR
         });
         expect(stdout).toContain("test cases passed");
         expect(exitCode).toEqual(0);
@@ -19,7 +19,7 @@ describe("seed", () => {
         const { exitCode, stdout } = await runSeedCli(
             ["test", "--workspace", "sdk", "--log-level", "info", "--custom-fixture", pathOfDirectory],
             {
-                cwd: FIXTURES_DIR,
+                cwd: FIXTURES_DIR
             }
         );
 

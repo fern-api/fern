@@ -23,7 +23,7 @@ export function convertTypeDeclaration({
     typeDeclaration,
     file,
     typeResolver,
-    exampleResolver,
+    exampleResolver
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -34,7 +34,7 @@ export function convertTypeDeclaration({
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
-        file,
+        file
     });
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
     return {
@@ -51,7 +51,7 @@ export function convertTypeDeclaration({
                               docs: example.docs,
                               jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
                                   example: example.value,
-                                  file,
+                                  file
                               }).resolvedExample,
                               shape: convertTypeExample({
                                   typeName: declaredTypeName,
@@ -60,20 +60,20 @@ export function convertTypeDeclaration({
                                   exampleResolver,
                                   typeDeclaration,
                                   fileContainingType: file,
-                                  fileContainingExample: file,
-                              }),
+                                  fileContainingExample: file
+                              })
                           })
                       )
-                    : [],
+                    : []
         },
-        descendantFilepaths: new Set(referencedTypes.map((referencedType) => referencedType.fernFilepath)),
+        descendantFilepaths: new Set(referencedTypes.map((referencedType) => referencedType.fernFilepath))
     };
 }
 
 export function convertType({
     typeDeclaration,
     file,
-    typeResolver,
+    typeResolver
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
@@ -84,6 +84,6 @@ export function convertType({
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
-        enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file }),
+        enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file })
     });
 }

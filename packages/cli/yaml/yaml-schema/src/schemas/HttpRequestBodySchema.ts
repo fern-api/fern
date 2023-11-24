@@ -5,7 +5,7 @@ import { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySche
 export const HttpRequestBodySchema = z.union([
     z.string(),
     HttpReferencedRequestBodySchema,
-    HttpInlineRequestBodySchema,
+    HttpInlineRequestBodySchema
 ]);
 
 export type HttpRequestBodySchema = z.infer<typeof HttpRequestBodySchema>;

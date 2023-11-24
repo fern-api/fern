@@ -71,7 +71,7 @@ export function getAllRules(): Rule[] {
         NoUndefinedVariableReferenceRule,
         OnlyObjectExtensionsRule,
         NoMaybeStreamingRule,
-        NoResponsePropertyRule,
+        NoResponsePropertyRule
     ];
 }
 

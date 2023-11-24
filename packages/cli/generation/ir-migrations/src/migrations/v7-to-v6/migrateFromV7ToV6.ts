@@ -4,7 +4,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V7_TO_V6_MIGRATION: IrMigration<
@@ -32,7 +32,7 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
@@ -57,25 +57,25 @@ export const V7_TO_V6_MIGRATION: IrMigration<
                             originalName,
                             camelCase: {
                                 safeName: camelCase,
-                                unsafeName: camelCase,
+                                unsafeName: camelCase
                             },
                             snakeCase: {
                                 safeName: snakeCase,
-                                unsafeName: snakeCase,
+                                unsafeName: snakeCase
                             },
                             screamingSnakeCase: {
                                 safeName: screamingSnakeCase,
-                                unsafeName: screamingSnakeCase,
+                                unsafeName: screamingSnakeCase
                             },
                             pascalCase: {
                                 safeName: pascalCase,
-                                unsafeName: pascalCase,
-                            },
+                                unsafeName: pascalCase
+                            }
                         },
-                        fernFilepath: service.name.fernFilepath,
-                    },
+                        fernFilepath: service.name.fernFilepath
+                    }
                 };
-            }),
+            })
         };
-    },
+    }
 };

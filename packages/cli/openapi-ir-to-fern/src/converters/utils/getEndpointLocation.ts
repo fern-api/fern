@@ -17,7 +17,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
                 : `${endpoint.sdkName.groupName.map((part) => camelCase(part)).join("/")}.yml`;
         return {
             file: RelativeFilePath.of(filename),
-            endpointId: endpoint.sdkName.methodName,
+            endpointId: endpoint.sdkName.methodName
         };
     }
 
@@ -31,14 +31,14 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
                 endpointId:
                     endpoint.summary != null
                         ? camelCase(endpoint.summary)
-                        : camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`),
+                        : camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`)
             };
         }
 
         // TODO(dsinghvi): warn that using path and method to generate id
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            endpointId: camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`),
+            endpointId: camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`)
         };
     }
 
@@ -46,7 +46,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     if (tag == null) {
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            endpointId: operationId,
+            endpointId: operationId
         };
     }
 
@@ -58,7 +58,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     if (isEqual(tagTokens, operationIdTokens)) {
         return {
             file: RelativeFilePath.of("__package__.yml"),
-            endpointId: tag,
+            endpointId: tag
         };
     }
 
@@ -67,7 +67,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         operationId,
         tag,
         path: endpoint.path,
-        method: endpoint.method,
+        method: endpoint.method
     });
     if (fastapiEndpointLocation != null) {
         return fastapiEndpointLocation;
@@ -84,7 +84,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
             return {
                 file: RelativeFilePath.of(`${camelCasedTag}.yml`),
                 endpointId: operationId,
-                tag,
+                tag
             };
         }
     }
@@ -96,7 +96,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     return {
         file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
-        tag,
+        tag
     };
 }
 
@@ -128,7 +128,7 @@ function maybeGetFastApiEndpointLocation({
     operationId,
     tag,
     path,
-    method,
+    method
 }: {
     operationId: string;
     tag: string;
@@ -141,7 +141,7 @@ function maybeGetFastApiEndpointLocation({
         return {
             file: RelativeFilePath.of(camelCase(tag) + ".yml"),
             endpointId: camelCase(operationId.slice(0, -1 * operationIdSuffix.length)),
-            tag,
+            tag
         };
     }
     return undefined;

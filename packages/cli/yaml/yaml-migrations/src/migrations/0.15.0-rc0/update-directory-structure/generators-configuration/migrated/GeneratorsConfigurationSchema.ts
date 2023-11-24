@@ -9,7 +9,7 @@ export const GeneratorsConfigurationSchema = z.strictObject({
     [DEFAULT_GROUP_GENERATORS_CONFIG_KEY]: z.optional(z.string()),
     [OPENAPI_LOCATION_KEY]: z.optional(z.string()),
     [ASYNC_API_LOCATION_KEY]: z.optional(z.string()),
-    groups: z.optional(z.record(GeneratorGroupSchema)),
+    groups: z.optional(z.record(GeneratorGroupSchema))
 });
 
 export type GeneratorsConfigurationSchema = z.infer<typeof GeneratorsConfigurationSchema>;

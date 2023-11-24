@@ -7,13 +7,13 @@ export const WebhookInlinedPayloadSchema = z.union([
     z.strictObject({
         name: z.string(),
         extends: ObjectExtendsSchema,
-        properties: z.optional(z.record(ObjectPropertySchema)),
+        properties: z.optional(z.record(ObjectPropertySchema))
     }),
     z.strictObject({
         name: z.string(),
         extends: z.optional(ObjectExtendsSchema),
-        properties: z.record(ObjectPropertySchema),
-    }),
+        properties: z.record(ObjectPropertySchema)
+    })
 ]);
 
 export type WebhookInlinedPayloadSchema = z.infer<typeof WebhookInlinedPayloadSchema>;

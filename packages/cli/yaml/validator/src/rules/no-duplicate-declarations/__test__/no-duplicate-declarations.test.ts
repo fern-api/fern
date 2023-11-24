@@ -10,7 +10,7 @@ describe("no-duplicate-declarations", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,20 +18,20 @@ describe("no-duplicate-declarations", () => {
                 message: "C is already declared in this file",
                 nodePath: ["errors", "C"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "InlinedRequest is already declared in this file",
                 nodePath: ["service", "endpoints", "get"],
                 relativeFilepath: RelativeFilePath.of("2.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "UpdateRequest is already declared in this file",
                 nodePath: ["service", "endpoints", "updateV2"],
                 relativeFilepath: RelativeFilePath.of("2.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

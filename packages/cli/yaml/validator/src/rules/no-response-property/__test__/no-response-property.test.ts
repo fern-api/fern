@@ -10,7 +10,7 @@ describe("no-response-property", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,8 +18,8 @@ describe("no-response-property", () => {
                 message: "Response does not have a property named id.",
                 nodePath: ["service", "endpoints", "getMovie"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

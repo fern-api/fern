@@ -28,11 +28,11 @@ export const V27_TO_V26_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: "0.6.1-3-g94ee67a",
         [GeneratorName.GO_MODEL]: "0.6.1-3-g94ee67a",
-        [GeneratorName.GO_SDK]: "0.6.1-3-g94ee67a",
+        [GeneratorName.GO_SDK]: "0.6.1-3-g94ee67a"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V26.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v27): IrVersions.V26.ir.IntermediateRepresentation => {
         return {
@@ -41,22 +41,22 @@ export const V27_TO_V26_MIGRATION: IrMigration<
                 Object.entries(v27.services).map(([key, val]) => {
                     return [key, convertHttpService(val)];
                 })
-            ),
+            )
         };
-    },
+    }
 };
 
 function convertHttpService(val: IrVersions.V27.HttpService): IrVersions.V26.HttpService {
     return {
         ...val,
-        endpoints: val.endpoints.map((endpoint) => convertHttpEndpoint(endpoint)),
+        endpoints: val.endpoints.map((endpoint) => convertHttpEndpoint(endpoint))
     };
 }
 
 function convertHttpEndpoint(val: IrVersions.V27.HttpEndpoint): IrVersions.V26.HttpEndpoint {
     return {
         ...val,
-        response: val.response != null ? convertHttpResponse(val.response) : undefined,
+        response: val.response != null ? convertHttpResponse(val.response) : undefined
     };
 }
 
@@ -70,6 +70,6 @@ function convertHttpResponse(val: IrVersions.V27.HttpResponse): IrVersions.V26.H
     }
     return IrVersions.V26.HttpResponse.json({
         docs: jsonResponse.docs,
-        responseBodyType: jsonResponse.responseBodyType,
+        responseBodyType: jsonResponse.responseBodyType
     });
 }

@@ -5,7 +5,7 @@ import {
     NavigationItem,
     PageConfiguration,
     SectionConfiguration,
-    TabbedNavigationConfig,
+    TabbedNavigationConfig
 } from "@fern-fern/docs-config/api";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -20,7 +20,7 @@ export async function visitDocsConfigFileYamlAst(
 ): Promise<void> {
     await visitor.file?.(
         {
-            config: contents,
+            config: contents
         },
         []
     );
@@ -30,7 +30,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.backgroundImage,
             visitor,
-            nodePath: ["background-image"],
+            nodePath: ["background-image"]
         });
     }
     if (contents.favicon != null) {
@@ -38,7 +38,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.favicon,
             visitor,
-            nodePath: ["favicon"],
+            nodePath: ["favicon"]
         });
     }
     if (contents.logo?.dark != null) {
@@ -46,7 +46,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.logo.dark,
             visitor,
-            nodePath: ["logo", "dark"],
+            nodePath: ["logo", "dark"]
         });
     }
     if (contents.logo?.light != null) {
@@ -54,7 +54,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.logo.light,
             visitor,
-            nodePath: ["logo", "light"],
+            nodePath: ["logo", "light"]
         });
     }
 
@@ -63,7 +63,7 @@ export async function visitDocsConfigFileYamlAst(
             navigation: contents.navigation,
             visitor,
             nodePath: ["navigation"],
-            absoluteFilepathToConfiguration,
+            absoluteFilepathToConfiguration
         });
     }
 
@@ -72,7 +72,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.typography.codeFont.path,
             visitor,
-            nodePath: ["typography", "codeFont"],
+            nodePath: ["typography", "codeFont"]
         });
     }
     if (contents.typography?.bodyFont != null) {
@@ -80,7 +80,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.typography.bodyFont.path,
             visitor,
-            nodePath: ["typography", "codeFont"],
+            nodePath: ["typography", "codeFont"]
         });
     }
     if (contents.typography?.headingsFont != null) {
@@ -88,7 +88,7 @@ export async function visitDocsConfigFileYamlAst(
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.typography.headingsFont.path,
             visitor,
-            nodePath: ["typography", "codeFont"],
+            nodePath: ["typography", "codeFont"]
         });
     }
 
@@ -99,7 +99,7 @@ export async function visitDocsConfigFileYamlAst(
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: version.path,
                     visitor,
-                    nodePath: ["versions", `${idx}`],
+                    nodePath: ["versions", `${idx}`]
                 });
                 const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
                 const content = yaml.load((await readFile(absoluteFilepath)).toString());
@@ -107,7 +107,7 @@ export async function visitDocsConfigFileYamlAst(
                     await visitor.versionFile?.(
                         {
                             path: version.path,
-                            content,
+                            content
                         },
                         [version.path]
                     );
@@ -118,7 +118,7 @@ export async function visitDocsConfigFileYamlAst(
                         navigation: parsedVersionFile.contents.navigation,
                         visitor,
                         nodePath: ["navigation"],
-                        absoluteFilepathToConfiguration: absoluteFilepath,
+                        absoluteFilepathToConfiguration: absoluteFilepath
                     });
                 }
             })
@@ -130,7 +130,7 @@ async function visitFilepath({
     absoluteFilepathToConfiguration,
     rawUnresolvedFilepath,
     visitor,
-    nodePath,
+    nodePath
 }: {
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     rawUnresolvedFilepath: string;
@@ -141,7 +141,7 @@ async function visitFilepath({
     await visitor.filepath?.(
         {
             absoluteFilepath,
-            value: rawUnresolvedFilepath,
+            value: rawUnresolvedFilepath
         },
         nodePath
     );
@@ -151,7 +151,7 @@ async function visitNavigation({
     navigation,
     visitor,
     nodePath,
-    absoluteFilepathToConfiguration,
+    absoluteFilepathToConfiguration
 }: {
     navigation: NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
@@ -167,7 +167,7 @@ async function visitNavigation({
                             navigationItem: item,
                             visitor,
                             nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
-                            absoluteFilepathToConfiguration,
+                            absoluteFilepathToConfiguration
                         });
                     })
                 );
@@ -180,7 +180,7 @@ async function visitNavigation({
                     navigationItem: item,
                     visitor,
                     nodePath: [...nodePath, `${itemIdx}`],
-                    absoluteFilepathToConfiguration,
+                    absoluteFilepathToConfiguration
                 });
             })
         );
@@ -191,7 +191,7 @@ async function visitNavigationItem({
     navigationItem,
     visitor,
     nodePath,
-    absoluteFilepathToConfiguration,
+    absoluteFilepathToConfiguration
 }: {
     navigationItem: NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
@@ -203,14 +203,14 @@ async function visitNavigationItem({
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: navigationItem.path,
             visitor,
-            nodePath: [...nodePath, "page"],
+            nodePath: [...nodePath, "page"]
         });
         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
         if (await doesPathExist(absoluteFilepath)) {
             await visitor.markdownPage?.(
                 {
                     title: navigationItem.page,
-                    content: (await readFile(absoluteFilepath)).toString(),
+                    content: (await readFile(absoluteFilepath)).toString()
                 },
                 [...nodePath, "page", navigationItem.path]
             );
@@ -224,7 +224,7 @@ async function visitNavigationItem({
                     navigationItem: item,
                     visitor,
                     nodePath: [...nodePath, "section", "contents", `${itemIdx}`],
-                    absoluteFilepathToConfiguration,
+                    absoluteFilepathToConfiguration
                 });
             })
         );

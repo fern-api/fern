@@ -12,14 +12,14 @@ describe("migrateFromV20ToV19", () => {
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
                 output += logs.join(" ");
-            }),
+            })
         });
         await expect(
             runMigration({
                 pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/file-download")),
                 context: {
-                    taskContext: context,
-                },
+                    taskContext: context
+                }
             })
         ).rejects.toBeTruthy();
         expect(output).toContain("does not support file download");

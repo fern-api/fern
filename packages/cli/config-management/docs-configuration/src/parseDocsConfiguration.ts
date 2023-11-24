@@ -17,13 +17,13 @@ import {
     TabbedDocsNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
-    VersionInfo,
+    VersionInfo
 } from "./ParsedDocsConfiguration";
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
     absoluteFilepathToDocsConfig,
-    context,
+    context
 }: {
     rawDocsConfiguration: RawDocs.DocsConfiguration;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -41,7 +41,7 @@ export async function parseDocsConfiguration({
         title,
         typography,
         tabs,
-        versions,
+        versions
     } = rawDocsConfiguration;
     const convertedColors = convertColorsConfiguration(colors ?? {}, context);
 
@@ -50,7 +50,7 @@ export async function parseDocsConfiguration({
         navigation,
         absolutePathToFernFolder,
         absolutePathToConfig: absoluteFilepathToDocsConfig,
-        context,
+        context
     });
 
     return {
@@ -67,18 +67,18 @@ export async function parseDocsConfiguration({
                           logo.dark != null
                               ? await convertImageReference({
                                     rawImageReference: logo.dark,
-                                    absoluteFilepathToDocsConfig,
+                                    absoluteFilepathToDocsConfig
                                 })
                               : undefined,
                       light:
                           logo.light != null
                               ? await convertImageReference({
                                     rawImageReference: logo.light,
-                                    absoluteFilepathToDocsConfig,
+                                    absoluteFilepathToDocsConfig
                                 })
                               : undefined,
                       height: logo.height,
-                      href: logo.href != null ? logo.href : undefined,
+                      href: logo.href != null ? logo.href : undefined
                   }
                 : undefined,
         favicon:
@@ -89,7 +89,7 @@ export async function parseDocsConfiguration({
             backgroundImage != null
                 ? await convertImageReference({
                       rawImageReference: backgroundImage,
-                      absoluteFilepathToDocsConfig,
+                      absoluteFilepathToDocsConfig
                   })
                 : undefined,
         colors: {
@@ -99,13 +99,13 @@ export async function parseDocsConfiguration({
                         ? {
                               type: "themed",
                               dark: convertedColors.accentPrimary.dark,
-                              light: convertedColors.accentPrimary.light,
+                              light: convertedColors.accentPrimary.light
                           }
                         : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                         convertedColors.accentPrimary.type === "unthemed"
                         ? {
                               type: "unthemed",
-                              color: convertedColors.accentPrimary.color,
+                              color: convertedColors.accentPrimary.color
                           }
                         : undefined
                     : undefined,
@@ -115,25 +115,25 @@ export async function parseDocsConfiguration({
                         ? {
                               type: "themed",
                               dark: convertedColors.background.dark,
-                              light: convertedColors.background.light,
+                              light: convertedColors.background.light
                           }
                         : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                         convertedColors.background.type === "unthemed"
                         ? {
                               type: "unthemed",
-                              color: convertedColors.background.color,
+                              color: convertedColors.background.color
                           }
                         : undefined
-                    : undefined,
+                    : undefined
         },
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
         typography:
             typography != null
                 ? await convertTypographyConfiguration({
                       rawTypography: typography,
-                      absoluteFilepathToDocsConfig,
+                      absoluteFilepathToDocsConfig
                   })
-                : undefined,
+                : undefined
     };
 }
 
@@ -142,7 +142,7 @@ async function getNavigationConfiguration({
     navigation,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context,
+    context
 }: {
     versions?: VersionConfig[];
     navigation?: NavigationConfig;
@@ -155,7 +155,7 @@ async function getNavigationConfiguration({
             rawNavigationConfig: navigation,
             absolutePathToFernFolder,
             absolutePathToConfig,
-            context,
+            context
         });
     } else if (versions != null) {
         const versionedNavbars: VersionInfo[] = [];
@@ -167,18 +167,18 @@ async function getNavigationConfiguration({
                 rawNavigationConfig: result.navigation,
                 absolutePathToFernFolder,
                 absolutePathToConfig: absoluteFilepathToVersionFile,
-                context,
+                context
             });
             versionedNavbars.push({
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
-                slug: version.slug,
+                slug: version.slug
             });
         }
         return {
             type: "versioned",
-            versions: versionedNavbars,
+            versions: versionedNavbars
         };
     }
     throw new Error("Unexpected. Docs have neither navigation or versions defined.");
@@ -186,7 +186,7 @@ async function getNavigationConfiguration({
 
 async function convertTypographyConfiguration({
     rawTypography,
-    absoluteFilepathToDocsConfig,
+    absoluteFilepathToDocsConfig
 }: {
     rawTypography: RawDocs.DocsTypographyConfig;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
@@ -196,29 +196,29 @@ async function convertTypographyConfiguration({
             rawTypography.headingsFont != null
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.headingsFont,
-                      absoluteFilepathToDocsConfig,
+                      absoluteFilepathToDocsConfig
                   })
                 : undefined,
         bodyFont:
             rawTypography.bodyFont != null
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.bodyFont,
-                      absoluteFilepathToDocsConfig,
+                      absoluteFilepathToDocsConfig
                   })
                 : undefined,
         codeFont:
             rawTypography.codeFont != null
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.codeFont,
-                      absoluteFilepathToDocsConfig,
+                      absoluteFilepathToDocsConfig
                   })
-                : undefined,
+                : undefined
     };
 }
 
 async function convertFontConfig({
     rawFontConfig,
-    absoluteFilepathToDocsConfig,
+    absoluteFilepathToDocsConfig
 }: {
     rawFontConfig: RawDocs.FontConfig;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
@@ -227,8 +227,8 @@ async function convertFontConfig({
         name: rawFontConfig.name,
         absolutePath: await resolveFilepath({
             absolutePath: absoluteFilepathToDocsConfig,
-            rawUnresolvedFilepath: rawFontConfig.path,
-        }),
+            rawUnresolvedFilepath: rawFontConfig.path
+        })
     };
 }
 
@@ -236,7 +236,7 @@ async function convertNavigationConfiguration({
     rawNavigationConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context,
+    context
 }: {
     rawNavigationConfig: RawDocs.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -252,19 +252,19 @@ async function convertNavigationConfiguration({
                             rawConfig: item,
                             absolutePathToFernFolder,
                             absolutePathToConfig,
-                            context,
+                            context
                         })
                     )
                 );
                 return {
                     tab: item.tab,
-                    layout,
+                    layout
                 };
             })
         );
         return {
             type: "tabbed",
-            items: tabbedNavigationItems,
+            items: tabbedNavigationItems
         };
     } else {
         return {
@@ -273,7 +273,7 @@ async function convertNavigationConfiguration({
                 rawNavigationConfig.map((item) =>
                     convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
                 )
-            ),
+            )
         };
     }
 }
@@ -282,7 +282,7 @@ async function convertNavigationItem({
     rawConfig,
     absolutePathToFernFolder,
     absolutePathToConfig,
-    context,
+    context
 }: {
     rawConfig: RawDocs.NavigationItem;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -295,9 +295,9 @@ async function convertNavigationItem({
             title: rawConfig.page,
             absolutePath: await resolveFilepath({
                 absolutePath: absolutePathToConfig,
-                rawUnresolvedFilepath: rawConfig.path,
+                rawUnresolvedFilepath: rawConfig.path
             }),
-            slug: rawConfig.slug ?? undefined,
+            slug: rawConfig.slug ?? undefined
         };
     }
     if (isRawSectionConfig(rawConfig)) {
@@ -310,7 +310,7 @@ async function convertNavigationItem({
                 )
             ),
             slug: rawConfig.slug ?? undefined,
-            collapsed: rawConfig.collapsed ?? undefined,
+            collapsed: rawConfig.collapsed ?? undefined
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -322,16 +322,14 @@ async function convertNavigationItem({
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
             showErrors: rawConfig.displayErrors ?? false,
             snippetsConfiguration:
-                rawConfig.snippets != null
-                    ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
-                    : undefined,
+                rawConfig.snippets != null ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets }) : undefined
         };
     }
     assertNever(rawConfig);
 }
 
 function convertSnippetsConfiguration({
-    rawConfig,
+    rawConfig
 }: {
     rawConfig: RawDocs.SnippetsConfiguration;
 }): DocsNavigationItem.SnippetsConfiguration {
@@ -339,7 +337,7 @@ function convertSnippetsConfiguration({
         python: rawConfig.python,
         typescript: rawConfig.typescript,
         go: rawConfig.go,
-        java: rawConfig.java,
+        java: rawConfig.java
     };
 }
 
@@ -360,7 +358,7 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
 
 async function convertImageReference({
     rawImageReference,
-    absoluteFilepathToDocsConfig,
+    absoluteFilepathToDocsConfig
 }: {
     rawImageReference: string;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
@@ -368,8 +366,8 @@ async function convertImageReference({
     return {
         filepath: await resolveFilepath({
             absolutePath: absoluteFilepathToDocsConfig,
-            rawUnresolvedFilepath: rawImageReference,
-        }),
+            rawUnresolvedFilepath: rawImageReference
+        })
     };
 }
 
@@ -385,7 +383,7 @@ function convertColorsConfiguration(
         background:
             rawConfig.background != null
                 ? convertColorConfiguration(rawConfig.background, context, "background")
-                : undefined,
+                : undefined
     };
 }
 
@@ -401,7 +399,7 @@ function convertColorConfiguration(
         }
         return {
             type: "unthemed",
-            color: rgb,
+            color: rgb
         };
     }
 
@@ -427,7 +425,7 @@ function convertColorConfiguration(
     return {
         type: "themed",
         dark: rgbDark,
-        light: rgbLight,
+        light: rgbLight
     };
 }
 
@@ -466,13 +464,13 @@ function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): DocsV1Write.Navbar
                 return {
                     type: "primary",
                     text: rawNavbarLink.text,
-                    url: rawNavbarLink.url,
+                    url: rawNavbarLink.url
                 };
             case "secondary":
                 return {
                     type: "secondary",
                     text: rawNavbarLink.text,
-                    url: rawNavbarLink.url,
+                    url: rawNavbarLink.url
                 };
             default:
                 assertNever(rawNavbarLink);
@@ -482,7 +480,7 @@ function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): DocsV1Write.Navbar
 
 async function resolveFilepath({
     rawUnresolvedFilepath,
-    absolutePath,
+    absolutePath
 }: {
     rawUnresolvedFilepath: string;
     absolutePath: AbsoluteFilePath;

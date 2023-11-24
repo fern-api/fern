@@ -28,7 +28,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
             const parsedReference = parseReferenceToTypeName({
                 reference: errorReference,
                 referencedIn: relativeFilepath,
-                imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
+                imports: mapValues(contents.imports ?? {}, RelativeFilePath.of)
             });
 
             if (parsedReference != null && doesErrorExist(parsedReference.typeName, parsedReference.relativeFilepath)) {
@@ -38,8 +38,8 @@ export const NoUndefinedErrorReferenceRule: Rule = {
             return [
                 {
                     severity: "error",
-                    message: "Error is not defined.",
-                },
+                    message: "Error is not defined."
+                }
             ];
         };
 
@@ -47,15 +47,15 @@ export const NoUndefinedErrorReferenceRule: Rule = {
             rootApiFile: {
                 errorReference: (errorReference, { relativeFilepath, contents }) => {
                     return validateErrorReference(errorReference, relativeFilepath, contents);
-                },
+                }
             },
             definitionFile: {
                 errorReference: (errorReference, { relativeFilepath, contents }) => {
                     return validateErrorReference(errorReference, relativeFilepath, contents);
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 async function getErrorsByFilepath(workspace: FernWorkspace) {
@@ -68,7 +68,7 @@ async function getErrorsByFilepath(workspace: FernWorkspace) {
         await visitDefinitionFileYamlAst(file, {
             errorDeclaration: ({ errorName }) => {
                 errorsForFile.add(errorName);
-            },
+            }
         });
     });
 

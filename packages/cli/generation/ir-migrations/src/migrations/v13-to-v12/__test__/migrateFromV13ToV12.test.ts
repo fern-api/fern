@@ -7,7 +7,7 @@ const runMigration = createMigrationTester(V13_TO_V12_MIGRATION);
 describe("migrateFromV13ToV12", () => {
     it("migrates header", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
         const firstScheme = migrated.auth.schemes[0];

@@ -32,7 +32,7 @@ describe("migrations", () => {
             for (const migration of allMigrations) {
                 expect(exportedMigrations.migrations).toContainEqual(
                     expect.objectContaining({
-                        name: migration.name,
+                        name: migration.name
                     })
                 );
             }
@@ -55,7 +55,7 @@ describe("migrations", () => {
         for (const migration of allMigrations) {
             expect(registeredMigrations).toContainEqual(
                 expect.objectContaining({
-                    version: migration.version,
+                    version: migration.version
                 })
             );
         }

@@ -10,15 +10,15 @@ describe("valid-default-environment", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("default-env-missing")
-            ),
+            )
         });
         expect(violations).toEqual([
             {
                 message: "The default-environment dev is not listed as an environment",
                 nodePath: ["default-environment"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 
@@ -29,15 +29,15 @@ describe("valid-default-environment", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("default-env-unspecified")
-            ),
+            )
         });
         expect(violations).toEqual([
             {
                 message: "Please specify a default-environment. If no default, use null",
                 nodePath: ["default-environment"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 
@@ -48,7 +48,7 @@ describe("valid-default-environment", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("default-env-valid")
-            ),
+            )
         });
         expect(violations).toEqual([]);
     });
@@ -60,7 +60,7 @@ describe("valid-default-environment", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("default-env-null")
-            ),
+            )
         });
         expect(violations).toEqual([]);
     });

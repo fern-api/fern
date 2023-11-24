@@ -3,7 +3,7 @@ import stripAnsi from "strip-ansi";
 export function addPrefixToString({
     prefix,
     content,
-    includePrefixOnAllLines = false,
+    includePrefixOnAllLines = false
 }: {
     prefix: string;
     content: string;

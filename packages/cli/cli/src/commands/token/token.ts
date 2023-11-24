@@ -6,7 +6,7 @@ import chalk from "chalk";
 
 export async function generateToken({
     orgId,
-    taskContext,
+    taskContext
 }: {
     orgId: string;
     taskContext: TaskContext;
@@ -14,7 +14,7 @@ export async function generateToken({
     const token = await askToLogin(taskContext);
     const venus = createVenusService({ token: token.value });
     const response = await venus.registry.generateRegistryTokens({
-        organizationId: FernVenusApi.OrganizationId(orgId),
+        organizationId: FernVenusApi.OrganizationId(orgId)
     });
     if (response.ok) {
         taskContext.logger.info(chalk.green(`Generated a FERN_TOKEN for ${orgId}: ${response.body.npm.token}`));
@@ -29,6 +29,6 @@ export async function generateToken({
             taskContext.failAndThrow(
                 `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`
             ),
-        _other: () => taskContext.failAndThrow("Failed to create token. Please reach out to support@buildwithfern.com"),
+        _other: () => taskContext.failAndThrow("Failed to create token. Please reach out to support@buildwithfern.com")
     });
 }

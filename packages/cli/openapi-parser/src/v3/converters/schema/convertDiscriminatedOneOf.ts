@@ -13,7 +13,7 @@ export function convertDiscriminatedOneOf({
     required,
     wrapAsNullable,
     discriminator,
-    context,
+    context
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -30,7 +30,7 @@ export function convertDiscriminatedOneOf({
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
             const subtypeReference = convertReferenceObject(
                 {
-                    $ref: schema,
+                    $ref: schema
                 },
                 false,
                 context,
@@ -38,7 +38,7 @@ export function convertDiscriminatedOneOf({
             );
             context.markReferencedByDiscriminatedUnion(
                 {
-                    $ref: schema,
+                    $ref: schema
                 },
                 discriminant,
                 1
@@ -55,7 +55,7 @@ export function convertDiscriminatedOneOf({
             const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
             return {
                 key: propertyName,
-                schema,
+                schema
             };
         });
     return wrapDiscriminantedOneOf({
@@ -65,7 +65,7 @@ export function convertDiscriminatedOneOf({
         properties: convertedProperties,
         description,
         discriminant,
-        subtypes: unionSubTypes,
+        subtypes: unionSubTypes
     });
 }
 
@@ -79,7 +79,7 @@ export function convertDiscriminatedOneOfWithVariants({
     wrapAsNullable,
     discriminant,
     variants,
-    context,
+    context
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -119,7 +119,7 @@ export function convertDiscriminatedOneOfWithVariants({
             const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
             return {
                 key: propertyName,
-                schema,
+                schema
             };
         });
     return wrapDiscriminantedOneOf({
@@ -129,7 +129,7 @@ export function convertDiscriminatedOneOfWithVariants({
         properties: convertedProperties,
         description,
         discriminant,
-        subtypes: unionSubTypes,
+        subtypes: unionSubTypes
     });
 }
 
@@ -140,7 +140,7 @@ export function wrapDiscriminantedOneOf({
     properties,
     description,
     discriminant,
-    subtypes,
+    subtypes
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -159,9 +159,9 @@ export function wrapDiscriminantedOneOf({
                 nameOverride,
                 generatedName,
                 schemas: subtypes,
-                commonProperties: properties,
+                commonProperties: properties
             }),
-            description,
+            description
         });
     }
     return SchemaWithExample.oneOf({
@@ -171,6 +171,6 @@ export function wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
         schemas: subtypes,
-        commonProperties: properties,
+        commonProperties: properties
     });
 }

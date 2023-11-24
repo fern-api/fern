@@ -7,7 +7,7 @@ import {
     GenerationLanguage,
     GeneratorGroup,
     GeneratorInvocation,
-    GeneratorsConfiguration,
+    GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
@@ -15,13 +15,13 @@ import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
-    OPENAPI_LOCATION_KEY,
+    OPENAPI_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
-    rawGeneratorsConfiguration,
+    rawGeneratorsConfiguration
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
@@ -47,18 +47,18 @@ export async function convertGeneratorsConfiguration({
                           convertGroup({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
-                              group,
+                              group
                           })
                       )
                   )
-                : [],
+                : []
     };
 }
 
 async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
-    group,
+    group
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
@@ -69,13 +69,13 @@ async function convertGroup({
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: await Promise.all(
             group.generators.map((generator) => convertGenerator({ absolutePathToGeneratorsConfiguration, generator }))
-        ),
+        )
     };
 }
 
 async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
-    generator,
+    generator
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
@@ -89,13 +89,13 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
-        language: getLanguageFromGeneratorName(generator.name),
+        language: getLanguageFromGeneratorName(generator.name)
     };
 }
 
 async function convertOutputMode({
     absolutePathToGeneratorsConfiguration,
-    generator,
+    generator
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
@@ -110,10 +110,10 @@ async function convertOutputMode({
                 generator.github.license != null
                     ? await getGithubLicense({
                           absolutePathToGeneratorsConfiguration,
-                          githubLicense: generator.github.license,
+                          githubLicense: generator.github.license
                       })
                     : undefined,
-            publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined,
+            publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined
         });
     }
     if (generator.output == null) {
@@ -127,7 +127,7 @@ async function convertOutputMode({
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: generator.output.url ?? "https://registry.npmjs.org",
                     packageName: generator.output["package-name"],
-                    token: generator.output.token ?? "",
+                    token: generator.output.token ?? ""
                 })
             );
         case "maven":
@@ -136,14 +136,14 @@ async function convertOutputMode({
                     registryUrl: generator.output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
-                    coordinate: generator.output.coordinate,
+                    coordinate: generator.output.coordinate
                 })
             );
         case "postman":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.postman({
                     apiKey: generator.output["api-key"],
-                    workspaceId: generator.output["workspace-id"],
+                    workspaceId: generator.output["workspace-id"]
                 })
             );
         case "pypi":
@@ -152,7 +152,7 @@ async function convertOutputMode({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
                     username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
                     password: generator.output.token ?? generator.output.password ?? "",
-                    coordinate: generator.output["package-name"],
+                    coordinate: generator.output["package-name"]
                 })
             );
         default:
@@ -162,7 +162,7 @@ async function convertOutputMode({
 
 async function getGithubLicense({
     absolutePathToGeneratorsConfiguration,
-    githubLicense,
+    githubLicense
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     githubLicense: GithubLicenseSchema;
@@ -193,7 +193,7 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             return FernFiddle.GithubPublishInfo.npm({
                 registryUrl: output.url ?? "https://registry.npmjs.org",
                 packageName: output["package-name"],
-                token: output.token,
+                token: output.token
             });
         case "maven":
             return FernFiddle.GithubPublishInfo.maven({
@@ -203,14 +203,14 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                     output.username != null && output.password != null
                         ? {
                               username: output.username,
-                              password: output.password,
+                              password: output.password
                           }
-                        : undefined,
+                        : undefined
             });
         case "postman":
             return FernFiddle.GithubPublishInfo.postman({
                 apiKey: output["api-key"],
-                workspaceId: output["workspace-id"],
+                workspaceId: output["workspace-id"]
             });
         case "pypi":
             return FernFiddle.GithubPublishInfo.pypi({
@@ -220,12 +220,12 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                     output.token != null
                         ? {
                               username: "__token__",
-                              password: output.token,
+                              password: output.token
                           }
                         : {
                               username: output.username ?? "",
-                              password: output.password ?? "",
-                          },
+                              password: output.password ?? ""
+                          }
             });
         default:
             assertNever(output);

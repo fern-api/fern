@@ -32,5 +32,5 @@ export const ALL_MIGRATIONS: VersionMigrations[] = [
     migrations_0_3_23,
     migrations_0_5_4,
     migrations_0_9_10,
-    migrations_0_15_0_rc0,
+    migrations_0_15_0_rc0
 ];

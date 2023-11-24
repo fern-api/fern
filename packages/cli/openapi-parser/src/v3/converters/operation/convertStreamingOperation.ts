@@ -16,7 +16,7 @@ export interface StreamingEndpoints {
 export function convertStreamingOperation({
     operationContext,
     context,
-    streamingExtension,
+    streamingExtension
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -27,11 +27,11 @@ export function convertStreamingOperation({
             const streamingOperation = convertHttpOperation({
                 operationContext,
                 context,
-                streamingResponse: true,
+                streamingResponse: true
             });
             return {
                 streaming: streamingOperation,
-                nonStreaming: undefined,
+                nonStreaming: undefined
             };
         }
         case "streamCondition": {
@@ -39,11 +39,11 @@ export function convertStreamingOperation({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
-                isStreaming: true,
+                isStreaming: true
             });
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
-                response: streamingExtension.responseStream,
+                response: streamingExtension.responseStream
             });
             const streamingOperation = convertHttpOperation({
                 operationContext: {
@@ -51,24 +51,24 @@ export function convertStreamingOperation({
                     operation: {
                         ...operationContext.operation,
                         requestBody: streamingRequestBody,
-                        responses: streamingResponses,
+                        responses: streamingResponses
                     },
-                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "stream"],
+                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "stream"]
                 },
                 context,
                 streamingResponse: true,
-                suffix: "stream",
+                suffix: "stream"
             });
 
             const nonStreamingRequestBody = getRequestBody({
                 context,
                 operation: operationContext.operation,
                 streamingExtension,
-                isStreaming: false,
+                isStreaming: false
             });
             const nonStreamingResponses = getResponses({
                 operation: operationContext.operation,
-                response: streamingExtension.response,
+                response: streamingExtension.response
             });
             const nonStreamingOperation = convertHttpOperation({
                 operationContext: {
@@ -76,15 +76,15 @@ export function convertStreamingOperation({
                     operation: {
                         ...operationContext.operation,
                         requestBody: nonStreamingRequestBody,
-                        responses: nonStreamingResponses,
-                    },
+                        responses: nonStreamingResponses
+                    }
                 },
-                context,
+                context
             });
 
             return {
                 streaming: streamingOperation,
-                nonStreaming: nonStreamingOperation,
+                nonStreaming: nonStreamingOperation
             };
         }
         default:
@@ -96,7 +96,7 @@ function getRequestBody({
     context,
     operation,
     streamingExtension,
-    isStreaming,
+    isStreaming
 }: {
     context: AbstractOpenAPIV3ParserContext;
     operation: OpenAPIV3.OperationObject;
@@ -131,24 +131,24 @@ function getRequestBody({
             ...resolvedRequstBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
                 type: "boolean",
-                "x-fern-boolean-literal": isStreaming,
-            } as OpenAPIV3.SchemaObject,
+                "x-fern-boolean-literal": isStreaming
+            } as OpenAPIV3.SchemaObject
         },
-        required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty],
+        required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };
 
     return {
         content: {
             "application/json": {
-                schema: requestBodySchemaWithLiteralProperty,
-            },
-        },
+                schema: requestBodySchemaWithLiteralProperty
+            }
+        }
     };
 }
 
 function getResponses({
     operation,
-    response,
+    response
 }: {
     operation: OpenAPIV3.OperationObject;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
@@ -159,9 +159,9 @@ function getResponses({
             description: "",
             content: {
                 "application/json": {
-                    schema: response,
-                },
-            },
-        } as OpenAPIV3.ResponseObject,
+                    schema: response
+                }
+            }
+        } as OpenAPIV3.ResponseObject
     };
 }

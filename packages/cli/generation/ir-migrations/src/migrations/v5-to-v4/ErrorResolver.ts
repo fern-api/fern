@@ -13,7 +13,7 @@ export class ErrorResolverImpl implements ErrorResolver {
         this.errors = ir.errors.reduce(
             (acc, error) => ({
                 ...acc,
-                [stringifyErrorName(error.name)]: error,
+                [stringifyErrorName(error.name)]: error
             }),
             {}
         );

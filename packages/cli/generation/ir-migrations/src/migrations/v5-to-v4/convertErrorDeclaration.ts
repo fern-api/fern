@@ -7,7 +7,7 @@ import { TypeReferenceResolver } from "./TypeReferenceResolver";
 export function convertErrorDeclaration({
     errorDeclaration,
     errorDiscriminationStrategy,
-    typeReferenceResolver,
+    typeReferenceResolver
 }: {
     errorDeclaration: IrVersions.V5.errors.ErrorDeclaration;
     errorDiscriminationStrategy: IrVersions.V5.ir.ErrorDiscriminationStrategy;
@@ -17,7 +17,7 @@ export function convertErrorDeclaration({
         errorDeclaration.type != null
             ? IrVersions.V4.types.Type.alias({
                   aliasOf: convertTypeReference(errorDeclaration.type),
-                  resolvedType: typeReferenceResolver.resolveTypeReference(errorDeclaration.type),
+                  resolvedType: typeReferenceResolver.resolveTypeReference(errorDeclaration.type)
               })
             : undefined;
     return {
@@ -27,7 +27,7 @@ export function convertErrorDeclaration({
             nameV2: convertNameToV1(errorDeclaration.name.name),
             nameV3: convertNameToV2(errorDeclaration.name.name),
             fernFilepath: convertFernFilepathV1(errorDeclaration.name.fernFilepath),
-            fernFilepathV2: convertFernFilepathV2(errorDeclaration.name.fernFilepath),
+            fernFilepathV2: convertFernFilepathV2(errorDeclaration.name.fernFilepath)
         },
         discriminantValueV2: convertNameAndWireValueToV2(errorDeclaration.discriminantValue),
         discriminantValueV3:
@@ -41,7 +41,7 @@ export function convertErrorDeclaration({
                         ),
                     _unknown: () => {
                         throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
-                    },
+                    }
                 }
             ),
         discriminantValueV4: convertNameAndWireValueToV2(errorDeclaration.discriminantValue),
@@ -49,13 +49,13 @@ export function convertErrorDeclaration({
             typeV2 ??
             IrVersions.V4.types.Type.alias({
                 aliasOf: IrVersions.V4.types.TypeReference.void(),
-                resolvedType: IrVersions.V4.types.ResolvedTypeReference.void(),
+                resolvedType: IrVersions.V4.types.ResolvedTypeReference.void()
             }),
         typeV2,
         typeV3: errorDeclaration.type != null ? convertTypeReference(errorDeclaration.type) : errorDeclaration.type,
         http: {
-            statusCode: errorDeclaration.statusCode,
+            statusCode: errorDeclaration.statusCode
         },
-        statusCode: errorDeclaration.statusCode,
+        statusCode: errorDeclaration.statusCode
     };
 }

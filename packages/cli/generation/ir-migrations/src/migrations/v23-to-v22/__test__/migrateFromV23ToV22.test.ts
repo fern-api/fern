@@ -10,7 +10,7 @@ describe("migrateFromV23ToV22", () => {
     it("migrates extensive", async () => {
         const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/exhaustive"));
         const migrated = await runMigration({
-            pathToFixture,
+            pathToFixture
         });
         expect(migrated).toMatchSnapshot();
     });
@@ -20,13 +20,13 @@ describe("migrateFromV23ToV22", () => {
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
                 output += logs.join(" ");
-            }),
+            })
         });
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/bytes")),
             context: {
-                taskContext: context,
-            },
+                taskContext: context
+            }
         });
         const numEndpoints = Object.entries(migrated.services)[0]?.[1].endpoints.length;
         expect(numEndpoints).toEqual(0);

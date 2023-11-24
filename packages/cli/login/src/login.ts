@@ -15,7 +15,7 @@ export async function login(
     { useDeviceCodeFlow = false }: { useDeviceCodeFlow?: boolean } = {}
 ): Promise<FernUserToken> {
     context.instrumentPostHogEvent({
-        command: "Login initiated",
+        command: "Login initiated"
     });
 
     const token = await getTokenFromAuth0(context, { useDeviceCodeFlow });
@@ -27,7 +27,7 @@ export async function login(
 
     return {
         type: "user",
-        value: token,
+        value: token
     };
 }
 
@@ -40,7 +40,7 @@ async function getTokenFromAuth0(
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
-            context,
+            context
         });
     }
 
@@ -48,14 +48,14 @@ async function getTokenFromAuth0(
         return await doAuth0LoginFlow({
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
-            audience: VENUS_AUDIENCE,
+            audience: VENUS_AUDIENCE
         });
     } catch {
         return await doAuth0DeviceAuthorizationFlow({
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
-            context,
+            context
         });
     }
 }

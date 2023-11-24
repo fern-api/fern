@@ -9,7 +9,7 @@ const runMigration = createMigrationTester(V11_TO_V10_MIGRATION);
 describe("migrateFromV11ToV10", () => {
     it("tranforms auth header correctly", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
         expect(migrated.auth).toEqual({
             docs: undefined,
@@ -19,37 +19,37 @@ describe("migrateFromV11ToV10", () => {
                     _type: "header",
                     availability: {
                         message: undefined,
-                        status: "GENERAL_AVAILABILITY",
+                        status: "GENERAL_AVAILABILITY"
                     },
                     docs: undefined,
                     name: {
                         name: {
                             camelCase: {
                                 safeName: "apiKey",
-                                unsafeName: "apiKey",
+                                unsafeName: "apiKey"
                             },
                             originalName: "ApiKey",
                             pascalCase: {
                                 safeName: "ApiKey",
-                                unsafeName: "ApiKey",
+                                unsafeName: "ApiKey"
                             },
                             screamingSnakeCase: {
                                 safeName: "API_KEY",
-                                unsafeName: "API_KEY",
+                                unsafeName: "API_KEY"
                             },
                             snakeCase: {
                                 safeName: "api_key",
-                                unsafeName: "api_key",
-                            },
+                                unsafeName: "api_key"
+                            }
                         },
-                        wireValue: "Authorization",
+                        wireValue: "Authorization"
                     },
                     valueType: {
                         _type: "primitive",
-                        primitive: "STRING",
-                    },
-                },
-            ],
+                        primitive: "STRING"
+                    }
+                }
+            ]
         });
     });
 
@@ -58,7 +58,7 @@ describe("migrateFromV11ToV10", () => {
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
                 output += logs.join(" ");
-            }),
+            })
         });
         await expect(
             runMigration({
@@ -67,8 +67,8 @@ describe("migrateFromV11ToV10", () => {
                     RelativeFilePath.of("./fixtures/auth-header-prefix")
                 ),
                 context: {
-                    taskContext: context,
-                },
+                    taskContext: context
+                }
             })
         ).rejects.toBeTruthy();
         expect(output).toContain("does not support specifying an auth header prefix");

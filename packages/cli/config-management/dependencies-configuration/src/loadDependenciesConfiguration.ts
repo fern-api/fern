@@ -6,18 +6,18 @@ import { loadRawDependenciesConfiguration } from "./loadRawDependenciesConfigura
 
 export async function loadDependenciesConfiguration({
     absolutePathToWorkspace,
-    context,
+    context
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DependenciesConfiguration> {
     const rawDependenciesConfiguration = await loadRawDependenciesConfiguration({
         absolutePathToWorkspace,
-        context,
+        context
     });
     return convertDependenciesConfiguration({
         absolutePathToWorkspace,
         rawDependenciesConfiguration,
-        context,
+        context
     });
 }

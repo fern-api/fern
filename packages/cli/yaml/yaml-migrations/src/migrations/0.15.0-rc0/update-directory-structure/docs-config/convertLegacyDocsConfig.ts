@@ -3,7 +3,7 @@ import { DocsURL, LegacyDocs, MigratedDocs } from ".";
 export function convertLegacyDocsConfig({
     docsConfiguration,
     docsURLs,
-    apiName,
+    apiName
 }: {
     docsConfiguration: LegacyDocs.DocsConfiguration;
     docsURLs: DocsURL[];
@@ -16,13 +16,13 @@ export function convertLegacyDocsConfig({
         navigation:
             apiName != null
                 ? addApiNameToNavigationConfig({ navigation: docsConfiguration.navigation, apiName })
-                : docsConfiguration.navigation,
+                : docsConfiguration.navigation
     };
 }
 
 function addApiNameToNavigationConfig({
     navigation,
-    apiName,
+    apiName
 }: {
     navigation: LegacyDocs.NavigationItem[];
     apiName: string | undefined;
@@ -31,7 +31,7 @@ function addApiNameToNavigationConfig({
         if (isAPIReferenceSection(item)) {
             return {
                 ...item,
-                apiName,
+                apiName
             };
         }
         return item;

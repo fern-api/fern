@@ -19,7 +19,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
 
         const getRuleViolations = ({
             declaredName,
-            relativeFilepath,
+            relativeFilepath
         }: {
             declaredName: DeclaredName;
             relativeFilepath: RelativeFilePath;
@@ -46,7 +46,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
                 severity: "error",
                 message: `${declaredName} is already declared in ${
                     duplicate === relativeFilepath ? "this file" : duplicate
-                }`,
+                }`
             }));
         };
 
@@ -62,10 +62,10 @@ export const NoDuplicateDeclarationsRule: Rule = {
                     } else {
                         return [];
                     }
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> {
@@ -90,7 +90,7 @@ async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> 
                 if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
                     addDeclaration(endpoint.request.name);
                 }
-            },
+            }
         });
     });
 

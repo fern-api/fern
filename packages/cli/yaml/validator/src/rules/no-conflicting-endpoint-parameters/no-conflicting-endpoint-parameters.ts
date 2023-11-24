@@ -14,14 +14,14 @@ export const NoConflictingEndpointParametersRule: Rule = {
                                 severity: "error",
                                 message: `Path parameter ${chalk.bold(
                                     pathParameterKey
-                                )} is not suitable for code generation, because it can conflict with the request body parameter.`,
-                            },
+                                )} is not suitable for code generation, because it can conflict with the request body parameter.`
+                            }
                         ];
                     } else {
                         return [];
                     }
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

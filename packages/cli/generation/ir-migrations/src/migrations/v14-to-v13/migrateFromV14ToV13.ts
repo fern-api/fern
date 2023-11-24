@@ -4,7 +4,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V14_TO_V13_MIGRATION: IrMigration<
@@ -32,7 +32,7 @@ export const V14_TO_V13_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v14): IrVersions.V13.ir.IntermediateRepresentation => {
@@ -48,10 +48,10 @@ export const V14_TO_V13_MIGRATION: IrMigration<
                                 baseProperties: union.baseProperties.map((objectProperty) => {
                                     return {
                                         ...objectProperty,
-                                        valueType: convertTypeReference(objectProperty.valueType),
+                                        valueType: convertTypeReference(objectProperty.valueType)
                                     };
                                 }),
-                                types: union.types.map((singleUnionType) => convertSingleUnionType(singleUnionType)),
+                                types: union.types.map((singleUnionType) => convertSingleUnionType(singleUnionType))
                             });
                         },
                         enum: IrVersions.V13.types.Type.enum,
@@ -61,15 +61,15 @@ export const V14_TO_V13_MIGRATION: IrMigration<
                                 properties: object.properties.map((objectProperty) => {
                                     return {
                                         ...objectProperty,
-                                        valueType: convertTypeReference(objectProperty.valueType),
+                                        valueType: convertTypeReference(objectProperty.valueType)
                                     };
-                                }),
+                                })
                             });
                         },
                         alias: (aliasTypeDeclaration) => {
                             return IrVersions.V13.types.Type.alias({
                                 aliasOf: convertTypeReference(aliasTypeDeclaration.aliasOf),
-                                resolvedType: convertResolvedType(aliasTypeDeclaration.resolvedType),
+                                resolvedType: convertResolvedType(aliasTypeDeclaration.resolvedType)
                             });
                         },
                         undiscriminatedUnion: (undiscriminatedUnion) => {
@@ -79,8 +79,8 @@ export const V14_TO_V13_MIGRATION: IrMigration<
                         },
                         _unknown: () => {
                             throw new Error("Encountered unknown shape");
-                        },
-                    }),
+                        }
+                    })
                 };
             }
         );
@@ -90,9 +90,9 @@ export const V14_TO_V13_MIGRATION: IrMigration<
             headers: v14.headers.map((header) => convertHttpHeader(header)),
             types: v13Types,
             services: mapValues(v14.services, (service) => convertHttpService(service)),
-            errors: mapValues(v14.errors, (error) => convertErrorDeclaration(error)),
+            errors: mapValues(v14.errors, (error) => convertErrorDeclaration(error))
         };
-    },
+    }
 };
 
 function convertAuth(auth: IrVersions.V14.auth.ApiAuth): IrVersions.V13.auth.ApiAuth {
@@ -104,7 +104,7 @@ function convertAuth(auth: IrVersions.V14.auth.ApiAuth): IrVersions.V13.auth.Api
                 return scheme;
             }
             return IrVersions.V13.auth.AuthScheme.header(convertHeader(scheme));
-        }),
+        })
     };
 }
 
@@ -113,7 +113,7 @@ function convertHeader(header: IrVersions.V14.auth.AuthScheme.Header): IrVersion
         docs: header.docs,
         prefix: header.prefix,
         name: header.name,
-        valueType: convertTypeReference(header.valueType),
+        valueType: convertTypeReference(header.valueType)
     };
 }
 
@@ -122,7 +122,7 @@ function convertHttpHeader(header: IrVersions.V14.http.HttpHeader): IrVersions.V
         docs: header.docs,
         availability: header.availability,
         name: header.name,
-        valueType: convertTypeReference(header.valueType),
+        valueType: convertTypeReference(header.valueType)
     };
 }
 
@@ -139,7 +139,7 @@ function convertTypeReference(typeReference: IrVersions.V14.types.TypeReference)
         unknown: IrVersions.V13.types.TypeReference.unknown,
         _unknown: () => {
             throw new Error("Unknown type reference: " + typeReference._type);
-        },
+        }
     });
 }
 
@@ -151,12 +151,12 @@ function convertContainerType(container: IrVersions.V14.types.ContainerType): Ir
         map: ({ keyType, valueType }) =>
             IrVersions.V13.types.ContainerType.map({
                 keyType: convertTypeReference(keyType),
-                valueType: convertTypeReference(valueType),
+                valueType: convertTypeReference(valueType)
             }),
         literal: IrVersions.V13.types.ContainerType.literal,
         _unknown: () => {
             throw new Error("Unknown ContainerType: " + container._type);
-        },
+        }
     });
 }
 
@@ -166,7 +166,7 @@ function convertSingleUnionType(
     return {
         docs: singleUnionType.docs,
         discriminantValue: singleUnionType.discriminantValue,
-        shape: convertSingleUnionTypeProperties(singleUnionType.shape),
+        shape: convertSingleUnionTypeProperties(singleUnionType.shape)
     };
 }
 
@@ -181,12 +181,12 @@ function convertSingleUnionTypeProperties(
             singleProperty: (singleProperty) =>
                 IrVersions.V13.types.SingleUnionTypeProperties.singleProperty({
                     name: singleProperty.name,
-                    type: convertTypeReference(singleProperty.type),
+                    type: convertTypeReference(singleProperty.type)
                 }),
             noProperties: IrVersions.V13.types.SingleUnionTypeProperties.noProperties,
             _unknown: () => {
                 throw new Error("Unknown SingleUnionTypeProperties: " + properties._type);
-            },
+            }
         }
     );
 }
@@ -206,7 +206,7 @@ function convertResolvedType(
         unknown: IrVersions.V13.types.ResolvedTypeReference.unknown,
         _unknown: () => {
             throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type);
-        },
+        }
     });
 }
 
@@ -217,9 +217,9 @@ function convertUndiscriminatedUnion(
         members: undiscriminatedUnion.members.map((member) => {
             return {
                 ...member,
-                type: convertTypeReference(member.type),
+                type: convertTypeReference(member.type)
             };
-        }),
+        })
     };
 }
 
@@ -232,7 +232,7 @@ function convertHttpService(service: IrVersions.V14.http.HttpService): IrVersion
         baseUrl: service.baseUrl,
         pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         headers: service.headers.map((header) => convertHttpHeader(header)),
-        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint)),
+        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
     };
 }
 
@@ -241,7 +241,7 @@ function convertPathParameter(pathParameter: IrVersions.V14.http.PathParameter):
         availability: pathParameter.availability,
         docs: pathParameter.docs,
         name: pathParameter.name,
-        valueType: convertTypeReference(pathParameter.valueType),
+        valueType: convertTypeReference(pathParameter.valueType)
     };
 }
 
@@ -264,7 +264,7 @@ function convertEndpoint(endpoint: IrVersions.V14.http.HttpEndpoint): IrVersions
         examples: endpoint.examples,
         streamingResponse:
             endpoint.streamingResponse != null ? convertStreamingResponse(endpoint.streamingResponse) : undefined,
-        sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse) : undefined,
+        sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse) : undefined
     };
 }
 
@@ -274,14 +274,14 @@ function convertQueryParameter(queryParameter: IrVersions.V14.http.QueryParamete
         docs: queryParameter.docs,
         name: queryParameter.name,
         valueType: convertTypeReference(queryParameter.valueType),
-        allowMultiple: queryParameter.allowMultiple,
+        allowMultiple: queryParameter.allowMultiple
     };
 }
 
 function convertSdkRequest(sdkRequest: IrVersions.V14.http.SdkRequest): IrVersions.V13.http.SdkRequest {
     return {
         requestParameterName: sdkRequest.requestParameterName,
-        shape: convertSdkRequestShape(sdkRequest.shape),
+        shape: convertSdkRequestShape(sdkRequest.shape)
     };
 }
 
@@ -290,12 +290,12 @@ function convertSdkRequestShape(shape: IrVersions.V14.http.SdkRequestShape): IrV
         justRequestBody: (reference) =>
             IrVersions.V13.http.SdkRequestShape.justRequestBody({
                 docs: reference.docs,
-                requestBodyType: convertTypeReference(reference.requestBodyType),
+                requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         wrapper: IrVersions.V13.http.SdkRequestShape.wrapper,
         _unknown: () => {
             throw new Error("Unknown SdkRequestShape: " + shape.type);
-        },
+        }
     });
 }
 
@@ -308,13 +308,13 @@ function convertRequestBody(requestBody: IrVersions.V14.http.HttpRequestBody): I
                 properties: inlinedRequestBody.properties.map((property) => ({
                     docs: property.docs,
                     name: property.name,
-                    valueType: convertTypeReference(property.valueType),
-                })),
+                    valueType: convertTypeReference(property.valueType)
+                }))
             }),
         reference: (reference) =>
             IrVersions.V13.http.HttpRequestBody.reference({
                 docs: reference.docs,
-                requestBodyType: convertTypeReference(reference.requestBodyType),
+                requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         fileUpload: (fileUpload) =>
             IrVersions.V13.http.HttpRequestBody.fileUpload({
@@ -323,15 +323,15 @@ function convertRequestBody(requestBody: IrVersions.V14.http.HttpRequestBody): I
                     if (fileUploadRequestProperty.type === "bodyProperty") {
                         return {
                             ...fileUploadRequestProperty,
-                            valueType: convertTypeReference(fileUploadRequestProperty.valueType),
+                            valueType: convertTypeReference(fileUploadRequestProperty.valueType)
                         };
                     }
                     return fileUploadRequestProperty;
-                }),
+                })
             }),
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody: " + requestBody.type);
-        },
+        }
     });
 }
 
@@ -340,7 +340,7 @@ function convertHttpResponse(
 ): IrVersions.V13.http.NonStreamingResponse {
     return {
         docs: response.docs,
-        responseBodyType: convertTypeReference(response.responseBodyType),
+        responseBodyType: convertTypeReference(response.responseBodyType)
     };
 }
 
@@ -349,7 +349,7 @@ function convertStreamingResponse(
 ): IrVersions.V13.http.StreamingResponse {
     return {
         dataEventType: convertTypeReference(response.dataEventType),
-        terminator: response.terminator,
+        terminator: response.terminator
     };
 }
 
@@ -363,11 +363,11 @@ function convertSdkResponse(sdkResponse: IrVersions.V14.http.SdkResponse): IrVer
             IrVersions.V13.http.SdkResponse.maybeStreaming({
                 condition: maybeStreamingResponse.condition,
                 nonStreaming: convertHttpResponse(maybeStreamingResponse.nonStreaming),
-                streaming: convertStreamingResponse(maybeStreamingResponse.streaming),
+                streaming: convertStreamingResponse(maybeStreamingResponse.streaming)
             }),
         _unknown: () => {
             throw new Error("Encountered unknown sdk response");
-        },
+        }
     });
 }
 
@@ -379,6 +379,6 @@ function convertErrorDeclaration(
         name: error.name,
         discriminantValue: error.discriminantValue,
         type: error.type != null ? convertTypeReference(error.type) : undefined,
-        statusCode: error.statusCode,
+        statusCode: error.statusCode
     };
 }

@@ -12,5 +12,5 @@ export const migration: Migration = {
             const newContents = contents.toString() + "\nerror-discriminant: error";
             await writeFile(filepath, newContents);
         }
-    },
+    }
 };

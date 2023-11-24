@@ -18,6 +18,6 @@ export async function visitPackageMarkerYamlAst(
         },
         navigation: async (navigation) => {
             await visitor.navigation?.(navigation, ["navigation"]);
-        },
+        }
     });
 }

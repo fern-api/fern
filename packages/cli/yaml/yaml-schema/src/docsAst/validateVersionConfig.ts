@@ -19,7 +19,7 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
     if (result.ok) {
         return {
             type: "success",
-            contents: result.value,
+            contents: result.value
         };
     }
 
@@ -27,12 +27,12 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
         const message = issue.path.length > 0 ? `${issue.message} at "${issue.path.join(" -> ")}"` : issue.message;
         return addPrefixToString({
             content: message,
-            prefix: "  - ",
+            prefix: "  - "
         });
     });
 
     return {
         type: "failure",
-        message: issues.join("\n"),
+        message: issues.join("\n")
     };
 }

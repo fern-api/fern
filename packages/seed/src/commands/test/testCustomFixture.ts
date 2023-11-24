@@ -19,7 +19,7 @@ export async function testCustomFixture({
     generatorType,
     compileCommand,
     logLevel,
-    numDockers,
+    numDockers
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: SeedWorkspace;
@@ -49,7 +49,7 @@ export async function testCustomFixture({
         compileCommand,
         customConfig: {},
         taskContext,
-        outputDir: absolutePathToOutput,
+        outputDir: absolutePathToOutput
     });
 
     if (result.type === "failure") {

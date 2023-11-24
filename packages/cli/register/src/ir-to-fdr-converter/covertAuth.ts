@@ -10,18 +10,18 @@ export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefin
                 return {
                     type: "basicAuth",
                     passwordName: scheme.password.originalName,
-                    usernameName: scheme.username.originalName,
+                    usernameName: scheme.username.originalName
                 };
             case "bearer":
                 return {
                     type: "bearerAuth",
-                    tokenName: scheme.token.originalName,
+                    tokenName: scheme.token.originalName
                 };
             case "header":
                 return {
                     type: "header",
                     headerWireValue: scheme.name.wireValue,
-                    nameOverride: scheme.name.name.originalName,
+                    nameOverride: scheme.name.name.originalName
                 };
             default:
                 assertNever(scheme);

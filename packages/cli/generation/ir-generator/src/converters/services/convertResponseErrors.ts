@@ -5,7 +5,7 @@ import { parseErrorName } from "../../utils/parseErrorName";
 
 export function convertResponseErrors({
     errors,
-    file,
+    file
 }: {
     errors: RawSchemas.ResponseErrorsSchema | undefined;
     file: FernFileContext;
@@ -16,11 +16,11 @@ export function convertResponseErrors({
               const referenceToError = typeof errorReference === "string" ? errorReference : errorReference.error;
               const errorName = parseErrorName({
                   errorName: referenceToError,
-                  file,
+                  file
               });
               return {
                   docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                  error: errorName,
+                  error: errorName
               };
           });
 }

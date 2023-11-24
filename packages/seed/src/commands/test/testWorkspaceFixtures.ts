@@ -48,7 +48,7 @@ export const FIXTURES = {
     UNKNOWN: "unknown",
     VARIABLES: "variables",
     RESERVED_KEYWORDS: "reserved-keywords",
-    IDEMPOTENCY_HEADERS: "idempotency-headers",
+    IDEMPOTENCY_HEADERS: "idempotency-headers"
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
@@ -74,7 +74,7 @@ export async function testWorkspaceFixtures({
     dockerCommand,
     compileCommand,
     logLevel,
-    numDockers,
+    numDockers
 }: {
     workspace: SeedWorkspace;
     generatorType: GeneratorType;
@@ -99,7 +99,7 @@ export async function testWorkspaceFixtures({
             spaceDelimitedCommand.slice(1),
             {
                 cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
-                doNotPipeOutput: false,
+                doNotPipeOutput: false
             }
         );
     }
@@ -130,7 +130,7 @@ export async function testWorkspaceFixtures({
                             workspace.absolutePathToWorkspace,
                             RelativeFilePath.of(fixture),
                             RelativeFilePath.of(fixtureConfigInstance.outputFolder)
-                        ),
+                        )
                     })
                 );
             }
@@ -147,7 +147,7 @@ export async function testWorkspaceFixtures({
                     compileCommand,
                     customConfig: undefined,
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
-                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
+                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture))
                 })
             );
         }
@@ -176,7 +176,7 @@ export async function acquireLocksAndRunTest({
     compileCommand,
     taskContext,
     outputDir,
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     lock: Semaphore;
     generatorType: GeneratorType;
@@ -203,7 +203,7 @@ export async function acquireLocksAndRunTest({
         compileCommand,
         taskContext,
         outputDir,
-        absolutePathToWorkspace,
+        absolutePathToWorkspace
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -220,7 +220,7 @@ async function testWithWriteToDisk({
     compileCommand,
     taskContext,
     outputDir,
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     fixture: string;
     irVersion: string | undefined;
@@ -238,7 +238,7 @@ async function testWithWriteToDisk({
             absolutePathToWorkspace,
             context: taskContext,
             cliVersion: "DUMMY",
-            workspaceName: fixture,
+            workspaceName: fixture
         });
         if (!workspace.didSucceed) {
             taskContext.logger.info(`Failed to load workspace for fixture ${fixture}`);
@@ -247,7 +247,7 @@ async function testWithWriteToDisk({
                 reason: Object.entries(workspace.failures)
                     .map(([file, reason]) => `${file}: ${reason.type}`)
                     .join("\n"),
-                fixture,
+                fixture
             };
         }
         if (workspace.workspace.type === "openapi") {
@@ -255,7 +255,7 @@ async function testWithWriteToDisk({
             return {
                 type: "failure",
                 reason: "Expected fern workspace. Found OpenAPI instead!",
-                fixture,
+                fixture
             };
         }
         await runDockerForWorkspace({
@@ -266,7 +266,7 @@ async function testWithWriteToDisk({
             generatorType,
             customConfig,
             taskContext,
-            irVersion,
+            irVersion
         });
         if (compileCommand != null) {
             const commands = compileCommand.split("&&").map((command) => command.trim());
@@ -279,7 +279,7 @@ async function testWithWriteToDisk({
                     spaceDelimitedCommand.slice(1),
                     {
                         cwd: outputDir,
-                        doNotPipeOutput: true,
+                        doNotPipeOutput: true
                     }
                 );
                 taskContext.logger.info(result.stdout);
@@ -291,7 +291,7 @@ async function testWithWriteToDisk({
         return {
             type: "failure",
             reason: (err as Error).message,
-            fixture,
+            fixture
         };
     }
 }

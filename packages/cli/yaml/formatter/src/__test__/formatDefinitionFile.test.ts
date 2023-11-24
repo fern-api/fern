@@ -8,7 +8,7 @@ const FIXTURES = [
     "no-newlines.yml",
     "lots-of-newlines.yml",
     "headers/file-header-with-newline.yml",
-    "headers/file-header-without-newline.yml",
+    "headers/file-header-without-newline.yml"
 ].map(RelativeFilePath.of);
 
 describe("formatDefinitionFile", () => {
@@ -24,6 +24,6 @@ describe("formatDefinitionFile", () => {
 async function formatForTest(fixturePath: RelativeFilePath): Promise<string> {
     const absoluteFilepath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"), fixturePath);
     return formatDefinitionFile({
-        fileContents: (await readFile(absoluteFilepath)).toString(),
+        fileContents: (await readFile(absoluteFilepath)).toString()
     });
 }

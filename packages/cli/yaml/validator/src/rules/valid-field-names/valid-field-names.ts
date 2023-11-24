@@ -14,10 +14,10 @@ export const ValidFieldNamesRule: Rule = {
                         enum: validateEnumNames,
                         object: () => [],
                         undiscriminatedUnion: () => [],
-                        discriminatedUnion: validateUnionNames,
+                        discriminatedUnion: validateUnionNames
                     });
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

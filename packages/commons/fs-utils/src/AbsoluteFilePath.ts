@@ -10,5 +10,5 @@ export const AbsoluteFilePath = {
             throw new Error("Filepath is not absolute: " + value);
         }
         return value as AbsoluteFilePath;
-    },
+    }
 };

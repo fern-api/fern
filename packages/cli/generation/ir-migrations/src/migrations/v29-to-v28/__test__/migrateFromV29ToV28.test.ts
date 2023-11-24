@@ -11,72 +11,72 @@ const expectedReferenceTypes = [
                 {
                     camelCase: {
                         safeName: "types",
-                        unsafeName: "types",
+                        unsafeName: "types"
                     },
                     originalName: "types",
                     pascalCase: {
                         safeName: "Types",
-                        unsafeName: "Types",
+                        unsafeName: "Types"
                     },
                     screamingSnakeCase: {
                         safeName: "TYPES",
-                        unsafeName: "TYPES",
+                        unsafeName: "TYPES"
                     },
                     snakeCase: {
                         safeName: "types",
-                        unsafeName: "types",
-                    },
-                },
+                        unsafeName: "types"
+                    }
+                }
             ],
             file: {
                 camelCase: {
                     safeName: "types",
-                    unsafeName: "types",
+                    unsafeName: "types"
                 },
                 originalName: "types",
                 pascalCase: {
                     safeName: "Types",
-                    unsafeName: "Types",
+                    unsafeName: "Types"
                 },
                 screamingSnakeCase: {
                     safeName: "TYPES",
-                    unsafeName: "TYPES",
+                    unsafeName: "TYPES"
                 },
                 snakeCase: {
                     safeName: "types",
-                    unsafeName: "types",
-                },
+                    unsafeName: "types"
+                }
             },
-            packagePath: [],
+            packagePath: []
         },
         name: {
             camelCase: {
                 safeName: "wheel",
-                unsafeName: "wheel",
+                unsafeName: "wheel"
             },
             originalName: "Wheel",
             pascalCase: {
                 safeName: "Wheel",
-                unsafeName: "Wheel",
+                unsafeName: "Wheel"
             },
             screamingSnakeCase: {
                 safeName: "WHEEL",
-                unsafeName: "WHEEL",
+                unsafeName: "WHEEL"
             },
             snakeCase: {
                 safeName: "wheel",
-                unsafeName: "wheel",
-            },
+                unsafeName: "wheel"
+            }
         },
-        typeId: "type_types:Wheel",
-    },
+        typeId: "type_types:Wheel"
+    }
 ];
 
 describe("migrateFromV29ToV28", () => {
     it("snapshot", async () => {
         const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"));
         const migrated = await runMigration({
-            pathToFixture,
+            pathToFixture
         });
         expect(migrated.types["type_types:Car"]?.referencedTypes).toEqual(expectedReferenceTypes);
         expect(migrated).toMatchSnapshot();

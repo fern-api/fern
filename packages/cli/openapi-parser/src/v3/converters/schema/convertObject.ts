@@ -2,7 +2,7 @@ import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     AllOfPropertyConflict,
     ObjectPropertyConflictInfo,
-    ReferencedSchema,
+    ReferencedSchema
 } from "@fern-fern/openapi-ir-model/finalIr";
 import { ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
@@ -28,7 +28,7 @@ export function convertObject({
     wrapAsNullable,
     allOf,
     context,
-    propertiesToExclude,
+    propertiesToExclude
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -55,7 +55,7 @@ export function convertObject({
             parents.push({
                 schemaId,
                 convertedSchema: convertToReferencedSchema(allOfElement, [schemaId]),
-                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs }),
+                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else {
@@ -89,7 +89,7 @@ export function convertObject({
             allOfPropertyConflicts.push({
                 propertyKey: allOfPropertyKey,
                 allOfSchemaIds: allOfPropertyInfo.schemaIds,
-                conflictingTypeSignatures: allOfPropertyInfo.schemas.length > 1,
+                conflictingTypeSignatures: allOfPropertyInfo.schemas.length > 1
             });
         }
     }
@@ -101,7 +101,7 @@ export function convertObject({
             ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
             : SchemaWithExample.optional({
                   description: undefined,
-                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
+                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
               });
 
         const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
@@ -118,7 +118,7 @@ export function convertObject({
             key: propertyName,
             schema,
             conflict: conflicts,
-            generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
+            generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName])
         };
     });
 
@@ -131,7 +131,7 @@ export function convertObject({
         }),
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
-        allOfPropertyConflicts,
+        allOfPropertyConflicts
     });
 }
 
@@ -142,7 +142,7 @@ export function wrapObject({
     properties,
     description,
     allOf,
-    allOfPropertyConflicts,
+    allOfPropertyConflicts
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -160,9 +160,9 @@ export function wrapObject({
                 nameOverride,
                 generatedName,
                 allOf,
-                allOfPropertyConflicts,
+                allOfPropertyConflicts
             }),
-            description,
+            description
         });
     }
     return SchemaWithExample.object({
@@ -171,14 +171,14 @@ export function wrapObject({
         nameOverride,
         generatedName,
         allOf,
-        allOfPropertyConflicts,
+        allOfPropertyConflicts
     });
 }
 
 function getAllProperties({
     schema,
     context,
-    breadcrumbs,
+    breadcrumbs
 }: {
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     context: AbstractOpenAPIV3ParserContext;
@@ -191,13 +191,13 @@ function getAllProperties({
     for (const allOfElement of resolvedSchema.allOf ?? []) {
         properties = {
             ...properties,
-            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs }),
+            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs })
         };
     }
     for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
         const convertedPropertySchema = convertSchema(propertySchema, false, context, [
             ...resolvedBreadCrumbs,
-            propertyName,
+            propertyName
         ]);
         properties[propertyName] = convertedPropertySchema;
     }

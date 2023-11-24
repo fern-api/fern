@@ -4,7 +4,7 @@ import {
     FernFileContext,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
 import { Rule, RuleViolation } from "../../Rule";
@@ -35,24 +35,24 @@ export const NoResponsePropertyRule: Rule = {
                         relativeFilepath,
                         definitionFile: contents,
                         rootApiFile: workspace.definition.rootApiFile.contents,
-                        casingsGenerator: CASINGS_GENERATOR,
+                        casingsGenerator: CASINGS_GENERATOR
                     });
                     const resolvedType = typeResolver.resolveTypeOrThrow({
                         type: typeof response !== "string" ? response.type : response,
-                        file,
+                        file
                     });
                     const result = resolvedTypeHasProperty(resolvedType, responseProperty, file, typeResolver);
                     return resultToRuleViolations(result, responseProperty);
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 enum Result {
     ContainsProperty,
     DoesNotContainProperty,
-    IsNotObject,
+    IsNotObject
 }
 
 function resultToRuleViolations(result: Result, responseProperty: string): RuleViolation[] {
@@ -63,15 +63,15 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
             return [
                 {
                     severity: "error",
-                    message: `Response does not have a property named ${responseProperty}.`,
-                },
+                    message: `Response does not have a property named ${responseProperty}.`
+                }
             ];
         case Result.IsNotObject:
             return [
                 {
                     severity: "error",
-                    message: "Response must be an object in order to return a property as a response.",
-                },
+                    message: "Response must be an object in order to return a property as a response."
+                }
             ];
     }
 }
@@ -147,7 +147,7 @@ function getAllPropertiesForExtendedType(
 ): Set<string> {
     const resolvedType = typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
-        file,
+        file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);

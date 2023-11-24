@@ -23,7 +23,7 @@ export function testParseOpenAPI(fixtureName: string, openApiFilename: string, a
             const openApiIr = await parse({
                 absolutePathToAsyncAPI,
                 absolutePathToOpenAPI,
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             expect(openApiIr).toMatchSnapshot();
         });

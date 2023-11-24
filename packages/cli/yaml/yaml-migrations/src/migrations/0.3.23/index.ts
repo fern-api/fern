@@ -3,7 +3,7 @@ import ChangeServicesKeyToServiceMigration from "./change-services-key-to-servic
 
 const versionMigrations: VersionMigrations = {
     version: "0.3.23",
-    migrations: [ChangeServicesKeyToServiceMigration],
+    migrations: [ChangeServicesKeyToServiceMigration]
 };
 
 export default versionMigrations;

@@ -25,31 +25,31 @@ function addTestCommand(cli: Argv) {
         (yargs) =>
             yargs
                 .option("workspace", {
-                    type: "string",
+                    type: "string"
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: 4
                 })
                 .option("custom-fixture", {
                     type: "string",
-                    demandOption: false,
+                    demandOption: false
                 })
                 .option("fixture", {
                     type: "string",
                     choices: Object.values(FIXTURES),
                     demandOption: false,
-                    description: "Runs on all fixtures if not provided",
+                    description: "Runs on all fixtures if not provided"
                 })
                 .option("update", {
                     type: "boolean",
                     alias: "u",
                     description: "Determines whether or not snapshots are written to disk",
-                    default: false,
+                    default: false
                 })
                 .option("log-level", {
                     default: LogLevel.Info,
-                    choices: LOG_LEVELS,
+                    choices: LOG_LEVELS
                 }),
         async (argv) => {
             const workspaces = await loadSeedWorkspaces();
@@ -78,7 +78,7 @@ function addTestCommand(cli: Argv) {
                     docker: parsedDockerImage,
                     compileCommand: undefined,
                     logLevel: argv["log-level"],
-                    numDockers: argv.parallel,
+                    numDockers: argv.parallel
                 });
             } else {
                 await testWorkspaceFixtures({
@@ -91,7 +91,7 @@ function addTestCommand(cli: Argv) {
                     dockerCommand: workspace.workspaceConfig.dockerCommand,
                     compileCommand: undefined,
                     logLevel: argv["log-level"],
-                    numDockers: argv.parallel,
+                    numDockers: argv.parallel
                 });
             }
         }
@@ -108,7 +108,7 @@ function validateAndParseDockerImage(docker: string): ParsedDockerName {
     if (dockerArray.length === 2 && dockerArray[0] != null && dockerArray[1] != null) {
         return {
             name: dockerArray[0],
-            version: dockerArray[1],
+            version: dockerArray[1]
         };
     }
     throw new Error(`Received invalid docker name ${docker}. Must be formatted as <name>:<version>`);

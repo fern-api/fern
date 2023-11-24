@@ -2,7 +2,7 @@ import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     GeneratorName,
     GeneratorsConfigurationSchema,
-    updateGeneratorGroup,
+    updateGeneratorGroup
 } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
@@ -11,7 +11,7 @@ export function addGenerator({
     generatorName,
     generatorsConfiguration,
     groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
-    context,
+    context
 }: {
     generatorName: string;
     generatorsConfiguration: GeneratorsConfigurationSchema;
@@ -34,9 +34,9 @@ export function addGenerator({
             }
             group.generators.push({
                 name: normalizedGeneratorName,
-                ...invocation,
+                ...invocation
             });
-        },
+        }
     });
 }
 

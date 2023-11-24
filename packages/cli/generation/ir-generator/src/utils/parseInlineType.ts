@@ -23,9 +23,9 @@ export function parseInlineType({ type, file }: parseInlineType.Args): TypeRefer
             TypeReference.named(
                 parseTypeName({
                     typeName: namedType,
-                    file,
+                    file
                 })
-            ),
+            )
     });
 }
 

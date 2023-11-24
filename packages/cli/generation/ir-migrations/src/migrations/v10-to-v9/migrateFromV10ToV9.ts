@@ -4,7 +4,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V10_TO_V9_MIGRATION: IrMigration<
@@ -32,7 +32,7 @@ export const V10_TO_V9_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v10): IrVersions.V9.ir.IntermediateRepresentation => {
@@ -40,7 +40,7 @@ export const V10_TO_V9_MIGRATION: IrMigration<
             v10.services,
             (service) => ({
                 docs: undefined,
-                ...service,
+                ...service
             })
         );
 
@@ -56,7 +56,7 @@ export const V10_TO_V9_MIGRATION: IrMigration<
 
         return {
             ...v10,
-            services: v9Services,
+            services: v9Services
         };
-    },
+    }
 };

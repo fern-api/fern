@@ -9,7 +9,7 @@ describe("visitRawTypeDeclaration", () => {
             discriminatedUnion: () => false,
             undiscriminatedUnion: () => false,
             enum: () => false,
-            alias: () => false,
+            alias: () => false
         });
         expect(isObject).toBe(true);
     });

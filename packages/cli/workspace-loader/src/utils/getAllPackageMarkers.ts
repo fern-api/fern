@@ -15,8 +15,8 @@ export function getAllPackageMarkers(
                 ...acc,
                 ...mapKeys(getAllPackageMarkers(definition), (_file, path) =>
                     join(pathToImportedDefinition, RelativeFilePath.of(path))
-                ),
+                )
             };
-        }, {}),
+        }, {})
     };
 }

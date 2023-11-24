@@ -17,7 +17,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {

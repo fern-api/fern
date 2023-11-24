@@ -15,7 +15,7 @@ describe("getMigrationsToRun", () => {
     it("works with dev versions", () => {
         const migrationsToRun = getMigrationsToRun({
             fromVersion: "0.0.190-7-g2dd301a6",
-            toVersion: "0.0.191-2-g9a7cba02",
+            toVersion: "0.0.191-2-g9a7cba02"
         });
         const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
         expect(allMigrations).toHaveLength(1);
@@ -24,7 +24,7 @@ describe("getMigrationsToRun", () => {
     it("works with prod + dev versions", () => {
         const migrationsToRun = getMigrationsToRun({
             fromVersion: "0.0.194",
-            toVersion: "0.0.194-4-gc1524d1b",
+            toVersion: "0.0.194-4-gc1524d1b"
         });
         const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
         expect(allMigrations).toHaveLength(0);

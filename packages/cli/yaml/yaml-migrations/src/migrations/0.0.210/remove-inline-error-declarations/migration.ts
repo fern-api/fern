@@ -17,7 +17,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to add 'key' property to union in ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
@@ -28,7 +28,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         const types = parsedDocument.get("types");
         if (types == null) {
             parsedDocument.set("types", {
-                [typeName]: typeDeclaration,
+                [typeName]: typeDeclaration
             });
         } else if (!YAML.isMap(types)) {
             context.failWithoutThrowing(`"types" is not a map in ${filepath}`);

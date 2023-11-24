@@ -4,7 +4,7 @@ import {
     PackageMarkerAstNodeTypes,
     PackageMarkerAstNodeVisitor,
     PackageMarkerAstVisitor,
-    PackageMarkerFileSchema,
+    PackageMarkerFileSchema
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -13,7 +13,7 @@ export function createPackageMarkerAstVisitorForRules({
     relativeFilepath,
     contents,
     allRuleVisitors,
-    addViolations,
+    addViolations
 }: {
     relativeFilepath: RelativeFilePath;
     contents: PackageMarkerFileSchema;
@@ -36,7 +36,7 @@ export function createPackageMarkerAstVisitorForRules({
                             severity: violation.severity,
                             relativeFilepath,
                             nodePath,
-                            message: violation.message,
+                            message: violation.message
                         }))
                     );
                 }
@@ -48,6 +48,6 @@ export function createPackageMarkerAstVisitorForRules({
 
     return {
         ...createAstNodeVisitor("export"),
-        ...createAstNodeVisitor("navigation"),
+        ...createAstNodeVisitor("navigation")
     };
 }

@@ -10,7 +10,7 @@ export const DefinitionFileSchema = z.strictObject({
     types: z.optional(z.record(TypeDeclarationSchema)),
     service: z.optional(HttpServiceSchema),
     webhooks: z.optional(z.record(WebhookSchema)),
-    errors: z.optional(z.record(ErrorDeclarationSchema)),
+    errors: z.optional(z.record(ErrorDeclarationSchema))
 });
 
 export type DefinitionFileSchema = z.infer<typeof DefinitionFileSchema>;

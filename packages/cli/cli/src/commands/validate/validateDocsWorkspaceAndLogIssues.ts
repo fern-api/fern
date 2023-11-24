@@ -21,9 +21,9 @@ export async function validateDocsWorkspaceAndLogIssues(workspace: DocsWorkspace
                             itemStr += `[${nodePathItem.arrayIndex}]`;
                         }
                         return itemStr;
-                    }),
+                    })
                 ],
-                title: violation.message,
+                title: violation.message
             })
         );
     }

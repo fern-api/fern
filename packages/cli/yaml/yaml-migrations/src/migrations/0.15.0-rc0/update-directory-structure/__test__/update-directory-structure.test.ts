@@ -21,7 +21,7 @@ describe("update-directory-structure", () => {
             process.chdir(tmpDir.path);
 
             await migration.run({
-                context: createMockTaskContext(),
+                context: createMockTaskContext()
             });
 
             // eslint-disable-next-line no-console
@@ -40,7 +40,7 @@ describe("update-directory-structure", () => {
 
         await expect(
             migration.run({
-                context: createMockTaskContext(),
+                context: createMockTaskContext()
             })
         ).rejects.toThrow();
     });

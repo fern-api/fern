@@ -4,7 +4,7 @@ import { FernFileContext } from "../../FernFileContext";
 
 export function convertUndiscriminatedUnionTypeDeclaration({
     union,
-    file,
+    file
 }: {
     union: RawSchemas.UndiscriminatedUnionSchema;
     file: FernFileContext;
@@ -14,13 +14,13 @@ export function convertUndiscriminatedUnionTypeDeclaration({
             if (typeof unionMember === "string") {
                 return {
                     docs: undefined,
-                    type: file.parseTypeReference(unionMember),
+                    type: file.parseTypeReference(unionMember)
                 };
             }
             return {
                 type: file.parseTypeReference(unionMember.type),
-                docs: unionMember.docs,
+                docs: unionMember.docs
             };
-        }),
+        })
     });
 }

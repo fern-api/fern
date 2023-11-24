@@ -19,6 +19,6 @@ export function getBasicSecuritySchemeNames(securityScheme: OpenAPIV3.SecuritySc
 
     return {
         usernameVariable,
-        passwordVariable,
+        passwordVariable
     };
 }

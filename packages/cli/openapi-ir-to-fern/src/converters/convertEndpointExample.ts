@@ -5,13 +5,13 @@ import {
     FullOneOfExample,
     KeyValuePair,
     LiteralExample,
-    PrimitiveExample,
+    PrimitiveExample
 } from "@fern-fern/openapi-ir-model/example";
 import { EndpointExample } from "@fern-fern/openapi-ir-model/finalIr";
 
 export function convertEndpointExample({
     endpointExample,
-    globalHeaderNames,
+    globalHeaderNames
 }: {
     endpointExample: EndpointExample;
     globalHeaderNames: Set<string>;
@@ -30,7 +30,7 @@ export function convertEndpointExample({
                 ? convertHeaderExamples({ globalHeaderNames, namedFullExamples: endpointExample.headers })
                 : undefined,
         request: endpointExample.request != null ? convertFullExample(endpointExample.request) : undefined,
-        response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined,
+        response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined
     };
 }
 
@@ -66,7 +66,7 @@ function convertQueryParameterExample(
 
 function convertHeaderExamples({
     globalHeaderNames,
-    namedFullExamples,
+    namedFullExamples
 }: {
     globalHeaderNames: Set<string>;
     namedFullExamples: NamedFullExample[];

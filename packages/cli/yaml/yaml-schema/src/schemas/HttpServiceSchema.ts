@@ -12,7 +12,7 @@ export const HttpServiceSchema = DeclarationWithoutDocsSchema.extend({
     "path-parameters": z.optional(z.record(z.string(), HttpPathParameterSchema)),
     idempotent: z.optional(z.boolean()),
     headers: z.optional(z.record(HttpHeaderSchema)),
-    endpoints: z.record(HttpEndpointSchema),
+    endpoints: z.record(HttpEndpointSchema)
 });
 
 export type HttpServiceSchema = z.infer<typeof HttpServiceSchema>;

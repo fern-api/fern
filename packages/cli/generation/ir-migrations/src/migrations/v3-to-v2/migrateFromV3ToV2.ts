@@ -3,7 +3,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest";
 
@@ -32,7 +32,7 @@ export const V3_TO_V2_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v3): IrVersions.V2.ir.IntermediateRepresentation => {
@@ -65,11 +65,11 @@ export const V3_TO_V2_MIGRATION: IrMigration<
                         migrateEndpoint(httpService, endpoint, v3.types, (type) => {
                             newTypes.push(type);
                         })
-                    ),
-                })),
-            },
+                    )
+                }))
+            }
         };
-    },
+    }
 };
 
 function migrateEndpoint(
@@ -93,7 +93,7 @@ function migrateEndpoint(
         response: v3Endpoint.response,
         errors: v3Endpoint.errors,
         errorsV2: v3Endpoint.errorsV2,
-        auth: v3Endpoint.auth,
+        auth: v3Endpoint.auth
     };
 }
 
@@ -109,14 +109,14 @@ function migrateRequest(
         return {
             docs: undefined,
             type: IrVersions.V2.types.TypeReference.void(),
-            typeV2: undefined,
+            typeV2: undefined
         };
     }
     return IrVersions.V3.services.http.HttpRequestBody._visit<IrVersions.V2.services.http.HttpRequest>(v3Request, {
         reference: (reference) => ({
             docs: reference.docs,
             type: reference.requestBodyType,
-            typeV2: reference.requestBodyType,
+            typeV2: reference.requestBodyType
         }),
         inlinedRequestBody: (inlinedRequestBody) => {
             const typeName: IrVersions.V2.types.DeclaredTypeName = {
@@ -128,9 +128,9 @@ function migrateRequest(
                     camelCase: inlinedRequestBody.name.unsafeName.camelCase,
                     pascalCase: inlinedRequestBody.name.unsafeName.pascalCase,
                     snakeCase: inlinedRequestBody.name.unsafeName.snakeCase,
-                    screamingSnakeCase: inlinedRequestBody.name.unsafeName.screamingSnakeCase,
+                    screamingSnakeCase: inlinedRequestBody.name.unsafeName.screamingSnakeCase
                 },
-                nameV3: inlinedRequestBody.name,
+                nameV3: inlinedRequestBody.name
             };
 
             const shape = IrVersions.V2.types.Type.object({
@@ -145,12 +145,12 @@ function migrateRequest(
                             pascalCase: property.name.name.unsafeName.pascalCase,
                             snakeCase: property.name.name.unsafeName.snakeCase,
                             screamingSnakeCase: property.name.name.unsafeName.screamingSnakeCase,
-                            wireValue: property.name.wireValue,
+                            wireValue: property.name.wireValue
                         },
                         nameV2: property.name,
-                        valueType: property.valueType,
+                        valueType: property.valueType
                     })
-                ),
+                )
             });
 
             addType({
@@ -159,7 +159,7 @@ function migrateRequest(
                 name: typeName,
                 shape,
                 referencedTypes: getReferencedTypesForInlinedRequest({ inlinedRequest: inlinedRequestBody, allTypes }),
-                examples: [],
+                examples: []
             });
 
             const typeReference = IrVersions.V2.types.TypeReference.named(typeName);
@@ -167,11 +167,11 @@ function migrateRequest(
             return {
                 docs: undefined,
                 type: typeReference,
-                typeV2: typeReference,
+                typeV2: typeReference
             };
         },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody type: " + v3Request.type);
-        },
+        }
     });
 }

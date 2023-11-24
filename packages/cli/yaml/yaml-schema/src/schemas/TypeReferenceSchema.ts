@@ -10,9 +10,9 @@ export function extendTypeReferenceSchema<T extends z.ZodRawShape>(extension: T)
         z.string(),
         z
             .strictObject({
-                type: z.string(),
+                type: z.string()
             })
-            .extend(extension),
+            .extend(extension)
     ]);
 }
 

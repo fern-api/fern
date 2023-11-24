@@ -12,7 +12,7 @@ describe("migrateFromV18ToV17", () => {
             pathToFixture: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("./fixtures/all-endpoints-same-url")
-            ),
+            )
         });
 
         expect(Object.values(migrated.services)[0]?.baseUrl).toBe("A");
@@ -23,7 +23,7 @@ describe("migrateFromV18ToV17", () => {
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
                 output += logs.join(" ");
-            }),
+            })
         });
         await expect(
             runMigration({
@@ -32,8 +32,8 @@ describe("migrateFromV18ToV17", () => {
                     RelativeFilePath.of("./fixtures/different-endpoint-urls")
                 ),
                 context: {
-                    taskContext: context,
-                },
+                    taskContext: context
+                }
             })
         ).rejects.toBeTruthy();
         expect(output).toContain("does not support endpoint-level server URLs");

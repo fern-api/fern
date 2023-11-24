@@ -8,7 +8,7 @@ describe("fern add", () => {
 
         const add = async (generator: string) => {
             await runFernCli(["add", generator], {
-                cwd: pathOfDirectory,
+                cwd: pathOfDirectory
             });
         };
 

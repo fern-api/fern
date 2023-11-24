@@ -19,14 +19,14 @@ export function validateEnumNames(declaration: RawSchemas.EnumSchema): RuleViola
                 severity: "error",
                 message: `Enum name ${chalk.bold(
                     enumName.name
-                )} is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores.`,
+                )} is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores.`
             });
         } else {
             violations.push({
                 severity: "error",
                 message: `Enum value ${chalk.bold(
                     enumName.name
-                )} is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.`,
+                )} is not suitable for code generation. Add a "name" property that starts with a letter and contains only letters, numbers, and underscores.`
             });
         }
     });

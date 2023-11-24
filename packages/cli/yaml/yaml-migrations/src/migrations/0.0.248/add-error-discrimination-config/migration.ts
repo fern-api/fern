@@ -16,7 +16,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateRootApiFile(filepath: AbsoluteFilePath): Promise<void> {
@@ -28,7 +28,7 @@ async function migrateRootApiFile(filepath: AbsoluteFilePath): Promise<void> {
     }
     parsedDocument.set("error-discrimination", {
         strategy: "property",
-        "property-name": errorDiscriminant.value,
+        "property-name": errorDiscriminant.value
     });
     parsedDocument.delete("error-discriminant");
     await writeFile(filepath, parsedDocument.toString());

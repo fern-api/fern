@@ -59,7 +59,7 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
         return {
             name: request.name,
             extends: request.body.extends,
-            properties,
+            properties
         };
     } else {
         return undefined;

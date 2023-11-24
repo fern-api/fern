@@ -8,7 +8,7 @@ import { getPreviewDocsDefinition } from "./previewDocs";
 export async function runPreviewServer({
     docsWorkspace,
     apiWorkspaces,
-    context,
+    context
 }: {
     docsWorkspace: DocsWorkspace;
     apiWorkspaces: APIWorkspace[];
@@ -20,15 +20,15 @@ export async function runPreviewServer({
     const docsDefinition = await getPreviewDocsDefinition({
         docsWorkspace,
         apiWorkspaces,
-        context,
+        context
     });
     const response: DocsV2Read.LoadDocsForUrlResponse = {
         baseUrl: {
             domain: "localhost:3000",
-            basePath: "",
+            basePath: ""
         },
         definition: docsDefinition,
-        lightModeEnabled: docsDefinition.config.colorsV3.type !== "dark",
+        lightModeEnabled: docsDefinition.config.colorsV3.type !== "dark"
     };
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {

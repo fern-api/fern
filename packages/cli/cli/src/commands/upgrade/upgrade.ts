@@ -38,7 +38,7 @@ const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
 export async function upgrade({
     cliContext,
     includePreReleases,
-    targetVersion,
+    targetVersion
 }: {
     cliContext: CliContext;
     includePreReleases: boolean;
@@ -47,7 +47,7 @@ export async function upgrade({
     if (targetVersion != null) {
         const versionExists = await doesVersionOfCliExist({
             cliEnvironment: cliContext.environment,
-            version: targetVersion,
+            version: targetVersion
         });
         if (!versionExists) {
             cliContext.failAndThrow(
@@ -67,10 +67,10 @@ export async function upgrade({
         targetVersion != null
             ? {
                   latestVersion: targetVersion,
-                  isUpgradeAvailable: true,
+                  isUpgradeAvailable: true
               }
             : await cliContext.isUpgradeAvailable({
-                  includePreReleases,
+                  includePreReleases
               });
 
     if (!fernCliUpgradeInfo.isUpgradeAvailable) {
@@ -84,7 +84,7 @@ export async function upgrade({
             await runMigrations({
                 fromVersion: previousVersion,
                 toVersion: fernCliUpgradeInfo.latestVersion,
-                context,
+                context
             });
         });
         await cliContext.exitIfFailed();
@@ -110,15 +110,15 @@ export async function upgrade({
         await loggingExeca(cliContext.logger, "npm", [
             "install",
             "-g",
-            `${cliContext.environment.packageName}@${fernCliUpgradeInfo.latestVersion}`,
+            `${cliContext.environment.packageName}@${fernCliUpgradeInfo.latestVersion}`
         ]);
 
         await rerunFernCliAtVersion({
             version: fernCliUpgradeInfo.latestVersion,
             cliContext,
             env: {
-                [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion,
-            },
+                [PREVIOUS_VERSION_ENV_VAR]: cliContext.environment.packageVersion
+            }
         });
     }
 }

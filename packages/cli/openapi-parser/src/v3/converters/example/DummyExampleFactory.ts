@@ -13,7 +13,7 @@ export class DummyExampleFactory {
 
     public generateExample({
         schema,
-        name,
+        name
     }: {
         schema: SchemaWithExample;
         name: string | undefined;
@@ -24,7 +24,7 @@ export class DummyExampleFactory {
     private generateExampleFromSchema({
         schema,
         name,
-        visitedSchemaIds,
+        visitedSchemaIds
     }: {
         schema: SchemaWithExample;
         name: string | undefined;
@@ -47,7 +47,7 @@ export class DummyExampleFactory {
                     const example = this.generateExampleFromSchema({
                         schema: referencedSchemaWithExample,
                         visitedSchemaIds,
-                        name,
+                        name
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return example;
@@ -69,8 +69,8 @@ export class DummyExampleFactory {
                     return FullExample.map([
                         {
                             key: keyExample,
-                            value: valueExample,
-                        },
+                            value: valueExample
+                        }
                     ]);
                 }
                 return FullExample.map([]);
@@ -88,7 +88,7 @@ export class DummyExampleFactory {
 
     private generateExampleFromPrimitive({
         primitiveSchema,
-        name,
+        name
     }: {
         primitiveSchema: PrimitiveSchemaWithExample;
         name: string | undefined;

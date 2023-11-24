@@ -15,7 +15,7 @@ function testFixture(fixtureName: string) {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const { stdout, failed } = await runFernCli(["ir", (await tmp.file()).path], {
                 cwd: fixturePath,
-                reject: false,
+                reject: false
             });
             expect(failed).toBe(true);
             expect(stdout).toContain("There are multiple workspaces. You must specify one with --api");
@@ -24,7 +24,7 @@ function testFixture(fixtureName: string) {
         it("Succeeds if API is specified", async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const { failed } = await runFernCli(["--api", "api1", "ir", (await tmp.file()).path], {
-                cwd: fixturePath,
+                cwd: fixturePath
             });
             expect(failed).toBe(false);
         }, 90_000);
@@ -33,7 +33,7 @@ function testFixture(fixtureName: string) {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const { failed } = await runFernCli(["--api", "api3", "ir", (await tmp.file()).path], {
                 cwd: fixturePath,
-                reject: false,
+                reject: false
             });
             expect(failed).toBe(true);
         }, 90_000);

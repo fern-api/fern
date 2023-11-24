@@ -6,12 +6,12 @@ import { ObjectPropertySchema } from "./ObjectPropertySchema";
 export const HttpInlineRequestBodySchema = z.union([
     z.strictObject({
         extends: ObjectExtendsSchema,
-        properties: z.optional(z.record(ObjectPropertySchema)),
+        properties: z.optional(z.record(ObjectPropertySchema))
     }),
     z.strictObject({
         extends: z.optional(ObjectExtendsSchema),
-        properties: z.record(ObjectPropertySchema),
-    }),
+        properties: z.record(ObjectPropertySchema)
+    })
 ]);
 
 export type HttpInlineRequestBodySchema = z.infer<typeof HttpInlineRequestBodySchema>;

@@ -6,13 +6,13 @@ import { addGenerator } from "../addGenerator";
 describe("addGenerator", () => {
     it("adds generator if not present", () => {
         const generatorsConfiguration: GeneratorsConfigurationSchema = {
-            groups: {},
+            groups: {}
         };
         const newConfiguration = addGenerator({
             generatorName: "fern-java",
             groupName: "local",
             generatorsConfiguration,
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const expectedNewConfiguration: GeneratorsConfigurationSchema = {
@@ -21,11 +21,11 @@ describe("addGenerator", () => {
                     generators: [
                         {
                             name: GeneratorName.JAVA,
-                            version: expect.any(String),
-                        },
-                    ],
-                },
-            },
+                            version: expect.any(String)
+                        }
+                    ]
+                }
+            }
         };
 
         expect(newConfiguration).toEqual(expectedNewConfiguration);
@@ -38,11 +38,11 @@ describe("addGenerator", () => {
                     generators: [
                         {
                             name: "fernapi/fern-typescript-sdk",
-                            version: "0.0.23",
-                        },
-                    ],
-                },
-            },
+                            version: "0.0.23"
+                        }
+                    ]
+                }
+            }
         };
 
         expect(() =>
@@ -50,7 +50,7 @@ describe("addGenerator", () => {
                 generatorName: "typescript",
                 generatorsConfiguration,
                 groupName: "local",
-                context: createMockTaskContext({ logger: NOOP_LOGGER }),
+                context: createMockTaskContext({ logger: NOOP_LOGGER })
             })
         ).toThrow(FernCliError);
     });

@@ -3,7 +3,7 @@ import {
     ObjectSchema,
     OneOfSchema,
     PrimitiveSchemaValue,
-    Schema,
+    Schema
 } from "@fern-fern/openapi-ir-model/finalIr";
 import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";

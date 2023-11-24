@@ -4,7 +4,7 @@ import {
     ObjectPropertyWithExample,
     OneOfSchemaWithExample,
     PrimitiveSchemaValueWithExample,
-    SchemaWithExample,
+    SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
 
 export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Schema {
@@ -16,55 +16,55 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 allOfPropertyConflicts: schema.allOfPropertyConflicts,
                 description: schema.description,
                 generatedName: schema.generatedName,
-                nameOverride: schema.nameOverride,
+                nameOverride: schema.nameOverride
             });
         case "array":
             return Schema.array({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value),
+                value: convertSchemaWithExampleToSchema(schema.value)
             });
         case "enum":
             return Schema.enum({
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                values: schema.values,
+                values: schema.values
             });
         case "literal":
             return Schema.literal({
                 description: schema.description,
-                value: schema.value,
+                value: schema.value
             });
         case "nullable":
             return Schema.nullable({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value),
+                value: convertSchemaWithExampleToSchema(schema.value)
             });
         case "optional":
             return Schema.optional({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value),
+                value: convertSchemaWithExampleToSchema(schema.value)
             });
         case "primitive":
             return Schema.primitive({
                 description: schema.description,
-                schema: convertToPrimitiveSchemaValue(schema.schema),
+                schema: convertToPrimitiveSchemaValue(schema.schema)
             });
         case "map":
             return Schema.map({
                 description: schema.description,
                 key: Schema.primitive({
                     description: schema.key.description,
-                    schema: convertToPrimitiveSchemaValue(schema.key.schema),
+                    schema: convertToPrimitiveSchemaValue(schema.key.schema)
                 }),
-                value: convertSchemaWithExampleToSchema(schema.value),
+                value: convertSchemaWithExampleToSchema(schema.value)
             });
         case "reference":
             return Schema.reference({
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                schema: schema.schema,
+                schema: schema.schema
             });
         case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.oneOf));
@@ -83,7 +83,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 commonProperties: oneOfSchema.commonProperties.map((commonProperty) => {
                     return {
                         key: commonProperty.key,
-                        schema: convertSchemaWithExampleToSchema(commonProperty.schema),
+                        schema: convertSchemaWithExampleToSchema(commonProperty.schema)
                     };
                 }),
                 description: oneOfSchema.description,
@@ -94,7 +94,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                     Object.entries(oneOfSchema.schemas).map(([discriminantValue, schemaWithExample]) => {
                         return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
                     })
-                ),
+                )
             };
         case "undisciminated":
             return {
@@ -102,7 +102,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 description: oneOfSchema.description,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
-                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
+                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema))
             };
         default:
             assertNever(oneOfSchema);
@@ -114,7 +114,7 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
         case "string":
             return PrimitiveSchemaValue.string({
                 maxLength: primitiveSchema.maxLength,
-                minLength: primitiveSchema.minLength,
+                minLength: primitiveSchema.minLength
             });
         case "base64":
             return PrimitiveSchemaValue.base64();
@@ -142,6 +142,6 @@ function convertToObjectProperty(objectProperty: ObjectPropertyWithExample): Obj
         conflict: objectProperty.conflict,
         generatedName: objectProperty.generatedName,
         key: objectProperty.key,
-        schema: convertSchemaWithExampleToSchema(objectProperty.schema),
+        schema: convertSchemaWithExampleToSchema(objectProperty.schema)
     };
 }

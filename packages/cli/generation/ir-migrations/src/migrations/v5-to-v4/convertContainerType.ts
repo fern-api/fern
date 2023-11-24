@@ -10,7 +10,7 @@ export function convertContainerType(
         map: ({ keyType, valueType }) =>
             IrVersions.V4.types.ContainerType.map({
                 keyType: convertTypeReference(keyType),
-                valueType: convertTypeReference(valueType),
+                valueType: convertTypeReference(valueType)
             }),
         optional: (itemType) => IrVersions.V4.types.ContainerType.optional(convertTypeReference(itemType)),
         literal: (literal) =>
@@ -19,10 +19,10 @@ export function convertContainerType(
                     IrVersions.V4.types.ContainerType.literal(IrVersions.V4.types.Literal.string(literalString)),
                 _unknown: () => {
                     throw new Error("Unknown Literal: " + literal.type);
-                },
+                }
             }),
         _unknown: () => {
             throw new Error("Unknown ContainerType: " + containerType._type);
-        },
+        }
     });
 }

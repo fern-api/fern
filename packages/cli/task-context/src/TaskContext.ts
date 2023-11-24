@@ -32,7 +32,7 @@ export interface PosthogEvent {
 // TODO change to boolean representation
 export enum TaskResult {
     Success,
-    Failure,
+    Failure
 }
 
 export interface Startable<T> {

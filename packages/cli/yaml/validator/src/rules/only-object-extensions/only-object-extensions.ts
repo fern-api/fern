@@ -16,8 +16,8 @@ export const OnlyObjectExtensionsRule: Rule = {
                             relativeFilepath,
                             definitionFile: contents,
                             rootApiFile: workspace.definition.rootApiFile.contents,
-                            casingsGenerator: CASINGS_GENERATOR,
-                        }),
+                            casingsGenerator: CASINGS_GENERATOR
+                        })
                     });
 
                     if (resolvedType == null) {
@@ -32,11 +32,11 @@ export const OnlyObjectExtensionsRule: Rule = {
                     return [
                         {
                             severity: "error",
-                            message: `Objects can only extend other objects, and ${extension} is not an object.`,
-                        },
+                            message: `Objects can only extend other objects, and ${extension} is not an object.`
+                        }
                     ];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

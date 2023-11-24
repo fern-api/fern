@@ -16,7 +16,7 @@ export interface ConvertedWebhooks {
 
 export function convertWebhooks({
     openApiFile,
-    context,
+    context
 }: {
     openApiFile: OpenAPIIntermediateRepresentation;
     context: OpenApiIrConverterContext;
@@ -40,18 +40,18 @@ export function convertWebhooks({
         const payloadTypeReference = convertToTypeReference({
             schema: webhook.payload,
             prefix: isPackageYml ? undefined : ROOT_PREFIX,
-            schemas,
+            schemas
         });
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
-            ...payloadTypeReference.additionalTypeDeclarations,
+            ...payloadTypeReference.additionalTypeDeclarations
         };
 
         const webhookDefinition: RawSchemas.WebhookSchema = {
             method: webhook.method,
             "display-name": webhook.summary ?? undefined,
             headers,
-            payload: payloadTypeReference.typeReference,
+            payload: payloadTypeReference.typeReference
         };
 
         if (webhook.description != null) {
@@ -68,7 +68,7 @@ export function convertWebhooks({
 
     return {
         webhooks: webhooksByFile,
-        additionalTypeDeclarations,
+        additionalTypeDeclarations
     };
 }
 
@@ -80,7 +80,7 @@ export interface WebhookLocation {
 
 function getWebhookLocation({
     webhook,
-    context,
+    context
 }: {
     webhook: Webhook;
     context: OpenApiIrConverterContext;
@@ -92,7 +92,7 @@ function getWebhookLocation({
     if (tag == null) {
         return {
             file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
-            endpointId: operationId,
+            endpointId: operationId
         };
     }
 
@@ -104,7 +104,7 @@ function getWebhookLocation({
     if (isEqual(tagTokens, operationIdTokens)) {
         return {
             file: RelativeFilePath.of("__package__.yml"),
-            endpointId: tag,
+            endpointId: tag
         };
     }
 
@@ -119,7 +119,7 @@ function getWebhookLocation({
             return {
                 file: RelativeFilePath.of(`${camelCasedTag}.yml`),
                 endpointId: operationId,
-                tag,
+                tag
             };
         }
     }
@@ -132,6 +132,6 @@ function getWebhookLocation({
     return {
         file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
-        tag,
+        tag
     };
 }
