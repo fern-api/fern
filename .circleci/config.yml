@@ -169,12 +169,6 @@ workflows:
           filters:
             branches:
               only: main
-          requires:
-            - check
-            - compile
-            - eslint
-            - test
-            - ete-tests
           context:
             - npm
             - auth0-dev
@@ -186,11 +180,6 @@ workflows:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
           requires:
-            - check
-            - compile
-            - eslint
-            - test
-            - ete-tests
             - live-test-dev
           context:
             - npm
@@ -204,12 +193,6 @@ workflows:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
-            - check-cli-release-is-allowed
-            - check
-            - compile
-            - eslint
-            - test
-            - ete-tests
             - live-test-dev
             - live-test
           context:
@@ -224,11 +207,6 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - check
-            - compile
-            - eslint
-            - test
-            - ete-tests
             - live-test-dev
           context:
             - fern-tokens
