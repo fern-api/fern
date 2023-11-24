@@ -185,7 +185,7 @@ navigation:
           - page: Introduction
             path: ./docs/pages/api/intro.mdx
       - api: Reference
-        api-name: fern
+        api-name: public-api
         audiences:
           - external
         snippets:
