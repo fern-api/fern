@@ -1,0 +1,81 @@
+### Install
+
+```bash
+npm install -g fern-api
+```
+
+### Already have an OpenAPI spec?
+
+Import your OpenAPI spec into Fern [here](/api-definition/open-api-specification/openapi/import).
+
+### The `fern/` directory
+
+The `fern/` directory contains your Fern configuration. This generally lives in your
+backend repo, but you can also have an independent repo dedicated to your API (like [Seam's](https://github.com/seamapi/fern-config)).
+
+In the root of your repo, run:
+
+```bash
+fern init
+```
+
+This will create the following folder structure in your project:
+
+```yaml
+fern/
+├─ fern.config.json # root-level configuration
+└─ api/ # your API
+  ├─ generators.yml # generators you're using
+  └─ definition/
+    ├─ api.yml  # API-level configuration
+    └─ imdb.yml # endpoints, types, and errors
+```
+
+### Generating an SDK
+
+To generate the TypeScript SDK and an OpenAPI spec, run:
+
+```bash
+fern generate
+```
+
+By default, `generators.yml` is configured to generate a TypeScript SDK and an
+OpenAPI spec. You can read more about generation on the [`fern generate`](/overview/cli/fern-generate) 
+page.
+
+### Defining your API
+
+```yaml imdb.yml
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+        
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+```
+
+Your **Fern Definition** is a set of YAML files that describe your API. You can
+learn more about this in the [Define your API](/api-definition/fern-definition/overview) section.
+

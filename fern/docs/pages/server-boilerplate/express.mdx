@@ -1,0 +1,96 @@
+The Express generator generates types and networking logic for your Express server. This saves you time and add compile-time safety that you are serving the exact API that you specified in your API Definition.
+
+[Source code](https://github.com/fern-api/fern-typescript)
+[A starter repo for Express + React, using Fern](https://github.com/fern-api/express-starter/)
+
+Available on the open source plan.
+
+## What Fern generates
+
+- TypeScript interfaces for your API types
+- Exceptions that you can throw for non-200 responses
+- Interfaces for you to define your business logic
+- All the networking/HTTP logic to call your API
+
+## Adding the Express generator
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-typescript-express
+  version: 0.7.2
+  output:
+    location: local-file-system
+    path: ../../generated/server-boilerplate/express
+```
+</CodeBlock>
+
+<Callout intent="warn">
+Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.
+</Callout>
+
+## Demo Video
+
+<div style={{ position: "relative", paddingBottom: "62.5%", height: "0" }}>
+    <iframe 
+        src="https://www.loom.com/embed/31f4243c4d824c54938bdc4840fbb8ba?sid=e5cc10a7-0328-4813-a877-cb3cbf61ef95" 
+        frameborder="0" 
+        webkitallowfullscreen 
+        mozallowfullscreen 
+        allowfullscreen 
+        style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%" }}>
+    </iframe>
+</div>
+
+
+## Express Configurations
+
+The following options are supported when generating an Express backend:
+
+### Use Branded String Aliases
+
+See [useBrandedStringAliases](https://docs.buildwithfern.com/sdks/typescript-node#use-branded-string-aliases) under SDK Configuration
+
+#### `treatUnknownAsAny`
+
+See [treatUnknownAsAny](https://docs.buildwithfern.com/sdks/typescript-node#treat-unknown-as-any) under SDK Configuration
+
+#### `noSerdeLayer`
+
+See [noSerdeLayer](https://docs.buildwithfern.com/sdks/typescript-node#no-serde-layer) under SDK Configuration
+
+#### `outputSourceFiles`
+
+See [outputSourceFiles](https://docs.buildwithfern.com/sdks/typescript-node#output-source-files) under SDK Configuration
+
+#### `areImplementationsOptional`
+
+**Type:** boolean
+**Default:** `false`
+
+By default, the generated `register()` will require an implementatiion for every
+service defined in your Fern Definition.
+
+If `areImplementationsOptional` is enabled, then `register()` won't require any
+implementations. Note that this is mildly dangerous, if you forget to include
+an implementation, then your server behavior may drift from your docs and clients.
+
+#### ✨ `doNotHandleUnrecognizedErrors`
+
+**Type:** boolean
+**Default:** `false`
+
+By default, if you throw a non-Fern error in your endpoint handler, it will be caught by generated code and a `500` response will be returned. No details from the error will be leaked to the client.
+
+If `doNotHandleUnrecognizedErrors` is enabled and you throw a non-Fern error, the error will be caught and passed on with `next(error)`. It's your responsibility to set up error-catching middleware that handles the error and returns a response to the client.
+
+## Dependencies
+
+The generated TypeScript code has the following dependencies:
+
+- [@ungap/url-search-params](https://www.npmjs.com/package/@ungap/url-search-params)
+- [url-join](https://www.npmjs.com/package/url-join)
+- [form-data](https://www.npmjs.com/package/form-data)
+- [axios](https://www.npmjs.com/package/axios)
+- [js-base64](https://www.npmjs.com/package/js-base64)
+
+If you are packaging your code manually, make sure to include them in your `package.json`.

@@ -1,0 +1,36 @@
+To export your API to OpenAPI from Fern, you can use the `fern-openapi` generator. The OpenAPI generator outputs an OpenAPI 3.1 document for your API, which can be used with any OpenAPI-compatible tools.
+
+Here is an example of how you can configure the fern-openapi generator in your generators.yml file:
+
+<CodeBlock title="generators.yml">
+```
+- name: fernapi/fern-openapi
+  version: 0.0.28
+  config:
+    format: yaml #options are yaml or json
+  github:
+    repository: your-organization/your-repository
+  ```
+</CodeBlock>
+
+## Configuration options 
+
+The following options are available:
+
+### Format
+
+- `format`: Allows you to control the name of the generated namespace export and client class. By default, the exported namespace and client are named based on the organization and API names in the Fern Definition.
+
+**Type**: string, enum of 'json' | 'yaml'
+
+**Default:** `yaml`
+
+When configured, the generator outputs OAS files in the specified format.
+
+#### Custom overrides
+
+**Type:** object
+
+**Default:** {}
+
+When configured, the object is merged into the generated OAS file. This allows you to add custom fields to the specification.

@@ -1,0 +1,74 @@
+The `Card` is used when you want to display content in a rectangular box.
+
+Card Prop:
+
+- *title*: string 
+- *icon*: Font Awesome Icon
+- *href*: string -- a link to another page
+
+Note: it is helpful to put `<br />` after each card to make sure they are not too close to each other. We're tracking the [issue here](https://github.com/fern-api/fern/issues/2325).
+
+## Single card 
+
+<Card
+title="Node.js/TypeScript"
+icon="fa-brands fa-node"
+href="https://github.com/fern-api/fern-typescript"
+/>
+
+<br />
+
+<CodeBlock title = "single-card.mdx">
+```mdx
+    <Card
+    title="Node.js/TypeScript"
+    icon="fa-brands fa-node"
+    href="https://github.com/fern-api/fern-typescript"
+    />
+```
+</CodeBlock>
+
+## Multiple cards 
+
+<Cards>
+  <Card
+    title="Node.js/TypeScript"
+    icon="fa-brands fa-node"
+    href="https://github.com/fern-api/fern-typescript"
+  />
+  <Card
+    title="Python"
+    icon="fa-brands fa-python"
+    href="https://github.com/fern-api/fern-python"
+  />
+  <Card
+    title="Java"
+    icon="fa-brands fa-java"
+    href="https://github.com/fern-api/fern-java"
+  />
+</Cards>
+
+<br />
+
+<CodeBlock title = "multiple-cards.mdx">
+```mdx
+    <Cards>
+    <Card
+        title="Node.js/TypeScript"
+        icon="fa-brands fa-node"
+        href="https://github.com/fern-api/fern-typescript"
+    />
+    <Card
+        title="Python"
+        icon="fa-brands fa-python"
+        href="https://github.com/fern-api/fern-python"
+    />
+    <Card
+        title="Java"
+        icon="fa-brands fa-java"
+        href="https://github.com/fern-api/fern-java"
+    />
+    </Cards>
+```
+</CodeBlock>
+

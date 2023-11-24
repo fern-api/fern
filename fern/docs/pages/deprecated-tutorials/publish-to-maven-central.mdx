@@ -1,0 +1,60 @@
+The following is a guide on how to publish your SDK (referred to as an `artifact`) to Maven Central.
+
+1. Decide what your Maven `groupId` will be .
+
+We recommend using a reverse domain name, as it's a common convention and it's easy to remember. 
+
+For example:
+    - `stripe.com` becomes `com.stripe`
+    - `aws.amazon.com` becomes `com.amazonaws`
+    - `twilio.com` becomes `com.twilio.sdk` (they added `sdk` to avoid a conflict with an existing groupId)
+    - `archive.org` becomes `org.archive`   
+    - `zookeeper.apache.org` becomes `org.apache.zookeeper`
+
+Alternatively, you can use your GitHub org name. For example, `github.com/segmentio` becomes `io.segment`.
+
+1. Create an account on Sonatype Jira. Create an account [here](https://issues.sonatype.org/secure/Signup!default.jspa).
+
+Sonatype is a company that runs the Maven Central Repository, which is where we will be uploading our artifacts to.
+
+1. Create a new issue by hitting the Create button.
+
+![Create](https://fern-image-hosting.s3.amazonaws.com/sonatype-create-button.png)
+
+1. Fill out the form. 
+
+- Select `Community Support - Open Source Project Repository Hosting (OSSRH)` for Project. 
+
+- Select `New Project` for Issue Type.
+
+![Create Issue](https://fern-image-hosting.s3.amazonaws.com/sonatype-create-issue-form.png)
+
+1. Prove ownership in the ticket.
+
+Before granting you the `groupId` you requested, Sonatype will ask you to prove ownership of either the GitHub org or domain name that you based your `groupId` on.
+
+In the case of a domain name, you will be asked to add a DNS TXT to your domain. Example ticket [here](https://issues.sonatype.org/browse/OSSRH-76115?jql=text%20~%20%22com%22).
+
+In the case of GitHub org, you will be asked to create a repo and the bot will check that the repo has been created. Example ticket [here](https://issues.sonatype.org/browse/OSSRH-85770). 
+
+1. You're ready to publish to your Maven repository! 
+
+- Your `Maven coordinate` is `<groupId>:<artifactId>`
+- Your `Maven username` is the username of your Sonatype account. 
+- Your `Maven password` is the password of your Sonatype account.
+
+1. Choose your artifact name.
+
+Picking an `artifactId` is a personal preference.  Here are examples for inspiration:
+
+- `stripe-java` [this is our recommended approach]
+- `slack-api-client`
+- `twilio`
+- `aws-java-sdk-s3`
+
+Going forward, when referencing the artifact you'll use the `groupId` and `artifactId` together. For example:
+
+- `com.stripe:stripe-java`
+- `com.slack.api/slack-api-client`
+- `dev.merge:merge-java-client`
+- `com.amazonaws:aws-java-sdk-s3`
