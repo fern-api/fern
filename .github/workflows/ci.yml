@@ -89,10 +89,10 @@ jobs:
         run: yarn install
 
       - name: Run ETE tests
+        env:
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
-          projectVersion=$(./scripts/git-version.sh)
-          echo "FERN_TOKEN=${{secrets.FERN_ORG_TOKEN_DEV}}" >> $GITHUB_ENV
-          yarn test:ete
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} yarn test:ete
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

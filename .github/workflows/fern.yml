@@ -2,7 +2,7 @@ name: fern
 on: [push]
 
 jobs:
-  check:
+  check-ir-definitions:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
