@@ -19,7 +19,6 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
     "lint:monorepo:fix": "yarn lint:monorepo --fix",
-    "organize-imports": "organize-imports-cli packages/**/tsconfig.json",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "yarn lint:style --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",

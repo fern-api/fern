@@ -4,5 +4,8 @@
 # But not the .ts files
 !*.ts
 
+# Ignore .d.ts files
+*.d.ts
+
 # Check subdirectories too
 !*/

@@ -41,26 +41,6 @@ jobs:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
 
-  organize-imports:
-    docker:
-      - image: cimg/node:18.8.0
-    resource_class: large
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Organize imports
-          # not using --list-different because sometimes this removes a trailing
-          # comma that prettier adds back
-          command: yarn organize-imports
-      - run:
-          name: Format
-          command: yarn format:fix
-      - run:
-          name: Ensure no changes to git-tracked files
-          command: git --no-pager diff --exit-code
-
   eslint:
     docker:
       - image: cimg/node:18.8.0
@@ -288,11 +268,6 @@ workflows:
               only: /.*/
 
       - eslint:
-          filters:
-            tags:
-              only: /.*/
-
-      - organize-imports:
           filters:
             tags:
               only: /.*/
