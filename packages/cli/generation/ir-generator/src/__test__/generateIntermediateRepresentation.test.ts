@@ -10,7 +10,7 @@ import { generateIntermediateRepresentation } from "../generateIntermediateRepre
 require("jest-specific-snapshot");
 
 const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
-const FHIR_DIR = path.join(__dirname, "../../../../../../fern/fhir");
+const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
 
 const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
     audiences: {
