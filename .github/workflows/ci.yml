@@ -89,9 +89,9 @@ jobs:
         run: yarn install
 
       - name: Run ETE tests
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
+          projectVersion=$(./scripts/git-version.sh)
+          echo "FERN_TOKEN=${{secrets.FERN_ORG_TOKEN_DEV}}" >> $GITHUB_ENV
           yarn test:ete
 
       - name: Ensure no changes to git-tracked files
