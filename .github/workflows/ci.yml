@@ -1,8 +1,8 @@
-name: check
+name: ci
 on: [push]
 
 jobs:
-  check:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
