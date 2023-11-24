@@ -315,7 +315,6 @@ workflows:
               only: main
           requires:
             - check
-            - organize-imports
             - compile
             - eslint
             - test
@@ -332,7 +331,6 @@ workflows:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
           requires:
             - check
-            - organize-imports
             - compile
             - eslint
             - test
@@ -352,7 +350,6 @@ workflows:
           requires:
             - check-cli-release-is-allowed
             - check
-            - organize-imports
             - compile
             - eslint
             - test
@@ -372,7 +369,6 @@ workflows:
               only: /.*/
           requires:
             - check
-            - organize-imports
             - compile
             - eslint
             - test
