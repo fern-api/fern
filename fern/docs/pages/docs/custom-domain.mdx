@@ -1,0 +1,60 @@
+Learn how to bring your own custom domain to Fern Docs.
+
+<Callout intent="tip"> 
+Note: Custom domains is a paid feature. Want to get set up? 
+Reach out in [Discord](https://discord.com/invite/JkkXumPzcG) 
+or [email us](mailto:sales@buildwithfern.com). 
+</Callout>
+
+### 1. Adding your domain to `docs.yml`
+
+First decide what subdomain to use with your documentation. 
+The most common options are https://docs.example.com or https://example.com/docs.
+
+We'll add the following to `docs.yml` to tell Fern Docs to 
+publish to `example.docs.buildwithfern.com`:
+
+<CodeBlock title="docs.yml">
+```yaml
+instances: 
+  - url: example.docs.buildwithfern.com
+```
+</CodeBlock>
+
+When ready to publish to a custom domain, add the `custom-domain` key to the instance. Note that this is a paid feature. For example:
+
+<CodeBlock title="docs.yml">
+```diff 
+instances: 
+  - url: example.docs.buildwithfern.com
++   custom-domain: docs.example.com
+```
+</CodeBlock>
+
+### 2. Running the generator
+
+In the example above, by running `fern generate --docs`, we'd see:
+
+<CodeBlock title="Terminal">
+```bash
+┌─
+│ ⠂ Publish docs
+└─
+```
+</CodeBlock>
+
+followed by
+
+<CodeBlock title="Terminal">
+```bash
+[api]: Published docs to https://example.docs.buildwithfern.com
+┌─
+│ ✓ Publish docs
+└─
+```
+</CodeBlock>
+
+### 3. Creating DNS records to point at Fern Docs
+
+Next, you'll need to get the DNS records by adding Fern Docs to your subscription. 
+You can do this by reaching out [sales@buildwithfern.com](mailto:sales@buildwithfern.com).

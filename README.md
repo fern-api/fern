@@ -295,7 +295,8 @@ This will validate that your workspace is set up correctly and that your API def
 
 ## Documentation
 
-Our full documentation can be found [here](https://www.buildwithfern.com/docs).
+Our full documentation can be found [here](https://www.buildwithfern.com/docs). To edit our documentation
+see [CONTRIBUTING.md](./CONTRIBUTING.md#writing-documentation).
 
 ## Community
 

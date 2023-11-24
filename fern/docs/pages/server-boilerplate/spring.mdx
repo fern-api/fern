@@ -1,0 +1,33 @@
+The Spring generator generates types and networking logic for your Spring server. This saves you time and add compile-time safety that you are serving the exact API that you specified in your API Definition.
+
+[Source code](https://github.com/fern-api/fern-java)
+[A starter repo for Express, using Fern](https://github.com/fern-api/spring-starter/)
+
+Available on the open source plan.
+
+## What Fern generates
+
+- Java classes for your API types
+- Exceptions that you can throw for non-200 responses
+- Abstract classes for you to define your business logic
+- All the networking/HTTP logic to call your API
+
+## Adding the Java generator
+
+<CodeBlock title="generators.yml">
+```yaml
+- name: fernapi/fern-java-spring
+  version: 0.5.10
+  output:
+    location: local-file-system
+    path: ../../generated/server-boilerplate/java
+```
+</CodeBlock>
+
+## Demo Video
+
+TODO
+
+## Spring Configurations
+
+TODO [https://github.com/fern-api/fern-java#spring-configuration](https://github.com/fern-api/fern-java#spring-configuration) 

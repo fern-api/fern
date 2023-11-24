@@ -1,0 +1,40 @@
+Use `fern check` to validate your API definition and Fern configuration. Your Fern configuration includes `fern.config.json`, `generators.yml`, and `docs.yml`.
+
+## Usage
+
+```bash
+$ fern check
+```
+
+## Usage in a GitHub Action 
+
+<CodeBlock title = ".github/workflows/fern-check.yml">
+```yml 
+name: Fern API Validation Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-fern-api:
+    name: Validate using Fern API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Fern API
+        run: npm install -g fern-api
+
+      - name: Validate API with Fern
+        run: fern check
+```
+</CodeBlock>

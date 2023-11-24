@@ -1,0 +1,65 @@
+`PR previews` offer a way to preview changes from pull requests (PRs) before merging code to a production branch. This is useful for reviewing documentation changes before publishing them to your live documentation site.
+
+Here's an example of a `PR preview`: https://fern-preview-fa86d0dd-7763-4d5f-84d8-6d630dc1742a.docs.buildwithfern.com
+
+## Usage 
+
+```bash
+$ fern generate --docs <instance-url> --preview
+```
+
+## Example
+
+```bash
+$ fern generate --docs fern.docs.buildwithfern.com --preview
+
+Download @fern/registry Downloading manifest...
+Download @fern/registry Downloading...
+Download @fern/registry Parsing...
+[docs]: Published docs to https://fern-preview-3e0e506f-d277-4f13-be63-e609b7320db1.docs.buildwithfern.com
+┌─
+│ ✓  Download @fern/registry
+│ ✓  fern.docs.buildwithfern.com
+└─
+```
+
+## Usage in GitHub Actions  
+
+The following is a GitHub Action workflow that generates a preview URL for every pull request.
+
+<CodeBlock title = ".github/workflows/preview-docs.yml">
+```yaml
+name: preview-docs
+
+on:
+  pull_request:
+    branches:
+      - main  
+
+jobs:
+  generate-preview-docs:
+    name: Generate Documentation Preview
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Generate Documentation Preview with Fern
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: fern generate --docs --preview
+```
+</CodeBlock>
+
+## Link expiration
+
+Preview links do not expire. However, the time to live (TTL) may be subject to change in the future.
