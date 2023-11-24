@@ -14,7 +14,23 @@ Talk about Fern in your local meetups! Even our users aren't always aware of som
 
 Write code! We've got lots of open issues - feel free to volunteer for one by commenting on the issue.
 
-## Local development
+## Writing Documentation
+
+Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in 
+[docs.yml](./fern/docs.yml).
+
+To edit the docs, you can modify `docs.yml` or any of the markdown that it references. 
+
+To validate that the docs, run: 
+```
+npm install -g fern-api
+fern check
+```
+
+When you make a PR to update the docs, a PR preview link will be generated which will allow you 
+to test if your changes came out as intended. 
+
+## Local Development 
 
 Our repo is a monorepo that relies on [Yarn workspaces](https://yarnpkg.com/features/workspaces) and [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp) to run smoothly.
 
