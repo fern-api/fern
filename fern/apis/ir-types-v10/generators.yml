@@ -1,0 +1,18 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript
+        version: 0.0.197
+        config:
+          mode: model
+  sdks:
+    generators:
+      - name: fernapi/java-model
+        version: 0.0.130-2-g36322d7
+        config:
+          wrapped-aliases: true
+      - name: fernapi/fern-pydantic-model
+        version: 0.0.34-1-g024c753
+        config:
+          wrapped_aliases: true

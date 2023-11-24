@@ -1,0 +1,98 @@
+name: check
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Lint Monorepo
+        run: yarn lint:monorepo
+
+      - name: Check dependencies
+        run: yarn depcheck
+
+      - name: Lint
+        run: yarn lint:style
+
+      - name: generate (dev) JSON Schema
+        run: yarn generate-json-schema:dev
+
+      - name: Format
+        run: yarn format:check
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: compile
+        run: yarn compile
+
+      - name: lint:eslint
+        run: yarn lint:eslint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Run tests
+        run: yarn test --ci
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  ete-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Run ETE tests
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: |
+          yarn test:ete
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code

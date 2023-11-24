@@ -1,0 +1,21 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript
+        version: 0.0.197
+        config:
+          mode: model
+  sdks:
+    generators:
+      - name: fernapi/java-model
+        version: 0.3.4
+        config:
+          wrapped-aliases: true
+          enable-forward-compatible-enums: true
+      - name: fernapi/fern-pydantic-model
+        version: 0.3.6-rc1-1-ga2f760f4
+        config:
+          wrapped_aliases: true
+          include_union_utils: true
+          frozen: true

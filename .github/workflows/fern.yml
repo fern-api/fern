@@ -1,0 +1,35 @@
+name: fern
+on: [push]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Check Fern API is valid
+        run: fern check
+
+  check-test-definitions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install Deps
+        run: yarn install
+
+      - name: Fern check
+        run: |
+          yarn workspace @fern-api/cli dist:cli:dev
+          cd test-definitions
+          FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev) check

@@ -2,106 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
 jobs:
-  check:
-    docker:
-      - image: cimg/node:18.8.0
-    resource_class: large
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: lint:monorepo
-          command: yarn lint:monorepo
-      - run:
-          name: Check root package
-          command: yarn root-package:check
-      - run:
-          name: Check dependencies
-          command: yarn depcheck
-      - run:
-          name: lint:style
-          command: yarn lint:style
-      - run:
-          name: fern check
-          command: npx fern-api check
-      - run:
-          name: fern check test definitons
-          command: |
-            yarn workspace @fern-api/cli dist:cli:dev
-            cd test-definitions
-            node $(yarn workspace @fern-api/cli bin fern:dev) check
-      - run:
-          name: generate (dev) JSON Schema
-          command: yarn generate-json-schema:dev
-      - run:
-          name: Format
-          command: yarn format:check
-      - run:
-          name: Ensure no changes to git-tracked files
-          command: git --no-pager diff --exit-code
-
-  eslint:
-    docker:
-      - image: cimg/node:18.8.0
-    resource_class: large
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          # compilation is needed for some typescript-eslint rules
-          name: compile
-          command: yarn compile
-      - run:
-          name: lint:eslint
-          command: yarn lint:eslint
-
-  compile:
-    docker:
-      - image: cimg/node:18.8.0
-    resource_class: large
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: compile
-          command: yarn compile
-
-  test:
-    # this is machine because of the docker-utils tests
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Run tests
-          command: yarn test --ci
-      - run:
-          name: Ensure no changes to git-tracked files
-          command: git --no-pager diff --exit-code
-
-  ete-tests:
-    # this is machine because of the local generation tests
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Run ETE tests
-          command: |
-            echo 'export FERN_TOKEN="$FERN_ORG_TOKEN_DEV"' >> $BASH_ENV
-            source "$BASH_ENV"
-            yarn test:ete
-      - run:
-          name: Ensure no changes to git-tracked files
-          command: git --no-pager diff --exit-code
-
   live-test-dev:
     docker:
       - image: cimg/node:18.8.0
@@ -242,54 +142,10 @@ jobs:
             export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
             npx fern-api generate --api ir-types-v31 --group sdks
 
-  check-cli-release-is-allowed:
-    docker:
-      - image: cimg/node:18.8.0
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Check release blockers
-          command: yarn check-cli-release-blockers
-      - run:
-          name: Ensure JSON schema is up to date
-          command: |
-            yarn generate-json-schema
-            git --no-pager diff --exit-code
-
 workflows:
   version: 2
   build:
     jobs:
-      - check:
-          filters:
-            tags:
-              only: /.*/
-
-      - eslint:
-          filters:
-            tags:
-              only: /.*/
-
-      - compile:
-          filters:
-            tags:
-              only: /.*/
-
-      - test:
-          filters:
-            tags:
-              only: /.*/
-
-      - ete-tests:
-          filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-            - fern-tokens
-
       - live-test-dev:
           filters:
             tags:
@@ -376,10 +232,3 @@ workflows:
             - live-test-dev
           context:
             - fern-tokens
-
-      - check-cli-release-is-allowed:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
