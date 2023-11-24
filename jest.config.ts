@@ -1,4 +1,3 @@
-import IS_CI from "is-ci";
 import { Config } from "jest";
 import defaultConfig from "./shared/jest.config.shared";
 
