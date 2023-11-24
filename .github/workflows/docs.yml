@@ -27,8 +27,8 @@ jobs:
       - name: Publish Fern Documentation
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: fern generate --docs
-        
+        run: FERN_TOKEN=${{ secrets.FERN_TOKEN }} fern generate --docs
+
   preview-docs:
     runs-on: ubuntu-latest
 
@@ -36,14 +36,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Install Fern
         run: npm install -g fern-api
-        
+
       - name: Generate Documentation Preview with Fern
         id: generate_docs
         env:
@@ -68,4 +68,3 @@ jobs:
               issue_number: issue_number,
               body: `Published docs preview URL: ${preview_url}`
             })
-        
