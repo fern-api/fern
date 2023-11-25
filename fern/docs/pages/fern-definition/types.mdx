@@ -73,15 +73,15 @@ types:
       breed: string
 ```
 
-You can extend multiple objects: 
+You can extend multiple objects:
 
-```yaml 
-types: 
-  GoldenRetriever: 
-    extends: 
-      - Dog 
-      - Pet 
-    properties: 
+```yaml
+types:
+  GoldenRetriever:
+    extends:
+      - Dog
+      - Pet
+    properties:
       isGoodBoy: boolean
 ```
 
@@ -209,61 +209,4 @@ interface Person {
   // age in years
   age: number;
 }
-```
-
-### Examples
-
-You can add examples for types. These are passed into the compiler to be used in
-the generated outputs (e.g., examples in the Postman collection).
-
-```yaml
-types:
-  UserId:
-    docs: A unique identifier for a user
-    type: string
-    examples:
-      - value: user-id-123
-```
-
-```typescript Generated TypeScript SDK
-/**
- * A unique identifier for a user
- *
- * @example "user-id-123"
- */
-type UserId = string;
-```
-
-The Fern compiler validates that your examples match the expected types. For
-example, this won't compile:
-
-```yaml
-types:
-  UserId:
-    type: integer
-    examples:
-      - value: hello # not an integer
-```
-
-#### Referencing examples from other types
-
-Just like types, you can compose examples. To reference an example from another
-type, use `$`.
-
-```yaml
-types:
-  UserId:
-    type: integer
-    examples:
-      - name: Example1
-        value: user-id-123
-
-  User:
-    properties:
-      id: UserId
-      name: string
-    examples:
-      - value:
-          id: $UserId.Example1 # <---
-          name: Jane Smith
 ```

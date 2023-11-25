@@ -110,6 +110,8 @@ navigation:
             path: ./docs/pages/fern-definition/errors.mdx
           - page: Imports
             path: ./docs/pages/fern-definition/imports.mdx
+          - page: Examples
+            path: ./pages/fern-definition/examples.mdx
           - page: api.yml reference
             path: ./docs/pages/fern-definition/api-yml.mdx
             slug: api-yml-reference
