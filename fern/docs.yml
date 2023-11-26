@@ -112,6 +112,8 @@ navigation:
             path: ./docs/pages/fern-definition/imports.mdx
           - page: Examples
             path: ./docs/pages/fern-definition/examples.mdx
+          - page: Audiences
+            path: ./docs/pages/fern-definition/audiences.mdx
           - page: api.yml reference
             path: ./docs/pages/fern-definition/api-yml.mdx
             slug: api-yml-reference
