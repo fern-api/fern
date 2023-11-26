@@ -17,7 +17,6 @@ export async function testCustomFixture({
     language,
     docker,
     generatorType,
-    compileCommand,
     logLevel,
     numDockers
 }: {
@@ -27,7 +26,6 @@ export async function testCustomFixture({
     irVersion: string | undefined;
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
-    compileCommand: string | undefined;
     logLevel: LogLevel;
     numDockers: number;
 }): Promise<void> {
@@ -46,7 +44,7 @@ export async function testCustomFixture({
         language,
         fixture: "custom",
         docker,
-        compileCommand,
+        scripts: undefined,
         customConfig: {},
         taskContext,
         outputDir: absolutePathToOutput

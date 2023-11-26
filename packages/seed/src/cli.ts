@@ -76,7 +76,6 @@ function addTestCommand(cli: Argv) {
                     language: workspace.workspaceConfig.language,
                     generatorType: workspace.workspaceConfig.generatorType,
                     docker: parsedDockerImage,
-                    compileCommand: undefined,
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel
                 });
@@ -89,7 +88,7 @@ function addTestCommand(cli: Argv) {
                     generatorType: workspace.workspaceConfig.generatorType,
                     docker: parsedDockerImage,
                     dockerCommand: workspace.workspaceConfig.dockerCommand,
-                    compileCommand: undefined,
+                    scripts: workspace.workspaceConfig.scripts,
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel
                 });
