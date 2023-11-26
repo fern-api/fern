@@ -2744,6 +2744,7 @@ __metadata:
   dependencies:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/docker-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
@@ -2753,7 +2754,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.351
-    "@fern-fern/seed-config": 0.0.7
+    "@fern-fern/seed-config": 0.0.9
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3232,10 +3233,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/seed-config@npm:0.0.7":
-  version: 0.0.7
-  resolution: "@fern-fern/seed-config@npm:0.0.7"
-  checksum: c1d3069368647e123f20ae1e049c35755e4a6f2bcd927fe402043c9733abbefa6fec792e78cb3c496ed65f307c73841a7dbbd3372a56b97b33d4b360ef69cbe5
+"@fern-fern/seed-config@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@fern-fern/seed-config@npm:0.0.9"
+  checksum: 417ee6876aac4a73416a32e7ff4790c7b824202cb5309ef07781ccb9d63e59f13e86b5ae4ee7d593441a1945fab718d0c9d630822cd914b51ca6f0b4311269f2
   languageName: node
   linkType: hard
 

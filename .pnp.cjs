@@ -4508,6 +4508,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/seed-cli", "workspace:packages/seed"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docker-utils", "workspace:packages/cli/generation/local-generation/docker-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/cli/generation/local-generation/local-workspace-runner"],\
@@ -4517,7 +4518,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.351"],\
-            ["@fern-fern/seed-config", "npm:0.0.7"],\
+            ["@fern-fern/seed-config", "npm:0.0.9"],\
             ["@types/find-up", "npm:4.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -5081,10 +5082,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/seed-config", [\
-        ["npm:0.0.7", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-seed-config-npm-0.0.7-306588ee8b-c1d3069368.zip/node_modules/@fern-fern/seed-config/",\
+        ["npm:0.0.9", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-seed-config-npm-0.0.9-e376a46cd1-417ee6876a.zip/node_modules/@fern-fern/seed-config/",\
           "packageDependencies": [\
-            ["@fern-fern/seed-config", "npm:0.0.7"]\
+            ["@fern-fern/seed-config", "npm:0.0.9"]\
           ],\
           "linkType": "HARD"\
         }]\

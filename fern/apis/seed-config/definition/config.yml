@@ -8,7 +8,12 @@ types:
       dockerCommand: optional<string>
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      compileCommands: optional<list<string>>
+      scripts: optional<list<ScriptConfig>>
+
+  ScriptConfig:
+    properties:
+      docker: string
+      commands: list<string>
 
   Language:
     enum:

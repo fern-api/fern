@@ -35,6 +35,7 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/docker-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
@@ -44,7 +45,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.351",
-    "@fern-fern/seed-config": "0.0.7",
+    "@fern-fern/seed-config": "0.0.9",
     "chalk": "^5.0.1",
     "find-up": "^6.3.0",
     "js-yaml": "^4.1.0",

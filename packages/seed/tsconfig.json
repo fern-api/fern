@@ -6,6 +6,7 @@
     { "path": "../cli/config-management/commons" },
     { "path": "../cli/config-management/generators-configuration" },
     { "path": "../cli/config-management/project-configuration" },
+    { "path": "../cli/generation/local-generation/docker-utils" },
     { "path": "../cli/generation/local-generation/local-workspace-runner" },
     { "path": "../cli/logger" },
     { "path": "../cli/task-context" },
