@@ -20,8 +20,8 @@ export declare namespace Payment {
     }
 
     interface IdempotentRequestOptions extends RequestOptions {
-        idempotencyKey: core.Supplier<string>;
-        idempotencyExpiration: core.Supplier<number>;
+        idempotencyKey: string;
+        idempotencyExpiration: number;
     }
 }
 

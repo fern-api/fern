@@ -516,7 +516,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const type = context.type.getReferenceToType(header.valueType);
                 properties.push({
                     name: this.getOptionKeyForNonLiteralHeader(header),
-                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
+                    type: getTextOfTsNode(type.typeNode),
                     hasQuestionToken: type.isOptional,
                 });
             }

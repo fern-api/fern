@@ -58,5 +58,8 @@
     "editorconfig": "2.0.0",
     "semver": "6.3.1"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "@fern-api/seed-cli": "^0.15.4-rc0-1-g10366a2e5"
+  }
 }
