@@ -64,6 +64,10 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "DateTimeDeserializer");
     }
 
+    public final ClassName getStreamClassName() {
+        return ClassName.get(getCorePackage(), "Stream");
+    }
+
     public final List<String> getPackagePrefixTokens() {
         return packagePrefixTokens;
     }

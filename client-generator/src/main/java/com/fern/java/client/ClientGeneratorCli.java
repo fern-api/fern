@@ -37,6 +37,7 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
+import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedJavaFile;
@@ -176,6 +177,9 @@ public final class ClientGeneratorCli
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
+
+        StreamGenerator streamGenerator = new StreamGenerator(context);
+        this.addGeneratedFile(streamGenerator.generateFile());
 
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
