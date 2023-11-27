@@ -60,6 +60,6 @@
   },
   "packageManager": "yarn@3.2.3",
   "dependencies": {
-    "@fern-api/seed-cli": "^0.15.4-rc0-1-g10366a2e5"
+    "@fern-api/seed-cli": "^0.15.4-rc0-2-g3d61a37ba"
   }
 }

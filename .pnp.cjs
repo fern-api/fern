@@ -236,7 +236,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/seed-cli", "npm:0.15.4-rc0-1-g10366a2e5"],\
+            ["@fern-api/seed-cli", "npm:0.15.4-rc0-2-g3d61a37ba"],\
             ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.9"],\
@@ -3543,10 +3543,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/seed-cli", [\
-        ["npm:0.15.4-rc0-1-g10366a2e5", {\
-          "packageLocation": "./.yarn/cache/@fern-api-seed-cli-npm-0.15.4-rc0-1-g10366a2e5-7bfc7b771f-d79df4bee8.zip/node_modules/@fern-api/seed-cli/",\
+        ["npm:0.15.4-rc0-2-g3d61a37ba", {\
+          "packageLocation": "./.yarn/cache/@fern-api-seed-cli-npm-0.15.4-rc0-2-g3d61a37ba-8f337e5de4-f53db460b2.zip/node_modules/@fern-api/seed-cli/",\
           "packageDependencies": [\
-            ["@fern-api/seed-cli", "npm:0.15.4-rc0-1-g10366a2e5"]\
+            ["@fern-api/seed-cli", "npm:0.15.4-rc0-2-g3d61a37ba"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8572,7 +8572,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/seed-cli", "npm:0.15.4-rc0-1-g10366a2e5"],\
+            ["@fern-api/seed-cli", "npm:0.15.4-rc0-2-g3d61a37ba"],\
             ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.9"],\
