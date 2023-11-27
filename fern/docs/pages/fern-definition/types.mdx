@@ -116,6 +116,20 @@ types:
       - SNOWING
 ```
 
+Enum names are restricted to `A-Z`, `a-z`, `0-9`, and `_` to ensure that generated code can compile across all of the languages that Fern can output. If you have an enum that doesn't follow this convention, you can use the `"name"` key to specify a custom name:
+
+```yaml
+types:
+  Operator:
+    enum:
+      - name: LESS_THAN # <--- the name that will be used in SDKs
+        value: < # <--- the value that will be serialized
+      - name: GREATER_THAN
+        value: >
+      - name: NOT_EQUAL
+        value: !=
+```
+
 ### Unions
 
 Fern supports tagged unions (a.k.a. discriminated unions). Unions are useful for
