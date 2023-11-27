@@ -141,8 +141,14 @@ exports[`generate IR 1`] = `
         "wireValue": "Idempotency-Expiration",
       },
       "valueType": {
-        "_type": "primitive",
-        "primitive": "INTEGER",
+        "_type": "container",
+        "container": {
+          "_type": "optional",
+          "optional": {
+            "_type": "primitive",
+            "primitive": "INTEGER",
+          },
+        },
       },
     },
   ],
