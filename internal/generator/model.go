@@ -887,7 +887,7 @@ func (c *singleUnionTypePropertiesInitializerVisitor) VisitSingleProperty(_ *ir.
 }
 
 func (c *singleUnionTypePropertiesInitializerVisitor) VisitNoProperties(_ any) error {
-	c.value = "value := make(map[string]any)"
+	c.value = "value := make(map[string]interface{})"
 	return nil
 }
 
