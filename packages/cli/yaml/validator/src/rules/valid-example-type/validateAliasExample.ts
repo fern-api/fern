@@ -10,7 +10,7 @@ export function validateAliasExample({
     file,
     typeResolver,
     exampleResolver,
-    workspace,
+    workspace
 }: {
     rawAlias: string | RawSchemas.AliasSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -25,6 +25,6 @@ export function validateAliasExample({
         file,
         typeResolver,
         exampleResolver,
-        workspace,
+        workspace
     });
 }

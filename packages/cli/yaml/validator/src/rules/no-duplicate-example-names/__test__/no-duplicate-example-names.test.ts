@@ -10,7 +10,7 @@ describe("no-duplicate-example-names", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,14 +18,14 @@ describe("no-duplicate-example-names", () => {
                 message: "Duplicate example name: Example2",
                 nodePath: ["types", "MyObject"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Duplicate example name: Example2",
                 nodePath: ["service", "endpoints", "get"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

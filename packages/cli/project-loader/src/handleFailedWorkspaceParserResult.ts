@@ -16,7 +16,7 @@ export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.Failed
 function handleWorkspaceParserFailureForFile({
     relativeFilepath,
     failure,
-    logger,
+    logger
 }: {
     relativeFilepath: RelativeFilePath;
     failure: WorkspaceLoader.Failure;
@@ -34,7 +34,7 @@ function handleWorkspaceParserFailureForFile({
                 logger.error(
                     formatLog({
                         title: `Failed to parse ${relativeFilepath}: ${failure.error.reason}`,
-                        subtitle: failure.error.mark.snippet,
+                        subtitle: failure.error.mark.snippet
                     })
                 );
             } else {
@@ -48,7 +48,7 @@ function handleWorkspaceParserFailureForFile({
                         formatLog({
                             title,
                             subtitle,
-                            breadcrumbs: [relativeFilepath, ...issue.path],
+                            breadcrumbs: [relativeFilepath, ...issue.path]
                         })
                     );
                 }
@@ -84,20 +84,20 @@ function parseIssue(issue: ZodIssue): ParsedIssue[] {
                     title: "Incorrect type",
                     subtitle: `Expected ${chalk.underline(issue.expected)} but received ${chalk.underline(
                         issue.received
-                    )}`,
-                },
+                    )}`
+                }
             ];
         case ZodIssueCode.unrecognized_keys:
             return issue.keys.map((key) => ({
                 title: "Unexpected key",
-                subtitle: `Encountered unexpected key ${chalk.underline(key)}`,
+                subtitle: `Encountered unexpected key ${chalk.underline(key)}`
             }));
         case ZodIssueCode.invalid_enum_value:
             return [
                 {
                     title: "Unrecognized value",
-                    subtitle: `Allowed values: ${issue.options.map((option) => chalk.underline(option)).join(", ")}`,
-                },
+                    subtitle: `Allowed values: ${issue.options.map((option) => chalk.underline(option)).join(", ")}`
+                }
             ];
         case ZodIssueCode.invalid_union:
         case ZodIssueCode.invalid_arguments:

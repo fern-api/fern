@@ -8,7 +8,7 @@ import { formatDefinitionFile } from "./formatDefinitionFile";
 export async function formatFernWorkspace({
     workspace,
     context,
-    shouldFix,
+    shouldFix
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
@@ -16,7 +16,7 @@ export async function formatFernWorkspace({
 }): Promise<void> {
     for (const [relativeFilepath, file] of entries(workspace.definition.namedDefinitionFiles)) {
         const formatted = formatDefinitionFile({
-            fileContents: file.rawContents,
+            fileContents: file.rawContents
         });
         if (formatted !== file.rawContents) {
             if (shouldFix) {

@@ -6,7 +6,7 @@ export const FernContainerRegex = {
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
     OPTIONAL: /^optional<\s*(.*)\s*>$/,
-    LITERAL: /^literal<\s*(?:"(.*)"|(true|false))\s*>$/,
+    LITERAL: /^literal<\s*(?:"(.*)"|(true|false))\s*>$/
 };
 
 export interface RawTypeReferenceVisitor<R> {
@@ -48,7 +48,7 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
     if (mapMatch?.[1] != null && mapMatch[2] != null) {
         return visitor.map({
             keyType: mapMatch[1],
-            valueType: mapMatch[2],
+            valueType: mapMatch[2]
         });
     }
 

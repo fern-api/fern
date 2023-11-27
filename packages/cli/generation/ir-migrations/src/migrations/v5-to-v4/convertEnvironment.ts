@@ -8,6 +8,6 @@ export function convertEnvironment(
         docs: environment.docs,
         id: environment.id,
         url: environment.url,
-        name: convertNameToV2(environment.name),
+        name: convertNameToV2(environment.name)
     };
 }

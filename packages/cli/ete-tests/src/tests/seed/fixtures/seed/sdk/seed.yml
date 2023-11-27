@@ -1,12 +1,16 @@
-irVersion: v20
-docker: fernapi/fern-python-sdk:0.4.0-rc0
+irVersion: v30
+docker: fernapi/fern-python-sdk:0.6.6
 language: python
 generatorType: SDK
-fixtures: 
-  exhaustive: 
+fixtures:
+  exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         client_class_name: Seed
       outputFolder: custom-client-class
-  
+scripts:
+  - docker: sunpeek/poetry:py3.11-slim
+    commands:
+      - poetry install
+      - poetry run mypy .

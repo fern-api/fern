@@ -4,7 +4,7 @@ import yaml from "js-yaml";
 import { LegacyDocs, LegacyDocsSerializers } from ".";
 
 export async function loadRawDocsConfiguration({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<LegacyDocs.DocsConfiguration | undefined> {
@@ -22,7 +22,7 @@ const DOCS_FOLDER = "docs";
 const DOCS_YML = "docs.yml";
 
 export function getAbsolutePathToDocsYaml({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): AbsoluteFilePath {
@@ -30,7 +30,7 @@ export function getAbsolutePathToDocsYaml({
 }
 
 export function getAbsolutePathToDocsFolder({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): AbsoluteFilePath {

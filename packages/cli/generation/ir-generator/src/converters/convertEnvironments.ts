@@ -5,13 +5,13 @@ import {
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments,
     SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments,
+    SingleBaseUrlEnvironments
 } from "@fern-fern/ir-sdk/api";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 
 export function convertEnvironments({
     rawApiFileSchema: { "default-environment": defaultEnvironment, environments },
-    casingsGenerator,
+    casingsGenerator
 }: {
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
     casingsGenerator: CasingsGenerator;
@@ -34,16 +34,16 @@ export function convertEnvironments({
                     convertMultipleBaseUrlEnvironments({
                         baseUrls: Object.keys(firstMultipleBaseUrlsEnvironment.urls),
                         environments,
-                        casingsGenerator,
+                        casingsGenerator
                     })
-                ),
-        }),
+                )
+        })
     };
 }
 
 function convertSingleBaseUrlEnvironments({
     environments,
-    casingsGenerator,
+    casingsGenerator
 }: {
     environments: Record<string, RawSchemas.EnvironmentSchema>;
     casingsGenerator: CasingsGenerator;
@@ -59,20 +59,20 @@ function convertSingleBaseUrlEnvironments({
                         url:
                             typeof singleBaseUrlEnvironment === "string"
                                 ? singleBaseUrlEnvironment
-                                : singleBaseUrlEnvironment.url,
+                                : singleBaseUrlEnvironment.url
                     }),
                     multipleBaseUrls: () => {
                         throw new Error(`Environment ${environmentName} has multiple base URLs`);
-                    },
+                    }
                 })
-        ),
+        )
     };
 }
 
 function convertMultipleBaseUrlEnvironments({
     baseUrls,
     environments,
-    casingsGenerator,
+    casingsGenerator
 }: {
     baseUrls: string[];
     environments: Record<string, RawSchemas.EnvironmentSchema>;
@@ -81,7 +81,7 @@ function convertMultipleBaseUrlEnvironments({
     return {
         baseUrls: baseUrls.map((baseUrl) => ({
             id: baseUrl,
-            name: casingsGenerator.generateName(baseUrl),
+            name: casingsGenerator.generateName(baseUrl)
         })),
         environments: Object.entries(environments).map(
             ([environmentName, rawEnvironment]): MultipleBaseUrlsEnvironment =>
@@ -90,12 +90,12 @@ function convertMultipleBaseUrlEnvironments({
                         docs: multipleBaseUrlsEnvironment.docs,
                         id: environmentName,
                         name: casingsGenerator.generateName(environmentName),
-                        urls: multipleBaseUrlsEnvironment.urls,
+                        urls: multipleBaseUrlsEnvironment.urls
                     }),
                     singleBaseUrl: () => {
                         throw new Error(`Environment ${environmentName} does not have multiple base URLs`);
-                    },
+                    }
                 })
-        ),
+        )
     };
 }

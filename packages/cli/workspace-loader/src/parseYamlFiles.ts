@@ -25,14 +25,14 @@ export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser
         try {
             parsedFiles[file.filepath] = {
                 contents: yaml.load(file.fileContents, {
-                    schema: yaml.CORE_SCHEMA,
+                    schema: yaml.CORE_SCHEMA
                 }),
-                rawContents: file.fileContents,
+                rawContents: file.fileContents
             };
         } catch (error) {
             failures[file.filepath] = {
                 type: WorkspaceLoaderFailureType.FILE_PARSE,
-                error,
+                error
             };
         }
     }
@@ -41,12 +41,12 @@ export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser
     if (Object.keys(failures).length > 0) {
         return {
             didSucceed: false,
-            failures,
+            failures
         };
     } else {
         return {
             didSucceed: true,
-            files: parsedFiles,
+            files: parsedFiles
         };
     }
 }

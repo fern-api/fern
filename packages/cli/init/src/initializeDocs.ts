@@ -9,7 +9,7 @@ import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganiz
 export async function initializeDocs({
     organization,
     taskContext,
-    versionOfCli,
+    versionOfCli
 }: {
     organization: string | undefined;
     taskContext: TaskContext;
@@ -18,7 +18,7 @@ export async function initializeDocs({
     const createDirectoryResponse = await createFernDirectoryAndWorkspace({
         organization,
         versionOfCli,
-        taskContext,
+        taskContext
     });
 
     await writeFile(
@@ -31,14 +31,14 @@ function getDocsConfig(organization: string): RawDocs.DocsConfiguration {
     return {
         instances: [
             {
-                url: `https://${organization}.${process.env.DOCS_DOMAIN_SUFFIX}`,
-            },
+                url: `https://${organization}.${process.env.DOCS_DOMAIN_SUFFIX}`
+            }
         ],
         title: `${organization} | Documentation`,
         navigation: [{ api: "API Reference" }],
         colors: {
             accentPrimary: "#ffffff",
-            background: "#000000",
-        },
+            background: "#000000"
+        }
     };
 }

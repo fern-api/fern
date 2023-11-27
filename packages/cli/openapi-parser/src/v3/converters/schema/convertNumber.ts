@@ -5,7 +5,7 @@ export function convertNumber({
     format,
     description,
     wrapAsNullable,
-    example,
+    example
 }: {
     format: string | undefined;
     description: string | undefined;
@@ -15,49 +15,49 @@ export function convertNumber({
     if (format == null || format === "double") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.double({
-                example,
+                example
             }),
             wrapAsNullable,
-            description,
+            description
         });
     } else if (format === "float") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.float({
-                example,
+                example
             }),
             wrapAsNullable,
-            description,
+            description
         });
     } else if (format === "int32") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.int({
-                example,
+                example
             }),
             wrapAsNullable,
-            description,
+            description
         });
     } else if (format === "int64") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.int64({
-                example,
+                example
             }),
             wrapAsNullable,
-            description,
+            description
         });
     } else if (format === "time-delta") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValueWithExample.float({
-                example,
+                example
             }),
             wrapAsNullable,
-            description,
+            description
         });
     }
     return wrapPrimitive({
         primitive: PrimitiveSchemaValueWithExample.float({
-            example,
+            example
         }),
         wrapAsNullable,
-        description,
+        description
     });
 }

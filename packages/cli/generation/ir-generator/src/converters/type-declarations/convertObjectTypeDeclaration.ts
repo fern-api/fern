@@ -6,14 +6,14 @@ import { convertDeclaration } from "../convertDeclaration";
 
 export function convertObjectTypeDeclaration({
     object,
-    file,
+    file
 }: {
     object: RawSchemas.ObjectSchema;
     file: FernFileContext;
 }): Type {
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
-        properties: getObjectPropertiesFromRawObjectSchema(object, file),
+        properties: getObjectPropertiesFromRawObjectSchema(object, file)
     });
 }
 
@@ -28,9 +28,9 @@ export function getObjectPropertiesFromRawObjectSchema(
         ...convertDeclaration(propertyDefinition),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
-        valueType: file.parseTypeReference(propertyDefinition),
+        valueType: file.parseTypeReference(propertyDefinition)
     }));
 }
 
@@ -46,7 +46,7 @@ export function getExtensionsAsList(extensions: string | string[] | undefined): 
 
 export function getPropertyName({
     propertyKey,
-    property,
+    property
 }: {
     propertyKey: string;
     property: RawSchemas.ObjectPropertySchema;
@@ -54,12 +54,12 @@ export function getPropertyName({
     if (typeof property !== "string" && property.name != null) {
         return {
             name: property.name,
-            wasExplicitlySet: true,
+            wasExplicitlySet: true
         };
     }
 
     return {
         name: propertyKey,
-        wasExplicitlySet: false,
+        wasExplicitlySet: false
     };
 }

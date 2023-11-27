@@ -18,7 +18,7 @@ export async function loggingExeca(
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
-            [secret]: "<redacted>",
+            [secret]: "<redacted>"
         }),
         substitutions
     );

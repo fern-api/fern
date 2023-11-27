@@ -14,7 +14,7 @@ export async function runDocker({
     imageName,
     args,
     binds,
-    removeAfterCompletion = false,
+    removeAfterCompletion = false
 }: runDocker.Args): Promise<void> {
     const docker = new Docker();
     const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion });
@@ -37,7 +37,7 @@ async function tryRunDocker({
     imageName,
     args,
     binds,
-    removeAfterCompletion,
+    removeAfterCompletion
 }: {
     docker: Docker;
     imageName: string;
@@ -51,11 +51,11 @@ async function tryRunDocker({
         new Writable({
             write(_chunk, _encding, callback) {
                 setImmediate(callback);
-            },
+            }
         }),
         {
             Binds: binds,
-            User: "root",
+            User: "root"
         }
     );
 

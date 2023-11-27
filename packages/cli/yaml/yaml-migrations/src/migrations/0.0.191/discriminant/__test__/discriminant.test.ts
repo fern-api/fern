@@ -15,7 +15,7 @@ describe("discriminant", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newBlogYaml = (

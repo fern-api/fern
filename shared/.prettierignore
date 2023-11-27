@@ -1,12 +1,11 @@
-lib
-build
-dist
-.yarn
-.husky
-generated
-bundle.c?js
-.pnp*
-**/fixtures/**
-**/docs/**
-**/fern/**
-!**/*.ts
+# Ignore everything recursively
+*
+
+# But not the .ts files
+!*.ts
+
+# Ignore .d.ts files
+*.d.ts
+
+# Check subdirectories too
+!*/

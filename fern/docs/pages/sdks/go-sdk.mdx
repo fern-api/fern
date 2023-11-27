@@ -1,0 +1,38 @@
+[Source code](https://github.com/fern-api/fern-go)
+
+**Latest version**: `0.9.0`
+
+The Go SDK generator outputs a fully functional Go SDK.
+
+## Local
+
+Dump the generated SDK to the local file system. Available on the open source plan.
+
+<CodeBlock title="generators.yml">
+```yaml
+generators:
+  groups:
+    local:
+      - name: fernapi/fern-go-sdk
+        version: 0.9.0
+        output:
+          location: local-file-system
+          path: ../../generated/sdk/go
+```
+</CodeBlock>
+
+## Publish to GitHub 
+
+Publish the generated SDK to GitHub.
+
+<CodeBlock title="generators.yml">
+```yaml
+generators:
+  groups:
+    publish:
+      - name: fernapi/fern-go-sdk
+        version: 0.9.0
+        github:
+          repository: fern-imdb/imdb-go # replace imdb with your organization
+```
+</CodeBlock>

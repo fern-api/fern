@@ -6,7 +6,7 @@ export function logErrorMessage({
     message,
     error,
     logger,
-    logLevel = LogLevel.Error,
+    logLevel = LogLevel.Error
 }: {
     message: string | undefined;
     error: unknown;

@@ -10,7 +10,7 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
-    context,
+    context
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
@@ -22,13 +22,13 @@ export async function loadRawGeneratorsConfiguration({
         schema: GeneratorsConfigurationSchema,
         value: contentsParsed,
         context,
-        filepathBeingParsed: filepath,
+        filepathBeingParsed: filepath
     });
 }
 
 export async function loadGeneratorsConfiguration({
     absolutePathToWorkspace,
-    context,
+    context
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
@@ -36,12 +36,12 @@ export async function loadGeneratorsConfiguration({
     const rawGeneratorsConfiguration = await loadRawGeneratorsConfiguration({ absolutePathToWorkspace, context });
     return convertGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration: getPathToGeneratorsConfiguration({ absolutePathToWorkspace }),
-        rawGeneratorsConfiguration,
+        rawGeneratorsConfiguration
     });
 }
 
 function getPathToGeneratorsConfiguration({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): AbsoluteFilePath {

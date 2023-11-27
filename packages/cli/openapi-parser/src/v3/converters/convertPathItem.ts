@@ -17,7 +17,7 @@ export function convertPathItem(
         document,
         pathItem: pathItemObject,
         path,
-        pathItemParameters: pathItemObject.parameters ?? [],
+        pathItemParameters: pathItemObject.parameters ?? []
     };
 
     for (const operation of operations) {
@@ -25,9 +25,9 @@ export function convertPathItem(
             context,
             pathItemContext: {
                 ...basePathItemContext,
-                method: operation.method,
+                method: operation.method
             },
-            operation: operation.operation,
+            operation: operation.operation
         });
         if (convertedOperation != null) {
             result.push(convertedOperation);
@@ -44,35 +44,35 @@ function getOperationObjectsFromPathItem(
     if (pathItemObject.get != null) {
         operations.push({
             method: HttpMethod.Get,
-            operation: pathItemObject.get,
+            operation: pathItemObject.get
         });
     }
 
     if (pathItemObject.post != null) {
         operations.push({
             method: HttpMethod.Post,
-            operation: pathItemObject.post,
+            operation: pathItemObject.post
         });
     }
 
     if (pathItemObject.put != null) {
         operations.push({
             method: HttpMethod.Put,
-            operation: pathItemObject.put,
+            operation: pathItemObject.put
         });
     }
 
     if (pathItemObject.delete != null) {
         operations.push({
             method: HttpMethod.Delete,
-            operation: pathItemObject.delete,
+            operation: pathItemObject.delete
         });
     }
 
     if (pathItemObject.patch != null) {
         operations.push({
             method: HttpMethod.Patch,
-            operation: pathItemObject.patch,
+            operation: pathItemObject.patch
         });
     }
 

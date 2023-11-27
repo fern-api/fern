@@ -17,7 +17,7 @@ export async function generateWorkspace({
     shouldLogS3Url,
     token,
     useLocalDocker,
-    keepDocker,
+    keepDocker
 }: {
     workspace: FernWorkspace;
     organization: string;
@@ -56,7 +56,7 @@ export async function generateWorkspace({
             workspace,
             generatorGroup: group,
             keepDocker,
-            context,
+            context
         });
     } else {
         await runRemoteGenerationForAPIWorkspace({
@@ -66,7 +66,7 @@ export async function generateWorkspace({
             generatorGroup: group,
             version,
             shouldLogS3Url,
-            token,
+            token
         });
     }
 }

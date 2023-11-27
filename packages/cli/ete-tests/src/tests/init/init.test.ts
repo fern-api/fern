@@ -9,7 +9,7 @@ describe("fern init", () => {
     it("no existing fern directory", async () => {
         const pathOfDirectory = await init();
         await runFernCli(["check"], {
-            cwd: pathOfDirectory,
+            cwd: pathOfDirectory
         });
         expect(
             await getDirectoryContents(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
@@ -22,7 +22,7 @@ describe("fern init", () => {
 
         // add new api
         await init({
-            directory: pathOfDirectory,
+            directory: pathOfDirectory
         });
         expect(
             await doesPathExist(
@@ -55,7 +55,7 @@ describe("fern init", () => {
         const pathOfDirectory = await init();
 
         await runFernCli(["init", "--docs"], {
-            cwd: pathOfDirectory,
+            cwd: pathOfDirectory
         });
 
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();

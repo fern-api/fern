@@ -6,7 +6,7 @@ import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 export async function visitAllReferencesInExample({
     example,
     visitor,
-    nodePath,
+    nodePath
 }: {
     example: unknown;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -21,7 +21,7 @@ export async function visitAllReferencesInExample({
             await visitAllReferencesInExample({
                 example: exampleValue,
                 visitor,
-                nodePath,
+                nodePath
             });
         }
     } else if (Array.isArray(example)) {
@@ -29,7 +29,7 @@ export async function visitAllReferencesInExample({
             await visitAllReferencesInExample({
                 example: exampleItem,
                 visitor,
-                nodePath,
+                nodePath
             });
         }
     }

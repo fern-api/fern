@@ -17,7 +17,7 @@ export async function generateIrForWorkspaces({
     cliContext,
     generationLanguage,
     audiences,
-    version,
+    version
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -39,7 +39,7 @@ export async function generateIrForWorkspaces({
                     context,
                     generationLanguage,
                     audiences,
-                    version,
+                    version
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);
@@ -58,7 +58,7 @@ async function getIntermediateRepresentation({
     context,
     generationLanguage,
     audiences,
-    version,
+    version
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
@@ -70,18 +70,18 @@ async function getIntermediateRepresentation({
         workspace,
         context,
         generationLanguage,
-        audiences,
+        audiences
     });
 
     if (version == null) {
         return IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "strip"
         });
     }
 
     return migrateIntermediateRepresentationThroughVersion({
         intermediateRepresentation,
         version,
-        context,
+        context
     });
 }

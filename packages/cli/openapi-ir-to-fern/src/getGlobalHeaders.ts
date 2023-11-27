@@ -29,7 +29,7 @@ export function getGlobalHeaders(
                 const convertedHeader = convertHeader({
                     header,
                     isPackageYml: false,
-                    schemas: openApiFile.schemas,
+                    schemas: openApiFile.schemas
                 });
                 globalHeaders[header.name] = new GlobalHeader(convertedHeader.value);
             }

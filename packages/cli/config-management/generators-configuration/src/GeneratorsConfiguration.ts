@@ -32,7 +32,7 @@ export const GenerationLanguage = {
     TYPESCRIPT: "typescript",
     JAVA: "java",
     PYTHON: "python",
-    GO: "go",
+    GO: "go"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

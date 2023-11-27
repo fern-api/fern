@@ -5,7 +5,7 @@ import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorks
 
 export async function previewDocsWorkspace({
     project,
-    cliContext,
+    cliContext
 }: {
     project: Project;
     cliContext: CliContext;
@@ -17,7 +17,7 @@ export async function previewDocsWorkspace({
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern preview --docs",
+        command: "fern preview --docs"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
@@ -26,6 +26,7 @@ export async function previewDocsWorkspace({
         await runPreviewServer({
             docsWorkspace,
             context,
+            apiWorkspaces: project.apiWorkspaces
         });
     });
 }

@@ -10,21 +10,21 @@ describe("no-duplicate-declarations", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
         expect(violations).toEqual([
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["service", "endpoints", "get"],
-                message: "Multiple errors have status-code 401: D, D",
+                message: "Multiple errors have status-code 401: D, D"
             },
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["service", "endpoints", "update"],
-                message: "Multiple errors have status-code 403: E, F",
-            },
+                message: "Multiple errors have status-code 403: E, F"
+            }
         ]);
     });
 });

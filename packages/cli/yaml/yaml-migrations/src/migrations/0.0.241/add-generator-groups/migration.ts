@@ -19,7 +19,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateGeneratorsYml(filepath: AbsoluteFilePath): Promise<void> {
@@ -31,18 +31,18 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath): Promise<void> {
         (newGeneratorsConfiguration.groups ??= {}).server = {
             generators: oldGeneratorsConfiguration.draft.map((draftGeneratorInvocation) =>
                 convertDraftGeneratorInvocation(draftGeneratorInvocation)
-            ),
+            )
         };
         newGeneratorsConfiguration = {
             "default-group": "server",
-            ...newGeneratorsConfiguration,
+            ...newGeneratorsConfiguration
         };
     }
     if (oldGeneratorsConfiguration.release != null && oldGeneratorsConfiguration.release.length > 0) {
         (newGeneratorsConfiguration.groups ??= {}).external = {
             generators: oldGeneratorsConfiguration.release.map((releaseGeneratorInvocation) =>
                 convertReleaseGeneratorInvocation(releaseGeneratorInvocation)
-            ),
+            )
         };
     }
     await writeFile(filepath, yaml.dump(newGeneratorsConfiguration));
@@ -53,12 +53,12 @@ function convertDraftGeneratorInvocation(
 ): NewSchemas.GeneratorInvocationSchema {
     const newSchema: NewSchemas.GeneratorInvocationSchema = {
         name: draftGeneratorInvocation.name,
-        version: draftGeneratorInvocation.version,
+        version: draftGeneratorInvocation.version
     };
     if (draftGeneratorInvocation["output-path"] != null) {
         newSchema.output = {
             location: "local-file-system",
-            path: draftGeneratorInvocation["output-path"],
+            path: draftGeneratorInvocation["output-path"]
         };
     }
     if (draftGeneratorInvocation.config != null) {
@@ -72,14 +72,14 @@ function convertReleaseGeneratorInvocation(
 ): NewSchemas.GeneratorInvocationSchema {
     const newSchema: NewSchemas.GeneratorInvocationSchema = {
         name: releaseGeneratorInvocation.name,
-        version: releaseGeneratorInvocation.version,
+        version: releaseGeneratorInvocation.version
     };
     if (releaseGeneratorInvocation.publishing != null) {
         newSchema.output = convertPublishingToOutput(releaseGeneratorInvocation.publishing);
     }
     if (releaseGeneratorInvocation.github != null) {
         newSchema.github = {
-            repository: releaseGeneratorInvocation.github.repository,
+            repository: releaseGeneratorInvocation.github.repository
         };
     }
     if (releaseGeneratorInvocation.config != null) {
@@ -92,19 +92,19 @@ function convertPublishingToOutput(publishing: OldSchemas.GeneratorPublishingSch
     if (isNpmPublishing(publishing)) {
         return {
             location: "npm",
-            ...publishing.npm,
+            ...publishing.npm
         };
     }
     if (isMavenPublishing(publishing)) {
         return {
             location: "maven",
-            ...publishing.maven,
+            ...publishing.maven
         };
     }
     if (isPostmanPublishing(publishing)) {
         return {
             location: "postman",
-            ...publishing.postman,
+            ...publishing.postman
         };
     }
     assertNever(publishing);

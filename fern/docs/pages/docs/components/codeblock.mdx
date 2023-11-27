@@ -1,0 +1,58 @@
+The `CodeBlock` is used when you want to display a code snippet.
+
+CodeBlock Props:
+
+- *title*: string
+- *language*: a string representing the language of the code snippet
+
+## Single CodeBlock
+
+This would look like:
+
+```mdx
+<CodeBlock title = "Node.js SDK">
+\```bash
+$ npm install --save @fern-api/node-sdk
+\```
+</CodeBlock>
+```
+
+<CodeBlock title = "Node.js SDK">
+```bash
+$ npm install --save @fern-api/node-sdk
+```
+</CodeBlock>
+
+## Multiple CodeBlocks
+
+If you'd like to have tabs to show multiple CodeBlocks at a time, you can use the `CodeBlocks` component.
+
+This would look like:
+
+```mdx
+<CodeBlocks>
+    <CodeBlock title = "Install the Fern CLI">
+    \```bash
+    $ npm install fern-api
+    \```
+    </CodeBlock>
+    <CodeBlock title = "Global install">
+    \```bash
+    $ npm install -global fern-api
+    \```
+    </CodeBlock>
+</CodeBlocks>
+```
+
+<CodeBlocks>
+    <CodeBlock title = "Install the Fern CLI">
+    ```bash
+    $ npm install fern-api
+    ```
+    </CodeBlock>
+    <CodeBlock title = "Global install">
+    ```bash
+    $ npm install -global fern-api
+    ```
+    </CodeBlock>
+</CodeBlocks>

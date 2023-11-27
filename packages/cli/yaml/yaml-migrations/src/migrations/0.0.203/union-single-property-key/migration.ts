@@ -17,7 +17,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to add 'key' property to union in ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Promise<void> {
@@ -46,7 +46,7 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
                 if (YAML.isScalar(singleUnionType.value)) {
                     singleUnionType.value = {
                         type: singleUnionType.value,
-                        key: singleUnionType.key,
+                        key: singleUnionType.key
                     };
                 } else if (YAML.isMap(singleUnionType.value)) {
                     singleUnionType.value.add(new YAML.Pair("key", singleUnionType.key));

@@ -82,6 +82,666 @@ exports[`generate IR 1`] = `
   "errorDiscriminationStrategy": {
     "type": "statusCode",
   },
+  "errors": {},
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_svc",
+    ],
+    "types": [],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {
+      "service_svc": [
+        "type_svc:myEnum",
+      ],
+    },
+  },
+  "services": {
+    "service_svc": {
+      "availability": null,
+      "basePath": {
+        "head": "/",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "/test",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_svc.test",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "test",
+              "unsafeName": "test",
+            },
+            "originalName": "test",
+            "pascalCase": {
+              "safeName": "Test",
+              "unsafeName": "Test",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TEST",
+              "unsafeName": "TEST",
+            },
+            "snakeCase": {
+              "safeName": "test",
+              "unsafeName": "test",
+            },
+          },
+          "path": {
+            "head": "/test",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "allowMultiple": true,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "someEnum",
+                    "unsafeName": "someEnum",
+                  },
+                  "originalName": "some-enum",
+                  "pascalCase": {
+                    "safeName": "SomeEnum",
+                    "unsafeName": "SomeEnum",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SOME_ENUM",
+                    "unsafeName": "SOME_ENUM",
+                  },
+                  "snakeCase": {
+                    "safeName": "some_enum",
+                    "unsafeName": "some_enum",
+                  },
+                },
+                "wireValue": "some-enum",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "optional",
+                  "optional": {
+                    "_type": "named",
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "svc",
+                            "unsafeName": "svc",
+                          },
+                          "originalName": "svc",
+                          "pascalCase": {
+                            "safeName": "Svc",
+                            "unsafeName": "Svc",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "SVC",
+                            "unsafeName": "SVC",
+                          },
+                          "snakeCase": {
+                            "safeName": "svc",
+                            "unsafeName": "svc",
+                          },
+                        },
+                      ],
+                      "file": {
+                        "camelCase": {
+                          "safeName": "svc",
+                          "unsafeName": "svc",
+                        },
+                        "originalName": "svc",
+                        "pascalCase": {
+                          "safeName": "Svc",
+                          "unsafeName": "Svc",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SVC",
+                          "unsafeName": "SVC",
+                        },
+                        "snakeCase": {
+                          "safeName": "svc",
+                          "unsafeName": "svc",
+                        },
+                      },
+                      "packagePath": [],
+                    },
+                    "name": {
+                      "camelCase": {
+                        "safeName": "myEnum",
+                        "unsafeName": "myEnum",
+                      },
+                      "originalName": "myEnum",
+                      "pascalCase": {
+                        "safeName": "MyEnum",
+                        "unsafeName": "MyEnum",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "MY_ENUM",
+                        "unsafeName": "MY_ENUM",
+                      },
+                      "snakeCase": {
+                        "safeName": "my_enum",
+                        "unsafeName": "my_enum",
+                      },
+                    },
+                    "typeId": "type_svc:myEnum",
+                  },
+                },
+              },
+            },
+          ],
+          "requestBody": null,
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "test",
+                  "unsafeName": "test",
+                },
+                "originalName": "TEST",
+                "pascalCase": {
+                  "safeName": "Test",
+                  "unsafeName": "Test",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TEST",
+                  "unsafeName": "TEST",
+                },
+                "snakeCase": {
+                  "safeName": "test",
+                  "unsafeName": "test",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "svc",
+                "unsafeName": "svc",
+              },
+              "originalName": "svc",
+              "pascalCase": {
+                "safeName": "Svc",
+                "unsafeName": "Svc",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SVC",
+                "unsafeName": "SVC",
+              },
+              "snakeCase": {
+                "safeName": "svc",
+                "unsafeName": "svc",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "svc",
+              "unsafeName": "svc",
+            },
+            "originalName": "svc",
+            "pascalCase": {
+              "safeName": "Svc",
+              "unsafeName": "Svc",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SVC",
+              "unsafeName": "SVC",
+            },
+            "snakeCase": {
+              "safeName": "svc",
+              "unsafeName": "svc",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_svc": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "svc",
+              "unsafeName": "svc",
+            },
+            "originalName": "svc",
+            "pascalCase": {
+              "safeName": "Svc",
+              "unsafeName": "Svc",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SVC",
+              "unsafeName": "SVC",
+            },
+            "snakeCase": {
+              "safeName": "svc",
+              "unsafeName": "svc",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "svc",
+            "unsafeName": "svc",
+          },
+          "originalName": "svc",
+          "pascalCase": {
+            "safeName": "Svc",
+            "unsafeName": "Svc",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SVC",
+            "unsafeName": "SVC",
+          },
+          "snakeCase": {
+            "safeName": "svc",
+            "unsafeName": "svc",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "svc",
+          "unsafeName": "svc",
+        },
+        "originalName": "svc",
+        "pascalCase": {
+          "safeName": "Svc",
+          "unsafeName": "Svc",
+        },
+        "screamingSnakeCase": {
+          "safeName": "SVC",
+          "unsafeName": "SVC",
+        },
+        "snakeCase": {
+          "safeName": "svc",
+          "unsafeName": "svc",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_svc",
+      "subpackages": [],
+      "types": [
+        "type_svc:myEnum",
+      ],
+      "webhooks": null,
+    },
+  },
+  "types": {
+    "type_svc:myEnum": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "svc",
+                "unsafeName": "svc",
+              },
+              "originalName": "svc",
+              "pascalCase": {
+                "safeName": "Svc",
+                "unsafeName": "Svc",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SVC",
+                "unsafeName": "SVC",
+              },
+              "snakeCase": {
+                "safeName": "svc",
+                "unsafeName": "svc",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "svc",
+              "unsafeName": "svc",
+            },
+            "originalName": "svc",
+            "pascalCase": {
+              "safeName": "Svc",
+              "unsafeName": "Svc",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SVC",
+              "unsafeName": "SVC",
+            },
+            "snakeCase": {
+              "safeName": "svc",
+              "unsafeName": "svc",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "myEnum",
+            "unsafeName": "myEnum",
+          },
+          "originalName": "myEnum",
+          "pascalCase": {
+            "safeName": "MyEnum",
+            "unsafeName": "MyEnum",
+          },
+          "screamingSnakeCase": {
+            "safeName": "MY_ENUM",
+            "unsafeName": "MY_ENUM",
+          },
+          "snakeCase": {
+            "safeName": "my_enum",
+            "unsafeName": "my_enum",
+          },
+        },
+        "typeId": "type_svc:myEnum",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "enum",
+        "values": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+                "originalName": "one",
+                "pascalCase": {
+                  "safeName": "One",
+                  "unsafeName": "One",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ONE",
+                  "unsafeName": "ONE",
+                },
+                "snakeCase": {
+                  "safeName": "one",
+                  "unsafeName": "one",
+                },
+              },
+              "wireValue": "one",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "two",
+                  "unsafeName": "two",
+                },
+                "originalName": "two",
+                "pascalCase": {
+                  "safeName": "Two",
+                  "unsafeName": "Two",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TWO",
+                  "unsafeName": "TWO",
+                },
+                "snakeCase": {
+                  "safeName": "two",
+                  "unsafeName": "two",
+                },
+              },
+              "wireValue": "two",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "three",
+                  "unsafeName": "three",
+                },
+                "originalName": "three",
+                "pascalCase": {
+                  "safeName": "Three",
+                  "unsafeName": "Three",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "THREE",
+                  "unsafeName": "THREE",
+                },
+                "snakeCase": {
+                  "safeName": "three",
+                  "unsafeName": "three",
+                },
+              },
+              "wireValue": "three",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "four",
+                  "unsafeName": "four",
+                },
+                "originalName": "four",
+                "pascalCase": {
+                  "safeName": "Four",
+                  "unsafeName": "Four",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOUR",
+                  "unsafeName": "FOUR",
+                },
+                "snakeCase": {
+                  "safeName": "four",
+                  "unsafeName": "four",
+                },
+              },
+              "wireValue": "four",
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+}
+`;
+
+exports[`generate IR 2`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "api",
+      "unsafeName": "api",
+    },
+    "originalName": "api",
+    "pascalCase": {
+      "safeName": "Api",
+      "unsafeName": "Api",
+    },
+    "screamingSnakeCase": {
+      "safeName": "API",
+      "unsafeName": "API",
+    },
+    "snakeCase": {
+      "safeName": "api",
+      "unsafeName": "api",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [
+      {
+        "_type": "bearer",
+        "docs": null,
+        "token": {
+          "camelCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+          "originalName": "token",
+          "pascalCase": {
+            "safeName": "Token",
+            "unsafeName": "Token",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TOKEN",
+            "unsafeName": "TOKEN",
+          },
+          "snakeCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+        },
+        "tokenEnvVar": null,
+      },
+    ],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
   "errors": {
     "error_imdb:MovieDoesNotExistError": {
       "discriminantValue": {
@@ -242,6 +902,7 @@ exports[`generate IR 1`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -304,6 +965,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_imdb.createMovie",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -750,6 +1412,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_imdb.getMovie",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -1535,7 +2198,7 @@ exports[`generate IR 1`] = `
 }
 `;
 
-exports[`generate IR 2`] = `
+exports[`generate IR 3`] = `
 {
   "apiDisplayName": null,
   "apiDocs": null,
@@ -1594,6 +2257,7 @@ exports[`generate IR 2`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -3095,7 +3759,7 @@ exports[`generate IR 2`] = `
 }
 `;
 
-exports[`generate IR 3`] = `
+exports[`generate IR 4`] = `
 {
   "apiDisplayName": null,
   "apiDocs": null,
@@ -3289,6 +3953,7 @@ exports[`generate IR 3`] = `
     },
   },
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -3348,6 +4013,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3412,6 +4078,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_a/b.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3554,6 +4221,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_a/c.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3696,6 +4364,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_folder.foo",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3800,6 +4469,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_folder/service.endpoint",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {
@@ -3953,6 +4623,7 @@ exports[`generate IR 3`] = `
           },
           "headers": [],
           "id": "endpoint_folder/service.unknownRequest",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

@@ -50,7 +50,7 @@ export async function runMigrations({ fromVersion, toVersion, context }: runMigr
         migrations.map(
             (migration): MigrationWithTaskContext => ({
                 migration,
-                context: context.addInteractiveTask({ name: `${version} ${migration.name}` }),
+                context: context.addInteractiveTask({ name: `${version} ${migration.name}` })
             })
         )
     );
@@ -58,7 +58,7 @@ export async function runMigrations({ fromVersion, toVersion, context }: runMigr
     for (const { migration, context: contextForMigration } of migrationsWithTasks) {
         const finishableContext = contextForMigration.start();
         await migration.run({
-            context: finishableContext,
+            context: finishableContext
         });
         finishableContext.finish();
         if (finishableContext.getResult() === TaskResult.Failure) {
@@ -77,7 +77,7 @@ async function askForConfirmation(migrationsToRun: VersionMigrations[]): Promise
             lines.push(
                 addPrefixToString({
                     prefix: "  ◦ ",
-                    content: `${migration.name}\n${chalk.dim(migration.summary)}`,
+                    content: `${migration.name}\n${chalk.dim(migration.summary)}`
                 })
             );
         }
@@ -87,7 +87,7 @@ async function askForConfirmation(migrationsToRun: VersionMigrations[]): Promise
     const { [QUESTION_KEY]: wantsToContinue } = await inquirer.prompt<{ [QUESTION_KEY]: boolean }>({
         name: QUESTION_KEY,
         type: "confirm",
-        message: lines.join("\n"),
+        message: lines.join("\n")
     });
 
     return wantsToContinue;

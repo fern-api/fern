@@ -14,11 +14,12 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     url: z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     auth: z.optional(z.boolean()),
+    idempotent: z.optional(z.boolean()),
     request: z.optional(z.union([z.string(), HttpRequestSchema])),
     response: z.optional(HttpResponseSchema),
     "response-stream": z.optional(z.union([z.string(), HttpResponseStreamSchema])),
     errors: z.optional(ResponseErrorsSchema),
-    examples: z.optional(z.array(ExampleEndpointCallSchema)),
+    examples: z.optional(z.array(ExampleEndpointCallSchema))
 });
 
 export type HttpEndpointSchema = z.infer<typeof HttpEndpointSchema>;

@@ -19,7 +19,7 @@ export function getCandidateDiscriminant(
         if (!init) {
             // when not initialized set candidate discriminants
             candidateDiscriminants = {
-                ...Object.fromEntries(Object.entries(literals).map(([key, val]) => [key, [val]])),
+                ...Object.fromEntries(Object.entries(literals).map(([key, val]) => [key, [val]]))
             };
             init = true;
         } else {
@@ -48,7 +48,7 @@ export function getCandidateDiscriminant(
     } else {
         return {
             discriminant: candidate[0],
-            values: candidate[1],
+            values: candidate[1]
         };
     }
 }

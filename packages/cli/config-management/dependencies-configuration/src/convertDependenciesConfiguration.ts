@@ -5,13 +5,13 @@ import { DependenciesConfiguration, Dependency } from "./DependenciesConfigurati
 import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigurationSchema";
 
 const EMPTY_DEPENDENCIES_CONFIGURATION: DependenciesConfiguration = {
-    dependencies: {},
+    dependencies: {}
 };
 
 export async function convertDependenciesConfiguration({
     absolutePathToWorkspace,
     rawDependenciesConfiguration,
-    context,
+    context
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     rawDependenciesConfiguration: DependenciesConfigurationSchema | undefined;
@@ -29,7 +29,7 @@ export async function convertDependenciesConfiguration({
                 dependencies[coordinate] = {
                     type: "local",
                     absoluteFilepath: pathToApi,
-                    path: versionOrPath,
+                    path: versionOrPath
                 };
             } else {
                 // don't throw so we can log all failures
@@ -45,7 +45,7 @@ export async function convertDependenciesConfiguration({
                     type: "version",
                     organization,
                     apiName,
-                    version: versionOrPath,
+                    version: versionOrPath
                 };
             } else {
                 // don't throw so we can log all failures
@@ -59,7 +59,7 @@ export async function convertDependenciesConfiguration({
     }
 
     return {
-        dependencies,
+        dependencies
     };
 }
 

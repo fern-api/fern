@@ -13,7 +13,7 @@ export interface ConvertedPathParameter {
 export function convertPathParameter({
     pathParameter,
     schemas,
-    isPackageYml,
+    isPackageYml
 }: {
     pathParameter: PathParameter;
     schemas: Record<SchemaId, Schema>;
@@ -22,20 +22,20 @@ export function convertPathParameter({
     const typeReference = convertToTypeReference({
         schema: pathParameter.schema,
         schemas,
-        prefix: isPackageYml ? undefined : ROOT_PREFIX,
+        prefix: isPackageYml ? undefined : ROOT_PREFIX
     });
     const value: RawSchemas.HttpPathParameterSchema =
         pathParameter.variableReference != null
             ? {
                   docs: pathParameter.description ?? undefined,
-                  variable: `$${pathParameter.variableReference}`,
+                  variable: `$${pathParameter.variableReference}`
               }
             : {
                   docs: pathParameter.description ?? undefined,
-                  type: getTypeFromTypeReference(typeReference.typeReference),
+                  type: getTypeFromTypeReference(typeReference.typeReference)
               };
     return {
         value,
-        additionalTypeDeclarations: typeReference.additionalTypeDeclarations,
+        additionalTypeDeclarations: typeReference.additionalTypeDeclarations
     };
 }

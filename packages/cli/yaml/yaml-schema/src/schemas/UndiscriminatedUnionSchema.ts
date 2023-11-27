@@ -7,11 +7,11 @@ export const UndiscriminatedUnionSchema = BaseTypeDeclarationSchema.extend({
         z.union([
             z.string(),
             WithDocsSchema.extend({
-                type: z.string(),
-            }),
+                type: z.string()
+            })
         ])
     ),
-    discriminated: z.literal(false),
+    discriminated: z.literal(false)
 });
 
 export type UndiscriminatedUnionSchema = z.infer<typeof UndiscriminatedUnionSchema>;

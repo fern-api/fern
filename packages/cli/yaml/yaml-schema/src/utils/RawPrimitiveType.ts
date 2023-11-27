@@ -8,5 +8,5 @@ export const RawPrimitiveType = {
     base64: "base64",
     uuid: "uuid",
     date: "date",
-    unknown: "unknown",
+    unknown: "unknown"
 } as const;

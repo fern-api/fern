@@ -67,6 +67,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [
     {
       "docs": null,
@@ -255,6 +256,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.post",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

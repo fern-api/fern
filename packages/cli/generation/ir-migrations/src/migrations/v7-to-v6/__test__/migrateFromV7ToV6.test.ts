@@ -7,17 +7,17 @@ const runMigration = createMigrationTester(V7_TO_V6_MIGRATION);
 describe("migrateFromV7ToV6", () => {
     it("adds name to services", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
         expect(migrated.services).toEqual([
             {
                 availability: {
                     message: undefined,
-                    status: "GENERAL_AVAILABILITY",
+                    status: "GENERAL_AVAILABILITY"
                 },
                 basePath: {
                     head: "/",
-                    parts: [],
+                    parts: []
                 },
                 baseUrl: undefined,
                 docs: undefined,
@@ -28,45 +28,45 @@ describe("migrateFromV7ToV6", () => {
                         {
                             camelCase: {
                                 safeName: "blog",
-                                unsafeName: "blog",
+                                unsafeName: "blog"
                             },
                             originalName: "blog",
                             pascalCase: {
                                 safeName: "Blog",
-                                unsafeName: "Blog",
+                                unsafeName: "Blog"
                             },
                             screamingSnakeCase: {
                                 safeName: "BLOG",
-                                unsafeName: "BLOG",
+                                unsafeName: "BLOG"
                             },
                             snakeCase: {
                                 safeName: "blog",
-                                unsafeName: "blog",
-                            },
-                        },
+                                unsafeName: "blog"
+                            }
+                        }
                     ],
                     name: {
                         camelCase: {
                             safeName: "blogService",
-                            unsafeName: "blogService",
+                            unsafeName: "blogService"
                         },
                         originalName: "BlogService",
                         pascalCase: {
                             safeName: "BlogService",
-                            unsafeName: "BlogService",
+                            unsafeName: "BlogService"
                         },
                         screamingSnakeCase: {
                             safeName: "BLOG_SERVICE",
-                            unsafeName: "BLOG_SERVICE",
+                            unsafeName: "BLOG_SERVICE"
                         },
                         snakeCase: {
                             safeName: "blog_service",
-                            unsafeName: "blog_service",
-                        },
-                    },
+                            unsafeName: "blog_service"
+                        }
+                    }
                 },
-                pathParameters: [],
-            },
+                pathParameters: []
+            }
         ]);
     });
 });

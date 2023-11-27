@@ -61,20 +61,20 @@ export class FernDefinitionFileFormatter {
 
         return {
             header: lines.slice(0, indexOfSeparator),
-            body: lines.slice(indexOfSeparator).filter((line) => line.trim().length > 0),
+            body: lines.slice(indexOfSeparator).filter((line) => line.trim().length > 0)
         };
     }
 
     private prettierFormat(content: string): string {
         return prettier.format(content, {
-            parser: "yaml",
+            parser: "yaml"
         });
     }
 
     private writeNextLine({
         nextLine,
         writer,
-        location: previousLocation,
+        location: previousLocation
     }: {
         nextLine: string;
         writer: FileWriter;
@@ -96,7 +96,7 @@ export class FernDefinitionFileFormatter {
      */
     private getNewCursorLocation({
         previousLocation,
-        line,
+        line
     }: {
         previousLocation: FernFileCursorLocation | undefined;
         line: string;

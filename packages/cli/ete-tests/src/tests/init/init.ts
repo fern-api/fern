@@ -4,7 +4,7 @@ import { runFernCli } from "../../utils/runFernCli";
 
 export async function init({
     directory,
-    openApiArg,
+    openApiArg
 }: { directory?: AbsoluteFilePath; openApiArg?: string } = {}): Promise<AbsoluteFilePath> {
     if (directory == null) {
         const tmpDir = await tmp.dir();
@@ -18,7 +18,7 @@ export async function init({
     }
 
     await runFernCli(cliArgs, {
-        cwd: directory,
+        cwd: directory
     });
     return directory;
 }

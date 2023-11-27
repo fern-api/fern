@@ -21,10 +21,10 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                     {
                         schema: PrimitiveSchemaValue.string({
                             minLength: undefined,
-                            maxLength: undefined,
+                            maxLength: undefined
                         }),
-                        description: schema.description,
-                    },
+                        description: schema.description
+                    }
                 ];
             } else {
                 throw new Error(`Variable ${variableName} has unsupported schema ${JSON.stringify(schema)}`);

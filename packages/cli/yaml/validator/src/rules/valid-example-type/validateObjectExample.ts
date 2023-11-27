@@ -6,7 +6,7 @@ import { keyBy } from "lodash-es";
 import { RuleViolation } from "../../Rule";
 import {
     convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject,
+    getAllPropertiesForObject
 } from "../../utils/getAllPropertiesForObject";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
@@ -19,7 +19,7 @@ export function validateObjectExample({
     typeResolver,
     exampleResolver,
     workspace,
-    example,
+    example
 }: {
     // undefined for inline requests
     typeName: string | undefined;
@@ -43,7 +43,7 @@ export function validateObjectExample({
         typeResolver,
         definitionFile: file.definitionFile,
         workspace,
-        filepathOfDeclaration: file.relativeFilepath,
+        filepathOfDeclaration: file.relativeFilepath
     });
 
     const allPropertiesByWireKey = keyBy(allPropertiesForObject, (property) => property.wireKey);
@@ -58,12 +58,12 @@ export function validateObjectExample({
                     ". " +
                     convertObjectPropertyWithPathToString({
                         property: requiredProperty,
-                        prefixBreadcrumbs: [typeNameForBreadcrumb],
+                        prefixBreadcrumbs: [typeNameForBreadcrumb]
                     });
             }
             violations.push({
                 severity: "error",
-                message,
+                message
             });
         }
     }
@@ -74,7 +74,7 @@ export function validateObjectExample({
         if (propertyWithPath == null) {
             violations.push({
                 severity: "error",
-                message: `Unexpected property "${exampleKey}"`,
+                message: `Unexpected property "${exampleKey}"`
             });
         } else {
             const definitionFile = getDefinitionFile(workspace, propertyWithPath.filepathOfDeclaration);
@@ -89,11 +89,11 @@ export function validateObjectExample({
                         relativeFilepath: propertyWithPath.filepathOfDeclaration,
                         definitionFile,
                         casingsGenerator: file.casingsGenerator,
-                        rootApiFile: workspace.definition.rootApiFile.contents,
+                        rootApiFile: workspace.definition.rootApiFile.contents
                     }),
                     workspace,
                     typeResolver,
-                    exampleResolver,
+                    exampleResolver
                 })
             );
         }

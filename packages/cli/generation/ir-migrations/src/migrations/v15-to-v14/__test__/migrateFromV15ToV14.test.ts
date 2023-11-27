@@ -7,7 +7,7 @@ const runMigration = createMigrationTester(V15_TO_V14_MIGRATION);
 describe("migrateFromV15ToV14", () => {
     it("migrates header", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
         const typeDeclaration = Object.values(migrated.types)[0];

@@ -24,7 +24,7 @@ export interface RawAsyncAPIFile {
 export async function parse({
     absolutePathToAsyncAPI,
     absolutePathToOpenAPI,
-    taskContext,
+    taskContext
 }: {
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
     absolutePathToOpenAPI: AbsoluteFilePath;
@@ -49,8 +49,8 @@ export async function parse({
             ...openApiIr,
             schemas: {
                 ...openApiIr.schemas,
-                ...asyncAPISchemas,
-            },
+                ...asyncAPISchemas
+            }
         };
     }
 

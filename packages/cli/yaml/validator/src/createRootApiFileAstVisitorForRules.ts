@@ -4,7 +4,7 @@ import {
     RootApiFileAstNodeTypes,
     RootApiFileAstNodeVisitor,
     RootApiFileAstVisitor,
-    RootApiFileSchema,
+    RootApiFileSchema
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -13,7 +13,7 @@ export function createRootApiFileAstVisitorForRules({
     relativeFilepath,
     contents,
     allRuleVisitors,
-    addViolations,
+    addViolations
 }: {
     relativeFilepath: RelativeFilePath;
     contents: RootApiFileSchema;
@@ -33,7 +33,7 @@ export function createRootApiFileAstVisitorForRules({
                             severity: violation.severity,
                             relativeFilepath,
                             nodePath,
-                            message: violation.message,
+                            message: violation.message
                         }))
                     );
                 }
@@ -51,6 +51,6 @@ export function createRootApiFileAstVisitorForRules({
         ...createAstNodeVisitor("errorReference"),
         ...createAstNodeVisitor("variableDeclaration"),
         ...createAstNodeVisitor("variableReference"),
-        ...createAstNodeVisitor("pathParameter"),
+        ...createAstNodeVisitor("pathParameter")
     };
 }

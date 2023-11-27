@@ -1,10 +1,10 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences } from "@fern-api/config-management-commons";
 import { createFdrService } from "@fern-api/core";
+import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry } from "@fern-fern/registry-node";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
 export async function registerApi({
@@ -13,47 +13,46 @@ export async function registerApi({
     context,
     token,
     audiences,
-    snippetsConfig,
+    snippetsConfig
 }: {
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig;
-}): Promise<FernRegistry.ApiDefinitionId> {
+    snippetsConfig: APIV1Write.SnippetsConfig;
+}): Promise<FdrAPI.ApiDefinitionId> {
     const ir = await generateIntermediateRepresentation({
         workspace,
         audiences,
-        generationLanguage: undefined,
+        generationLanguage: undefined
     });
 
     const fdrService = createFdrService({
-        token: token.value,
+        token: token.value
     });
 
     const apiDefinition = convertIrToFdrApi(ir, snippetsConfig);
     context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
-        orgId: FernRegistry.OrgId(organization),
-        apiId: FernRegistry.ApiId(ir.apiName.originalName),
-        definition: apiDefinition,
+        orgId: organization,
+        apiId: ir.apiName.originalName,
+        definition: apiDefinition
     });
 
     if (response.ok) {
         context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
         return response.body.apiDefinitionId;
     } else {
-        return response.error._visit<never>({
-            unauthorizedError: () => {
-                return context.failAndThrow("Insufficient permissions.");
-            },
-            userNotInOrgError: () => {
-                return context.failAndThrow("Insufficient permissions.");
-            },
-            _other: (error) => {
-                return context.failAndThrow("Failed to register API", error);
-            },
-        });
+        switch (response.error.error) {
+            case "UnauthorizedError":
+            case "UserNotInOrgError": {
+                return context.failAndThrow(
+                    "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
+                );
+            }
+            default:
+                return context.failAndThrow("Failed to register API", response.error);
+        }
     }
 }

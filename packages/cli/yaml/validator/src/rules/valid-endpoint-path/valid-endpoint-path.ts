@@ -15,25 +15,25 @@ export const ValidEndpointPathRule: Rule = {
                     if (!endpoint.path.startsWith("/")) {
                         violations.push({
                             severity: "error",
-                            message: "Path must be the empty string, or start with a slash.",
+                            message: "Path must be the empty string, or start with a slash."
                         });
                     }
 
                     if (endpoint.path === "/") {
                         violations.push({
                             severity: "error",
-                            message: 'Path cannot be /. Use "" instead.',
+                            message: 'Path cannot be /. Use "" instead.'
                         });
                     } else if (endpoint.path.endsWith("/")) {
                         violations.push({
                             severity: "error",
-                            message: "Path cannot end with a slash.",
+                            message: "Path cannot end with a slash."
                         });
                     }
 
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

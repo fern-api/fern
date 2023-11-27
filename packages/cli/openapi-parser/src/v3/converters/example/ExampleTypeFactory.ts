@@ -26,7 +26,7 @@ export class ExampleTypeFactory {
     private buildExampleFromSchema({
         schema,
         isOptional,
-        visitedSchemaIds,
+        visitedSchemaIds
     }: {
         schema: SchemaWithExample;
         isOptional: boolean;
@@ -52,7 +52,7 @@ export class ExampleTypeFactory {
                     const example = this.buildExampleFromSchema({
                         schema: referencedSchemaWithExample,
                         isOptional,
-                        visitedSchemaIds,
+                        visitedSchemaIds
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return example;
@@ -67,7 +67,7 @@ export class ExampleTypeFactory {
                 const itemExample = this.buildExampleFromSchema({
                     schema: schema.value,
                     isOptional: true,
-                    visitedSchemaIds,
+                    visitedSchemaIds
                 });
                 if (isOptional) {
                     return itemExample != null ? FullExample.array([itemExample]) : undefined;
@@ -79,14 +79,14 @@ export class ExampleTypeFactory {
                 const valueExample = this.buildExampleFromSchema({
                     schema: schema.value,
                     isOptional: true,
-                    visitedSchemaIds,
+                    visitedSchemaIds
                 });
                 if (keyExample != null && valueExample != null) {
                     return FullExample.map([
                         {
                             key: keyExample,
-                            value: valueExample,
-                        },
+                            value: valueExample
+                        }
                     ]);
                 }
                 return isOptional ? undefined : FullExample.map([]);
@@ -101,12 +101,12 @@ export class ExampleTypeFactory {
                     const allOfExample = this.buildExampleFromSchema({
                         schema: allOfSchemaWithExample,
                         isOptional: false,
-                        visitedSchemaIds: new Set(),
+                        visitedSchemaIds: new Set()
                     });
                     if (allOfExample?.type === "object") {
                         properties = {
                             ...properties,
-                            ...allOfExample.properties,
+                            ...allOfExample.properties
                         };
                     } else {
                         return undefined;
@@ -116,7 +116,7 @@ export class ExampleTypeFactory {
                     const propertyExample = this.buildExampleFromSchema({
                         schema: objPropertyWithExample.schema,
                         isOptional: false,
-                        visitedSchemaIds,
+                        visitedSchemaIds
                     });
                     if (isSchemaRequired(objPropertyWithExample.schema) && propertyExample == null) {
                         return undefined;
@@ -128,7 +128,7 @@ export class ExampleTypeFactory {
                     const propertyExample = this.buildExampleFromSchema({
                         schema: objPropertyWithExample.schema,
                         isOptional: false,
-                        visitedSchemaIds,
+                        visitedSchemaIds
                     });
                     if (propertyExample != null) {
                         properties[objPropertyWithExample.key] = propertyExample;
@@ -137,16 +137,16 @@ export class ExampleTypeFactory {
                 if (isOptional) {
                     return Object.keys(properties).length > 0
                         ? FullExample.object({
-                              properties,
+                              properties
                           })
                         : undefined;
                 }
                 return Object.keys(properties).length > 0
                     ? FullExample.object({
-                          properties,
+                          properties
                       })
                     : FullExample.object({
-                          properties: {},
+                          properties: {}
                       });
             }
             default:

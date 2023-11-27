@@ -3,7 +3,7 @@ import {
     EndpointExample,
     HeaderExample,
     PathParameterExample,
-    QueryParameterExample,
+    QueryParameterExample
 } from "@fern-fern/openapi-ir-model/finalIr";
 import {
     EndpointWithExample,
@@ -12,7 +12,7 @@ import {
     QueryParameterWithExample,
     RequestWithExample,
     ResponseWithExample,
-    SchemaWithExample,
+    SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { isSchemaRequired } from "../../utils/isSchemaRequired";
 import { DummyExampleFactory } from "./DummyExampleFactory";
@@ -126,7 +126,7 @@ export class ExampleEndpointFactory {
             queryParameters,
             headers,
             request: requestExample,
-            response: responseExample,
+            response: responseExample
         };
 
         return example;
@@ -142,13 +142,13 @@ export class ExampleEndpointFactory {
                 type: "success",
                 value: {
                     name: parameter.name,
-                    value: example,
-                },
+                    value: example
+                }
             };
         } else if (isRequired) {
             const dummyExample = this.dummyExampleFactory.generateExample({
                 schema: parameter.schema,
-                name: parameter.name,
+                name: parameter.name
             });
             if (dummyExample == null) {
                 return { type: "failed" };
@@ -157,8 +157,8 @@ export class ExampleEndpointFactory {
                 type: "success",
                 value: {
                     name: parameter.name,
-                    value: dummyExample,
-                },
+                    value: dummyExample
+                }
             };
         }
         return { type: "success", value: undefined };

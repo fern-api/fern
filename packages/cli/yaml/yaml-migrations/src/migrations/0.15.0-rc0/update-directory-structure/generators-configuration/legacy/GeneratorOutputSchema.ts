@@ -10,7 +10,7 @@ export const GeneratorOutputSchema = z.discriminatedUnion("location", [
     MavenOutputLocationSchema,
     PypiOutputLocationSchema,
     PostmanOutputLocationSchema,
-    LocalFileSystemOutputLocationSchema,
+    LocalFileSystemOutputLocationSchema
 ]);
 
 export type GeneratorOutputSchema = z.infer<typeof GeneratorOutputSchema>;

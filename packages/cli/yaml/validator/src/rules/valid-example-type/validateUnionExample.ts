@@ -14,7 +14,7 @@ export function validateUnionExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace,
+    workspace
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -35,8 +35,8 @@ export function validateUnionExample({
         return [
             {
                 severity: "error",
-                message: `Missing discriminant property ("${discriminant}")`,
-            },
+                message: `Missing discriminant property ("${discriminant}")`
+            }
         ];
     }
 
@@ -53,8 +53,8 @@ export function validateUnionExample({
                     `Invalid discriminant property: "${discriminantValue}". Allowed discriminant values:\n` +
                     Object.keys(rawUnion.union)
                         .map((otherDiscriminantValue) => `  - ${otherDiscriminantValue}`)
-                        .join("\n"),
-            },
+                        .join("\n")
+            }
         ];
     }
 
@@ -67,7 +67,7 @@ export function validateUnionExample({
 
     const resolvedType = typeResolver.resolveType({
         type,
-        file,
+        file
     });
 
     // type doesn't exist. this is handled by other rules
@@ -84,7 +84,7 @@ export function validateUnionExample({
             example: nonDiscriminantPropertyExamples,
             typeResolver,
             exampleResolver,
-            workspace,
+            workspace
         });
     }
 
@@ -104,7 +104,7 @@ export function validateUnionExample({
     if (singlePropertyExample == null) {
         violations.push({
             severity: "error",
-            message: `Missing property "${singlePropertyKey}"`,
+            message: `Missing property "${singlePropertyKey}"`
         });
     } else {
         violations.push(
@@ -114,7 +114,7 @@ export function validateUnionExample({
                 typeResolver,
                 exampleResolver,
                 file,
-                workspace,
+                workspace
             })
         );
     }
@@ -127,6 +127,6 @@ export function validateUnionExample({
 function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): RuleViolation[] {
     return Object.keys(extraProperties).map((key) => ({
         severity: "error",
-        message: `Unexpected property "${key}"`,
+        message: `Unexpected property "${key}"`
     }));
 }

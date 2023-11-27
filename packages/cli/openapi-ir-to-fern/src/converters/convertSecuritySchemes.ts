@@ -22,17 +22,17 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
 
             let addBasicAuthScheme = false;
             const basicAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
-                scheme: "basic",
+                scheme: "basic"
             };
             if (securityScheme.usernameVariableName != null) {
                 basicAuthScheme.username = {
-                    name: securityScheme.usernameVariableName,
+                    name: securityScheme.usernameVariableName
                 };
                 addBasicAuthScheme = true;
             }
             if (securityScheme.passwordVariableName != null) {
                 basicAuthScheme.password = {
-                    name: securityScheme.passwordVariableName,
+                    name: securityScheme.passwordVariableName
                 };
                 addBasicAuthScheme = true;
             }
@@ -45,11 +45,11 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
 
             let addBearerAuthScheme = false;
             const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
-                scheme: "bearer",
+                scheme: "bearer"
             };
             if (securityScheme.tokenVariableName != null) {
                 bearerAuthScheme.token = {
-                    name: securityScheme.tokenVariableName,
+                    name: securityScheme.tokenVariableName
                 };
                 addBearerAuthScheme = true;
             }
@@ -64,7 +64,7 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
                 header: securityScheme.headerName,
                 name: securityScheme.headerVariableName ?? "apiKey",
                 type: "string",
-                prefix: securityScheme.prefix ?? undefined,
+                prefix: securityScheme.prefix ?? undefined
             };
             if (auth == null) {
                 auth = id;
@@ -74,7 +74,7 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
             } else {
                 globalHeaders[securityScheme.headerName] = {
                     type: "string",
-                    name: securityScheme.headerVariableName ?? getHeaderName(securityScheme.headerName),
+                    name: securityScheme.headerVariableName ?? getHeaderName(securityScheme.headerName)
                 };
             }
         }
@@ -83,6 +83,6 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
     return {
         auth,
         authSchemes: Object.keys(authSchemes).length === 0 ? undefined : authSchemes,
-        globalHeaders,
+        globalHeaders
     };
 }

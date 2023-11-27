@@ -21,7 +21,7 @@ export function validateTypeReferenceExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace,
+    workspace
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -35,7 +35,7 @@ export function validateTypeReferenceExample({
         // expected type with the referenced type
         const resolvedExpectedType = typeResolver.resolveType({
             type: rawTypeReference,
-            file,
+            file
         });
         // invalid reference. will be caught by another rule
         if (resolvedExpectedType == null) {
@@ -50,7 +50,7 @@ export function validateTypeReferenceExample({
         }
         const resolvedActualType = typeResolver.resolveNamedType({
             referenceToNamedType: parsedExampleReference.rawTypeReference,
-            file,
+            file
         });
         // invalid reference. will be caught by another rule
         if (resolvedActualType == null) {
@@ -63,8 +63,8 @@ export function validateTypeReferenceExample({
             return [
                 {
                     severity: "error",
-                    message: `Expected example to be: ${rawTypeReference}. Example is ${example}.`,
-                },
+                    message: `Expected example to be: ${rawTypeReference}. Example is ${example}.`
+                }
             ];
         }
     }
@@ -74,7 +74,7 @@ export function validateTypeReferenceExample({
         named: (referenceToNamedType) => {
             const declaration = typeResolver.getDeclarationOfNamedType({
                 referenceToNamedType,
-                file,
+                file
             });
 
             // type doesn't exist. this will be caught by other rules.
@@ -89,7 +89,7 @@ export function validateTypeReferenceExample({
                 example,
                 typeResolver,
                 exampleResolver,
-                workspace,
+                workspace
             });
         },
         map: ({ keyType, valueType }) => {
@@ -103,7 +103,7 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace,
+                    workspace
                 }),
                 ...validateTypeReferenceExample({
                     rawTypeReference: valueType,
@@ -111,8 +111,8 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace,
-                }),
+                    workspace
+                })
             ]);
         },
         list: (itemType) => {
@@ -126,7 +126,7 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace,
+                    workspace
                 })
             );
         },
@@ -142,8 +142,8 @@ export function validateTypeReferenceExample({
                         severity: "error",
                         message:
                             "Set has duplicate elements:\n" +
-                            duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n"),
-                    },
+                            duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")
+                    }
                 ];
             }
 
@@ -154,7 +154,7 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace,
+                    workspace
                 })
             );
         },
@@ -168,7 +168,7 @@ export function validateTypeReferenceExample({
                 typeResolver,
                 exampleResolver,
                 file,
-                workspace,
+                workspace
             });
         },
         unknown: () => {
@@ -186,13 +186,13 @@ export function validateTypeReferenceExample({
                 default:
                     assertNever(expectedLiteral);
             }
-        },
+        }
     });
 }
 
 function validatePrimitiveExample({
     primitiveType,
-    example,
+    example
 }: {
     primitiveType: PrimitiveType;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -209,7 +209,7 @@ function validatePrimitiveExample({
         base64: () => validateString(example),
         _other: () => {
             throw new Error("Unknown primitive type: " + primitiveType);
-        },
+        }
     });
 }
 
@@ -252,7 +252,7 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                     actual.container._type === expected.container._type &&
                     areResolvedTypesEquivalent({
                         expected: expected.container.itemType,
-                        actual: actual.container.itemType,
+                        actual: actual.container.itemType
                     })
                 );
             case "optional":
@@ -262,7 +262,7 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                     actual:
                         actual._type === "container" && actual.container._type === "optional"
                             ? actual.container.itemType
-                            : actual,
+                            : actual
                 });
             case "map":
                 return (
@@ -270,11 +270,11 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                     actual.container._type === expected.container._type &&
                     areResolvedTypesEquivalent({
                         expected: expected.container.keyType,
-                        actual: actual.container.keyType,
+                        actual: actual.container.keyType
                     }) &&
                     areResolvedTypesEquivalent({
                         expected: expected.container.valueType,
-                        actual: actual.container.valueType,
+                        actual: actual.container.valueType
                     })
                 );
             case "literal":
@@ -283,7 +283,7 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
                 }
                 return areLiteralTypesEquivalent({
                     expected: expected.container.literal,
-                    actual: actual.container.literal,
+                    actual: actual.container.literal
                 });
             default:
                 assertNever(expected.container);

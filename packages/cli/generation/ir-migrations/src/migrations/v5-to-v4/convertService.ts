@@ -7,14 +7,14 @@ import {
     convertNameAndWireValueToV1,
     convertNameAndWireValueToV2,
     convertNameToV1,
-    convertNameToV2,
+    convertNameToV2
 } from "./convertName";
 import { convertTypeReference } from "./convertTypeReference";
 import { ErrorResolver } from "./ErrorResolver";
 
 export function convertService({
     service,
-    errorResolver,
+    errorResolver
 }: {
     service: IrVersions.V5.http.HttpService;
     errorResolver: ErrorResolver;
@@ -28,7 +28,7 @@ export function convertService({
         basePathV2: service.basePath,
         endpoints: service.endpoints.map((endpoint) => convertEndpoint({ endpoint, errorResolver })),
         headers: service.headers.map((header) => convertHeader(header)),
-        pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
+        pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter))
     };
 }
 
@@ -38,7 +38,7 @@ function convertDeclaredServiceName(
     return {
         name: serviceName.name.pascalCase.unsafeName,
         fernFilepath: convertFernFilepathV1(serviceName.fernFilepath),
-        fernFilepathV2: convertFernFilepathV2(serviceName.fernFilepath),
+        fernFilepathV2: convertFernFilepathV2(serviceName.fernFilepath)
     };
 }
 
@@ -51,7 +51,7 @@ function convertBasePathToString(basePath: IrVersions.V5.http.HttpPath): string 
 
 function convertEndpoint({
     endpoint,
-    errorResolver,
+    errorResolver
 }: {
     endpoint: IrVersions.V5.http.HttpEndpoint;
     errorResolver: ErrorResolver;
@@ -74,7 +74,7 @@ function convertEndpoint({
         errors: endpoint.errors.map((error) => convertResponseError(error)),
         errorsV2: convertResponseErrorsV2({ responseErrors: endpoint.errors, errorResolver }),
         auth: endpoint.auth,
-        examples: endpoint.examples.map((example) => convertExampleEndpointCall(example)),
+        examples: endpoint.examples.map((example) => convertExampleEndpointCall(example))
     };
 }
 
@@ -86,7 +86,7 @@ function convertPathParameter(
         availability: pathParameter.availability,
         name: convertNameToV1(pathParameter.name),
         nameV2: convertNameToV2(pathParameter.name),
-        valueType: convertTypeReference(pathParameter.valueType),
+        valueType: convertTypeReference(pathParameter.valueType)
     };
 }
 
@@ -99,7 +99,7 @@ function convertQueryParameter(
         name: convertNameAndWireValueToV1(queryParameter.name),
         nameV2: convertNameAndWireValueToV2(queryParameter.name),
         valueType: convertTypeReference(queryParameter.valueType),
-        allowMultiple: queryParameter.allowMultiple,
+        allowMultiple: queryParameter.allowMultiple
     };
 }
 
@@ -114,17 +114,17 @@ function convertRequestBody(
                 properties: inlinedRequestBody.properties.map((property) => ({
                     docs: property.docs,
                     name: convertNameAndWireValueToV2(property.name),
-                    valueType: convertTypeReference(property.valueType),
-                })),
+                    valueType: convertTypeReference(property.valueType)
+                }))
             }),
         reference: (reference) =>
             IrVersions.V4.services.http.HttpRequestBody.reference({
                 docs: reference.docs,
-                requestBodyType: convertTypeReference(reference.requestBodyType),
+                requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody type: " + requestBody.type);
-        },
+        }
     });
 }
 
@@ -137,18 +137,18 @@ function convertSdkRequest(sdkRequest: IrVersions.V5.http.SdkRequest): IrVersion
                 justRequestBody: (requestBodyReference) =>
                     IrVersions.V4.services.http.SdkRequestShape.justRequestBody({
                         docs: requestBodyReference.docs,
-                        requestBodyType: convertTypeReference(requestBodyReference.requestBodyType),
+                        requestBodyType: convertTypeReference(requestBodyReference.requestBodyType)
                     }),
                 wrapper: (wrapper) =>
                     IrVersions.V4.services.http.SdkRequestShape.wrapper({
                         wrapperName: convertNameToV2(wrapper.wrapperName),
-                        bodyKey: convertNameToV2(wrapper.bodyKey),
+                        bodyKey: convertNameToV2(wrapper.bodyKey)
                     }),
                 _unknown: () => {
                     throw new Error("Unknown SdkRequestShape type: " + sdkRequest.shape.type);
-                },
+                }
             }
-        ),
+        )
     };
 }
 
@@ -157,7 +157,7 @@ function convertResponse(response: IrVersions.V5.http.HttpResponse): IrVersions.
     return {
         docs: response.docs,
         type: convertedType ?? IrVersions.V4.types.TypeReference.void(),
-        typeV2: convertedType,
+        typeV2: convertedType
     };
 }
 
@@ -166,13 +166,13 @@ function convertResponseError(
 ): IrVersions.V4.services.commons.ResponseError {
     return {
         docs: responseError.docs,
-        error: convertDeclaredErrorName(responseError.error),
+        error: convertDeclaredErrorName(responseError.error)
     };
 }
 
 function convertResponseErrorsV2({
     responseErrors,
-    errorResolver,
+    errorResolver
 }: {
     responseErrors: IrVersions.V5.http.ResponseErrors;
     errorResolver: ErrorResolver;
@@ -184,15 +184,15 @@ function convertResponseErrorsV2({
             snakeCase: "error_name",
             pascalCase: "ErrorName",
             screamingSnakeCase: "ERROR_NAME",
-            wireValue: "errorName",
+            wireValue: "errorName"
         },
-        types: responseErrors.map((responseError) => convertResponseErrorV2({ responseError, errorResolver })),
+        types: responseErrors.map((responseError) => convertResponseErrorV2({ responseError, errorResolver }))
     };
 }
 
 function convertResponseErrorV2({
     responseError,
-    errorResolver,
+    errorResolver
 }: {
     responseError: IrVersions.V5.http.ResponseError;
     errorResolver: ErrorResolver;
@@ -201,13 +201,13 @@ function convertResponseErrorV2({
     return {
         docs: responseError.docs,
         discriminantValue: convertNameAndWireValueToV1(declaration.discriminantValue),
-        shape: convertResponseErrorShape({ responseError, declaration }),
+        shape: convertResponseErrorShape({ responseError, declaration })
     };
 }
 
 function convertResponseErrorShape({
     responseError,
-    declaration,
+    declaration
 }: {
     responseError: IrVersions.V5.http.ResponseError;
     declaration: IrVersions.V5.errors.ErrorDeclaration;
@@ -222,9 +222,9 @@ function convertResponseErrorShape({
             snakeCase: "content",
             pascalCase: "Content",
             screamingSnakeCase: "CONTENT",
-            wireValue: "content",
+            wireValue: "content"
         },
-        error: convertDeclaredErrorName(responseError.error),
+        error: convertDeclaredErrorName(responseError.error)
     });
 }
 
@@ -236,7 +236,7 @@ function convertDeclaredErrorName(
         nameV2: convertNameToV1(errorName.name),
         nameV3: convertNameToV2(errorName.name),
         fernFilepath: convertFernFilepathV1(errorName.fernFilepath),
-        fernFilepathV2: convertFernFilepathV2(errorName.fernFilepath),
+        fernFilepathV2: convertFernFilepathV2(errorName.fernFilepath)
     };
 }
 
@@ -256,7 +256,7 @@ function convertExampleEndpointCall(
         endpointHeaders: example.endpointHeaders.map((header) => convertExampleHeader(header)),
         queryParameters: example.queryParameters.map((queryParameter) => convertExampleQueryParameter(queryParameter)),
         request: example.request != null ? convertExampleRequest(example.request) : undefined,
-        response: convertExampleResponse(example.response),
+        response: convertExampleResponse(example.response)
     };
 }
 
@@ -265,14 +265,14 @@ function convertExamplePathParameter(
 ): IrVersions.V4.services.http.ExamplePathParameter {
     return {
         key: pathParameter.key,
-        value: convertExampleTypeReference(pathParameter.value),
+        value: convertExampleTypeReference(pathParameter.value)
     };
 }
 
 function convertExampleHeader(header: IrVersions.V5.http.ExampleHeader): IrVersions.V4.services.http.ExampleHeader {
     return {
         wireKey: header.wireKey,
-        value: convertExampleTypeReference(header.value),
+        value: convertExampleTypeReference(header.value)
     };
 }
 
@@ -281,7 +281,7 @@ function convertExampleQueryParameter(
 ): IrVersions.V4.services.http.ExampleQueryParameter {
     return {
         wireKey: queryParameter.wireKey,
-        value: convertExampleTypeReference(queryParameter.value),
+        value: convertExampleTypeReference(queryParameter.value)
     };
 }
 
@@ -294,13 +294,13 @@ function convertExampleRequest(
                 jsonExample: inlinedRequestBody.jsonExample,
                 properties: inlinedRequestBody.properties.map((property) =>
                     convertExampleInlinedRequestBodyProperty(property)
-                ),
+                )
             }),
         reference: (reference) =>
             IrVersions.V4.services.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
         _unknown: () => {
             throw new Error("Unknown ExampleRequestBody: " + request.type);
-        },
+        }
     });
 }
 
@@ -313,7 +313,7 @@ function convertExampleInlinedRequestBodyProperty(
         originalTypeDeclaration:
             property.originalTypeDeclaration != null
                 ? convertDeclaredTypeName(property.originalTypeDeclaration)
-                : undefined,
+                : undefined
     };
 }
 
@@ -323,15 +323,15 @@ function convertExampleResponse(
     return IrVersions.V5.http.ExampleResponse._visit<IrVersions.V4.services.http.ExampleResponse>(response, {
         ok: (okResponse) =>
             IrVersions.V4.services.http.ExampleResponse.ok({
-                body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined,
+                body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined
             }),
         error: (errorResponse) =>
             IrVersions.V4.services.http.ExampleResponse.error({
                 error: convertDeclaredErrorName(errorResponse.error),
-                body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined,
+                body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
             }),
         _unknown: () => {
             throw new Error("Unknown ExampleResponse: " + response.type);
-        },
+        }
     });
 }

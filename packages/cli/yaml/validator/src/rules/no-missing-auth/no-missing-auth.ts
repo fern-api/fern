@@ -11,8 +11,8 @@ export const NoMissingAuthRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "Service requires auth, but no auth is defined.",
-                            },
+                                message: "Service requires auth, but no auth is defined."
+                            }
                         ];
                     }
                     return [];
@@ -22,13 +22,13 @@ export const NoMissingAuthRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "Endpoint requires auth, but no auth is defined.",
-                            },
+                                message: "Endpoint requires auth, but no auth is defined."
+                            }
                         ];
                     }
                     return [];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

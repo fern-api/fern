@@ -3,7 +3,7 @@ import {
     DocsNavigationItem,
     ParsedDocsConfiguration,
     TabbedDocsNavigation,
-    UntabbedDocsNavigation,
+    UntabbedDocsNavigation
 } from "./ParsedDocsConfiguration";
 
 export type ReferencedApisResponse = DefaultAPIReferenced | NamedAPIReferenced;
@@ -43,7 +43,7 @@ export function getReferencedApiSections(config: ParsedDocsConfiguration): Refer
 
 export function visitNavigation({
     navigation,
-    collector,
+    collector
 }: {
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     collector: ApiSectionCollector;
@@ -68,7 +68,7 @@ export function visitNavigation({
 
 export function visitDocsNavigationItem({
     item,
-    collector,
+    collector
 }: {
     item: DocsNavigationItem;
     collector: ApiSectionCollector;
@@ -100,12 +100,12 @@ class ApiSectionCollector {
     getReferences(): ReferencedApisResponse | undefined {
         if (this.defaultApi) {
             return {
-                type: "default",
+                type: "default"
             };
         } else if (Object.keys(this.namedApis).length > 0) {
             return {
                 type: "named",
-                apiNames: [...this.namedApis],
+                apiNames: [...this.namedApis]
             };
         }
         return undefined;

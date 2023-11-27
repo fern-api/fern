@@ -12,7 +12,7 @@ export async function getAllYamlFiles(context: TaskContext): Promise<AbsoluteFil
     }
     const filepaths = await glob("*/definition/**/*.yml", {
         cwd: fernDirectory,
-        absolute: true,
+        absolute: true
     });
     return filepaths.map(AbsoluteFilePath.of);
 }

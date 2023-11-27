@@ -6,7 +6,7 @@ export {
     isNotStartedLoading,
     loaded,
     loading,
-    notStartedLoading,
+    notStartedLoading
 } from "./Loadable";
 export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable";
 export {
@@ -16,6 +16,6 @@ export {
     mapLoadableArray,
     mapLoadables,
     mapNotFailedLoadableArray,
-    visitLoadableArray,
+    visitLoadableArray
 } from "./utils";
 export { visitLoadable, type LoadableVisitor } from "./visitor";

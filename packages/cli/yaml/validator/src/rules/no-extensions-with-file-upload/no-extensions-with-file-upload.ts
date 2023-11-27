@@ -19,11 +19,11 @@ export const NoExtensionsWithFileUploadRule: Rule = {
                     return [
                         {
                             severity: "error",
-                            message: "Request body extensions are not supported for file-upload requests.",
-                        },
+                            message: "Request body extensions are not supported for file-upload requests."
+                        }
                     ];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

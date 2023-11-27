@@ -28,7 +28,7 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: "0.5.0-3-gac7ce7c",
         [GeneratorName.GO_MODEL]: "0.0.14-8-g2fa39f7",
-        [GeneratorName.GO_SDK]: "0.0.14-8-g2fa39f7",
+        [GeneratorName.GO_SDK]: "0.0.14-8-g2fa39f7"
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v22): IrVersions.V21.ir.IntermediateRepresentation => {
@@ -36,15 +36,15 @@ export const V22_TO_V21_MIGRATION: IrMigration<
             ...v22,
             services: mapValues(v22.services, (service) => {
                 return convertService(service);
-            }),
+            })
         };
-    },
+    }
 };
 
 function convertService(service: IrVersions.V22.http.HttpService): IrVersions.V21.http.HttpService {
     return {
         ...service,
-        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint)),
+        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
     };
 }
 
@@ -58,26 +58,26 @@ function convertEndpoint(endpoint: IrVersions.V22.http.HttpEndpoint): IrVersions
                   json: (jsonResponse) => ({
                       response: IrVersions.V21.http.HttpResponse.json(jsonResponse),
                       streamingResponse: undefined,
-                      sdkResponse: IrVersions.V21.http.SdkResponse.json(jsonResponse),
+                      sdkResponse: IrVersions.V21.http.SdkResponse.json(jsonResponse)
                   }),
                   fileDownload: (fileDownloadResponse) => ({
                       response: IrVersions.V21.http.HttpResponse.fileDownload(fileDownloadResponse),
                       streamingResponse: undefined,
-                      sdkResponse: IrVersions.V21.http.SdkResponse.fileDownload(fileDownloadResponse),
+                      sdkResponse: IrVersions.V21.http.SdkResponse.fileDownload(fileDownloadResponse)
                   }),
                   streaming: (streamingResponse) => ({
                       response: undefined,
                       streamingResponse,
-                      sdkResponse: IrVersions.V21.http.SdkResponse.streaming(streamingResponse),
+                      sdkResponse: IrVersions.V21.http.SdkResponse.streaming(streamingResponse)
                   }),
                   _unknown: () => {
                       throw new Error("Unknown HttpResponse: " + endpoint.response?.type);
-                  },
+                  }
               })
             : {
                   response: undefined,
                   streamingResponse: undefined,
-                  sdkResponse: undefined,
-              }),
+                  sdkResponse: undefined
+              })
     };
 }

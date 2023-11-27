@@ -4,7 +4,7 @@ import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 export async function visitImports({
     imports,
     visitor,
-    nodePath,
+    nodePath
 }: {
     imports: Record<string, string> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;

@@ -21,7 +21,7 @@ export interface FernFileContext {
 
 export function constructRootApiFileContext({
     casingsGenerator,
-    rootApiFile,
+    rootApiFile
 }: {
     casingsGenerator: CasingsGenerator;
     rootApiFile: RootApiFileSchema;
@@ -29,10 +29,10 @@ export function constructRootApiFileContext({
     return constructFernFileContext({
         relativeFilepath: RelativeFilePath.of("."),
         definitionFile: {
-            imports: rootApiFile.imports,
+            imports: rootApiFile.imports
         },
         casingsGenerator,
-        rootApiFile,
+        rootApiFile
     });
 }
 
@@ -40,7 +40,7 @@ export function constructFernFileContext({
     relativeFilepath,
     definitionFile,
     casingsGenerator,
-    rootApiFile,
+    rootApiFile
 }: {
     relativeFilepath: RelativeFilePath;
     definitionFile: DefinitionFileSchema;
@@ -57,7 +57,7 @@ export function constructFernFileContext({
             return parseInlineType({ type: typeAsString, file });
         },
         casingsGenerator,
-        rootApiFile,
+        rootApiFile
     };
     return file;
 }

@@ -2,7 +2,7 @@ import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 export function getResolvedPathOfImportedFile({
     referencedIn,
-    importPath,
+    importPath
 }: {
     referencedIn: RelativeFilePath;
     importPath: RelativeFilePath;

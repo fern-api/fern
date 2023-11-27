@@ -9,7 +9,7 @@ export interface ReferenceToTypeName {
 export function parseReferenceToTypeName({
     reference,
     referencedIn,
-    imports,
+    imports
 }: {
     reference: string;
     referencedIn: RelativeFilePath;
@@ -24,7 +24,7 @@ export function parseReferenceToTypeName({
     if (secondPart == null) {
         return {
             typeName: firstPart,
-            relativeFilepath: referencedIn,
+            relativeFilepath: referencedIn
         };
     }
 
@@ -36,6 +36,6 @@ export function parseReferenceToTypeName({
 
     return {
         relativeFilepath: getResolvedPathOfImportedFile({ referencedIn, importPath }),
-        typeName: secondPart,
+        typeName: secondPart
     };
 }

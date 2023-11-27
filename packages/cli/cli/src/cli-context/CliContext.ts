@@ -42,7 +42,7 @@ export class CliContext {
         this.environment = {
             packageName,
             packageVersion,
-            cliName,
+            cliName
         };
     }
 
@@ -104,13 +104,13 @@ export class CliContext {
                 [Promise<FernCliUpgradeInfo>, Promise<never>]
             >([
                 this.isUpgradeAvailable(),
-                new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300)),
+                new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ]);
 
             if (isUpgradeAvailable) {
                 let upgradeMessage = getFernCliUpgradeMessage({
                     toVersion: latestVersion,
-                    cliEnvironment: this.environment,
+                    cliEnvironment: this.environment
                 });
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
@@ -210,7 +210,7 @@ export class CliContext {
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return {
             ...this.constructTaskInit(),
-            logPrefix: prefixWithColor,
+            logPrefix: prefixWithColor
         };
     }
 
@@ -226,7 +226,7 @@ export class CliContext {
             instrumentPostHogEvent: (event) => {
                 this.instrumentPostHogEvent(event);
             },
-            shouldBufferLogs: false,
+            shouldBufferLogs: false
         };
     }
 
@@ -235,15 +235,15 @@ export class CliContext {
             {
                 parts,
                 level,
-                time: new Date(),
-            },
+                time: new Date()
+            }
         ]);
     }
 
     private logImmediately(logs: Log[]): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered, {
-            includeDebugInfo: this.logLevel === LogLevel.Debug,
+            includeDebugInfo: this.logLevel === LogLevel.Debug
         });
     }
 
@@ -254,7 +254,7 @@ export class CliContext {
 
     private _isUpgradeAvailable: FernCliUpgradeInfo | undefined;
     public async isUpgradeAvailable({
-        includePreReleases = false,
+        includePreReleases = false
     }: {
         includePreReleases?: boolean;
     } = {}): Promise<FernCliUpgradeInfo> {
@@ -263,7 +263,7 @@ export class CliContext {
 
             const latestPackageVersion = await getLatestVersionOfCli({
                 cliEnvironment: this.environment,
-                includePreReleases,
+                includePreReleases
             });
             const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
 
@@ -274,7 +274,7 @@ export class CliContext {
 
             this._isUpgradeAvailable = {
                 isUpgradeAvailable,
-                latestVersion: latestPackageVersion,
+                latestVersion: latestPackageVersion
             };
         }
         return this._isUpgradeAvailable;

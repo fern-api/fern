@@ -2,7 +2,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 
 export function getFullEndpointPath({
     service,
-    endpoint,
+    endpoint
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;

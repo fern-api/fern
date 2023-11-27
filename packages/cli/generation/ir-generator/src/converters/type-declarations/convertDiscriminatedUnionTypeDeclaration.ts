@@ -12,7 +12,7 @@ const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 export function convertDiscriminatedUnionTypeDeclaration({
     union,
     file,
-    typeResolver,
+    typeResolver
 }: {
     union: RawSchemas.DiscriminatedUnionSchema;
     file: FernFileContext;
@@ -22,7 +22,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
     return Type.union({
         discriminant: file.casingsGenerator.generateNameAndWireValue({
             wireValue: discriminant,
-            name: getUnionDiscriminantName(union).name,
+            name: getUnionDiscriminantName(union).name
         }),
         extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
@@ -31,9 +31,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
                       ...convertDeclaration(propertyDefinition),
                       name: file.casingsGenerator.generateNameAndWireValue({
                           wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name
                       }),
-                      valueType: file.parseTypeReference(propertyDefinition),
+                      valueType: file.parseTypeReference(propertyDefinition)
                   }))
                 : [],
         types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
@@ -46,7 +46,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
 
             const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
                 wireValue: unionKey,
-                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name,
+                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
             });
 
             const docs = getDocs(rawSingleUnionType);
@@ -55,7 +55,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 return {
                     discriminantValue,
                     docs,
-                    shape: SingleUnionTypeProperties.noProperties(),
+                    shape: SingleUnionTypeProperties.noProperties()
                 };
             }
 
@@ -68,11 +68,11 @@ export function convertDiscriminatedUnionTypeDeclaration({
                     rawValueType: rawType,
                     parsedValueType,
                     file,
-                    typeResolver,
+                    typeResolver
                 }),
-                docs: getDocs(rawSingleUnionType),
+                docs: getDocs(rawSingleUnionType)
             };
-        }),
+        })
     });
 }
 
@@ -93,18 +93,18 @@ export function getUnionDiscriminantName(union: RawSchemas.DiscriminatedUnionSch
     if (union.discriminant != null && typeof union.discriminant !== "string" && union.discriminant.name != null) {
         return {
             name: union.discriminant.name,
-            wasExplicitlySet: true,
+            wasExplicitlySet: true
         };
     }
     return {
         name: getUnionDiscriminant(union),
-        wasExplicitlySet: false,
+        wasExplicitlySet: false
     };
 }
 
 export function getSingleUnionTypeName({
     unionKey,
-    rawSingleUnionType,
+    rawSingleUnionType
 }: {
     unionKey: string;
     rawSingleUnionType: string | RawSchemas.SingleUnionTypeSchema;
@@ -115,13 +115,13 @@ export function getSingleUnionTypeName({
     if (typeof rawSingleUnionType !== "string" && rawSingleUnionType.name != null) {
         return {
             name: rawSingleUnionType.name,
-            wasExplicitlySet: true,
+            wasExplicitlySet: true
         };
     }
 
     return {
         name: unionKey,
-        wasExplicitlySet: false,
+        wasExplicitlySet: false
     };
 }
 
@@ -130,7 +130,7 @@ export function getSingleUnionTypeProperties({
     rawValueType,
     parsedValueType,
     file,
-    typeResolver,
+    typeResolver
 }: {
     rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
     rawValueType: string;
@@ -151,9 +151,9 @@ export function getSingleUnionTypeProperties({
     return SingleUnionTypeProperties.singleProperty({
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: getSinglePropertyKeyValue(singlePropertyKey),
-            name: getSinglePropertyKeyName(singlePropertyKey),
+            name: getSinglePropertyKeyName(singlePropertyKey)
         }),
-        type: parsedValueType,
+        type: parsedValueType
     });
 }
 

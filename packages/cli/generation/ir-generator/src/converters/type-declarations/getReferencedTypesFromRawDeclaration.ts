@@ -13,7 +13,7 @@ export function getReferencedTypesFromRawDeclaration({
     typeDeclaration,
     file,
     typeResolver,
-    seenTypeNames = new SeenTypeNamesImpl(),
+    seenTypeNames = new SeenTypeNamesImpl()
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
@@ -60,7 +60,7 @@ export function getReferencedTypesFromRawDeclaration({
                 return types;
             }, []);
         },
-        enum: () => [],
+        enum: () => []
     });
 
     const referencedTypes: DeclaredTypeName[] = [];
@@ -74,7 +74,7 @@ export function getReferencedTypesFromRawDeclaration({
             set: (valueType) => valueType,
             named: (name) => [name],
             literal: () => [],
-            unknown: () => [],
+            unknown: () => []
         });
 
         for (const rawName of rawNames) {
@@ -86,7 +86,7 @@ export function getReferencedTypesFromRawDeclaration({
 
                 const maybeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                     referenceToNamedType: rawName,
-                    file,
+                    file
                 });
 
                 referencedTypes.push(
@@ -94,7 +94,7 @@ export function getReferencedTypesFromRawDeclaration({
                         typeDeclaration: maybeDeclaration.declaration,
                         file: maybeDeclaration.file,
                         typeResolver,
-                        seenTypeNames,
+                        seenTypeNames
                     })
                 );
             }

@@ -19,7 +19,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({
         document,
         taskContext,
-        authHeaders,
+        authHeaders
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
@@ -69,7 +69,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         } else {
             this.discrminatedUnionReferences[schema.$ref] = {
                 discriminants: new Set([discrminant]),
-                numReferences: times,
+                numReferences: times
             };
         }
     }
@@ -87,7 +87,7 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             const convertedError = convertToError({
                 statusCode: parsedStatusCode,
                 errorBodyCollector,
-                context: this,
+                context: this
             });
             if (convertedError != null) {
                 errors[parsedStatusCode] = convertedError;

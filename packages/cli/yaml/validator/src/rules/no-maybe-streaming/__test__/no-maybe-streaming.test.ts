@@ -11,7 +11,7 @@ describe("no-maybe-streaming", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,8 +19,8 @@ describe("no-maybe-streaming", () => {
                 message: "You cannot specify both response and response-stream",
                 nodePath: ["service", "endpoints", "both"],
                 relativeFilepath: RelativeFilePath.of("service.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

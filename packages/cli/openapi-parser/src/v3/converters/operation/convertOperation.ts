@@ -44,7 +44,7 @@ export interface ConvertedStreamingOperation {
 export function convertOperation({
     context,
     pathItemContext,
-    operation,
+    operation
 }: {
     context: AbstractOpenAPIV3ParserContext;
     pathItemContext: PathItemContext;
@@ -67,16 +67,16 @@ export function convertOperation({
             operation,
             sdkMethodName,
             httpMethod: pathItemContext.method,
-            path: pathItemContext.path,
+            path: pathItemContext.path
         }),
         operation,
-        operationParameters: operation.parameters ?? [],
+        operationParameters: operation.parameters ?? []
     };
 
     if (isWebhook({ operation })) {
         const webhook = convertWebhookOperation({
             context,
-            operationContext,
+            operationContext
         });
         return webhook != null ? { type: "webhook", value: webhook } : undefined;
     }
@@ -86,13 +86,13 @@ export function convertOperation({
         const streamingOperation = convertStreamingOperation({
             context,
             operationContext,
-            streamingExtension,
+            streamingExtension
         });
         return streamingOperation != null
             ? {
                   type: "streaming",
                   streaming: streamingOperation.streaming,
-                  nonStreaming: streamingOperation.nonStreaming,
+                  nonStreaming: streamingOperation.nonStreaming
               }
             : undefined;
     }
@@ -102,18 +102,18 @@ export function convertOperation({
         const asyncAndSync = convertAsyncSyncOperation({
             context,
             operationContext,
-            asyncExtension,
+            asyncExtension
         });
         return {
             type: "async",
             async: asyncAndSync.async,
-            sync: asyncAndSync.sync,
+            sync: asyncAndSync.sync
         };
     }
 
     const convertedHttpOperation = convertHttpOperation({
         context,
-        operationContext,
+        operationContext
     });
     return { type: "http", value: convertedHttpOperation };
 }
@@ -128,7 +128,7 @@ function getSdkGroupAndMethod(operation: OpenAPIV3.OperationObject): EndpointSdk
     if (sdkMethodName != null) {
         return {
             groupName: typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName,
-            methodName: sdkMethodName,
+            methodName: sdkMethodName
         };
     }
     return undefined;
@@ -138,7 +138,7 @@ function getBaseBreadcrumbs({
     sdkMethodName,
     operation,
     httpMethod,
-    path,
+    path
 }: {
     sdkMethodName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;

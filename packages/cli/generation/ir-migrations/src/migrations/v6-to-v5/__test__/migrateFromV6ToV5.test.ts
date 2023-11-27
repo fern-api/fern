@@ -10,7 +10,7 @@ const runMigration = createMigrationTester(V6_TO_V5_MIGRATION);
 describe("migrateFromV6ToV5", () => {
     it("correctly migrates when not using environments", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/no-environments")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/no-environments"))
         });
         expect(migrated.environments).toEqual([]);
     });
@@ -20,7 +20,7 @@ describe("migrateFromV6ToV5", () => {
             pathToFixture: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("./fixtures/single-url-per-environment")
-            ),
+            )
         });
 
         const expectedEnvironments: IrVersions.V5.environment.Environment[] = [
@@ -30,23 +30,23 @@ describe("migrateFromV6ToV5", () => {
                 name: {
                     camelCase: {
                         safeName: "production",
-                        unsafeName: "production",
+                        unsafeName: "production"
                     },
                     originalName: "Production",
                     pascalCase: {
                         safeName: "Production",
-                        unsafeName: "Production",
+                        unsafeName: "Production"
                     },
                     screamingSnakeCase: {
                         safeName: "PRODUCTION",
-                        unsafeName: "PRODUCTION",
+                        unsafeName: "PRODUCTION"
                     },
                     snakeCase: {
                         safeName: "production",
-                        unsafeName: "production",
-                    },
+                        unsafeName: "production"
+                    }
                 },
-                url: "prod.com",
+                url: "prod.com"
             },
             {
                 docs: "I'm staging",
@@ -54,24 +54,24 @@ describe("migrateFromV6ToV5", () => {
                 name: {
                     camelCase: {
                         safeName: "staging",
-                        unsafeName: "staging",
+                        unsafeName: "staging"
                     },
                     originalName: "Staging",
                     pascalCase: {
                         safeName: "Staging",
-                        unsafeName: "Staging",
+                        unsafeName: "Staging"
                     },
                     screamingSnakeCase: {
                         safeName: "STAGING",
-                        unsafeName: "STAGING",
+                        unsafeName: "STAGING"
                     },
                     snakeCase: {
                         safeName: "staging",
-                        unsafeName: "staging",
-                    },
+                        unsafeName: "staging"
+                    }
                 },
-                url: "staging.com",
-            },
+                url: "staging.com"
+            }
         ];
 
         expect(migrated.environments).toEqual(expectedEnvironments);
@@ -83,7 +83,7 @@ describe("migrateFromV6ToV5", () => {
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {
                 output += logs.join(" ");
-            }),
+            })
         });
         await expect(
             runMigration({
@@ -92,8 +92,8 @@ describe("migrateFromV6ToV5", () => {
                     RelativeFilePath.of("./fixtures/multiple-urls-per-environment")
                 ),
                 context: {
-                    taskContext: context,
-                },
+                    taskContext: context
+                }
             })
         ).rejects.toBeTruthy();
         expect(output).toContain("does not support specifying multiple URLs for a single environment");

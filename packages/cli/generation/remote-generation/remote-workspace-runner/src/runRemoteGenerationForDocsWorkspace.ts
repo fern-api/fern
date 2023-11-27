@@ -10,7 +10,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     context,
     token,
     instanceUrl,
-    preview,
+    preview
 }: {
     organization: string;
     fernWorkspaces: FernWorkspace[];
@@ -39,7 +39,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 fernWorkspaces,
                 version: "",
-                preview,
+                preview
             });
         });
         return;
@@ -67,7 +67,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             context,
             fernWorkspaces,
             version: "",
-            preview,
+            preview
         });
     });
     return;

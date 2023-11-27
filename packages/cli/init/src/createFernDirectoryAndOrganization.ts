@@ -6,7 +6,7 @@ import {
     FERN_DIRECTORY,
     loadProjectConfig,
     ProjectConfigSchema,
-    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_FILENAME
 } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -16,7 +16,7 @@ import { kebabCase } from "lodash-es";
 export async function createFernDirectoryAndWorkspace({
     organization,
     taskContext,
-    versionOfCli,
+    versionOfCli
 }: {
     organization: string | undefined;
     taskContext: TaskContext;
@@ -33,7 +33,7 @@ export async function createFernDirectoryAndWorkspace({
                 const didCreateOrganization = await createOrganizationIfDoesNotExist({
                     organization,
                     token,
-                    context: taskContext,
+                    context: taskContext
                 });
                 if (didCreateOrganization) {
                     taskContext.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
@@ -55,7 +55,7 @@ export async function createFernDirectoryAndWorkspace({
         await writeProjectConfig({
             filepath: join(pathToFernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME)),
             organization,
-            versionOfCli,
+            versionOfCli
         });
     } else {
         const projectConfig = await loadProjectConfig({ directory: pathToFernDirectory, context: taskContext });
@@ -64,14 +64,14 @@ export async function createFernDirectoryAndWorkspace({
 
     return {
         absolutePathToFernDirectory: pathToFernDirectory,
-        organization,
+        organization
     };
 }
 
 async function writeProjectConfig({
     organization,
     filepath,
-    versionOfCli,
+    versionOfCli
 }: {
     organization: string;
     filepath: AbsoluteFilePath;
@@ -79,7 +79,7 @@ async function writeProjectConfig({
 }): Promise<void> {
     const projectConfig: ProjectConfigSchema = {
         organization,
-        version: versionOfCli,
+        version: versionOfCli
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }

@@ -24,7 +24,7 @@ export async function getAllPackages({ since = false }: { since?: boolean } = {}
         if (parsed.location !== ".") {
             packages.push({
                 name: parsed.name,
-                location: path.resolve(__dirname, "../../..", parsed.location),
+                location: path.resolve(__dirname, "../../..", parsed.location)
             });
         }
         return packages;

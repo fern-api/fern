@@ -3,7 +3,7 @@ import jwksClient from "jwks-rsa";
 import { FernUserToken } from "../FernToken";
 
 const client = jwksClient({
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
 });
 
 export async function verifyJwt(token: FernUserToken): Promise<boolean> {

@@ -18,7 +18,7 @@ export function combineAudiences(...allAudiences: [Audiences, ...Audiences[]]): 
         }
         return {
             type: "select",
-            audiences: [...getAudienceStrings(combined), ...getAudienceStrings(audiences)],
+            audiences: [...getAudienceStrings(combined), ...getAudienceStrings(audiences)]
         };
     });
 }

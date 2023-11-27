@@ -11,7 +11,7 @@ import {
     HttpPathParameterSchema,
     HttpQueryParameterSchema,
     HttpServiceSchema,
-    TypeDeclarationSchema,
+    TypeDeclarationSchema
 } from "../schemas";
 
 export type DefinitionFileAstVisitor<R = void | Promise<void>> = {
@@ -78,7 +78,7 @@ export const TypeReferenceLocation = {
     RequestReference: "requestReference",
     InlinedRequestProperty: "inlinedRequestProperty",
     Response: "response",
-    StreamingResponse: "streamingResponse",
+    StreamingResponse: "streamingResponse"
 } as const;
 export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>;
 

@@ -13,7 +13,7 @@ export function constructCasingsGenerator(generationLanguage: GenerationLanguage
         generateName: (name) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                safeName: sanitizeNameForLanguage(unsafeString, generationLanguage),
+                safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
             });
 
             const camelCaseName = camelCase(name);
@@ -24,13 +24,13 @@ export function constructCasingsGenerator(generationLanguage: GenerationLanguage
                 camelCase: generateSafeAndUnsafeString(camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(snakeCaseName.toUpperCase()),
-                pascalCase: generateSafeAndUnsafeString(upperFirst(camelCaseName)),
+                pascalCase: generateSafeAndUnsafeString(upperFirst(camelCaseName))
             };
         },
         generateNameAndWireValue: ({ name, wireValue }) => ({
             name: casingsGenerator.generateName(name),
-            wireValue,
-        }),
+            wireValue
+        })
     };
     return casingsGenerator;
 }

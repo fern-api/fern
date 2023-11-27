@@ -10,7 +10,7 @@ export function validateUndiscriminatedUnionExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace,
+    workspace
 }: {
     rawUnion: RawSchemas.UndiscriminatedUnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -27,7 +27,7 @@ export function validateUndiscriminatedUnionExample({
             typeResolver,
             exampleResolver,
             file,
-            workspace,
+            workspace
         });
         if (violationsForMember.length === 0) {
             return [];

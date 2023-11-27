@@ -21,7 +21,7 @@ export async function runDockerForWorkspace({
     workspace,
     taskContext,
     customConfig,
-    irVersion,
+    irVersion
 }: {
     generatorType: GeneratorType;
     absolutePathToOutput: AbsoluteFilePath;
@@ -48,12 +48,12 @@ export async function runDockerForWorkspace({
                         : FernFiddle.remoteGen.OutputMode.github({
                               repo: `seed-${language}`,
                               owner: "fern-api",
-                              publishInfo,
+                              publishInfo
                           }),
                 absolutePathToLocalOutput: absolutePathToOutput,
-                language,
-            },
-        ],
+                language
+            }
+        ]
     };
     await runLocalGenerationForSeed({
         organization: DUMMY_ORGANIZATION,
@@ -61,7 +61,7 @@ export async function runDockerForWorkspace({
         generatorGroup,
         keepDocker: true,
         context: taskContext,
-        irVersionOverride: irVersion,
+        irVersionOverride: irVersion
     });
 }
 
@@ -70,17 +70,17 @@ function getPublishInfo(language: GenerationLanguage): GithubPublishInfo | undef
         case "java":
             return FernFiddle.GithubPublishInfo.maven({
                 coordinate: "",
-                registryUrl: "",
+                registryUrl: ""
             });
         case "python":
             return FernFiddle.GithubPublishInfo.pypi({
                 packageName: "",
-                registryUrl: "",
+                registryUrl: ""
             });
         case "typescript":
             return FernFiddle.GithubPublishInfo.npm({
                 packageName: "",
-                registryUrl: "",
+                registryUrl: ""
             });
         case "go":
             return undefined;

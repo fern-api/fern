@@ -15,7 +15,7 @@ export interface AsyncAndSyncEndpoints {
 export function convertAsyncSyncOperation({
     operationContext,
     context,
-    asyncExtension,
+    asyncExtension
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -41,10 +41,10 @@ export function convertAsyncSyncOperation({
                     Object.entries(operation.responses).filter(([statusCode]) => {
                         return parseInt(statusCode) !== asyncResponseStatusCode;
                     })
-                ),
-            },
+                )
+            }
         },
-        context,
+        context
     });
 
     const asyncOperation = convertHttpOperation({
@@ -52,32 +52,32 @@ export function convertAsyncSyncOperation({
             ...operationContext,
             pathItemParameters: filteredPathItemParams,
             operationParameters: filteredOperationParams,
-            baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "async"],
+            baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "async"]
         },
         context,
         suffix: "async",
-        responseStatusCode: asyncResponseStatusCode,
+        responseStatusCode: asyncResponseStatusCode
     });
 
     asyncOperation.headers.push({
         name: headerToIgnore,
         schema: Schema.literal({
             description: null,
-            value: LiteralSchemaValue.string(headerValue),
+            value: LiteralSchemaValue.string(headerValue)
         }),
-        description: undefined,
+        description: undefined
     });
 
     return {
         sync: syncOperation,
-        async: asyncOperation,
+        async: asyncOperation
     };
 }
 
 function filterParameters({
     context,
     headerToIgnore,
-    parameters,
+    parameters
 }: {
     context: AbstractOpenAPIV3ParserContext;
     headerToIgnore: string;

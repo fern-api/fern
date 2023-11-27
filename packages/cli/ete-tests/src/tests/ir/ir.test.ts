@@ -7,53 +7,53 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 
 const FIXTURES: Fixture[] = [
     {
-        name: "file-upload",
+        name: "file-upload"
     },
     {
-        name: "streaming",
+        name: "streaming"
     },
     {
-        name: "nested-example-reference",
+        name: "nested-example-reference"
     },
     {
-        name: "auth-header-prefix",
+        name: "auth-header-prefix"
     },
     {
-        name: "simple",
-    },
-    {
-        name: "simple",
-        audiences: ["test"],
+        name: "simple"
     },
     {
         name: "simple",
-        audiences: ["internal"],
+        audiences: ["test"]
+    },
+    {
+        name: "simple",
+        audiences: ["internal"]
     },
     {
         name: "migration",
-        version: "v1",
+        version: "v1"
     },
     {
-        name: "extended-examples",
+        name: "extended-examples"
     },
     {
-        name: "packages",
+        name: "packages"
     },
     {
-        name: "multiple-environment-urls",
+        name: "multiple-environment-urls"
     },
     {
-        name: "variables",
+        name: "variables"
     },
     {
-        name: "navigation-points-to",
+        name: "navigation-points-to"
     },
     {
-        name: "webhooks",
+        name: "webhooks"
     },
     {
-        name: "response-property",
-    },
+        name: "response-property"
+    }
 ];
 
 interface Fixture {
@@ -75,7 +75,7 @@ describe("ir", () => {
                     fixturePath,
                     language: fixture.language,
                     audiences: fixture.audiences,
-                    version: fixture.version,
+                    version: fixture.version
                 });
                 // eslint-disable-next-line jest/no-standalone-expect
                 expect(irContents).toMatchSnapshot();
@@ -87,7 +87,7 @@ describe("ir", () => {
     it("works with latest version", async () => {
         const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v27"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
-            reject: false,
+            reject: false
         });
         expect(stdout).toContain("Wrote IR to");
     });
@@ -95,7 +95,7 @@ describe("ir", () => {
     it("fails with invalid version", async () => {
         const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v100"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
-            reject: false,
+            reject: false
         });
         expect(stdout).toContain("IR v100 does not exist");
     });

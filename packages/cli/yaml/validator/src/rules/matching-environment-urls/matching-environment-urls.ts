@@ -19,7 +19,7 @@ export const MatchingEnvironmentUrlsRule: Rule = {
                     const addViolationForUrlId = (urlId: string) => {
                         violations.push({
                             severity: "error",
-                            message: `Environment ${environmentId} is missing URL for ${chalk.bold(urlId)}`,
+                            message: `Environment ${environmentId} is missing URL for ${chalk.bold(urlId)}`
                         });
                     };
 
@@ -35,12 +35,12 @@ export const MatchingEnvironmentUrlsRule: Rule = {
                                     addViolationForUrlId(urlId);
                                 }
                             }
-                        },
+                        }
                     });
 
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

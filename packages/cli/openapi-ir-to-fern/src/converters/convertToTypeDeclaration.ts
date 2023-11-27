@@ -11,7 +11,7 @@ import {
     OptionalSchema,
     PrimitiveSchema,
     ReferencedSchema,
-    Schema,
+    Schema
 } from "@fern-fern/openapi-ir-model/finalIr";
 import {
     convertArrayToTypeReference,
@@ -21,7 +21,7 @@ import {
     convertPrimitiveToTypeReference,
     convertReferenceToTypeReference,
     convertToTypeReference,
-    convertUnknownToTypeReference,
+    convertUnknownToTypeReference
 } from "./convertToTypeReference";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
@@ -61,7 +61,7 @@ export function convertToTypeDeclaration(schema: Schema, schemas: Record<SchemaI
 
 export function convertObjectToTypeDeclaration({
     schema,
-    schemas,
+    schemas
 }: {
     schema: ObjectSchema;
     schemas: Record<SchemaId, Schema>;
@@ -86,7 +86,7 @@ export function convertObjectToTypeDeclaration({
         properties[property.key] = propertyTypeReference.typeReference;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
-            ...propertyTypeReference.additionalTypeDeclarations,
+            ...propertyTypeReference.additionalTypeDeclarations
         };
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
@@ -107,7 +107,7 @@ export function convertObjectToTypeDeclaration({
         extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference.typeReference));
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
-            ...allOfTypeReference.additionalTypeDeclarations,
+            ...allOfTypeReference.additionalTypeDeclarations
         };
     }
 
@@ -118,7 +118,7 @@ export function convertObjectToTypeDeclaration({
         }
         const inlinedSchemaPropertyInfo = getAllProperties({
             schema: inlinedSchema,
-            schemaId: inlineSchemaId,
+            schemaId: inlineSchemaId
         });
         for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
@@ -132,7 +132,7 @@ export function convertObjectToTypeDeclaration({
         for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
             const extendedSchemaTypeReference = convertToTypeReference({
                 schema: Schema.reference(extendedSchema),
-                schemas,
+                schemas
             });
             extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference.typeReference));
         }
@@ -148,17 +148,17 @@ export function convertObjectToTypeDeclaration({
                         typeof propertyDefinition === "string"
                             ? {
                                   type: propertyDefinition,
-                                  name: `_${propertyKey}`,
+                                  name: `_${propertyKey}`
                               }
                             : {
                                   ...propertyDefinition,
-                                  name: `_${propertyKey}`,
-                              },
+                                  name: `_${propertyKey}`
+                              }
                     ];
                 }
                 return [propertyKey, propertyDefinition];
             })
-        ),
+        )
     };
     if (extendedSchemas.length > 0) {
         objectTypeDeclaration.extends = extendedSchemas;
@@ -166,7 +166,7 @@ export function convertObjectToTypeDeclaration({
     return {
         name: schema.nameOverride ?? schema.generatedName,
         typeDeclaration: objectTypeDeclaration,
-        additionalTypeDeclarations,
+        additionalTypeDeclarations
     };
 }
 
@@ -183,7 +183,7 @@ function getAllProperties({ schemaId, schema }: { schemaId: SchemaId; schema: Sc
 
 export function convertArrayToTypeDeclaration({
     schema,
-    schemas,
+    schemas
 }: {
     schema: ArraySchema;
     schemas: Record<SchemaId, Schema>;
@@ -192,14 +192,14 @@ export function convertArrayToTypeDeclaration({
     return {
         typeDeclaration: arrayTypeReference.typeReference,
         additionalTypeDeclarations: {
-            ...arrayTypeReference.additionalTypeDeclarations,
-        },
+            ...arrayTypeReference.additionalTypeDeclarations
+        }
     };
 }
 
 export function convertMapToTypeDeclaration({
     schema,
-    schemas,
+    schemas
 }: {
     schema: MapSchema;
     schemas: Record<SchemaId, Schema>;
@@ -208,8 +208,8 @@ export function convertMapToTypeDeclaration({
     return {
         typeDeclaration: mapTypeReference.typeReference,
         additionalTypeDeclarations: {
-            ...mapTypeReference.additionalTypeDeclarations,
-        },
+            ...mapTypeReference.additionalTypeDeclarations
+        }
     };
 }
 
@@ -217,7 +217,7 @@ export function convertPrimitiveToTypeDeclaration(schema: PrimitiveSchema): Type
     const primitiveTypeReference = convertPrimitiveToTypeReference(schema);
     return {
         typeDeclaration: primitiveTypeReference.typeReference,
-        additionalTypeDeclarations: {},
+        additionalTypeDeclarations: {}
     };
 }
 
@@ -230,17 +230,17 @@ export function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclaratio
                 return {
                     name: enumValue.nameOverride ?? enumValue.generatedName,
                     value: enumValue.value,
-                    docs: enumValue.description ?? undefined,
+                    docs: enumValue.description ?? undefined
                 };
-            }),
+            })
         },
-        additionalTypeDeclarations: {},
+        additionalTypeDeclarations: {}
     };
 }
 
 export function convertReferenceToTypeDeclaration({
     schema,
-    schemas,
+    schemas
 }: {
     schema: ReferencedSchema;
     schemas: Record<SchemaId, Schema>;
@@ -250,14 +250,14 @@ export function convertReferenceToTypeDeclaration({
         name: schema.nameOverride ?? schema.generatedName,
         typeDeclaration: referenceTypeReference.typeReference,
         additionalTypeDeclarations: {
-            ...referenceTypeReference.additionalTypeDeclarations,
-        },
+            ...referenceTypeReference.additionalTypeDeclarations
+        }
     };
 }
 
 export function convertOptionalToTypeDeclaration({
     schema,
-    schemas,
+    schemas
 }: {
     schema: OptionalSchema;
     schemas: Record<SchemaId, Schema>;
@@ -266,8 +266,8 @@ export function convertOptionalToTypeDeclaration({
     return {
         typeDeclaration: optionalTypeReference.typeReference,
         additionalTypeDeclarations: {
-            ...optionalTypeReference.additionalTypeDeclarations,
-        },
+            ...optionalTypeReference.additionalTypeDeclarations
+        }
     };
 }
 
@@ -276,8 +276,8 @@ export function convertUnknownToTypeDeclaration(): TypeDeclarations {
     return {
         typeDeclaration: unknownTypeReference.typeReference,
         additionalTypeDeclarations: {
-            ...unknownTypeReference.additionalTypeDeclarations,
-        },
+            ...unknownTypeReference.additionalTypeDeclarations
+        }
     };
 }
 
@@ -286,14 +286,14 @@ export function convertLiteralToTypeDeclaration(value: LiteralSchemaValue): Type
     return {
         typeDeclaration: literalTypeReference.typeReference,
         additionalTypeDeclarations: {
-            ...literalTypeReference.additionalTypeDeclarations,
-        },
+            ...literalTypeReference.additionalTypeDeclarations
+        }
     };
 }
 
 export function convertOneOfToTypeDeclaration({
     schema,
-    schemas,
+    schemas
 }: {
     schema: OneOfSchema;
     schemas: Record<SchemaId, Schema>;
@@ -306,7 +306,7 @@ export function convertOneOfToTypeDeclaration({
             baseProperties[property.key] = propertyTypeReference.typeReference;
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,
-                ...propertyTypeReference.additionalTypeDeclarations,
+                ...propertyTypeReference.additionalTypeDeclarations
             };
         }
         const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
@@ -317,12 +317,12 @@ export function convertOneOfToTypeDeclaration({
             } else {
                 union[discriminantValue] = {
                     type: subSchemaTypeReference.typeReference.type,
-                    docs: subSchemaTypeReference.typeReference.docs,
+                    docs: subSchemaTypeReference.typeReference.docs
                 };
             }
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,
-                ...subSchemaTypeReference.additionalTypeDeclarations,
+                ...subSchemaTypeReference.additionalTypeDeclarations
             };
         }
         return {
@@ -331,9 +331,9 @@ export function convertOneOfToTypeDeclaration({
                 discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
-                union,
+                union
             },
-            additionalTypeDeclarations,
+            additionalTypeDeclarations
         };
     }
 
@@ -345,12 +345,12 @@ export function convertOneOfToTypeDeclaration({
         } else {
             union.push({
                 type: subSchemaTypeReference.typeReference.type,
-                docs: subSchemaTypeReference.typeReference.docs,
+                docs: subSchemaTypeReference.typeReference.docs
             });
         }
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
-            ...subSchemaTypeReference.additionalTypeDeclarations,
+            ...subSchemaTypeReference.additionalTypeDeclarations
         };
     }
     return {
@@ -358,9 +358,9 @@ export function convertOneOfToTypeDeclaration({
         typeDeclaration: {
             discriminated: false,
             docs: schema.description ?? undefined,
-            union,
+            union
         },
-        additionalTypeDeclarations,
+        additionalTypeDeclarations
     };
 }
 

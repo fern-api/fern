@@ -4,7 +4,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V16_TO_V15_MIGRATION: IrMigration<
@@ -32,7 +32,7 @@ export const V16_TO_V15_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v16, { taskContext, targetGenerator }): IrVersions.V15.ir.IntermediateRepresentation => {
@@ -54,11 +54,11 @@ export const V16_TO_V15_MIGRATION: IrMigration<
                 endpoints: service.endpoints.map((endpoint) => ({
                     ...endpoint,
                     allPathParameters: convertPathParameters(endpoint.allPathParameters),
-                    pathParameters: convertPathParameters(endpoint.pathParameters),
-                })),
-            })),
+                    pathParameters: convertPathParameters(endpoint.pathParameters)
+                }))
+            }))
         };
-    },
+    }
 };
 
 function convertPathParameters(
@@ -72,7 +72,7 @@ function convertPathParameter(pathParameter: IrVersions.V16.http.PathParameter):
         ...pathParameter,
         availability: {
             status: IrVersions.V15.commons.AvailabilityStatus.GeneralAvailability,
-            message: undefined,
-        },
+            message: undefined
+        }
     };
 }

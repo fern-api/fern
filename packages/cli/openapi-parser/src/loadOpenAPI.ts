@@ -9,10 +9,10 @@ const XFernStreaming: NodeType = {
     properties: {
         "stream-condition": { type: "string" },
         response: "Schema",
-        "response-stream": "Schema",
+        "response-stream": "Schema"
     },
     required: ["stream-condition", "response", "response-stream"],
-    extensionsPrefix: "x-",
+    extensionsPrefix: "x-"
 };
 
 const FERN_TYPE_EXTENSIONS: Plugin = {
@@ -26,12 +26,12 @@ const FERN_TYPE_EXTENSIONS: Plugin = {
                     ...types.Operation,
                     properties: {
                         ...types.Operation?.properties,
-                        "x-fern-streaming": "XFernStreaming",
-                    },
-                },
+                        "x-fern-streaming": "XFernStreaming"
+                    }
+                }
             };
-        },
-    },
+        }
+    }
 };
 
 export async function loadOpenAPI(absoluteFilePathToOpenAPI: AbsoluteFilePath): Promise<OpenAPI.Document> {
@@ -42,16 +42,16 @@ export async function loadOpenAPI(absoluteFilePathToOpenAPI: AbsoluteFilePath): 
                 styleguide: {
                     plugins: [FERN_TYPE_EXTENSIONS],
                     rules: {
-                        spec: "warn",
-                    },
-                },
+                        spec: "warn"
+                    }
+                }
             },
             undefined
         ),
         ref: absoluteFilePathToOpenAPI,
         dereference: false,
         removeUnusedComponents: false,
-        keepUrlRefs: true,
+        keepUrlRefs: true
     });
 
     return await SwaggerParser.parse(result.bundle.parsed);

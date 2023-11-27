@@ -11,7 +11,7 @@ export function validateRequest({
     typeResolver,
     exampleResolver,
     file,
-    workspace,
+    workspace
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema | undefined;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -28,7 +28,7 @@ export function validateRequest({
         if (example != null) {
             violations.push({
                 severity: "error",
-                message: "Unexpected request in example.",
+                message: "Unexpected request in example."
             });
         }
     } else if (isInlineRequestBody(body)) {
@@ -38,13 +38,13 @@ export function validateRequest({
                 typeNameForBreadcrumb: "<Inlined Request>",
                 rawObject: {
                     extends: body.extends,
-                    properties: body.properties ?? {},
+                    properties: body.properties ?? {}
                 },
                 file,
                 typeResolver,
                 exampleResolver,
                 workspace,
-                example,
+                example
             })
         );
     } else {
@@ -55,7 +55,7 @@ export function validateRequest({
                 file,
                 workspace,
                 typeResolver,
-                exampleResolver,
+                exampleResolver
             })
         );
     }

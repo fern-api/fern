@@ -4,7 +4,7 @@ import { extendTypeReferenceSchema } from "./TypeReferenceSchema";
 
 export const HttpQueryParameterSchema = extendTypeReferenceSchema(
     DeclarationWithNameSchema.extend({
-        "allow-multiple": z.optional(z.boolean()),
+        "allow-multiple": z.optional(z.boolean())
     }).shape
 );
 

@@ -7,20 +7,20 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 describe("fern preview", () => {
     it("preview basic docs", async () => {
         void runFernCli(["preview"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
+            cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
         await sleep(5000);
 
-        const response = await fetch("http://localhost:3000/docs/preview/load", {
-            method: "POST",
+        const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
+            method: "POST"
         });
 
         expect(response.body != null).toEqual(true);
         const responseBody = await response.json();
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect(Object.keys(responseBody as any)).toEqual(["pages", "config"]);
+        expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
     }, 180_000);
 });
 

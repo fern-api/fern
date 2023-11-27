@@ -25,7 +25,7 @@ describe("fern generate --local", () => {
     it("Keep files listed in .fernignore from unmodified", async () => {
         const pathOfDirectory = await init();
         await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory,
+            cwd: pathOfDirectory
         });
 
         // write custom files and override
@@ -41,7 +41,7 @@ describe("fern generate --local", () => {
         await writeFile(absolutePathToDummyText, DUMMY_TXT_FILECONTENTS);
 
         await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory,
+            cwd: pathOfDirectory
         });
 
         await expectPathExists(absolutePathToFernignore);
@@ -50,7 +50,7 @@ describe("fern generate --local", () => {
 
         // rerun and make sure no issues if there are no changes
         await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory,
+            cwd: pathOfDirectory
         });
     }, 180_000);
 });

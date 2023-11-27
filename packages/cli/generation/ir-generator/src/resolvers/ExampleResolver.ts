@@ -27,7 +27,7 @@ export class ExampleResolverImpl implements ExampleResolver {
 
     public resolveAllReferencesInExample({
         example,
-        file,
+        file
     }: {
         example: unknown;
         file: FernFileContext;
@@ -35,14 +35,14 @@ export class ExampleResolverImpl implements ExampleResolver {
         if (typeof example === "string") {
             const resolvedExample = this.resolveExample({
                 example,
-                file,
+                file
             });
             if (resolvedExample == null || typeof resolvedExample.resolvedExample === "string") {
                 return resolvedExample;
             }
             return this.resolveAllReferencesInExample({
                 example: resolvedExample.resolvedExample,
-                file: resolvedExample.file,
+                file: resolvedExample.file
             });
         } else if (isPlainObject(example)) {
             const newExample: typeof example = {};
@@ -81,7 +81,7 @@ export class ExampleResolverImpl implements ExampleResolver {
 
     public resolveExample({
         example,
-        file,
+        file
     }: {
         example: unknown;
         file: FernFileContext;
@@ -89,7 +89,7 @@ export class ExampleResolverImpl implements ExampleResolver {
         if (typeof example !== "string") {
             return {
                 resolvedExample: example,
-                file,
+                file
             };
         }
 
@@ -97,14 +97,14 @@ export class ExampleResolverImpl implements ExampleResolver {
             return {
                 // remove backslash
                 resolvedExample: example.slice(1),
-                file,
+                file
             };
         }
 
         if (!example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
             return {
                 resolvedExample: example,
-                file,
+                file
             };
         }
 
@@ -115,7 +115,7 @@ export class ExampleResolverImpl implements ExampleResolver {
 
         const typeDeclaration = this.typeResolver.getDeclarationOfNamedType({
             referenceToNamedType: parsedExampleReference.rawTypeReference,
-            file,
+            file
         });
         if (
             typeDeclaration == null ||
@@ -159,14 +159,14 @@ export class ExampleResolverImpl implements ExampleResolver {
         if (third == null) {
             return {
                 rawTypeReference: first.slice(EXAMPLE_REFERENCE_PREFIX.length),
-                exampleName: second,
+                exampleName: second
             };
         }
 
         // otherwise, the reference is $imported.Type.Example
         return {
             rawTypeReference: `${first}.${second}`.slice(EXAMPLE_REFERENCE_PREFIX.length),
-            exampleName: third,
+            exampleName: third
         };
     }
 }

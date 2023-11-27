@@ -1,7 +1,7 @@
 import {
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
-    SchemaWithExample,
+    SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -13,7 +13,7 @@ export function convertAdditionalProperties({
     additionalProperties,
     description,
     wrapAsNullable,
-    context,
+    context
 }: {
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
@@ -30,13 +30,13 @@ export function convertAdditionalProperties({
                 schema: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
-                    example: undefined,
-                }),
+                    example: undefined
+                })
             },
             valueSchema: SchemaWithExample.unknown({
                 description: undefined,
-                example: undefined,
-            }),
+                example: undefined
+            })
         });
     }
     return wrapMap({
@@ -47,10 +47,10 @@ export function convertAdditionalProperties({
             schema: PrimitiveSchemaValueWithExample.string({
                 minLength: undefined,
                 maxLength: undefined,
-                example: undefined,
-            }),
+                example: undefined
+            })
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
+        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"])
     });
 }
 
@@ -64,7 +64,7 @@ export function wrapMap({
     keySchema,
     valueSchema,
     wrapAsNullable,
-    description,
+    description
 }: {
     keySchema: PrimitiveSchemaWithExample;
     valueSchema: SchemaWithExample;
@@ -76,14 +76,14 @@ export function wrapMap({
             value: SchemaWithExample.map({
                 description,
                 key: keySchema,
-                value: valueSchema,
+                value: valueSchema
             }),
-            description,
+            description
         });
     }
     return SchemaWithExample.map({
         description,
         key: keySchema,
-        value: valueSchema,
+        value: valueSchema
     });
 }

@@ -4,7 +4,7 @@ import {
     doesPathExist,
     getDirectoryContents,
     join,
-    RelativeFilePath,
+    RelativeFilePath
 } from "@fern-api/fs-utils";
 import { findUp } from "find-up";
 import { Migration } from "../../../types/Migration";
@@ -53,7 +53,7 @@ export const migration: Migration = {
         const workspacesContainingDocs = [];
         for (const workspace of workspaces) {
             const absolutePathToDocsYaml = getAbsolutePathToDocsYaml({
-                absolutePathToWorkspace: join(absolutePathToFernDirectory, RelativeFilePath.of(workspace.name)),
+                absolutePathToWorkspace: join(absolutePathToFernDirectory, RelativeFilePath.of(workspace.name))
             });
             if (await doesPathExist(absolutePathToDocsYaml)) {
                 workspacesContainingDocs.push(workspace);
@@ -63,7 +63,7 @@ export const migration: Migration = {
         if (workspacesContainingDocs.length === 0 || workspacesContainingDocs[0] == null) {
             await migrateOnlyMultipleAPIs({
                 absolutePathToFernDirectory,
-                workspaces: workspaces.map((workspace) => workspace.name),
+                workspaces: workspaces.map((workspace) => workspace.name)
             });
             return;
         }
@@ -78,9 +78,9 @@ export const migration: Migration = {
         await migrateDocsAndMultipleAPIs({
             absolutePathToFernDirectory,
             workspaces: workspaces.map((workspace) => workspace.name),
-            workspaceContainingDocs: workspacesContainingDocs[0].name,
+            workspaceContainingDocs: workspacesContainingDocs[0].name
         });
-    },
+    }
 };
 
 const FERN_DIRECTORY = "fern";

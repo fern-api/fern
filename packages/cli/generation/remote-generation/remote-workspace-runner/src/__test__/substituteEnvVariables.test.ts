@@ -10,10 +10,10 @@ describe("substituteEnvVariables", () => {
             foo: "bar",
             baz: {
                 qux: {
-                    thud: "${FOO_VAR}",
-                },
+                    thud: "${FOO_VAR}"
+                }
             },
-            plugh: "${FOO_VAR}-${BAR_VAR}",
+            plugh: "${FOO_VAR}-${BAR_VAR}"
         };
         const substituted = substituteEnvVariables(content, createMockTaskContext());
 
@@ -26,10 +26,10 @@ describe("substituteEnvVariables", () => {
             foo: "bar",
             baz: {
                 qux: {
-                    thud: "${UNDEFINED_ENV_VAR}",
-                },
+                    thud: "${UNDEFINED_ENV_VAR}"
+                }
             },
-            plugh: "${FOO_VAR}",
+            plugh: "${FOO_VAR}"
         };
         expect(() => substituteEnvVariables(content, createMockTaskContext({ logger: NOOP_LOGGER }))).toThrow(
             FernCliError

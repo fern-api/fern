@@ -29,7 +29,7 @@ export const IdGenerator = {
     generateWebhookGroupId: (fernFilepath: FernFilepath): string => {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `webhooks_${joinedFernFilePath}`;
-    },
+    }
 };
 
 function stringifyFernFilepath(fernFilepath: FernFilepath): string {

@@ -12,12 +12,12 @@ export interface ConvertedGeneratorsConfiguration {
 export type PathModificationStrategy = typeof PathModificationStrategy[keyof typeof PathModificationStrategy];
 export const PathModificationStrategy = {
     Nest: "Nest",
-    MoveUp: "MoveUp",
+    MoveUp: "MoveUp"
 } as const;
 
 export function convertLegacyGeneratorsConfiguration({
     generatorsConfiguration,
-    pathModificationStrategy,
+    pathModificationStrategy
 }: {
     generatorsConfiguration: LegacyGenerators.GeneratorsConfigurationSchema;
     pathModificationStrategy: PathModificationStrategy;
@@ -30,7 +30,7 @@ export function convertLegacyGeneratorsConfiguration({
                 if (group.docs != null) {
                     docsURLs.push({
                         url: group.docs.domain,
-                        customDomain: group.docs["custom-domains"]?.[0],
+                        customDomain: group.docs["custom-domains"]?.[0]
                     });
                 }
                 return [
@@ -39,21 +39,21 @@ export function convertLegacyGeneratorsConfiguration({
                         audiences: group.audiences,
                         generators: group.generators.map((generatorInvocation) =>
                             convertLegacyGeneratorsInvocation({ generatorInvocation, pathModificationStrategy })
-                        ),
-                    },
+                        )
+                    }
                 ];
             })
-        ),
+        )
     };
     return {
         value: convertedGeneratorsConfiguration,
-        docsURLs,
+        docsURLs
     };
 }
 
 function convertLegacyGeneratorsInvocation({
     generatorInvocation,
-    pathModificationStrategy,
+    pathModificationStrategy
 }: {
     generatorInvocation: LegacyGenerators.GeneratorInvocationSchema;
     pathModificationStrategy: PathModificationStrategy;
@@ -64,15 +64,15 @@ function convertLegacyGeneratorsInvocation({
             generatorInvocation.output?.location === "local-file-system"
                 ? {
                       location: "local-file-system",
-                      path: convertPath({ path: generatorInvocation.output.path, pathModificationStrategy }),
+                      path: convertPath({ path: generatorInvocation.output.path, pathModificationStrategy })
                   }
-                : generatorInvocation.output,
+                : generatorInvocation.output
     };
 }
 
 function convertPath({
     path,
-    pathModificationStrategy,
+    pathModificationStrategy
 }: {
     path: string;
     pathModificationStrategy: PathModificationStrategy;

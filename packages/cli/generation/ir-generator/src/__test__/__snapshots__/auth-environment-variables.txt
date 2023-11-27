@@ -92,6 +92,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -148,6 +149,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_service.getWithApiKey",
+          "idempotent": false,
           "method": "GET",
           "name": {
             "camelCase": {

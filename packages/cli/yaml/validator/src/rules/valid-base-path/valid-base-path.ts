@@ -11,15 +11,15 @@ export const ValidBasePathRule: Rule = {
                     } else {
                         return [];
                     }
-                },
+                }
             },
             definitionFile: {
                 httpService: (service) => {
                     return validateBasePath(service["base-path"]);
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 function validateBasePath(basePath: string): RuleViolation[] {
@@ -32,14 +32,14 @@ function validateBasePath(basePath: string): RuleViolation[] {
     if (!basePath.startsWith("/")) {
         violations.push({
             severity: "error",
-            message: "base-path must be empty or start with a slash.",
+            message: "base-path must be empty or start with a slash."
         });
     }
 
     if (basePath.endsWith("/")) {
         violations.push({
             severity: "error",
-            message: "base-path cannot end with a slash.",
+            message: "base-path cannot end with a slash."
         });
     }
 

@@ -5,7 +5,7 @@ export function convertAuth(auth: IrVersions.V5.auth.ApiAuth): IrVersions.V4.aut
     return {
         docs: auth.docs,
         requirement: auth.requirement,
-        schemes: auth.schemes.map((scheme) => convertAuthScheme(scheme)),
+        schemes: auth.schemes.map((scheme) => convertAuthScheme(scheme))
     };
 }
 
@@ -16,6 +16,6 @@ function convertAuthScheme(scheme: IrVersions.V5.auth.AuthScheme): IrVersions.V4
         header: (header) => IrVersions.V4.auth.AuthScheme.header(convertHeader(header)),
         _unknown: () => {
             throw new Error("Unknown AuthScheme: " + scheme._type);
-        },
+        }
     });
 }

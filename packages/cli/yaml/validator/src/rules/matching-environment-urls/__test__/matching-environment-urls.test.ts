@@ -11,7 +11,7 @@ describe("matching-environment-urls", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("matching-urls")
-            ),
+            )
         });
         expect(violations).toEqual([]);
     });
@@ -23,7 +23,7 @@ describe("matching-environment-urls", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("not-matching-urls")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -31,32 +31,32 @@ describe("matching-environment-urls", () => {
                 message: "Environment SingleUrl is missing URL for A",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Environment SingleUrl is missing URL for B",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Environment SingleUrl is missing URL for C",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Environment Staging is missing URL for C",
                 nodePath: ["environments", "Staging"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Environment Production is missing URL for A",
                 nodePath: ["environments", "Production"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

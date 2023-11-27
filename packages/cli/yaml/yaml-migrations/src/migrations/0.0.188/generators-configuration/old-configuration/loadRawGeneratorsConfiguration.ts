@@ -7,7 +7,7 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
-    context,
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     context: TaskContext;
@@ -18,6 +18,6 @@ export async function loadRawGeneratorsConfiguration({
         schema: GeneratorsConfigurationSchema,
         value: contentsParsed,
         context,
-        filepathBeingParsed: absolutePathToGeneratorsConfiguration,
+        filepathBeingParsed: absolutePathToGeneratorsConfiguration
     });
 }

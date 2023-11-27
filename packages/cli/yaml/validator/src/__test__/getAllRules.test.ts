@@ -28,7 +28,7 @@ describe("getAllRules", () => {
         for (const rule of allRules) {
             expect(registeredRules).toContainEqual(
                 expect.objectContaining({
-                    name: rule.name,
+                    name: rule.name
                 })
             );
         }

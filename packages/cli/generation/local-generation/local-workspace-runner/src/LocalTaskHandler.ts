@@ -25,7 +25,7 @@ export class LocalTaskHandler {
         context,
         absolutePathToTmpOutputDirectory,
         absolutePathToTmpSnippetJSON,
-        absolutePathToLocalOutput,
+        absolutePathToLocalOutput
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -67,6 +67,12 @@ export class LocalTaskHandler {
         // In tmp directory initialize a `.git` directory
         await this.runGitCommand(["init"], tmpOutputResolutionDir);
         await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
+
+        const response = await this.runGitCommand(["config", "--list"], tmpOutputResolutionDir);
+        if (!response.includes("user.name")) {
+            await this.runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir);
+            await this.runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir);
+        }
         await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir);
 
         // Stage deletions `git rm -rf .`
@@ -119,18 +125,19 @@ export class LocalTaskHandler {
         await cp(AbsoluteFilePath.of(absolutePathToTmpSnippetJSON), absolutePathToSnippet);
     }
 
-    private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<void> {
-        await loggingExeca(this.context.logger, "git", options, {
+    private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
+        const response = await loggingExeca(this.context.logger, "git", options, {
             cwd,
-            doNotPipeOutput: true,
+            doNotPipeOutput: true
         });
+        return response.stdout;
     }
 }
 
 const NEW_LINE_REGEX = /\r?\n/;
 
 async function getFernIgnorePaths({
-    absolutePathToFernignore,
+    absolutePathToFernignore
 }: {
     absolutePathToFernignore: AbsoluteFilePath;
 }): Promise<string[]> {
@@ -140,6 +147,6 @@ async function getFernIgnorePaths({
         ...fernIgnoreFileContents
             .trim()
             .split(NEW_LINE_REGEX)
-            .filter((line) => !line.startsWith("#") && line.length > 0),
+            .filter((line) => !line.startsWith("#") && line.length > 0)
     ];
 }

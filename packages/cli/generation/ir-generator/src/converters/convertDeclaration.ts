@@ -4,7 +4,7 @@ import { Availability, AvailabilityStatus, Declaration } from "@fern-fern/ir-sdk
 
 const DEFAULT_DECLARATION = {
     docs: undefined,
-    availability: undefined,
+    availability: undefined
 };
 
 export function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Declaration {
@@ -13,7 +13,7 @@ export function convertDeclaration(declaration: string | RawSchemas.DeclarationS
     }
     return {
         docs: declaration.docs,
-        availability: convertAvailability(declaration.availability),
+        availability: convertAvailability(declaration.availability)
     };
 }
 
@@ -25,7 +25,7 @@ export function convertAvailability(
     }
     return {
         status: convertAvailabilityStatus(typeof availability === "string" ? availability : availability.status),
-        message: typeof availability !== "string" ? availability.message : undefined,
+        message: typeof availability !== "string" ? availability.message : undefined
     };
 }
 

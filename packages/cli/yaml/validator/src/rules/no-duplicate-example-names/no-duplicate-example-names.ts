@@ -14,7 +14,7 @@ export const NoDuplicateExampleNamesRule: Rule = {
                     const allNames = declaration.examples.map((example) => example.name).filter(isNonNullish);
                     return getDuplicates(allNames).map((duplicate) => ({
                         severity: "error",
-                        message: `Duplicate example name: ${duplicate}`,
+                        message: `Duplicate example name: ${duplicate}`
                     }));
                 },
                 httpEndpoint: ({ endpoint }) => {
@@ -24,10 +24,10 @@ export const NoDuplicateExampleNamesRule: Rule = {
                     const allNames = endpoint.examples.map((example) => example.name).filter(isNonNullish);
                     return getDuplicates(allNames).map((duplicate) => ({
                         severity: "error",
-                        message: `Duplicate example name: ${duplicate}`,
+                        message: `Duplicate example name: ${duplicate}`
                     }));
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

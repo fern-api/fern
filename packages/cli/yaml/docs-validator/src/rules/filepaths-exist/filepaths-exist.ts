@@ -10,12 +10,12 @@ export const FilepathsExistRule: Rule = {
                     return [
                         {
                             severity: "error",
-                            message: `Path ${value} does not exist`,
-                        },
+                            message: `Path ${value} does not exist`
+                        }
                     ];
                 }
                 return [];
-            },
+            }
         };
-    },
+    }
 };

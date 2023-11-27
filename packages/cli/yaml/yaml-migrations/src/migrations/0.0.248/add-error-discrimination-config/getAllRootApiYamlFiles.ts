@@ -12,7 +12,7 @@ export async function getAllRootApiYamlFiles(context: TaskContext): Promise<Abso
     }
     const filepaths = await glob("*/definition/api.yml", {
         cwd: fernDirectory,
-        absolute: true,
+        absolute: true
     });
     return filepaths.map(AbsoluteFilePath.of);
 }

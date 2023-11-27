@@ -11,7 +11,7 @@ describe("valid-example-endpoint-call", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -24,12 +24,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "headers",
+                    "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required header "endpointHeader"',
@@ -39,12 +39,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "headers",
+                    "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required header "serviceHeader"',
@@ -54,12 +54,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "headers",
+                    "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required header "endpointHeader"',
@@ -69,12 +69,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "headers",
+                    "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Unexpected header "extraHeader"',
@@ -84,12 +84,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 3,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "headers",
+                    "headers"
                 ],
                 relativeFilepath: RelativeFilePath.of("headers.yml"),
-                severity: "error",
+                severity: "error"
             },
 
             // path-parameters.yml
@@ -101,12 +101,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "path-parameters",
+                    "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required path parameter "endpointPathParam"',
@@ -116,12 +116,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "path-parameters",
+                    "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required path parameter "servicePathParam"',
@@ -131,12 +131,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "path-parameters",
+                    "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required path parameter "endpointPathParam"',
@@ -146,12 +146,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "path-parameters",
+                    "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Unexpected path parameter "extraParam"',
@@ -161,12 +161,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 3,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "path-parameters",
+                    "path-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("path-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
 
             // query-parameters.yml
@@ -178,12 +178,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "query-parameters",
+                    "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required query parameter "queryParam"',
@@ -193,12 +193,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 3,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "query-parameters",
+                    "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Unexpected query parameter "extraParam"',
@@ -208,12 +208,12 @@ describe("valid-example-endpoint-call", () => {
                     "get",
                     {
                         arrayIndex: 3,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "query-parameters",
+                    "query-parameters"
                 ],
                 relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
-                severity: "error",
+                severity: "error"
             },
 
             // request.yml
@@ -225,12 +225,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Expected example to be a string. Example is: undefined",
@@ -240,12 +240,12 @@ describe("valid-example-endpoint-call", () => {
                     "c",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Expected example to be a string. Example is: 123",
@@ -255,12 +255,12 @@ describe("valid-example-endpoint-call", () => {
                     "c",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Expected example to be an object. Example is: 123",
@@ -270,12 +270,12 @@ describe("valid-example-endpoint-call", () => {
                     "d",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Example is missing required property "bar"',
@@ -285,12 +285,12 @@ describe("valid-example-endpoint-call", () => {
                     "d",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message:
@@ -301,12 +301,12 @@ describe("valid-example-endpoint-call", () => {
                     "d",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Unexpected property "extraProperty"',
@@ -316,12 +316,12 @@ describe("valid-example-endpoint-call", () => {
                     "d",
                     {
                         arrayIndex: 2,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "request",
+                    "request"
                 ],
                 relativeFilepath: RelativeFilePath.of("request.yml"),
-                severity: "error",
+                severity: "error"
             },
 
             // response.yml
@@ -333,12 +333,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: 'Expected example to be a boolean. Example is: "hello"',
@@ -348,12 +348,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 1,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Expected example to be a string. Example is: undefined",
@@ -363,12 +363,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 3,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Expected example to be a string. Example is: true",
@@ -378,12 +378,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 4,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Unexpected response in example. ErrorWithNoBody does not have a body.",
@@ -393,12 +393,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 7,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message:
@@ -409,12 +409,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 8,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message:
@@ -425,12 +425,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 9,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Unexpected response in example. NotFoundError does not have a body.",
@@ -440,12 +440,12 @@ describe("valid-example-endpoint-call", () => {
                     "a",
                     {
                         arrayIndex: 9,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message:
@@ -456,13 +456,13 @@ describe("valid-example-endpoint-call", () => {
                     "b",
                     {
                         arrayIndex: 0,
-                        key: "examples",
+                        key: "examples"
                     },
-                    "response",
+                    "response"
                 ],
                 relativeFilepath: RelativeFilePath.of("response.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);
@@ -475,7 +475,7 @@ describe("valid-example-endpoint-call", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("optional-example-property")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [];

@@ -8,7 +8,7 @@ import { DependenciesConfigurationSchema } from "./schemas/DependenciesConfigura
 
 export async function loadRawDependenciesConfiguration({
     absolutePathToWorkspace,
-    context,
+    context
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
@@ -28,6 +28,6 @@ export async function loadRawDependenciesConfiguration({
         schema: DependenciesConfigurationSchema,
         value: contentsParsed,
         context,
-        filepathBeingParsed: absolutePathToDependenciesConfiguration,
+        filepathBeingParsed: absolutePathToDependenciesConfiguration
     });
 }

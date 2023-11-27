@@ -15,7 +15,7 @@ describe("union-single-property-key", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newBlogYaml = (

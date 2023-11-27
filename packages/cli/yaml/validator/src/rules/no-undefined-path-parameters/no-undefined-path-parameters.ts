@@ -16,34 +16,34 @@ export const NoUndefinedPathParametersRule: Rule = {
                     return getPathParameterRuleViolations({
                         path: file["base-path"],
                         pathParameters: file["path-parameters"] ?? {},
-                        pathType: "file",
+                        pathType: "file"
                     });
-                },
+                }
             },
             definitionFile: {
                 httpService: (service) => {
                     return getPathParameterRuleViolations({
                         path: service["base-path"],
                         pathParameters: service["path-parameters"] ?? {},
-                        pathType: "service",
+                        pathType: "service"
                     });
                 },
                 httpEndpoint: ({ endpoint }) => {
                     return getPathParameterRuleViolations({
                         path: endpoint.path,
                         pathParameters: endpoint["path-parameters"] != null ? endpoint["path-parameters"] : {},
-                        pathType: "endpoint",
+                        pathType: "endpoint"
                     });
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 function getPathParameterRuleViolations({
     path,
     pathParameters,
-    pathType,
+    pathType
 }: {
     path: string;
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema>;
@@ -57,7 +57,7 @@ function getPathParameterRuleViolations({
         if (urlPathParameters.has(part.pathParameter)) {
             errors.push({
                 severity: "error",
-                message: `${capitalize(pathType)} has duplicate path parameter: ${chalk.bold(part.pathParameter)}.`,
+                message: `${capitalize(pathType)} has duplicate path parameter: ${chalk.bold(part.pathParameter)}.`
             });
         }
         urlPathParameters.add(part.pathParameter);
@@ -70,7 +70,7 @@ function getPathParameterRuleViolations({
     undefinedPathParameters.forEach((pathParameter) => {
         errors.push({
             severity: "error",
-            message: `${capitalize(pathType)} has missing path-parameter: ${chalk.bold(pathParameter)}.`,
+            message: `${capitalize(pathType)} has missing path-parameter: ${chalk.bold(pathParameter)}.`
         });
     });
 
@@ -79,7 +79,7 @@ function getPathParameterRuleViolations({
     missingUrlPathParameters.forEach((pathParameter) => {
         errors.push({
             severity: "error",
-            message: `Path parameter is unreferenced in ${pathType}: ${chalk.bold(pathParameter)}.`,
+            message: `Path parameter is unreferenced in ${pathType}: ${chalk.bold(pathParameter)}.`
         });
     });
 

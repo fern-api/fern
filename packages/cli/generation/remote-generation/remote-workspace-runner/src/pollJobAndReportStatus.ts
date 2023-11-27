@@ -9,7 +9,7 @@ export function pollJobAndReportStatus({
     job,
     taskId,
     taskHandler,
-    context,
+    context
 }: {
     job: FernFiddle.remoteGen.CreateJobResponse;
     taskId: FernFiddle.remoteGen.RemoteGenTaskId;

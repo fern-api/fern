@@ -16,7 +16,7 @@ export async function runRemoteGenerationForGenerator({
     version,
     audiences,
     shouldLogS3Url,
-    token,
+    token
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -30,7 +30,7 @@ export async function runRemoteGenerationForGenerator({
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
-        audiences,
+        audiences
     });
 
     const job = await createAndStartJob({
@@ -41,7 +41,7 @@ export async function runRemoteGenerationForGenerator({
         version,
         intermediateRepresentation,
         shouldLogS3Url,
-        token,
+        token
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -56,13 +56,13 @@ export async function runRemoteGenerationForGenerator({
         job,
         taskId,
         generatorInvocation,
-        interactiveTaskContext,
+        interactiveTaskContext
     });
 
     return await pollJobAndReportStatus({
         job,
         taskHandler,
         taskId,
-        context: interactiveTaskContext,
+        context: interactiveTaskContext
     });
 }

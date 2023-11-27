@@ -8,7 +8,7 @@ export function createTypeReferenceVisitor(
         await visitor.typeReference?.(
             {
                 typeReference,
-                location,
+                location
             },
             nodePath
         );

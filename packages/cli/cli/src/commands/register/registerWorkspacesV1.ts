@@ -14,7 +14,7 @@ export async function registerWorkspacesV1({
     project,
     cliContext,
     token,
-    version,
+    version
 }: {
     project: Project;
     cliContext: CliContext;
@@ -26,7 +26,7 @@ export async function registerWorkspacesV1({
             await createOrganizationIfDoesNotExist({
                 organization: project.config.organization,
                 token,
-                context,
+                context
             });
         });
     }
@@ -43,7 +43,7 @@ export async function registerWorkspacesV1({
                     apiId: FernFiddle.ApiId(workspace.definition.rootApiFile.contents.name),
                     version,
                     cliVersion: cliContext.environment.packageVersion,
-                    yamlSchemaVersion: `${YAML_SCHEMA_VERSION}`,
+                    yamlSchemaVersion: `${YAML_SCHEMA_VERSION}`
                 });
                 if (!registerApiResponse.ok) {
                     registerApiResponse.error._visit({
@@ -52,7 +52,7 @@ export async function registerWorkspacesV1({
                         },
                         _other: (value) => {
                             context.failAndThrow("Failed to register", value);
-                        },
+                        }
                     });
                     return;
                 }

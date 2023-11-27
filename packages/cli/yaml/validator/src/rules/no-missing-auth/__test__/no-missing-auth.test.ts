@@ -10,7 +10,7 @@ describe("no-missing-auth", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,14 +18,14 @@ describe("no-missing-auth", () => {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 nodePath: ["service", "endpoints", "foo"],
-                message: "Endpoint requires auth, but no auth is defined.",
+                message: "Endpoint requires auth, but no auth is defined."
             },
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("b.yml"),
                 nodePath: ["service"],
-                message: "Service requires auth, but no auth is defined.",
-            },
+                message: "Service requires auth, but no auth is defined."
+            }
         ]);
     });
 });

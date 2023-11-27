@@ -14,14 +14,14 @@ describe("convertResponseErrors", () => {
                 relativeFilepath: RelativeFilePath.of("path/to/other"),
                 definitionFile: {
                     imports: {
-                        commons: "./commons",
-                    },
+                        commons: "./commons"
+                    }
                 },
                 casingsGenerator,
                 rootApiFile: {
-                    name: "api",
-                },
-            }),
+                    name: "api"
+                }
+            })
         });
 
         const expectedResponseErrors: ResponseErrors = [
@@ -31,29 +31,29 @@ describe("convertResponseErrors", () => {
                     errorId: "error_path/to/commons:UnauthorizedError",
                     fernFilepath: convertToFernFilepath({
                         relativeFilepath: RelativeFilePath.of("path/to/commons"),
-                        casingsGenerator,
+                        casingsGenerator
                     }),
                     name: {
                         originalName: "UnauthorizedError",
                         camelCase: {
                             safeName: "unauthorizedError",
-                            unsafeName: "unauthorizedError",
+                            unsafeName: "unauthorizedError"
                         },
                         pascalCase: {
                             safeName: "UnauthorizedError",
-                            unsafeName: "UnauthorizedError",
+                            unsafeName: "UnauthorizedError"
                         },
                         snakeCase: {
                             safeName: "unauthorized_error",
-                            unsafeName: "unauthorized_error",
+                            unsafeName: "unauthorized_error"
                         },
                         screamingSnakeCase: {
                             safeName: "UNAUTHORIZED_ERROR",
-                            unsafeName: "UNAUTHORIZED_ERROR",
-                        },
-                    },
-                },
-            },
+                            unsafeName: "UNAUTHORIZED_ERROR"
+                        }
+                    }
+                }
+            }
         ];
 
         expect(actualResponseErrors).toEqual(expectedResponseErrors);

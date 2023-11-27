@@ -59,6 +59,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -119,6 +120,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_dummy.generate-stream",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

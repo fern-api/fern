@@ -4,7 +4,7 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 
 export function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
-    rawGeneratorsConfiguration,
+    rawGeneratorsConfiguration
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
@@ -25,11 +25,11 @@ export function convertGeneratorsConfiguration({
                                             dirname(absolutePathToGeneratorsConfiguration),
                                             generatorInvocation.generate.output
                                         )
-                                      : undefined,
+                                      : undefined
                           }
                         : undefined,
-                config: generatorInvocation.config,
+                config: generatorInvocation.config
             };
-        }),
+        })
     };
 }

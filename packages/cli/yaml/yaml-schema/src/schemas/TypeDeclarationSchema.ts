@@ -11,7 +11,7 @@ export const TypeDeclarationSchema = z.union([
     DiscriminatedUnionSchema,
     AliasSchema,
     EnumSchema,
-    UndiscriminatedUnionSchema,
+    UndiscriminatedUnionSchema
 ]);
 
 export type TypeDeclarationSchema = z.infer<typeof TypeDeclarationSchema>;

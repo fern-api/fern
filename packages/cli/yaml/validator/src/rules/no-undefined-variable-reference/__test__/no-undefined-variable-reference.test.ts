@@ -11,7 +11,7 @@ describe("no-undefined-variable-reference", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,26 +19,26 @@ describe("no-undefined-variable-reference", () => {
                 message: "Variable $var-missing is not defined.",
                 nodePath: ["path-parameters", "baz"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Variable reference must start with $",
                 nodePath: ["path-parameters", "biz", "variable"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Variable $var-missing is not defined.",
                 nodePath: ["service", "endpoints", "test", "path-parameters", "baz"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Variable reference must start with $",
                 nodePath: ["service", "endpoints", "test", "path-parameters", "biz", "variable"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

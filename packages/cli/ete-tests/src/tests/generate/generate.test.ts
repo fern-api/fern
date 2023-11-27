@@ -12,7 +12,7 @@ describe("fern generate", () => {
         const pathOfDirectory = await init();
 
         await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory,
+            cwd: pathOfDirectory
         });
 
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/typescript")))).toBe(true);
@@ -21,7 +21,7 @@ describe("fern generate", () => {
     it("missing docs page", async () => {
         const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
-            reject: false,
+            reject: false
         });
 
         expect(
@@ -33,7 +33,7 @@ describe("fern generate", () => {
 
     it("overlapping methods", async () => {
         const { stdout } = await runFernCli(["generate"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("overlap-methods")),
+            cwd: join(fixturesDir, RelativeFilePath.of("overlap-methods"))
         });
 
         expect(stripAnsi(stdout).trim()).toContain("[api]: Multiple endpoints have conflicting names for 'hello':");

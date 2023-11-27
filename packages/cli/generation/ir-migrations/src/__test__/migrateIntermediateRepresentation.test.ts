@@ -9,7 +9,7 @@ import { migrateIntermediateRepresentationForGenerator } from "../migrateInterme
 import {
     GeneratorVersion,
     GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
+    GeneratorWasNotCreatedYet
 } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
@@ -52,8 +52,8 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.246",
-            },
+                version: "0.0.246"
+            }
         });
         expect(
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -67,8 +67,8 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.245-1-ga1ce47f",
-            },
+                version: "0.0.245-1-ga1ce47f"
+            }
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
@@ -77,7 +77,7 @@ describe("migrateIntermediateRepresentation", () => {
             pascalCase: "BlogNotFoundError",
             screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
             snakeCase: "blog_not_found_error",
-            wireValue: "BlogNotFoundError",
+            wireValue: "BlogNotFoundError"
         });
     });
 
@@ -87,8 +87,8 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.245",
-            },
+                version: "0.0.245"
+            }
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
@@ -97,7 +97,7 @@ describe("migrateIntermediateRepresentation", () => {
             pascalCase: "BlogNotFoundError",
             screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
             snakeCase: "blog_not_found_error",
-            wireValue: "BlogNotFoundError",
+            wireValue: "BlogNotFoundError"
         });
     });
 
@@ -107,8 +107,8 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.246-1-ga1ce47f",
-            },
+                version: "0.0.246-1-ga1ce47f"
+            }
         });
 
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
@@ -120,8 +120,8 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.247",
-            },
+                version: "0.0.247"
+            }
         });
 
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();

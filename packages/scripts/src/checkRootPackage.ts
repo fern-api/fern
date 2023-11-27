@@ -32,7 +32,7 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
     const newDependencies = packagesToDependOn.reduce(
         (dependencies, p) => ({
             ...dependencies,
-            [p.name]: "workspace:*",
+            [p.name]: "workspace:*"
         }),
         {}
     );

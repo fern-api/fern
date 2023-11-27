@@ -2,6 +2,6 @@ export { convertLegacyGeneratorsConfiguration } from "./convertLegacyGeneratorsC
 export * as LegacyGenerators from "./legacy";
 export {
     getAbsolutePathToGeneratorsConfiguration,
-    loadRawGeneratorsConfiguration,
+    loadRawGeneratorsConfiguration
 } from "./loadRawGeneratorsConfiguration";
 export * as MigratedGenerators from "./migrated";

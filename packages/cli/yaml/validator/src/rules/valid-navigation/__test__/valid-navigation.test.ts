@@ -11,7 +11,7 @@ describe("valid-navigation", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,44 +19,44 @@ describe("valid-navigation", () => {
                 message: "Unexpected item: ./b.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Unexpected item: d.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "__package__.yml cannot be specified in navigation.",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "a.yml is specified more than once.",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Missing b.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Missing c.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "./foo does not exist.",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-string/__package__.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

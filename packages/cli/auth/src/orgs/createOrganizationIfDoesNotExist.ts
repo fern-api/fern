@@ -7,7 +7,7 @@ import { getOrganizationNameValidationError } from "./getOrganizationNameValidat
 export async function createOrganizationIfDoesNotExist({
     organization,
     token,
-    context,
+    context
 }: {
     organization: string;
     token: FernUserToken;
@@ -26,7 +26,7 @@ export async function createOrganizationIfDoesNotExist({
         context.failAndThrow(validationError);
     }
     const createOrganizationResponse = await venus.organization.create({
-        organizationId: FernVenusApi.OrganizationId(organization),
+        organizationId: FernVenusApi.OrganizationId(organization)
     });
     if (!createOrganizationResponse.ok) {
         context.failAndThrow(`Failed to create organization: ${organization}`, createOrganizationResponse.error);

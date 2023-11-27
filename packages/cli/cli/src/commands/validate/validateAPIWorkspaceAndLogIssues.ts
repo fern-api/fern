@@ -26,9 +26,9 @@ export async function validateAPIWorkspaceAndLogIssues(workspace: FernWorkspace,
                             itemStr += `[${nodePathItem.arrayIndex}]`;
                         }
                         return itemStr;
-                    }),
+                    })
                 ],
-                title: violation.message,
+                title: violation.message
             })
         );
     }

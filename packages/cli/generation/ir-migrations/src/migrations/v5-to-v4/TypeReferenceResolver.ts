@@ -18,7 +18,7 @@ export class TypeReferenceResolverImpl implements TypeReferenceResolver {
         this.types = ir.types.reduce(
             (acc, type) => ({
                 ...acc,
-                [stringifyTypeName(type.name)]: type,
+                [stringifyTypeName(type.name)]: type
             }),
             {}
         );
@@ -37,14 +37,14 @@ export class TypeReferenceResolverImpl implements TypeReferenceResolver {
                 }
                 return IrVersions.V4.types.ResolvedTypeReference.named({
                     name: convertDeclaredTypeName(typeName),
-                    shape: getTypeDeclarationShape(typeDeclaration.shape._type),
+                    shape: getTypeDeclarationShape(typeDeclaration.shape._type)
                 });
             },
             primitive: IrVersions.V4.types.ResolvedTypeReference.primitive,
             unknown: IrVersions.V4.types.ResolvedTypeReference.unknown,
             _unknown: () => {
                 throw new Error("Unknown TypeReference: " + typeReference._type);
-            },
+            }
         });
     }
 

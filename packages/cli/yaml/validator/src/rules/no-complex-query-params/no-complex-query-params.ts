@@ -16,13 +16,13 @@ export const NoComplexQueryParamsRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: `${type} is not a valid type for a query parameter`,
-                            },
+                                message: `${type} is not a valid type for a query parameter`
+                            }
                         ];
                     }
                     return [];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

@@ -9,7 +9,7 @@ export const DiscriminatedUnionSchema = BaseTypeDeclarationSchema.extend({
     "base-properties": z.optional(z.record(ObjectPropertySchema)),
     extends: z.optional(ObjectExtendsSchema),
     union: z.record(SingleUnionTypeSchema),
-    discriminant: z.optional(z.union([z.string(), UnionDiscriminantSchema])),
+    discriminant: z.optional(z.union([z.string(), UnionDiscriminantSchema]))
 });
 
 export type DiscriminatedUnionSchema = z.infer<typeof DiscriminatedUnionSchema>;

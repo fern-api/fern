@@ -26,7 +26,7 @@ export abstract class AbstractOpenAPIV3ParserContext {
     constructor({
         document,
         taskContext,
-        authHeaders,
+        authHeaders
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;

@@ -18,7 +18,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string): void 
             const openApiIr = await parse({
                 absolutePathToOpenAPI: AbsoluteFilePath.of(openApiPath),
                 absolutePathToAsyncAPI: undefined,
-                taskContext: mockTaskContext,
+                taskContext: mockTaskContext
             });
             const fernDefinition = convert({ openApiIr, taskContext: mockTaskContext });
             expect(fernDefinition).toMatchSnapshot();

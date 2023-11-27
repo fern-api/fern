@@ -10,7 +10,7 @@ import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 export async function visitTypeDeclarations({
     typeDeclarations,
     visitor,
-    nodePath,
+    nodePath
 }: {
     typeDeclarations: Record<string, TypeDeclarationSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
@@ -30,7 +30,7 @@ export async function visitTypeDeclaration({
     typeName,
     declaration,
     visitor,
-    nodePathForType,
+    nodePathForType
 }: {
     typeName: string;
     declaration: TypeDeclarationSchema;
@@ -51,7 +51,7 @@ export async function visitTypeDeclaration({
             await visitAllReferencesInExample({
                 example: example.value,
                 nodePath: nodePathForExample,
-                visitor,
+                visitor
             });
         }
     };
@@ -68,7 +68,7 @@ export async function visitTypeDeclaration({
                     docs: createDocsVisitor(visitor, nodePathForType),
                     availability: noop,
                     audiences: noop,
-                    examples: visitExamples,
+                    examples: visitExamples
                 });
             }
         },
@@ -103,14 +103,14 @@ export async function visitTypeDeclaration({
                                 type: async (type) => {
                                     await visitTypeReference(type, [...nodePathForProperty, "type"]);
                                 },
-                                audiences: noop,
+                                audiences: noop
                             });
                         }
                     }
                 },
                 availability: noop,
                 audiences: noop,
-                examples: visitExamples,
+                examples: visitExamples
             });
         },
         discriminatedUnion: async (union) => {
@@ -142,7 +142,7 @@ export async function visitTypeDeclaration({
                                     if (typeof type === "string") {
                                         await visitTypeReference(type, [...nodePathForType, "type"]);
                                     }
-                                },
+                                }
                             });
                         }
                     }
@@ -150,7 +150,7 @@ export async function visitTypeDeclaration({
                 "base-properties": noop,
                 availability: noop,
                 audiences: noop,
-                examples: visitExamples,
+                examples: visitExamples
             });
         },
         undiscriminatedUnion: async (union) => {
@@ -165,14 +165,14 @@ export async function visitTypeDeclaration({
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
                                 type: async (type) => {
                                     await visitTypeReference(type, [...nodePathForType, "type"]);
-                                },
+                                }
                             });
                         }
                     }
                 },
                 availability: noop,
                 audiences: noop,
-                examples: visitExamples,
+                examples: visitExamples
             });
         },
         enum: async (_enum) => {
@@ -182,22 +182,22 @@ export async function visitTypeDeclaration({
                     for (const enumType of enumTypes) {
                         const nodePathForEnumType = [
                             ...nodePathForType,
-                            typeof enumType === "string" ? enumType : enumType.name ?? enumType.value,
+                            typeof enumType === "string" ? enumType : enumType.name ?? enumType.value
                         ];
 
                         if (typeof enumType !== "string") {
                             await visitObject(enumType, {
                                 docs: createDocsVisitor(visitor, nodePathForEnumType),
                                 name: noop,
-                                value: noop,
+                                value: noop
                             });
                         }
                     }
                 },
                 availability: noop,
                 audiences: noop,
-                examples: visitExamples,
+                examples: visitExamples
             });
-        },
+        }
     });
 }

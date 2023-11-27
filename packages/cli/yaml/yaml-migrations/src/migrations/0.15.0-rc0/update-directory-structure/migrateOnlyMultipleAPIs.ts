@@ -4,7 +4,7 @@ import yaml from "js-yaml";
 import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
 import {
     convertLegacyGeneratorsConfiguration,
-    PathModificationStrategy,
+    PathModificationStrategy
 } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
 
 const APIS_DIRECTORY = "apis";
@@ -26,7 +26,7 @@ const APIS_DIRECTORY = "apis";
  */
 export async function migrateOnlyMultipleAPIs({
     absolutePathToFernDirectory,
-    workspaces,
+    workspaces
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
     workspaces: string[];
@@ -45,7 +45,7 @@ export async function migrateOnlyMultipleAPIs({
 }
 
 async function migrateAndWriteGeneratorsYml({
-    absolutePathToWorkspace,
+    absolutePathToWorkspace
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<void> {
@@ -56,7 +56,7 @@ async function migrateAndWriteGeneratorsYml({
     const absolutePathToGeneratorsConfiguration = getAbsolutePathToGeneratorsConfiguration({ absolutePathToWorkspace });
     const convertedResponse = convertLegacyGeneratorsConfiguration({
         generatorsConfiguration,
-        pathModificationStrategy: PathModificationStrategy.Nest,
+        pathModificationStrategy: PathModificationStrategy.Nest
     });
     await writeFile(absolutePathToGeneratorsConfiguration, yaml.dump(convertedResponse.value));
 }

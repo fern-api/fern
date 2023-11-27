@@ -1,25 +1,28 @@
 import { assertNever } from "@fern-api/core-utils";
+import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-fern/ir-sdk";
-import { FernRegistry } from "@fern-fern/registry-node";
 
-export function convertAuth(auth: Ir.auth.ApiAuth): FernRegistry.api.v1.register.ApiAuth | undefined {
+export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefined {
     const scheme = auth.schemes[0];
     if (auth.schemes.length === 1 && scheme != null) {
         switch (scheme.type) {
             case "basic":
-                return FernRegistry.api.v1.register.ApiAuth.basicAuth({
+                return {
+                    type: "basicAuth",
                     passwordName: scheme.password.originalName,
-                    usernameName: scheme.username.originalName,
-                });
+                    usernameName: scheme.username.originalName
+                };
             case "bearer":
-                return FernRegistry.api.v1.register.ApiAuth.bearerAuth({
-                    tokenName: scheme.token.originalName,
-                });
+                return {
+                    type: "bearerAuth",
+                    tokenName: scheme.token.originalName
+                };
             case "header":
-                return FernRegistry.api.v1.register.ApiAuth.header({
+                return {
+                    type: "header",
                     headerWireValue: scheme.name.wireValue,
-                    nameOverride: scheme.name.name.originalName,
-                });
+                    nameOverride: scheme.name.name.originalName
+                };
             default:
                 assertNever(scheme);
         }

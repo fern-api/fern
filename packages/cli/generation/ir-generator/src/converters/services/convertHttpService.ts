@@ -8,7 +8,7 @@ import {
     PathParameter,
     PathParameterLocation,
     ResponseErrors,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
@@ -33,7 +33,7 @@ export function convertHttpService({
     typeResolver,
     exampleResolver,
     variableResolver,
-    globalErrors,
+    globalErrors
 }: {
     rootPathParameters: PathParameter[];
     serviceDefinition: RawSchemas.HttpServiceSchema;
@@ -48,7 +48,7 @@ export function convertHttpService({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
-        variableResolver,
+        variableResolver
     });
 
     const serviceName = { fernFilepath: file.fernFilepath };
@@ -69,7 +69,7 @@ export function convertHttpService({
                 pathParameters: endpoint["path-parameters"],
                 location: PathParameterLocation.Endpoint,
                 file,
-                variableResolver,
+                variableResolver
             });
 
             const httpEndpoint = {
@@ -78,6 +78,7 @@ export function convertHttpService({
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
+                idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
                 baseUrl: endpoint.url ?? serviceDefinition.url,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
@@ -98,13 +99,13 @@ export function convertHttpService({
                                       ...convertDeclaration(queryParameter),
                                       name: file.casingsGenerator.generateNameAndWireValue({
                                           wireValue: queryParameterKey,
-                                          name,
+                                          name
                                       }),
                                       valueType,
                                       allowMultiple:
                                           typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
                                               ? queryParameter["allow-multiple"]
-                                              : false,
+                                              : false
                                   };
                               }
                           )
@@ -120,7 +121,7 @@ export function convertHttpService({
                     service: serviceDefinition,
                     request: endpoint.request,
                     file,
-                    typeResolver,
+                    typeResolver
                 }),
                 response: convertHttpResponse({ endpoint, file, typeResolver }),
                 errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
@@ -135,14 +136,14 @@ export function convertHttpService({
                                   errorResolver,
                                   exampleResolver,
                                   variableResolver,
-                                  file,
+                                  file
                               })
                           )
-                        : [],
+                        : []
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;
-        }),
+        })
     };
 }
 
@@ -150,7 +151,7 @@ export function convertPathParameters({
     pathParameters,
     location,
     file,
-    variableResolver,
+    variableResolver
 }: {
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
     location: PathParameterLocation;
@@ -166,7 +167,7 @@ export function convertPathParameters({
             parameter,
             location,
             file,
-            variableResolver,
+            variableResolver
         })
     );
 }
@@ -176,7 +177,7 @@ function convertPathParameter({
     parameter,
     location,
     file,
-    variableResolver,
+    variableResolver
 }: {
     parameterName: string;
     parameter: RawSchemas.HttpPathParameterSchema;
@@ -191,14 +192,14 @@ function convertPathParameter({
         location,
         variable: isVariablePathParameter(parameter)
             ? variableResolver.getVariableIdOrThrow(typeof parameter === "string" ? parameter : parameter.variable)
-            : undefined,
+            : undefined
     };
 }
 
 function getPathParameterType({
     parameter,
     variableResolver,
-    file,
+    file
 }: {
     parameter: RawSchemas.HttpPathParameterSchema;
     variableResolver: VariableResolver;
@@ -207,7 +208,7 @@ function getPathParameterType({
     const parsed = resolvePathParameterOrThrow({
         parameter,
         variableResolver,
-        file,
+        file
     });
     return parsed.file.parseTypeReference(parsed.rawType);
 }
@@ -215,7 +216,7 @@ function getPathParameterType({
 export function resolvePathParameterOrThrow({
     parameter,
     variableResolver,
-    file,
+    file
 }: {
     parameter: RawSchemas.HttpPathParameterSchema;
     variableResolver: VariableResolver;
@@ -224,7 +225,7 @@ export function resolvePathParameterOrThrow({
     const resolved = resolvePathParameter({
         parameter,
         variableResolver,
-        file,
+        file
     });
     if (resolved == null) {
         throw new Error("Cannot resolve path parameter");
@@ -235,7 +236,7 @@ export function resolvePathParameterOrThrow({
 export function resolvePathParameter({
     parameter,
     variableResolver,
-    file,
+    file
 }: {
     parameter: RawSchemas.HttpPathParameterSchema;
     variableResolver: VariableResolver;
@@ -256,19 +257,19 @@ export function resolvePathParameter({
 
         return {
             rawType,
-            file: resolvedVariable.file,
+            file: resolvedVariable.file
         };
     } else {
         return {
             file,
-            rawType: typeof parameter === "string" ? parameter : parameter.type,
+            rawType: typeof parameter === "string" ? parameter : parameter.type
         };
     }
 }
 
 export function getQueryParameterName({
     queryParameterKey,
-    queryParameter,
+    queryParameter
 }: {
     queryParameterKey: string;
     queryParameter: RawSchemas.HttpQueryParameterSchema;
@@ -301,7 +302,7 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
 export function convertHttpHeader({
     headerKey,
     header,
-    file,
+    file
 }: {
     headerKey: string;
     header: RawSchemas.HttpHeaderSchema;
@@ -312,9 +313,9 @@ export function convertHttpHeader({
         ...convertDeclaration(header),
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: headerKey,
-            name,
+            name
         }),
-        valueType: file.parseTypeReference(header),
+        valueType: file.parseTypeReference(header)
     };
 }
 
@@ -326,12 +327,12 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
         if (header.name != null) {
             return {
                 name: header.name,
-                wasExplicitlySet: true,
+                wasExplicitlySet: true
             };
         }
     }
     return {
         name: headerKey,
-        wasExplicitlySet: false,
+        wasExplicitlySet: false
     };
 }

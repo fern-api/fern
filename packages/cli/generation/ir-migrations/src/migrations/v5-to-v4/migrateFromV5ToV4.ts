@@ -3,7 +3,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 import { convertAuth } from "./convertAuth";
 import { convertEnvironment } from "./convertEnvironment";
@@ -40,7 +40,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
@@ -55,19 +55,19 @@ export const V5_TO_V4_MIGRATION: IrMigration<
             types: v5.types.map((typeDeclaration) => convertTypeDeclaration(typeDeclaration)),
             services: {
                 http: v5.services.map((service) => convertService({ service, errorResolver })),
-                websocket: [],
+                websocket: []
             },
             errors: v5.errors.map((error) =>
                 convertErrorDeclaration({
                     errorDeclaration: error,
                     errorDiscriminationStrategy: v5.errorDiscriminationStrategy,
-                    typeReferenceResolver,
+                    typeReferenceResolver
                 })
             ),
             constants: {
                 errorDiscriminant: "_error",
                 errorInstanceIdKey: "_errorInstanceId",
-                unknownErrorDiscriminantValue: "_unknown",
+                unknownErrorDiscriminantValue: "_unknown"
             },
             constantsV2: {
                 errors: {
@@ -78,7 +78,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                         snakeCase: "error",
                         pascalCase: "Error",
                         screamingSnakeCase: "ERROR",
-                        wireValue: "error",
+                        wireValue: "error"
                     },
                     errorContentKey: {
                         originalValue: "content",
@@ -86,8 +86,8 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                         snakeCase: "content",
                         pascalCase: "Content",
                         screamingSnakeCase: "CONTENT",
-                        wireValue: "content",
-                    },
+                        wireValue: "content"
+                    }
                 },
                 errorsV2: {
                     errorInstanceIdKey: convertNameAndWireValueToV2(v5.constants.errorInstanceIdKey),
@@ -98,17 +98,17 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                                 camelCase: "error",
                                 snakeCase: "error",
                                 pascalCase: "Error",
-                                screamingSnakeCase: "ERROR",
+                                screamingSnakeCase: "ERROR"
                             },
                             safeName: {
                                 originalValue: "error",
                                 camelCase: "error",
                                 snakeCase: "error",
                                 pascalCase: "Error",
-                                screamingSnakeCase: "ERROR",
-                            },
+                                screamingSnakeCase: "ERROR"
+                            }
                         },
-                        wireValue: "error",
+                        wireValue: "error"
                     },
                     errorContentKey: {
                         name: {
@@ -117,19 +117,19 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                                 camelCase: "content",
                                 snakeCase: "content",
                                 pascalCase: "Content",
-                                screamingSnakeCase: "CONTENT",
+                                screamingSnakeCase: "CONTENT"
                             },
                             safeName: {
                                 originalValue: "content",
                                 camelCase: "content",
                                 snakeCase: "content",
                                 pascalCase: "Content",
-                                screamingSnakeCase: "CONTENT",
-                            },
+                                screamingSnakeCase: "CONTENT"
+                            }
                         },
-                        wireValue: "content",
-                    },
-                },
+                        wireValue: "content"
+                    }
+                }
             },
             defaultEnvironment: v5.defaultEnvironment,
             environments: v5.environments.map((environment) => convertEnvironment(environment)),
@@ -145,16 +145,16 @@ export const V5_TO_V4_MIGRATION: IrMigration<
                         property: (property) =>
                             IrVersions.V4.ir.ErrorDiscriminationStrategy.property({
                                 discriminant: convertNameAndWireValueToV2(property.discriminant),
-                                contentProperty: convertNameAndWireValueToV2(property.contentProperty),
+                                contentProperty: convertNameAndWireValueToV2(property.contentProperty)
                             }),
                         _unknown: () => {
                             throw new Error(
                                 "Unknown ErrorDiscriminationStrategy: " + v5.errorDiscriminationStrategy.type
                             );
-                        },
+                        }
                     }
                 ),
-            sdkConfig: v5.sdkConfig,
+            sdkConfig: v5.sdkConfig
         };
-    },
+    }
 };

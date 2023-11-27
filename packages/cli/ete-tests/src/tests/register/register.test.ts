@@ -6,6 +6,6 @@ it("fern register", async () => {
     const pathOfDirectory = await init();
 
     await runFernCli(["register-v2", "--log-level", "debug"], {
-        cwd: pathOfDirectory,
+        cwd: pathOfDirectory
     });
 }, 30_000);

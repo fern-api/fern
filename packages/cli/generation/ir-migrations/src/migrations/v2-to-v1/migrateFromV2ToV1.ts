@@ -3,7 +3,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V2_TO_V1_MIGRATION: IrMigration<
@@ -31,7 +31,7 @@ export const V2_TO_V1_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v2): IrVersions.V1.ir.IntermediateRepresentation => {
@@ -58,7 +58,7 @@ export const V2_TO_V1_MIGRATION: IrMigration<
                         pascalCase: error.discriminantValueV4.name.unsafeName.pascalCase,
                         snakeCase: error.discriminantValueV4.name.unsafeName.snakeCase,
                         screamingSnakeCase: error.discriminantValueV4.name.unsafeName.screamingSnakeCase,
-                        wireValue: error.discriminantValueV4.wireValue,
+                        wireValue: error.discriminantValueV4.wireValue
                     },
                     discriminantValueV2: error.discriminantValueV2,
                     discriminantValueV3: error.discriminantValueV3,
@@ -67,9 +67,9 @@ export const V2_TO_V1_MIGRATION: IrMigration<
                     typeV2: error.typeV2,
                     typeV3: error.typeV3,
                     http: error.http,
-                    statusCode: error.statusCode,
+                    statusCode: error.statusCode
                 })
-            ),
+            )
         };
-    },
+    }
 };

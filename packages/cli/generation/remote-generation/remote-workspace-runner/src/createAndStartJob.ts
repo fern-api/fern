@@ -21,7 +21,7 @@ export async function createAndStartJob({
     version,
     context,
     shouldLogS3Url,
-    token,
+    token
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -39,7 +39,7 @@ export async function createAndStartJob({
         version,
         context,
         shouldLogS3Url,
-        token,
+        token
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation });
     return job;
@@ -52,7 +52,7 @@ async function createJob({
     version,
     context,
     shouldLogS3Url,
-    token,
+    token
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -66,7 +66,7 @@ async function createJob({
         id: generatorInvocation.name,
         version: generatorInvocation.version,
         outputMode: generatorInvocation.outputMode,
-        customConfig: generatorInvocation.config,
+        customConfig: generatorInvocation.config
     };
     const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
 
@@ -77,7 +77,7 @@ async function createJob({
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
-        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
+        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles"
     });
 
     if (!createResponse.ok) {
@@ -113,7 +113,7 @@ async function createJob({
             },
             _other: (content) => {
                 return context.failAndThrow("Failed to create job", content);
-            },
+            }
         });
     }
 
@@ -124,7 +124,7 @@ async function startJob({
     intermediateRepresentation,
     generatorInvocation,
     job,
-    context,
+    context
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: GeneratorInvocation;
@@ -136,8 +136,8 @@ async function startJob({
         context,
         targetGenerator: {
             name: generatorInvocation.name,
-            version: generatorInvocation.version,
-        },
+            version: generatorInvocation.version
+        }
     });
 
     const formData = new FormData();
@@ -145,7 +145,7 @@ async function startJob({
     const irAsString = await stringifyLargeObject(migratedIntermediateRepresentation, {
         onWrite: (irFilepath) => {
             context.logger.debug("Wrote IR to disk: " + irFilepath);
-        },
+        }
     });
     formData.append("file", irAsString);
 
@@ -154,7 +154,7 @@ async function startJob({
         await axios.post(url, formData, {
             headers: formData.getHeaders(),
             // HACK: the IR should be more compact and scale linearly with API size
-            maxBodyLength: Infinity,
+            maxBodyLength: Infinity
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;

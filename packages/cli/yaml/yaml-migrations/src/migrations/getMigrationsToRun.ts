@@ -4,7 +4,7 @@ import { ALL_MIGRATIONS } from "./all";
 
 export function getMigrationsToRun({
     fromVersion,
-    toVersion,
+    toVersion
 }: {
     fromVersion: string;
     toVersion: string;

@@ -10,7 +10,7 @@ describe("no-undefined-path-parameters", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,32 +18,32 @@ describe("no-undefined-path-parameters", () => {
                 message: "File has missing path-parameter: bar.",
                 nodePath: [],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Service has missing path-parameter: baseParameter.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Path parameter is unreferenced in service: fakeBaseParameter.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Endpoint has missing path-parameter: parameter2.",
                 nodePath: ["service", "endpoints", "missingPathParameters"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Path parameter is unreferenced in endpoint: parameter1.",
                 nodePath: ["service", "endpoints", "unusedPathParameters"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

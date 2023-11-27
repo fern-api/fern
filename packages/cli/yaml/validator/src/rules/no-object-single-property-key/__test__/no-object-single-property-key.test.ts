@@ -11,7 +11,7 @@ describe("valid-field-names", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,8 +19,8 @@ describe("valid-field-names", () => {
                 message: 'Union variant e has no type, so "key" cannot be defined',
                 nodePath: ["types", "MyUnion"],
                 relativeFilepath: RelativeFilePath.of("posts.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

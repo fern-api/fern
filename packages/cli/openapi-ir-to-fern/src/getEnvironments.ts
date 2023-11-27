@@ -47,9 +47,9 @@ export function getEnvironments(openApiFile: OpenAPIIntermediateRepresentation):
             return {
                 type: "single",
                 environmentToUrl: {
-                    default: maybeSanitizeUpgradedServerUrl(openApiFile.servers[0].url),
+                    default: maybeSanitizeUpgradedServerUrl(openApiFile.servers[0].url)
                 },
-                endpointPathPrefix: "",
+                endpointPathPrefix: ""
             };
         }
         return undefined;
@@ -60,7 +60,7 @@ export function getEnvironments(openApiFile: OpenAPIIntermediateRepresentation):
         return {
             type: "single",
             environmentToUrl: mapValues(defaultUrls, (url) => url.slice(0, url.length - sharedSuffix.length)),
-            endpointPathPrefix: sharedSuffix,
+            endpointPathPrefix: sharedSuffix
         };
     }
 
@@ -73,8 +73,8 @@ export function getEnvironments(openApiFile: OpenAPIIntermediateRepresentation):
         defaultUrl,
         serviceToUrl: {
             ...defaultUrls,
-            ...overrideUrls,
-        },
+            ...overrideUrls
+        }
     };
 }
 

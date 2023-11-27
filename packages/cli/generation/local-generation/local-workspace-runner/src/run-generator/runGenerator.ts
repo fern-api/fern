@@ -30,7 +30,7 @@ export async function runGenerator({
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
-    generatorInvocation,
+    generatorInvocation
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -38,14 +38,14 @@ export async function runGenerator({
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
-        `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`,
+        `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`
     ];
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         generatorInvocation,
         customConfig,
         workspaceName,
         organization,
-        absolutePathToSnippet,
+        absolutePathToSnippet
     });
     binds.push(...bindsForGenerators);
 
@@ -65,6 +65,6 @@ export async function runGenerator({
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
-        removeAfterCompletion: !keepDocker,
+        removeAfterCompletion: !keepDocker
     });
 }

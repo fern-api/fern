@@ -10,15 +10,15 @@ describe("no-missing-error-discriminant", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("discriminant-missing-errors-declared")
-            ),
+            )
         });
         expect(violations).toEqual([
             {
                 message: "error-discrimination is required because this API has declared errors.",
                 nodePath: ["error-discrimination"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 
@@ -29,7 +29,7 @@ describe("no-missing-error-discriminant", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("discriminant-missing-no-errors-declared")
-            ),
+            )
         });
         expect(violations).toEqual([]);
     });
@@ -41,7 +41,7 @@ describe("no-missing-error-discriminant", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("discriminant-present-errors-declared")
-            ),
+            )
         });
         expect(violations).toEqual([]);
     });
@@ -53,7 +53,7 @@ describe("no-missing-error-discriminant", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("discriminant-present-no-errors-declared")
-            ),
+            )
         });
         expect(violations).toEqual([]);
     });

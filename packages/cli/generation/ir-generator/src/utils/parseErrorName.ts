@@ -8,7 +8,7 @@ export function parseErrorName({ errorName, file }: { errorName: string; file: F
     const reference = parseReferenceToTypeName({
         reference: errorName,
         referencedIn: file.relativeFilepath,
-        imports: file.imports,
+        imports: file.imports
     });
     if (reference == null) {
         throw new Error("Failed to locate error " + errorName);
@@ -18,12 +18,12 @@ export function parseErrorName({ errorName, file }: { errorName: string; file: F
         name: file.casingsGenerator.generateName(reference.typeName),
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
-            casingsGenerator: file.casingsGenerator,
-        }),
+            casingsGenerator: file.casingsGenerator
+        })
     };
 
     return {
         ...nameWithoutId,
-        errorId: IdGenerator.generateErrorId(nameWithoutId),
+        errorId: IdGenerator.generateErrorId(nameWithoutId)
     };
 }

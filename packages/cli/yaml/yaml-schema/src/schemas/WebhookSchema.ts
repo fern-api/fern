@@ -7,7 +7,7 @@ export const WebhookSchema = DeclarationSchema.extend({
     method: z.enum(["GET", "POST"]),
     "display-name": z.optional(z.string()),
     headers: z.optional(z.record(HttpHeaderSchema)),
-    payload: WebhookPayloadSchema,
+    payload: WebhookPayloadSchema
 });
 
 export type WebhookSchema = z.infer<typeof WebhookSchema>;

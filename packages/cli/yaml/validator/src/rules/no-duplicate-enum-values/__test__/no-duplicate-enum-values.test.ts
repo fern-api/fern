@@ -10,7 +10,7 @@ describe("no-duplicate-enum-values", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,8 +18,8 @@ describe("no-duplicate-enum-values", () => {
                 message: "Duplicated enum value: A.",
                 nodePath: ["types", "MyEnum"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

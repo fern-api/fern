@@ -4,7 +4,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V11_TO_V10_MIGRATION: IrMigration<
@@ -32,21 +32,21 @@ export const V11_TO_V10_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v11, context): IrVersions.V10.ir.IntermediateRepresentation => {
         return {
             ...v11,
-            auth: convertAuth(v11.auth, context),
+            auth: convertAuth(v11.auth, context)
         };
-    },
+    }
 };
 
 function convertAuth(auth: IrVersions.V11.auth.ApiAuth, context: IrMigrationContext): IrVersions.V10.auth.ApiAuth {
     return {
         ...auth,
-        schemes: auth.schemes.map((scheme) => convertAuthScheme(scheme, context)),
+        schemes: auth.schemes.map((scheme) => convertAuthScheme(scheme, context))
     };
 }
 
@@ -72,17 +72,17 @@ function convertAuthScheme(
                 docs: header.docs,
                 availability: {
                     status: IrVersions.V10.commons.AvailabilityStatus.GeneralAvailability,
-                    message: undefined,
+                    message: undefined
                 },
                 name: {
                     name: header.name,
-                    wireValue: header.header,
+                    wireValue: header.header
                 },
-                valueType: header.valueType,
+                valueType: header.valueType
             });
         },
         _unknown: () => {
             throw new Error("Unknown auth scheme: " + scheme._type);
-        },
+        }
     });
 }

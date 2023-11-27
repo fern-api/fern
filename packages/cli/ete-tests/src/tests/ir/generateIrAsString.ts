@@ -8,7 +8,7 @@ export async function generateIrAsString({
     language,
     audiences,
     apiName,
-    version,
+    version
 }: {
     fixturePath: AbsoluteFilePath;
     language?: GenerationLanguage;
@@ -37,7 +37,7 @@ export async function generateIrAsString({
     }
 
     await runFernCli(command, {
-        cwd: fixturePath,
+        cwd: fixturePath
     });
 
     const irContents = await readFile(irOutputPath);

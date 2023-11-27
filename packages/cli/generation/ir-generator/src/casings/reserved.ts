@@ -66,7 +66,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "Error",
         "File",
         "Object",
-        "Record",
+        "Record"
     ]),
     [GenerationLanguage.JAVA]: new Set([
         "abstract",
@@ -119,7 +119,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "try",
         "void",
         "volatile",
-        "while",
+        "while"
     ]),
     [GenerationLanguage.PYTHON]: new Set([
         "False",
@@ -158,7 +158,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "with",
         "yield",
         // the following aren't actually reserved, but we treat them as unavailable
-        "self",
+        "self"
     ]),
     [GenerationLanguage.GO]: new Set([
         // Keywords - these are not allowed. https://go.dev/ref/spec#Keywords
@@ -210,6 +210,6 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "uint16",
         "uint32",
         "uint64",
-        "uintptr",
-    ]),
+        "uintptr"
+    ])
 };

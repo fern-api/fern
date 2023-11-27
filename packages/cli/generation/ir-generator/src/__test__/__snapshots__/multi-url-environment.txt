@@ -191,6 +191,7 @@ exports[`generate IR 1`] = `
   },
   "errors": {},
   "headers": [],
+  "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
     "docs": null,
@@ -248,6 +249,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_ec2.bootInstance",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
@@ -465,6 +467,7 @@ exports[`generate IR 1`] = `
           },
           "headers": [],
           "id": "endpoint_s3.getPresignedUrl",
+          "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {

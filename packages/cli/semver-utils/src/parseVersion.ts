@@ -47,7 +47,7 @@ export function parseVersion(versionString: string): ParsedVersion {
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
-            commitIndex: parsedCommitIndex,
+            commitIndex: parsedCommitIndex
         };
     }
 
@@ -66,7 +66,7 @@ export function parseVersion(versionString: string): ParsedVersion {
             major: parsedMajor,
             minor: parsedMinor,
             patch: parsedPatch,
-            releaseCandidateIndex: parsedRcIndex,
+            releaseCandidateIndex: parsedRcIndex
         };
     }
 
@@ -93,7 +93,7 @@ export function parseVersion(versionString: string): ParsedVersion {
             minor: parsedMinor,
             patch: parsedPatch,
             releaseCandidateIndex: parsedRcIndex,
-            commitIndex: parsedCommitIndex,
+            commitIndex: parsedCommitIndex
         };
     }
 
@@ -110,7 +110,7 @@ export function parseVersion(versionString: string): ParsedVersion {
             type: "release",
             major: parsedMajor,
             minor: parsedMinor,
-            patch: parsedPatch,
+            patch: parsedPatch
         };
     }
 

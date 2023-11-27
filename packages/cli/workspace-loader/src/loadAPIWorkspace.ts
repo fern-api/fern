@@ -15,7 +15,7 @@ export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
-    workspaceName,
+    workspaceName
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
@@ -48,8 +48,8 @@ export async function loadAPIWorkspace({
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 absolutePathToOpenAPI,
-                absolutePathToAsyncAPI,
-            },
+                absolutePathToAsyncAPI
+            }
         };
     }
     if (openApiDirectoryExists) {
@@ -69,8 +69,8 @@ export async function loadAPIWorkspace({
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 absolutePathToOpenAPI,
-                absolutePathToAsyncAPI,
-            },
+                absolutePathToAsyncAPI
+            }
         };
     }
 
@@ -86,7 +86,7 @@ export async function loadAPIWorkspace({
 
     const structuralValidationResult = validateStructureOfYamlFiles({
         files: parseResult.files,
-        absolutePathToDefinition,
+        absolutePathToDefinition
     });
     if (!structuralValidationResult.didSucceed) {
         return structuralValidationResult;
@@ -96,7 +96,7 @@ export async function loadAPIWorkspace({
         dependenciesConfiguration,
         structuralValidationResult,
         context,
-        cliVersion,
+        cliVersion
     });
     if (!processPackageMarkersResult.didSucceed) {
         return processPackageMarkersResult;
@@ -116,8 +116,8 @@ export async function loadAPIWorkspace({
                 rootApiFile: structuralValidationResult.rootApiFile,
                 namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
                 packageMarkers: processPackageMarkersResult.packageMarkers,
-                importedDefinitions: processPackageMarkersResult.importedDefinitions,
-            },
-        },
+                importedDefinitions: processPackageMarkersResult.importedDefinitions
+            }
+        }
     };
 }

@@ -17,9 +17,9 @@ export const NoConflictingEndpointPathsRule: Rule = {
                         service,
                         endpointId,
                         endpoint,
-                        relativeFilepath,
+                        relativeFilepath
                     });
-                },
+                }
             });
         });
 
@@ -30,7 +30,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
                         service,
                         endpointId,
                         endpoint,
-                        relativeFilepath,
+                        relativeFilepath
                     });
 
                     if (conflictingEndpoints.length === 0) {
@@ -43,7 +43,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
                             message: [
                                 `Endpoint path ${getFullEndpointPath({
                                     service,
-                                    endpoint,
+                                    endpoint
                                 })} conflicts with other endpoints:`,
                                 ...conflictingEndpoints.map(
                                     (conflictingEndpoint) =>
@@ -52,15 +52,15 @@ export const NoConflictingEndpointPathsRule: Rule = {
                                         } ${chalk.dim(
                                             getFullEndpointPath({
                                                 service: conflictingEndpoint.service,
-                                                endpoint: conflictingEndpoint.endpoint,
+                                                endpoint: conflictingEndpoint.endpoint
                                             })
                                         )}`
-                                ),
-                            ].join("\n"),
-                        },
+                                )
+                            ].join("\n")
+                        }
                     ];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

@@ -19,13 +19,13 @@ export const NoMissingErrorDiscriminantRule: Rule = {
                     return [
                         {
                             severity: "error",
-                            message: "error-discrimination is required because this API has declared errors.",
-                        },
+                            message: "error-discrimination is required because this API has declared errors."
+                        }
                     ];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 function doesApiDeclareErrors(workspace: FernWorkspace): boolean {

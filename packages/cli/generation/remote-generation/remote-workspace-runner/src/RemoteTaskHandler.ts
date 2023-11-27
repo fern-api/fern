@@ -48,7 +48,7 @@ export class RemoteTaskHandler {
                 npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
                 maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
                 pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
-                _other: () => "<unknown package>",
+                _other: () => "<unknown package>"
             });
         });
 
@@ -70,7 +70,7 @@ export class RemoteTaskHandler {
         const logS3Url = (s3Url: string) => {
             this.context.logger.debug(
                 `Generated files. ${terminalLink("View here", s3Url, {
-                    fallback: (text, url) => `${text}: ${url}`,
+                    fallback: (text, url) => `${text}: ${url}`
                 })}`
             );
         };
@@ -91,7 +91,7 @@ export class RemoteTaskHandler {
                         await downloadFilesForTask({
                             s3PreSignedReadUrl: finishedStatus.s3PreSignedReadUrlV2,
                             absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
-                            context: this.context,
+                            context: this.context
                         });
                     }
                 }
@@ -103,7 +103,7 @@ export class RemoteTaskHandler {
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
-            },
+            }
         });
 
         return this.#isFinished ? { createdSnippets: this.#createdSnippets } : undefined;
@@ -123,7 +123,7 @@ export class RemoteTaskHandler {
 async function downloadFilesForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput,
-    context,
+    context
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
@@ -132,7 +132,7 @@ async function downloadFilesForTask({
     try {
         // initiate request
         const request = await axios.get(s3PreSignedReadUrl, {
-            responseType: "stream",
+            responseType: "stream"
         });
 
         // pipe to zip

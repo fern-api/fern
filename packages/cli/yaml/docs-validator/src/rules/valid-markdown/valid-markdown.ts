@@ -16,15 +16,15 @@ export const ValidMarkdownRule: Rule = {
                     return [
                         {
                             severity: "error",
-                            message,
-                        },
+                            message
+                        }
                     ];
                 }
 
                 return [];
-            },
+            }
         };
-    },
+    }
 };
 
 const REMARK_PLUGINS = [remarkGfm];
@@ -46,17 +46,17 @@ async function parseMarkdown({ markdown }: { markdown: string }): Promise<Markdo
             scope: {},
             mdxOptions: {
                 remarkPlugins: REMARK_PLUGINS,
-                format: "detect",
+                format: "detect"
             },
-            parseFrontmatter: false,
+            parseFrontmatter: false
         });
         return {
-            type: "success",
+            type: "success"
         };
     } catch (err) {
         return {
             type: "failure",
-            message: err instanceof Error ? err.message : undefined,
+            message: err instanceof Error ? err.message : undefined
         };
     }
 }

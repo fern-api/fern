@@ -14,7 +14,7 @@ export interface ConvertedHeader {
 export function convertHeader({
     header,
     schemas,
-    isPackageYml,
+    isPackageYml
 }: {
     header: Header;
     schemas: Record<SchemaId, Schema>;
@@ -23,15 +23,15 @@ export function convertHeader({
     const typeReference = convertToTypeReference({
         schema: header.schema,
         schemas,
-        prefix: isPackageYml ? undefined : ROOT_PREFIX,
+        prefix: isPackageYml ? undefined : ROOT_PREFIX
     });
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
     return {
         value: {
             name: camelCase(headerWithoutXPrefix),
             docs: header.description ?? undefined,
-            type: getTypeFromTypeReference(typeReference.typeReference),
+            type: getTypeFromTypeReference(typeReference.typeReference)
         },
-        additionalTypeDeclarations: typeReference.additionalTypeDeclarations,
+        additionalTypeDeclarations: typeReference.additionalTypeDeclarations
     };
 }

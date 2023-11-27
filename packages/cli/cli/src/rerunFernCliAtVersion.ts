@@ -6,7 +6,7 @@ import { FERN_CWD_ENV_VAR } from "./cwd";
 export async function rerunFernCliAtVersion({
     version,
     cliContext,
-    env,
+    env
 }: {
     version: string;
     cliContext: CliContext;
@@ -18,12 +18,12 @@ export async function rerunFernCliAtVersion({
         "--quiet",
         "--yes",
         `${cliContext.environment.packageName}@${version}`,
-        ...process.argv.slice(2),
+        ...process.argv.slice(2)
     ];
     cliContext.logger.debug(
         [
             `Re-running CLI at version ${version}.`,
-            `${chalk.dim(`+ npx ${commandLineArgs.map((arg) => `"${arg}"`).join(" ")}`)}`,
+            `${chalk.dim(`+ npx ${commandLineArgs.map((arg) => `"${arg}"`).join(" ")}`)}`
         ].join("\n")
     );
 
@@ -32,8 +32,8 @@ export async function rerunFernCliAtVersion({
         reject: false,
         env: {
             ...env,
-            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
-        },
+            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd()
+        }
     });
 
     if (failed) {

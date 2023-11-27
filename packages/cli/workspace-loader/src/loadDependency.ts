@@ -4,7 +4,7 @@ import {
     DependenciesConfiguration,
     Dependency,
     LocalApiDependency,
-    VersionedDependency,
+    VersionedDependency
 } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
@@ -45,7 +45,7 @@ export async function loadDependency({
     dependenciesConfiguration,
     context,
     rootApiFile,
-    cliVersion,
+    cliVersion
 }: {
     dependencyName: string;
     dependenciesConfiguration: DependenciesConfiguration;
@@ -56,7 +56,7 @@ export async function loadDependency({
     let definition: FernDefinition | undefined;
     let failure: WorkspaceLoader.DependencyFailure = {
         type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
-        dependencyName,
+        dependencyName
     };
 
     // look up dependency in dependencies configuration
@@ -64,7 +64,7 @@ export async function loadDependency({
     if (dependency == null) {
         failure = {
             type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED,
-            dependencyName,
+            dependencyName
         };
     } else {
         await context.runInteractiveTask(
@@ -76,7 +76,7 @@ export async function loadDependency({
                             context: contextForDependency,
                             rootApiFile,
                             dependency,
-                            cliVersion,
+                            cliVersion
                         });
                         return;
                     case "local":
@@ -84,7 +84,7 @@ export async function loadDependency({
                             context: contextForDependency,
                             rootApiFile,
                             dependency,
-                            cliVersion,
+                            cliVersion
                         });
                         return;
                     default:
@@ -105,7 +105,7 @@ async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
     rootApiFile,
-    cliVersion,
+    cliVersion
 }: {
     dependency: LocalApiDependency;
     context: TaskContext;
@@ -118,7 +118,7 @@ async function validateLocalDependencyAndGetDefinition({
         absolutePathToWorkspace: dependency.absoluteFilepath,
         context,
         cliVersion,
-        workspaceName: undefined,
+        workspaceName: undefined
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
@@ -148,7 +148,7 @@ async function validateVersionedDependencyAndGetDefinition({
     dependency,
     context,
     rootApiFile,
-    cliVersion,
+    cliVersion
 }: {
     dependency: VersionedDependency;
     context: TaskContext;
@@ -175,7 +175,7 @@ async function validateVersionedDependencyAndGetDefinition({
             },
             _other: (error) => {
                 context.failWithoutThrowing("Failed to download API manifest", error);
-            },
+            }
         });
         return undefined;
     }
@@ -217,7 +217,7 @@ async function validateVersionedDependencyAndGetDefinition({
     try {
         await downloadDependency({
             s3PreSignedReadUrl: response.body.definitionS3DownloadUrl,
-            absolutePathToLocalOutput: pathToDependency,
+            absolutePathToLocalOutput: pathToDependency
         });
     } catch (error) {
         context.failWithoutThrowing("Failed to download API", error);
@@ -230,7 +230,7 @@ async function validateVersionedDependencyAndGetDefinition({
         absolutePathToWorkspace: pathToDependency,
         context,
         cliVersion: response.body.cliVersion,
-        workspaceName: undefined,
+        workspaceName: undefined
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(
@@ -299,6 +299,7 @@ async function getAreRootApiFilesEquivalent(
         },
         docs: noop,
         headers: noop,
+        "idempotency-headers": noop,
         "default-environment": noop,
         environments: noop,
         "error-discrimination": (errorDiscrimination) => {
@@ -321,24 +322,24 @@ async function getAreRootApiFilesEquivalent(
             areRootApiFilesEquivalent &&= basePathsAreEqual;
         },
         "path-parameters": noop,
-        variables: noop,
+        variables: noop
     });
     return {
         equal: areRootApiFilesEquivalent,
-        differences,
+        differences
     };
 }
 
 async function downloadDependency({
     s3PreSignedReadUrl,
-    absolutePathToLocalOutput,
+    absolutePathToLocalOutput
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
 }) {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream",
+        responseType: "stream"
     });
 
     // pipe to tgz

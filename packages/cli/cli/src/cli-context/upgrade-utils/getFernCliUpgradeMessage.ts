@@ -4,7 +4,7 @@ import { CliEnvironment } from "../CliEnvironment";
 
 export function getFernCliUpgradeMessage({
     cliEnvironment,
-    toVersion,
+    toVersion
 }: {
     cliEnvironment: CliEnvironment;
     toVersion: string;
@@ -23,6 +23,6 @@ export function getFernCliUpgradeMessage({
         float: "center",
         textAlignment: "center",
         borderColor: "yellow",
-        borderStyle: "round",
+        borderStyle: "round"
     });
 }

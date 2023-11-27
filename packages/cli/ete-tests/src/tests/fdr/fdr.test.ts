@@ -6,8 +6,8 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 
 const FIXTURES: Fixture[] = [
     {
-        name: "simple",
-    },
+        name: "simple"
+    }
 ];
 
 interface Fixture {
@@ -29,7 +29,7 @@ describe("fdr", () => {
                     fixturePath,
                     language: fixture.language,
                     audiences: fixture.audiences,
-                    version: fixture.version,
+                    version: fixture.version
                 });
                 // eslint-disable-next-line jest/no-standalone-expect
                 expect(fdrContents).toMatchSnapshot();

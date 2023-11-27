@@ -10,7 +10,7 @@ import { CliContext } from "../../cli-context/CliContext";
 
 export async function writeDefinitionForWorkspaces({
     project,
-    cliContext,
+    cliContext
 }: {
     project: Project;
     cliContext: CliContext;
@@ -40,7 +40,7 @@ async function writeDefinitionForWorkspace(workspace: FernWorkspace) {
         const absoluteFilepath = join(directoryOfDefinition, RelativeFilePath.of(relativePath));
         let fileContents = yaml.dump(definitionFile.contents);
         fileContents = formatDefinitionFile({
-            fileContents: yaml.dump(definitionFile.contents),
+            fileContents: yaml.dump(definitionFile.contents)
         });
         const dirname = absoluteFilepath.split("/").slice(0, -1).join("/");
         await mkdir(dirname, { recursive: true });

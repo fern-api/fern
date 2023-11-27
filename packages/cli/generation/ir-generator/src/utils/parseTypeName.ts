@@ -8,7 +8,7 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
     const reference = parseReferenceToTypeName({
         reference: typeName,
         referencedIn: file.relativeFilepath,
-        imports: file.imports,
+        imports: file.imports
     });
     if (reference == null) {
         throw new Error("Failed to locate type: " + typeName);
@@ -18,12 +18,12 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
         name: file.casingsGenerator.generateName(reference.typeName),
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
-            casingsGenerator: file.casingsGenerator,
-        }),
+            casingsGenerator: file.casingsGenerator
+        })
     };
 
     return {
         ...nameWithoutId,
-        typeId: IdGenerator.generateTypeId(nameWithoutId),
+        typeId: IdGenerator.generateTypeId(nameWithoutId)
     };
 }

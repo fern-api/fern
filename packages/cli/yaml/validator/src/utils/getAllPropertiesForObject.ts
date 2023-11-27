@@ -32,7 +32,7 @@ export function getAllPropertiesForObject({
     typeResolver,
     // used only for recursive calls
     path = [],
-    seen = {},
+    seen = {}
 }: {
     // this can be undefined for inline requests
     typeName: TypeName | undefined;
@@ -60,7 +60,7 @@ export function getAllPropertiesForObject({
         relativeFilepath: filepathOfDeclaration,
         definitionFile,
         casingsGenerator: CASINGS_GENERATOR,
-        rootApiFile: workspace.definition.rootApiFile.contents,
+        rootApiFile: workspace.definition.rootApiFile.contents
     });
 
     if (objectDeclaration.properties != null) {
@@ -78,7 +78,7 @@ export function getAllPropertiesForObject({
                     resolvedPropertyType,
                     isOptional:
                         resolvedPropertyType._type === "container" &&
-                        resolvedPropertyType.container._type === "optional",
+                        resolvedPropertyType.container._type === "optional"
                 });
             }
         }
@@ -90,7 +90,7 @@ export function getAllPropertiesForObject({
         for (const extension of extensions) {
             const resolvedTypeOfExtension = typeResolver.resolveNamedType({
                 referenceToNamedType: extension,
-                file,
+                file
             });
 
             if (
@@ -111,16 +111,16 @@ export function getAllPropertiesForObject({
                                 ...path,
                                 {
                                     reference: extension,
-                                    followedVia: "extension",
+                                    followedVia: "extension"
                                 },
                                 ...resolvedTypeOfExtension.objectPath.map(
                                     (pathItem): ObjectPropertyPathPart => ({
                                         reference: pathItem.reference,
-                                        followedVia: "alias",
+                                        followedVia: "alias"
                                     })
-                                ),
+                                )
                             ],
-                            seen,
+                            seen
                         })
                     );
                 }
@@ -136,7 +136,7 @@ export function getAllPropertiesForType({
     filepathOfDeclaration,
     definitionFile,
     workspace,
-    typeResolver,
+    typeResolver
 }: {
     typeName: TypeName;
     filepathOfDeclaration: RelativeFilePath;
@@ -150,8 +150,8 @@ export function getAllPropertiesForType({
             relativeFilepath: filepathOfDeclaration,
             definitionFile,
             casingsGenerator: CASINGS_GENERATOR,
-            rootApiFile: workspace.definition.rootApiFile.contents,
-        }),
+            rootApiFile: workspace.definition.rootApiFile.contents
+        })
     });
     if (resolvedType == null || resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
         return [];
@@ -162,13 +162,13 @@ export function getAllPropertiesForType({
         filepathOfDeclaration,
         definitionFile,
         workspace,
-        typeResolver,
+        typeResolver
     });
 }
 
 export function convertObjectPropertyWithPathToString({
     property,
-    prefixBreadcrumbs = [],
+    prefixBreadcrumbs = []
 }: {
     property: ObjectPropertyWithPath;
     prefixBreadcrumbs?: string[];

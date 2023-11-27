@@ -115,7 +115,7 @@ export class TtyAwareLogger {
                 ...taskLines.map((taskLine) =>
                     addPrefixToString({ content: taskLine, prefix: "│ ", includePrefixOnAllLines: true })
                 ),
-                "└─",
+                "└─"
             ].join("\n") + "\n";
         this.lastPaint = paint;
         return paint;
@@ -149,13 +149,13 @@ function formatLog(log: Log, { includeDebugInfo }: { includeDebugInfo: boolean }
     if (log.prefix != null) {
         content = addPrefixToString({
             prefix: log.prefix,
-            content,
+            content
         });
     }
     if (includeDebugInfo) {
         content = addPrefixToString({
             prefix: chalk.dim(getDebugPrefix(log)),
-            content,
+            content
         });
     }
     content += "\n";

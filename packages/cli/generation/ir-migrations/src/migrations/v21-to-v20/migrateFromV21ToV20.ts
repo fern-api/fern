@@ -5,7 +5,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V21_TO_V20_MIGRATION: IrMigration<
@@ -33,7 +33,7 @@ export const V21_TO_V20_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v21, context): IrVersions.V20.ir.IntermediateRepresentation => {
@@ -41,9 +41,9 @@ export const V21_TO_V20_MIGRATION: IrMigration<
             ...v21,
             services: mapValues(v21.services, (service) => {
                 return convertService(service, context);
-            }),
+            })
         };
-    },
+    }
 };
 
 function convertService(
@@ -52,7 +52,7 @@ function convertService(
 ): IrVersions.V20.http.HttpService {
     return {
         ...service,
-        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context)),
+        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context))
     };
 }
 
@@ -66,7 +66,7 @@ function convertEndpoint(
             endpoint.streamingResponse != null
                 ? convertStreamingResponse(endpoint.streamingResponse, context)
                 : undefined,
-        sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse, context) : undefined,
+        sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse, context) : undefined
     };
 }
 
@@ -89,9 +89,9 @@ function convertStreamingResponse(
             },
             _unknown: () => {
                 throw new Error("Unknown StreamingResponseChunkType: " + response.dataEventType.type);
-            },
+            }
         }),
-        terminator: response.terminator,
+        terminator: response.terminator
     };
 }
 
@@ -107,11 +107,11 @@ function convertSdkResponse(
             IrVersions.V20.http.SdkResponse.maybeStreaming({
                 condition: maybeStreamingResponse.condition,
                 streaming: convertStreamingResponse(maybeStreamingResponse.streaming, context),
-                nonStreaming: maybeStreamingResponse.nonStreaming,
+                nonStreaming: maybeStreamingResponse.nonStreaming
             }),
         json: IrVersions.V20.http.SdkResponse.json,
         _unknown: () => {
             throw new Error("Unknown SdkResponse: " + sdkResponse.type);
-        },
+        }
     });
 }

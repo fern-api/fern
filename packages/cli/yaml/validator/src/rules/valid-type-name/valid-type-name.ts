@@ -12,13 +12,13 @@ export const ValidTypeNameRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "Type name must begin with a letter",
-                            },
+                                message: "Type name must begin with a letter"
+                            }
                         ];
                     }
                     return [];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

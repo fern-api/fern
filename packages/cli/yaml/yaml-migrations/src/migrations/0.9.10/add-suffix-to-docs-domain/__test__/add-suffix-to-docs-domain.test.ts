@@ -15,7 +15,7 @@ describe("add-suffix-to-docs-domain", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newGeneratorsYml = (

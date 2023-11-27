@@ -14,7 +14,7 @@ export function convertTypeDeclaration(
         name: convertDeclaredTypeName(typeDeclaration.name),
         shape: convertTypeShape(typeDeclaration.shape),
         examples: typeDeclaration.examples.map((example) => convertExampleType(example)),
-        referencedTypes: typeDeclaration.referencedTypes.map((typeName) => convertDeclaredTypeName(typeName)),
+        referencedTypes: typeDeclaration.referencedTypes.map((typeName) => convertDeclaredTypeName(typeName))
     };
 }
 
@@ -23,7 +23,7 @@ function convertTypeShape(shape: IrVersions.V5.types.Type): IrVersions.V4.types.
         alias: ({ aliasOf, resolvedType }) =>
             IrVersions.V4.types.Type.alias({
                 aliasOf: convertTypeReference(aliasOf),
-                resolvedType: convertResolvedTypeReference(resolvedType),
+                resolvedType: convertResolvedTypeReference(resolvedType)
             }),
         enum: (enumDeclaration) =>
             IrVersions.V4.types.Type.enum({
@@ -32,8 +32,8 @@ function convertTypeShape(shape: IrVersions.V5.types.Type): IrVersions.V4.types.
                     availability: enumValue.availability,
                     name: convertNameAndWireValueToV1(enumValue.name),
                     nameV2: convertNameAndWireValueToV2(enumValue.name),
-                    value: enumValue.name.wireValue,
-                })),
+                    value: enumValue.name.wireValue
+                }))
             }),
         object: (objectDeclaration) =>
             IrVersions.V4.types.Type.object({
@@ -43,8 +43,8 @@ function convertTypeShape(shape: IrVersions.V5.types.Type): IrVersions.V4.types.
                     availability: property.availability,
                     name: convertNameAndWireValueToV1(property.name),
                     nameV2: convertNameAndWireValueToV2(property.name),
-                    valueType: convertTypeReference(property.valueType),
-                })),
+                    valueType: convertTypeReference(property.valueType)
+                }))
             }),
         union: (unionDeclaration) =>
             IrVersions.V4.types.Type.union({
@@ -64,7 +64,7 @@ function convertTypeShape(shape: IrVersions.V5.types.Type): IrVersions.V4.types.
                             noProperties: IrVersions.V4.types.TypeReference.void,
                             _unknown: () => {
                                 throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
-                            },
+                            }
                         }
                     ),
                     shape: IrVersions.V5.types.SingleUnionTypeProperties._visit<IrVersions.V4.types.SingleUnionTypeProperties>(
@@ -78,19 +78,19 @@ function convertTypeShape(shape: IrVersions.V5.types.Type): IrVersions.V4.types.
                                 IrVersions.V4.types.SingleUnionTypeProperties.singleProperty({
                                     name: convertNameAndWireValueToV1(property.name),
                                     nameV2: convertNameAndWireValueToV2(property.name),
-                                    type: convertTypeReference(property.type),
+                                    type: convertTypeReference(property.type)
                                 }),
                             noProperties: IrVersions.V4.types.SingleUnionTypeProperties.noProperties,
                             _unknown: () => {
                                 throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
-                            },
+                            }
                         }
-                    ),
-                })),
+                    )
+                }))
             }),
         _unknown: () => {
             throw new Error("Unknown shape: " + shape._type);
-        },
+        }
     });
 }
 
@@ -99,7 +99,7 @@ function convertExampleType(example: IrVersions.V5.types.ExampleType): IrVersion
         docs: example.docs,
         jsonExample: example.jsonExample,
         name: example.name?.originalName,
-        shape: convertExampleTypeShape(example.shape),
+        shape: convertExampleTypeShape(example.shape)
     };
 }
 
@@ -112,7 +112,7 @@ function convertResolvedTypeReference(
             named: (resolvedNamedType) =>
                 IrVersions.V4.types.ResolvedTypeReference.named({
                     name: convertDeclaredTypeName(resolvedNamedType.name),
-                    shape: convertShapeType(resolvedNamedType.shape),
+                    shape: convertShapeType(resolvedNamedType.shape)
                 }),
             container: (containerType) =>
                 IrVersions.V4.types.ResolvedTypeReference.container(convertContainerType(containerType)),
@@ -120,7 +120,7 @@ function convertResolvedTypeReference(
             unknown: IrVersions.V4.types.ResolvedTypeReference.unknown,
             _unknown: () => {
                 throw new Error("Unknown ResolvedTypeReference: " + resolvedTypeReference._type);
-            },
+            }
         }
     );
 }
@@ -132,6 +132,6 @@ function convertShapeType(shape: IrVersions.V5.types.ShapeType): IrVersions.V4.t
         union: () => IrVersions.V5.types.ShapeType.Union,
         _unknown: () => {
             throw new Error("Unknown ShapeType: " + shape);
-        },
+        }
     });
 }

@@ -7,7 +7,7 @@ export async function validateSchema<T>({
     schema,
     value,
     context,
-    filepathBeingParsed,
+    filepathBeingParsed
 }: {
     schema: z.ZodType<T>;
     value: unknown;
@@ -23,7 +23,7 @@ export async function validateSchema<T>({
         const message = issue.path.length > 0 ? `${issue.message} at "${joinZodPath(issue.path)}"` : issue.message;
         return addPrefixToString({
             content: message,
-            prefix: "  - ",
+            prefix: "  - "
         });
     });
 

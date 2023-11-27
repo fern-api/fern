@@ -16,7 +16,7 @@ export async function validateDocsWorkspace(workspace: DocsWorkspace, logger: Lo
 export async function runRulesOnDocsWorkspace({
     workspace,
     rules,
-    logger,
+    logger
 }: {
     workspace: DocsWorkspace;
     rules: Rule[];
@@ -31,7 +31,7 @@ export async function runRulesOnDocsWorkspace({
         allRuleVisitors,
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
-        },
+        }
     });
     await visitDocsConfigFileYamlAst(
         workspace.config,

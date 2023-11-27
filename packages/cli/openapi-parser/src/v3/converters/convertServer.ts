@@ -7,13 +7,13 @@ export function convertServer(server: OpenAPIV3.ServerObject): Server {
     return {
         url: getServerUrl({ url: server.url, variables: server.variables ?? {} }),
         description: server.description,
-        name: getServerName(server),
+        name: getServerName(server)
     };
 }
 
 function getServerUrl({
     url,
-    variables,
+    variables
 }: {
     url: string;
     variables: Record<string, OpenAPIV3.ServerVariableObject>;
@@ -34,7 +34,7 @@ function getServerUrl({
 function getServerName(server: OpenAPIV3.ServerObject): string | undefined {
     const name = getExtension<string>(server, [
         FernOpenAPIExtension.SERVER_NAME_V1,
-        FernOpenAPIExtension.SERVER_NAME_V2,
+        FernOpenAPIExtension.SERVER_NAME_V2
     ]);
 
     if (name != null) {

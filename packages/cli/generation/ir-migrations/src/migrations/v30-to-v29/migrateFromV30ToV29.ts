@@ -29,21 +29,21 @@ export const V30_TO_V29_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "0.6.5-1-g0ef31b7a",
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V29.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "strip",
-            skipValidation: true,
+            skipValidation: true
         }),
     migrateBackwards: (v30): IrVersions.V29.ir.IntermediateRepresentation => {
         const converter = new Converter(v30);
         return {
             ...v30,
             types: converter.convertTypes(v30.types),
-            services: converter.convertServices(v30.services),
+            services: converter.convertServices(v30.services)
         };
-    },
+    }
 };
 
 class Converter {
@@ -76,7 +76,7 @@ class Converter {
     private convertService(service: IrVersions.V30.HttpService): IrVersions.V29.HttpService {
         return {
             ...service,
-            endpoints: this.convertEndpoints(service.endpoints),
+            endpoints: this.convertEndpoints(service.endpoints)
         };
     }
 
@@ -84,7 +84,7 @@ class Converter {
         return examples.map((exampleEndpoint) => {
             return {
                 ...exampleEndpoint,
-                examples: this.convertExampleEndpointCalls(exampleEndpoint.examples),
+                examples: this.convertExampleEndpointCalls(exampleEndpoint.examples)
             };
         });
     }
@@ -105,7 +105,7 @@ class Converter {
                     exampleEndpointCall.request != null
                         ? this.convertExampleRequestBody(exampleEndpointCall.request)
                         : undefined,
-                response: this.convertExampleResponse(exampleEndpointCall.response),
+                response: this.convertExampleResponse(exampleEndpointCall.response)
             };
         });
     }
@@ -116,7 +116,7 @@ class Converter {
         return examples.map((examplePathParameter) => {
             return {
                 key: examplePathParameter.name.originalName,
-                value: this.convertExampleTypeReference(examplePathParameter.value),
+                value: this.convertExampleTypeReference(examplePathParameter.value)
             };
         });
     }
@@ -125,7 +125,7 @@ class Converter {
         return examples.map((exampleHeader) => {
             return {
                 wireKey: exampleHeader.name.wireValue,
-                value: this.convertExampleTypeReference(exampleHeader.value),
+                value: this.convertExampleTypeReference(exampleHeader.value)
             };
         });
     }
@@ -136,7 +136,7 @@ class Converter {
         return examples.map((exampleQueryParameter) => {
             return {
                 wireKey: exampleQueryParameter.name.wireValue,
-                value: this.convertExampleTypeReference(exampleQueryParameter.value),
+                value: this.convertExampleTypeReference(exampleQueryParameter.value)
             };
         });
     }
@@ -150,9 +150,9 @@ class Converter {
                         return {
                             ...exampleObjectProperty,
                             wireKey: exampleObjectProperty.name.wireValue,
-                            value: this.convertExampleTypeReference(exampleObjectProperty.value),
+                            value: this.convertExampleTypeReference(exampleObjectProperty.value)
                         };
-                    }),
+                    })
                 });
             case "reference":
                 return IrVersions.V29.ExampleRequestBody.reference(this.convertExampleTypeReference(example));
@@ -165,12 +165,12 @@ class Converter {
         switch (example.type) {
             case "ok":
                 return IrVersions.V29.ExampleResponse.ok({
-                    body: example.body != null ? this.convertExampleTypeReference(example.body) : undefined,
+                    body: example.body != null ? this.convertExampleTypeReference(example.body) : undefined
                 });
             case "error":
                 return IrVersions.V29.ExampleResponse.error({
                     ...example,
-                    body: example.body != null ? this.convertExampleTypeReference(example.body) : undefined,
+                    body: example.body != null ? this.convertExampleTypeReference(example.body) : undefined
                 });
             default:
                 assertNever(example);
@@ -180,7 +180,7 @@ class Converter {
     private convertType(typeDecl: IrVersions.V30.TypeDeclaration): IrVersions.V29.TypeDeclaration {
         return {
             ...typeDecl,
-            examples: this.convertExampleTypes(typeDecl.examples),
+            examples: this.convertExampleTypes(typeDecl.examples)
         };
     }
 
@@ -193,7 +193,7 @@ class Converter {
     private convertExampleType(example: IrVersions.V30.ExampleType): IrVersions.V29.ExampleType {
         return {
             ...example,
-            shape: this.convertExampleTypeShape(example.shape),
+            shape: this.convertExampleTypeShape(example.shape)
         };
     }
 
@@ -210,7 +210,7 @@ class Converter {
     ): IrVersions.V29.ExampleTypeReference {
         return {
             ...example,
-            shape: this.convertExampleTypeReferenceShape(example.shape),
+            shape: this.convertExampleTypeReferenceShape(example.shape)
         };
     }
 
@@ -279,7 +279,7 @@ class Converter {
         return examples.map((example) => {
             return {
                 key: this.convertExampleTypeReference(example.key),
-                value: this.convertExampleTypeReference(example.value),
+                value: this.convertExampleTypeReference(example.value)
             };
         });
     }
@@ -287,7 +287,7 @@ class Converter {
     private convertExampleNamedType(example: IrVersions.V30.ExampleNamedType): IrVersions.V29.ExampleNamedType {
         return {
             ...example,
-            shape: this.convertExampleTypeShape(example.shape),
+            shape: this.convertExampleTypeShape(example.shape)
         };
     }
 
@@ -295,7 +295,7 @@ class Converter {
         switch (example.type) {
             case "alias":
                 return IrVersions.V29.ExampleTypeShape.alias({
-                    value: this.convertExampleTypeReference(example.value),
+                    value: this.convertExampleTypeReference(example.value)
                 });
             case "enum":
                 return IrVersions.V29.ExampleTypeShape.enum({ wireValue: example.value.wireValue });
@@ -314,16 +314,16 @@ class Converter {
                 return {
                     ...exampleObjectProperty,
                     wireKey: exampleObjectProperty.name.wireValue,
-                    value: this.convertExampleTypeReference(exampleObjectProperty.value),
+                    value: this.convertExampleTypeReference(exampleObjectProperty.value)
                 };
-            }),
+            })
         };
     }
 
     private convertExampleUnionType(example: IrVersions.V30.ExampleUnionType): IrVersions.V29.ExampleSingleUnionType {
         return {
             wireDiscriminantValue: example.singleUnionType.wireDiscriminantValue.wireValue,
-            properties: this.convertExampleSingleUnionTypeProperties(example.singleUnionType.shape),
+            properties: this.convertExampleSingleUnionTypeProperties(example.singleUnionType.shape)
         };
     }
 
@@ -340,13 +340,13 @@ class Converter {
                     typeName,
                     shape: this.convertExampleTypeShape(
                         IrVersions.V30.ExampleTypeShape.object({ properties: example.object.properties })
-                    ),
+                    )
                 });
             }
             case "singleProperty":
                 return IrVersions.V29.ExampleSingleUnionTypeProperties.singleProperty({
                     ...example,
-                    shape: this.convertExampleTypeReferenceShape(example.shape),
+                    shape: this.convertExampleTypeReferenceShape(example.shape)
                 });
             case "noProperties":
                 return IrVersions.V29.ExampleSingleUnionTypeProperties.noProperties();

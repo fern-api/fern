@@ -17,7 +17,7 @@ export const migration: Migration = {
                 context.failAndThrow("Failed to migrate " + yamlFilepath, error);
             }
         }
-    },
+    }
 };
 
 async function getFileContents(filepath: AbsoluteFilePath): Promise<string> {
@@ -40,7 +40,7 @@ function addDiscriminantToFile(contents: string): string {
             `${prefix}discriminant:`,
             `${prefixForDiscriminantFields}value: _type`,
             `${prefixForDiscriminantFields}name: type`,
-            result,
+            result
         ].join("\n");
     });
 }

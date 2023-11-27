@@ -6,7 +6,7 @@ export const HttpPathParameterSchema = z.union([
     TypeReferenceWithDocsSchema,
     // pathParam: $myVariable
     z.string(),
-    VariableReferenceSchema,
+    VariableReferenceSchema
 ]);
 
 export type HttpPathParameterSchema = z.infer<typeof HttpPathParameterSchema>;

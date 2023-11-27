@@ -13,6 +13,7 @@ export async function visitRootApiFileYamlAst(
         "display-name": noop,
         imports: noop,
         auth: noop,
+        "idempotency-headers": noop,
         "auth-schemes": noop,
         "default-environment": async (defaultEnvironment) => {
             await visitor.defaultEnvironment?.(defaultEnvironment, ["default-environment"]);
@@ -43,7 +44,7 @@ export async function visitRootApiFileYamlAst(
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: ["path-parameters"],
+                nodePath: ["path-parameters"]
             });
         },
         variables: async (variables) => {
@@ -52,12 +53,12 @@ export async function visitRootApiFileYamlAst(
                     await visitor.variableDeclaration?.(
                         {
                             variableId,
-                            variable,
+                            variable
                         },
                         ["variables", variableId]
                     );
                 }
             }
-        },
+        }
     });
 }

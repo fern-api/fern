@@ -37,7 +37,7 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
     if (typeof streaming === "boolean") {
         return streaming
             ? {
-                  type: "stream",
+                  type: "stream"
               }
             : undefined;
     }
@@ -46,7 +46,7 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
         type: "streamCondition",
         streamConditionProperty: maybeTrimRequestPrefix(streaming["stream-condition"]),
         responseStream: streaming["response-stream"],
-        response: streaming.response,
+        response: streaming.response
     };
 }
 

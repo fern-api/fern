@@ -17,12 +17,12 @@ export function convertErrorDiscriminationStrategy(
             return ErrorDiscriminationStrategy.property({
                 discriminant: file.casingsGenerator.generateNameAndWireValue({
                     name: rawStrategy["property-name"],
-                    wireValue: rawStrategy["property-name"],
+                    wireValue: rawStrategy["property-name"]
                 }),
                 contentProperty: file.casingsGenerator.generateNameAndWireValue({
                     name: ERROR_CONTENT_PROPERTY_NAME,
-                    wireValue: ERROR_CONTENT_PROPERTY_NAME,
-                }),
+                    wireValue: ERROR_CONTENT_PROPERTY_NAME
+                })
             });
         default:
             assertNever(rawStrategy);

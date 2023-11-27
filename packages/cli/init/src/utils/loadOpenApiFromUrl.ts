@@ -9,7 +9,7 @@ export type LoadOpenAPIResult = SuccessLoadOpenAPI | FailedLoadOpenAPI;
 
 export enum LoadOpenAPIStatus {
     Success = "success",
-    Failure = "failure",
+    Failure = "failure"
 }
 export interface SuccessLoadOpenAPI {
     status: LoadOpenAPIStatus.Success;
@@ -33,14 +33,14 @@ export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger:
         await writeFile(filePath, yamlData);
         return {
             status: LoadOpenAPIStatus.Success,
-            filePath,
+            filePath
         };
     } catch (error) {
         logger.debug(`Encountered an error while loading OpenAPI spec: ${JSON.stringify(error)}`);
         const errorMessage = `Failed to load OpenAPI spec from ${url}`;
         return {
             status: LoadOpenAPIStatus.Failure,
-            errorMessage,
+            errorMessage
         };
     }
 }

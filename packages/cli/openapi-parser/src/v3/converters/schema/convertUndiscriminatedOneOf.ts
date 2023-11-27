@@ -14,7 +14,7 @@ export function convertUndiscriminatedOneOf({
     description,
     wrapAsNullable,
     context,
-    subtypes,
+    subtypes
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -57,7 +57,7 @@ export function convertUndiscriminatedOneOf({
                 enumValues.push(schema.value.string);
                 if (schema.description != null) {
                     enumDescriptions[schema.value.string] = {
-                        description: schema.description,
+                        description: schema.description
                     };
                 }
             }
@@ -69,7 +69,7 @@ export function convertUndiscriminatedOneOf({
             description,
             fernEnum: enumDescriptions,
             enumVarNames: undefined,
-            enumValues,
+            enumValues
         });
     }
 
@@ -82,12 +82,12 @@ export function convertUndiscriminatedOneOf({
         generatedName,
         wrapAsNullable,
         description,
-        subtypes: uniqueSubtypes,
+        subtypes: uniqueSubtypes
     });
 }
 
 function getUniqueSubTypeNames({
-    schemas,
+    schemas
 }: {
     schemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
 }): string[] {
@@ -149,7 +149,7 @@ export function wrapUndiscriminantedOneOf({
     generatedName,
     wrapAsNullable,
     description,
-    subtypes,
+    subtypes
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -164,9 +164,9 @@ export function wrapUndiscriminantedOneOf({
                 description,
                 nameOverride,
                 generatedName,
-                schemas: subtypes,
+                schemas: subtypes
             }),
-            description,
+            description
         });
     }
     return SchemaWithExample.oneOf({
@@ -174,6 +174,6 @@ export function wrapUndiscriminantedOneOf({
         description,
         nameOverride,
         generatedName,
-        schemas: subtypes,
+        schemas: subtypes
     });
 }

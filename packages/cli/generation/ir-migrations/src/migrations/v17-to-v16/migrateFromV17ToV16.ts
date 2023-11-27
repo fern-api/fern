@@ -3,7 +3,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V17_TO_V16_MIGRATION: IrMigration<
@@ -31,7 +31,7 @@ export const V17_TO_V16_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v17, { taskContext, targetGenerator }): IrVersions.V16.ir.IntermediateRepresentation => {
@@ -50,7 +50,7 @@ export const V17_TO_V16_MIGRATION: IrMigration<
             }
         }
         return {
-            ...v17,
+            ...v17
         };
-    },
+    }
 };

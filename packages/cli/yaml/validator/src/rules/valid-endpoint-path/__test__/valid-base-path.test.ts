@@ -11,7 +11,7 @@ describe("valid-endpoint-path", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         const expectedViolations: ValidationViolation[] = [
@@ -19,20 +19,20 @@ describe("valid-endpoint-path", () => {
                 message: 'Path cannot be /. Use "" instead.',
                 nodePath: ["service", "endpoints", "slash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Path must be the empty string, or start with a slash.",
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "Path cannot end with a slash.",
                 nodePath: ["service", "endpoints", "trailingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);

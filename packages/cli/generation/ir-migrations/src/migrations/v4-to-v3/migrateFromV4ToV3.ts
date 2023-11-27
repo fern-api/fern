@@ -3,7 +3,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V4_TO_V3_MIGRATION: IrMigration<
@@ -31,7 +31,7 @@ export const V4_TO_V3_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v4): IrVersions.V3.ir.IntermediateRepresentation => {
@@ -48,7 +48,7 @@ export const V4_TO_V3_MIGRATION: IrMigration<
                     examples: v4Type.examples.map(
                         (v4Example): IrVersions.V3.types.ExampleType => convertExampleType(v4Example.shape)
                     ),
-                    referencedTypes: v4Type.referencedTypes,
+                    referencedTypes: v4Type.referencedTypes
                 })
             ),
             errors: v4.errors,
@@ -65,12 +65,12 @@ export const V4_TO_V3_MIGRATION: IrMigration<
                     ...service,
                     endpoints: service.endpoints.map((endpoint) => ({
                         ...endpoint,
-                        examples: endpoint.examples.map((example) => convertExampleEndpointCall(example)),
-                    })),
-                })),
-            },
+                        examples: endpoint.examples.map((example) => convertExampleEndpointCall(example))
+                    }))
+                }))
+            }
         };
-    },
+    }
 };
 
 function convertExampleType(v4Example: IrVersions.V4.types.ExampleTypeShape): IrVersions.V3.types.ExampleType {
@@ -81,7 +81,7 @@ function convertExampleType(v4Example: IrVersions.V4.types.ExampleTypeShape): Ir
         enum: IrVersions.V3.types.ExampleType.enum,
         _unknown: () => {
             throw new Error("Unknown ExampleTypeShape: " + v4Example.type);
-        },
+        }
     });
 }
 
@@ -91,9 +91,9 @@ function convertExampleObject(v4Example: IrVersions.V4.types.ExampleObjectType):
             (property): IrVersions.V3.types.ExampleObjectProperty => ({
                 wireKey: property.wireKey,
                 value: convertExampleTypeReference(property.value),
-                originalTypeDeclaration: property.originalTypeDeclaration,
+                originalTypeDeclaration: property.originalTypeDeclaration
             })
-        ),
+        )
     };
 }
 
@@ -110,7 +110,7 @@ function convertExampleTypeReference(
             unknown: IrVersions.V3.types.ExampleTypeReference.unknown,
             _unknown: () => {
                 throw new Error("Unknown ExampleTypeReference: " + v4Example.shape.type);
-            },
+            }
         }
     );
 }
@@ -130,19 +130,19 @@ function convertContainerExample(
             IrVersions.V3.types.ExampleContainer.map(
                 examplePairs.map((pair) => ({
                     key: convertExampleTypeReference(pair.key),
-                    value: convertExampleTypeReference(pair.value),
+                    value: convertExampleTypeReference(pair.value)
                 }))
             ),
         _unknown: () => {
             throw new Error("Unknown ExampleContainer: " + v4Example.type);
-        },
+        }
     });
 }
 
 function convertNamedExample(v4Example: IrVersions.V4.types.ExampleNamedType): IrVersions.V3.types.ExampleNamedType {
     return {
         typeName: v4Example.typeName,
-        shape: convertExampleType(v4Example.shape),
+        shape: convertExampleType(v4Example.shape)
     };
 }
 
@@ -166,15 +166,15 @@ function convertExampleUnion(
                     noProperties: () => IrVersions.V3.types.ExampleSingleUnionTypeProperties.noProperties(),
                     _unknown: () => {
                         throw new Error("Unknown ExampleSingleUnionTypeProperties: " + v4Example.properties.type);
-                    },
+                    }
                 }
-            ),
+            )
     };
 }
 
 function convertExampleAlias(v4Example: IrVersions.V4.types.ExampleAliasType): IrVersions.V3.types.ExampleAliasType {
     return {
-        value: convertExampleTypeReference(v4Example.value),
+        value: convertExampleTypeReference(v4Example.value)
     };
 }
 
@@ -192,7 +192,7 @@ function convertExampleEndpointCall(
         endpointHeaders: example.endpointHeaders.map((header) => convertExampleHeader(header)),
         queryParameters: example.queryParameters.map((queryParameter) => convertExampleQueryParameter(queryParameter)),
         request: example.request != null ? convertExampleRequest(example.request) : undefined,
-        response: convertExampleResponse(example.response),
+        response: convertExampleResponse(example.response)
     };
 }
 
@@ -201,7 +201,7 @@ function convertExamplePathParameter(
 ): IrVersions.V3.services.http.ExamplePathParameter {
     return {
         key: pathParameter.key,
-        value: convertExampleTypeReference(pathParameter.value),
+        value: convertExampleTypeReference(pathParameter.value)
     };
 }
 
@@ -210,7 +210,7 @@ function convertExampleHeader(
 ): IrVersions.V3.services.http.ExampleHeader {
     return {
         key: header.wireKey,
-        value: convertExampleTypeReference(header.value),
+        value: convertExampleTypeReference(header.value)
     };
 }
 
@@ -219,7 +219,7 @@ function convertExampleQueryParameter(
 ): IrVersions.V3.services.http.ExampleQueryParameter {
     return {
         key: queryParameter.wireKey,
-        value: convertExampleTypeReference(queryParameter.value),
+        value: convertExampleTypeReference(queryParameter.value)
     };
 }
 
@@ -233,13 +233,13 @@ function convertExampleRequest(
                 IrVersions.V3.services.http.ExampleRequestBody.inlinedRequestBody({
                     properties: inlinedRequestBody.properties.map((property) =>
                         convertExampleInlinedRequestBodyProperty(property)
-                    ),
+                    )
                 }),
             reference: (reference) =>
                 IrVersions.V3.services.http.ExampleRequestBody.reference(convertExampleTypeReference(reference)),
             _unknown: () => {
                 throw new Error("Unknown ExampleRequestBody: " + request.type);
-            },
+            }
         }
     );
 }
@@ -250,7 +250,7 @@ function convertExampleInlinedRequestBodyProperty(
     return {
         wireKey: property.wireKey,
         value: convertExampleTypeReference(property.value),
-        originalTypeDeclaration: property.originalTypeDeclaration,
+        originalTypeDeclaration: property.originalTypeDeclaration
     };
 }
 
@@ -260,15 +260,15 @@ function convertExampleResponse(
     return IrVersions.V4.services.http.ExampleResponse._visit<IrVersions.V3.services.http.ExampleResponse>(response, {
         ok: (okResponse) =>
             IrVersions.V3.services.http.ExampleResponse.ok({
-                body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined,
+                body: okResponse.body != null ? convertExampleTypeReference(okResponse.body) : undefined
             }),
         error: (errorResponse) =>
             IrVersions.V3.services.http.ExampleResponse.error({
                 error: errorResponse.error,
-                body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined,
+                body: errorResponse.body != null ? convertExampleTypeReference(errorResponse.body) : undefined
             }),
         _unknown: () => {
             throw new Error("Unknown ExampleResponse: " + response.type);
-        },
+        }
     });
 }

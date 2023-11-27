@@ -28,7 +28,7 @@ export function convertResponse({
     context,
     responseBreadcrumbs,
     responseStatusCode,
-    isStreaming,
+    isStreaming
 }: {
     isStreaming: boolean;
     responses: OpenAPIV3.ResponsesObject;
@@ -53,19 +53,19 @@ export function convertResponse({
                 case "json":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes,
+                        errorStatusCodes
                     };
                 case "streamingJson":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes,
+                        errorStatusCodes
                     };
                 case "file":
                 case "text":
                 case "streamingText":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes: [],
+                        errorStatusCodes: []
                     };
                 default:
                     assertNever(convertedResponse);
@@ -75,7 +75,7 @@ export function convertResponse({
 
     return {
         value: undefined,
-        errorStatusCodes,
+        errorStatusCodes
     };
 }
 
@@ -83,7 +83,7 @@ function convertResolvedResponse({
     isStreaming,
     response,
     context,
-    responseBreadcrumbs,
+    responseBreadcrumbs
 }: {
     isStreaming: boolean;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
@@ -102,20 +102,20 @@ function convertResolvedResponse({
                 description: resolvedResponse.description,
                 schema: convertSchemaWithExampleToSchema(
                     convertSchema(responseSchema, false, context, responseBreadcrumbs)
-                ),
+                )
             };
         }
         return {
             type: "json",
             description: resolvedResponse.description,
-            schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
+            schema: convertSchema(responseSchema, false, context, responseBreadcrumbs)
         };
     }
 
     if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema != null) {
         return {
             type: "file",
-            description: resolvedResponse.description,
+            description: resolvedResponse.description
         };
     }
 
@@ -124,7 +124,7 @@ function convertResolvedResponse({
         if (textPlainSchema == null) {
             return {
                 type: "text",
-                description: resolvedResponse.description,
+                description: resolvedResponse.description
             };
         }
         const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
@@ -133,12 +133,12 @@ function convertResolvedResponse({
         if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
             return {
                 type: "streamingText",
-                description: resolvedResponse.description,
+                description: resolvedResponse.description
             };
         }
         return {
             type: "text",
-            description: resolvedResponse.description,
+            description: resolvedResponse.description
         };
     }
 
@@ -147,7 +147,7 @@ function convertResolvedResponse({
 
 function markErrorSchemas({
     responses,
-    context,
+    context
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;

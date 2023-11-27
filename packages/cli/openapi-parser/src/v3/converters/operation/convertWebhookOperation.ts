@@ -7,7 +7,7 @@ import { convertRequest } from "../endpoint/convertRequest";
 
 export function convertWebhookOperation({
     context,
-    operationContext,
+    operationContext
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -20,7 +20,7 @@ export function convertWebhookOperation({
         context,
         requestBreadcrumbs: payloadBreadcrumbs,
         path,
-        httpMethod: method,
+        httpMethod: method
     });
 
     if (operation.requestBody == null) {
@@ -37,7 +37,7 @@ export function convertWebhookOperation({
         requestBody: operation.requestBody,
         document,
         context,
-        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
+        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"]
     });
 
     if (convertedPayload == null || convertedPayload.type !== "json") {
@@ -58,6 +58,6 @@ export function convertWebhookOperation({
         headers: convertedParameters.headers,
         generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
         payload: convertedPayload.schema,
-        description: operation.description,
+        description: operation.description
     };
 }

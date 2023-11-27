@@ -24,7 +24,7 @@ export function convertToServices({
     openApiFile,
     environments,
     globalHeaderNames,
-    context,
+    context
 }: {
     openApiFile: OpenAPIIntermediateRepresentation;
     environments: Environments | undefined;
@@ -46,7 +46,7 @@ export function convertToServices({
             }
             services[file] = {
                 value: emptyService,
-                docs: serviceTag?.description ?? undefined,
+                docs: serviceTag?.description ?? undefined
             };
         }
         const service = services[file];
@@ -61,23 +61,23 @@ export function convertToServices({
                 environments,
                 nonRequestReferencedSchemas,
                 globalHeaderNames,
-                errors: openApiFile.errors,
+                errors: openApiFile.errors
             });
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,
-                ...convertedEndpoint.additionalTypeDeclarations,
+                ...convertedEndpoint.additionalTypeDeclarations
             };
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
             let endpointDefinition = convertedEndpoint.value;
             if (endpoint.audiences.length > 0) {
                 endpointDefinition = {
                     ...endpointDefinition,
-                    audiences: endpoint.audiences,
+                    audiences: endpoint.audiences
                 };
             } else if (openApiFile.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
                 endpointDefinition = {
                     ...endpointDefinition,
-                    audiences: [EXTERNAL_AUDIENCE],
+                    audiences: [EXTERNAL_AUDIENCE]
                 };
             }
             service.value.endpoints[endpointId] = endpointDefinition;
@@ -88,7 +88,7 @@ export function convertToServices({
     return {
         services,
         schemaIdsToExclude,
-        additionalTypeDeclarations,
+        additionalTypeDeclarations
     };
 }
 
@@ -96,7 +96,7 @@ function getEmptyService(): RawSchemas.HttpServiceSchema {
     return {
         auth: false,
         "base-path": "",
-        endpoints: {},
+        endpoints: {}
     };
 }
 

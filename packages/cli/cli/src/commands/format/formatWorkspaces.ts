@@ -5,7 +5,7 @@ import { CliContext } from "../../cli-context/CliContext";
 export async function formatWorkspaces({
     project,
     cliContext,
-    shouldFix,
+    shouldFix
 }: {
     project: Project;
     cliContext: CliContext;
@@ -20,7 +20,7 @@ export async function formatWorkspaces({
                 await formatWorkspace({
                     workspace,
                     context,
-                    shouldFix,
+                    shouldFix
                 });
             });
         })

@@ -11,7 +11,7 @@ export function generateSchemasFromAsyncAPI(asyncApi: AsyncAPI, taskContext: Tas
         openapi: "3.0.0",
         info: {
             title: "",
-            version: "",
+            version: ""
         },
         paths: {},
         components: {
@@ -26,9 +26,9 @@ export function generateSchemasFromAsyncAPI(asyncApi: AsyncAPI, taskContext: Tas
                         })
                         .filter(([_, value]) => value !== undefined)
                 ),
-                ...asyncApi.components?.schemas,
-            },
-        },
+                ...asyncApi.components?.schemas
+            }
+        }
     };
     const openApiIr = generateIr(openApiV3, taskContext);
     return openApiIr.schemas;

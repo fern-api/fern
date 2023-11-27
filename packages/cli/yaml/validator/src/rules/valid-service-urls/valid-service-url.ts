@@ -17,8 +17,8 @@ export const ValidServiceUrlsRule: Rule = {
                 return [
                     {
                         severity: "error",
-                        message: `"url" cannot be configured unless you specify multiple URLs for each environment in ${ROOT_API_FILENAME}`,
-                    },
+                        message: `"url" cannot be configured unless you specify multiple URLs for each environment in ${ROOT_API_FILENAME}`
+                    }
                 ];
             }
 
@@ -29,9 +29,9 @@ export const ValidServiceUrlsRule: Rule = {
                         `URL ${chalk.bold(
                             url
                         )} is not recognized. Please add it to your environments in ${ROOT_API_FILENAME} or specify one of the configured environment URLs:`,
-                        ...urlIds.map((urlId) => `  - ${urlId}`),
-                    ].join("\n"),
-                },
+                        ...urlIds.map((urlId) => `  - ${urlId}`)
+                    ].join("\n")
+                }
             ];
         };
 
@@ -53,9 +53,9 @@ export const ValidServiceUrlsRule: Rule = {
                                 severity: "error",
                                 message: [
                                     '"url" is missing. Please specify one of the configured environment URLs:',
-                                    ...urlIds.map((urlId) => `  - ${urlId}`),
-                                ].join("\n"),
-                            },
+                                    ...urlIds.map((urlId) => `  - ${urlId}`)
+                                ].join("\n")
+                            }
                         ];
                     }
 
@@ -63,14 +63,14 @@ export const ValidServiceUrlsRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: '"url" cannot be specified on both the service and endpoint',
-                            },
+                                message: '"url" cannot be specified on both the service and endpoint'
+                            }
                         ];
                     }
 
                     return validateBaseUrl(baseUrl);
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

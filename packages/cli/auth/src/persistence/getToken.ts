@@ -16,7 +16,7 @@ export async function getAccessToken(): Promise<FernOrganizationToken | undefine
     }
     return {
         type: "organization",
-        value: tokenFromEnvVar,
+        value: tokenFromEnvVar
     };
 }
 
@@ -35,6 +35,6 @@ export async function getUserToken(): Promise<FernUserToken | undefined> {
 
     return {
         type: "user",
-        value: tokenString,
+        value: tokenString
     };
 }

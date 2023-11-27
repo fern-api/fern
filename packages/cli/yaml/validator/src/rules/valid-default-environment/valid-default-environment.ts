@@ -12,8 +12,8 @@ export const ValidDefaultEnvironmentRule: Rule = {
                             return [
                                 {
                                     severity: "error",
-                                    message: `The default-environment ${defaultEnvironment} is not listed as an environment`,
-                                },
+                                    message: `The default-environment ${defaultEnvironment} is not listed as an environment`
+                                }
                             ];
                         }
                     }
@@ -21,13 +21,13 @@ export const ValidDefaultEnvironmentRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "Please specify a default-environment. If no default, use null",
-                            },
+                                message: "Please specify a default-environment. If no default, use null"
+                            }
                         ];
                     }
                     return [];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

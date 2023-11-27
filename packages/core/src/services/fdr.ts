@@ -1,15 +1,14 @@
-import { FernRegistryClient } from "@fern-fern/registry-node";
-import { Supplier } from "@fern-fern/registry-node/core";
+import { FdrClient } from "@fern-api/fdr-sdk";
 
 export function createFdrService({
     environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-    token,
+    token
 }: {
     environment?: string;
-    token: Supplier<string>;
-}): FernRegistryClient {
-    return new FernRegistryClient({
+    token: (() => string) | string;
+}): FdrClient {
+    return new FdrClient({
         environment,
-        token,
+        token
     });
 }

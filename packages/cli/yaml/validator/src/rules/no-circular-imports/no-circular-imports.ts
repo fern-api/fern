@@ -27,7 +27,7 @@ export const NoCircularImportsRule: Rule = {
 
                     const resolvedImportPath = getResolvedPathOfImportedFile({
                         referencedIn: relativeFilepath,
-                        importPath: RelativeFilePath.of(importPath),
+                        importPath: RelativeFilePath.of(importPath)
                     });
                     const circularImportsToReport = circularImportsForFile.filter(
                         ({ chainWithoutStartingFilepath: chain }) =>
@@ -42,13 +42,13 @@ export const NoCircularImportsRule: Rule = {
                                 : `Circular import detected: ${[
                                       circularImport.startingFilepath,
                                       ...circularImport.chainWithoutStartingFilepath,
-                                      circularImport.startingFilepath,
-                                  ].join(" -> ")}`,
+                                      circularImport.startingFilepath
+                                  ].join(" -> ")}`
                     }));
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 function findCircularImports(definitionFiles: FernDefinition["namedDefinitionFiles"]): CircularImports {
@@ -79,7 +79,7 @@ function findCircularImportsRecursive(
         for (const importPath of Object.values(file.contents.imports)) {
             const resolvedImportPath = getResolvedPathOfImportedFile({
                 referencedIn: filepath,
-                importPath: RelativeFilePath.of(importPath),
+                importPath: RelativeFilePath.of(importPath)
             });
             if (path.includes(resolvedImportPath)) {
                 // to reduce duplicates, only keep track of paths that:
@@ -88,7 +88,7 @@ function findCircularImportsRecursive(
                 if (path[0] === resolvedImportPath && path[0] === minimumString(path)) {
                     circularImports.push({
                         startingFilepath: resolvedImportPath,
-                        chainWithoutStartingFilepath: path.slice(1),
+                        chainWithoutStartingFilepath: path.slice(1)
                     });
                 }
             } else {

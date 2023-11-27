@@ -21,7 +21,7 @@ function itFixture(fixtureName: string) {
             }
 
             await runFernCli(["write-definition", "--log-level", "debug"], {
-                cwd: fixturePath,
+                cwd: fixturePath
             });
 
             expect(await getDirectoryContents(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();

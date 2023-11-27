@@ -3,7 +3,7 @@ import GeneratorsConfigurationMigration from "./generators-configuration";
 
 const versionMigrations: VersionMigrations = {
     version: "0.0.188",
-    migrations: [GeneratorsConfigurationMigration],
+    migrations: [GeneratorsConfigurationMigration]
 };
 
 export default versionMigrations;

@@ -12,6 +12,6 @@ export function convertTypeReference(
         unknown: IrVersions.V4.types.TypeReference.unknown,
         _unknown: () => {
             throw new Error("Unkonwn TypeReference: " + typeReference._type);
-        },
+        }
     });
 }

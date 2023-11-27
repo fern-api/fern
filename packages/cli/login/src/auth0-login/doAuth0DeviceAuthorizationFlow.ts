@@ -18,7 +18,7 @@ export async function doAuth0DeviceAuthorizationFlow({
     auth0Domain,
     auth0ClientId,
     audience,
-    context,
+    context
 }: {
     auth0Domain: string;
     auth0ClientId: string;
@@ -30,7 +30,7 @@ export async function doAuth0DeviceAuthorizationFlow({
         url: `https://${auth0Domain}/oauth/device/code`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
         data: qs.stringify({ client_id: auth0ClientId, audience }),
-        validateStatus: () => true,
+        validateStatus: () => true
     });
 
     if (deviceCodeResponse.status !== 200) {
@@ -49,8 +49,8 @@ export async function doAuth0DeviceAuthorizationFlow({
                 margin: 1,
                 textAlignment: "center",
                 borderColor: "green",
-                borderStyle: "round",
-            }),
+                borderStyle: "round"
+            })
         ].join("\n")
     );
 
@@ -58,7 +58,7 @@ export async function doAuth0DeviceAuthorizationFlow({
         auth0ClientId,
         auth0Domain,
         deviceCode: deviceCodeResponse.data.device_code,
-        context,
+        context
     });
 
     return token;
@@ -81,7 +81,7 @@ async function pollForToken({
     auth0Domain,
     auth0ClientId,
     deviceCode,
-    context,
+    context
 }: {
     auth0Domain: string;
     auth0ClientId: string;
@@ -95,9 +95,9 @@ async function pollForToken({
         data: qs.stringify({
             grant_type: "urn:ietf:params:oauth:grant-type:device_code",
             device_code: deviceCode,
-            client_id: auth0ClientId,
+            client_id: auth0ClientId
         }),
-        validateStatus: () => true,
+        validateStatus: () => true
     });
 
     if (response.status === 200) {
@@ -114,7 +114,7 @@ async function pollForToken({
                 auth0Domain,
                 auth0ClientId,
                 deviceCode,
-                context,
+                context
             });
         case "access_denied":
         case "expired_token":

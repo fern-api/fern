@@ -29,8 +29,8 @@ async function main() {
             "process.env.VENUS_AUDIENCE": getEnvironmentVariable("VENUS_AUDIENCE"),
             "process.env.LOCAL_STORAGE_FOLDER": getEnvironmentVariable("LOCAL_STORAGE_FOLDER"),
             "process.env.POSTHOG_API_KEY": getEnvironmentVariable("POSTHOG_API_KEY"),
-            "process.env.DOCS_DOMAIN_SUFFIX": getEnvironmentVariable("DOCS_DOMAIN_SUFFIX"),
-        },
+            "process.env.DOCS_DOMAIN_SUFFIX": getEnvironmentVariable("DOCS_DOMAIN_SUFFIX")
+        }
     };
 
     function getEnvironmentVariable(environmentVariable) {
@@ -63,7 +63,7 @@ require("./bundle.cjs");`
                 version: packageJson.version,
                 repository: packageJson.repository,
                 files: ["bundle.cjs", "cli.cjs"],
-                bin: { "fern-dev": "cli.cjs" },
+                bin: { "fern-dev": "cli.cjs" }
             },
             undefined,
             2

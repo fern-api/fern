@@ -1,0 +1,25 @@
+groups:
+  production:
+    audiences:
+      - external
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.7.2
+        output:
+          location: npm
+          package-name: '@fern-api/node-sdk'
+          token: ${NPM_TOKEN}
+        github:
+          repository: fern-api/node-sdk
+        config:
+          namespaceExport: Fern
+      - name: fernapi/fern-python-sdk
+        version: 0.6.5
+        output:
+          location: pypi
+          package-name: fern-api
+          token: ${PYPI_TOKEN}
+        github:
+          repository: fern-api/python-sdk
+        config:
+          client_class_name: Fern

@@ -35,7 +35,7 @@ export class ErrorResolverImpl implements ErrorResolver {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToError,
             referencedIn: file.relativeFilepath,
-            imports: file.imports,
+            imports: file.imports
         });
 
         if (parsedReference == null) {
@@ -58,8 +58,8 @@ export class ErrorResolverImpl implements ErrorResolver {
                 definitionFile,
                 relativeFilepath: parsedReference.relativeFilepath,
                 casingsGenerator: file.casingsGenerator,
-                rootApiFile: this.workspace.definition.rootApiFile.contents,
-            }),
+                rootApiFile: this.workspace.definition.rootApiFile.contents
+            })
         };
     }
 }

@@ -13,11 +13,11 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
     const openApiIr = await parse({
         absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
         absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,
-        taskContext: context,
+        taskContext: context
     });
     const definition = convert({
         taskContext: context,
-        openApiIr,
+        openApiIr
     });
 
     return {
@@ -26,7 +26,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
         generatorsConfiguration: openapiWorkspace.generatorsConfiguration,
         absoluteFilepath: openapiWorkspace.absoluteFilepath,
         dependenciesConfiguration: {
-            dependencies: {},
+            dependencies: {}
         },
         workspaceName: openapiWorkspace.workspaceName,
         definition: {
@@ -34,17 +34,17 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
             absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
                 contents: definition.rootApiFile,
-                rawContents: yaml.dump(definition.rootApiFile),
+                rawContents: yaml.dump(definition.rootApiFile)
             },
             namedDefinitionFiles: mapValues(definition.definitionFiles, (definitionFile) => ({
                 // these files doesn't live on disk, so there's no absolute filepath
                 absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
                 rawContents: yaml.dump(definitionFile),
-                contents: definitionFile,
+                contents: definitionFile
             })),
             packageMarkers: {},
-            importedDefinitions: {},
-        },
+            importedDefinitions: {}
+        }
     };
 }
 

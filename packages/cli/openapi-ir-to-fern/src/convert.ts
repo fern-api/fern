@@ -12,7 +12,7 @@ export interface OpenApiConvertedFernDefinition {
 
 export function convert({
     openApiIr,
-    taskContext,
+    taskContext
 }: {
     taskContext: TaskContext;
     openApiIr: OpenAPIIntermediateRepresentation;
@@ -22,6 +22,6 @@ export function convert({
 
     return {
         rootApiFile: convertedPackage.rootApiFile,
-        definitionFiles: convertedPackage.definitionFiles,
+        definitionFiles: convertedPackage.definitionFiles
     };
 }

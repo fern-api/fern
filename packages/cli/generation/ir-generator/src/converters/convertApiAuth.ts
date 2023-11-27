@@ -4,7 +4,7 @@ import { FernFileContext } from "../FernFileContext";
 
 export function convertApiAuth({
     rawApiFileSchema,
-    file,
+    file
 }: {
     rawApiFileSchema: RawSchemas.RootApiFileSchema;
     file: FernFileContext;
@@ -13,7 +13,7 @@ export function convertApiAuth({
         return {
             docs: undefined,
             requirement: AuthSchemesRequirement.All,
-            schemes: [],
+            schemes: []
         };
     }
 
@@ -26,9 +26,9 @@ export function convertApiAuth({
                 convertSchemeReference({
                     reference: authScheme,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    file,
-                }),
-            ],
+                    file
+                })
+            ]
         }),
         any: ({ any }) => ({
             docs,
@@ -37,17 +37,17 @@ export function convertApiAuth({
                 convertSchemeReference({
                     reference: schemeReference,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    file,
+                    file
                 })
-            ),
-        }),
+            )
+        })
     });
 }
 
 function convertSchemeReference({
     reference,
     authSchemeDeclarations,
-    file,
+    file
 }: {
     reference: RawSchemas.AuthSchemeReferenceSchema | string;
     authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
@@ -64,24 +64,24 @@ function convertSchemeReference({
                     docs,
                     name: file.casingsGenerator.generateNameAndWireValue({
                         name: rawHeader.name ?? reference,
-                        wireValue: rawHeader.header,
+                        wireValue: rawHeader.header
                     }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
-                    headerEnvVar: rawHeader.env,
+                    headerEnvVar: rawHeader.env
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
                     file,
                     docs,
-                    rawScheme,
+                    rawScheme
                 }),
             bearer: (rawScheme) =>
                 generateBearerAuth({
                     file,
                     docs,
-                    rawScheme,
-                }),
+                    rawScheme
+                })
         });
     };
 
@@ -92,13 +92,13 @@ function convertSchemeReference({
             return generateBearerAuth({
                 file,
                 docs: undefined,
-                rawScheme: undefined,
+                rawScheme: undefined
             });
         case "basic":
             return generateBasicAuth({
                 file,
                 docs: undefined,
-                rawScheme: undefined,
+                rawScheme: undefined
             });
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
@@ -108,7 +108,7 @@ function convertSchemeReference({
 function generateBearerAuth({
     docs,
     rawScheme,
-    file,
+    file
 }: {
     docs: string | undefined;
     rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
@@ -117,14 +117,14 @@ function generateBearerAuth({
     return AuthScheme.bearer({
         docs,
         token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
-        tokenEnvVar: rawScheme?.token?.env,
+        tokenEnvVar: rawScheme?.token?.env
     });
 }
 
 function generateBasicAuth({
     docs,
     rawScheme,
-    file,
+    file
 }: {
     docs: string | undefined;
     rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
@@ -135,6 +135,6 @@ function generateBasicAuth({
         username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
         password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
-        passwordEnvVar: rawScheme?.password?.env,
+        passwordEnvVar: rawScheme?.password?.env
     });
 }

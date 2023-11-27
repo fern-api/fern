@@ -10,14 +10,14 @@ export const NoMaybeStreamingRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "You cannot specify both response and response-stream",
-                            },
+                                message: "You cannot specify both response and response-stream"
+                            }
                         ];
                     } else {
                         return [];
                     }
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

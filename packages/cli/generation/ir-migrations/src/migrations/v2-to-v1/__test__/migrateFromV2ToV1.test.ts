@@ -7,7 +7,7 @@ const runMigration = createMigrationTester(V2_TO_V1_MIGRATION);
 describe("migrateFromV2ToV1", () => {
     it("adds discriminantValue to errors", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
         expect(migrated.errors[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
@@ -15,7 +15,7 @@ describe("migrateFromV2ToV1", () => {
             pascalCase: "BlogNotFoundError",
             screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
             snakeCase: "blog_not_found_error",
-            wireValue: "BlogNotFoundError",
+            wireValue: "BlogNotFoundError"
         });
         expect(migrated.services.http[0]?.name.name).toBe("BlogService");
     });

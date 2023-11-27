@@ -12,7 +12,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
     project,
     outputFilepath,
     cliContext,
-    audiences,
+    audiences
 }: {
     project: Project;
     outputFilepath: AbsoluteFilePath;
@@ -31,7 +31,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage: undefined,
-                    audiences,
+                    audiences
                 });
 
                 const apiDefinition = convertIrToFdrApi(intermediateRepresentation, {});

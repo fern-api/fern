@@ -15,7 +15,7 @@ describe("remove-inline-error-declarations", () => {
         process.chdir(tmpDir.path);
 
         await migration.run({
-            context: createMockTaskContext(),
+            context: createMockTaskContext()
         });
 
         const newA = (

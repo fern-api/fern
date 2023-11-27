@@ -3,7 +3,7 @@ import {
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
-    InlinedRequestBodyProperty,
+    InlinedRequestBodyProperty
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -11,7 +11,7 @@ import { getExtensionsAsList, getPropertyName } from "../type-declarations/conve
 
 export function convertHttpRequestBody({
     request,
-    file,
+    file
 }: {
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
@@ -20,7 +20,7 @@ export function convertHttpRequestBody({
     if (bytesRequest != null) {
         return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
-            contentType: typeof request === "string" ? undefined : request?.["content-type"],
+            contentType: typeof request === "string" ? undefined : request?.["content-type"]
         });
     }
 
@@ -28,7 +28,7 @@ export function convertHttpRequestBody({
         return HttpRequestBody.reference(
             convertReferenceHttpRequestBody({
                 requestBody: request,
-                file,
+                file
             })
         );
     }
@@ -46,9 +46,9 @@ export function convertHttpRequestBody({
                     return FileUploadRequestProperty.file({
                         key: file.casingsGenerator.generateNameAndWireValue({
                             wireValue: property.key,
-                            name: property.key,
+                            name: property.key
                         }),
-                        isOptional: property.isOptional,
+                        isOptional: property.isOptional
                     });
                 } else {
                     return FileUploadRequestProperty.bodyProperty(
@@ -56,11 +56,11 @@ export function convertHttpRequestBody({
                             propertyKey: property.key,
                             propertyDefinition: property.propertyType,
                             docs: property.docs,
-                            file,
+                            file
                         })
                     );
                 }
-            }),
+            })
         });
     }
 
@@ -82,10 +82,10 @@ export function convertHttpRequestBody({
                               propertyKey,
                               propertyDefinition,
                               docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                              file,
+                              file
                           })
                       )
-                    : [],
+                    : []
         });
     }
 
@@ -93,7 +93,7 @@ export function convertHttpRequestBody({
         convertReferenceHttpRequestBody({
             requestBody: request.body,
             file,
-            contentType: request["content-type"],
+            contentType: request["content-type"]
         })
     );
 }
@@ -101,7 +101,7 @@ export function convertHttpRequestBody({
 export function convertReferenceHttpRequestBody({
     requestBody,
     file,
-    contentType,
+    contentType
 }: {
     requestBody: RawSchemas.HttpReferencedRequestBodySchema | string;
     file: FernFileContext;
@@ -110,7 +110,7 @@ export function convertReferenceHttpRequestBody({
     return {
         docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
-        contentType,
+        contentType
     };
 }
 
@@ -118,7 +118,7 @@ function convertInlinedRequestProperty({
     propertyKey,
     propertyDefinition,
     docs,
-    file,
+    file
 }: {
     propertyKey: string;
     propertyDefinition: RawSchemas.ObjectPropertySchema;
@@ -129,8 +129,8 @@ function convertInlinedRequestProperty({
         docs,
         name: file.casingsGenerator.generateNameAndWireValue({
             wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
         }),
-        valueType: file.parseTypeReference(propertyDefinition),
+        valueType: file.parseTypeReference(propertyDefinition)
     };
 }

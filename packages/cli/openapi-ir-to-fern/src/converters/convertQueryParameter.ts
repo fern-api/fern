@@ -13,7 +13,7 @@ export interface ConvertedQueryParameter {
 export function convertQueryParameter({
     queryParameter,
     isPackageYml,
-    schemas,
+    schemas
 }: {
     queryParameter: QueryParameter;
     isPackageYml: boolean;
@@ -27,9 +27,9 @@ export function convertQueryParameter({
         value: {
             docs: queryParameter.description ?? undefined,
             type: getTypeFromTypeReference(typeReference.value.typeReference),
-            "allow-multiple": typeReference.allowMultiple ? true : undefined,
+            "allow-multiple": typeReference.allowMultiple ? true : undefined
         },
-        additionalTypeDeclarations: typeReference.value.additionalTypeDeclarations,
+        additionalTypeDeclarations: typeReference.value.additionalTypeDeclarations
     };
 }
 
@@ -43,7 +43,7 @@ interface QueryParameterTypeReference {
 function getQueryParameterTypeReference({
     schema,
     isPackageYml,
-    schemas,
+    schemas
 }: {
     schema: Schema;
     isPackageYml: boolean;
@@ -63,12 +63,12 @@ function getQueryParameterTypeReference({
                 value: convertToTypeReference({
                     schema: Schema.optional({
                         value: resolvedSchema.value,
-                        description: schema.description ?? resolvedSchema.description,
+                        description: schema.description ?? resolvedSchema.description
                     }),
                     prefix,
-                    schemas,
+                    schemas
                 }),
-                allowMultiple: true,
+                allowMultiple: true
             };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.oneOf.type === "undisciminated") {
             // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
@@ -76,7 +76,7 @@ function getQueryParameterTypeReference({
                 return getQueryParameterTypeReference({
                     schema,
                     isPackageYml,
-                    schemas,
+                    schemas
                 });
             }
         } else if (resolvedSchema.type === "object") {
@@ -95,12 +95,12 @@ function getQueryParameterTypeReference({
                     value: convertToTypeReference({
                         schema: Schema.optional({
                             value: resolvedSchema.value,
-                            description: schema.description ?? resolvedSchema.description,
+                            description: schema.description ?? resolvedSchema.description
                         }),
                         prefix,
-                        schemas,
+                        schemas
                     }),
-                    allowMultiple: true,
+                    allowMultiple: true
                 };
             }
         }
@@ -109,9 +109,9 @@ function getQueryParameterTypeReference({
                 value: convertToTypeReference({
                     schema: Schema.optional({ value: schema.value.value, description: schema.description }),
                     prefix,
-                    schemas,
+                    schemas
                 }),
-                allowMultiple: true,
+                allowMultiple: true
             };
         } else if (schema.value.type === "oneOf" && schema.value.oneOf.type === "undisciminated") {
             // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
@@ -119,7 +119,7 @@ function getQueryParameterTypeReference({
                 return getQueryParameterTypeReference({
                     schema: Schema.optional({ value: oneOfSchema, description: undefined }),
                     isPackageYml,
-                    schemas,
+                    schemas
                 });
             }
         } else if (schema.value.type === "object") {
@@ -129,9 +129,9 @@ function getQueryParameterTypeReference({
             value: convertToTypeReference({
                 schema,
                 prefix,
-                schemas,
+                schemas
             }),
-            allowMultiple: false,
+            allowMultiple: false
         };
     }
 
@@ -140,18 +140,18 @@ function getQueryParameterTypeReference({
             value: convertToTypeReference({
                 schema: Schema.optional({ value: schema.value, description: schema.description }),
                 prefix,
-                schemas,
+                schemas
             }),
-            allowMultiple: true,
+            allowMultiple: true
         };
     } else {
         return {
             value: convertToTypeReference({
                 schema,
                 prefix,
-                schemas,
+                schemas
             }),
-            allowMultiple: false,
+            allowMultiple: false
         };
     }
 }

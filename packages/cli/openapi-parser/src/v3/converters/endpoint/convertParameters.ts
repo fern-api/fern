@@ -4,7 +4,7 @@ import {
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
-    SchemaWithExample,
+    SchemaWithExample
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -24,7 +24,7 @@ export function convertParameters({
     httpMethod,
     parameters,
     context,
-    requestBreadcrumbs,
+    requestBreadcrumbs
 }: {
     path: string;
     httpMethod: HttpMethod;
@@ -35,7 +35,7 @@ export function convertParameters({
     const convertedParameters: ConvertedParameters = {
         pathParameters: [],
         queryParameters: [],
-        headers: [],
+        headers: []
     };
     for (const parameter of parameters) {
         const resolvedParameter = isReferenceObject(parameter)
@@ -48,27 +48,27 @@ export function convertParameters({
             resolvedParameter.schema != null
                 ? convertSchema(resolvedParameter.schema, !isRequired, context, [
                       ...requestBreadcrumbs,
-                      resolvedParameter.name,
+                      resolvedParameter.name
                   ])
                 : isRequired
                 ? SchemaWithExample.primitive({
                       schema: PrimitiveSchemaValueWithExample.string({
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter.example),
+                          example: getExamplesString(resolvedParameter.example)
                       }),
-                      description: undefined,
+                      description: undefined
                   })
                 : SchemaWithExample.optional({
                       value: SchemaWithExample.primitive({
                           schema: PrimitiveSchemaValueWithExample.string({
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter.example),
+                              example: getExamplesString(resolvedParameter.example)
                           }),
-                          description: undefined,
+                          description: undefined
                       }),
-                      description: undefined,
+                      description: undefined
                   });
         if (
             resolvedParameter.in === "header" &&
@@ -82,7 +82,7 @@ export function convertParameters({
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({
                     value: LiteralSchemaValue.string(defaultValue),
-                    description: undefined,
+                    description: undefined
                 });
             }
         }
@@ -90,14 +90,14 @@ export function convertParameters({
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
-            description: resolvedParameter.description,
+            description: resolvedParameter.description
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
         } else if (resolvedParameter.in === "path") {
             convertedParameters.pathParameters.push({
                 ...convertedParameter,
-                variableReference: getVariableReference(resolvedParameter),
+                variableReference: getVariableReference(resolvedParameter)
             });
         } else if (resolvedParameter.in === "header") {
             if (!HEADERS_TO_SKIP.has(resolvedParameter.name) && !context.authHeaders.has(resolvedParameter.name)) {
@@ -126,5 +126,5 @@ const HEADERS_TO_SKIP = new Set([
     "Cookie",
     "Origin",
     "Content-Disposition",
-    "X-Ping-Custom-Domain",
+    "X-Ping-Custom-Domain"
 ]);

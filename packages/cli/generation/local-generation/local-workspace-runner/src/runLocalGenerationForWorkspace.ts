@@ -4,7 +4,7 @@ import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-config
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
     migrateIntermediateRepresentationForGenerator,
-    migrateIntermediateRepresentationThroughVersion,
+    migrateIntermediateRepresentationThroughVersion
 } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -20,7 +20,7 @@ export async function runLocalGenerationForWorkspace({
     workspace,
     generatorGroup,
     keepDocker,
-    context,
+    context
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -48,7 +48,7 @@ export async function runLocalGenerationForWorkspace({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: undefined,
-                        writeSnippets: false,
+                        writeSnippets: false
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -69,7 +69,7 @@ export async function runLocalGenerationForSeed({
     generatorGroup,
     keepDocker,
     context,
-    irVersionOverride,
+    irVersionOverride
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -100,7 +100,7 @@ export async function runLocalGenerationForSeed({
                         irVersionOverride,
 
                         // TODO: For now, we only write the snippet.json for non-typescript generators.
-                        writeSnippets: !generatorInvocation.name.includes("typescript"),
+                        writeSnippets: !generatorInvocation.name.includes("typescript")
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -120,7 +120,7 @@ async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
         // use the /private prefix on osx so that docker can access the tmpdir
         // see https://stackoverflow.com/a/45123074
         tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
-        prefix: "fern",
+        prefix: "fern"
     });
 }
 
@@ -134,7 +134,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker,
     context,
     irVersionOverride,
-    writeSnippets,
+    writeSnippets
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -153,18 +153,18 @@ async function writeFilesToDiskAndRunGenerator({
         generatorInvocation,
         workspaceTempDir,
         context,
-        irVersionOverride,
+        irVersionOverride
     });
     context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
     const configJsonFile = await tmp.file({
-        tmpdir: workspaceTempDir.path,
+        tmpdir: workspaceTempDir.path
     });
     const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJsonFile.path);
     context.logger.debug("Will write config.json to: " + absolutePathToWriteConfigJson);
 
     const tmpOutputDirectory = await tmp.dir({
-        tmpdir: workspaceTempDir.path,
+        tmpdir: workspaceTempDir.path
     });
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
@@ -172,7 +172,7 @@ async function writeFilesToDiskAndRunGenerator({
     let absolutePathToTmpSnippetJSON = undefined;
     if (writeSnippets) {
         const snippetJsonFile = await tmp.file({
-            tmpdir: workspaceTempDir.path,
+            tmpdir: workspaceTempDir.path
         });
         absolutePathToTmpSnippetJSON = AbsoluteFilePath.of(snippetJsonFile.path);
         context.logger.debug("Will write snippet.json to: " + absolutePathToTmpSnippetJSON);
@@ -186,14 +186,14 @@ async function writeFilesToDiskAndRunGenerator({
         workspaceName: workspace.name,
         organization,
         keepDocker,
-        generatorInvocation,
+        generatorInvocation
     });
 
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
-        absolutePathToTmpSnippetJSON,
+        absolutePathToTmpSnippetJSON
     });
     await taskHandler.copyGeneratedFiles();
 }
@@ -204,7 +204,7 @@ async function writeIrToFile({
     generatorInvocation,
     workspaceTempDir,
     context,
-    irVersionOverride,
+    irVersionOverride
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
@@ -216,26 +216,26 @@ async function writeIrToFile({
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         audiences,
-        generationLanguage: generatorInvocation.language,
+        generationLanguage: generatorInvocation.language
     });
     const migratedIntermediateRepresentation =
         irVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({
                   intermediateRepresentation,
                   context,
-                  version: irVersionOverride,
+                  version: irVersionOverride
               })
             : await migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
                   context,
                   targetGenerator: {
                       name: generatorInvocation.name,
-                      version: generatorInvocation.version,
-                  },
+                      version: generatorInvocation.version
+                  }
               });
 
     const irFile = await tmp.file({
-        tmpdir: workspaceTempDir.path,
+        tmpdir: workspaceTempDir.path
     });
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
     await streamObjectToFile(absolutePathToIr, migratedIntermediateRepresentation, { pretty: true });

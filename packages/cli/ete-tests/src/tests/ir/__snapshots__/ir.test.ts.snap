@@ -62,6 +62,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {},
@@ -184,6 +185,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_app:GetAppResponse": {
             "name": {
@@ -1215,6 +1217,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {
@@ -1296,6 +1299,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -7753,6 +7757,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {
@@ -7834,6 +7839,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "ServerA",
                     "method": "GET",
                     "path": {
@@ -7879,6 +7885,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "ServerB",
                     "method": "POST",
                     "path": {
@@ -7981,6 +7988,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": "ServerA",
                     "method": "GET",
                     "path": {
@@ -8355,6 +8363,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {},
@@ -8689,6 +8698,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_nested:Response": {
             "name": {
@@ -9191,6 +9201,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     },
                     "displayName": null,
                     "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -9915,6 +9926,7 @@ exports[`ir {"name":"packages"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_:RootString": {
             "name": {
@@ -10436,6 +10448,7 @@ exports[`ir {"name":"packages"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -11001,6 +11014,7 @@ exports[`ir {"name":"response-property"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_service:WithDocs": {
             "name": {
@@ -11535,6 +11549,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -11784,6 +11799,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -12168,6 +12184,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             "docs": null
         }
     ],
+    "idempotencyHeaders": [],
     "types": {
         "type_commons:Internal": {
             "name": {
@@ -12556,6 +12573,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -13230,6 +13248,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "docs": null
         }
     ],
+    "idempotencyHeaders": [],
     "types": {
         "type_commons:Type": {
             "name": {
@@ -14049,6 +14068,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -15706,6 +15726,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "docs": null
         }
     ],
+    "idempotencyHeaders": [],
     "types": {
         "type_commons:Internal": {
             "name": {
@@ -21897,6 +21918,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -22219,6 +22241,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -23522,6 +23545,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "displayName": "Get Movie by Id",
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "GET",
                     "path": {
@@ -25014,6 +25038,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "DELETE",
                     "path": {
@@ -25771,6 +25796,7 @@ exports[`ir {"name":"streaming"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {
@@ -25852,6 +25878,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -25908,6 +25935,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -26228,6 +26256,7 @@ exports[`ir {"name":"variables"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {
         "type_commons:StringAlias": {
             "name": {
@@ -26392,6 +26421,7 @@ exports[`ir {"name":"variables"} 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
@@ -27140,6 +27170,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
         "docs": null
     },
     "headers": [],
+    "idempotencyHeaders": [],
     "types": {},
     "errors": {},
     "services": {},

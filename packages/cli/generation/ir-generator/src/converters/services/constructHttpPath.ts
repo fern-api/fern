@@ -8,7 +8,7 @@ export function constructHttpPath(rawPath: string): HttpPath {
     } else {
         return {
             head,
-            parts: [...getAllParts(rawPathGenerator)],
+            parts: [...getAllParts(rawPathGenerator)]
         };
     }
 }
@@ -21,7 +21,7 @@ function* getAllParts(rawPathGenerator: Generator<string>): Generator<HttpPathPa
         done = untilNextOpeningBrace.done;
         yield {
             pathParameter,
-            tail: untilNextOpeningBrace.value,
+            tail: untilNextOpeningBrace.value
         };
     } while (!done);
 }
@@ -43,6 +43,6 @@ function readUntil(generator: Generator<string>, delimiter: string): { value: st
 
     return {
         value,
-        done: nextResult.done ?? false,
+        done: nextResult.done ?? false
     };
 }

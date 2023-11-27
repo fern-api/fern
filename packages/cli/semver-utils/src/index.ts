@@ -6,5 +6,5 @@ export {
     type PostReleaseCandidateCommit,
     type PostReleaseCommit,
     type Release,
-    type ReleaseCandidate,
+    type ReleaseCandidate
 } from "./parseVersion";

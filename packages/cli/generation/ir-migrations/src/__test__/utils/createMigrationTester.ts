@@ -26,8 +26,8 @@ async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
         context: context?.taskContext ?? createMockTaskContext(),
         targetGenerator: context?.targetGenerator ?? {
             name: "",
-            version: "",
-        },
+            version: ""
+        }
     });
     return migrated.ir;
 }

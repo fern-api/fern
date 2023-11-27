@@ -10,7 +10,7 @@ describe("no-complex-query-params", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("simple")
-            ),
+            )
         });
 
         expect(violations).toEqual([
@@ -18,20 +18,20 @@ describe("no-complex-query-params", () => {
                 message: "list<string> is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "c"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "unknown is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
+                severity: "error"
             },
             {
                 message: "optional<AliasOfAliasOfObject> is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "g"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error",
-            },
+                severity: "error"
+            }
         ]);
     });
 });

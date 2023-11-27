@@ -29,12 +29,12 @@ export const ImportFileExistsRule: Rule = {
                             severity: "error",
                             message: `Import ${chalk.bold(importedAs)} points to non-existent path ${chalk.bold(
                                 importPath
-                            )}.`,
+                            )}.`
                         });
                     }
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };

@@ -6,7 +6,7 @@ import {
     doesRequestHaveNonBodyProperties,
     getHeaderName,
     getQueryParameterName,
-    TypeResolverImpl,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
@@ -16,7 +16,7 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
-    ObjectPropertyWithPath,
+    ObjectPropertyWithPath
 } from "../../utils/getAllPropertiesForObject";
 
 export const NoConflictingRequestWrapperPropertiesRule: Rule = {
@@ -30,7 +30,7 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                         service,
                         relativeFilepath,
                         definitionFile,
-                        workspace,
+                        workspace
                     });
 
                     const violations: RuleViolation[] = [];
@@ -46,15 +46,15 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
                                 )}. This is not suitable for code generation. Use the "name" property to deconflict.\n` +
                                 propertiesWithName
                                     .map((property) => `  - ${convertRequestWrapperPropertyToString(property)}`)
-                                    .join("\n"),
+                                    .join("\n")
                         });
                     }
 
                     return violations;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 type RequestWrapperProperty =
@@ -97,7 +97,7 @@ function getRequestWrapperPropertiesByName({
     service,
     relativeFilepath,
     definitionFile,
-    workspace,
+    workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     service: RawSchemas.HttpServiceSchema;
@@ -121,14 +121,14 @@ function getRequestWrapperPropertiesByName({
                     relativeFilepath,
                     definitionFile,
                     casingsGenerator: CASINGS_GENERATOR,
-                    rootApiFile: workspace.definition.rootApiFile.contents,
+                    rootApiFile: workspace.definition.rootApiFile.contents
                 }),
-                typeResolver: new TypeResolverImpl(workspace),
+                typeResolver: new TypeResolverImpl(workspace)
             })
         ) {
             addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
                 type: "referenced-body",
-                propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+                propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER
             });
         }
     }
@@ -138,7 +138,7 @@ function getRequestWrapperPropertiesByName({
             addProperty(getHeaderName({ headerKey, header }).name, {
                 type: "service-header",
                 headerKey,
-                header,
+                header
             });
         }
     }
@@ -149,7 +149,7 @@ function getRequestWrapperPropertiesByName({
                 addProperty(getHeaderName({ headerKey, header }).name, {
                     type: "endpoint-header",
                     headerKey,
-                    header,
+                    header
                 });
             }
         }
@@ -159,7 +159,7 @@ function getRequestWrapperPropertiesByName({
                 addProperty(getQueryParameterName({ queryParameterKey, queryParameter }).name, {
                     type: "endpoint-query-parameter",
                     queryParameterKey,
-                    queryParameter,
+                    queryParameter
                 });
             }
         }
@@ -169,18 +169,18 @@ function getRequestWrapperPropertiesByName({
                 typeName: undefined,
                 objectDeclaration: {
                     extends: endpoint.request.body.extends,
-                    properties: endpoint.request.body.properties ?? {},
+                    properties: endpoint.request.body.properties ?? {}
                 },
                 filepathOfDeclaration: relativeFilepath,
                 definitionFile,
                 workspace,
-                typeResolver: new TypeResolverImpl(workspace),
+                typeResolver: new TypeResolverImpl(workspace)
             });
 
             for (const property of allProperties) {
                 addProperty(property.name, {
                     type: "inlined-body",
-                    property,
+                    property
                 });
             }
         }
@@ -200,7 +200,7 @@ function convertRequestWrapperPropertyToString(property: RequestWrapperProperty)
         case "inlined-body":
             return `Body property: ${convertObjectPropertyWithPathToString({
                 property: property.property,
-                prefixBreadcrumbs: ["<Request Body>"],
+                prefixBreadcrumbs: ["<Request Body>"]
             })}`;
         case "referenced-body":
             return `Body property "${property.propertyName}"`;

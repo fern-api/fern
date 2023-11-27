@@ -28,11 +28,11 @@ export const V25_TO_V24_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V24.IntermediateRepresentation.jsonOrThrow(ir, {
-            unrecognizedObjectKeys: "strip",
+            unrecognizedObjectKeys: "strip"
         }),
     migrateBackwards: (v25, context): IrVersions.V24.ir.IntermediateRepresentation => {
         const bytesEndpoints: IrVersions.V25.HttpEndpoint[] = [];
@@ -59,29 +59,29 @@ export const V25_TO_V24_MIGRATION: IrMigration<
                             textHttpEndpoints.push(endpoint);
                             return IrVersions.V24.HttpResponse.json({
                                 docs: undefined,
-                                responseBodyType: IrVersions.V24.TypeReference.unknown(),
+                                responseBodyType: IrVersions.V24.TypeReference.unknown()
                             });
                         },
                         _other: () => {
                             throw new Error("Encountered unknown response type");
-                        },
+                        }
                     });
                     v24CompatibleEndpoints.push({
                         ...endpoint,
                         sdkRequest: v24SdkRequest,
-                        response: v24Response,
+                        response: v24Response
                     });
                 } else {
                     v24CompatibleEndpoints.push({
                         ...endpoint,
                         sdkRequest: v24SdkRequest,
-                        response: undefined,
+                        response: undefined
                     });
                 }
             }
             v24CompatibleServices[serviceId] = {
                 ...httpService,
-                endpoints: v24CompatibleEndpoints,
+                endpoints: v24CompatibleEndpoints
             };
         }
         if (textHttpEndpoints.length > 0) {
@@ -120,9 +120,9 @@ export const V25_TO_V24_MIGRATION: IrMigration<
         }
         return {
             ...v25,
-            services: v24CompatibleServices,
+            services: v24CompatibleServices
         };
-    },
+    }
 };
 
 function getV24SDKRequest(sdkRequest: IrVersions.V25.SdkRequest): IrVersions.V24.SdkRequest | undefined {
@@ -130,17 +130,17 @@ function getV24SDKRequest(sdkRequest: IrVersions.V25.SdkRequest): IrVersions.V24
     if (shape.type === "wrapper") {
         return {
             shape: IrVersions.V24.SdkRequestShape.wrapper({
-                ...shape,
+                ...shape
             }),
-            requestParameterName: sdkRequest.requestParameterName,
+            requestParameterName: sdkRequest.requestParameterName
         };
     }
     if (shape.value.type === "typeReference") {
         return {
             shape: IrVersions.V24.SdkRequestShape.justRequestBody({
-                ...shape.value,
+                ...shape.value
             }),
-            requestParameterName: sdkRequest.requestParameterName,
+            requestParameterName: sdkRequest.requestParameterName
         };
     }
     return undefined;

@@ -10,5 +10,5 @@ export const RelativeFilePath = {
             throw new Error("Filepath is not relative: " + value);
         }
         return value as RelativeFilePath;
-    },
+    }
 };

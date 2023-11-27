@@ -67,7 +67,7 @@ export function flatMapLoadable<V, U, E = unknown>(
     return visitLoadable<V, Loadable<U, E>, E>(loadable, {
         loading,
         loaded: (value) => map(value),
-        failed,
+        failed
     });
 }
 
@@ -89,7 +89,7 @@ export function mapLoadableArray<V, U>(
     return visitLoadable<V, Loadable<U>[]>(loadable, {
         loading: () => Array<Loadable<U>>(numLoading).fill(loading()),
         loaded: (value) => map(value).map(loaded),
-        failed: (error) => Array<Loadable<U>>(numLoading).fill(failed(error)),
+        failed: (error) => Array<Loadable<U>>(numLoading).fill(failed(error))
     });
 }
 

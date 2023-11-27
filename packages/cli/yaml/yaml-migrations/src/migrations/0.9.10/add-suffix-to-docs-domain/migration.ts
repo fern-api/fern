@@ -15,7 +15,7 @@ export const migration: Migration = {
                 context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
             }
         }
-    },
+    }
 };
 
 async function migrateYamlFile(filepath: AbsoluteFilePath): Promise<void> {

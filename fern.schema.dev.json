@@ -330,6 +330,7 @@
                 ]
               }
             },
+            "idempotent": { "type": "boolean" },
             "headers": {
               "type": "object",
               "additionalProperties": {
@@ -359,6 +360,7 @@
                     }
                   },
                   "auth": { "type": "boolean" },
+                  "idempotent": { "type": "boolean" },
                   "request": {
                     "anyOf": [
                       { "type": "string" },

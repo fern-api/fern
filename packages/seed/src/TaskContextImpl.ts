@@ -10,7 +10,7 @@ import {
     PosthogEvent,
     Startable,
     TaskContext,
-    TaskResult,
+    TaskResult
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { Log } from "./Log";
@@ -46,7 +46,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         takeOverTerminal,
         onResult,
         shouldBufferLogs,
-        instrumentPostHogEvent,
+        instrumentPostHogEvent
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
@@ -105,14 +105,14 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             parts,
             level,
             time: new Date(),
-            ...overrides,
+            ...overrides
         });
     }
 
     protected log(log: Log): void {
         this.bufferedLogs.push({
             ...log,
-            prefix: this.logPrefix,
+            prefix: this.logPrefix
         });
         if (!this.shouldBufferLogs) {
             this.flushLogs();
@@ -135,7 +135,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
-            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event),
+            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event)
         });
         this.subtasks.push(subtask);
         return subtask;
@@ -189,7 +189,7 @@ export class InteractiveTaskContextImpl
     public start(): Finishable & InteractiveTaskContext {
         super.start();
         this.logAtLevelWithOverrides(LogLevel.Info, ["Started."], {
-            omitOnTTY: true,
+            omitOnTTY: true
         });
         this.flushLogs();
         return this;
@@ -202,11 +202,11 @@ export class InteractiveTaskContextImpl
     public finish(): void {
         if (this.result === TaskResult.Success) {
             this.logAtLevelWithOverrides(LogLevel.Info, ["Finished."], {
-                omitOnTTY: true,
+                omitOnTTY: true
             });
         } else {
             this.logAtLevelWithOverrides(LogLevel.Error, ["Failed."], {
-                omitOnTTY: true,
+                omitOnTTY: true
             });
         }
         super.finish();
@@ -225,7 +225,7 @@ export class InteractiveTaskContextImpl
 
         return addPrefixToString({
             prefix: `${this.getIcon({ spinner }).padEnd(spinner.length)} `,
-            content: lines.join("\n"),
+            content: lines.join("\n")
         });
     }
 

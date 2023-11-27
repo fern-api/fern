@@ -3,7 +3,7 @@ import {
     APIS_DIRECTORY,
     DEFAULT_API_WORSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
-    GENERATORS_CONFIGURATION_FILENAME,
+    GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -17,7 +17,7 @@ export async function initializeAPI({
     organization,
     versionOfCli,
     openApiPath,
-    context,
+    context
 }: {
     organization: string | undefined;
     versionOfCli: string;
@@ -27,12 +27,12 @@ export async function initializeAPI({
     const { absolutePathToFernDirectory } = await createFernDirectoryAndWorkspace({
         organization,
         versionOfCli,
-        taskContext: context,
+        taskContext: context
     });
 
     const directoryOfWorkspace = await getDirectoryOfNewAPIWorkspace({
         absolutePathToFernDirectory,
-        taskContext: context,
+        taskContext: context
     });
     if (openApiPath != null) {
         await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath });
@@ -44,7 +44,7 @@ export async function initializeAPI({
 
 async function getDirectoryOfNewAPIWorkspace({
     absolutePathToFernDirectory,
-    taskContext,
+    taskContext
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
     taskContext: TaskContext;
@@ -111,7 +111,7 @@ async function getDirectoryOfNewAPIWorkspace({
 }
 
 async function hasWorkspaces({
-    absolutePathToFernDirectory,
+    absolutePathToFernDirectory
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
 }): Promise<boolean> {
@@ -123,7 +123,7 @@ async function hasWorkspaces({
 }
 
 async function hasInlinedAPIDefinitions({
-    absolutePathToFernDirectory,
+    absolutePathToFernDirectory
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
 }): Promise<boolean> {

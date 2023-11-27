@@ -35,15 +35,15 @@ export const NoErrorStatusCodeConflictRule: Rule = {
                         if (errorNames.length > 1) {
                             result.push({
                                 severity: "error",
-                                message: `Multiple errors have status-code ${statusCode}: ${errorNames.join(", ")}`,
+                                message: `Multiple errors have status-code ${statusCode}: ${errorNames.join(", ")}`
                             });
                         }
                     }
                     return result;
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
 
 async function getErrorDeclarations(
@@ -56,7 +56,7 @@ async function getErrorDeclarations(
             errorDeclaration: ({ errorName, declaration }) => {
                 errorDeclarations[errorName] = declaration;
             },
-            httpService: noop,
+            httpService: noop
         });
     });
     return errorDeclarations;

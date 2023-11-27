@@ -5,7 +5,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V20_TO_V19_MIGRATION: IrMigration<
@@ -33,7 +33,7 @@ export const V20_TO_V19_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "0.3.6-rc1-2-g6050f7f8",
         [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: "0.0.0",
-        [GeneratorName.GO_SDK]: "0.0.0",
+        [GeneratorName.GO_SDK]: "0.0.0"
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v20, context): IrVersions.V19.ir.IntermediateRepresentation => {
@@ -41,9 +41,9 @@ export const V20_TO_V19_MIGRATION: IrMigration<
             ...v20,
             services: mapValues(v20.services, (service) => {
                 return convertService(service, context);
-            }),
+            })
         };
-    },
+    }
 };
 
 function convertService(
@@ -52,7 +52,7 @@ function convertService(
 ): IrVersions.V19.http.HttpService {
     return {
         ...service,
-        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context)),
+        endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint, context))
     };
 }
 
@@ -63,7 +63,7 @@ function convertEndpoint(
     return {
         ...endpoint,
         response: endpoint.response != null ? convertResponse(endpoint.response, context) : undefined,
-        sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse, context) : undefined,
+        sdkResponse: endpoint.sdkResponse != null ? convertSdkResponse(endpoint.sdkResponse, context) : undefined
     };
 }
 
@@ -78,7 +78,7 @@ function convertResponse(
         json: (jsonResponse) => jsonResponse,
         _unknown: () => {
             throw new Error("Unknown HttpResponse: " + response.type);
-        },
+        }
     });
 }
 
@@ -95,12 +95,12 @@ function convertSdkResponse(
             IrVersions.V19.http.SdkResponse.maybeStreaming({
                 condition: maybeStreamingResponse.condition,
                 streaming: maybeStreamingResponse.streaming,
-                nonStreaming: convertResponse(maybeStreamingResponse.nonStreaming, context),
+                nonStreaming: convertResponse(maybeStreamingResponse.nonStreaming, context)
             }),
         json: IrVersions.V19.http.SdkResponse.nonStreaming,
         _unknown: () => {
             throw new Error("Unknown SdkResponse: " + sdkResponse.type);
-        },
+        }
     });
 }
 

@@ -5,7 +5,7 @@ import { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema
 export const EnvironmentSchema = z.union([
     z.string(),
     SingleBaseUrlEnvironmentSchema,
-    MultipleBaseUrlsEnvironmentSchema,
+    MultipleBaseUrlsEnvironmentSchema
 ]);
 
 export type EnvironmentSchema = z.infer<typeof EnvironmentSchema>;

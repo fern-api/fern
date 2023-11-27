@@ -11,13 +11,13 @@ export const NoGetRequestBodyRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: "Endpoint is a GET, so it cannot have a request body.",
-                            },
+                                message: "Endpoint is a GET, so it cannot have a request body."
+                            }
                         ];
                     }
                     return [];
-                },
-            },
+                }
+            }
         };
-    },
+    }
 };
