@@ -2,7 +2,7 @@ import { entries } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { convertPackage } from "./convertPackage";
-import { convertTypeShape } from "./convertTypeShape";
+import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
 import { convertAuth } from "./covertAuth";
 
 export function convertIrToFdrApi(
@@ -14,7 +14,14 @@ export function convertIrToFdrApi(
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
         auth: convertAuth(ir.auth),
-        snippetsConfiguration: snippetsConfig
+        snippetsConfiguration: snippetsConfig,
+        globalHeaders: ir.headers.map(
+            (header): APIV1Write.Header => ({
+                description: header.docs ?? undefined,
+                key: header.name.wireValue,
+                type: convertTypeReference(header.valueType)
+            })
+        )
     };
 
     for (const [typeId, type] of entries(ir.types)) {
