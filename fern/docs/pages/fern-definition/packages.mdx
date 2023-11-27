@@ -96,3 +96,49 @@ fern/
         └─ v2/
           └─ movie.yml
 ```
+
+## Navigation
+
+`__package__.yml` also allows you to configure the navigation order 
+of your services. This is relevant when you want to control the display 
+of your documentation. 
+
+For example, let's say you have the following Fern Directory: 
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml
+  └─ definition/
+    ├─ projects.yml
+    ├─ roles.yml
+    ├─ users.yml
+```
+
+Your API will be sorted alphabetically: projects, roles, then users. If you 
+want to control the navigation you can add a `__package__.yml` file 
+and configure the order 
+
+<CodeBlock title="__package__.yml">
+```yaml
+navigation: 
+  - users.yml
+  - roles.yml
+  - projects.yml
+```
+</CodeBlock>
+
+Note the fern directory structure will now look like 
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml
+  └─ definition/
+    ├─ __package__.yml # <------------ 
+    ├─ projects.yml
+    ├─ roles.yml
+    ├─ users.yml
+```
