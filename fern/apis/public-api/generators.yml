@@ -4,10 +4,10 @@ groups:
       - external
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
+        version: 0.8.9
         output:
           location: npm
-          package-name: '@fern-api/node-sdk'
+          package-name: "@fern-api/node-sdk"
           token: ${NPM_TOKEN}
         github:
           repository: fern-api/node-sdk

@@ -1,6 +1,6 @@
 [Source code](https://github.com/fern-api/fern-typescript)
 
-**Latest version**: `0.7.2`
+**Latest version**: `0.8.9`
 
 The TypeScript Node.js SDK generator outputs a fully functional TypeScript/JavaScript SDK for server-side usage. It can publish the SDK to npmjs.org (or any other npm repository).
 
@@ -9,16 +9,8 @@ The TypeScript Node.js SDK generator outputs a fully functional TypeScript/JavaS
 Dump the generated SDK to the local file system. Available on the open source plan.
 
 <CodeBlock title="generators.yml">
-```yaml
-generators:
-  groups:
-    local:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: local-file-system
-          path: ../../generated/sdk/node
-```
+  ```yaml generators: groups: local: - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location:
+  local-file-system path: ../../generated/sdk/node ```
 </CodeBlock>
 
 ## Publish an Internal Package
@@ -26,16 +18,8 @@ generators:
 Publish the generated SDK to a private NPM hosted by Fern. Available on the Starter plan.
 
 <CodeBlock title="generators.yml">
-```yaml
-generators:
-  groups:
-    internal:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: npm.buildwithfern.com
-          package-name: @fern-imdb/api # replace imdb with your org name
-```
+  ```yaml generators: groups: internal: - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location:
+  npm.buildwithfern.com package-name: @fern-imdb/api # replace imdb with your org name ```
 </CodeBlock>
 
 ## Publish a Public Package
@@ -43,59 +27,28 @@ generators:
 Publish the generated SDK to [npmjs.com](https://www.npmjs.com/). Available on the Starter plan.
 
 <CodeBlock title="generators.yml">
-```yaml
-generators:
-  groups:
-    public:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: npm
-          package-name: imdb # replace with your package name
-          token: ${NPM_TOKEN}
-        github:
-          repository: imdb/imdb-node # replace imdb with your org & package name
-```
+  ```yaml generators: groups: public: - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location: npm
+  package-name: imdb # replace with your package name token: ${NPM_TOKEN}
+  github: repository: imdb/imdb-node # replace imdb with your org & package name ```
 </CodeBlock>
 
 You can override the registry using the `url` key.
 
 <CodeBlock title="generators.yml">
-```diff
-generators:
-  groups:
-    public:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: npm
-          package-name: imdb # replace with your package name
-          token: ${NPM_TOKEN}
-+       url: your-npm-registry.com
-```
+  ```diff generators: groups: public: - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location: npm
+  package-name: imdb # replace with your package name token: ${NPM_TOKEN}+ url: your-npm-registry.com ```
 </CodeBlock>
 
 ## Configuration options
 
-You can customize the behavior of the TypeScript generator in `generators.yml`. 
+You can customize the behavior of the TypeScript generator in `generators.yml`.
 
 You can have one or many config, such as:
 
 <CodeBlock title="generators.yml">
-```diff
-- name: fernapi/fern-typescript-node-sdk
-  version: 0.7.2
-  output:
-    location: npm
-    package-name: imdb
-  github:
-    repository: imdb/imdb-node 
-+ config: 
-+   namespaceExport: IMDb
-+   timeoutInSeconds: 120
-+   noSerdeLayer: true
-+   outputEsm: true
-```
+  ```diff - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location: npm package-name: imdb github:
+  repository: imdb/imdb-node + config: + namespaceExport: IMDb + timeoutInSeconds: 120 + noSerdeLayer: true + outputEsm:
+  true ```
 </CodeBlock>
 
 The following options are available:
@@ -113,17 +66,8 @@ import { IMDbApi, IMDbApiClient } from "imdb";
 To customize these names, you can use `namepaceExport`:
 
 <CodeBlock title="generators.yml">
-```diff
-- name: fernapi/fern-typescript-node-sdk
-  version: 0.7.2
-  output:
-    location: npm
-    package-name: imdb
-  github:
-    repository: imdb/imdb-node 
-+ config: 
-+   namespaceExport: IMDb
-```
+  ```diff - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location: npm package-name: imdb github:
+  repository: imdb/imdb-node + config: + namespaceExport: IMDb ```
 </CodeBlock>
 
 The result would be:
@@ -139,13 +83,13 @@ import { IMDb, IMDbClient } from "imdb";
 **Type**: integer or "infinity"
 **Default**: `60`
 
-```yaml 
-config: 
+```yaml
+config:
   timeoutInSeconds: 120
 ```
 
-```yaml 
-config: 
+```yaml
+config:
   timeoutInSeconds: infinity
 ```
 
@@ -165,65 +109,66 @@ By default, the generated client includes a layer for serializing requests and d
 1. The generated types can stray from the wire/JSON representation to be more idiomatic. For example, when `noSerdeLayer` is disabled, all properties are camelCase, even if the server is expecting snake_case.
 
 ```yaml
-config: 
+config:
   noSerdeLayer: true
 ```
 
-### Output ESM 
+### Output ESM
 
 - `outputEsm`: Allows you to control whether (de-)serialization code is generated. When `true`, the client uses JSON.parse() and JSON.stringify() instead.
 
 **Type**: `boolean`
-**Default**: `false` 
+**Default**: `false`
 
 By default, the generated TypeScript targets CommonJS. Set `outputEsm` to `true` to target `esnext` instead.
 
 ```yaml
-config: 
+config:
   outputEsm: true
 ```
 
-### Output Source Files 
+### Output Source Files
 
-- `outputSourceFiles`: Allows you to control whether the generator outputs `.js` and `d.ts` files. 
+- `outputSourceFiles`: Allows you to control whether the generator outputs `.js` and `d.ts` files.
 
 **Type**: `boolean`
-**Default**: `false` 
+**Default**: `false`
 
 When enabled, the generator outputs raw TypeScript files.
 
 When disabled (the default), the generator outputs .js and d.ts files.
 
 <Callout intent="warn">
-This config only applied when dumping the generated SDK to the local file system. It does not apply when publishing to GitHub or npm.
+  This config only applied when dumping the generated SDK to the local file system. It does not apply when publishing to
+  GitHub or npm.
 </Callout>
 
 ```yaml
-config: 
+config:
   outputSourceFiles: true
 ```
 
-### Include Credentials On Cross Origin Requests 
+### Include Credentials On Cross Origin Requests
 
-- `includeCredentialsOnCrossOriginRequests`: Allows you to set [withCredentials](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)  to `true` when making network requests.
+- `includeCredentialsOnCrossOriginRequests`: Allows you to set [withCredentials](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials) to `true` when making network requests.
 
 **Type**: `boolean`
-**Default**: `false` 
+**Default**: `false`
 
 ```yaml
-config: 
+config:
   includeCredentialsOnCrossOriginRequests: true
 ```
 
 ### allowCustomFetcher
 
-- `allowCustomFetcher`: Allows the end user to specify a custom fetcher implementation. 
+- `allowCustomFetcher`: Allows the end user to specify a custom fetcher implementation.
 
 **Type**: `boolean`
-**Default**: `false` 
+**Default**: `false`
 
 ```yaml
-config: 
+config:
   allowCustomFetcher: true
 ```
 
@@ -240,10 +185,10 @@ const imdb = new IMDbClient({
 - `requireDefaultEnvironment`: When enabled, the generated client doesn't allow the user to specify a server URL.
 
 **Type**: `boolean`
-**Default**: `false` 
+**Default**: `false`
 
 ```yaml
-config: 
+config:
   requireDefaultEnvironment: true
 ```
 
@@ -251,7 +196,7 @@ When disabled (the default), the generated client includes an option to override
 
 ```typescript
 const imdb = new IMDbClient({
-  environment: "localhost:8080",
+  environment: "localhost:8080"
 });
 ```
 
@@ -260,12 +205,12 @@ const imdb = new IMDbClient({
 - `skipResponseValidation`: When enabled, the generated client will never throw if the response is misshapen. Rather, the client will log the issue using `console.warn` and return the data (casted to the expected response type).
 
 **Type**: `boolean`
-**Default**: `false` 
+**Default**: `false`
 
 By default, the client will throw an error if the response from the server doesn't match the expected type (based on how the response is modeled in the API definition).
 
 ```yaml
-config: 
+config:
   skipResponseValidation: true
 ```
 
@@ -276,15 +221,13 @@ config:
 **Type**: `map<string,string>`
 **Default**: `{}`
 
-<Callout intent="warn">
-This only applies when publishing to GitHub.
-</Callout>
+<Callout intent="warn">This only applies when publishing to GitHub.</Callout>
 
 By default, the client will throw an error if the response from the server doesn't match the expected type (based on how the response is modeled in the API definition).
 
 ```yaml
-config: 
-  extraDependencies: 
+config:
+  extraDependencies:
     jest: "^29.7.0" # <-- examples
     "@types/jest": "^29.5.5"
     ts-jest: "^29.1.1"
@@ -300,13 +243,13 @@ config:
 In Fern, there's an `unknown` type that represents data that isn't knowable at runtime. By default, these types are generated into TypeScript as the `unknown` type.
 
 ```yaml
-config: 
+config:
   treatUnknownAsAny: true
 ```
 
-### No Optional Properties 
+### No Optional Properties
 
-- `noOptionalProperties`: When enabled,  the generated properties are never optional. Instead, the type is generated with `| undefined`.
+- `noOptionalProperties`: When enabled, the generated properties are never optional. Instead, the type is generated with `| undefined`.
 
 **Type**: `boolean`
 **Default**: `false`
@@ -350,13 +293,7 @@ interface Person {
 
 For example, let's say you have the following Fern Definition:
 
-<CodeBlock title="movies.yml">
-```yaml
-types:
-  MyString: string
-  OtherString: string
-```
-</CodeBlock>
+<CodeBlock title="movies.yml">```yaml types: MyString: string OtherString: string ```</CodeBlock>
 
 <CodeBlock title="generated code">
 ```typescript
@@ -384,7 +321,8 @@ printMyString(otherString);
 // compiles
 const myString = MyString("my-string");
 printMyString(myString);
-```
+
+````
 </CodeBlock>
 
 When `useBrandedStringAliases` is disabled (the default), string aliases are generated as normal TypeScript aliases:
@@ -394,7 +332,8 @@ When `useBrandedStringAliases` is disabled (the default), string aliases are gen
 export type MyString = string;
 
 export type OtherString = string;
-```
+````
+
 </CodeBlock>
 
 ### Never Throw Errors
@@ -405,13 +344,7 @@ export type OtherString = string;
 **Default**: `false`
 
 <CodeBlock title="APIResponse.ts">
-```typescript
-const response = await client.callEndpoint(...);
-if (response.ok) {
-  console.log(response.body)
-} else {
-  console.error(respons.error)
-}
-```
+  ```typescript const response = await client.callEndpoint(...); if (response.ok) {console.log(response.body)} else{" "}
+  {console.error(respons.error)}
+  ```
 </CodeBlock>
-
