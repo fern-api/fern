@@ -66,8 +66,17 @@ import { IMDbApi, IMDbApiClient } from "imdb";
 To customize these names, you can use `namepaceExport`:
 
 <CodeBlock title="generators.yml">
-  ```diff - name: fernapi/fern-typescript-node-sdk version: 0.8.9 output: location: npm package-name: imdb github:
-  repository: imdb/imdb-node + config: + namespaceExport: IMDb ```
+```diff 
+- name: fernapi/fern-typescript-node-sdk 
+version: 0.8.9 
+output: 
+  location: npm 
+  package-name: imdb 
+github:
+  repository: imdb/imdb-node 
++ config: 
+  + namespaceExport: IMDb 
+```
 </CodeBlock>
 
 The result would be:
