@@ -1,7 +1,43 @@
-`fern init` adds a new API to your repo. By default, you'll see the `IMDb Movie API` example.
+`fern init` adds a new API to your project. By default, you'll see a sample API for the `IMDb` (International Movie Database) added to your repository.
 
 ## Usage
 
 ```bash
 $ fern init
 ```
+
+The file structure will look like:
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml
+  └─ definition/ # sample API definition
+    ├─ api.yml
+    └─ imdb.yml
+```
+
+## Options
+
+By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
+
+```bash
+$ fern init --docs
+```
+
+The file added will look like:
+
+<CodeBlock title = "docs.yml">
+```yml
+instances:
+  - url: https://<your-organization>.docs.buildwithfern.com
+title: <your-organization> | Documentation
+navigation:
+  - api: API Reference
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
+```
+
+To see what the API docs looks like, run `fern generate --docs`. More details on this command are available [here](/fern-generate).
