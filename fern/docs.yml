@@ -8,6 +8,9 @@ tabs:
   overview:
     display-name: Overview
     icon: "fa-solid fa-globe"
+  api-definition:
+    display-name: API Definition
+    icon: "fa-solid fa-pen-to-square"    
   sdks:
     display-name: Generate SDKs
     icon: "fa-solid fa-code"
@@ -20,9 +23,6 @@ tabs:
   api-reference:
     display-name: API Reference
     icon: "fa-solid fa-file-contract"
-  api-definition:
-    display-name: API Definition
-    icon: "fa-solid fa-pen-to-square"
 
 navigation:
   - tab: overview
@@ -174,6 +174,8 @@ navigation:
             path: ./docs/pages/server-boilerplate/spring.mdx
           - page: Go
             path: ./docs/pages/server-boilerplate/go.mdx
+          - page: .NET
+            path: ./docs/pages/server-boilerplate/dotnet.mdx  
           - page: Ruby on Rails
             path: ./docs/pages/server-boilerplate/ruby-on-rails.mdx
           - page: Flask
