@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Versions**
  - Fern CLI: [found in `fern.config.json` e.g. 0.15.3]
- - Generator: [found in `generators.yml` e.g. fernapi/fern-typescript-node-sdk 0.8.8]
+ - Generator: [found in `generators.yml` e.g. 0.8.8]
 
 **Additional context**
 Add any other context about the problem here.
