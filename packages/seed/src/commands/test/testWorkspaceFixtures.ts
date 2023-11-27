@@ -21,6 +21,7 @@ export const FIXTURES = {
     AUDIENCES: "audiences",
     AUTH_ENVIRONMENT_VARIABLES: "auth-environment-variables",
     BASIC_AUTH: "basic-auth",
+    BEARER_TOKEN_ENVIRONMENT_VARIABLE: "bearer-token-environment-variable",
     BYTES: "bytes",
     CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
