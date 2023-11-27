@@ -2482,7 +2482,7 @@ __metadata:
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/qs": ^6.9.7
+    "@types/qs": ^6.9.10
     axios: ^0.27.2
     boxen: ^7.0.0
     chalk: ^5.0.1
@@ -2493,7 +2493,7 @@ __metadata:
     open: ^8.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: ^6.11.1
+    qs: ^6.11.2
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -4433,10 +4433,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*, @types/qs@npm:^6.9.7":
+"@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
+  languageName: node
+  linkType: hard
+
+"@types/qs@npm:^6.9.10":
+  version: 6.9.10
+  resolution: "@types/qs@npm:6.9.10"
+  checksum: 3e479ee056bd2b60894baa119d12ecd33f20a25231b836af04654e784c886f28a356477630430152a86fba253da65d7ecd18acffbc2a8877a336e75aa0272c67
   languageName: node
   linkType: hard
 
@@ -12754,12 +12761,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.11.1":
-  version: 6.11.1
-  resolution: "qs@npm:6.11.1"
+"qs@npm:^6.11.2":
+  version: 6.11.2
+  resolution: "qs@npm:6.11.2"
   dependencies:
     side-channel: ^1.0.4
-  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
+  checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
   languageName: node
   linkType: hard
 
