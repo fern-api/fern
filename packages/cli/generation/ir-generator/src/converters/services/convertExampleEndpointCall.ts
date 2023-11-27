@@ -41,11 +41,20 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
 }): ExampleEndpointCall {
+    const convertedPathParameters = convertPathParameters({
+        service,
+        endpoint,
+        example,
+        typeResolver,
+        exampleResolver,
+        variableResolver,
+        file
+    });
     return {
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
-        url: buildUrl({ service, endpoint, example }),
-        ...convertPathParameters({ service, endpoint, example, typeResolver, exampleResolver, variableResolver, file }),
+        url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
+        ...convertedPathParameters,
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file }),
         queryParameters:
             example["query-parameters"] != null
@@ -412,16 +421,22 @@ function convertExampleResponseBody({
 function buildUrl({
     service,
     endpoint,
-    example
+    example,
+    pathParams
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
+    pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
     let url = service["base-path"] + endpoint.path;
     if (example["path-parameters"] != null) {
-        for (const [key, value] of Object.entries(example["path-parameters"])) {
-            url = url.replaceAll(`{${key}}`, `${value}`);
+        for (const parameter of [
+            ...pathParams.endpointPathParameters,
+            ...pathParams.servicePathParameters,
+            ...pathParams.rootPathParameters
+        ]) {
+            url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
         }
     }
     return url;
