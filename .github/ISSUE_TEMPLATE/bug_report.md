@@ -14,9 +14,9 @@ A clear and concise description of what the bug is.
 ```
 # shape.yml
 
-types: 
-  Shape: 
-    union: 
+types:
+  Shape:
+    union:
       triangle: ...
 ```
 

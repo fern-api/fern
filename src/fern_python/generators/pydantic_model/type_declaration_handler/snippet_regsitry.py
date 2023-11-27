@@ -208,12 +208,13 @@ class SnippetRegistry:
                 context=context,
                 example_type_reference=property.value,
             )
-            args.append(
-                self._write_named_parameter_for_value(
-                    parameter_name=property.name.snake_case.unsafe_name,
-                    value=path_parameter_value,
-                ),
-            )
+            if path_parameter_value is not None:
+                args.append(
+                    self._write_named_parameter_for_value(
+                        parameter_name=property.name.snake_case.unsafe_name,
+                        value=path_parameter_value,
+                    ),
+                )
 
         all_headers = example_endpoint_call.service_headers + example_endpoint_call.endpoint_headers
         for header in all_headers:
@@ -222,12 +223,13 @@ class SnippetRegistry:
                 context=context,
                 example_type_reference=header.value,
             )
-            args.append(
-                self._write_named_parameter_for_value(
-                    parameter_name=header.name.name.snake_case.safe_name,
-                    value=header_parameter_value,
-                ),
-            )
+            if header_parameter_value is not None:
+                args.append(
+                    self._write_named_parameter_for_value(
+                        parameter_name=header.name.name.snake_case.safe_name,
+                        value=header_parameter_value,
+                    ),
+                )
 
         for query_parameter in example_endpoint_call.query_parameters:
             query_parameter_value = self._snippet_for_example_type_reference(
@@ -235,12 +237,13 @@ class SnippetRegistry:
                 context=context,
                 example_type_reference=query_parameter.value,
             )
-            args.append(
-                self._write_named_parameter_for_value(
-                    parameter_name=query_parameter.name.name.snake_case.safe_name,
-                    value=query_parameter_value,
-                ),
-            )
+            if query_parameter_value is not None:
+                args.append(
+                    self._write_named_parameter_for_value(
+                        parameter_name=query_parameter.name.name.snake_case.safe_name,
+                        value=query_parameter_value,
+                    ),
+                )
 
         if example_endpoint_call.request is not None:
             args.extend(
@@ -279,16 +282,18 @@ class SnippetRegistry:
     ) -> List[AST.Expression]:
         snippets: List[AST.Expression] = []
         for example_property in example_inlined_request_body.properties:
-            snippets.append(
-                self._write_named_parameter_for_value(
-                    parameter_name=example_property.name.name.snake_case.unsafe_name,
-                    value=self._snippet_for_example_type_reference(
-                        ir=ir,
-                        context=context,
-                        example_type_reference=example_property.value,
-                    ),
-                ),
+            property_value = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=example_property.value,
             )
+            if property_value is not None:
+                snippets.append(
+                    self._write_named_parameter_for_value(
+                        parameter_name=example_property.name.name.snake_case.unsafe_name,
+                        value=property_value,
+                    ),
+                )
         return snippets
 
     def _snippet_for_request_reference(
@@ -298,16 +303,19 @@ class SnippetRegistry:
         endpoint: ir_types.HttpEndpoint,
         example_type_reference: ir_types.ExampleTypeReference,
     ) -> List[AST.Expression]:
-        return [
-            self._write_named_parameter_for_value(
-                parameter_name=self._get_request_parameter_name(endpoint),
-                value=self._snippet_for_example_type_reference(
-                    ir=ir,
-                    context=context,
-                    example_type_reference=example_type_reference,
-                ),
-            )
-        ]
+        request_value = self._snippet_for_example_type_reference(
+            ir=ir,
+            context=context,
+            example_type_reference=example_type_reference,
+        )
+        if request_value is not None:
+            return [
+                self._write_named_parameter_for_value(
+                    parameter_name=self._get_request_parameter_name(endpoint),
+                    value=request_value,
+                )
+            ]
+        return []
 
     def _snippet_for_type(
         self,
@@ -337,7 +345,7 @@ class SnippetRegistry:
         name: ir_types.DeclaredTypeName,
         example_type_shape: ir_types.ExampleTypeShape,
         register: bool = False,
-    ) -> AST.Expression:
+    ) -> Optional[AST.Expression]:
         snippet = example_type_shape.visit(
             alias=lambda alias: self._snippet_for_alias(
                 ir=ir,
@@ -362,7 +370,7 @@ class SnippetRegistry:
                 example=union,
             ),
         )
-        if register:
+        if register and snippet is not None:
             self._snippets[name.type_id] = snippet
         return snippet
 
@@ -371,7 +379,7 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         example: ir_types.ExampleAliasType,
-    ) -> AST.Expression:
+    ) -> Optional[AST.Expression]:
         return self._snippet_for_example_type_reference(
             ir=ir,
             context=context,
@@ -443,12 +451,13 @@ class SnippetRegistry:
                     example_type_shape=named.shape,
                 ),
             )
-            args.append(
-                self._write_named_parameter_for_value(
-                    parameter_name=property.name.name.snake_case.safe_name,
-                    value=value,
-                ),
-            )
+            if value is not None:
+                args.append(
+                    self._write_named_parameter_for_value(
+                        parameter_name=property.name.name.snake_case.safe_name,
+                        value=value,
+                    ),
+                )
         return args
 
     def _snippet_for_primitive(
@@ -529,27 +538,17 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         container: ir_types.ExampleContainer,
-    ) -> AST.Expression:
+    ) -> Optional[AST.Expression]:
         snippet = container.visit(
-            list=lambda list: self._write_list(
-                values=[
-                    self._snippet_for_example_type_reference(
-                        ir=ir,
-                        context=context,
-                        example_type_reference=example_type_reference,
-                    )
-                    for example_type_reference in list
-                ],
+            list=lambda list: self._snippet_for_list_or_set(
+                ir=ir,
+                context=context,
+                example_type_references=list,
             ),
-            set=lambda set: self._write_list(
-                values=[
-                    self._snippet_for_example_type_reference(
-                        ir=ir,
-                        context=context,
-                        example_type_reference=example_type_reference,
-                    )
-                    for example_type_reference in set
-                ],
+            set=lambda set: self._snippet_for_list_or_set(
+                ir=ir,
+                context=context,
+                example_type_references=set,
             ),
             optional=lambda optional: self._snippet_for_example_type_reference(
                 ir=ir,
@@ -558,35 +557,61 @@ class SnippetRegistry:
             )
             if optional is not None
             else None,
-            map=lambda map: self._write_map(
-                keys=[
-                    self._snippet_for_example_type_reference(
-                        ir=ir,
-                        context=context,
-                        example_type_reference=pair.key,
-                    )
-                    for pair in map
-                ],
-                values=[
-                    self._snippet_for_example_type_reference(
-                        ir=ir,
-                        context=context,
-                        example_type_reference=pair.value,
-                    )
-                    for pair in map
-                ],
+            map=lambda map: self._snippet_for_map(
+                ir=ir,
+                context=context,
+                pairs=map,
             ),
         )
-        if snippet is None:
-            raise Exception("internal error: cannot generate snippet - expected an example container but found none")
         return snippet
+
+    def _snippet_for_list_or_set(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        example_type_references: List[ir_types.ExampleTypeReference],
+    ) -> Optional[AST.Expression]:
+        values: List[AST.Expression] = []
+        for example_type_reference in example_type_references:
+            expression = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=example_type_reference,
+            )
+            if expression is not None:
+                values.append(expression)
+        return self._write_list(values=values)
+
+    def _snippet_for_map(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        pairs: List[ir_types.ExampleKeyValuePair],
+    ) -> Optional[AST.Expression]:
+        keys: List[AST.Expression] = []
+        values: List[AST.Expression] = []
+        for pair in pairs:
+            key = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=pair.key,
+            )
+            value = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=pair.value,
+            )
+            if key is not None and value is not None:
+                keys.append(key)
+                values.append(value)
+        return self._write_map(keys=keys, values=values)
 
     def _snippet_for_example_type_reference(
         self,
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
         example_type_reference: ir_types.ExampleTypeReference,
-    ) -> AST.Expression:
+    ) -> Optional[AST.Expression]:
         return example_type_reference.shape.visit(
             primitive=lambda primitive: self._snippet_for_primitive(
                 primitive=primitive,
@@ -705,13 +730,19 @@ class SnippetRegistry:
         )
 
         def write_union(writer: AST.NodeWriter) -> None:
-            writer.write_node(AST.Expression(union_class_reference))
-            writer.write("(")
-            writer.write_node(union_discriminant_parameter)
-            writer.write(", ")
-            writer.write("value=")
-            writer.write_node(union_value)
-            writer.write(")")
+            if union_value is not None:
+                writer.write_node(AST.Expression(union_class_reference))
+                writer.write("(")
+                writer.write_node(union_discriminant_parameter)
+                writer.write(", ")
+                writer.write("value=")
+                writer.write_node(union_value)
+                writer.write(")")
+            else:
+                writer.write_node(AST.Expression(union_class_reference))
+                writer.write("(")
+                writer.write_node(union_discriminant_parameter)
+                writer.write(")")
 
         return AST.Expression(AST.CodeWriter(write_union))
 
