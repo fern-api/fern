@@ -44,11 +44,10 @@ This will create the following folder structure in your project:
 ```yaml
 fern/
 ├─ fern.config.json # root-level configuration
-└─ api/
-  ├─ generators.yml # generators you're using
-  └─ definition/
-    ├─ api.yml  # API-level configuration
-    └─ imdb.yml # endpoints, types, and errors
+├─ generators.yml # generators you're using
+└─ definition/
+  ├─ api.yml  # API-level configuration
+  └─ imdb.yml # endpoints, types, and errors
 ```
 
 Here's what the `imdb.yml` starter file looks like:
@@ -110,11 +109,10 @@ This will generate an OpenAPI-based Fern project:
 
 ```yaml
 fern/
-├─ fern.config.json # root-level configuration
-└─ api/
-  ├─ generators.yml # generators you're using
-  └─ openapi/
-    └─ openapi.yml # your openapi definition
+├─ fern.config.json
+├─ generators.yml # generators you're using
+└─ openapi/
+  └─ openapi.json # your openapi definition
 ```
 
 ## Motivation
