@@ -2,7 +2,7 @@ import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
-    MAP: /^map<\s*(.*)\s*,\s*(.*)\s*>$/,
+    MAP: /^map<\s*([^<]*)\s*,\s*(.*)\s*>$/,
     LIST: /^list<\s*(.*)\s*>$/,
     SET: /^set<\s*(.*)\s*>$/,
     OPTIONAL: /^optional<\s*(.*)\s*>$/,

@@ -18,6 +18,10 @@ types:
     properties:
       string: string
 
+  ObjectWithMapOfMap:
+    properties:
+      map: map<string, map<string, string>>
+
   NestedObjectWithOptionalField:
     properties:
       string: optional<string>
