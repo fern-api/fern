@@ -46,11 +46,6 @@ export function convertObject({
     const parents: ReferencedAllOfInfo[] = [];
     for (const allOfElement of allOf) {
         if (isReferenceObject(allOfElement)) {
-            // if allOf element is a union, then don't inherit from it
-            const resolvedReference = context.resolveSchemaReference(allOfElement);
-            if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
-                continue;
-            }
             const schemaId = getSchemaIdFromReference(allOfElement);
             parents.push({
                 schemaId,

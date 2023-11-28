@@ -1,5 +1,5 @@
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
-import { isRawObjectDefinition } from "@fern-api/yaml-schema";
+import { isRawObjectDefinition, isRawDiscriminatedUnionDefinition } from "@fern-api/yaml-schema";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -10,14 +10,16 @@ export const OnlyObjectExtensionsRule: Rule = {
         return {
             definitionFile: {
                 extension: (extension, { relativeFilepath, contents }) => {
+                    const fileContext = constructFernFileContext({
+                        relativeFilepath,
+                        definitionFile: contents,
+                        rootApiFile: workspace.definition.rootApiFile.contents,
+                        casingsGenerator: CASINGS_GENERATOR
+                    });
+
                     const resolvedType = typeResolver.resolveNamedType({
                         referenceToNamedType: extension,
-                        file: constructFernFileContext({
-                            relativeFilepath,
-                            definitionFile: contents,
-                            rootApiFile: workspace.definition.rootApiFile.contents,
-                            casingsGenerator: CASINGS_GENERATOR
-                        })
+                        file: fileContext
                     });
 
                     if (resolvedType == null) {
@@ -26,6 +28,16 @@ export const OnlyObjectExtensionsRule: Rule = {
                     }
 
                     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
+                        return [];
+                    }
+
+                    if (resolvedType._type === "named" && isRawDiscriminatedUnionDefinition(resolvedType.declaration) && Object.values(resolvedType.declaration).every((d) => {
+                        const resolvedOptionType = typeResolver.resolveNamedType({
+                            referenceToNamedType: d.type,
+                            file: fileContext,
+                        });
+                        return isRawObjectDefinition(resolvedOptionType.declaration);
+                    })) {
                         return [];
                     }
 
