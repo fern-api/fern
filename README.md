@@ -19,11 +19,103 @@ Fern is an open-source toolkit that simplifies the design, build, and consumptio
 
 ![Overview Diagram](/fern/docs/images/overview.png)
 
-## Quickstart
+## Getting started
 
---> [Generate an SDK in 3 commands](https://docs.buildwithfern.com/overview/welcome/quickstart)
+_Note: Fern requires **Node 18** or higher_
 
---> [Beautiful documentation in less than 5 minutes](https://github.com/fern-api/docs-starter)
+The Fern toolkit is available as a command line interface. To install it, run:
+
+```bash
+npm install -g fern-api
+```
+
+To create a starter project, navigate to the root of your repository and run:
+
+```bash
+fern init
+```
+
+This will initialize a Fern workspace in the current folder, including the `./fern` directory that Fern will use to hold its resources.
+
+_Note: to initialize a starter project from an existing OpenAPI spec, see [Starting from OpenAPI](#starting-from-openapi)._
+
+This will create the following folder structure in your project:
+
+```yaml
+fern/
+├─ fern.config.json # root-level configuration
+└─ api/
+  ├─ generators.yml # generators you're using
+  └─ definition/
+    ├─ api.yml  # API-level configuration
+    └─ imdb.yml # endpoints, types, and errors
+```
+
+Here's what the `imdb.yml` starter file looks like:
+
+```yaml
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
+
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
+
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
+
+errors:
+  MovieDoesNotExistError:
+    status-code: 404
+    type: MovieId
+```
+
+### Starting from OpenAPI
+
+If you have an existing OpenAPI definition, you can use that as your starting point by specifying the `--openapi` option:
+
+```bash
+fern init --openapi ./path/to/openapi.yml
+# or
+fern init --openapi https://petstore.swagger.io/v2/swagger.json
+```
+
+This will generate an OpenAPI-based Fern project:
+
+```yaml
+fern/
+├─ fern.config.json # root-level configuration
+└─ api/
+  ├─ generators.yml # generators you're using
+  └─ openapi/
+    └─ openapi.yml # your openapi definition
+```
 
 ## Motivation
 
@@ -75,6 +167,18 @@ For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfe
 See how developer-focused companies benefit from Fern.
 
 [![Customer Showcase](/fern/docs/images/showcase.png)](https://buildwithfern.com/showcase)
+
+## CLI Commands
+
+Here's a quick look at the most popular CLI commands. View the [full list here](https://docs.buildwithfern.com/overview/cli/cli).
+
+`fern generate`: run the generators specified in `generators.yml`. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-generate)
+
+`fern check`: validate your API definition and Fern configuration. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-check)
+
+`fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-add)
+
+`fern init`: adds a new starter API to your repository.
 
 ## Community
 
