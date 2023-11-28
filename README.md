@@ -3,7 +3,7 @@
   <a href="https://www.buildwithfern.com/">
     <img src="fern.png" height="120" align="center" alt="header" />
   </a>
-  <br/>
+<br/>
 
 # Fern
 
@@ -23,7 +23,7 @@ Fern is an open-source toolkit that simplifies the design, build, and consumptio
 
 --> [Generate an SDK in 3 commands](https://docs.buildwithfern.com/overview/welcome/quickstart)
 
---> [Beautiful documentation in 5 minutes](https://github.com/fern-api/docs-starter)
+--> [Beautiful documentation in less than 5 minutes](https://github.com/fern-api/docs-starter)
 
 ## Motivation
 
