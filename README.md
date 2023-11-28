@@ -55,15 +55,19 @@ For additional language support, visit [the Fern issues](https://github.com/fern
 
 ### 🌿 API Documentation
 
-Fern builds and hosts a fully-featured documentation website. The API reference is auto-generated from your API definition. You can write additional pages -- such as `quickstart` or `how authentication works`) -- in markdown and Fern takes care of the rest. Search, SEO, dark mode, and popular components are provided out-of-the-box. Customize your "theme" to match your brand colors, font, and logo.
+Fern will build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. Search, SEO, dark mode, and popular components are provided out-of-the-box. Plus, you can customize the colors, font, logo, and domain name.
 
-Get started with Fern Docs for free. Pay when you want to host your docs at a custom domain (`docs.your-website.com`).
+Check out docs built with Fern:
+
+- [docs.vellum.ai](https://docs.vellum.ai)
+- [docs.superagent.sh](https://docs.superagent.sh/)
+- [docs.propexo.com](https://docs.propexo.com/)
 
 ### 🌿 Server boilerplate
 
 Define your API, and Fern will generate models, networking code and boilerplate application code. The generated code adds type safety to your API implementation - if your backend doesn't implement the API correctly, it won't compile.
 
-Fern currently supports:
+Frameworks currently supported:
 
 - [Express](https://github.com/fern-api/fern-typescript)
 - [Spring Boot](https://github.com/fern-api/fern-java)
