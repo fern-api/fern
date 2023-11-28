@@ -172,13 +172,13 @@ See how developer-focused companies benefit from Fern.
 
 Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/cli).
 
+`fern init`: adds a new starter API to your repository.
+
+`fern check`: validate your API definition and Fern configuration.
+
 `fern generate`: run the generators specified in `generators.yml`.
 
-`fern check`: validate your API definition and Fern configuration. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-check)
-
-`fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-add)
-
-`fern init`: adds a new starter API to your repository.
+`fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 
 ## Community
 
