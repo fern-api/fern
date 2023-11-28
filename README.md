@@ -109,11 +109,10 @@ This will generate an OpenAPI-based Fern project:
 
 ```yaml
 fern/
+├─ openapi/
+  └─ openapi.yml # your openapi definition
 ├─ fern.config.json # root-level configuration
-└─ api/
-  ├─ generators.yml # generators you're using
-  └─ openapi/
-    └─ openapi.yml # your openapi definition
+└─ generators.yml # generators you're using
 ```
 
 ## Motivation
