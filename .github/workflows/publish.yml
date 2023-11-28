@@ -85,7 +85,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker/fastapi/Dockerfile
+          file: ./docker/sdk/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: fernapi/fern-python-sdk:${{env.VERSION}}
@@ -125,7 +125,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./docker/fastapi/Dockerfile
+          file: ./docker/pydantic/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: fernapi/fern-pydantic-model:${{env.VERSION}}
