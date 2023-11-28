@@ -17,18 +17,13 @@
 
 Fern is an open-source toolkit that simplifies the design, build, and consumption of REST APIs. It allows you to effortlessly generate SDKs, API documentation, and backend server boilerplate.
 
-<br/>
-<div align="center">
-  <a href="https://docs.buildwithfern.com?utm_source=fern-api/fern/readme/overview-diagram">
-    <img src="fern/docs/images/overview.png" height="200" align="center" alt="overview diagram" />
-  </a>
-<br/>
+![Overview Diagram](/fern/docs/images/overview.png)
 
 ## Quickstart
 
---> [**Generate an SDK with just 3 commands.**](https://docs.buildwithfern.com/overview/welcome/quickstart)
+--> [Generate an SDK in 3 commands](https://docs.buildwithfern.com/overview/welcome/quickstart)
 
---> [**Get beautiful documentation in 5 minutes.**](https://github.com/fern-api/docs-starter)
+--> [Beautiful documentation in less than 5 minutes](https://github.com/fern-api/docs-starter)
 
 ## Motivation
 
