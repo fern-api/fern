@@ -25,7 +25,7 @@ REST APIs underpin the internet but are still painful to work with. They are oft
 
 With Fern, we aim to bring great developer experiences to REST APIs. At AWS and Palantir, we saw first-hand how code generation tooling allows developers to build faster without worrying about the pitfalls of API development. We’re building Fern open source to bring that tooling to every software company.
 
-## OpenAPI Compatability
+## OpenAPI Compatibility
 
 Fern is fully compatible with OpenAPI, allowing the use of existing OpenAPI specifications. It's designed to augment, not replace, your current OpenAPI toolchains and workflows.
 
