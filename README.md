@@ -91,6 +91,6 @@ We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.m
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
 
-## Attribution
-
+<!--
 Thanks to the folks at [Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
+-->
