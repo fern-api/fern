@@ -9,5 +9,5 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": ["source.fixAll", "source.organizeImports", "source.sortMembers"],
-  "editor.defaultFormatter": null
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
