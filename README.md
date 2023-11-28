@@ -23,7 +23,7 @@ Fern is an open-source toolkit that simplifies the design, build, and consumptio
 
 _Note: Fern requires **Node 18** or higher_
 
-The Fern toolkit is available as a command line interface. To install it, run:
+The Fern toolkit is available as a command line interface (CLI). To install it, run:
 
 ```bash
 npm install -g fern-api
@@ -170,9 +170,9 @@ See how developer-focused companies benefit from Fern.
 
 ## CLI Commands
 
-Here's a quick look at the most popular CLI commands. View the [full list here](https://docs.buildwithfern.com/overview/cli/cli).
+Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/cli).
 
-`fern generate`: run the generators specified in `generators.yml`. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-generate)
+`fern generate`: run the generators specified in `generators.yml`.
 
 `fern check`: validate your API definition and Fern configuration. [Read more.](https://docs.buildwithfern.com/overview/cli/fern-check)
 
