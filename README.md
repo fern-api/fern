@@ -3,7 +3,7 @@
   <a href="https://www.buildwithfern.com/">
     <img src="fern.png" height="120" align="center" alt="header" />
   </a>
-  <br/>
+<br/>
 
 # Fern
 
@@ -11,25 +11,30 @@
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 [![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
-[![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://docs.buildwithfern.com?utm_source=fern-api/fern/readme)
+[![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://docs.buildwithfern.com?utm_source=fern-api/fern/readme-read-our-documentation)
 
 </div>
 
 Fern is an open-source toolkit that simplifies the design, build, and consumption of REST APIs. It allows you to effortlessly generate SDKs, API documentation, and backend server boilerplate.
 
-![overview diagram](fern/docs/images/overview.png)
+<br/>
+<div align="center">
+  <a href="https://docs.buildwithfern.com?utm_source=fern-api/fern/readme/overview-diagram">
+    <img src="fern/docs/images/overview.png" height="200" align="center" alt="overview diagram" />
+  </a>
+<br/>
+
+## Quickstart
+
+--> [**Generate an SDK with just 3 commands.**](https://docs.buildwithfern.com/overview/welcome/quickstart)
+
+--> [**Get beautiful documentation in 5 minutes.**](https://github.com/fern-api/docs-starter)
 
 ## Motivation
 
-REST APIs underpin the internet but are still painful to work with. They are often untyped, unstandardized, and out-of-sync across multiple sources of truth.
-
-With Fern, we aim to bring great developer experiences to REST APIs. At AWS and Palantir, we saw first-hand how code generation tooling allows developers to build faster without worrying about the pitfalls of API development. We’re building Fern open source to bring that tooling to every software company.
-
-## OpenAPI Compatibility
+REST APIs underpin the internet but are still painful to work with. They are often untyped, unstandardized, and out-of-sync across multiple sources of truth. With Fern, we aim to bring great developer experiences to REST APIs.
 
 Fern is fully compatible with OpenAPI, allowing the use of existing OpenAPI specifications. It's designed to augment, not replace, your current OpenAPI toolchains and workflows.
-
-If you're not a fan of OpenAPI, you can also use Fern's [simpler format](https://docs.buildwithfern.com/api-definition/fern-definition) to define your API.
 
 ## Capabilities
 
@@ -37,7 +42,7 @@ The Fern CLI can generate the following types of artifacts:
 
 ### 🌿 SDKs
 
-Generate idiomatic SDKs (client libraries). Fern keeps your SDKs synchronized with your backend, eliminating the need to manually maintain your SDKs as your API changes.
+Generate idiomatic SDKs (client libraries). Fern keeps your SDKs synchronized with your backend, eliminating the need to manually maintain your SDKs as your API changes. Fern can publish your SDKs to registries, like npm, Maven, and PyPI.
 
 Currently, the following languages are supported:
 
@@ -45,8 +50,6 @@ Currently, the following languages are supported:
 - [Java](https://github.com/fern-api/fern-java)
 - [Python](https://github.com/fern-api/fern-python)
 - [Go](https://github.com/fern-api/fern-go)
-
-Fern can publish your SDKs to registries, like npm, Maven, and PyPI. See [Publishing a public package](https://docs.buildwithfern.com/generate-sd-ks#publish-a-public-package).
 
 For additional language support, visit [the Fern issues](https://github.com/fern-api/fern/issues) and let us know!
 
@@ -67,14 +70,6 @@ Fern currently supports:
 - [FastAPI](https://github.com/fern-api/fern-python)
 
 For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
-
-## Getting started
-
-Here's a quickstart for:
-
-[**Generating SDKs**](https://docs.buildwithfern.com/overview/welcome/quickstart)
-
-[**API documentation**](https://github.com/fern-api/docs-starter)
 
 ## Customer Showcase
 
