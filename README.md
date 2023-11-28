@@ -15,7 +15,7 @@
 
 </div>
 
-Fern is an open source toolkit for designing, building, and consuming REST APIs. **With Fern, you can generate SDKs (client libraries), API documentation, and boilerplate for your backend server.**
+Fern is an open-source toolkit that simplifies the design, build, and consumption of REST APIs. It allows you to effortlessly generate SDKs, API documentation, and backend server boilerplate.
 
 ![overview diagram](fern/docs/images/overview.png)
 
@@ -23,11 +23,11 @@ Fern is an open source toolkit for designing, building, and consuming REST APIs.
 
 REST APIs underpin the internet but are still painful to work with. They are often untyped, unstandardized, and out-of-sync across multiple sources of truth.
 
-With Fern, we aim to bring great developer experiences to REST APIs. At AWS and Palantir, we saw first-hand how code generation tooling allows developers to build faster without worrying about the pitfalls of API development. **We’re building Fern open source to bring that tooling to every software company.**
+With Fern, we aim to bring great developer experiences to REST APIs. At AWS and Palantir, we saw first-hand how code generation tooling allows developers to build faster without worrying about the pitfalls of API development. We’re building Fern open source to bring that tooling to every software company.
 
 ## OpenAPI Compatability
 
-Fern is **fully compatible with OpenAPI.** You can use your existing OpenAPI spec with Fern. We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them.
+Fern is fully compatible with OpenAPI, allowing the use of existing OpenAPI specifications. It's designed to augment, not replace, your current OpenAPI toolchains and workflows.
 
 If you're not a fan of OpenAPI, you can also use Fern's [simpler format](https://docs.buildwithfern.com/api-definition/fern-definition) to define your API.
 
@@ -37,7 +37,7 @@ The Fern CLI can generate the following types of artifacts:
 
 ### 🌿 SDKs
 
-Whether you call them client libraries, SDKs, bindings, or wrappers, Fern generates idiomatic SDKs you can use to interact with your APIs. This makes it trivial to keep your SDKs in sync with your backend, and eliminates the need to write the SDKs manually.
+Generate idiomatic SDKs (client libraries). Fern keeps your SDKs synchronized with your backend, eliminating the need to manually maintain your SDKs as your API changes.
 
 Currently, the following languages are supported:
 
@@ -48,7 +48,7 @@ Currently, the following languages are supported:
 
 Fern can publish your SDKs to registries, like npm, Maven, and PyPI. See [Publishing a public package](https://docs.buildwithfern.com/generate-sd-ks#publish-a-public-package).
 
-If you'd like to see a language supported, head over to [the Fern issues](https://github.com/fern-api/fern/issues) to voice your support!
+For additional language support, visit [the Fern issues](https://github.com/fern-api/fern/issues) and let us know!
 
 ### 🌿 API Documentation
 
@@ -78,7 +78,7 @@ Here's a quickstart for:
 
 ## Customer Showcase
 
-Discover how Fern helps developer-focused companies.
+See how developer-focused companies benefit from Fern.
 
 [![Customer Showcase](/fern/docs/images/showcase.png)](https://buildwithfern.com/showcase)
 
@@ -88,7 +88,7 @@ Discover how Fern helps developer-focused companies.
 
 ## Contributing
 
-We highly value community contributions. See our [CONTRIBUTING.md](/CONTRIBUTING.md) document for more info on how you can contribute!
+We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md).
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
 
