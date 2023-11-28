@@ -3,23 +3,24 @@ Use `fern check` to validate your API definition and Fern configuration. Your Fe
 ## Usage
 
 ```bash
-fern check
+$ fern check
 ```
 
-## Usage in a GitHub Action
+## Usage in a GitHub Action 
 
 <CodeBlock title = ".github/workflows/fern-check.yml">
 ```yml 
 name: Fern API Validation Check
 
 on:
-pull_request:
-branches: - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-validate-fern-api:
-name: Validate using Fern API
-runs-on: ubuntu-latest
+  validate-fern-api:
+    name: Validate using Fern API
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -35,7 +36,5 @@ runs-on: ubuntu-latest
 
       - name: Validate API with Fern
         run: fern check
-
 ```
 </CodeBlock>
-```

@@ -3,10 +3,10 @@ Use `fern token` to generate a `FERN_TOKEN` that is specific to your organizatio
 ## Usage
 
 ```bash
-fern token
+$ fern token
 ```
 
-## GitHub Actions
+## GitHub Actions 
 
 If using GitHub Actions as your CI, add the `FERN_TOKEN` as a GitHub Action secret in the repo where your Fern configuration is stored. Here are [instructions for how to create a secret](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) for a repo.
 
@@ -18,3 +18,4 @@ env:
     FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
 run: fern generate --docs
 ```
+
