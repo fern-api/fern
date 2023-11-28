@@ -43,12 +43,11 @@ This will create the following folder structure in your project:
 
 ```yaml
 fern/
+├─ definition/
+  ├─ api.yml  # API-level configuration
+  └─ imdb.yml # endpoints, types, and errors
 ├─ fern.config.json # root-level configuration
-└─ api/
-  ├─ generators.yml # generators you're using
-  └─ definition/
-    ├─ api.yml  # API-level configuration
-    └─ imdb.yml # endpoints, types, and errors
+├─ generators.yml # generators you're using
 ```
 
 Here's what the `imdb.yml` starter file looks like:
