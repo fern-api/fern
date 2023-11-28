@@ -7,10 +7,8 @@ from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeReques
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
-from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import (
-    PydanticModelCustomConfig,
     PydanticModelGenerator,
     SnippetRegistry,
 )
@@ -75,15 +73,7 @@ class SdkGenerator(AbstractGenerator):
         if not custom_config.client_filename.endswith(".py"):
             raise RuntimeError("client_filename must end in .py")
 
-        self._pydantic_model_custom_config = PydanticModelCustomConfig(
-            wrapped_aliases=custom_config.wrapped_aliases,
-            skip_formatting=custom_config.skip_formatting,
-            include_union_utils=custom_config.include_union_utils,
-            orm_mode=False,
-            frozen=True,
-            smart_union=True,
-            version=PydanticVersionCompatibility.Both,
-        )
+        self._pydantic_model_custom_config = custom_config.pydantic_config
 
         context = SdkGeneratorContextImpl(
             ir=ir,

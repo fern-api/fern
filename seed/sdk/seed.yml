@@ -14,5 +14,10 @@ fixtures:
         timeout_in_seconds: 5
       outputFolder: five-second-timeout
     - customConfig:
-        include_union_utils: true
+        pydantic_config:
+          include_union_utils: true
       outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          version: v1
+      outputFolder: pydantic-v1
