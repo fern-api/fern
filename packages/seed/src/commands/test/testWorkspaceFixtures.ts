@@ -5,8 +5,10 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { GeneratorType } from "@fern-fern/seed-config/api";
+import { GeneratorType, ScriptConfig } from "@fern-fern/seed-config/api";
+import { writeFile } from "fs/promises";
 import path from "path";
+import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
@@ -19,6 +21,7 @@ export const FIXTURES = {
     AUDIENCES: "audiences",
     AUTH_ENVIRONMENT_VARIABLES: "auth-environment-variables",
     BASIC_AUTH: "basic-auth",
+    BEARER_TOKEN_ENVIRONMENT_VARIABLE: "bearer-token-environment-variable",
     BYTES: "bytes",
     CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
@@ -72,7 +75,7 @@ export async function testWorkspaceFixtures({
     fixtures,
     docker,
     dockerCommand,
-    compileCommand,
+    scripts,
     logLevel,
     numDockers
 }: {
@@ -83,7 +86,7 @@ export async function testWorkspaceFixtures({
     fixtures: string[];
     docker: ParsedDockerName;
     dockerCommand: string | undefined;
-    compileCommand: string | undefined;
+    scripts: ScriptConfig[] | undefined;
     logLevel: LogLevel;
     numDockers: number;
 }): Promise<void> {
@@ -121,7 +124,7 @@ export async function testWorkspaceFixtures({
                         language,
                         fixture,
                         docker,
-                        compileCommand,
+                        scripts,
                         customConfig: fixtureConfigInstance.customConfig,
                         taskContext: taskContextFactory.create(
                             `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
@@ -144,7 +147,7 @@ export async function testWorkspaceFixtures({
                     language,
                     fixture,
                     docker,
-                    compileCommand,
+                    scripts,
                     customConfig: undefined,
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture))
@@ -173,7 +176,7 @@ export async function acquireLocksAndRunTest({
     fixture,
     docker,
     customConfig,
-    compileCommand,
+    scripts,
     taskContext,
     outputDir,
     absolutePathToWorkspace
@@ -185,7 +188,7 @@ export async function acquireLocksAndRunTest({
     fixture: string;
     docker: ParsedDockerName;
     customConfig: unknown;
-    compileCommand: string | undefined;
+    scripts: ScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
@@ -200,7 +203,7 @@ export async function acquireLocksAndRunTest({
         docker,
         customConfig,
         generatorType,
-        compileCommand,
+        scripts,
         taskContext,
         outputDir,
         absolutePathToWorkspace
@@ -217,7 +220,7 @@ async function testWithWriteToDisk({
     language,
     docker,
     customConfig,
-    compileCommand,
+    scripts,
     taskContext,
     outputDir,
     absolutePathToWorkspace
@@ -228,7 +231,7 @@ async function testWithWriteToDisk({
     docker: ParsedDockerName;
     generatorType: GeneratorType;
     customConfig: unknown;
-    compileCommand: string | undefined;
+    scripts: ScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
@@ -268,22 +271,32 @@ async function testWithWriteToDisk({
             taskContext,
             irVersion
         });
-        if (compileCommand != null) {
-            const commands = compileCommand.split("&&").map((command) => command.trim());
-            for (const command of commands) {
-                taskContext.logger.info(`Running command: ${command}`);
-                const spaceDelimitedCommand = command.split(" ");
-                const result = await loggingExeca(
-                    taskContext.logger,
-                    spaceDelimitedCommand[0] ?? command,
-                    spaceDelimitedCommand.slice(1),
-                    {
-                        cwd: outputDir,
-                        doNotPipeOutput: true
-                    }
-                );
-                taskContext.logger.info(result.stdout);
-                taskContext.logger.info(result.stderr);
+        for (const script of scripts ?? []) {
+            const scriptFile = await tmp.file();
+            await writeFile(scriptFile.path, ["cd generated", ...script.commands].join("\n"));
+            taskContext.logger.info(`Running script ${scriptFile.path}`);
+            const command = await loggingExeca(
+                taskContext.logger,
+                "docker",
+                [
+                    "run",
+                    "-v",
+                    `${outputDir}:/generated`,
+                    "-v",
+                    `${scriptFile.path}:/test.sh`,
+                    script.docker,
+                    "bash",
+                    "test.sh"
+                ],
+                {
+                    doNotPipeOutput: true
+                }
+            );
+            if (command.failed) {
+                taskContext.logger.error("Failed to run script. See ouptut below");
+                taskContext.logger.error(command.stdout);
+                taskContext.logger.error(command.stderr);
+                return { type: "failure", reason: "Failed to run script...", fixture };
             }
         }
         return { type: "success", fixture };

@@ -5,13 +5,12 @@ Every folder in your API definition is a package.
 ```yaml
 fern/
 ├─ fern.config.json
-└─ api/
-  ├─ generators.yml
-  └─ definition/ # <------ root package
-    ├─ api.yml
-    ├─ imdb.yml
-    └─ persons/ # <-------- nested package
-      ├─ director.yml
+├─ generators.yml
+└─ definition/ # <------ root package
+  ├─ api.yml
+  ├─ imdb.yml
+  └─ persons/ # <-------- nested package
+    ├─ director.yml
 ```
 
 The generated SDK will match the hierarchy of your API definition.
@@ -46,11 +45,10 @@ would have a fern directory
 ```yaml
 fern/
 ├─ fern.config.json
-└─ api/
-  ├─ generators.yml
-  └─ definition/
-    ├─ __package__.yml # <---
-    └─ api.yml
+├─ generators.yml
+└─ definition/
+  ├─ __package__.yml # <---
+  └─ api.yml
 ```
 
 that contains the following `__package__.yml`
@@ -86,13 +84,56 @@ packagess.
 ```yaml
 fern/
 ├─ fern.config.json
-└─ api/
-  ├─ generators.yml
-  └─ definition/
-    ├─ api.yml
-    └─ imdb/
-        └─ v1/
-          └─ movie.yml # type names can overlap with v2/movie.yml
-        └─ v2/
-          └─ movie.yml
+├─ generators.yml
+└─ definition/
+  ├─ api.yml
+  └─ imdb/
+      └─ v1/
+        └─ movie.yml # type names can overlap with v2/movie.yml
+      └─ v2/
+        └─ movie.yml
+```
+
+## Navigation
+
+`__package__.yml` also allows you to configure the navigation order 
+of your services. This is relevant when you want to control the display 
+of your documentation. 
+
+For example, let's say you have the following Fern Directory: 
+
+```yaml
+fern/
+├─ fern.config.json
+├─ generators.yml
+└─ definition/
+  ├─ projects.yml
+  ├─ roles.yml
+  ├─ users.yml
+```
+
+Your API will be sorted alphabetically: projects, roles, then users. If you 
+want to control the navigation you can add a `__package__.yml` file 
+and configure the order 
+
+<CodeBlock title="__package__.yml">
+```yaml
+navigation: 
+  - users.yml
+  - roles.yml
+  - projects.yml
+```
+</CodeBlock>
+
+Note the fern directory structure will now look like 
+
+```yaml
+fern/
+├─ fern.config.json
+├─ generators.yml
+└─ definition/
+  ├─ __package__.yml # <------------ New File
+  ├─ projects.yml
+  ├─ roles.yml
+  └─ users.yml
 ```

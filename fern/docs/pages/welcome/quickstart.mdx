@@ -24,11 +24,10 @@ This will create the following folder structure in your project:
 ```yaml
 fern/
 ├─ fern.config.json # root-level configuration
-└─ api/ # your API
-  ├─ generators.yml # generators you're using
-  └─ definition/
-    ├─ api.yml  # API-level configuration
-    └─ imdb.yml # endpoints, types, and errors
+├─ generators.yml # generators you're using
+└─ definition/
+  ├─ api.yml  # API-level configuration
+  └─ imdb.yml # endpoints, types, and errors
 ```
 
 ### Generating an SDK
@@ -40,7 +39,7 @@ fern generate
 ```
 
 By default, `generators.yml` is configured to generate a TypeScript SDK and an
-OpenAPI spec. You can read more about generation on the [`fern generate`](/overview/cli/fern-generate) 
+OpenAPI spec. You can read more about generation on the [`fern generate`](/overview/cli/fern-generate)
 page.
 
 ### Defining your API
@@ -56,7 +55,7 @@ types:
       rating:
         type: double
         docs: The rating scale is one to five stars
-        
+
 service:
   auth: false
   base-path: /movies
@@ -78,4 +77,3 @@ errors:
 
 Your **Fern Definition** is a set of YAML files that describe your API. You can
 learn more about this in the [Define your API](/api-definition/fern-definition/overview) section.
-

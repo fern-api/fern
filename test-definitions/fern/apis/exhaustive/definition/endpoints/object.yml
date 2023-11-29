@@ -17,6 +17,12 @@ service:
       request: objects.ObjectWithRequiredField
       response: objects.ObjectWithRequiredField
 
+    getAndReturnWithMapOfMap:
+      path: /get-and-return-with-map-of-map
+      method: POST
+      request: objects.ObjectWithMapOfMap
+      response: objects.ObjectWithMapOfMap
+
     getAndReturnNestedWithOptionalField:
       path: /get-and-return-nested-with-optional-field
       method: POST

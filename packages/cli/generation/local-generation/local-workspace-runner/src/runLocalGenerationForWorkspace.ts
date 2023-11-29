@@ -98,9 +98,7 @@ export async function runLocalGenerationForSeed({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
-
-                        // TODO: For now, we only write the snippet.json for non-typescript generators.
-                        writeSnippets: !generatorInvocation.name.includes("typescript")
+                        writeSnippets: true
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
