@@ -10,7 +10,14 @@ Fern has a first-class concept for marking different endpoints, types, and prope
 
 To prevent typos, you must specify all your audiences in `api.yml`:
 
-<CodeBlock title="api.yml">```yaml name: api audiences: - internal - beta ```</CodeBlock>
+<CodeBlock title="api.yml">
+```yaml 
+name: api 
+audiences: 
+  - internal 
+  - beta 
+```
+</CodeBlock>
 
 In `generators.yml`, you can apply audience filters so that only certain
 endpoints are passed to the generators:
