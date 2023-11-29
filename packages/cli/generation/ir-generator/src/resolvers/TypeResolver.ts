@@ -2,6 +2,7 @@ import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { ContainerType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
 import { ObjectPathItem, ResolvedType } from "./ResolvedType";
@@ -273,7 +274,14 @@ export class TypeResolverImpl implements TypeResolver {
         return {
             _type: "named",
             rawName: rawDeclaration.typeName,
-            name: parsedTypeReference,
+            name: {
+                typeId: parsedTypeReference.value,
+                fernFilepath: convertToFernFilepath({
+                    casingsGenerator: referencedIn.casingsGenerator,
+                    relativeFilepath: fileOfResolvedDeclaration.relativeFilepath
+                }),
+                name: referencedIn.casingsGenerator.generateName(rawDeclaration.typeName)
+            },
             declaration,
             filepath: fileOfResolvedDeclaration.relativeFilepath,
             objectPath,

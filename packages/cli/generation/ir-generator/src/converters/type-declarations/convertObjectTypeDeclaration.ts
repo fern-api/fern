@@ -12,7 +12,9 @@ export function convertObjectTypeDeclaration({
     file: FernFileContext;
 }): Type {
     return Type.object({
-        extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
+        extends: getExtensionsAsList(object.extends).map(
+            (extended) => parseTypeName({ typeName: extended, file }).typeId
+        ),
         properties: getObjectPropertiesFromRawObjectSchema(object, file)
     });
 }

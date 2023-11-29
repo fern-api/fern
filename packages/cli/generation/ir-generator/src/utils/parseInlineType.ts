@@ -24,7 +24,7 @@ export function parseInlineType({ type, file }: parseInlineType.Args): TypeRefer
                 parseTypeName({
                     typeName: namedType,
                     file
-                })
+                }).typeId
             )
     });
 }

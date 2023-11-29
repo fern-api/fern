@@ -2717,31 +2717,7 @@ exports[`generate IR 1`] = `
             },
             "valueType": {
               "_type": "named",
-              "fernFilepath": {
-                "allParts": [],
-                "file": null,
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-                "originalName": "Name",
-                "pascalCase": {
-                  "safeName": "Name",
-                  "unsafeName": "Name",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NAME",
-                  "unsafeName": "NAME",
-                },
-                "snakeCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-              },
-              "typeId": "type_:Name",
+              "value": "type_:Name",
             },
           },
         ],

@@ -21,6 +21,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { convertToFernFilepath } from "../../utils/convertToFernFilepath";
 import {
     getSingleUnionTypeName,
     getSingleUnionTypeProperties,
@@ -267,9 +268,12 @@ export function convertTypeReferenceExample({
                 throw new Error("Type reference is not to a named type.");
             }
             const typeName: DeclaredTypeName = {
-                typeId: parsedReferenceToNamedType.typeId,
-                fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                name: parsedReferenceToNamedType.name
+                typeId: parsedReferenceToNamedType.value,
+                fernFilepath: convertToFernFilepath({
+                    casingsGenerator: fileContainingRawTypeReference.casingsGenerator,
+                    relativeFilepath: fileContainingRawTypeReference.relativeFilepath
+                }),
+                name: fileContainingRawTypeReference.casingsGenerator.generateName(named)
             };
             return ExampleTypeReferenceShape.named({
                 typeName,
@@ -581,9 +585,12 @@ function convertSingleUnionType({
                 throw new Error(`${rawValueType} is not an object`);
             }
             const typeName: DeclaredTypeName = {
-                typeId: parsedSingleUnionTypeProperties.typeId,
-                fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
-                name: parsedSingleUnionTypeProperties.name
+                typeId: parsedSingleUnionTypeProperties.value,
+                fernFilepath: convertToFernFilepath({
+                    casingsGenerator: fileContainingType.casingsGenerator,
+                    relativeFilepath: fileContainingType.relativeFilepath
+                }),
+                name: fileContainingType.casingsGenerator.generateName(rawValueType)
             };
             return {
                 wireDiscriminantValue,

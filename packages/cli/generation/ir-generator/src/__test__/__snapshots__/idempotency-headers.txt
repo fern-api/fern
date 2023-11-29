@@ -311,69 +311,7 @@ exports[`generate IR 1`] = `
                 },
                 "valueType": {
                   "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "payment",
-                          "unsafeName": "payment",
-                        },
-                        "originalName": "payment",
-                        "pascalCase": {
-                          "safeName": "Payment",
-                          "unsafeName": "Payment",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "PAYMENT",
-                          "unsafeName": "PAYMENT",
-                        },
-                        "snakeCase": {
-                          "safeName": "payment",
-                          "unsafeName": "payment",
-                        },
-                      },
-                    ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "payment",
-                        "unsafeName": "payment",
-                      },
-                      "originalName": "payment",
-                      "pascalCase": {
-                        "safeName": "Payment",
-                        "unsafeName": "Payment",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "PAYMENT",
-                        "unsafeName": "PAYMENT",
-                      },
-                      "snakeCase": {
-                        "safeName": "payment",
-                        "unsafeName": "payment",
-                      },
-                    },
-                    "packagePath": [],
-                  },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "currency",
-                      "unsafeName": "currency",
-                    },
-                    "originalName": "Currency",
-                    "pascalCase": {
-                      "safeName": "Currency",
-                      "unsafeName": "Currency",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "CURRENCY",
-                      "unsafeName": "CURRENCY",
-                    },
-                    "snakeCase": {
-                      "safeName": "currency",
-                      "unsafeName": "currency",
-                    },
-                  },
-                  "typeId": "type_payment:Currency",
+                  "value": "type_payment:Currency",
                 },
               },
             ],

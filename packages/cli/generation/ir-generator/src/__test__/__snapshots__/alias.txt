@@ -373,61 +373,11 @@ exports[`generate IR 1`] = `
         "_type": "alias",
         "aliasOf": {
           "_type": "named",
-          "fernFilepath": {
-            "allParts": [],
-            "file": null,
-            "packagePath": [],
-          },
-          "name": {
-            "camelCase": {
-              "safeName": "type",
-              "unsafeName": "type",
-            },
-            "originalName": "Type",
-            "pascalCase": {
-              "safeName": "Type",
-              "unsafeName": "Type",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPE",
-              "unsafeName": "TYPE",
-            },
-            "snakeCase": {
-              "safeName": "type",
-              "unsafeName": "type",
-            },
-          },
-          "typeId": "type_:Type",
+          "value": "type_:Type",
         },
         "resolvedType": {
           "_type": "named",
-          "name": {
-            "fernFilepath": {
-              "allParts": [],
-              "file": null,
-              "packagePath": [],
-            },
-            "name": {
-              "camelCase": {
-                "safeName": "type",
-                "unsafeName": "type",
-              },
-              "originalName": "Type",
-              "pascalCase": {
-                "safeName": "Type",
-                "unsafeName": "Type",
-              },
-              "screamingSnakeCase": {
-                "safeName": "TYPE",
-                "unsafeName": "TYPE",
-              },
-              "snakeCase": {
-                "safeName": "type",
-                "unsafeName": "type",
-              },
-            },
-            "typeId": "type_:Type",
-          },
+          "name": "type_:Type",
           "shape": "OBJECT",
         },
       },
@@ -691,31 +641,7 @@ exports[`generate IR 1`] = `
             },
             "valueType": {
               "_type": "named",
-              "fernFilepath": {
-                "allParts": [],
-                "file": null,
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "typeId",
-                  "unsafeName": "typeId",
-                },
-                "originalName": "TypeId",
-                "pascalCase": {
-                  "safeName": "TypeId",
-                  "unsafeName": "TypeId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "TYPE_ID",
-                  "unsafeName": "TYPE_ID",
-                },
-                "snakeCase": {
-                  "safeName": "type_id",
-                  "unsafeName": "type_id",
-                },
-              },
-              "typeId": "type_:TypeId",
+              "value": "type_:TypeId",
             },
           },
           {

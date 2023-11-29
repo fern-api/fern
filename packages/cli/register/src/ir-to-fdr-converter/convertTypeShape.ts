@@ -1,7 +1,8 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-fern/ir-sdk";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
-export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
+export function convertTypeShape(irType: Ir.types.Type, ir: IntermediateRepresentation): APIV1Write.TypeShape {
     return irType._visit<APIV1Write.TypeShape>({
         alias: (alias) => {
             return {
@@ -23,7 +24,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
         object: (object) => {
             return {
                 type: "object",
-                extends: object.extends.map((extension) => extension.typeId),
+                extends: object.extends,
                 properties: object.properties.map(
                     (property): APIV1Write.ObjectProperty => ({
                         description: property.docs ?? undefined,
@@ -51,7 +52,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                             variant.shape,
                             {
                                 samePropertiesAsObject: (extension) => ({
-                                    extends: [extension.typeId],
+                                    extends: [extension],
                                     properties: baseProperties
                                 }),
                                 singleProperty: (singleProperty) => ({
@@ -84,7 +85,10 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                 type: "undiscriminatedUnion",
                 variants: union.members.map((variant): APIV1Write.UndiscriminatedUnionVariant => {
                     return {
-                        typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
+                        typeName:
+                            variant.type.type === "named"
+                                ? ir.types[variant.type.value]?.name.name.originalName
+                                : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type)
                     };
@@ -156,10 +160,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                 }
             });
         },
-        named: (name) => {
+        named: (typeId) => {
             return {
                 type: "id",
-                value: name.typeId
+                value: typeId
             };
         },
         primitive: (primitive) => {

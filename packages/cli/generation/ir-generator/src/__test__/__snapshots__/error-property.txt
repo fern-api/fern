@@ -194,69 +194,7 @@ exports[`generate IR 1`] = `
       "statusCode": 400,
       "type": {
         "_type": "named",
-        "fernFilepath": {
-          "allParts": [
-            {
-              "camelCase": {
-                "safeName": "errors",
-                "unsafeName": "errors",
-              },
-              "originalName": "errors",
-              "pascalCase": {
-                "safeName": "Errors",
-                "unsafeName": "Errors",
-              },
-              "screamingSnakeCase": {
-                "safeName": "ERRORS",
-                "unsafeName": "ERRORS",
-              },
-              "snakeCase": {
-                "safeName": "errors",
-                "unsafeName": "errors",
-              },
-            },
-          ],
-          "file": {
-            "camelCase": {
-              "safeName": "errors",
-              "unsafeName": "errors",
-            },
-            "originalName": "errors",
-            "pascalCase": {
-              "safeName": "Errors",
-              "unsafeName": "Errors",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ERRORS",
-              "unsafeName": "ERRORS",
-            },
-            "snakeCase": {
-              "safeName": "errors",
-              "unsafeName": "errors",
-            },
-          },
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "propertyBasedErrorTestBody",
-            "unsafeName": "propertyBasedErrorTestBody",
-          },
-          "originalName": "PropertyBasedErrorTestBody",
-          "pascalCase": {
-            "safeName": "PropertyBasedErrorTestBody",
-            "unsafeName": "PropertyBasedErrorTestBody",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PROPERTY_BASED_ERROR_TEST_BODY",
-            "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
-          },
-          "snakeCase": {
-            "safeName": "property_based_error_test_body",
-            "unsafeName": "property_based_error_test_body",
-          },
-        },
-        "typeId": "type_errors:PropertyBasedErrorTestBody",
+        "value": "type_errors:PropertyBasedErrorTestBody",
       },
     },
   },

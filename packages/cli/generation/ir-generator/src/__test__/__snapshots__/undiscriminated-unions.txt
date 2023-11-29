@@ -152,69 +152,7 @@ exports[`generate IR 1`] = `
             "docs": null,
             "requestBodyType": {
               "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "union",
-                      "unsafeName": "union",
-                    },
-                    "originalName": "union",
-                    "pascalCase": {
-                      "safeName": "Union",
-                      "unsafeName": "Union",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "UNION",
-                      "unsafeName": "UNION",
-                    },
-                    "snakeCase": {
-                      "safeName": "union",
-                      "unsafeName": "union",
-                    },
-                  },
-                ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                  "originalName": "union",
-                  "pascalCase": {
-                    "safeName": "Union",
-                    "unsafeName": "Union",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "UNION",
-                    "unsafeName": "UNION",
-                  },
-                  "snakeCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                },
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "myUnion",
-                  "unsafeName": "myUnion",
-                },
-                "originalName": "MyUnion",
-                "pascalCase": {
-                  "safeName": "MyUnion",
-                  "unsafeName": "MyUnion",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "MY_UNION",
-                  "unsafeName": "MY_UNION",
-                },
-                "snakeCase": {
-                  "safeName": "my_union",
-                  "unsafeName": "my_union",
-                },
-              },
-              "typeId": "type_union:MyUnion",
+              "value": "type_union:MyUnion",
             },
             "type": "reference",
           },
@@ -224,69 +162,7 @@ exports[`generate IR 1`] = `
               "docs": null,
               "responseBodyType": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "union",
-                        "unsafeName": "union",
-                      },
-                      "originalName": "union",
-                      "pascalCase": {
-                        "safeName": "Union",
-                        "unsafeName": "Union",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "UNION",
-                        "unsafeName": "UNION",
-                      },
-                      "snakeCase": {
-                        "safeName": "union",
-                        "unsafeName": "union",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "union",
-                      "unsafeName": "union",
-                    },
-                    "originalName": "union",
-                    "pascalCase": {
-                      "safeName": "Union",
-                      "unsafeName": "Union",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "UNION",
-                      "unsafeName": "UNION",
-                    },
-                    "snakeCase": {
-                      "safeName": "union",
-                      "unsafeName": "union",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "myUnion",
-                    "unsafeName": "myUnion",
-                  },
-                  "originalName": "MyUnion",
-                  "pascalCase": {
-                    "safeName": "MyUnion",
-                    "unsafeName": "MyUnion",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "MY_UNION",
-                    "unsafeName": "MY_UNION",
-                  },
-                  "snakeCase": {
-                    "safeName": "my_union",
-                    "unsafeName": "my_union",
-                  },
-                },
-                "typeId": "type_union:MyUnion",
+                "value": "type_union:MyUnion",
               },
               "type": "response",
             },
@@ -318,69 +194,7 @@ exports[`generate IR 1`] = `
                 "docs": null,
                 "requestBodyType": {
                   "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "union",
-                          "unsafeName": "union",
-                        },
-                        "originalName": "union",
-                        "pascalCase": {
-                          "safeName": "Union",
-                          "unsafeName": "Union",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "UNION",
-                          "unsafeName": "UNION",
-                        },
-                        "snakeCase": {
-                          "safeName": "union",
-                          "unsafeName": "union",
-                        },
-                      },
-                    ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "union",
-                        "unsafeName": "union",
-                      },
-                      "originalName": "union",
-                      "pascalCase": {
-                        "safeName": "Union",
-                        "unsafeName": "Union",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "UNION",
-                        "unsafeName": "UNION",
-                      },
-                      "snakeCase": {
-                        "safeName": "union",
-                        "unsafeName": "union",
-                      },
-                    },
-                    "packagePath": [],
-                  },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "myUnion",
-                      "unsafeName": "myUnion",
-                    },
-                    "originalName": "MyUnion",
-                    "pascalCase": {
-                      "safeName": "MyUnion",
-                      "unsafeName": "MyUnion",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "MY_UNION",
-                      "unsafeName": "MY_UNION",
-                    },
-                    "snakeCase": {
-                      "safeName": "my_union",
-                      "unsafeName": "my_union",
-                    },
-                  },
-                  "typeId": "type_union:MyUnion",
+                  "value": "type_union:MyUnion",
                 },
                 "type": "typeReference",
               },

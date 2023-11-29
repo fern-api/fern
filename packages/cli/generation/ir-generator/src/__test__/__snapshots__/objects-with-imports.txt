@@ -755,104 +755,27 @@ exports[`generate IR 1`] = `
                                 },
                                 "originalTypeDeclaration": {
                                   "fernFilepath": {
-                                    "allParts": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                      {
-                                        "camelCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                        "originalName": "metadata",
-                                        "pascalCase": {
-                                          "safeName": "Metadata",
-                                          "unsafeName": "Metadata",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "METADATA",
-                                          "unsafeName": "METADATA",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                      },
-                                    ],
-                                    "file": {
-                                      "camelCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                      "originalName": "metadata",
-                                      "pascalCase": {
-                                        "safeName": "Metadata",
-                                        "unsafeName": "Metadata",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "METADATA",
-                                        "unsafeName": "METADATA",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                    },
-                                    "packagePath": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                    ],
+                                    "allParts": [],
+                                    "file": null,
+                                    "packagePath": [],
                                   },
                                   "name": {
                                     "camelCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadataMetadata",
+                                      "unsafeName": "metadataMetadata",
                                     },
-                                    "originalName": "Metadata",
+                                    "originalName": "metadata.Metadata",
                                     "pascalCase": {
-                                      "safeName": "Metadata",
-                                      "unsafeName": "Metadata",
+                                      "safeName": "MetadataMetadata",
+                                      "unsafeName": "MetadataMetadata",
                                     },
                                     "screamingSnakeCase": {
-                                      "safeName": "METADATA",
-                                      "unsafeName": "METADATA",
+                                      "safeName": "METADATA_METADATA",
+                                      "unsafeName": "METADATA_METADATA",
                                     },
                                     "snakeCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadata_metadata",
+                                      "unsafeName": "metadata_metadata",
                                     },
                                   },
                                   "typeId": "type_commons/metadata:Metadata",
@@ -895,104 +818,27 @@ exports[`generate IR 1`] = `
                                 },
                                 "originalTypeDeclaration": {
                                   "fernFilepath": {
-                                    "allParts": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                      {
-                                        "camelCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                        "originalName": "metadata",
-                                        "pascalCase": {
-                                          "safeName": "Metadata",
-                                          "unsafeName": "Metadata",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "METADATA",
-                                          "unsafeName": "METADATA",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                      },
-                                    ],
-                                    "file": {
-                                      "camelCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                      "originalName": "metadata",
-                                      "pascalCase": {
-                                        "safeName": "Metadata",
-                                        "unsafeName": "Metadata",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "METADATA",
-                                        "unsafeName": "METADATA",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                    },
-                                    "packagePath": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                    ],
+                                    "allParts": [],
+                                    "file": null,
+                                    "packagePath": [],
                                   },
                                   "name": {
                                     "camelCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadataMetadata",
+                                      "unsafeName": "metadataMetadata",
                                     },
-                                    "originalName": "Metadata",
+                                    "originalName": "metadata.Metadata",
                                     "pascalCase": {
-                                      "safeName": "Metadata",
-                                      "unsafeName": "Metadata",
+                                      "safeName": "MetadataMetadata",
+                                      "unsafeName": "MetadataMetadata",
                                     },
                                     "screamingSnakeCase": {
-                                      "safeName": "METADATA",
-                                      "unsafeName": "METADATA",
+                                      "safeName": "METADATA_METADATA",
+                                      "unsafeName": "METADATA_METADATA",
                                     },
                                     "snakeCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadata_metadata",
+                                      "unsafeName": "metadata_metadata",
                                     },
                                   },
                                   "typeId": "type_commons/metadata:Metadata",
@@ -1082,104 +928,27 @@ exports[`generate IR 1`] = `
                           "type": "named",
                           "typeName": {
                             "fernFilepath": {
-                              "allParts": [
-                                {
-                                  "camelCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                  "originalName": "commons",
-                                  "pascalCase": {
-                                    "safeName": "Commons",
-                                    "unsafeName": "Commons",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "COMMONS",
-                                    "unsafeName": "COMMONS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                },
-                                {
-                                  "camelCase": {
-                                    "safeName": "metadata",
-                                    "unsafeName": "metadata",
-                                  },
-                                  "originalName": "metadata",
-                                  "pascalCase": {
-                                    "safeName": "Metadata",
-                                    "unsafeName": "Metadata",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "METADATA",
-                                    "unsafeName": "METADATA",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "metadata",
-                                    "unsafeName": "metadata",
-                                  },
-                                },
-                              ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "metadata",
-                                  "unsafeName": "metadata",
-                                },
-                                "originalName": "metadata",
-                                "pascalCase": {
-                                  "safeName": "Metadata",
-                                  "unsafeName": "Metadata",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "METADATA",
-                                  "unsafeName": "METADATA",
-                                },
-                                "snakeCase": {
-                                  "safeName": "metadata",
-                                  "unsafeName": "metadata",
-                                },
-                              },
-                              "packagePath": [
-                                {
-                                  "camelCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                  "originalName": "commons",
-                                  "pascalCase": {
-                                    "safeName": "Commons",
-                                    "unsafeName": "Commons",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "COMMONS",
-                                    "unsafeName": "COMMONS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                },
-                              ],
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
                             },
                             "name": {
                               "camelCase": {
-                                "safeName": "metadata",
-                                "unsafeName": "metadata",
+                                "safeName": "metadataMetadata",
+                                "unsafeName": "metadataMetadata",
                               },
-                              "originalName": "Metadata",
+                              "originalName": "metadata.Metadata",
                               "pascalCase": {
-                                "safeName": "Metadata",
-                                "unsafeName": "Metadata",
+                                "safeName": "MetadataMetadata",
+                                "unsafeName": "MetadataMetadata",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "METADATA",
-                                "unsafeName": "METADATA",
+                                "safeName": "METADATA_METADATA",
+                                "unsafeName": "METADATA_METADATA",
                               },
                               "snakeCase": {
-                                "safeName": "metadata",
-                                "unsafeName": "metadata",
+                                "safeName": "metadata_metadata",
+                                "unsafeName": "metadata_metadata",
                               },
                             },
                             "typeId": "type_commons/metadata:Metadata",
@@ -1461,104 +1230,27 @@ exports[`generate IR 1`] = `
                                 },
                                 "originalTypeDeclaration": {
                                   "fernFilepath": {
-                                    "allParts": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                      {
-                                        "camelCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                        "originalName": "metadata",
-                                        "pascalCase": {
-                                          "safeName": "Metadata",
-                                          "unsafeName": "Metadata",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "METADATA",
-                                          "unsafeName": "METADATA",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                      },
-                                    ],
-                                    "file": {
-                                      "camelCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                      "originalName": "metadata",
-                                      "pascalCase": {
-                                        "safeName": "Metadata",
-                                        "unsafeName": "Metadata",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "METADATA",
-                                        "unsafeName": "METADATA",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                    },
-                                    "packagePath": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                    ],
+                                    "allParts": [],
+                                    "file": null,
+                                    "packagePath": [],
                                   },
                                   "name": {
                                     "camelCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadataMetadata",
+                                      "unsafeName": "metadataMetadata",
                                     },
-                                    "originalName": "Metadata",
+                                    "originalName": "metadata.Metadata",
                                     "pascalCase": {
-                                      "safeName": "Metadata",
-                                      "unsafeName": "Metadata",
+                                      "safeName": "MetadataMetadata",
+                                      "unsafeName": "MetadataMetadata",
                                     },
                                     "screamingSnakeCase": {
-                                      "safeName": "METADATA",
-                                      "unsafeName": "METADATA",
+                                      "safeName": "METADATA_METADATA",
+                                      "unsafeName": "METADATA_METADATA",
                                     },
                                     "snakeCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadata_metadata",
+                                      "unsafeName": "metadata_metadata",
                                     },
                                   },
                                   "typeId": "type_commons/metadata:Metadata",
@@ -1601,104 +1293,27 @@ exports[`generate IR 1`] = `
                                 },
                                 "originalTypeDeclaration": {
                                   "fernFilepath": {
-                                    "allParts": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                      {
-                                        "camelCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                        "originalName": "metadata",
-                                        "pascalCase": {
-                                          "safeName": "Metadata",
-                                          "unsafeName": "Metadata",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "METADATA",
-                                          "unsafeName": "METADATA",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "metadata",
-                                          "unsafeName": "metadata",
-                                        },
-                                      },
-                                    ],
-                                    "file": {
-                                      "camelCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                      "originalName": "metadata",
-                                      "pascalCase": {
-                                        "safeName": "Metadata",
-                                        "unsafeName": "Metadata",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "METADATA",
-                                        "unsafeName": "METADATA",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "metadata",
-                                        "unsafeName": "metadata",
-                                      },
-                                    },
-                                    "packagePath": [
-                                      {
-                                        "camelCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                        "originalName": "commons",
-                                        "pascalCase": {
-                                          "safeName": "Commons",
-                                          "unsafeName": "Commons",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "COMMONS",
-                                          "unsafeName": "COMMONS",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "commons",
-                                          "unsafeName": "commons",
-                                        },
-                                      },
-                                    ],
+                                    "allParts": [],
+                                    "file": null,
+                                    "packagePath": [],
                                   },
                                   "name": {
                                     "camelCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadataMetadata",
+                                      "unsafeName": "metadataMetadata",
                                     },
-                                    "originalName": "Metadata",
+                                    "originalName": "metadata.Metadata",
                                     "pascalCase": {
-                                      "safeName": "Metadata",
-                                      "unsafeName": "Metadata",
+                                      "safeName": "MetadataMetadata",
+                                      "unsafeName": "MetadataMetadata",
                                     },
                                     "screamingSnakeCase": {
-                                      "safeName": "METADATA",
-                                      "unsafeName": "METADATA",
+                                      "safeName": "METADATA_METADATA",
+                                      "unsafeName": "METADATA_METADATA",
                                     },
                                     "snakeCase": {
-                                      "safeName": "metadata",
-                                      "unsafeName": "metadata",
+                                      "safeName": "metadata_metadata",
+                                      "unsafeName": "metadata_metadata",
                                     },
                                   },
                                   "typeId": "type_commons/metadata:Metadata",
@@ -1788,104 +1403,27 @@ exports[`generate IR 1`] = `
                           "type": "named",
                           "typeName": {
                             "fernFilepath": {
-                              "allParts": [
-                                {
-                                  "camelCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                  "originalName": "commons",
-                                  "pascalCase": {
-                                    "safeName": "Commons",
-                                    "unsafeName": "Commons",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "COMMONS",
-                                    "unsafeName": "COMMONS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                },
-                                {
-                                  "camelCase": {
-                                    "safeName": "metadata",
-                                    "unsafeName": "metadata",
-                                  },
-                                  "originalName": "metadata",
-                                  "pascalCase": {
-                                    "safeName": "Metadata",
-                                    "unsafeName": "Metadata",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "METADATA",
-                                    "unsafeName": "METADATA",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "metadata",
-                                    "unsafeName": "metadata",
-                                  },
-                                },
-                              ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "metadata",
-                                  "unsafeName": "metadata",
-                                },
-                                "originalName": "metadata",
-                                "pascalCase": {
-                                  "safeName": "Metadata",
-                                  "unsafeName": "Metadata",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "METADATA",
-                                  "unsafeName": "METADATA",
-                                },
-                                "snakeCase": {
-                                  "safeName": "metadata",
-                                  "unsafeName": "metadata",
-                                },
-                              },
-                              "packagePath": [
-                                {
-                                  "camelCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                  "originalName": "commons",
-                                  "pascalCase": {
-                                    "safeName": "Commons",
-                                    "unsafeName": "Commons",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "COMMONS",
-                                    "unsafeName": "COMMONS",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "commons",
-                                    "unsafeName": "commons",
-                                  },
-                                },
-                              ],
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
                             },
                             "name": {
                               "camelCase": {
-                                "safeName": "metadata",
-                                "unsafeName": "metadata",
+                                "safeName": "metadataMetadata",
+                                "unsafeName": "metadataMetadata",
                               },
-                              "originalName": "Metadata",
+                              "originalName": "metadata.Metadata",
                               "pascalCase": {
-                                "safeName": "Metadata",
-                                "unsafeName": "Metadata",
+                                "safeName": "MetadataMetadata",
+                                "unsafeName": "MetadataMetadata",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "METADATA",
-                                "unsafeName": "METADATA",
+                                "safeName": "METADATA_METADATA",
+                                "unsafeName": "METADATA_METADATA",
                               },
                               "snakeCase": {
-                                "safeName": "metadata",
-                                "unsafeName": "metadata",
+                                "safeName": "metadata_metadata",
+                                "unsafeName": "metadata_metadata",
                               },
                             },
                             "typeId": "type_commons/metadata:Metadata",
@@ -2034,108 +1572,7 @@ exports[`generate IR 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "commons",
-                          "unsafeName": "commons",
-                        },
-                        "originalName": "commons",
-                        "pascalCase": {
-                          "safeName": "Commons",
-                          "unsafeName": "Commons",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "COMMONS",
-                          "unsafeName": "COMMONS",
-                        },
-                        "snakeCase": {
-                          "safeName": "commons",
-                          "unsafeName": "commons",
-                        },
-                      },
-                      {
-                        "camelCase": {
-                          "safeName": "metadata",
-                          "unsafeName": "metadata",
-                        },
-                        "originalName": "metadata",
-                        "pascalCase": {
-                          "safeName": "Metadata",
-                          "unsafeName": "Metadata",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "METADATA",
-                          "unsafeName": "METADATA",
-                        },
-                        "snakeCase": {
-                          "safeName": "metadata",
-                          "unsafeName": "metadata",
-                        },
-                      },
-                    ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "metadata",
-                        "unsafeName": "metadata",
-                      },
-                      "originalName": "metadata",
-                      "pascalCase": {
-                        "safeName": "Metadata",
-                        "unsafeName": "Metadata",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "METADATA",
-                        "unsafeName": "METADATA",
-                      },
-                      "snakeCase": {
-                        "safeName": "metadata",
-                        "unsafeName": "metadata",
-                      },
-                    },
-                    "packagePath": [
-                      {
-                        "camelCase": {
-                          "safeName": "commons",
-                          "unsafeName": "commons",
-                        },
-                        "originalName": "commons",
-                        "pascalCase": {
-                          "safeName": "Commons",
-                          "unsafeName": "Commons",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "COMMONS",
-                          "unsafeName": "COMMONS",
-                        },
-                        "snakeCase": {
-                          "safeName": "commons",
-                          "unsafeName": "commons",
-                        },
-                      },
-                    ],
-                  },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "metadata",
-                      "unsafeName": "metadata",
-                    },
-                    "originalName": "Metadata",
-                    "pascalCase": {
-                      "safeName": "Metadata",
-                      "unsafeName": "Metadata",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "METADATA",
-                      "unsafeName": "METADATA",
-                    },
-                    "snakeCase": {
-                      "safeName": "metadata",
-                      "unsafeName": "metadata",
-                    },
-                  },
-                  "typeId": "type_commons/metadata:Metadata",
+                  "value": "type_commons/metadata:Metadata",
                 },
               },
             },
@@ -2547,104 +1984,27 @@ exports[`generate IR 1`] = `
                                                         },
                                                         "originalTypeDeclaration": {
                                                           "fernFilepath": {
-                                                            "allParts": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                                "originalName": "metadata",
-                                                                "pascalCase": {
-                                                                  "safeName": "Metadata",
-                                                                  "unsafeName": "Metadata",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "METADATA",
-                                                                  "unsafeName": "METADATA",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                              },
-                                                            ],
-                                                            "file": {
-                                                              "camelCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                              "originalName": "metadata",
-                                                              "pascalCase": {
-                                                                "safeName": "Metadata",
-                                                                "unsafeName": "Metadata",
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "safeName": "METADATA",
-                                                                "unsafeName": "METADATA",
-                                                              },
-                                                              "snakeCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                            },
-                                                            "packagePath": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                            ],
+                                                            "allParts": [],
+                                                            "file": null,
+                                                            "packagePath": [],
                                                           },
                                                           "name": {
                                                             "camelCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadataMetadata",
+                                                              "unsafeName": "metadataMetadata",
                                                             },
-                                                            "originalName": "Metadata",
+                                                            "originalName": "metadata.Metadata",
                                                             "pascalCase": {
-                                                              "safeName": "Metadata",
-                                                              "unsafeName": "Metadata",
+                                                              "safeName": "MetadataMetadata",
+                                                              "unsafeName": "MetadataMetadata",
                                                             },
                                                             "screamingSnakeCase": {
-                                                              "safeName": "METADATA",
-                                                              "unsafeName": "METADATA",
+                                                              "safeName": "METADATA_METADATA",
+                                                              "unsafeName": "METADATA_METADATA",
                                                             },
                                                             "snakeCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadata_metadata",
+                                                              "unsafeName": "metadata_metadata",
                                                             },
                                                           },
                                                           "typeId": "type_commons/metadata:Metadata",
@@ -2687,104 +2047,27 @@ exports[`generate IR 1`] = `
                                                         },
                                                         "originalTypeDeclaration": {
                                                           "fernFilepath": {
-                                                            "allParts": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                                "originalName": "metadata",
-                                                                "pascalCase": {
-                                                                  "safeName": "Metadata",
-                                                                  "unsafeName": "Metadata",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "METADATA",
-                                                                  "unsafeName": "METADATA",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                              },
-                                                            ],
-                                                            "file": {
-                                                              "camelCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                              "originalName": "metadata",
-                                                              "pascalCase": {
-                                                                "safeName": "Metadata",
-                                                                "unsafeName": "Metadata",
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "safeName": "METADATA",
-                                                                "unsafeName": "METADATA",
-                                                              },
-                                                              "snakeCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                            },
-                                                            "packagePath": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                            ],
+                                                            "allParts": [],
+                                                            "file": null,
+                                                            "packagePath": [],
                                                           },
                                                           "name": {
                                                             "camelCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadataMetadata",
+                                                              "unsafeName": "metadataMetadata",
                                                             },
-                                                            "originalName": "Metadata",
+                                                            "originalName": "metadata.Metadata",
                                                             "pascalCase": {
-                                                              "safeName": "Metadata",
-                                                              "unsafeName": "Metadata",
+                                                              "safeName": "MetadataMetadata",
+                                                              "unsafeName": "MetadataMetadata",
                                                             },
                                                             "screamingSnakeCase": {
-                                                              "safeName": "METADATA",
-                                                              "unsafeName": "METADATA",
+                                                              "safeName": "METADATA_METADATA",
+                                                              "unsafeName": "METADATA_METADATA",
                                                             },
                                                             "snakeCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadata_metadata",
+                                                              "unsafeName": "metadata_metadata",
                                                             },
                                                           },
                                                           "typeId": "type_commons/metadata:Metadata",
@@ -2874,104 +2157,27 @@ exports[`generate IR 1`] = `
                                                   "type": "named",
                                                   "typeName": {
                                                     "fernFilepath": {
-                                                      "allParts": [
-                                                        {
-                                                          "camelCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                          "originalName": "commons",
-                                                          "pascalCase": {
-                                                            "safeName": "Commons",
-                                                            "unsafeName": "Commons",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "COMMONS",
-                                                            "unsafeName": "COMMONS",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                        },
-                                                        {
-                                                          "camelCase": {
-                                                            "safeName": "metadata",
-                                                            "unsafeName": "metadata",
-                                                          },
-                                                          "originalName": "metadata",
-                                                          "pascalCase": {
-                                                            "safeName": "Metadata",
-                                                            "unsafeName": "Metadata",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "METADATA",
-                                                            "unsafeName": "METADATA",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "metadata",
-                                                            "unsafeName": "metadata",
-                                                          },
-                                                        },
-                                                      ],
-                                                      "file": {
-                                                        "camelCase": {
-                                                          "safeName": "metadata",
-                                                          "unsafeName": "metadata",
-                                                        },
-                                                        "originalName": "metadata",
-                                                        "pascalCase": {
-                                                          "safeName": "Metadata",
-                                                          "unsafeName": "Metadata",
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                          "safeName": "METADATA",
-                                                          "unsafeName": "METADATA",
-                                                        },
-                                                        "snakeCase": {
-                                                          "safeName": "metadata",
-                                                          "unsafeName": "metadata",
-                                                        },
-                                                      },
-                                                      "packagePath": [
-                                                        {
-                                                          "camelCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                          "originalName": "commons",
-                                                          "pascalCase": {
-                                                            "safeName": "Commons",
-                                                            "unsafeName": "Commons",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "COMMONS",
-                                                            "unsafeName": "COMMONS",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                        },
-                                                      ],
+                                                      "allParts": [],
+                                                      "file": null,
+                                                      "packagePath": [],
                                                     },
                                                     "name": {
                                                       "camelCase": {
-                                                        "safeName": "metadata",
-                                                        "unsafeName": "metadata",
+                                                        "safeName": "metadataMetadata",
+                                                        "unsafeName": "metadataMetadata",
                                                       },
-                                                      "originalName": "Metadata",
+                                                      "originalName": "metadata.Metadata",
                                                       "pascalCase": {
-                                                        "safeName": "Metadata",
-                                                        "unsafeName": "Metadata",
+                                                        "safeName": "MetadataMetadata",
+                                                        "unsafeName": "MetadataMetadata",
                                                       },
                                                       "screamingSnakeCase": {
-                                                        "safeName": "METADATA",
-                                                        "unsafeName": "METADATA",
+                                                        "safeName": "METADATA_METADATA",
+                                                        "unsafeName": "METADATA_METADATA",
                                                       },
                                                       "snakeCase": {
-                                                        "safeName": "metadata",
-                                                        "unsafeName": "metadata",
+                                                        "safeName": "metadata_metadata",
+                                                        "unsafeName": "metadata_metadata",
                                                       },
                                                     },
                                                     "typeId": "type_commons/metadata:Metadata",
@@ -3263,104 +2469,27 @@ exports[`generate IR 1`] = `
                                                         },
                                                         "originalTypeDeclaration": {
                                                           "fernFilepath": {
-                                                            "allParts": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                                "originalName": "metadata",
-                                                                "pascalCase": {
-                                                                  "safeName": "Metadata",
-                                                                  "unsafeName": "Metadata",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "METADATA",
-                                                                  "unsafeName": "METADATA",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                              },
-                                                            ],
-                                                            "file": {
-                                                              "camelCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                              "originalName": "metadata",
-                                                              "pascalCase": {
-                                                                "safeName": "Metadata",
-                                                                "unsafeName": "Metadata",
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "safeName": "METADATA",
-                                                                "unsafeName": "METADATA",
-                                                              },
-                                                              "snakeCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                            },
-                                                            "packagePath": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                            ],
+                                                            "allParts": [],
+                                                            "file": null,
+                                                            "packagePath": [],
                                                           },
                                                           "name": {
                                                             "camelCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadataMetadata",
+                                                              "unsafeName": "metadataMetadata",
                                                             },
-                                                            "originalName": "Metadata",
+                                                            "originalName": "metadata.Metadata",
                                                             "pascalCase": {
-                                                              "safeName": "Metadata",
-                                                              "unsafeName": "Metadata",
+                                                              "safeName": "MetadataMetadata",
+                                                              "unsafeName": "MetadataMetadata",
                                                             },
                                                             "screamingSnakeCase": {
-                                                              "safeName": "METADATA",
-                                                              "unsafeName": "METADATA",
+                                                              "safeName": "METADATA_METADATA",
+                                                              "unsafeName": "METADATA_METADATA",
                                                             },
                                                             "snakeCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadata_metadata",
+                                                              "unsafeName": "metadata_metadata",
                                                             },
                                                           },
                                                           "typeId": "type_commons/metadata:Metadata",
@@ -3403,104 +2532,27 @@ exports[`generate IR 1`] = `
                                                         },
                                                         "originalTypeDeclaration": {
                                                           "fernFilepath": {
-                                                            "allParts": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                                "originalName": "metadata",
-                                                                "pascalCase": {
-                                                                  "safeName": "Metadata",
-                                                                  "unsafeName": "Metadata",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "METADATA",
-                                                                  "unsafeName": "METADATA",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "metadata",
-                                                                  "unsafeName": "metadata",
-                                                                },
-                                                              },
-                                                            ],
-                                                            "file": {
-                                                              "camelCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                              "originalName": "metadata",
-                                                              "pascalCase": {
-                                                                "safeName": "Metadata",
-                                                                "unsafeName": "Metadata",
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "safeName": "METADATA",
-                                                                "unsafeName": "METADATA",
-                                                              },
-                                                              "snakeCase": {
-                                                                "safeName": "metadata",
-                                                                "unsafeName": "metadata",
-                                                              },
-                                                            },
-                                                            "packagePath": [
-                                                              {
-                                                                "camelCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                                "originalName": "commons",
-                                                                "pascalCase": {
-                                                                  "safeName": "Commons",
-                                                                  "unsafeName": "Commons",
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "safeName": "COMMONS",
-                                                                  "unsafeName": "COMMONS",
-                                                                },
-                                                                "snakeCase": {
-                                                                  "safeName": "commons",
-                                                                  "unsafeName": "commons",
-                                                                },
-                                                              },
-                                                            ],
+                                                            "allParts": [],
+                                                            "file": null,
+                                                            "packagePath": [],
                                                           },
                                                           "name": {
                                                             "camelCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadataMetadata",
+                                                              "unsafeName": "metadataMetadata",
                                                             },
-                                                            "originalName": "Metadata",
+                                                            "originalName": "metadata.Metadata",
                                                             "pascalCase": {
-                                                              "safeName": "Metadata",
-                                                              "unsafeName": "Metadata",
+                                                              "safeName": "MetadataMetadata",
+                                                              "unsafeName": "MetadataMetadata",
                                                             },
                                                             "screamingSnakeCase": {
-                                                              "safeName": "METADATA",
-                                                              "unsafeName": "METADATA",
+                                                              "safeName": "METADATA_METADATA",
+                                                              "unsafeName": "METADATA_METADATA",
                                                             },
                                                             "snakeCase": {
-                                                              "safeName": "metadata",
-                                                              "unsafeName": "metadata",
+                                                              "safeName": "metadata_metadata",
+                                                              "unsafeName": "metadata_metadata",
                                                             },
                                                           },
                                                           "typeId": "type_commons/metadata:Metadata",
@@ -3590,104 +2642,27 @@ exports[`generate IR 1`] = `
                                                   "type": "named",
                                                   "typeName": {
                                                     "fernFilepath": {
-                                                      "allParts": [
-                                                        {
-                                                          "camelCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                          "originalName": "commons",
-                                                          "pascalCase": {
-                                                            "safeName": "Commons",
-                                                            "unsafeName": "Commons",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "COMMONS",
-                                                            "unsafeName": "COMMONS",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                        },
-                                                        {
-                                                          "camelCase": {
-                                                            "safeName": "metadata",
-                                                            "unsafeName": "metadata",
-                                                          },
-                                                          "originalName": "metadata",
-                                                          "pascalCase": {
-                                                            "safeName": "Metadata",
-                                                            "unsafeName": "Metadata",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "METADATA",
-                                                            "unsafeName": "METADATA",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "metadata",
-                                                            "unsafeName": "metadata",
-                                                          },
-                                                        },
-                                                      ],
-                                                      "file": {
-                                                        "camelCase": {
-                                                          "safeName": "metadata",
-                                                          "unsafeName": "metadata",
-                                                        },
-                                                        "originalName": "metadata",
-                                                        "pascalCase": {
-                                                          "safeName": "Metadata",
-                                                          "unsafeName": "Metadata",
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                          "safeName": "METADATA",
-                                                          "unsafeName": "METADATA",
-                                                        },
-                                                        "snakeCase": {
-                                                          "safeName": "metadata",
-                                                          "unsafeName": "metadata",
-                                                        },
-                                                      },
-                                                      "packagePath": [
-                                                        {
-                                                          "camelCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                          "originalName": "commons",
-                                                          "pascalCase": {
-                                                            "safeName": "Commons",
-                                                            "unsafeName": "Commons",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "COMMONS",
-                                                            "unsafeName": "COMMONS",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "commons",
-                                                            "unsafeName": "commons",
-                                                          },
-                                                        },
-                                                      ],
+                                                      "allParts": [],
+                                                      "file": null,
+                                                      "packagePath": [],
                                                     },
                                                     "name": {
                                                       "camelCase": {
-                                                        "safeName": "metadata",
-                                                        "unsafeName": "metadata",
+                                                        "safeName": "metadataMetadata",
+                                                        "unsafeName": "metadataMetadata",
                                                       },
-                                                      "originalName": "Metadata",
+                                                      "originalName": "metadata.Metadata",
                                                       "pascalCase": {
-                                                        "safeName": "Metadata",
-                                                        "unsafeName": "Metadata",
+                                                        "safeName": "MetadataMetadata",
+                                                        "unsafeName": "MetadataMetadata",
                                                       },
                                                       "screamingSnakeCase": {
-                                                        "safeName": "METADATA",
-                                                        "unsafeName": "METADATA",
+                                                        "safeName": "METADATA_METADATA",
+                                                        "unsafeName": "METADATA_METADATA",
                                                       },
                                                       "snakeCase": {
-                                                        "safeName": "metadata",
-                                                        "unsafeName": "metadata",
+                                                        "safeName": "metadata_metadata",
+                                                        "unsafeName": "metadata_metadata",
                                                       },
                                                     },
                                                     "typeId": "type_commons/metadata:Metadata",
@@ -3820,31 +2795,7 @@ exports[`generate IR 1`] = `
                     "_type": "list",
                     "list": {
                       "_type": "named",
-                      "fernFilepath": {
-                        "allParts": [],
-                        "file": null,
-                        "packagePath": [],
-                      },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "node",
-                          "unsafeName": "node",
-                        },
-                        "originalName": "Node",
-                        "pascalCase": {
-                          "safeName": "Node",
-                          "unsafeName": "Node",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "NODE",
-                          "unsafeName": "NODE",
-                        },
-                        "snakeCase": {
-                          "safeName": "node",
-                          "unsafeName": "node",
-                        },
-                      },
-                      "typeId": "type_:Node",
+                      "value": "type_:Node",
                     },
                   },
                 },
@@ -4818,45 +3769,84 @@ exports[`generate IR 1`] = `
                                                   "unsafeName": "file",
                                                 },
                                               },
+                                              {
+                                                "camelCase": {
+                                                  "safeName": "directory",
+                                                  "unsafeName": "directory",
+                                                },
+                                                "originalName": "directory",
+                                                "pascalCase": {
+                                                  "safeName": "Directory",
+                                                  "unsafeName": "Directory",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "DIRECTORY",
+                                                  "unsafeName": "DIRECTORY",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "directory",
+                                                  "unsafeName": "directory",
+                                                },
+                                              },
                                             ],
                                             "file": {
                                               "camelCase": {
-                                                "safeName": "file",
-                                                "unsafeName": "file",
+                                                "safeName": "directory",
+                                                "unsafeName": "directory",
                                               },
-                                              "originalName": "file",
+                                              "originalName": "directory",
                                               "pascalCase": {
-                                                "safeName": "File",
-                                                "unsafeName": "File",
+                                                "safeName": "Directory",
+                                                "unsafeName": "Directory",
                                               },
                                               "screamingSnakeCase": {
-                                                "safeName": "FILE",
-                                                "unsafeName": "FILE",
+                                                "safeName": "DIRECTORY",
+                                                "unsafeName": "DIRECTORY",
                                               },
                                               "snakeCase": {
-                                                "safeName": "file",
-                                                "unsafeName": "file",
+                                                "safeName": "directory",
+                                                "unsafeName": "directory",
                                               },
                                             },
-                                            "packagePath": [],
+                                            "packagePath": [
+                                              {
+                                                "camelCase": {
+                                                  "safeName": "file",
+                                                  "unsafeName": "file",
+                                                },
+                                                "originalName": "file",
+                                                "pascalCase": {
+                                                  "safeName": "File",
+                                                  "unsafeName": "File",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "FILE",
+                                                  "unsafeName": "FILE",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "file",
+                                                  "unsafeName": "file",
+                                                },
+                                              },
+                                            ],
                                           },
                                           "name": {
                                             "camelCase": {
-                                              "safeName": "file",
-                                              "unsafeName": "file",
+                                              "safeName": "fileFile",
+                                              "unsafeName": "fileFile",
                                             },
-                                            "originalName": "File",
+                                            "originalName": "file.File",
                                             "pascalCase": {
-                                              "safeName": "File",
-                                              "unsafeName": "File",
+                                              "safeName": "FileFile",
+                                              "unsafeName": "FileFile",
                                             },
                                             "screamingSnakeCase": {
-                                              "safeName": "FILE",
-                                              "unsafeName": "FILE",
+                                              "safeName": "FILE_FILE",
+                                              "unsafeName": "FILE_FILE",
                                             },
                                             "snakeCase": {
-                                              "safeName": "file",
-                                              "unsafeName": "file",
+                                              "safeName": "file_file",
+                                              "unsafeName": "file_file",
                                             },
                                           },
                                           "typeId": "type_file:File",
@@ -4919,45 +3909,84 @@ exports[`generate IR 1`] = `
                                                   "unsafeName": "file",
                                                 },
                                               },
+                                              {
+                                                "camelCase": {
+                                                  "safeName": "directory",
+                                                  "unsafeName": "directory",
+                                                },
+                                                "originalName": "directory",
+                                                "pascalCase": {
+                                                  "safeName": "Directory",
+                                                  "unsafeName": "Directory",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "DIRECTORY",
+                                                  "unsafeName": "DIRECTORY",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "directory",
+                                                  "unsafeName": "directory",
+                                                },
+                                              },
                                             ],
                                             "file": {
                                               "camelCase": {
-                                                "safeName": "file",
-                                                "unsafeName": "file",
+                                                "safeName": "directory",
+                                                "unsafeName": "directory",
                                               },
-                                              "originalName": "file",
+                                              "originalName": "directory",
                                               "pascalCase": {
-                                                "safeName": "File",
-                                                "unsafeName": "File",
+                                                "safeName": "Directory",
+                                                "unsafeName": "Directory",
                                               },
                                               "screamingSnakeCase": {
-                                                "safeName": "FILE",
-                                                "unsafeName": "FILE",
+                                                "safeName": "DIRECTORY",
+                                                "unsafeName": "DIRECTORY",
                                               },
                                               "snakeCase": {
-                                                "safeName": "file",
-                                                "unsafeName": "file",
+                                                "safeName": "directory",
+                                                "unsafeName": "directory",
                                               },
                                             },
-                                            "packagePath": [],
+                                            "packagePath": [
+                                              {
+                                                "camelCase": {
+                                                  "safeName": "file",
+                                                  "unsafeName": "file",
+                                                },
+                                                "originalName": "file",
+                                                "pascalCase": {
+                                                  "safeName": "File",
+                                                  "unsafeName": "File",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "FILE",
+                                                  "unsafeName": "FILE",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "file",
+                                                  "unsafeName": "file",
+                                                },
+                                              },
+                                            ],
                                           },
                                           "name": {
                                             "camelCase": {
-                                              "safeName": "file",
-                                              "unsafeName": "file",
+                                              "safeName": "fileFile",
+                                              "unsafeName": "fileFile",
                                             },
-                                            "originalName": "File",
+                                            "originalName": "file.File",
                                             "pascalCase": {
-                                              "safeName": "File",
-                                              "unsafeName": "File",
+                                              "safeName": "FileFile",
+                                              "unsafeName": "FileFile",
                                             },
                                             "screamingSnakeCase": {
-                                              "safeName": "FILE",
-                                              "unsafeName": "FILE",
+                                              "safeName": "FILE_FILE",
+                                              "unsafeName": "FILE_FILE",
                                             },
                                             "snakeCase": {
-                                              "safeName": "file",
-                                              "unsafeName": "file",
+                                              "safeName": "file_file",
+                                              "unsafeName": "file_file",
                                             },
                                           },
                                           "typeId": "type_file:File",
@@ -5020,45 +4049,84 @@ exports[`generate IR 1`] = `
                                                   "unsafeName": "file",
                                                 },
                                               },
+                                              {
+                                                "camelCase": {
+                                                  "safeName": "directory",
+                                                  "unsafeName": "directory",
+                                                },
+                                                "originalName": "directory",
+                                                "pascalCase": {
+                                                  "safeName": "Directory",
+                                                  "unsafeName": "Directory",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "DIRECTORY",
+                                                  "unsafeName": "DIRECTORY",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "directory",
+                                                  "unsafeName": "directory",
+                                                },
+                                              },
                                             ],
                                             "file": {
                                               "camelCase": {
-                                                "safeName": "file",
-                                                "unsafeName": "file",
+                                                "safeName": "directory",
+                                                "unsafeName": "directory",
                                               },
-                                              "originalName": "file",
+                                              "originalName": "directory",
                                               "pascalCase": {
-                                                "safeName": "File",
-                                                "unsafeName": "File",
+                                                "safeName": "Directory",
+                                                "unsafeName": "Directory",
                                               },
                                               "screamingSnakeCase": {
-                                                "safeName": "FILE",
-                                                "unsafeName": "FILE",
+                                                "safeName": "DIRECTORY",
+                                                "unsafeName": "DIRECTORY",
                                               },
                                               "snakeCase": {
-                                                "safeName": "file",
-                                                "unsafeName": "file",
+                                                "safeName": "directory",
+                                                "unsafeName": "directory",
                                               },
                                             },
-                                            "packagePath": [],
+                                            "packagePath": [
+                                              {
+                                                "camelCase": {
+                                                  "safeName": "file",
+                                                  "unsafeName": "file",
+                                                },
+                                                "originalName": "file",
+                                                "pascalCase": {
+                                                  "safeName": "File",
+                                                  "unsafeName": "File",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "FILE",
+                                                  "unsafeName": "FILE",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "file",
+                                                  "unsafeName": "file",
+                                                },
+                                              },
+                                            ],
                                           },
                                           "name": {
                                             "camelCase": {
-                                              "safeName": "file",
-                                              "unsafeName": "file",
+                                              "safeName": "fileFile",
+                                              "unsafeName": "fileFile",
                                             },
-                                            "originalName": "File",
+                                            "originalName": "file.File",
                                             "pascalCase": {
-                                              "safeName": "File",
-                                              "unsafeName": "File",
+                                              "safeName": "FileFile",
+                                              "unsafeName": "FileFile",
                                             },
                                             "screamingSnakeCase": {
-                                              "safeName": "FILE",
-                                              "unsafeName": "FILE",
+                                              "safeName": "FILE_FILE",
+                                              "unsafeName": "FILE_FILE",
                                             },
                                             "snakeCase": {
-                                              "safeName": "file",
-                                              "unsafeName": "file",
+                                              "safeName": "file_file",
+                                              "unsafeName": "file_file",
                                             },
                                           },
                                           "typeId": "type_file:File",
@@ -5186,45 +4254,84 @@ exports[`generate IR 1`] = `
                                             "unsafeName": "file",
                                           },
                                         },
+                                        {
+                                          "camelCase": {
+                                            "safeName": "directory",
+                                            "unsafeName": "directory",
+                                          },
+                                          "originalName": "directory",
+                                          "pascalCase": {
+                                            "safeName": "Directory",
+                                            "unsafeName": "Directory",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "DIRECTORY",
+                                            "unsafeName": "DIRECTORY",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "directory",
+                                            "unsafeName": "directory",
+                                          },
+                                        },
                                       ],
                                       "file": {
                                         "camelCase": {
-                                          "safeName": "file",
-                                          "unsafeName": "file",
+                                          "safeName": "directory",
+                                          "unsafeName": "directory",
                                         },
-                                        "originalName": "file",
+                                        "originalName": "directory",
                                         "pascalCase": {
-                                          "safeName": "File",
-                                          "unsafeName": "File",
+                                          "safeName": "Directory",
+                                          "unsafeName": "Directory",
                                         },
                                         "screamingSnakeCase": {
-                                          "safeName": "FILE",
-                                          "unsafeName": "FILE",
+                                          "safeName": "DIRECTORY",
+                                          "unsafeName": "DIRECTORY",
                                         },
                                         "snakeCase": {
-                                          "safeName": "file",
-                                          "unsafeName": "file",
+                                          "safeName": "directory",
+                                          "unsafeName": "directory",
                                         },
                                       },
-                                      "packagePath": [],
+                                      "packagePath": [
+                                        {
+                                          "camelCase": {
+                                            "safeName": "file",
+                                            "unsafeName": "file",
+                                          },
+                                          "originalName": "file",
+                                          "pascalCase": {
+                                            "safeName": "File",
+                                            "unsafeName": "File",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "FILE",
+                                            "unsafeName": "FILE",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "file",
+                                            "unsafeName": "file",
+                                          },
+                                        },
+                                      ],
                                     },
                                     "name": {
                                       "camelCase": {
-                                        "safeName": "file",
-                                        "unsafeName": "file",
+                                        "safeName": "fileFile",
+                                        "unsafeName": "fileFile",
                                       },
-                                      "originalName": "File",
+                                      "originalName": "file.File",
                                       "pascalCase": {
-                                        "safeName": "File",
-                                        "unsafeName": "File",
+                                        "safeName": "FileFile",
+                                        "unsafeName": "FileFile",
                                       },
                                       "screamingSnakeCase": {
-                                        "safeName": "FILE",
-                                        "unsafeName": "FILE",
+                                        "safeName": "FILE_FILE",
+                                        "unsafeName": "FILE_FILE",
                                       },
                                       "snakeCase": {
-                                        "safeName": "file",
-                                        "unsafeName": "file",
+                                        "safeName": "file_file",
+                                        "unsafeName": "file_file",
                                       },
                                     },
                                     "typeId": "type_file:File",
@@ -5757,45 +4864,84 @@ exports[`generate IR 1`] = `
                                                                           "unsafeName": "file",
                                                                         },
                                                                       },
+                                                                      {
+                                                                        "camelCase": {
+                                                                          "safeName": "directory",
+                                                                          "unsafeName": "directory",
+                                                                        },
+                                                                        "originalName": "directory",
+                                                                        "pascalCase": {
+                                                                          "safeName": "Directory",
+                                                                          "unsafeName": "Directory",
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "safeName": "DIRECTORY",
+                                                                          "unsafeName": "DIRECTORY",
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "safeName": "directory",
+                                                                          "unsafeName": "directory",
+                                                                        },
+                                                                      },
                                                                     ],
                                                                     "file": {
                                                                       "camelCase": {
-                                                                        "safeName": "file",
-                                                                        "unsafeName": "file",
+                                                                        "safeName": "directory",
+                                                                        "unsafeName": "directory",
                                                                       },
-                                                                      "originalName": "file",
+                                                                      "originalName": "directory",
                                                                       "pascalCase": {
-                                                                        "safeName": "File",
-                                                                        "unsafeName": "File",
+                                                                        "safeName": "Directory",
+                                                                        "unsafeName": "Directory",
                                                                       },
                                                                       "screamingSnakeCase": {
-                                                                        "safeName": "FILE",
-                                                                        "unsafeName": "FILE",
+                                                                        "safeName": "DIRECTORY",
+                                                                        "unsafeName": "DIRECTORY",
                                                                       },
                                                                       "snakeCase": {
-                                                                        "safeName": "file",
-                                                                        "unsafeName": "file",
+                                                                        "safeName": "directory",
+                                                                        "unsafeName": "directory",
                                                                       },
                                                                     },
-                                                                    "packagePath": [],
+                                                                    "packagePath": [
+                                                                      {
+                                                                        "camelCase": {
+                                                                          "safeName": "file",
+                                                                          "unsafeName": "file",
+                                                                        },
+                                                                        "originalName": "file",
+                                                                        "pascalCase": {
+                                                                          "safeName": "File",
+                                                                          "unsafeName": "File",
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "safeName": "FILE",
+                                                                          "unsafeName": "FILE",
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "safeName": "file",
+                                                                          "unsafeName": "file",
+                                                                        },
+                                                                      },
+                                                                    ],
                                                                   },
                                                                   "name": {
                                                                     "camelCase": {
-                                                                      "safeName": "file",
-                                                                      "unsafeName": "file",
+                                                                      "safeName": "fileFile",
+                                                                      "unsafeName": "fileFile",
                                                                     },
-                                                                    "originalName": "File",
+                                                                    "originalName": "file.File",
                                                                     "pascalCase": {
-                                                                      "safeName": "File",
-                                                                      "unsafeName": "File",
+                                                                      "safeName": "FileFile",
+                                                                      "unsafeName": "FileFile",
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "safeName": "FILE",
-                                                                      "unsafeName": "FILE",
+                                                                      "safeName": "FILE_FILE",
+                                                                      "unsafeName": "FILE_FILE",
                                                                     },
                                                                     "snakeCase": {
-                                                                      "safeName": "file",
-                                                                      "unsafeName": "file",
+                                                                      "safeName": "file_file",
+                                                                      "unsafeName": "file_file",
                                                                     },
                                                                   },
                                                                   "typeId": "type_file:File",
@@ -5858,45 +5004,84 @@ exports[`generate IR 1`] = `
                                                                           "unsafeName": "file",
                                                                         },
                                                                       },
+                                                                      {
+                                                                        "camelCase": {
+                                                                          "safeName": "directory",
+                                                                          "unsafeName": "directory",
+                                                                        },
+                                                                        "originalName": "directory",
+                                                                        "pascalCase": {
+                                                                          "safeName": "Directory",
+                                                                          "unsafeName": "Directory",
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "safeName": "DIRECTORY",
+                                                                          "unsafeName": "DIRECTORY",
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "safeName": "directory",
+                                                                          "unsafeName": "directory",
+                                                                        },
+                                                                      },
                                                                     ],
                                                                     "file": {
                                                                       "camelCase": {
-                                                                        "safeName": "file",
-                                                                        "unsafeName": "file",
+                                                                        "safeName": "directory",
+                                                                        "unsafeName": "directory",
                                                                       },
-                                                                      "originalName": "file",
+                                                                      "originalName": "directory",
                                                                       "pascalCase": {
-                                                                        "safeName": "File",
-                                                                        "unsafeName": "File",
+                                                                        "safeName": "Directory",
+                                                                        "unsafeName": "Directory",
                                                                       },
                                                                       "screamingSnakeCase": {
-                                                                        "safeName": "FILE",
-                                                                        "unsafeName": "FILE",
+                                                                        "safeName": "DIRECTORY",
+                                                                        "unsafeName": "DIRECTORY",
                                                                       },
                                                                       "snakeCase": {
-                                                                        "safeName": "file",
-                                                                        "unsafeName": "file",
+                                                                        "safeName": "directory",
+                                                                        "unsafeName": "directory",
                                                                       },
                                                                     },
-                                                                    "packagePath": [],
+                                                                    "packagePath": [
+                                                                      {
+                                                                        "camelCase": {
+                                                                          "safeName": "file",
+                                                                          "unsafeName": "file",
+                                                                        },
+                                                                        "originalName": "file",
+                                                                        "pascalCase": {
+                                                                          "safeName": "File",
+                                                                          "unsafeName": "File",
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "safeName": "FILE",
+                                                                          "unsafeName": "FILE",
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "safeName": "file",
+                                                                          "unsafeName": "file",
+                                                                        },
+                                                                      },
+                                                                    ],
                                                                   },
                                                                   "name": {
                                                                     "camelCase": {
-                                                                      "safeName": "file",
-                                                                      "unsafeName": "file",
+                                                                      "safeName": "fileFile",
+                                                                      "unsafeName": "fileFile",
                                                                     },
-                                                                    "originalName": "File",
+                                                                    "originalName": "file.File",
                                                                     "pascalCase": {
-                                                                      "safeName": "File",
-                                                                      "unsafeName": "File",
+                                                                      "safeName": "FileFile",
+                                                                      "unsafeName": "FileFile",
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "safeName": "FILE",
-                                                                      "unsafeName": "FILE",
+                                                                      "safeName": "FILE_FILE",
+                                                                      "unsafeName": "FILE_FILE",
                                                                     },
                                                                     "snakeCase": {
-                                                                      "safeName": "file",
-                                                                      "unsafeName": "file",
+                                                                      "safeName": "file_file",
+                                                                      "unsafeName": "file_file",
                                                                     },
                                                                   },
                                                                   "typeId": "type_file:File",
@@ -5959,45 +5144,84 @@ exports[`generate IR 1`] = `
                                                                           "unsafeName": "file",
                                                                         },
                                                                       },
+                                                                      {
+                                                                        "camelCase": {
+                                                                          "safeName": "directory",
+                                                                          "unsafeName": "directory",
+                                                                        },
+                                                                        "originalName": "directory",
+                                                                        "pascalCase": {
+                                                                          "safeName": "Directory",
+                                                                          "unsafeName": "Directory",
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "safeName": "DIRECTORY",
+                                                                          "unsafeName": "DIRECTORY",
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "safeName": "directory",
+                                                                          "unsafeName": "directory",
+                                                                        },
+                                                                      },
                                                                     ],
                                                                     "file": {
                                                                       "camelCase": {
-                                                                        "safeName": "file",
-                                                                        "unsafeName": "file",
+                                                                        "safeName": "directory",
+                                                                        "unsafeName": "directory",
                                                                       },
-                                                                      "originalName": "file",
+                                                                      "originalName": "directory",
                                                                       "pascalCase": {
-                                                                        "safeName": "File",
-                                                                        "unsafeName": "File",
+                                                                        "safeName": "Directory",
+                                                                        "unsafeName": "Directory",
                                                                       },
                                                                       "screamingSnakeCase": {
-                                                                        "safeName": "FILE",
-                                                                        "unsafeName": "FILE",
+                                                                        "safeName": "DIRECTORY",
+                                                                        "unsafeName": "DIRECTORY",
                                                                       },
                                                                       "snakeCase": {
-                                                                        "safeName": "file",
-                                                                        "unsafeName": "file",
+                                                                        "safeName": "directory",
+                                                                        "unsafeName": "directory",
                                                                       },
                                                                     },
-                                                                    "packagePath": [],
+                                                                    "packagePath": [
+                                                                      {
+                                                                        "camelCase": {
+                                                                          "safeName": "file",
+                                                                          "unsafeName": "file",
+                                                                        },
+                                                                        "originalName": "file",
+                                                                        "pascalCase": {
+                                                                          "safeName": "File",
+                                                                          "unsafeName": "File",
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "safeName": "FILE",
+                                                                          "unsafeName": "FILE",
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "safeName": "file",
+                                                                          "unsafeName": "file",
+                                                                        },
+                                                                      },
+                                                                    ],
                                                                   },
                                                                   "name": {
                                                                     "camelCase": {
-                                                                      "safeName": "file",
-                                                                      "unsafeName": "file",
+                                                                      "safeName": "fileFile",
+                                                                      "unsafeName": "fileFile",
                                                                     },
-                                                                    "originalName": "File",
+                                                                    "originalName": "file.File",
                                                                     "pascalCase": {
-                                                                      "safeName": "File",
-                                                                      "unsafeName": "File",
+                                                                      "safeName": "FileFile",
+                                                                      "unsafeName": "FileFile",
                                                                     },
                                                                     "screamingSnakeCase": {
-                                                                      "safeName": "FILE",
-                                                                      "unsafeName": "FILE",
+                                                                      "safeName": "FILE_FILE",
+                                                                      "unsafeName": "FILE_FILE",
                                                                     },
                                                                     "snakeCase": {
-                                                                      "safeName": "file",
-                                                                      "unsafeName": "file",
+                                                                      "safeName": "file_file",
+                                                                      "unsafeName": "file_file",
                                                                     },
                                                                   },
                                                                   "typeId": "type_file:File",
@@ -6125,45 +5349,84 @@ exports[`generate IR 1`] = `
                                                                     "unsafeName": "file",
                                                                   },
                                                                 },
+                                                                {
+                                                                  "camelCase": {
+                                                                    "safeName": "directory",
+                                                                    "unsafeName": "directory",
+                                                                  },
+                                                                  "originalName": "directory",
+                                                                  "pascalCase": {
+                                                                    "safeName": "Directory",
+                                                                    "unsafeName": "Directory",
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "safeName": "DIRECTORY",
+                                                                    "unsafeName": "DIRECTORY",
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "safeName": "directory",
+                                                                    "unsafeName": "directory",
+                                                                  },
+                                                                },
                                                               ],
                                                               "file": {
                                                                 "camelCase": {
-                                                                  "safeName": "file",
-                                                                  "unsafeName": "file",
+                                                                  "safeName": "directory",
+                                                                  "unsafeName": "directory",
                                                                 },
-                                                                "originalName": "file",
+                                                                "originalName": "directory",
                                                                 "pascalCase": {
-                                                                  "safeName": "File",
-                                                                  "unsafeName": "File",
+                                                                  "safeName": "Directory",
+                                                                  "unsafeName": "Directory",
                                                                 },
                                                                 "screamingSnakeCase": {
-                                                                  "safeName": "FILE",
-                                                                  "unsafeName": "FILE",
+                                                                  "safeName": "DIRECTORY",
+                                                                  "unsafeName": "DIRECTORY",
                                                                 },
                                                                 "snakeCase": {
-                                                                  "safeName": "file",
-                                                                  "unsafeName": "file",
+                                                                  "safeName": "directory",
+                                                                  "unsafeName": "directory",
                                                                 },
                                                               },
-                                                              "packagePath": [],
+                                                              "packagePath": [
+                                                                {
+                                                                  "camelCase": {
+                                                                    "safeName": "file",
+                                                                    "unsafeName": "file",
+                                                                  },
+                                                                  "originalName": "file",
+                                                                  "pascalCase": {
+                                                                    "safeName": "File",
+                                                                    "unsafeName": "File",
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "safeName": "FILE",
+                                                                    "unsafeName": "FILE",
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "safeName": "file",
+                                                                    "unsafeName": "file",
+                                                                  },
+                                                                },
+                                                              ],
                                                             },
                                                             "name": {
                                                               "camelCase": {
-                                                                "safeName": "file",
-                                                                "unsafeName": "file",
+                                                                "safeName": "fileFile",
+                                                                "unsafeName": "fileFile",
                                                               },
-                                                              "originalName": "File",
+                                                              "originalName": "file.File",
                                                               "pascalCase": {
-                                                                "safeName": "File",
-                                                                "unsafeName": "File",
+                                                                "safeName": "FileFile",
+                                                                "unsafeName": "FileFile",
                                                               },
                                                               "screamingSnakeCase": {
-                                                                "safeName": "FILE",
-                                                                "unsafeName": "FILE",
+                                                                "safeName": "FILE_FILE",
+                                                                "unsafeName": "FILE_FILE",
                                                               },
                                                               "snakeCase": {
-                                                                "safeName": "file",
-                                                                "unsafeName": "file",
+                                                                "safeName": "file_file",
+                                                                "unsafeName": "file_file",
                                                               },
                                                             },
                                                             "typeId": "type_file:File",
@@ -6487,69 +5750,7 @@ exports[`generate IR 1`] = `
                     "_type": "list",
                     "list": {
                       "_type": "named",
-                      "fernFilepath": {
-                        "allParts": [
-                          {
-                            "camelCase": {
-                              "safeName": "file",
-                              "unsafeName": "file",
-                            },
-                            "originalName": "file",
-                            "pascalCase": {
-                              "safeName": "File",
-                              "unsafeName": "File",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "FILE",
-                              "unsafeName": "FILE",
-                            },
-                            "snakeCase": {
-                              "safeName": "file",
-                              "unsafeName": "file",
-                            },
-                          },
-                        ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "file",
-                            "unsafeName": "file",
-                          },
-                          "originalName": "file",
-                          "pascalCase": {
-                            "safeName": "File",
-                            "unsafeName": "File",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "FILE",
-                            "unsafeName": "FILE",
-                          },
-                          "snakeCase": {
-                            "safeName": "file",
-                            "unsafeName": "file",
-                          },
-                        },
-                        "packagePath": [],
-                      },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "file",
-                          "unsafeName": "file",
-                        },
-                        "originalName": "File",
-                        "pascalCase": {
-                          "safeName": "File",
-                          "unsafeName": "File",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "FILE",
-                          "unsafeName": "FILE",
-                        },
-                        "snakeCase": {
-                          "safeName": "file",
-                          "unsafeName": "file",
-                        },
-                      },
-                      "typeId": "type_file:File",
+                      "value": "type_file:File",
                     },
                   },
                 },
@@ -6591,108 +5792,7 @@ exports[`generate IR 1`] = `
                     "_type": "list",
                     "list": {
                       "_type": "named",
-                      "fernFilepath": {
-                        "allParts": [
-                          {
-                            "camelCase": {
-                              "safeName": "file",
-                              "unsafeName": "file",
-                            },
-                            "originalName": "file",
-                            "pascalCase": {
-                              "safeName": "File",
-                              "unsafeName": "File",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "FILE",
-                              "unsafeName": "FILE",
-                            },
-                            "snakeCase": {
-                              "safeName": "file",
-                              "unsafeName": "file",
-                            },
-                          },
-                          {
-                            "camelCase": {
-                              "safeName": "directory",
-                              "unsafeName": "directory",
-                            },
-                            "originalName": "directory",
-                            "pascalCase": {
-                              "safeName": "Directory",
-                              "unsafeName": "Directory",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "DIRECTORY",
-                              "unsafeName": "DIRECTORY",
-                            },
-                            "snakeCase": {
-                              "safeName": "directory",
-                              "unsafeName": "directory",
-                            },
-                          },
-                        ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "directory",
-                            "unsafeName": "directory",
-                          },
-                          "originalName": "directory",
-                          "pascalCase": {
-                            "safeName": "Directory",
-                            "unsafeName": "Directory",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "DIRECTORY",
-                            "unsafeName": "DIRECTORY",
-                          },
-                          "snakeCase": {
-                            "safeName": "directory",
-                            "unsafeName": "directory",
-                          },
-                        },
-                        "packagePath": [
-                          {
-                            "camelCase": {
-                              "safeName": "file",
-                              "unsafeName": "file",
-                            },
-                            "originalName": "file",
-                            "pascalCase": {
-                              "safeName": "File",
-                              "unsafeName": "File",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "FILE",
-                              "unsafeName": "FILE",
-                            },
-                            "snakeCase": {
-                              "safeName": "file",
-                              "unsafeName": "file",
-                            },
-                          },
-                        ],
-                      },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "directory",
-                          "unsafeName": "directory",
-                        },
-                        "originalName": "Directory",
-                        "pascalCase": {
-                          "safeName": "Directory",
-                          "unsafeName": "Directory",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "DIRECTORY",
-                          "unsafeName": "DIRECTORY",
-                        },
-                        "snakeCase": {
-                          "safeName": "directory",
-                          "unsafeName": "directory",
-                        },
-                      },
-                      "typeId": "type_file/directory:Directory",
+                      "value": "type_file/directory:Directory",
                     },
                   },
                 },
@@ -7704,69 +6804,7 @@ exports[`generate IR 1`] = `
             },
             "valueType": {
               "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                    "originalName": "file",
-                    "pascalCase": {
-                      "safeName": "File",
-                      "unsafeName": "File",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "FILE",
-                      "unsafeName": "FILE",
-                    },
-                    "snakeCase": {
-                      "safeName": "file",
-                      "unsafeName": "file",
-                    },
-                  },
-                ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "file",
-                    "unsafeName": "file",
-                  },
-                  "originalName": "file",
-                  "pascalCase": {
-                    "safeName": "File",
-                    "unsafeName": "File",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "FILE",
-                    "unsafeName": "FILE",
-                  },
-                  "snakeCase": {
-                    "safeName": "file",
-                    "unsafeName": "file",
-                  },
-                },
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "fileInfo",
-                  "unsafeName": "fileInfo",
-                },
-                "originalName": "FileInfo",
-                "pascalCase": {
-                  "safeName": "FileInfo",
-                  "unsafeName": "FileInfo",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "FILE_INFO",
-                  "unsafeName": "FILE_INFO",
-                },
-                "snakeCase": {
-                  "safeName": "file_info",
-                  "unsafeName": "file_info",
-                },
-              },
-              "typeId": "type_file:FileInfo",
+              "value": "type_file:FileInfo",
             },
           },
         ],

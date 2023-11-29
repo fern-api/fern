@@ -461,33 +461,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [
-          {
-            "fernFilepath": {
-              "allParts": [],
-              "file": null,
-              "packagePath": [],
-            },
-            "name": {
-              "camelCase": {
-                "safeName": "docs",
-                "unsafeName": "docs",
-              },
-              "originalName": "Docs",
-              "pascalCase": {
-                "safeName": "Docs",
-                "unsafeName": "Docs",
-              },
-              "screamingSnakeCase": {
-                "safeName": "DOCS",
-                "unsafeName": "DOCS",
-              },
-              "snakeCase": {
-                "safeName": "docs",
-                "unsafeName": "docs",
-              },
-            },
-            "typeId": "type_:Docs",
-          },
+          "type_:Docs",
         ],
         "properties": [
           {
@@ -718,33 +692,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [
-          {
-            "fernFilepath": {
-              "allParts": [],
-              "file": null,
-              "packagePath": [],
-            },
-            "name": {
-              "camelCase": {
-                "safeName": "docs",
-                "unsafeName": "docs",
-              },
-              "originalName": "Docs",
-              "pascalCase": {
-                "safeName": "Docs",
-                "unsafeName": "Docs",
-              },
-              "screamingSnakeCase": {
-                "safeName": "DOCS",
-                "unsafeName": "DOCS",
-              },
-              "snakeCase": {
-                "safeName": "docs",
-                "unsafeName": "docs",
-              },
-            },
-            "typeId": "type_:Docs",
-          },
+          "type_:Docs",
         ],
         "properties": [
           {
@@ -1040,33 +988,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [
-          {
-            "fernFilepath": {
-              "allParts": [],
-              "file": null,
-              "packagePath": [],
-            },
-            "name": {
-              "camelCase": {
-                "safeName": "json",
-                "unsafeName": "json",
-              },
-              "originalName": "JSON",
-              "pascalCase": {
-                "safeName": "Json",
-                "unsafeName": "Json",
-              },
-              "screamingSnakeCase": {
-                "safeName": "JSON",
-                "unsafeName": "JSON",
-              },
-              "snakeCase": {
-                "safeName": "json",
-                "unsafeName": "json",
-              },
-            },
-            "typeId": "type_:JSON",
-          },
+          "type_:JSON",
         ],
         "properties": [
           {

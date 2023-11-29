@@ -3,7 +3,6 @@ import { ContainerType, TypeReference } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { constructFernFileContext } from "../FernFileContext";
-import { convertToFernFilepath } from "../utils/convertToFernFilepath";
 import { parseInlineType } from "../utils/parseInlineType";
 
 describe("parse inline types", () => {
@@ -24,20 +23,7 @@ describe("parse inline types", () => {
             })
         });
         const expectedTypeReference = TypeReference.container(
-            ContainerType.optional(
-                TypeReference.container(
-                    ContainerType.list(
-                        TypeReference.named({
-                            typeId: "type_a/b/c:Dummy",
-                            fernFilepath: convertToFernFilepath({
-                                relativeFilepath: dummyFilepath,
-                                casingsGenerator
-                            }),
-                            name: casingsGenerator.generateName(dummyTypeName)
-                        })
-                    )
-                )
-            )
+            ContainerType.optional(TypeReference.container(ContainerType.list(TypeReference.named("type_a/b/c:Dummy"))))
         );
 
         const parsedTypeReferenceJson = await IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference);

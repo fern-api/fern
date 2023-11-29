@@ -28,6 +28,7 @@ import { V29_TO_V28_MIGRATION } from "./migrations/v29-to-v28/migrateFromV29ToV2
 import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V30_TO_V29_MIGRATION } from "./migrations/v30-to-v29/migrateFromV30ToV29";
 import { V31_TO_V30_MIGRATION } from "./migrations/v31-to-v30/migrateFromV31ToV30";
+import { V32_TO_V31_MIGRATION } from "./migrations/v32-to-v31/migrateFromV32ToV31";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
@@ -259,6 +260,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V32_TO_V31_MIGRATION)
     .withMigration(V31_TO_V30_MIGRATION)
     .withMigration(V30_TO_V29_MIGRATION)
     .withMigration(V29_TO_V28_MIGRATION)

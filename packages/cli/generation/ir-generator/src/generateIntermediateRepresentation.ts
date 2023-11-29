@@ -5,6 +5,7 @@ import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import {
+    DeclaredTypeName,
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
@@ -36,6 +37,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
+import { parseTypeName } from "./utils/parseTypeName";
 
 export async function generateIntermediateRepresentation({
     workspace,
@@ -47,8 +49,6 @@ export async function generateIntermediateRepresentation({
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
-
-    const irGraph = new IrGraph(audiences);
 
     const rootApiFileContext = constructRootApiFileContext({
         casingsGenerator,
@@ -127,6 +127,33 @@ export async function generateIntermediateRepresentation({
         webhookGroups: {}
     };
 
+    const declaredTypeNameById: Record<TypeId, DeclaredTypeName> = {};
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+        const fileContext = constructFernFileContext({
+            relativeFilepath,
+            definitionFile: file,
+            casingsGenerator,
+            rootApiFile: workspace.definition.rootApiFile.contents
+        });
+        await visitObject(fileContext.definitionFile, {
+            imports: noop,
+            docs: noop,
+            types: (types) => {
+                for (const [typeName, _] of Object.entries(types ?? {})) {
+                    const declaredTypeName = parseTypeName({
+                        typeName,
+                        file: fileContext
+                    });
+                    declaredTypeNameById[declaredTypeName.typeId] = declaredTypeName;
+                }
+            },
+            errors: noop,
+            service: noop,
+            webhooks: noop
+        });
+    });
+    const irGraph = new IrGraph(audiences, declaredTypeNameById);
+
     const packageTreeGenerator = new PackageTreeGenerator();
 
     const visitDefinitionFile = async (file: FernFileContext) => {
@@ -157,6 +184,8 @@ export async function generateIntermediateRepresentation({
                     const subpackageFilepaths = convertedTypeDeclarationWithFilepaths.descendantFilepaths;
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
+                    declaredTypeNameById[typeId] = convertedTypeDeclaration.name;
+
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 

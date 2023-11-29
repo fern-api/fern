@@ -28,7 +28,7 @@ export function convertIrToFdrApi(
         fdrApi.types[typeId] = {
             description: type.docs ?? undefined,
             name: type.name.name.originalName,
-            shape: convertTypeShape(type.shape)
+            shape: convertTypeShape(type.shape, ir)
         };
     }
 

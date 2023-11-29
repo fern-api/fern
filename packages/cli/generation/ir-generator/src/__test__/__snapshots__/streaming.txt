@@ -206,69 +206,7 @@ exports[`generate IR 1`] = `
             "dataEventType": {
               "json": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "dummy",
-                        "unsafeName": "dummy",
-                      },
-                      "originalName": "dummy",
-                      "pascalCase": {
-                        "safeName": "Dummy",
-                        "unsafeName": "Dummy",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "DUMMY",
-                        "unsafeName": "DUMMY",
-                      },
-                      "snakeCase": {
-                        "safeName": "dummy",
-                        "unsafeName": "dummy",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "dummy",
-                      "unsafeName": "dummy",
-                    },
-                    "originalName": "dummy",
-                    "pascalCase": {
-                      "safeName": "Dummy",
-                      "unsafeName": "Dummy",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "DUMMY",
-                      "unsafeName": "DUMMY",
-                    },
-                    "snakeCase": {
-                      "safeName": "dummy",
-                      "unsafeName": "dummy",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "streamResponse",
-                    "unsafeName": "streamResponse",
-                  },
-                  "originalName": "StreamResponse",
-                  "pascalCase": {
-                    "safeName": "StreamResponse",
-                    "unsafeName": "StreamResponse",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "STREAM_RESPONSE",
-                    "unsafeName": "STREAM_RESPONSE",
-                  },
-                  "snakeCase": {
-                    "safeName": "stream_response",
-                    "unsafeName": "stream_response",
-                  },
-                },
-                "typeId": "type_dummy:StreamResponse",
+                "value": "type_dummy:StreamResponse",
               },
               "type": "json",
             },

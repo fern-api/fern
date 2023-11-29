@@ -287,69 +287,7 @@ exports[`generate IR 1`] = `
       "statusCode": 401,
       "type": {
         "_type": "named",
-        "fernFilepath": {
-          "allParts": [
-            {
-              "camelCase": {
-                "safeName": "errors",
-                "unsafeName": "errors",
-              },
-              "originalName": "errors",
-              "pascalCase": {
-                "safeName": "Errors",
-                "unsafeName": "Errors",
-              },
-              "screamingSnakeCase": {
-                "safeName": "ERRORS",
-                "unsafeName": "ERRORS",
-              },
-              "snakeCase": {
-                "safeName": "errors",
-                "unsafeName": "errors",
-              },
-            },
-          ],
-          "file": {
-            "camelCase": {
-              "safeName": "errors",
-              "unsafeName": "errors",
-            },
-            "originalName": "errors",
-            "pascalCase": {
-              "safeName": "Errors",
-              "unsafeName": "Errors",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ERRORS",
-              "unsafeName": "ERRORS",
-            },
-            "snakeCase": {
-              "safeName": "errors",
-              "unsafeName": "errors",
-            },
-          },
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "unauthorizedRequestErrorBody",
-            "unsafeName": "unauthorizedRequestErrorBody",
-          },
-          "originalName": "UnauthorizedRequestErrorBody",
-          "pascalCase": {
-            "safeName": "UnauthorizedRequestErrorBody",
-            "unsafeName": "UnauthorizedRequestErrorBody",
-          },
-          "screamingSnakeCase": {
-            "safeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
-            "unsafeName": "UNAUTHORIZED_REQUEST_ERROR_BODY",
-          },
-          "snakeCase": {
-            "safeName": "unauthorized_request_error_body",
-            "unsafeName": "unauthorized_request_error_body",
-          },
-        },
-        "typeId": "type_errors:UnauthorizedRequestErrorBody",
+        "value": "type_errors:UnauthorizedRequestErrorBody",
       },
     },
   },

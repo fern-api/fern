@@ -204,69 +204,7 @@ exports[`generate IR 1`] = `
                   "_type": "optional",
                   "optional": {
                     "_type": "named",
-                    "fernFilepath": {
-                      "allParts": [
-                        {
-                          "camelCase": {
-                            "safeName": "svc",
-                            "unsafeName": "svc",
-                          },
-                          "originalName": "svc",
-                          "pascalCase": {
-                            "safeName": "Svc",
-                            "unsafeName": "Svc",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "SVC",
-                            "unsafeName": "SVC",
-                          },
-                          "snakeCase": {
-                            "safeName": "svc",
-                            "unsafeName": "svc",
-                          },
-                        },
-                      ],
-                      "file": {
-                        "camelCase": {
-                          "safeName": "svc",
-                          "unsafeName": "svc",
-                        },
-                        "originalName": "svc",
-                        "pascalCase": {
-                          "safeName": "Svc",
-                          "unsafeName": "Svc",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "SVC",
-                          "unsafeName": "SVC",
-                        },
-                        "snakeCase": {
-                          "safeName": "svc",
-                          "unsafeName": "svc",
-                        },
-                      },
-                      "packagePath": [],
-                    },
-                    "name": {
-                      "camelCase": {
-                        "safeName": "myEnum",
-                        "unsafeName": "myEnum",
-                      },
-                      "originalName": "myEnum",
-                      "pascalCase": {
-                        "safeName": "MyEnum",
-                        "unsafeName": "MyEnum",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "MY_ENUM",
-                        "unsafeName": "MY_ENUM",
-                      },
-                      "snakeCase": {
-                        "safeName": "my_enum",
-                        "unsafeName": "my_enum",
-                      },
-                    },
-                    "typeId": "type_svc:myEnum",
+                    "value": "type_svc:myEnum",
                   },
                 },
               },
@@ -835,69 +773,7 @@ exports[`generate IR 2`] = `
       "statusCode": 404,
       "type": {
         "_type": "named",
-        "fernFilepath": {
-          "allParts": [
-            {
-              "camelCase": {
-                "safeName": "imdb",
-                "unsafeName": "imdb",
-              },
-              "originalName": "imdb",
-              "pascalCase": {
-                "safeName": "Imdb",
-                "unsafeName": "Imdb",
-              },
-              "screamingSnakeCase": {
-                "safeName": "IMDB",
-                "unsafeName": "IMDB",
-              },
-              "snakeCase": {
-                "safeName": "imdb",
-                "unsafeName": "imdb",
-              },
-            },
-          ],
-          "file": {
-            "camelCase": {
-              "safeName": "imdb",
-              "unsafeName": "imdb",
-            },
-            "originalName": "imdb",
-            "pascalCase": {
-              "safeName": "Imdb",
-              "unsafeName": "Imdb",
-            },
-            "screamingSnakeCase": {
-              "safeName": "IMDB",
-              "unsafeName": "IMDB",
-            },
-            "snakeCase": {
-              "safeName": "imdb",
-              "unsafeName": "imdb",
-            },
-          },
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "movieId",
-            "unsafeName": "movieId",
-          },
-          "originalName": "MovieId",
-          "pascalCase": {
-            "safeName": "MovieId",
-            "unsafeName": "MovieId",
-          },
-          "screamingSnakeCase": {
-            "safeName": "MOVIE_ID",
-            "unsafeName": "MOVIE_ID",
-          },
-          "snakeCase": {
-            "safeName": "movie_id",
-            "unsafeName": "movie_id",
-          },
-        },
-        "typeId": "type_imdb:MovieId",
+        "value": "type_imdb:MovieId",
       },
     },
   },
@@ -997,69 +873,7 @@ exports[`generate IR 2`] = `
             "docs": null,
             "requestBodyType": {
               "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                    "originalName": "imdb",
-                    "pascalCase": {
-                      "safeName": "Imdb",
-                      "unsafeName": "Imdb",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "IMDB",
-                      "unsafeName": "IMDB",
-                    },
-                    "snakeCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                  },
-                ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "imdb",
-                    "unsafeName": "imdb",
-                  },
-                  "originalName": "imdb",
-                  "pascalCase": {
-                    "safeName": "Imdb",
-                    "unsafeName": "Imdb",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "IMDB",
-                    "unsafeName": "IMDB",
-                  },
-                  "snakeCase": {
-                    "safeName": "imdb",
-                    "unsafeName": "imdb",
-                  },
-                },
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "createMovieRequest",
-                  "unsafeName": "createMovieRequest",
-                },
-                "originalName": "CreateMovieRequest",
-                "pascalCase": {
-                  "safeName": "CreateMovieRequest",
-                  "unsafeName": "CreateMovieRequest",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CREATE_MOVIE_REQUEST",
-                  "unsafeName": "CREATE_MOVIE_REQUEST",
-                },
-                "snakeCase": {
-                  "safeName": "create_movie_request",
-                  "unsafeName": "create_movie_request",
-                },
-              },
-              "typeId": "type_imdb:CreateMovieRequest",
+              "value": "type_imdb:CreateMovieRequest",
             },
             "type": "reference",
           },
@@ -1069,69 +883,7 @@ exports[`generate IR 2`] = `
               "docs": null,
               "responseBodyType": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                      "originalName": "imdb",
-                      "pascalCase": {
-                        "safeName": "Imdb",
-                        "unsafeName": "Imdb",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "IMDB",
-                        "unsafeName": "IMDB",
-                      },
-                      "snakeCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                    "originalName": "imdb",
-                    "pascalCase": {
-                      "safeName": "Imdb",
-                      "unsafeName": "Imdb",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "IMDB",
-                      "unsafeName": "IMDB",
-                    },
-                    "snakeCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "movieId",
-                    "unsafeName": "movieId",
-                  },
-                  "originalName": "MovieId",
-                  "pascalCase": {
-                    "safeName": "MovieId",
-                    "unsafeName": "MovieId",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "MOVIE_ID",
-                    "unsafeName": "MOVIE_ID",
-                  },
-                  "snakeCase": {
-                    "safeName": "movie_id",
-                    "unsafeName": "movie_id",
-                  },
-                },
-                "typeId": "type_imdb:MovieId",
+                "value": "type_imdb:MovieId",
               },
               "type": "response",
             },
@@ -1163,69 +915,7 @@ exports[`generate IR 2`] = `
                 "docs": null,
                 "requestBodyType": {
                   "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "imdb",
-                          "unsafeName": "imdb",
-                        },
-                        "originalName": "imdb",
-                        "pascalCase": {
-                          "safeName": "Imdb",
-                          "unsafeName": "Imdb",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "IMDB",
-                          "unsafeName": "IMDB",
-                        },
-                        "snakeCase": {
-                          "safeName": "imdb",
-                          "unsafeName": "imdb",
-                        },
-                      },
-                    ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                      "originalName": "imdb",
-                      "pascalCase": {
-                        "safeName": "Imdb",
-                        "unsafeName": "Imdb",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "IMDB",
-                        "unsafeName": "IMDB",
-                      },
-                      "snakeCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                    },
-                    "packagePath": [],
-                  },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "createMovieRequest",
-                      "unsafeName": "createMovieRequest",
-                    },
-                    "originalName": "CreateMovieRequest",
-                    "pascalCase": {
-                      "safeName": "CreateMovieRequest",
-                      "unsafeName": "CreateMovieRequest",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "CREATE_MOVIE_REQUEST",
-                      "unsafeName": "CREATE_MOVIE_REQUEST",
-                    },
-                    "snakeCase": {
-                      "safeName": "create_movie_request",
-                      "unsafeName": "create_movie_request",
-                    },
-                  },
-                  "typeId": "type_imdb:CreateMovieRequest",
+                  "value": "type_imdb:CreateMovieRequest",
                 },
                 "type": "typeReference",
               },
@@ -1258,69 +948,7 @@ exports[`generate IR 2`] = `
               },
               "valueType": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                      "originalName": "imdb",
-                      "pascalCase": {
-                        "safeName": "Imdb",
-                        "unsafeName": "Imdb",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "IMDB",
-                        "unsafeName": "IMDB",
-                      },
-                      "snakeCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                    "originalName": "imdb",
-                    "pascalCase": {
-                      "safeName": "Imdb",
-                      "unsafeName": "Imdb",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "IMDB",
-                      "unsafeName": "IMDB",
-                    },
-                    "snakeCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "movieId",
-                    "unsafeName": "movieId",
-                  },
-                  "originalName": "MovieId",
-                  "pascalCase": {
-                    "safeName": "MovieId",
-                    "unsafeName": "MovieId",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "MOVIE_ID",
-                    "unsafeName": "MOVIE_ID",
-                  },
-                  "snakeCase": {
-                    "safeName": "movie_id",
-                    "unsafeName": "movie_id",
-                  },
-                },
-                "typeId": "type_imdb:MovieId",
+                "value": "type_imdb:MovieId",
               },
               "variable": null,
             },
@@ -1467,69 +1095,7 @@ exports[`generate IR 2`] = `
               },
               "valueType": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                      "originalName": "imdb",
-                      "pascalCase": {
-                        "safeName": "Imdb",
-                        "unsafeName": "Imdb",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "IMDB",
-                        "unsafeName": "IMDB",
-                      },
-                      "snakeCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                    "originalName": "imdb",
-                    "pascalCase": {
-                      "safeName": "Imdb",
-                      "unsafeName": "Imdb",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "IMDB",
-                      "unsafeName": "IMDB",
-                    },
-                    "snakeCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "movieId",
-                    "unsafeName": "movieId",
-                  },
-                  "originalName": "MovieId",
-                  "pascalCase": {
-                    "safeName": "MovieId",
-                    "unsafeName": "MovieId",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "MOVIE_ID",
-                    "unsafeName": "MOVIE_ID",
-                  },
-                  "snakeCase": {
-                    "safeName": "movie_id",
-                    "unsafeName": "movie_id",
-                  },
-                },
-                "typeId": "type_imdb:MovieId",
+                "value": "type_imdb:MovieId",
               },
               "variable": null,
             },
@@ -1542,69 +1108,7 @@ exports[`generate IR 2`] = `
               "docs": null,
               "responseBodyType": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                      "originalName": "imdb",
-                      "pascalCase": {
-                        "safeName": "Imdb",
-                        "unsafeName": "Imdb",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "IMDB",
-                        "unsafeName": "IMDB",
-                      },
-                      "snakeCase": {
-                        "safeName": "imdb",
-                        "unsafeName": "imdb",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                    "originalName": "imdb",
-                    "pascalCase": {
-                      "safeName": "Imdb",
-                      "unsafeName": "Imdb",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "IMDB",
-                      "unsafeName": "IMDB",
-                    },
-                    "snakeCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "movie",
-                    "unsafeName": "movie",
-                  },
-                  "originalName": "Movie",
-                  "pascalCase": {
-                    "safeName": "Movie",
-                    "unsafeName": "Movie",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "MOVIE",
-                    "unsafeName": "MOVIE",
-                  },
-                  "snakeCase": {
-                    "safeName": "movie",
-                    "unsafeName": "movie",
-                  },
-                },
-                "typeId": "type_imdb:Movie",
+                "value": "type_imdb:Movie",
               },
               "type": "response",
             },
@@ -1982,69 +1486,7 @@ exports[`generate IR 2`] = `
             },
             "valueType": {
               "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                    "originalName": "imdb",
-                    "pascalCase": {
-                      "safeName": "Imdb",
-                      "unsafeName": "Imdb",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "IMDB",
-                      "unsafeName": "IMDB",
-                    },
-                    "snakeCase": {
-                      "safeName": "imdb",
-                      "unsafeName": "imdb",
-                    },
-                  },
-                ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "imdb",
-                    "unsafeName": "imdb",
-                  },
-                  "originalName": "imdb",
-                  "pascalCase": {
-                    "safeName": "Imdb",
-                    "unsafeName": "Imdb",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "IMDB",
-                    "unsafeName": "IMDB",
-                  },
-                  "snakeCase": {
-                    "safeName": "imdb",
-                    "unsafeName": "imdb",
-                  },
-                },
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "movieId",
-                  "unsafeName": "movieId",
-                },
-                "originalName": "MovieId",
-                "pascalCase": {
-                  "safeName": "MovieId",
-                  "unsafeName": "MovieId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "MOVIE_ID",
-                  "unsafeName": "MOVIE_ID",
-                },
-                "snakeCase": {
-                  "safeName": "movie_id",
-                  "unsafeName": "movie_id",
-                },
-              },
-              "typeId": "type_imdb:MovieId",
+              "value": "type_imdb:MovieId",
             },
           },
           {
@@ -2527,69 +1969,7 @@ exports[`generate IR 3`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "a",
-                          "unsafeName": "a",
-                        },
-                        "originalName": "a",
-                        "pascalCase": {
-                          "safeName": "A",
-                          "unsafeName": "A",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "A",
-                          "unsafeName": "A",
-                        },
-                        "snakeCase": {
-                          "safeName": "a",
-                          "unsafeName": "a",
-                        },
-                      },
-                    ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "a",
-                        "unsafeName": "a",
-                      },
-                      "originalName": "a",
-                      "pascalCase": {
-                        "safeName": "A",
-                        "unsafeName": "A",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "A",
-                        "unsafeName": "A",
-                      },
-                      "snakeCase": {
-                        "safeName": "a",
-                        "unsafeName": "a",
-                      },
-                    },
-                    "packagePath": [],
-                  },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "a",
-                      "unsafeName": "a",
-                    },
-                    "originalName": "A",
-                    "pascalCase": {
-                      "safeName": "A",
-                      "unsafeName": "A",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "A",
-                      "unsafeName": "A",
-                    },
-                    "snakeCase": {
-                      "safeName": "a",
-                      "unsafeName": "a",
-                    },
-                  },
-                  "typeId": "type_a:A",
+                  "value": "type_a:A",
                 },
               },
             },
@@ -2741,33 +2121,7 @@ exports[`generate IR 3`] = `
       "shape": {
         "_type": "object",
         "extends": [
-          {
-            "fernFilepath": {
-              "allParts": [],
-              "file": null,
-              "packagePath": [],
-            },
-            "name": {
-              "camelCase": {
-                "safeName": "rootType",
-                "unsafeName": "rootType",
-              },
-              "originalName": "RootType",
-              "pascalCase": {
-                "safeName": "RootType",
-                "unsafeName": "RootType",
-              },
-              "screamingSnakeCase": {
-                "safeName": "ROOT_TYPE",
-                "unsafeName": "ROOT_TYPE",
-              },
-              "snakeCase": {
-                "safeName": "root_type",
-                "unsafeName": "root_type",
-              },
-            },
-            "typeId": "type_:RootType",
-          },
+          "type_:RootType",
         ],
         "properties": [],
       },
@@ -2928,69 +2282,7 @@ exports[`generate IR 3`] = `
                   "_type": "list",
                   "list": {
                     "_type": "named",
-                    "fernFilepath": {
-                      "allParts": [
-                        {
-                          "camelCase": {
-                            "safeName": "ast",
-                            "unsafeName": "ast",
-                          },
-                          "originalName": "ast",
-                          "pascalCase": {
-                            "safeName": "Ast",
-                            "unsafeName": "Ast",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "AST",
-                            "unsafeName": "AST",
-                          },
-                          "snakeCase": {
-                            "safeName": "ast",
-                            "unsafeName": "ast",
-                          },
-                        },
-                      ],
-                      "file": {
-                        "camelCase": {
-                          "safeName": "ast",
-                          "unsafeName": "ast",
-                        },
-                        "originalName": "ast",
-                        "pascalCase": {
-                          "safeName": "Ast",
-                          "unsafeName": "Ast",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "AST",
-                          "unsafeName": "AST",
-                        },
-                        "snakeCase": {
-                          "safeName": "ast",
-                          "unsafeName": "ast",
-                        },
-                      },
-                      "packagePath": [],
-                    },
-                    "name": {
-                      "camelCase": {
-                        "safeName": "fieldValue",
-                        "unsafeName": "fieldValue",
-                      },
-                      "originalName": "FieldValue",
-                      "pascalCase": {
-                        "safeName": "FieldValue",
-                        "unsafeName": "FieldValue",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "FIELD_VALUE",
-                        "unsafeName": "FIELD_VALUE",
-                      },
-                      "snakeCase": {
-                        "safeName": "field_value",
-                        "unsafeName": "field_value",
-                      },
-                    },
-                    "typeId": "type_ast:FieldValue",
+                    "value": "type_ast:FieldValue",
                   },
                 },
               },
@@ -3050,69 +2342,7 @@ exports[`generate IR 3`] = `
                   "_type": "optional",
                   "optional": {
                     "_type": "named",
-                    "fernFilepath": {
-                      "allParts": [
-                        {
-                          "camelCase": {
-                            "safeName": "ast",
-                            "unsafeName": "ast",
-                          },
-                          "originalName": "ast",
-                          "pascalCase": {
-                            "safeName": "Ast",
-                            "unsafeName": "Ast",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "AST",
-                            "unsafeName": "AST",
-                          },
-                          "snakeCase": {
-                            "safeName": "ast",
-                            "unsafeName": "ast",
-                          },
-                        },
-                      ],
-                      "file": {
-                        "camelCase": {
-                          "safeName": "ast",
-                          "unsafeName": "ast",
-                        },
-                        "originalName": "ast",
-                        "pascalCase": {
-                          "safeName": "Ast",
-                          "unsafeName": "Ast",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "AST",
-                          "unsafeName": "AST",
-                        },
-                        "snakeCase": {
-                          "safeName": "ast",
-                          "unsafeName": "ast",
-                        },
-                      },
-                      "packagePath": [],
-                    },
-                    "name": {
-                      "camelCase": {
-                        "safeName": "fieldValue",
-                        "unsafeName": "fieldValue",
-                      },
-                      "originalName": "FieldValue",
-                      "pascalCase": {
-                        "safeName": "FieldValue",
-                        "unsafeName": "FieldValue",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "FIELD_VALUE",
-                        "unsafeName": "FIELD_VALUE",
-                      },
-                      "snakeCase": {
-                        "safeName": "field_value",
-                        "unsafeName": "field_value",
-                      },
-                    },
-                    "typeId": "type_ast:FieldValue",
+                    "value": "type_ast:FieldValue",
                   },
                 },
               },
@@ -3273,69 +2503,7 @@ exports[`generate IR 3`] = `
               },
               "type": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "ast",
-                        "unsafeName": "ast",
-                      },
-                      "originalName": "ast",
-                      "pascalCase": {
-                        "safeName": "Ast",
-                        "unsafeName": "Ast",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AST",
-                        "unsafeName": "AST",
-                      },
-                      "snakeCase": {
-                        "safeName": "ast",
-                        "unsafeName": "ast",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "ast",
-                      "unsafeName": "ast",
-                    },
-                    "originalName": "ast",
-                    "pascalCase": {
-                      "safeName": "Ast",
-                      "unsafeName": "Ast",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "AST",
-                      "unsafeName": "AST",
-                    },
-                    "snakeCase": {
-                      "safeName": "ast",
-                      "unsafeName": "ast",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "primitiveValue",
-                    "unsafeName": "primitiveValue",
-                  },
-                  "originalName": "PrimitiveValue",
-                  "pascalCase": {
-                    "safeName": "PrimitiveValue",
-                    "unsafeName": "PrimitiveValue",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "PRIMITIVE_VALUE",
-                    "unsafeName": "PRIMITIVE_VALUE",
-                  },
-                  "snakeCase": {
-                    "safeName": "primitive_value",
-                    "unsafeName": "primitive_value",
-                  },
-                },
-                "typeId": "type_ast:PrimitiveValue",
+                "value": "type_ast:PrimitiveValue",
               },
             },
           },
@@ -3365,69 +2533,7 @@ exports[`generate IR 3`] = `
             "docs": null,
             "shape": {
               "_type": "samePropertiesAsObject",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "ast",
-                      "unsafeName": "ast",
-                    },
-                    "originalName": "ast",
-                    "pascalCase": {
-                      "safeName": "Ast",
-                      "unsafeName": "Ast",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "AST",
-                      "unsafeName": "AST",
-                    },
-                    "snakeCase": {
-                      "safeName": "ast",
-                      "unsafeName": "ast",
-                    },
-                  },
-                ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "ast",
-                    "unsafeName": "ast",
-                  },
-                  "originalName": "ast",
-                  "pascalCase": {
-                    "safeName": "Ast",
-                    "unsafeName": "Ast",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "AST",
-                    "unsafeName": "AST",
-                  },
-                  "snakeCase": {
-                    "safeName": "ast",
-                    "unsafeName": "ast",
-                  },
-                },
-                "packagePath": [],
-              },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectValue",
-                  "unsafeName": "objectValue",
-                },
-                "originalName": "ObjectValue",
-                "pascalCase": {
-                  "safeName": "ObjectValue",
-                  "unsafeName": "ObjectValue",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_VALUE",
-                  "unsafeName": "OBJECT_VALUE",
-                },
-                "snakeCase": {
-                  "safeName": "object_value",
-                  "unsafeName": "object_value",
-                },
-              },
-              "typeId": "type_ast:ObjectValue",
+              "value": "type_ast:ObjectValue",
             },
           },
           {
@@ -3480,69 +2586,7 @@ exports[`generate IR 3`] = `
               },
               "type": {
                 "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
-                      "camelCase": {
-                        "safeName": "ast",
-                        "unsafeName": "ast",
-                      },
-                      "originalName": "ast",
-                      "pascalCase": {
-                        "safeName": "Ast",
-                        "unsafeName": "Ast",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AST",
-                        "unsafeName": "AST",
-                      },
-                      "snakeCase": {
-                        "safeName": "ast",
-                        "unsafeName": "ast",
-                      },
-                    },
-                  ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "ast",
-                      "unsafeName": "ast",
-                    },
-                    "originalName": "ast",
-                    "pascalCase": {
-                      "safeName": "Ast",
-                      "unsafeName": "Ast",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "AST",
-                      "unsafeName": "AST",
-                    },
-                    "snakeCase": {
-                      "safeName": "ast",
-                      "unsafeName": "ast",
-                    },
-                  },
-                  "packagePath": [],
-                },
-                "name": {
-                  "camelCase": {
-                    "safeName": "containerValue",
-                    "unsafeName": "containerValue",
-                  },
-                  "originalName": "ContainerValue",
-                  "pascalCase": {
-                    "safeName": "ContainerValue",
-                    "unsafeName": "ContainerValue",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "CONTAINER_VALUE",
-                    "unsafeName": "CONTAINER_VALUE",
-                  },
-                  "snakeCase": {
-                    "safeName": "container_value",
-                    "unsafeName": "container_value",
-                  },
-                },
-                "typeId": "type_ast:ContainerValue",
+                "value": "type_ast:ContainerValue",
               },
             },
           },

@@ -54,7 +54,7 @@ function constructResolvedTypeReference({
                 ? ShapeType.UndiscriminatedUnion
                 : assertNever(resolvedType.declaration);
             return ResolvedTypeReference.named({
-                name: resolvedType.name,
+                name: resolvedType.name.typeId,
                 shape: shapeType
             });
         }

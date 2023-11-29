@@ -24,7 +24,9 @@ export function convertDiscriminatedUnionTypeDeclaration({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name
         }),
-        extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
+        extends: getExtensionsAsList(union.extends).map(
+            (extended) => parseTypeName({ typeName: extended, file }).typeId
+        ),
         baseProperties:
             union["base-properties"] != null
                 ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
@@ -146,7 +148,7 @@ export function getSingleUnionTypeProperties({
         isRawObjectDefinition(resolvedType.declaration) &&
         singlePropertyKey == null
     ) {
-        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
+        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name.typeId);
     }
     return SingleUnionTypeProperties.singleProperty({
         name: file.casingsGenerator.generateNameAndWireValue({

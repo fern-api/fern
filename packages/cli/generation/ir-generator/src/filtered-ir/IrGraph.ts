@@ -1,5 +1,6 @@
 import { Audiences as ConfigAudiences } from "@fern-api/config-management-commons";
 import { assertNever, noop } from "@fern-api/core-utils";
+import { FernCliError } from "@fern-api/task-context";
 import {
     ContainerType,
     DeclaredServiceName,
@@ -29,6 +30,7 @@ import {
 } from "./ids";
 
 export class IrGraph {
+    private declaredTypeNameById: Record<TypeId, DeclaredTypeName> = {};
     private types: Record<TypeId, TypeNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
@@ -39,8 +41,9 @@ export class IrGraph {
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
 
-    public constructor(audiences: ConfigAudiences) {
+    public constructor(audiences: ConfigAudiences, declaredTypeNameById: Record<TypeId, DeclaredTypeName>) {
         this.audiences = audiencesFromConfig(audiences);
+        this.declaredTypeNameById = declaredTypeNameById;
     }
 
     public addType(
@@ -80,7 +83,12 @@ export class IrGraph {
         const referencedTypes = new Set<TypeId>();
         const referencedSubpackages = new Set<FernFilepath>();
         if (errorDeclaration.type != null) {
-            populateReferencesFromTypeReference(errorDeclaration.type, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(
+                this.declaredTypeNameById,
+                errorDeclaration.type,
+                referencedTypes,
+                referencedSubpackages
+            );
         }
         const errorNode: ErrorNode = {
             errorId,
@@ -97,13 +105,28 @@ export class IrGraph {
         const referencedErrors = new Set<ErrorId>();
         const referencedSubpackages = new Set<FernFilepath>();
         for (const header of [...service.headers, ...httpEndpoint.headers]) {
-            populateReferencesFromTypeReference(header.valueType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(
+                this.declaredTypeNameById,
+                header.valueType,
+                referencedTypes,
+                referencedSubpackages
+            );
         }
         for (const pathParameter of [...service.pathParameters, ...httpEndpoint.pathParameters]) {
-            populateReferencesFromTypeReference(pathParameter.valueType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(
+                this.declaredTypeNameById,
+                pathParameter.valueType,
+                referencedTypes,
+                referencedSubpackages
+            );
         }
         for (const queryParameter of httpEndpoint.queryParameters) {
-            populateReferencesFromTypeReference(queryParameter.valueType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(
+                this.declaredTypeNameById,
+                queryParameter.valueType,
+                referencedTypes,
+                referencedSubpackages
+            );
         }
         if (httpEndpoint.requestBody != null) {
             HttpRequestBody._visit(httpEndpoint.requestBody, {
@@ -112,18 +135,33 @@ export class IrGraph {
                         populateReferencesFromTypeName(extension, referencedTypes, referencedSubpackages);
                     }
                     for (const property of inlinedRequestBody.properties) {
-                        populateReferencesFromTypeReference(property.valueType, referencedTypes, referencedSubpackages);
+                        populateReferencesFromTypeReference(
+                            this.declaredTypeNameById,
+                            property.valueType,
+                            referencedTypes,
+                            referencedSubpackages
+                        );
                     }
                 },
                 reference: ({ requestBodyType }) => {
-                    populateReferencesFromTypeReference(requestBodyType, referencedTypes, referencedSubpackages);
+                    populateReferencesFromTypeReference(
+                        this.declaredTypeNameById,
+                        requestBodyType,
+                        referencedTypes,
+                        referencedSubpackages
+                    );
                 },
                 fileUpload: ({ properties }) => {
                     for (const property of properties) {
                         FileUploadRequestProperty._visit(property, {
                             file: noop,
                             bodyProperty: ({ valueType }) => {
-                                populateReferencesFromTypeReference(valueType, referencedTypes, referencedSubpackages);
+                                populateReferencesFromTypeReference(
+                                    this.declaredTypeNameById,
+                                    valueType,
+                                    referencedTypes,
+                                    referencedSubpackages
+                                );
                             },
                             _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
@@ -144,6 +182,7 @@ export class IrGraph {
                 fileDownload: noop,
                 json: (jsonResponse) => {
                     populateReferencesFromTypeReference(
+                        this.declaredTypeNameById,
                         jsonResponse.responseBodyType,
                         referencedTypes,
                         referencedSubpackages
@@ -152,7 +191,12 @@ export class IrGraph {
                 streaming: (streamingResponse) => {
                     StreamingResponseChunkType._visit(streamingResponse.dataEventType, {
                         json: (typeReference) =>
-                            populateReferencesFromTypeReference(typeReference, referencedTypes, referencedSubpackages),
+                            populateReferencesFromTypeReference(
+                                this.declaredTypeNameById,
+                                typeReference,
+                                referencedTypes,
+                                referencedSubpackages
+                            ),
                         text: noop,
                         _other: () => {
                             throw new Error(
@@ -323,15 +367,25 @@ function audiencesFromConfig(configAudiences: ConfigAudiences): Audiences {
 }
 
 function populateReferencesFromTypeReference(
+    declaredTypeNameById: Record<TypeId, DeclaredTypeName>,
     typeReference: TypeReference,
     referencedTypes: Set<TypeId>,
     referencedSubpackages: Set<FernFilepath>
 ) {
     TypeReference._visit(typeReference, {
         container: (containerType) => {
-            populateReferencesFromContainer(containerType, referencedTypes, referencedSubpackages);
+            populateReferencesFromContainer(
+                declaredTypeNameById,
+                containerType,
+                referencedTypes,
+                referencedSubpackages
+            );
         },
-        named: (declaredTypeName) => {
+        named: (typeId) => {
+            const declaredTypeName = declaredTypeNameById[typeId];
+            if (declaredTypeName == null) {
+                throw new FernCliError();
+            }
             populateReferencesFromTypeName(declaredTypeName, referencedTypes, referencedSubpackages);
         },
         primitive: noop,
@@ -350,23 +404,39 @@ function populateReferencesFromTypeName(
 }
 
 function populateReferencesFromContainer(
+    declaredTypeNameById: Record<TypeId, DeclaredTypeName>,
     containerType: ContainerType,
     referencedTypes: Set<TypeId>,
     referencedSubpackages: Set<FernFilepath>
 ) {
     ContainerType._visit(containerType, {
         list: (listType) => {
-            populateReferencesFromTypeReference(listType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(declaredTypeNameById, listType, referencedTypes, referencedSubpackages);
         },
         map: (mapType) => {
-            populateReferencesFromTypeReference(mapType.keyType, referencedTypes, referencedSubpackages);
-            populateReferencesFromTypeReference(mapType.valueType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(
+                declaredTypeNameById,
+                mapType.keyType,
+                referencedTypes,
+                referencedSubpackages
+            );
+            populateReferencesFromTypeReference(
+                declaredTypeNameById,
+                mapType.valueType,
+                referencedTypes,
+                referencedSubpackages
+            );
         },
         optional: (optionalType) => {
-            populateReferencesFromTypeReference(optionalType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(
+                declaredTypeNameById,
+                optionalType,
+                referencedTypes,
+                referencedSubpackages
+            );
         },
         set: (setType) => {
-            populateReferencesFromTypeReference(setType, referencedTypes, referencedSubpackages);
+            populateReferencesFromTypeReference(declaredTypeNameById, setType, referencedTypes, referencedSubpackages);
         },
         literal: noop,
         _other: noop
