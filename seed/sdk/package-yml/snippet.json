@@ -1,0 +1,25 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{id}/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": ""
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}/{nestedId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "await client.service.nop(\"id-219xca8\")\n"
+            }
+        }
+    ],
+    "types": {}
+}

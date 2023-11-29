@@ -1,5 +1,5 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, getTextOfTsNode } from "@fern-typescript/commons";
+import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { Fetcher, GetReferenceOpts, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
@@ -86,31 +86,50 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
         const groups: string[] = [lines.join("\n")];
         for (const example of this.endpoint.examples) {
-            const exampleParameters = this.request.getExampleEndpointParameters({
+            const generatedExample = this.getExample({
                 context,
                 example,
                 opts: { isForComment: true },
             });
-            if (exampleParameters == null) {
+            if (generatedExample == null) {
                 continue;
             }
-            const generatedExample = ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        this.generatedSdkClientClass.accessFromRootClient({
-                            referenceToRootClient: ts.factory.createIdentifier("client"),
-                        }),
-                        ts.factory.createIdentifier(this.endpoint.name.camelCase.safeName)
-                    ),
-                    undefined,
-                    exampleParameters
-                )
-            );
             const exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
         }
 
         return groups.join("\n\n");
+    }
+
+    public getExample({
+        context,
+        example,
+        opts,
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression | undefined {
+        const exampleParameters = this.request.getExampleEndpointParameters({
+            context,
+            example,
+            opts,
+        });
+        if (exampleParameters == null) {
+            return undefined;
+        }
+        return ts.factory.createAwaitExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    this.generatedSdkClientClass.accessFromRootClient({
+                        referenceToRootClient: ts.factory.createIdentifier("client"),
+                    }),
+                    ts.factory.createIdentifier(this.endpoint.name.camelCase.safeName)
+                ),
+                undefined,
+                exampleParameters
+            )
+        );
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

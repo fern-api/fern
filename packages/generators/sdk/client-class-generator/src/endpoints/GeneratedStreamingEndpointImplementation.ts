@@ -58,6 +58,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
     }
 
+    public getExample(): ts.Expression | undefined {
+        return undefined;
+    }
+
     public getOverloads(): EndpointSignature[] {
         return [];
     }

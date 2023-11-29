@@ -34,6 +34,19 @@ export interface ObjectServiceMethods {
             locals: any;
         }
     ): void | Promise<void>;
+    getAndReturnWithMapOfMap(
+        req: express.Request<
+            never,
+            SeedExhaustive.types.ObjectWithMapOfMap,
+            SeedExhaustive.types.ObjectWithMapOfMap,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedExhaustive.types.ObjectWithMapOfMap) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        }
+    ): void | Promise<void>;
     getAndReturnNestedWithOptionalField(
         req: express.Request<
             never,
@@ -142,6 +155,46 @@ export class ObjectService {
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithRequiredField' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.post("/get-and-return-with-map-of-map", async (req, res, next) => {
+            const request = await serializers.types.ObjectWithMapOfMap.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.getAndReturnWithMapOfMap(req as any, {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    });
+                    next();
+                } catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.SeedExhaustiveError) {
+                        console.warn(
+                            `Endpoint 'getAndReturnWithMapOfMap' unexpectedly threw ${error.constructor.name}.` +
                                 ` If this was intentional, please add ${error.constructor.name} to` +
                                 " the endpoint's errors list in your Fern Definition."
                         );

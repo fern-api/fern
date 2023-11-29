@@ -3,6 +3,7 @@ import {
     AuthScheme,
     BasicAuthScheme,
     BearerAuthScheme,
+    ExampleEndpointCall,
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
@@ -276,6 +277,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
             });
         }
+    }
+
+    public getSnippetForEndpoint(args: {
+        context: SdkContext;
+        endpointId: string;
+        example: ExampleEndpointCall;
+    }): ts.Expression | undefined {
+        const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
+            return generatedEndpoint.endpoint.id === args.endpointId;
+        });
+        if (generatedEndpoint == null) {
+            return undefined;
+        }
+        return generatedEndpoint.getExample({ context: args.context, example: args.example, opts: {} });
     }
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.PropertyAccessExpression {

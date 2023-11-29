@@ -37,6 +37,6 @@ export function constructNpmPackage({
                 repoUrl: outputMode.repoUrl,
             };
         default:
-            throw new Error(`Encountered unknown output mode: ${outputMode.type}`);
+            throw new Error(`Encountered unknown output mode: ${outputMode}`);
     }
 }

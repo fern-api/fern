@@ -41,7 +41,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 customConfig: rawConfig.customConfig ?? {},
             },
             {
-                allowUnknownKeys: true,
+                unrecognizedObjectKeys: "passthrough",
             }
         );
         const generatorNotificationService =

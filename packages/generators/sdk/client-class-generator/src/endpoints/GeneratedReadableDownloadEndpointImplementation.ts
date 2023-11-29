@@ -57,6 +57,10 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
         this.includeSerdeLayer = includeSerdeLayer;
     }
 
+    public getExample(): ts.Expression | undefined {
+        return undefined;
+    }
+
     public getOverloads(): EndpointSignature[] {
         return [];
     }

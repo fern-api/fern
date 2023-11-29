@@ -1,5 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     BundledTypescriptProject,
     convertExportedFilePathToFilePath,
@@ -8,6 +10,7 @@ import {
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
+    getTextOfTsNode,
     ImportsManager,
     JavaScriptRuntime,
     NpmPackage,
@@ -29,7 +32,9 @@ import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlin
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile } from "ts-morph";
+import urlJoin from "url-join";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -56,6 +61,7 @@ export declare namespace SdkGenerator {
     }
 
     export interface Config {
+        snippetFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
@@ -82,6 +88,8 @@ export class SdkGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
+
+    private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
 
     private project: Project;
     private rootDirectory: Directory;
@@ -285,6 +293,18 @@ export class SdkGenerator {
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
 
+        if (this.config.snippetFilepath != null) {
+            this.generateSnippets();
+            const snippets: FernGeneratorExec.Snippets = {
+                endpoints: this.endpointSnippets,
+                types: {},
+            };
+            await writeFile(
+                this.config.snippetFilepath,
+                JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
+            );
+        }
+
         return this.config.shouldBundle
             ? new BundledTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -449,6 +469,51 @@ export class SdkGenerator {
         }
     }
 
+    private generateSnippets() {
+        this.forEachService((service, packageId) => {
+            for (const endpoint of service.endpoints) {
+                const example = endpoint.examples[0];
+                if (example != null) {
+                    const snippet = this.withSnippet({
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            const expression = context.sdkClientClass
+                                .getGeneratedSdkClientClass(packageId)
+                                .getSnippetForEndpoint({ context, endpointId: endpoint.id, example });
+                            if (expression != null) {
+                                context.sourceFile.addStatements(getTextOfTsNode(expression));
+                            }
+                        },
+                    });
+                    this.endpointSnippets.push({
+                        id: {
+                            path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                            method: endpoint.method,
+                        },
+                        snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                            client: snippet,
+                        }),
+                    });
+                }
+            }
+        });
+    }
+
+    // TODO(dsinghvi): HACKHACK Move this to IR
+    private getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+        let url = "";
+        if (endpoint.fullPath.head.length > 0) {
+            url = urlJoin(url, endpoint.fullPath.head);
+        }
+        for (const part of endpoint.fullPath.parts) {
+            url = urlJoin(url, "{" + part.pathParameter + "}");
+            if (part.tail.length > 0) {
+                url = urlJoin(url, part.tail);
+            }
+        }
+        return url.startsWith("/") ? url : `/${url}`;
+    }
+
     private generateEnvironments(): void {
         this.withSourceFile({
             filepath: this.environmentsDeclarationReferencer.getExportedFilepath(),
@@ -485,6 +550,21 @@ export class SdkGenerator {
                     .writeToFile(context);
             },
         });
+    }
+
+    private withSnippet({
+        run,
+    }: {
+        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
+    }): string {
+        const project = new Project({
+            useInMemoryFileSystem: true,
+        });
+        const sourceFile = project.createSourceFile("snippet");
+        const importsManager = new ImportsManager();
+        run({ sourceFile, importsManager });
+        importsManager.writeImportsToSourceFile(sourceFile);
+        return sourceFile.getText();
     }
 
     private withSourceFile({

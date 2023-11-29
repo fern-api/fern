@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
@@ -71,6 +72,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             context: generatorContext,
             npmPackage,
             config: {
+                snippetFilepath:
+                    config.output.snippetFilepath != null
+                        ? AbsoluteFilePath.of(config.output.snippetFilepath)
+                        : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
                 neverThrowErrors: customConfig.neverThrowErrors,

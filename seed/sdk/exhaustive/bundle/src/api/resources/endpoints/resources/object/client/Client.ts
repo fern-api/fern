@@ -114,6 +114,44 @@ export class Object_ {
         };
     }
 
+    public async getAndReturnWithMapOfMap(
+        request: Fiddle.types.ObjectWithMapOfMap,
+        requestOptions?: Object_.RequestOptions
+    ): Promise<
+        core.APIResponse<Fiddle.types.ObjectWithMapOfMap, Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error>
+    > {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/object/get-and-return-with-map-of-map"),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Version": "0.0.1",
+            },
+            contentType: "application/json",
+            body: await serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: await serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+            };
+        }
+
+        return {
+            ok: false,
+            error: Fiddle.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
+        };
+    }
+
     public async getAndReturnNestedWithOptionalField(
         request: Fiddle.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions
