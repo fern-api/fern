@@ -26,7 +26,7 @@ export declare namespace Submission {
  * Responsible for spinning up and spinning down execution.
  */
 export class Submission {
-    constructor(protected readonly _options: Submission.Options) {}
+    constructor(protected readonly _options: Submission.Options = {}) {}
 
     /**
      * Returns sessionId and execution server URL for session. Spins up server.

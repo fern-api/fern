@@ -22,7 +22,7 @@ export declare namespace Playlist {
 }
 
 export class Playlist {
-    constructor(protected readonly _options: Playlist.Options) {}
+    constructor(protected readonly _options: Playlist.Options = {}) {}
 
     /**
      * Create a new playlist

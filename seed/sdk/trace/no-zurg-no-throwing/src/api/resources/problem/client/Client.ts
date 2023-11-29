@@ -21,7 +21,7 @@ export declare namespace Problem {
 }
 
 export class Problem {
-    constructor(protected readonly _options: Problem.Options) {}
+    constructor(protected readonly _options: Problem.Options = {}) {}
 
     /**
      * Creates a problem

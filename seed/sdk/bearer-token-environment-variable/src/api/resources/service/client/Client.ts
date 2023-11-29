@@ -10,7 +10,7 @@ import * as errors from "../../../../errors";
 export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
-        apiKey: core.Supplier<core.BearerToken | undefined>;
+        apiKey?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {

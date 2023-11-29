@@ -22,7 +22,7 @@ export declare namespace Homepage {
 }
 
 export class Homepage {
-    constructor(protected readonly _options: Homepage.Options) {}
+    constructor(protected readonly _options: Homepage.Options = {}) {}
 
     public async getHomepageProblems(
         requestOptions?: Homepage.RequestOptions

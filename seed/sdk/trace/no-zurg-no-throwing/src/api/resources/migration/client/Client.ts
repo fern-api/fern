@@ -21,7 +21,7 @@ export declare namespace Migration {
 }
 
 export class Migration {
-    constructor(protected readonly _options: Migration.Options) {}
+    constructor(protected readonly _options: Migration.Options = {}) {}
 
     public async getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,

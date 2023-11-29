@@ -22,7 +22,7 @@ export declare namespace V2 {
 }
 
 export class V2 {
-    constructor(protected readonly _options: V2.Options) {}
+    constructor(protected readonly _options: V2.Options = {}) {}
 
     public async test(requestOptions?: V2.RequestOptions): Promise<core.APIResponse<void, SeedTrace.v2.test.Error>> {
         const _response = await core.fetcher({

@@ -8,7 +8,7 @@ import { Service } from "./api/resources/service/client/Client";
 export declare namespace SeedBearerTokenEnvironmentVariableClient {
     interface Options {
         environment: core.Supplier<string>;
-        apiKey: core.Supplier<core.BearerToken | undefined>;
+        apiKey?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {

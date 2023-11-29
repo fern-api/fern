@@ -22,7 +22,7 @@ export declare namespace Sysprop {
 }
 
 export class Sysprop {
-    constructor(protected readonly _options: Sysprop.Options) {}
+    constructor(protected readonly _options: Sysprop.Options = {}) {}
 
     public async setNumWarmInstances(
         language: SeedTrace.Language,

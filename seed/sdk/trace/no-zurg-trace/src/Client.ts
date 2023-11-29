@@ -27,7 +27,7 @@ export declare namespace SeedTraceClient {
 }
 
 export class SeedTraceClient {
-    constructor(protected readonly _options: SeedTraceClient.Options) {}
+    constructor(protected readonly _options: SeedTraceClient.Options = {}) {}
 
     protected _v2: V2 | undefined;
 

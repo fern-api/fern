@@ -318,6 +318,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
+                    initializer: optionsInterface.getProperties().every((property) => property.hasQuestionToken())
+                        ? "{}"
+                        : undefined,
                 },
             ],
         });
@@ -578,7 +581,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ])
                     )
                 ),
-                hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
+                hasQuestionToken:
+                    !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                    this.bearerAuthScheme.tokenEnvVar != null,
             });
         }
 
@@ -598,7 +603,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                   ])
                         )
                     ),
-                    hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
+                    hasQuestionToken:
+                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null),
                 },
                 {
                     name: this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
@@ -614,7 +621,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                   ])
                         )
                     ),
-                    hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
+                    hasQuestionToken:
+                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
+                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null),
                 }
             );
         }

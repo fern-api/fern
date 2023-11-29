@@ -21,7 +21,7 @@ export declare namespace Admin {
 }
 
 export class Admin {
-    constructor(protected readonly _options: Admin.Options) {}
+    constructor(protected readonly _options: Admin.Options = {}) {}
 
     public async updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
