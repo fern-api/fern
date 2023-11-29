@@ -1,4 +1,4 @@
-import { HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { HttpHeader, InlinedRequestBodyProperty, NameAndWireValue, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";
@@ -11,8 +11,11 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
     getAllQueryParameters: () => QueryParameter[];
     getNonBodyKeys: (context: SdkContext) => RequestWrapperNonBodyProperty[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
+    getInlinedRequestBodyPropertyKeyFromName: (name: NameAndWireValue) => string;
     getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfQueryParameterFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfNonLiteralHeaderFromName: (name: NameAndWireValue) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;

@@ -34,6 +34,7 @@
     "@fern-typescript/endpoint-error-union-generator": "workspace:*",
     "@fern-typescript/environments-generator": "workspace:*",
     "@fern-typescript/generic-sdk-error-generators": "workspace:*",
+    "@fern-typescript/request-wrapper-example-generator": "workspace:*",
     "@fern-typescript/request-wrapper-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/sdk-client-class-generator": "workspace:*",

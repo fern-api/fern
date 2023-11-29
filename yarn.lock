@@ -2490,6 +2490,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/request-wrapper-example-generator@workspace:*, @fern-typescript/request-wrapper-example-generator@workspace:packages/generators/sdk/request-wrapper-example-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/request-wrapper-example-generator@workspace:packages/generators/sdk/request-wrapper-example-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.22.20
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-sdk": 0.0.3088
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.52.0
+    jest: ^28.1.3
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/request-wrapper-generator@workspace:*, @fern-typescript/request-wrapper-generator@workspace:packages/generators/sdk/request-wrapper-generator":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/request-wrapper-generator@workspace:packages/generators/sdk/request-wrapper-generator"
@@ -2682,6 +2704,7 @@ __metadata:
     "@fern-typescript/endpoint-error-union-generator": "workspace:*"
     "@fern-typescript/environments-generator": "workspace:*"
     "@fern-typescript/generic-sdk-error-generators": "workspace:*"
+    "@fern-typescript/request-wrapper-example-generator": "workspace:*"
     "@fern-typescript/request-wrapper-generator": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@fern-typescript/sdk-client-class-generator": "workspace:*"
@@ -6091,6 +6114,7 @@ __metadata:
     prettier: ^2.7.1
     ts-node: ^10.9.1
     typescript: 4.6.4
+    workspace: ^0.0.1-preview.1
   languageName: unknown
   linkType: soft
 
@@ -9987,6 +10011,13 @@ __metadata:
   version: 2.0.0
   resolution: "wildcard@npm:2.0.0"
   checksum: 1f4fe4c03dfc492777c60f795bbba597ac78794f1b650d68f398fbee9adb765367c516ebd4220889b6a81e9626e7228bbe0d66237abb311573c2ee1f4902a5ad
+  languageName: node
+  linkType: hard
+
+"workspace@npm:^0.0.1-preview.1":
+  version: 0.0.1-preview.1
+  resolution: "workspace@npm:0.0.1-preview.1"
+  checksum: 0d3a1ed8a5735bd3295f2685a92cfd59a53d9386d6177e3dc036416e0b200729632a3760d9b34d75597b826e30620d7b02d9852c9bc2e0028c64436c9c5cda2e
   languageName: node
   linkType: hard
 

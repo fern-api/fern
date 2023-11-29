@@ -89,7 +89,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
         }
 
         return this.generatedUnion.build({
-            discriminantValueToBuild: example.discriminant.wireValue,
+            discriminantValueToBuild: example.singleUnionType.wireDiscriminantValue.wireValue,
             builderArgument: ExampleSingleUnionTypeProperties._visit<ts.Expression | undefined>(
                 example.singleUnionType.shape,
                 {
@@ -109,7 +109,9 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                 {
                     singleProperty: (property) => {
                         const unionMember = this.shape.types.find(
-                            (member) => member.discriminantValue.wireValue === example.discriminant.wireValue
+                            (member) =>
+                                member.discriminantValue.wireValue ===
+                                example.singleUnionType.wireDiscriminantValue.wireValue
                         );
                         if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
                             throw new Error(

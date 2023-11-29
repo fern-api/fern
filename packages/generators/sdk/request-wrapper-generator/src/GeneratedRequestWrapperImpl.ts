@@ -7,10 +7,11 @@ import {
     HttpService,
     InlinedRequestBody,
     InlinedRequestBodyProperty,
+    NameAndWireValue,
     QueryParameter,
     TypeReference,
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -19,24 +20,32 @@ export declare namespace GeneratedRequestWrapperImpl {
         service: HttpService;
         endpoint: HttpEndpoint;
         wrapperName: string;
+        packageId: PackageId;
     }
 }
+
+const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private service: HttpService;
     private endpoint: HttpEndpoint;
     private wrapperName: string;
+    private packageId: PackageId;
 
-    constructor({ service, endpoint, wrapperName }: GeneratedRequestWrapperImpl.Init) {
+    constructor({ service, endpoint, wrapperName, packageId }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
         this.wrapperName = wrapperName;
+        this.packageId = packageId;
     }
 
     public writeToFile(context: SdkContext): void {
+        const docs = this.getDocs(context);
+
         const requestInterface = context.sourceFile.addInterface({
             name: this.wrapperName,
             isExported: true,
+            docs: docs != null ? [docs] : [],
         });
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
@@ -108,6 +117,63 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 },
             });
         }
+    }
+
+    private getDocs(context: SdkContext): string | undefined {
+        const groups: string[] = [];
+        if (this.endpoint.requestBody == null) {
+            for (const example of this.endpoint.examples) {
+                const generatedExample = context.requestWrapper.getGeneratedExample({
+                    exampleHeaders: [...example.serviceHeaders, ...example.endpointHeaders],
+                    endpointName: this.endpoint.name,
+                    exampleBody: undefined,
+                    exampleQueryParameters: example.queryParameters,
+                    packageId: this.packageId,
+                });
+                const exampleStr =
+                    "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
+                groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+            }
+        } else {
+            this.endpoint.requestBody._visit({
+                reference: () => {
+                    for (const example of this.endpoint.examples) {
+                        if (example.request?.type !== "reference") {
+                            continue;
+                        }
+                        const generatedExample = context.type.getGeneratedExample(example.request);
+                        const exampleStr =
+                            "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
+                        groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+                    }
+                },
+                inlinedRequestBody: () => {
+                    for (const example of this.endpoint.examples) {
+                        if (example.request?.type !== "inlinedRequestBody") {
+                            continue;
+                        }
+                        const generatedExample = context.requestWrapper.getGeneratedExample({
+                            exampleHeaders: [...example.serviceHeaders, ...example.endpointHeaders],
+                            endpointName: this.endpoint.name,
+                            exampleBody: example.request,
+                            exampleQueryParameters: example.queryParameters,
+                            packageId: this.packageId,
+                        });
+                        const exampleStr =
+                            "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
+                        groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+                    }
+                },
+                bytes: () => undefined,
+                fileUpload: () => undefined,
+                _other: () => undefined,
+            });
+        }
+
+        if (groups.length === 0) {
+            return undefined;
+        }
+        return groups.join("\n\n");
     }
 
     private getInlineProperty(
@@ -197,7 +263,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKey(property: InlinedRequestBodyProperty): string {
-        return property.name.name.camelCase.unsafeName;
+        return this.getInlinedRequestBodyPropertyKeyFromName(property.name);
+    }
+
+    public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): string {
+        return name.name.camelCase.unsafeName;
     }
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
@@ -272,16 +342,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
+        return this.getPropertyNameOfNonLiteralHeaderFromName(queryParameter.name);
+    }
+
+    public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
-            safeName: queryParameter.name.name.camelCase.safeName,
-            propertyName: queryParameter.name.name.camelCase.unsafeName,
+            safeName: name.name.camelCase.safeName,
+            propertyName: name.name.camelCase.unsafeName,
         };
     }
 
     public getPropertyNameOfNonLiteralHeader(header: HttpHeader): RequestWrapperNonBodyProperty {
+        return this.getPropertyNameOfNonLiteralHeaderFromName(header.name);
+    }
+
+    public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
-            safeName: header.name.name.camelCase.safeName,
-            propertyName: header.name.name.camelCase.unsafeName,
+            safeName: name.name.camelCase.safeName,
+            propertyName: name.name.camelCase.unsafeName,
         };
     }
 

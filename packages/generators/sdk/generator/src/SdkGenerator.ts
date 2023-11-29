@@ -19,6 +19,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
+import { RequestWrapperExampleGenerator } from "@fern-typescript/request-wrapper-example-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
@@ -112,6 +113,7 @@ export class SdkGenerator {
     private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
     private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
     private requestWrapperGenerator: RequestWrapperGenerator;
+    private requestWrapperExampleGenerator: RequestWrapperExampleGenerator;
     private sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
     private sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
     private environmentsGenerator: EnvironmentsGenerator;
@@ -175,6 +177,7 @@ export class SdkGenerator {
             namespaceExport,
             packageResolver: this.packageResolver,
         });
+        this.requestWrapperExampleGenerator = new RequestWrapperExampleGenerator();
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
@@ -560,6 +563,7 @@ export class SdkGenerator {
             endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
             sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
             endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
+            requestWrapperExampleGenerator: this.requestWrapperExampleGenerator,
             requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
             requestWrapperGenerator: this.requestWrapperGenerator,
             sdkInlinedRequestBodySchemaDeclarationReferencer: this.sdkInlinedRequestBodySchemaDeclarationReferencer,

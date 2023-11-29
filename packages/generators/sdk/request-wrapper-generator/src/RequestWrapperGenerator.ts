@@ -1,4 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
 import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
 
@@ -8,17 +9,20 @@ export declare namespace RequestWrapperGenerator {
             service: HttpService;
             endpoint: HttpEndpoint;
             wrapperName: string;
+            packageId: PackageId;
         }
     }
 }
 
 export class RequestWrapperGenerator {
     public generateRequestWrapper({
+        packageId,
         service,
         endpoint,
         wrapperName,
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
+            packageId,
             service,
             endpoint,
             wrapperName,

@@ -1,5 +1,11 @@
 import { noop } from "@fern-api/core-utils";
-import { FileProperty, HttpEndpoint, HttpRequestBody, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    FileProperty,
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpService,
+    IntermediateRepresentation,
+} from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
     getTextOfTsNode,
