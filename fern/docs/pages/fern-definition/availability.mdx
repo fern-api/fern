@@ -1,0 +1,58 @@
+You can add `availability` to an endpoint, type, or property within your Fern Definition.
+
+Availability can be:
+- `in-development` which means it is being worked on
+- `pre-release` which represents beta 
+- `deprecated` which means it will be removed in the future
+- `generally-available` which means it is stable and available for use
+
+By default, all endpoints, types, and properties are `generally-available`.
+
+## Endpoint 
+
+<CodeBlock title="imdb.yml">
+```diff
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
++     availability: deprecated
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
+```
+</CodeBlock>
+
+
+## Type
+
+<CodeBlock title="imdb.yml">
+```diff
+  Movie:
++   availability: pre-release
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+```
+</CodeBlock>
+
+## Property 
+
+<CodeBlock title="imdb.yml">
+```diff
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
++       availability: in-development
+        type: double
+        docs: The rating scale out of ten stars
+```
+</CodeBlock>
