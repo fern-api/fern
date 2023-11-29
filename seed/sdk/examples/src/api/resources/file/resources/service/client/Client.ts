@@ -26,6 +26,11 @@ export class Service {
 
     /**
      * @throws {@link SeedExamples.NotFoundError}
+     *
+     * @example
+     *     await client.service.getFile("file.txt", {
+     *         xFileApiVersion: "0.0.2"
+     *     })
      */
     public async getFile(
         filename: string,

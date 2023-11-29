@@ -1,4 +1,5 @@
-import { HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
@@ -15,4 +16,13 @@ export interface RequestParameter {
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
     ) => ts.Statement[];
+    generateExample({
+        context,
+        example,
+        opts,
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression | undefined;
 }

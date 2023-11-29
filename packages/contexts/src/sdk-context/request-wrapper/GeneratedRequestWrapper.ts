@@ -1,7 +1,14 @@
-import { HttpHeader, InlinedRequestBodyProperty, NameAndWireValue, QueryParameter } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    HttpHeader,
+    InlinedRequestBodyProperty,
+    NameAndWireValue,
+    QueryParameter,
+} from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";
+import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample";
 import { RequestWrapperNonBodyProperty } from "./types";
 
 export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
@@ -23,4 +30,5 @@ export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
     }) => ts.Statement[];
+    generateExample: (example: ExampleEndpointCall) => GeneratedRequestWrapperExample | undefined;
 }

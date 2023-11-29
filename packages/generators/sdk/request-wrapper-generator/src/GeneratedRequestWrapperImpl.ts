@@ -1,5 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import {
+    ExampleEndpointCall,
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
@@ -12,8 +13,14 @@ import {
     TypeReference,
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
+import {
+    GeneratedRequestWrapper,
+    GeneratedRequestWrapperExample,
+    RequestWrapperNonBodyProperty,
+    SdkContext,
+} from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
+import { RequestWrapperExampleGenerator } from "./RequestWrapperExampleGenerator";
 
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {
@@ -119,55 +126,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
     }
 
+    public generateExample(example: ExampleEndpointCall): GeneratedRequestWrapperExample {
+        const exampleGenerator = new RequestWrapperExampleGenerator();
+        return exampleGenerator.generateExample({
+            bodyPropertyName: this.getReferencedBodyPropertyName(),
+            example,
+            packageId: this.packageId,
+            endpointName: this.endpoint.name,
+        });
+    }
+
     private getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
-        if (this.endpoint.requestBody == null) {
-            for (const example of this.endpoint.examples) {
-                const generatedExample = context.requestWrapper.getGeneratedExample({
-                    exampleHeaders: [...example.serviceHeaders, ...example.endpointHeaders],
-                    endpointName: this.endpoint.name,
-                    exampleBody: undefined,
-                    exampleQueryParameters: example.queryParameters,
-                    packageId: this.packageId,
-                });
-                const exampleStr =
-                    "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
-                groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
-            }
-        } else {
-            this.endpoint.requestBody._visit({
-                reference: () => {
-                    for (const example of this.endpoint.examples) {
-                        if (example.request?.type !== "reference") {
-                            continue;
-                        }
-                        const generatedExample = context.type.getGeneratedExample(example.request);
-                        const exampleStr =
-                            "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
-                        groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
-                    }
-                },
-                inlinedRequestBody: () => {
-                    for (const example of this.endpoint.examples) {
-                        if (example.request?.type !== "inlinedRequestBody") {
-                            continue;
-                        }
-                        const generatedExample = context.requestWrapper.getGeneratedExample({
-                            exampleHeaders: [...example.serviceHeaders, ...example.endpointHeaders],
-                            endpointName: this.endpoint.name,
-                            exampleBody: example.request,
-                            exampleQueryParameters: example.queryParameters,
-                            packageId: this.packageId,
-                        });
-                        const exampleStr =
-                            "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
-                        groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
-                    }
-                },
-                bytes: () => undefined,
-                fileUpload: () => undefined,
-                _other: () => undefined,
-            });
+
+        for (const example of this.endpoint.examples) {
+            const generatedExample = this.generateExample(example);
+            const exampleStr = "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
+            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
         }
 
         if (groups.length === 0) {

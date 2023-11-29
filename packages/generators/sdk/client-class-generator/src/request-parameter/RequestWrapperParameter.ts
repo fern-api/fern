@@ -1,4 +1,5 @@
-import { HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
@@ -104,6 +105,19 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         } else {
             return ts.factory.createIdentifier(this.getRequestParameterName());
         }
+    }
+
+    public generateExample({
+        context,
+        example,
+        opts,
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression | undefined {
+        const requestWrapperExample = this.getGeneratedRequestWrapper(context).generateExample(example);
+        return requestWrapperExample?.build(context, opts);
     }
 
     public getAllQueryParameters(context: SdkContext): QueryParameter[] {

@@ -18,7 +18,6 @@ import {
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
-import { RequestWrapperExampleGenerator } from "@fern-typescript/request-wrapper-example-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
@@ -75,7 +74,6 @@ export declare namespace SdkContextImpl {
         sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         requestWrapperGenerator: RequestWrapperGenerator;
-        requestWrapperExampleGenerator: RequestWrapperExampleGenerator;
         sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
         sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
@@ -132,7 +130,6 @@ export class SdkContextImpl implements SdkContext {
         endpointErrorUnionGenerator,
         sdkEndpointTypeSchemasGenerator,
         requestWrapperDeclarationReferencer,
-        requestWrapperExampleGenerator,
         requestWrapperGenerator,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         sdkInlinedRequestBodySchemaGenerator,
@@ -211,7 +208,6 @@ export class SdkContextImpl implements SdkContext {
         this.requestWrapper = new RequestWrapperContextImpl({
             requestWrapperDeclarationReferencer,
             requestWrapperGenerator,
-            requestWrapperExampleGenerator,
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,

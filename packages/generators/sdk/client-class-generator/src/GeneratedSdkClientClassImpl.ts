@@ -278,6 +278,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
+    public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.PropertyAccessExpression {
+        // TODO(dsinghvi): HACKHACK, this doesn't work with nested packages and shouldnt be hardcoded
+        const lastFernFilepathPart =
+            this.package_.fernFilepath.allParts[this.package_.fernFilepath.allParts.length - 1];
+        if (lastFernFilepathPart == null) {
+            throw new Error("Cannot generate wrapped service because FernFilepath is empty");
+        }
+        return ts.factory.createPropertyAccessExpression(
+            args.referenceToRootClient,
+            ts.factory.createIdentifier(lastFernFilepathPart.camelCase.unsafeName)
+        );
+    }
+
     public instantiate({
         referenceToClient,
         referenceToOptions,

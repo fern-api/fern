@@ -1,5 +1,5 @@
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher } from "@fern-typescript/commons";
+import { Fetcher, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
@@ -24,6 +24,8 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         includeSerdeLayer: boolean;
     }
 }
+
+const EXAMPLE_PREFIX = "    ";
 
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
@@ -82,7 +84,33 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             return undefined;
         }
 
-        return lines.join("\n");
+        const groups: string[] = [lines.join("\n")];
+        for (const example of this.endpoint.examples) {
+            const exampleParameters = this.request.getExampleEndpointParameters({
+                context,
+                example,
+                opts: { isForComment: true },
+            });
+            if (exampleParameters == null) {
+                continue;
+            }
+            const generatedExample = ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        this.generatedSdkClientClass.accessFromRootClient({
+                            referenceToRootClient: ts.factory.createIdentifier("client"),
+                        }),
+                        ts.factory.createIdentifier(this.endpoint.name.camelCase.safeName)
+                    ),
+                    undefined,
+                    exampleParameters
+                )
+            );
+            const exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
+            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+        }
+
+        return groups.join("\n\n");
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

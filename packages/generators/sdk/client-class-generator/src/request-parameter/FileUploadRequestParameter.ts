@@ -23,6 +23,10 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         throw new Error("Cannot get reference to request body in file upload request");
     }
 
+    public generateExample(): ts.Expression | undefined {
+        return undefined;
+    }
+
     public getAllQueryParameters(context: SdkContext): QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }

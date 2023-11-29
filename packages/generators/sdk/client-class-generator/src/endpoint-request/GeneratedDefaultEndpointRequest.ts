@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    ExampleEndpointCall,
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
@@ -8,7 +9,7 @@ import {
     SdkRequest,
     SdkRequestShape,
 } from "@fern-fern/ir-sdk/api";
-import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
@@ -102,6 +103,38 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
         return parameters;
+    }
+
+    public getExampleEndpointParameters({
+        context,
+        example,
+        opts,
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression[] | undefined {
+        const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
+        const result: ts.Expression[] = [];
+        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+            const exampleParameter = exampleParameters.find(
+                (param) => param.name.originalName === pathParameter.name.originalName
+            );
+            if (exampleParameter == null) {
+                result.push(ts.factory.createIdentifier("undefined"));
+            } else {
+                const generatedExample = context.type.getGeneratedExample(exampleParameter.value);
+                result.push(generatedExample.build(context, opts));
+            }
+        }
+        if (this.requestParameter != null) {
+            const requestParameterExample = this.requestParameter.generateExample({ context, example, opts });
+            if (requestParameterExample == null) {
+                return undefined;
+            }
+            result.push(requestParameterExample);
+        }
+        return result;
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {

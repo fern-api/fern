@@ -157,10 +157,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/generators/sdk/generic-sdk-error-generators"\
       },\
       {\
-        "name": "@fern-typescript/request-wrapper-example-generator",\
-        "reference": "workspace:packages/generators/sdk/request-wrapper-example-generator"\
-      },\
-      {\
         "name": "@fern-typescript/request-wrapper-generator",\
         "reference": "workspace:packages/generators/sdk/request-wrapper-generator"\
       },\
@@ -211,7 +207,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/form-data-utils", ["workspace:packages/core-utilities/form-data-utils"]],\
       ["@fern-typescript/generic-express-error-generators", ["workspace:packages/generators/express/generic-express-error-generators"]],\
       ["@fern-typescript/generic-sdk-error-generators", ["workspace:packages/generators/sdk/generic-sdk-error-generators"]],\
-      ["@fern-typescript/request-wrapper-example-generator", ["workspace:packages/generators/sdk/request-wrapper-example-generator"]],\
       ["@fern-typescript/request-wrapper-generator", ["workspace:packages/generators/sdk/request-wrapper-generator"]],\
       ["@fern-typescript/resolvers", ["workspace:packages/resolvers"]],\
       ["@fern-typescript/sdk-client-class-generator", ["workspace:packages/generators/sdk/client-class-generator"]],\
@@ -4188,30 +4183,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-typescript/request-wrapper-example-generator", [\
-        ["workspace:packages/generators/sdk/request-wrapper-example-generator", {\
-          "packageLocation": "./packages/generators/sdk/request-wrapper-example-generator/",\
-          "packageDependencies": [\
-            ["@fern-typescript/request-wrapper-example-generator", "workspace:packages/generators/sdk/request-wrapper-example-generator"],\
-            ["@babel/core", "npm:7.19.1"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.3088"],\
-            ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.52.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-typescript/request-wrapper-generator", [\
         ["workspace:packages/generators/sdk/request-wrapper-generator", {\
           "packageLocation": "./packages/generators/sdk/request-wrapper-generator/",\
@@ -4380,7 +4351,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/endpoint-error-union-generator", "workspace:packages/generators/sdk/endpoint-error-union-generator"],\
             ["@fern-typescript/environments-generator", "workspace:packages/generators/sdk/environments-generator"],\
             ["@fern-typescript/generic-sdk-error-generators", "workspace:packages/generators/sdk/generic-sdk-error-generators"],\
-            ["@fern-typescript/request-wrapper-example-generator", "workspace:packages/generators/sdk/request-wrapper-example-generator"],\
             ["@fern-typescript/request-wrapper-generator", "workspace:packages/generators/sdk/request-wrapper-generator"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@fern-typescript/sdk-client-class-generator", "workspace:packages/generators/sdk/client-class-generator"],\

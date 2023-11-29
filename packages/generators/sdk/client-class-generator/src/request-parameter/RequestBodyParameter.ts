@@ -41,6 +41,10 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         throw new Error("Cannot reference query parameter because request is not wrapped");
     }
 
+    public generateExample(): ts.Expression | undefined {
+        return undefined;
+    }
+
     protected getParameterType(context: SdkContext): { type: ts.TypeNode; hasQuestionToken: boolean } {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return {

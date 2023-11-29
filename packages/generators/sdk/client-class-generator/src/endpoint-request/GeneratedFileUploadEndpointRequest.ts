@@ -87,6 +87,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         }
     }
 
+    public getExampleEndpointParameters(): ts.Expression[] | undefined {
+        return undefined;
+    }
+
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const property of this.requestBody.properties) {

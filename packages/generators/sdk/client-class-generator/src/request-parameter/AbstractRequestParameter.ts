@@ -1,5 +1,12 @@
-import { HttpEndpoint, HttpHeader, HttpService, QueryParameter, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import {
+    ExampleEndpointCall,
+    HttpEndpoint,
+    HttpHeader,
+    HttpService,
+    QueryParameter,
+    SdkRequest,
+} from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { RequestParameter } from "./RequestParameter";
@@ -52,6 +59,15 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         queryParamSetter: (value: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[];
+    public abstract generateExample({
+        context,
+        example,
+        opts,
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression | undefined;
     protected abstract getParameterType(contxt: SdkContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
