@@ -1,6 +1,6 @@
 ---
-name: Improve to Fern's documentation
-about: 'Suggest a change that makes docs.buildwithfern.com more helpful'
+name: Documentation improvement
+about: 'Suggest a change to Fern's documentation docs.buildwithfern.com'
 title: ''
 labels: ''
 assignees: ''

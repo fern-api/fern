@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project, which include changes to the CLI, code generators, and Fern Docs product
+about: 'Let us know a feature you would want in Fern'
 title: ''
 labels: ''
 assignees: ''
