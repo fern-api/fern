@@ -33,12 +33,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     public async run(pathToConfig: string): Promise<void> {
         const configStr = await readFile(pathToConfig);
         const rawConfig = JSON.parse(configStr.toString());
-        const config = await GeneratorExecParsing.GeneratorConfig.parseOrThrow({
-            ...rawConfig,
-            // in this version of the fiddle client, it requires unknown
-            // properties to be present
-            customConfig: rawConfig.customConfig ?? {},
-        });
+        const config = await GeneratorExecParsing.GeneratorConfig.parseOrThrow(
+            {
+                ...rawConfig,
+                // in this version of the fiddle client, it requires unknown
+                // properties to be present
+                customConfig: rawConfig.customConfig ?? {},
+            },
+            {
+                allowUnknownKeys: true,
+            }
+        );
         const generatorNotificationService =
             config.environment.type === "remote" ? new GeneratorNotificationServiceImpl(config.environment) : undefined;
 
