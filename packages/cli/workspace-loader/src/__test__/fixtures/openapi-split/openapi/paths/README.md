@@ -16,7 +16,7 @@ You can adopt any organization you wish.  We have some tips for organizing paths
 
 Use a predefined "path separator" and keep all of your path files in the top level of the `paths` folder.
 
-```
+```yaml
 ├── echo.yaml
 ├── path-item-with-examples.yaml
 ├── path-item.yaml
@@ -32,7 +32,6 @@ In addition, Redocly recommends placing path parameters within `{}` curly braces
 * Quickly see a list of all paths.  Many people think in terms of the "number" of "endpoints" (paths), and not the "number" of "operations" (paths * http methods).
 
 * Only the "file-per-path" option is semantically correct with the OpenAPI Specification 3.0.2.  However, Redocly's openapi-cli will build valid bundles for any of the other options too.
-
 
 #### Drawbacks
 

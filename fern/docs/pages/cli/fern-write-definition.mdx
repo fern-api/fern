@@ -1,14 +1,22 @@
 `fern write-definition` will convert your OpenAPI specification into a Fern Definition. You'll see a new folder called `definition` created.
 
+When successfully executed, this command will not produce any output, indicating it has run without issues.
+
+## Usage
+
+```bash
+fern write-definition
 ```
-fern/
-├─ fern.config.json
-├─ generators.yml
-└─ openapi/
-  └─ openapi.json
-└─ definition/ <--- your Fern Definition
-  └─ api.yml
-  └─ __package__.yml
+
+```diff
+  fern/
+  ├─ fern.config.json
+  ├─ generators.yml
+  └─ openapi/
+    └─ openapi.json
++ └─ definition/ <--- your Fern Definition
+    └─ api.yml
+    └─ __package__.yml
 ```
 
 When you have an `openapi` folder and a `definition` folder, Fern defaults to reading your OpenAPI spec. Remove the `openapi` folder if you'd like to use your Fern Definition as an input to Fern's generators.

@@ -1024,6 +1024,7 @@ exports[`generate IR 1`] = `
       "type_types/object:ObjectWithRequiredField",
       "type_types/enum:WeatherReport",
       "type_types/object:ObjectWithOptionalField",
+      "type_types/object:ObjectWithMapOfMap",
       "type_types/object:NestedObjectWithOptionalField",
       "type_types/object:NestedObjectWithRequiredField",
       "type_types/union:Animal",
@@ -3106,6 +3107,102 @@ exports[`generate IR 1`] = `
                 "requestBodyType": {
                   "_type": "named",
                   "value": "type_types/object:ObjectWithRequiredField",
+                },
+                "type": "typeReference",
+              },
+            },
+          },
+        },
+        {
+          "allPathParameters": [],
+          "auth": true,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "/object/get-and-return-with-map-of-map",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_endpoints/object.getAndReturnWithMapOfMap",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "getAndReturnWithMapOfMap",
+              "unsafeName": "getAndReturnWithMapOfMap",
+            },
+            "originalName": "getAndReturnWithMapOfMap",
+            "pascalCase": {
+              "safeName": "GetAndReturnWithMapOfMap",
+              "unsafeName": "GetAndReturnWithMapOfMap",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_AND_RETURN_WITH_MAP_OF_MAP",
+              "unsafeName": "GET_AND_RETURN_WITH_MAP_OF_MAP",
+            },
+            "snakeCase": {
+              "safeName": "get_and_return_with_map_of_map",
+              "unsafeName": "get_and_return_with_map_of_map",
+            },
+          },
+          "path": {
+            "head": "/get-and-return-with-map-of-map",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "docs": null,
+            "requestBodyType": {
+              "_type": "named",
+              "value": "type_types/object:ObjectWithMapOfMap",
+            },
+            "type": "reference",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "value": "type_types/object:ObjectWithMapOfMap",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "type": "justRequestBody",
+              "value": {
+                "contentType": null,
+                "docs": null,
+                "requestBodyType": {
+                  "_type": "named",
+                  "value": "type_types/object:ObjectWithMapOfMap",
                 },
                 "type": "typeReference",
               },
@@ -7987,6 +8084,7 @@ exports[`generate IR 1`] = `
       "types": [
         "type_types/object:ObjectWithOptionalField",
         "type_types/object:ObjectWithRequiredField",
+        "type_types/object:ObjectWithMapOfMap",
         "type_types/object:NestedObjectWithOptionalField",
         "type_types/object:NestedObjectWithRequiredField",
       ],
@@ -8800,6 +8898,172 @@ exports[`generate IR 1`] = `
             "valueType": {
               "_type": "named",
               "value": "type_types/object:ObjectWithOptionalField",
+            },
+          },
+        ],
+      },
+    },
+    "type_types/object:ObjectWithMapOfMap": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "object",
+                "unsafeName": "object",
+              },
+              "originalName": "object",
+              "pascalCase": {
+                "safeName": "Object",
+                "unsafeName": "Object",
+              },
+              "screamingSnakeCase": {
+                "safeName": "OBJECT",
+                "unsafeName": "OBJECT",
+              },
+              "snakeCase": {
+                "safeName": "object",
+                "unsafeName": "object",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "object",
+              "unsafeName": "object",
+            },
+            "originalName": "object",
+            "pascalCase": {
+              "safeName": "Object",
+              "unsafeName": "Object",
+            },
+            "screamingSnakeCase": {
+              "safeName": "OBJECT",
+              "unsafeName": "OBJECT",
+            },
+            "snakeCase": {
+              "safeName": "object",
+              "unsafeName": "object",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "objectWithMapOfMap",
+            "unsafeName": "objectWithMapOfMap",
+          },
+          "originalName": "ObjectWithMapOfMap",
+          "pascalCase": {
+            "safeName": "ObjectWithMapOfMap",
+            "unsafeName": "ObjectWithMapOfMap",
+          },
+          "screamingSnakeCase": {
+            "safeName": "OBJECT_WITH_MAP_OF_MAP",
+            "unsafeName": "OBJECT_WITH_MAP_OF_MAP",
+          },
+          "snakeCase": {
+            "safeName": "object_with_map_of_map",
+            "unsafeName": "object_with_map_of_map",
+          },
+        },
+        "typeId": "type_types/object:ObjectWithMapOfMap",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "map",
+                  "unsafeName": "map",
+                },
+                "originalName": "map",
+                "pascalCase": {
+                  "safeName": "Map",
+                  "unsafeName": "Map",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MAP",
+                  "unsafeName": "MAP",
+                },
+                "snakeCase": {
+                  "safeName": "map",
+                  "unsafeName": "map",
+                },
+              },
+              "wireValue": "map",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "map",
+                "keyType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+                "valueType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "map",
+                    "keyType": {
+                      "_type": "primitive",
+                      "primitive": "STRING",
+                    },
+                    "valueType": {
+                      "_type": "primitive",
+                      "primitive": "STRING",
+                    },
+                  },
+                },
+              },
             },
           },
         ],
