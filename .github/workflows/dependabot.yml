@@ -1,5 +1,10 @@
 name: dependabot
-on: pull_request
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'fern/docs/**'
+      - 'fern/docs.yml'
 
 permissions:
   contents: write
