@@ -54,7 +54,7 @@ We can mark types for different audiences. In this example, the `Email` type is 
 Email: 
   properties:
     subject: string
-    body: string
+    body: optional<string>
   audiences: # <---
     - internal
     - beta
@@ -72,7 +72,7 @@ Email:
     subject: string
     body: optional<string>
     to: 
-      type: optional<string>
+      type: string
       docs: The recipient of the email
       audiences: # <---
         - beta
