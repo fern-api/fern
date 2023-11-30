@@ -550,10 +550,6 @@ function convertSingleUnionType({
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
             }
-            const resolvedType = typeResolver.resolveTypeOrThrow({
-                type: rawValueType,
-                file: fileContainingType
-            });
             return {
                 wireDiscriminantValue,
                 shape: ExampleSingleUnionTypeProperties.singleProperty(
@@ -562,8 +558,7 @@ function convertSingleUnionType({
                         rawTypeBeingExemplified: rawValueType,
                         typeResolver,
                         exampleResolver,
-                        fileContainingRawTypeReference:
-                            resolvedType._type === "named" ? resolvedType.file : fileContainingType,
+                        fileContainingRawTypeReference: fileContainingType,
                         fileContainingExample
                     })
                 )
