@@ -74,9 +74,8 @@ export async function testWorkspaceFixtures({
     language,
     fixtures,
     docker,
-    dockerCommand,
     scripts,
-    logLevel,
+    taskContextFactory,
     numDockers
 }: {
     workspace: SeedWorkspace;
@@ -88,24 +87,10 @@ export async function testWorkspaceFixtures({
     dockerCommand: string | undefined;
     scripts: ScriptConfig[] | undefined;
     logLevel: LogLevel;
+    taskContextFactory: TaskContextFactory;
     numDockers: number;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
-    const taskContextFactory = new TaskContextFactory(logLevel);
-
-    if (dockerCommand != null) {
-        const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
-        const spaceDelimitedCommand = dockerCommand.split(" ");
-        await loggingExeca(
-            workspaceTaskContext.logger,
-            spaceDelimitedCommand[0] ?? dockerCommand,
-            spaceDelimitedCommand.slice(1),
-            {
-                cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
-                doNotPipeOutput: false
-            }
-        );
-    }
 
     const testCases = [];
     for (const fixture of fixtures) {
