@@ -1,5 +1,11 @@
 name: ci
-on: [push]
+
+on:
+  push:
+    paths-ignore:
+      - '.github/**'
+      - 'fern/docs/**'
+      - 'fern/docs.yml'
 
 jobs:
   lint:
