@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
-    "dockerode": "^3.3.1"
+    "dockerode": "^3.3.1",
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@types/dockerode": "^3.3.9",

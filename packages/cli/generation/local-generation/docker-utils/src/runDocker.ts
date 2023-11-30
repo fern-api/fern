@@ -1,12 +1,19 @@
 import Docker from "dockerode";
+import { writeFile } from "fs/promises";
 import { Writable } from "stream";
+import tmp from "tmp-promise";
 
 export declare namespace runDocker {
     export interface Args {
         imageName: string;
         args?: string[];
         binds?: string[];
+        writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
+    }
+
+    export interface Result {
+        logs: string;
     }
 }
 
@@ -14,12 +21,13 @@ export async function runDocker({
     imageName,
     args,
     binds,
+    writeLogsToFile = true,
     removeAfterCompletion = false
 }: runDocker.Args): Promise<void> {
     const docker = new Docker();
-    const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion });
+    const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
     try {
-        await tryRun();
+        const logs = await tryRun();
     } catch (e) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((e as any)?.statusCode === 404) {
@@ -37,19 +45,23 @@ async function tryRunDocker({
     imageName,
     args,
     binds,
-    removeAfterCompletion
+    removeAfterCompletion,
+    writeLogsToFile
 }: {
     docker: Docker;
     imageName: string;
     args?: string[];
     binds?: string[];
     removeAfterCompletion: boolean;
+    writeLogsToFile: boolean;
 }): Promise<void> {
+    let logs = "";
     const [status, container] = await docker.run(
         imageName,
         args != null ? args : [],
         new Writable({
             write(_chunk, _encding, callback) {
+                logs += _chunk.toString();
                 setImmediate(callback);
             }
         }),
@@ -66,8 +78,15 @@ async function tryRunDocker({
     if (status.Error != null) {
         throw status.Error;
     }
+
     if (status.StatusCode !== 0) {
-        throw new Error("Docker exited with a non-zero exit code.");
+        if (writeLogsToFile) {
+            const tmpFile = await tmp.file();
+            await writeFile(tmpFile.path, logs);
+            throw new Error(`Docker exited with a non-zero exit code. Logs here: ${tmpFile.path}`);
+        } else {
+            throw new Error("Docker exited with a non-zero exit code.");
+        }
     }
 }
 
