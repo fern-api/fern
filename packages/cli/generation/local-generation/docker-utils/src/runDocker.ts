@@ -27,7 +27,7 @@ export async function runDocker({
     const docker = new Docker();
     const tryRun = () => tryRunDocker({ docker, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
     try {
-        const logs = await tryRun();
+        await tryRun();
     } catch (e) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if ((e as any)?.statusCode === 404) {
