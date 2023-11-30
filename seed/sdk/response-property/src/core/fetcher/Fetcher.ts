@@ -97,7 +97,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
                 response.status >= 500
             ) {
                 const delay = Math.min(INITIAL_RETRY_DELAY * Math.pow(i, 2), MAX_RETRY_DELAY);
-                response = await new Promise((resolve) => setTimeout(resolve, delay));
+                await new Promise((resolve) => setTimeout(resolve, delay));
+                response = await makeRequest();
             } else {
                 break;
             }
