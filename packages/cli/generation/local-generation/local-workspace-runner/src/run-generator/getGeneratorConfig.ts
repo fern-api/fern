@@ -3,11 +3,13 @@ import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
 
+const DEFAULT_OUTPUT_VERSION = "0.0.1";
+
 export declare namespace getGeneratorConfig {
     export interface Args {
         workspaceName: string;
         organization: string;
-        outputVersion: string;
+        outputVersion?: string | undefined;
         customConfig: unknown;
         generatorInvocation: GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
@@ -24,7 +26,7 @@ export function getGeneratorConfig({
     customConfig,
     workspaceName,
     organization,
-    outputVersion,
+    outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];

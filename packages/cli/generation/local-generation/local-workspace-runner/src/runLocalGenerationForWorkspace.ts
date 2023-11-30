@@ -15,8 +15,6 @@ import tmp, { DirectoryResult } from "tmp-promise";
 import { LocalTaskHandler } from "./LocalTaskHandler";
 import { runGenerator } from "./run-generator/runGenerator";
 
-const DEFAULT_OUTPUT_VERSION = "0.0.1";
-
 export async function runLocalGenerationForWorkspace({
     organization,
     workspace,
@@ -191,7 +189,7 @@ async function writeFilesToDiskAndRunGenerator({
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
         organization,
-        outputVersion: outputVersionOverride ?? DEFAULT_OUTPUT_VERSION,
+        outputVersion: outputVersionOverride,
         keepDocker,
         generatorInvocation
     });

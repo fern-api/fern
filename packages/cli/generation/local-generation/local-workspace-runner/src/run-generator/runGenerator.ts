@@ -10,7 +10,7 @@ export declare namespace runGenerator {
     export interface Args {
         workspaceName: string;
         organization: string;
-        outputVersion: string;
+        outputVersion?: string | undefined;
 
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
