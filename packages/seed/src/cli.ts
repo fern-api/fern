@@ -1,7 +1,10 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
+import path from "path";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { testCustomFixture } from "./commands/test/testCustomFixture";
 import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
 import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
@@ -66,6 +69,23 @@ function addTestCommand(cli: Argv) {
 
             const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
 
+            // build docker iamge
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const dockerCommand = workspace.workspaceConfig.dockerCommand;
+            if (dockerCommand != null) {
+                const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
+                const spaceDelimitedCommand = dockerCommand.split(" ");
+                await loggingExeca(
+                    workspaceTaskContext.logger,
+                    spaceDelimitedCommand[0] ?? dockerCommand,
+                    spaceDelimitedCommand.slice(1),
+                    {
+                        cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
+                        doNotPipeOutput: false
+                    }
+                );
+            }
+
             if (argv.customFixture != null) {
                 await testCustomFixture({
                     pathToFixture: argv.customFixture.startsWith("/")
@@ -90,7 +110,8 @@ function addTestCommand(cli: Argv) {
                     dockerCommand: workspace.workspaceConfig.dockerCommand,
                     scripts: workspace.workspaceConfig.scripts,
                     logLevel: argv["log-level"],
-                    numDockers: argv.parallel
+                    numDockers: argv.parallel,
+                    taskContextFactory
                 });
             }
         }
