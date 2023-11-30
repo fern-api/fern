@@ -25,7 +25,7 @@ export function getGeneratorConfig({
     workspaceName,
     organization,
     outputVersion,
-    absolutePathToSnippet,
+    absolutePathToSnippet
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -45,7 +45,7 @@ export function getGeneratorConfig({
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
-                    version: outputVersion,
+                    version: outputVersion
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
             };
@@ -110,7 +110,7 @@ function newDummyPublishOutputConfig(version: string): FernGeneratorExec.Generat
                     username: ""
                 }
             },
-            version,
+            version
         }),
         path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
     };

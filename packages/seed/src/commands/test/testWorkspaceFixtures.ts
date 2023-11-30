@@ -106,7 +106,10 @@ export async function testWorkspaceFixtures({
                         lock,
                         generatorType,
                         irVersion,
-                        outputVersion: fixtureConfigInstance.outputVersion != null ? fixtureConfigInstance.outputVersion : undefined,
+                        outputVersion:
+                            fixtureConfigInstance.outputVersion != null
+                                ? fixtureConfigInstance.outputVersion
+                                : undefined,
                         language,
                         fixture,
                         docker,
@@ -262,7 +265,7 @@ async function testWithWriteToDisk({
             customConfig,
             taskContext,
             irVersion,
-            outputVersion,
+            outputVersion
         });
         for (const script of scripts ?? []) {
             const scriptFile = await tmp.file();

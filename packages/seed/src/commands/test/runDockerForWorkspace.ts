@@ -22,7 +22,7 @@ export async function runDockerForWorkspace({
     taskContext,
     customConfig,
     irVersion,
-    outputVersion,
+    outputVersion
 }: {
     generatorType: GeneratorType;
     absolutePathToOutput: AbsoluteFilePath;
@@ -64,7 +64,7 @@ export async function runDockerForWorkspace({
         keepDocker: true,
         context: taskContext,
         irVersionOverride: irVersion,
-        outputVersionOverride: outputVersion,
+        outputVersionOverride: outputVersion
     });
 }
 

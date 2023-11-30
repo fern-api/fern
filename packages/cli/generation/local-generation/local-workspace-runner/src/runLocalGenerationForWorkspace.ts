@@ -73,7 +73,7 @@ export async function runLocalGenerationForSeed({
     keepDocker,
     context,
     irVersionOverride,
-    outputVersionOverride,
+    outputVersionOverride
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -193,7 +193,7 @@ async function writeFilesToDiskAndRunGenerator({
         organization,
         outputVersion: outputVersionOverride != null ? outputVersionOverride : DEFAULT_OUTPUT_VERSION,
         keepDocker,
-        generatorInvocation,
+        generatorInvocation
     });
 
     const taskHandler = new LocalTaskHandler({

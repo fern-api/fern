@@ -32,7 +32,7 @@ export async function runGenerator({
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
-    generatorInvocation,
+    generatorInvocation
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
