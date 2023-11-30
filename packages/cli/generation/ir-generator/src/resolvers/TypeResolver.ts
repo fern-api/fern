@@ -47,7 +47,9 @@ export class TypeResolverImpl implements TypeResolver {
     }): RawTypeDeclarationInfo {
         const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file });
         if (declaration == null) {
-            throw new Error("Cannot find declaration of type: " + referenceToNamedType);
+            throw new Error(
+                "Cannot find declaration of type: " + referenceToNamedType + " in file " + file.relativeFilepath
+            );
         }
         return declaration;
     }

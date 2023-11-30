@@ -259,7 +259,7 @@ export function convertTypeReferenceExample({
         },
         named: (named) => {
             const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
-                referenceToNamedType: named,
+                referenceToNamedType: rawTypeBeingExemplified,
                 file: fileContainingRawTypeReference
             });
             const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
@@ -407,32 +407,28 @@ function convertObject({
                               throw new Error("Could not find original type declaration for property: " + wireKey);
                           }
 
-                          try {
-                              const valueExample = convertTypeReferenceExample({
-                                  example: propertyExample,
-                                  fileContainingExample,
-                                  rawTypeBeingExemplified:
-                                      typeof originalTypeDeclaration.rawPropertyType === "string"
-                                          ? originalTypeDeclaration.rawPropertyType
-                                          : originalTypeDeclaration.rawPropertyType.type,
-                                  fileContainingRawTypeReference: originalTypeDeclaration.file,
-                                  typeResolver,
-                                  exampleResolver
-                              });
-                              exampleProperties.push({
-                                  name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                                      name: getPropertyName({
-                                          propertyKey: wireKey,
-                                          property: originalTypeDeclaration.rawPropertyType
-                                      }).name,
-                                      wireValue: wireKey
-                                  }),
-                                  value: valueExample,
-                                  originalTypeDeclaration: originalTypeDeclaration.typeName
-                              });
-                          } catch (e) {
-                              // skip properties that fail to convert (undiscriminated unions)
-                          }
+                          const valueExample = convertTypeReferenceExample({
+                              example: propertyExample,
+                              fileContainingExample,
+                              rawTypeBeingExemplified:
+                                  typeof originalTypeDeclaration.rawPropertyType === "string"
+                                      ? originalTypeDeclaration.rawPropertyType
+                                      : originalTypeDeclaration.rawPropertyType.type,
+                              fileContainingRawTypeReference: originalTypeDeclaration.file,
+                              typeResolver,
+                              exampleResolver
+                          });
+                          exampleProperties.push({
+                              name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                  name: getPropertyName({
+                                      propertyKey: wireKey,
+                                      property: originalTypeDeclaration.rawPropertyType
+                                  }).name,
+                                  wireValue: wireKey
+                              }),
+                              value: valueExample,
+                              originalTypeDeclaration: originalTypeDeclaration.typeName
+                          });
 
                           return exampleProperties;
                       },
@@ -459,15 +455,7 @@ function getOriginalTypeDeclarationForProperty({
     | undefined {
     const rawPropertyType = rawObject.properties?.[wirePropertyKey];
     if (rawPropertyType != null) {
-        const resolvedType = typeResolver.resolveTypeOrThrow({
-            type: typeof rawPropertyType === "string" ? rawPropertyType : rawPropertyType.type,
-            file
-        });
-        if (resolvedType._type === "named") {
-            return { typeName, rawPropertyType, file: resolvedType.file };
-        } else {
-            return { typeName, rawPropertyType, file };
-        }
+        return { typeName, rawPropertyType, file };
     } else {
         return getOriginalTypeDeclarationForPropertyFromExtensions({
             wirePropertyKey,
