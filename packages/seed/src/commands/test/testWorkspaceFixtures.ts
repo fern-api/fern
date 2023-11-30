@@ -266,7 +266,7 @@ async function testWithWriteToDisk({
         });
         for (const script of scripts ?? []) {
             const scriptFile = await tmp.file();
-            await writeFile(scriptFile.path, ["cd generated", ...script.commands].join("\n"));
+            await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
             taskContext.logger.info(`Running script ${scriptFile.path}`);
             const command = await loggingExeca(
                 taskContext.logger,
@@ -278,8 +278,8 @@ async function testWithWriteToDisk({
                     "-v",
                     `${scriptFile.path}:/test.sh`,
                     script.docker,
-                    "bash",
-                    "test.sh"
+                    "/bin/sh",
+                    "/test.sh"
                 ],
                 {
                     doNotPipeOutput: true
