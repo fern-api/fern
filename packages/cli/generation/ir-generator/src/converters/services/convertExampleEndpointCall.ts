@@ -335,7 +335,7 @@ function convertExampleRequestBody({
                             : originalTypeDeclaration.rawPropertyType.type,
                     typeResolver,
                     exampleResolver,
-                    fileContainingRawTypeReference: file,
+                    fileContainingRawTypeReference: originalTypeDeclaration.file,
                     fileContainingExample: file
                 }),
                 originalTypeDeclaration: originalTypeDeclaration.typeName

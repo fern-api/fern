@@ -459,7 +459,15 @@ function getOriginalTypeDeclarationForProperty({
     | undefined {
     const rawPropertyType = rawObject.properties?.[wirePropertyKey];
     if (rawPropertyType != null) {
-        return { typeName, rawPropertyType, file };
+        const resolvedType = typeResolver.resolveTypeOrThrow({
+            type: typeof rawPropertyType === "string" ? rawPropertyType : rawPropertyType.type,
+            file
+        });
+        if (resolvedType._type === "named") {
+            return { typeName, rawPropertyType, file: resolvedType.file };
+        } else {
+            return { typeName, rawPropertyType, file };
+        }
     } else {
         return getOriginalTypeDeclarationForPropertyFromExtensions({
             wirePropertyKey,
