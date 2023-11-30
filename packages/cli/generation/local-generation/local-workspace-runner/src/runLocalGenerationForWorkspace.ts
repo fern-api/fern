@@ -48,6 +48,7 @@ export async function runLocalGenerationForWorkspace({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: undefined,
+                        outputVersionOverride: undefined,
                         writeSnippets: false
                     });
                     interactiveTaskContext.logger.info(
@@ -69,7 +70,8 @@ export async function runLocalGenerationForSeed({
     generatorGroup,
     keepDocker,
     context,
-    irVersionOverride
+    irVersionOverride,
+    outputVersionOverride
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -77,6 +79,7 @@ export async function runLocalGenerationForSeed({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputVersionOverride: string | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -98,6 +101,7 @@ export async function runLocalGenerationForSeed({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
+                        outputVersionOverride,
                         writeSnippets: true
                     });
                     interactiveTaskContext.logger.info(
@@ -132,6 +136,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker,
     context,
     irVersionOverride,
+    outputVersionOverride,
     writeSnippets
 }: {
     organization: string;
@@ -143,6 +148,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputVersionOverride: string | undefined;
     writeSnippets: boolean;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
@@ -183,6 +189,7 @@ async function writeFilesToDiskAndRunGenerator({
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
         organization,
+        outputVersion: outputVersionOverride,
         keepDocker,
         generatorInvocation
     });

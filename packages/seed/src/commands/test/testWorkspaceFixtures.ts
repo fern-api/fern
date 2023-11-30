@@ -106,6 +106,7 @@ export async function testWorkspaceFixtures({
                         lock,
                         generatorType,
                         irVersion,
+                        outputVersion: fixtureConfigInstance.outputVersion,
                         language,
                         fixture,
                         docker,
@@ -128,6 +129,7 @@ export async function testWorkspaceFixtures({
                     absolutePathToWorkspace,
                     lock,
                     irVersion,
+                    outputVersion: undefined,
                     generatorType,
                     language,
                     fixture,
@@ -157,6 +159,7 @@ export async function acquireLocksAndRunTest({
     lock,
     generatorType,
     irVersion,
+    outputVersion,
     language,
     fixture,
     docker,
@@ -169,6 +172,7 @@ export async function acquireLocksAndRunTest({
     lock: Semaphore;
     generatorType: GeneratorType;
     irVersion: string | undefined;
+    outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
     fixture: string;
     docker: ParsedDockerName;
@@ -184,6 +188,7 @@ export async function acquireLocksAndRunTest({
     const result = await testWithWriteToDisk({
         fixture,
         irVersion,
+        outputVersion,
         language,
         docker,
         customConfig,
@@ -202,6 +207,7 @@ async function testWithWriteToDisk({
     generatorType,
     fixture,
     irVersion,
+    outputVersion,
     language,
     docker,
     customConfig,
@@ -212,6 +218,7 @@ async function testWithWriteToDisk({
 }: {
     fixture: string;
     irVersion: string | undefined;
+    outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     generatorType: GeneratorType;
@@ -254,7 +261,8 @@ async function testWithWriteToDisk({
             generatorType,
             customConfig,
             taskContext,
-            irVersion
+            irVersion,
+            outputVersion
         });
         for (const script of scripts ?? []) {
             const scriptFile = await tmp.file();

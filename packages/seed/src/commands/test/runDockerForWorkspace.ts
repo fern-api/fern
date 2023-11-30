@@ -21,7 +21,8 @@ export async function runDockerForWorkspace({
     workspace,
     taskContext,
     customConfig,
-    irVersion
+    irVersion,
+    outputVersion
 }: {
     generatorType: GeneratorType;
     absolutePathToOutput: AbsoluteFilePath;
@@ -31,6 +32,7 @@ export async function runDockerForWorkspace({
     taskContext: TaskContext;
     customConfig: unknown;
     irVersion?: string;
+    outputVersion?: string;
 }): Promise<void> {
     const publishInfo = language != null ? getPublishInfo(language) : undefined;
 
@@ -61,7 +63,8 @@ export async function runDockerForWorkspace({
         generatorGroup,
         keepDocker: true,
         context: taskContext,
-        irVersionOverride: irVersion
+        irVersionOverride: irVersion,
+        outputVersionOverride: outputVersion
     });
 }
 

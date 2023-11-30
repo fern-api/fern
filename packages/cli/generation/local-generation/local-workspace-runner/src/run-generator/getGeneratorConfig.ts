@@ -3,10 +3,13 @@ import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
 
+const DEFAULT_OUTPUT_VERSION = "0.0.1";
+
 export declare namespace getGeneratorConfig {
     export interface Args {
         workspaceName: string;
         organization: string;
+        outputVersion?: string | undefined;
         customConfig: unknown;
         generatorInvocation: GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
@@ -23,15 +26,16 @@ export function getGeneratorConfig({
     customConfig,
     workspaceName,
     organization,
+    outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: () => {
-            return DUMMY_PUBLISH_OUTPUT_CONFIG;
+            return newDummyPublishOutputConfig(outputVersion);
         },
         publishV2: () => {
-            return DUMMY_PUBLISH_OUTPUT_CONFIG;
+            return newDummyPublishOutputConfig(outputVersion);
         },
         downloadFiles: () => {
             return {
@@ -43,7 +47,7 @@ export function getGeneratorConfig({
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
-                    version: "0.0.1"
+                    version: outputVersion
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
             };
@@ -72,42 +76,44 @@ export function getGeneratorConfig({
     };
 }
 
-const DUMMY_PUBLISH_OUTPUT_CONFIG = {
-    mode: FernGeneratorExec.OutputMode.publish({
-        registries: {
-            maven: {
-                group: "",
-                password: "",
-                registryUrl: "",
-                username: ""
+function newDummyPublishOutputConfig(version: string): FernGeneratorExec.GeneratorOutputConfig {
+    return {
+        mode: FernGeneratorExec.OutputMode.publish({
+            registries: {
+                maven: {
+                    group: "",
+                    password: "",
+                    registryUrl: "",
+                    username: ""
+                },
+                npm: {
+                    registryUrl: "",
+                    scope: "",
+                    token: ""
+                }
             },
-            npm: {
-                registryUrl: "",
-                scope: "",
-                token: ""
-            }
-        },
-        publishTarget: undefined,
-        registriesV2: {
-            maven: {
-                password: "",
-                registryUrl: "",
-                username: "",
-                coordinate: ""
+            publishTarget: undefined,
+            registriesV2: {
+                maven: {
+                    password: "",
+                    registryUrl: "",
+                    username: "",
+                    coordinate: ""
+                },
+                npm: {
+                    registryUrl: "",
+                    token: "",
+                    packageName: ""
+                },
+                pypi: {
+                    packageName: "",
+                    password: "",
+                    registryUrl: "",
+                    username: ""
+                }
             },
-            npm: {
-                registryUrl: "",
-                token: "",
-                packageName: ""
-            },
-            pypi: {
-                packageName: "",
-                password: "",
-                registryUrl: "",
-                username: ""
-            }
-        },
-        version: "0.0.1"
-    }),
-    path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
-};
+            version
+        }),
+        path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
+    };
+}

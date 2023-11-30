@@ -41,6 +41,7 @@ export async function testCustomFixture({
         lock,
         generatorType,
         irVersion,
+        outputVersion: undefined,
         language,
         fixture: "custom",
         docker,
