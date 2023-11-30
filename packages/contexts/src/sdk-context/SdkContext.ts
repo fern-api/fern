@@ -11,6 +11,7 @@ import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-s
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 
 export interface SdkContext extends ModelContext {
+    namespaceExport: string | undefined;
     endpointErrorUnion: EndpointErrorUnionContext;
     environments: EnvironmentsContext;
     genericAPISdkError: GenericAPISdkErrorContext;

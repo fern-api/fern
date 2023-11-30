@@ -236,7 +236,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/seed-cli", "npm:0.15.6-8-gde257e6d5"],\
+            ["@fern-api/seed-cli", "npm:0.15.6-11-g299c4e433"],\
             ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.9"],\
@@ -3544,10 +3544,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/seed-cli", [\
-        ["npm:0.15.6-8-gde257e6d5", {\
-          "packageLocation": "./.yarn/cache/@fern-api-seed-cli-npm-0.15.6-8-gde257e6d5-dfaf255d04-bee6bda140.zip/node_modules/@fern-api/seed-cli/",\
+        ["npm:0.15.6-11-g299c4e433", {\
+          "packageLocation": "./.yarn/cache/@fern-api-seed-cli-npm-0.15.6-11-g299c4e433-fe786517eb-594bc6176b.zip/node_modules/@fern-api/seed-cli/",\
           "packageDependencies": [\
-            ["@fern-api/seed-cli", "npm:0.15.6-8-gde257e6d5"]\
+            ["@fern-api/seed-cli", "npm:0.15.6-11-g299c4e433"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4246,10 +4246,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@types/jest", "npm:28.1.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.52.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
@@ -8598,7 +8600,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/seed-cli", "npm:0.15.6-8-gde257e6d5"],\
+            ["@fern-api/seed-cli", "npm:0.15.6-11-g299c4e433"],\
             ["@types/is-ci", "npm:3.0.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.9"],\

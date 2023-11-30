@@ -5,7 +5,7 @@ import {
     TypeDeclaration,
     TypeReference,
 } from "@fern-fern/ir-sdk/api";
-import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
+import { ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -19,6 +19,8 @@ import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDec
 
 export declare namespace TypeContextImpl {
     export interface Init {
+        npmPackage: NpmPackage | undefined;
+        isForSnippet: boolean;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         typeResolver: TypeResolver;
@@ -40,8 +42,12 @@ export class TypeContextImpl implements TypeContext {
     private typeGenerator: TypeGenerator;
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     private includeSerdeLayer: boolean;
+    private isForSnippet: boolean;
+    private npmPackage: NpmPackage | undefined;
 
     constructor({
+        npmPackage,
+        isForSnippet,
         sourceFile,
         importsManager,
         typeResolver,
@@ -51,6 +57,8 @@ export class TypeContextImpl implements TypeContext {
         treatUnknownAsAny,
         includeSerdeLayer,
     }: TypeContextImpl.Init) {
+        this.npmPackage = npmPackage;
+        this.isForSnippet = isForSnippet;
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.typeResolver = typeResolver;
@@ -80,12 +88,25 @@ export class TypeContextImpl implements TypeContext {
     }
 
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
-        return this.typeDeclarationReferencer.getReferenceToType({
-            name: typeName,
-            importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
-            referencedIn: this.sourceFile,
-            importsManager: this.importsManager,
-        });
+        if (this.isForSnippet) {
+            return this.typeDeclarationReferencer.getReferenceToType({
+                name: typeName,
+                importStrategy: {
+                    type: "fromPackage",
+                    namespaceImport: this.typeDeclarationReferencer.namespaceExport,
+                    packageName: this.npmPackage?.packageName ?? "api",
+                },
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager,
+            });
+        } else {
+            return this.typeDeclarationReferencer.getReferenceToType({
+                name: typeName,
+                importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager,
+            });
+        }
     }
 
     public resolveTypeReference(typeReference: TypeReference): ResolvedTypeReference {

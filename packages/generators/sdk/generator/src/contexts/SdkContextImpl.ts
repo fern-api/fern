@@ -5,6 +5,7 @@ import {
     DependencyManager,
     ExternalDependencies,
     ImportsManager,
+    NpmPackage,
 } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
@@ -89,6 +90,8 @@ export declare namespace SdkContextImpl {
         timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
+        isForSnippet: boolean;
+        npmPackage: NpmPackage | undefined;
     }
 }
 
@@ -98,8 +101,10 @@ export class SdkContextImpl implements SdkContext {
     public readonly coreUtilities: CoreUtilities;
     public readonly fernConstants: Constants;
 
+    public readonly npmPackage: NpmPackage | undefined;
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
+    public readonly namespaceExport: string | undefined;
 
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
@@ -113,6 +118,8 @@ export class SdkContextImpl implements SdkContext {
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
 
     constructor({
+        npmPackage,
+        isForSnippet,
         intermediateRepresentation,
         typeGenerator,
         typeResolver,
@@ -150,7 +157,9 @@ export class SdkContextImpl implements SdkContext {
         fernConstants,
         includeSerdeLayer,
     }: SdkContextImpl.Init) {
+        this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.sourceFile = sourceFile;
+        this.npmPackage = npmPackage;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager,
@@ -162,6 +171,8 @@ export class SdkContextImpl implements SdkContext {
         this.fernConstants = fernConstants;
 
         this.type = new TypeContextImpl({
+            npmPackage,
+            isForSnippet,
             sourceFile: this.sourceFile,
             importsManager,
             typeResolver,

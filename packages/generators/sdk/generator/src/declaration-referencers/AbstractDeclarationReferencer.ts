@@ -3,6 +3,7 @@ import {
     ExportedDirectory,
     ExportedFilePath,
     getDirectReferenceToExport,
+    getReferenceToExportFromPackage,
     getReferenceToExportFromRoot,
     Reference,
 } from "@fern-typescript/commons";
@@ -59,6 +60,14 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     importsManager,
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
+                    subImport,
+                });
+            case "fromPackage":
+                return getReferenceToExportFromPackage({
+                    importsManager,
+                    namedImport: importStrategy.namespaceImport,
+                    packageName: importStrategy.packageName,
+                    exportedName,
                     subImport,
                 });
             default:

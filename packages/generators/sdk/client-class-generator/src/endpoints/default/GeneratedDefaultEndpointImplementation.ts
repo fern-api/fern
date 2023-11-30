@@ -12,6 +12,7 @@ import {
     getTimeoutExpression,
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
+import { camelCase } from "lodash-es";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -122,7 +123,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     this.generatedSdkClientClass.accessFromRootClient({
-                        referenceToRootClient: ts.factory.createIdentifier("client"),
+                        referenceToRootClient: ts.factory.createIdentifier(camelCase(context.namespaceExport) ?? "client"),
                     }),
                     ts.factory.createIdentifier(this.endpoint.name.camelCase.safeName)
                 ),

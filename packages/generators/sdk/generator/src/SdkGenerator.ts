@@ -476,7 +476,10 @@ export class SdkGenerator {
                 if (example != null) {
                     const snippet = this.withSnippet({
                         run: ({ sourceFile, importsManager }) => {
-                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            const context = this.generateSdkContext(
+                                { sourceFile, importsManager },
+                                { isForSnippet: true }
+                            );
                             const expression = context.sdkClientClass
                                 .getGeneratedSdkClientClass(packageId)
                                 .getSnippetForEndpoint({ context, endpointId: endpoint.id, example });
@@ -617,14 +620,19 @@ export class SdkGenerator {
         }
     }
 
-    private generateSdkContext({
-        sourceFile,
-        importsManager,
-    }: {
-        sourceFile: SourceFile;
-        importsManager: ImportsManager;
-    }): SdkContextImpl {
+    private generateSdkContext(
+        {
+            sourceFile,
+            importsManager,
+        }: {
+            sourceFile: SourceFile;
+            importsManager: ImportsManager;
+        },
+        { isForSnippet }: { isForSnippet?: boolean } = {}
+    ): SdkContextImpl {
         return new SdkContextImpl({
+            npmPackage: this.npmPackage,
+            isForSnippet: isForSnippet ?? false,
             intermediateRepresentation: this.intermediateRepresentation,
             sourceFile,
             coreUtilitiesManager: this.coreUtilitiesManager,
