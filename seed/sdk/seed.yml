@@ -3,6 +3,14 @@ docker: fernapi/fern-go-sdk:latest
 dockerCommand: docker build -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: sdk
-compileCommands:
-  - go build ./...
-  - go test ./...
+fixtures:
+  streaming:
+    - outputFolder: .
+      outputVersion: v2.0.0
+      customConfig:
+        module:
+          path: github.com/fern-api/stream-go
+scripts:
+  - docker: golang:1.18-alpine
+    commands:
+      - CGO_ENABLED=0 go test ./...

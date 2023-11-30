@@ -4,8 +4,8 @@ package dummy
 
 import (
 	context "context"
-	seedgo "github.com/fern-api/seed-go"
-	core "github.com/fern-api/seed-go/core"
+	v2 "github.com/fern-api/stream-go/v2"
+	core "github.com/fern-api/stream-go/v2/core"
 	http "net/http"
 )
 
@@ -27,14 +27,14 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 }
 
-func (c *Client) GenerateStream(ctx context.Context, request *seedgo.GenerateStreamRequestzs) (*core.Stream[seedgo.StreamResponse], error) {
+func (c *Client) GenerateStream(ctx context.Context, request *v2.GenerateStreamRequestzs) (*core.Stream[v2.StreamResponse], error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "generate-stream"
 
-	streamer := core.NewStreamer[seedgo.StreamResponse](c.caller)
+	streamer := core.NewStreamer[v2.StreamResponse](c.caller)
 	return streamer.Stream(
 		ctx,
 		&core.StreamParams{

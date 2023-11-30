@@ -5,7 +5,7 @@ package streaming
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/seed-go/core"
+	core "github.com/fern-api/stream-go/v2/core"
 )
 
 type GenerateStreamRequestzs struct {

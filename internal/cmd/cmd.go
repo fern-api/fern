@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/fern-api/fern-go"
@@ -14,6 +15,7 @@ import (
 	"github.com/fern-api/fern-go/internal/writer"
 	generatorexec "github.com/fern-api/generator-exec-go"
 	"go.uber.org/multierr"
+	"golang.org/x/mod/semver"
 )
 
 const (
@@ -123,6 +125,13 @@ func run(fn GeneratorFunc) (retErr error) {
 		}
 		config.ImportPath = config.Module.Path
 	}
+	if suffix, ok := parseMajorVersion(config.Version); ok {
+		// Append the major version suffix for any version greater than 1.X.X.
+		//
+		// For details, see https://github.com/golang/go/issues/35732
+		config.ImportPath = maybeAppendVersionSuffix(config.ImportPath, suffix)
+		config.Module.Path = maybeAppendVersionSuffix(config.Module.Path, suffix)
+	}
 	defer func() {
 		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
 		if retErr != nil {
@@ -175,17 +184,13 @@ func newConfig(configFilename string) (*Config, error) {
 		coordinatorURL = config.Environment.Remote.CoordinatorUrlV2
 		coordinatorTaskID = config.Environment.Remote.Id
 	}
-	var version string
-	if config.Publish != nil {
-		version = config.Publish.Version
-	}
 	return &Config{
 		DryRun:             config.DryRun,
 		EnableExplicitNull: customConfig.EnableExplicitNull,
 		Organization:       config.Organization,
 		CoordinatorURL:     coordinatorURL,
 		CoordinatorTaskID:  coordinatorTaskID,
-		Version:            version,
+		Version:            outputVersionFromGeneratorConfig(config),
 		IrFilepath:         config.IrFilepath,
 		ImportPath:         customConfig.ImportPath,
 		Module:             moduleConfig,
@@ -300,4 +305,46 @@ func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, 
 	default:
 		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)
 	}
+}
+
+func outputVersionFromGeneratorConfig(c *generatorexec.GeneratorConfig) string {
+	visitor := new(outputModeVersionVisitor)
+	if err := c.Output.Mode.Accept(visitor); err == nil {
+		return visitor.value
+	}
+	return ""
+}
+
+type outputModeVersionVisitor struct {
+	value string
+}
+
+func (o *outputModeVersionVisitor) VisitPublish(publishConfig *generatorexec.GeneratorPublishConfig) error {
+	o.value = publishConfig.Version
+	return nil
+}
+
+func (o *outputModeVersionVisitor) VisitDownloadFiles(_ any) error {
+	return nil
+}
+
+func (o *outputModeVersionVisitor) VisitGithub(outputMode *generatorexec.GithubOutputMode) error {
+	o.value = outputMode.Version
+	return nil
+}
+
+// parseMajorVersion returns the major version, and returns true if
+// it is greater than 1.X.X (e.g. v2.0.0).
+func parseMajorVersion(version string) (string, bool) {
+	major := semver.Major(version)
+	return major, major != "" && major != "v0" && major != "v1"
+}
+
+// maybeAppendVersionSuffix appends the given version suffix to the
+// importPath if it doesn't already exist.
+func maybeAppendVersionSuffix(importPath string, version string) string {
+	if path.Base(importPath) == version {
+		return importPath
+	}
+	return path.Join(importPath, version)
 }

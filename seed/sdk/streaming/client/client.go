@@ -3,8 +3,8 @@
 package client
 
 import (
-	core "github.com/fern-api/seed-go/core"
-	dummy "github.com/fern-api/seed-go/dummy"
+	core "github.com/fern-api/stream-go/v2/core"
+	dummy "github.com/fern-api/stream-go/v2/dummy"
 	http "net/http"
 )
 

@@ -3,7 +3,8 @@
     "output": {
         "mode": {
             "type": "github",
-            "repoUrl": "https://github.com/acme/acme-go"
+            "repoUrl": "https://github.com/acme/acme-go",
+            "version": "v1.0.0"
         },
         "path": "tmp"
     },
@@ -12,9 +13,6 @@
         "path": "github.com/acme/acme-go",
         "version": "1.19"
       }
-    },
-    "publish": {
-      "version": "1.0.0"
     },
     "workspaceName": "test",
     "organization": "fernbot",

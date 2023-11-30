@@ -43,6 +43,37 @@ func (g *GetOptionsRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(marshaler)
 }
 
+type GetUndiscriminatedOptionsRequest struct {
+	dryRun bool
+}
+
+func (g *GetUndiscriminatedOptionsRequest) DryRun() bool {
+	return g.dryRun
+}
+
+func (g *GetUndiscriminatedOptionsRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetUndiscriminatedOptionsRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*g = GetUndiscriminatedOptionsRequest(body)
+	g.dryRun = true
+	return nil
+}
+
+func (g *GetUndiscriminatedOptionsRequest) MarshalJSON() ([]byte, error) {
+	type embed GetUndiscriminatedOptionsRequest
+	var marshaler = struct {
+		embed
+		DryRun bool `json:"dryRun"`
+	}{
+		embed:  embed(*g),
+		DryRun: true,
+	}
+	return json.Marshal(marshaler)
+}
+
 type CreateOptionsResponse struct {
 	Type    string
 	ok      bool
@@ -176,4 +207,89 @@ func (o *Options) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", o)
+}
+
+type UndiscriminatedOptions struct {
+	typeName        string
+	stringLiteral   string
+	unknownLiteral  bool
+	StringStringMap map[string]string
+}
+
+func NewUndiscriminatedOptionsWithStringLiteral() *UndiscriminatedOptions {
+	return &UndiscriminatedOptions{typeName: "stringLiteral", stringLiteral: "options"}
+}
+
+func NewUndiscriminatedOptionsWithUnknownLiteral() *UndiscriminatedOptions {
+	return &UndiscriminatedOptions{typeName: "unknownLiteral", unknownLiteral: true}
+}
+
+func NewUndiscriminatedOptionsFromStringStringMap(value map[string]string) *UndiscriminatedOptions {
+	return &UndiscriminatedOptions{typeName: "stringStringMap", StringStringMap: value}
+}
+
+func (u *UndiscriminatedOptions) StringLiteral() string {
+	return u.stringLiteral
+}
+
+func (u *UndiscriminatedOptions) UnknownLiteral() bool {
+	return u.unknownLiteral
+}
+
+func (u *UndiscriminatedOptions) UnmarshalJSON(data []byte) error {
+	var valueStringLiteral string
+	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
+		if valueStringLiteral == "options" {
+			u.typeName = "stringLiteral"
+			u.stringLiteral = valueStringLiteral
+			return nil
+		}
+	}
+	var valueUnknownLiteral bool
+	if err := json.Unmarshal(data, &valueUnknownLiteral); err == nil {
+		if valueUnknownLiteral == true {
+			u.typeName = "unknownLiteral"
+			u.unknownLiteral = valueUnknownLiteral
+			return nil
+		}
+	}
+	var valueStringStringMap map[string]string
+	if err := json.Unmarshal(data, &valueStringStringMap); err == nil {
+		u.typeName = "stringStringMap"
+		u.StringStringMap = valueStringStringMap
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UndiscriminatedOptions) MarshalJSON() ([]byte, error) {
+	switch u.typeName {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
+	case "stringLiteral":
+		return json.Marshal("options")
+	case "unknownLiteral":
+		return json.Marshal(true)
+	case "stringStringMap":
+		return json.Marshal(u.StringStringMap)
+	}
+}
+
+type UndiscriminatedOptionsVisitor interface {
+	VisitStringLiteral(string) error
+	VisitUnknownLiteral(bool) error
+	VisitStringStringMap(map[string]string) error
+}
+
+func (u *UndiscriminatedOptions) Accept(visitor UndiscriminatedOptionsVisitor) error {
+	switch u.typeName {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
+	case "stringLiteral":
+		return visitor.VisitStringLiteral(u.stringLiteral)
+	case "unknownLiteral":
+		return visitor.VisitUnknownLiteral(u.unknownLiteral)
+	case "stringStringMap":
+		return visitor.VisitStringStringMap(u.StringStringMap)
+	}
 }

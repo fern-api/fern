@@ -33,5 +33,9 @@ func NewClientOptions() *ClientOptions {
 func (c *ClientOptions) ToHeader() http.Header { return c.cloneHeader() }
 
 func (c *ClientOptions) cloneHeader() http.Header {
-	return c.HTTPHeader.Clone()
+	headers := c.HTTPHeader.Clone()
+	headers.Set("X-Fern-Language", "Go")
+	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/seed-go")
+	headers.Set("X-Fern-SDK-Version", "0.0.1")
+	return headers
 }

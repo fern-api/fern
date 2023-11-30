@@ -72,3 +72,26 @@ func (c *Client) GetOptions(ctx context.Context, request *seedgo.GetOptionsReque
 	}
 	return response, nil
 }
+
+func (c *Client) GetUndiscriminatedOptions(ctx context.Context, request *seedgo.GetUndiscriminatedOptionsRequest) (*seedgo.UndiscriminatedOptions, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "options"
+
+	var response *seedgo.UndiscriminatedOptions
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:      endpointURL,
+			Method:   http.MethodPost,
+			Headers:  c.header,
+			Request:  request,
+			Response: &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
