@@ -33,3 +33,4 @@ types:
     properties:
       customConfig: unknown
       outputFolder: string
+      outputVersion: optional<string>

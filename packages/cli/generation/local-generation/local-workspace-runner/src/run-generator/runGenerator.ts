@@ -10,6 +10,7 @@ export declare namespace runGenerator {
     export interface Args {
         workspaceName: string;
         organization: string;
+        outputVersion: string;
 
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
@@ -25,12 +26,13 @@ export declare namespace runGenerator {
 export async function runGenerator({
     workspaceName,
     organization,
+    outputVersion,
     absolutePathToOutput,
     absolutePathToSnippet,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
-    generatorInvocation
+    generatorInvocation,
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -44,6 +46,7 @@ export async function runGenerator({
         generatorInvocation,
         customConfig,
         workspaceName,
+        outputVersion,
         organization,
         absolutePathToSnippet
     });

@@ -93,6 +93,7 @@ function addTestCommand(cli: Argv) {
                         : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
                     workspace,
                     irVersion: workspace.workspaceConfig.irVersion,
+                    outputVersion: undefined,
                     language: workspace.workspaceConfig.language,
                     generatorType: workspace.workspaceConfig.generatorType,
                     docker: parsedDockerImage,
