@@ -54,8 +54,8 @@ workflows:
             tags:
               only:
                 - /.*/
-          # requires:
-          #   - test
+          requires:
+            - test
           context:
             - docker-hub
             - github

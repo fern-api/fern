@@ -398,14 +398,14 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 type UnionWithUnknown struct {
 	Type    string
 	Foo     *Foo
-	Unknown any
+	Unknown interface{}
 }
 
 func NewUnionWithUnknownFromFoo(value *Foo) *UnionWithUnknown {
 	return &UnionWithUnknown{Type: "foo", Foo: value}
 }
 
-func NewUnionWithUnknownFromUnknown(value any) *UnionWithUnknown {
+func NewUnionWithUnknownFromUnknown(value interface{}) *UnionWithUnknown {
 	return &UnionWithUnknown{Type: "unknown", Unknown: value}
 }
 
@@ -425,7 +425,7 @@ func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 		}
 		u.Foo = value
 	case "unknown":
-		value := make(map[string]any)
+		value := make(map[string]interface{})
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
@@ -449,8 +449,8 @@ func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "unknown":
 		var marshaler = struct {
-			Type    string `json:"type"`
-			Unknown any    `json:"unknown,omitempty"`
+			Type    string      `json:"type"`
+			Unknown interface{} `json:"unknown,omitempty"`
 		}{
 			Type:    u.Type,
 			Unknown: u.Unknown,
@@ -461,7 +461,7 @@ func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 
 type UnionWithUnknownVisitor interface {
 	VisitFoo(*Foo) error
-	VisitUnknown(any) error
+	VisitUnknown(interface{}) error
 }
 
 func (u *UnionWithUnknown) Accept(visitor UnionWithUnknownVisitor) error {
