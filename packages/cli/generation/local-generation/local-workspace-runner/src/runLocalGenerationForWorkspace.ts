@@ -191,7 +191,7 @@ async function writeFilesToDiskAndRunGenerator({
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
         organization,
-        outputVersion: outputVersionOverride != null ? outputVersionOverride : DEFAULT_OUTPUT_VERSION,
+        outputVersion: outputVersionOverride ?? DEFAULT_OUTPUT_VERSION,
         keepDocker,
         generatorInvocation
     });

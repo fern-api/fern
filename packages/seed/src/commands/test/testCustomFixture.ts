@@ -14,7 +14,6 @@ export async function testCustomFixture({
     pathToFixture,
     workspace,
     irVersion,
-    outputVersion,
     language,
     docker,
     generatorType,
@@ -25,7 +24,6 @@ export async function testCustomFixture({
     workspace: SeedWorkspace;
     generatorType: GeneratorType;
     irVersion: string | undefined;
-    outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
     logLevel: LogLevel;
@@ -43,7 +41,7 @@ export async function testCustomFixture({
         lock,
         generatorType,
         irVersion,
-        outputVersion,
+        outputVersion: undefined,
         language,
         fixture: "custom",
         docker,

@@ -106,10 +106,7 @@ export async function testWorkspaceFixtures({
                         lock,
                         generatorType,
                         irVersion,
-                        outputVersion:
-                            fixtureConfigInstance.outputVersion != null
-                                ? fixtureConfigInstance.outputVersion
-                                : undefined,
+                        outputVersion: fixtureConfigInstance.outputVersion,
                         language,
                         fixture,
                         docker,
