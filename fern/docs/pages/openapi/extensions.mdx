@@ -51,7 +51,7 @@ components:
         - diamonds
         - hearts
         - spades
-      x-fern-enum: # <------
+      x-fern-enum: # <----
         clubs:
           description: Some docs about clubs
         spades:
@@ -104,7 +104,7 @@ components:
         cast:
           type: array
           items:
-            type: object # <---------- Inline Type
+            type: object # <---- Inline Type
             properties:
               firstName:
                 type: string
@@ -144,7 +144,7 @@ components:
           type: array
           items:
             type: object
-            x-fern-type-name: Person # <----------
+            x-fern-type-name: Person # <----
             properties:
               firstName:
                 type: string
@@ -162,7 +162,7 @@ export interface Movie {
     cast?: Person[]
 }
 
-export interface Person  { # <----- Overridden name
+export interface Person  { # <---- Overridden name
     firstName?: string;
     lastName?: string;
     age?: integer;
@@ -179,7 +179,7 @@ so that you can filter your SDKs and Docs as you would like in Fern.
 paths: 
   /users: 
     post: 
-      x-fern-audiences: # <------- mark with the public audience
+      x-fern-audiences: # <---- mark with the public audience
         - public
       operationId: users_create
       ...
@@ -197,12 +197,23 @@ To filter to the public audience, update your generators.yml
 ```yaml
 groups: 
   sdks: 
-    audiences: # <------------- the generators will now be filtered to the public audience
+    audiences: # <---- the generators will now be filtered to the public audience
       - public 
     generators: 
       - name: fernapi/fern-tyepscript-node-sdk
         version: 0.8.8
         ...
+```
+</CodeBlock>
+
+If generating Fern Docs, you'll need to update your `docs.yml` configuration to include:
+
+<CodeBlock title="docs.yml">
+```yaml
+navigation:
+  - api: API Reference
+    audiences: # <---- the API Reference will now be filtered to the public audience
+      - public
 ```
 </CodeBlock>
 
