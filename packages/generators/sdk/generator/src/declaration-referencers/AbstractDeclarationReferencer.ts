@@ -65,7 +65,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
             case "fromPackage":
                 return getReferenceToExportFromPackage({
                     importsManager,
-                    namedImport: importStrategy.namespaceImport,
+                    namespaceImport: importStrategy.namespaceImport,
                     packageName: importStrategy.packageName,
                     exportedName,
                     subImport,

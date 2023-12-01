@@ -3,7 +3,7 @@ import { SourceFile } from "ts-morph";
 
 export type ImportStrategy =
     | { type: "fromRoot"; namespaceImport?: string; useDynamicImport?: boolean }
-    | { type: "fromPackage"; namespaceImport: string; packageName: string }
+    | { type: "fromPackage"; namespaceImport?: string; packageName: string }
     | { type: "direct"; alias?: string };
 
 export interface DeclarationReferencer<Name> {

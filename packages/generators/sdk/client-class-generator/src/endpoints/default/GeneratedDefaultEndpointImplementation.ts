@@ -12,7 +12,6 @@ import {
     getTimeoutExpression,
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
-import { camelCase } from "lodash-es";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -91,6 +90,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 context,
                 example,
                 opts: { isForComment: true },
+                clientReference: context.sdkInstanceReferenceForSnippet,
             });
             if (generatedExample == null) {
                 continue;
@@ -102,19 +102,16 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return groups.join("\n\n");
     }
 
-    public getExample({
-        context,
-        example,
-        opts,
-    }: {
+    public getExample(args: {
         context: SdkContext;
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
+        clientReference: ts.Identifier;
     }): ts.Expression | undefined {
         const exampleParameters = this.request.getExampleEndpointParameters({
-            context,
-            example,
-            opts,
+            context: args.context,
+            example: args.example,
+            opts: args.opts,
         });
         if (exampleParameters == null) {
             return undefined;
@@ -123,9 +120,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     this.generatedSdkClientClass.accessFromRootClient({
-                        referenceToRootClient: ts.factory.createIdentifier(camelCase(context.namespaceExport) ?? "client"),
+                        referenceToRootClient: args.clientReference,
                     }),
-                    ts.factory.createIdentifier(this.endpoint.name.camelCase.safeName)
+                    ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
                 ),
                 undefined,
                 exampleParameters

@@ -1,3 +1,4 @@
+import { ts } from "ts-morph";
 import { ModelContext } from "../model-context/ModelContext";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
 import { EnvironmentsContext } from "./environments";
@@ -11,6 +12,7 @@ import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-s
 import { TimeoutSdkErrorContext } from "./timeout-sdk-error";
 
 export interface SdkContext extends ModelContext {
+    sdkInstanceReferenceForSnippet: ts.Identifier;
     namespaceExport: string | undefined;
     endpointErrorUnion: EndpointErrorUnionContext;
     environments: EnvironmentsContext;

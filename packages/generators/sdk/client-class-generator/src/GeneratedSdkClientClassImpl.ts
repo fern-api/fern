@@ -84,6 +84,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private requireDefaultEnvironment: boolean;
     private npmPackage: NpmPackage | undefined;
     private targetRuntime: JavaScriptRuntime;
+    private packageId: PackageId;
 
     constructor({
         intermediateRepresentation,
@@ -101,6 +102,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
     }: GeneratedSdkClientClassImpl.Init) {
+        this.packageId = packageId;
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -279,10 +281,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
-    public getSnippetForEndpoint(args: {
+    public invokeEndpoint(args: {
         context: SdkContext;
         endpointId: string;
         example: ExampleEndpointCall;
+        clientReference: ts.Identifier;
     }): ts.Expression | undefined {
         const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
             return generatedEndpoint.endpoint.id === args.endpointId;
@@ -290,7 +293,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (generatedEndpoint == null) {
             return undefined;
         }
-        return generatedEndpoint.getExample({ context: args.context, example: args.example, opts: {} });
+        return generatedEndpoint.getExample({
+            ...args,
+            opts: {},
+        });
     }
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.PropertyAccessExpression {
@@ -314,6 +320,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         referenceToOptions: ts.Expression;
     }): ts.Expression {
         return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
+    }
+
+    public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
+        const rootSdkClientName = args.context.sdkClientClass.getReferenceToClientClass(this.packageId, {
+            npmPackage: args.npmPackage,
+        });
+        const optionsProperties = this.getOptionsPropertiesForSnippet(args.context);
+        return ts.factory.createNewExpression(
+            rootSdkClientName.getExpression(),
+            undefined,
+            optionsProperties.length > 0 ? [ts.factory.createObjectLiteralExpression(optionsProperties)] : undefined
+        );
     }
 
     public writeToFile(context: SdkContext): void {
@@ -562,6 +580,60 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     /***********
      * OPTIONS *
      ***********/
+
+    public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
+        const properties: ts.ObjectLiteralElementLike[] = [];
+
+        if (this.bearerAuthScheme != null) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.getBearerAuthOptionKey(this.bearerAuthScheme),
+                    ts.factory.createStringLiteral(`YOUR_${this.bearerAuthScheme.token.screamingSnakeCase.unsafeName}`)
+                )
+            );
+        }
+
+        if (this.basicAuthScheme != null) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
+                    ts.factory.createStringLiteral(
+                        `YOUR_${this.basicAuthScheme.username.screamingSnakeCase.unsafeName}`
+                    )
+                )
+            );
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
+                    ts.factory.createStringLiteral(
+                        `YOUR_${this.basicAuthScheme.password.screamingSnakeCase.unsafeName}`
+                    )
+                )
+            );
+        }
+
+        for (const header of this.authHeaders) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.getOptionKeyForAuthHeader(header),
+                    ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
+                )
+            );
+        }
+
+        for (const header of this.intermediateRepresentation.headers) {
+            if (!isLiteralHeader(header, context)) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.getOptionKeyForNonLiteralHeader(header),
+                        ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
+                    )
+                );
+            }
+        }
+
+        return properties;
+    }
 
     private generateOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];

@@ -6,7 +6,7 @@ export declare namespace getReferenceToExportFromPackage {
     export interface Args {
         importsManager: ImportsManager;
         packageName: string;
-        namedImport: string;
+        namespaceImport?: string | undefined;
         exportedName: string;
         subImport?: string[];
     }
@@ -15,23 +15,35 @@ export declare namespace getReferenceToExportFromPackage {
 export function getReferenceToExportFromPackage({
     importsManager,
     packageName,
-    namedImport,
+    namespaceImport,
     exportedName,
     subImport = [],
 }: getReferenceToExportFromPackage.Args): Reference {
     const addImport = () => {
-        importsManager.addImport(packageName, { namedImports: [namedImport] });
+        importsManager.addImport(packageName, { namedImports: [namespaceImport ?? exportedName] });
     };
 
-    const entityName = [exportedName, ...subImport].reduce<ts.EntityName>(
-        (acc, part) => ts.factory.createQualifiedName(acc, part),
-        ts.factory.createIdentifier(namedImport)
-    );
+    const entityName =
+        namespaceImport != null
+            ? [exportedName, ...subImport].reduce<ts.EntityName>(
+                  (acc, part) => ts.factory.createQualifiedName(acc, part),
+                  ts.factory.createIdentifier(namespaceImport)
+              )
+            : [...subImport].reduce<ts.EntityName>(
+                  (acc, part) => ts.factory.createQualifiedName(acc, part),
+                  ts.factory.createIdentifier(exportedName)
+              );
 
-    const expression = [exportedName, ...subImport].reduce<ts.Expression>(
-        (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
-        ts.factory.createIdentifier(namedImport)
-    );
+    const expression =
+        namespaceImport != null
+            ? [exportedName, ...subImport].reduce<ts.Expression>(
+                  (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
+                  ts.factory.createIdentifier(namespaceImport)
+              )
+            : [...subImport].reduce<ts.Expression>(
+                  (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
+                  ts.factory.createIdentifier(exportedName)
+              );
 
     const typeNode = ts.factory.createTypeReferenceNode(entityName);
 

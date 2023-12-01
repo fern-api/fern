@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": ""
+                "client": "import { SeedPackageYmlClient } from \"\";\n"
             }
         },
         {
@@ -17,7 +17,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "await seedPackageYml.service.nop(\"id-219xca8\")\n"
+                "client": "import { SeedPackageYmlClient } from \"\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.service.nop(\"id-219xca8\");\n"
             }
         }
     ],

@@ -29,7 +29,8 @@ import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlin
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { SourceFile } from "ts-morph";
+import { camelCase } from "lodash-es";
+import { SourceFile, ts } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
@@ -105,6 +106,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
     public readonly namespaceExport: string | undefined;
+    public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
     public readonly sdkError: SdkErrorContextImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
@@ -157,6 +159,11 @@ export class SdkContextImpl implements SdkContext {
         fernConstants,
         includeSerdeLayer,
     }: SdkContextImpl.Init) {
+        this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
+            typeDeclarationReferencer.namespaceExport != null
+                ? camelCase(typeDeclarationReferencer.namespaceExport)
+                : "client"
+        );
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;

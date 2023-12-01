@@ -33,7 +33,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { writeFile } from "fs/promises";
-import { Directory, Project, SourceFile } from "ts-morph";
+import { Directory, Project, SourceFile, ts } from "ts-morph";
 import urlJoin from "url-join";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
@@ -470,21 +470,47 @@ export class SdkGenerator {
     }
 
     private generateSnippets() {
+        const rootPackage: PackageId = { isRoot: true };
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 const example = endpoint.examples[0];
                 if (example != null) {
                     const snippet = this.withSnippet({
-                        run: ({ sourceFile, importsManager }) => {
+                        run: async ({ sourceFile, importsManager }) => {
                             const context = this.generateSdkContext(
                                 { sourceFile, importsManager },
                                 { isForSnippet: true }
                             );
-                            const expression = context.sdkClientClass
+                            const clientInstantiation = context.sdkClientClass
+                                .getGeneratedSdkClientClass(rootPackage)
+                                .instantiateAsRoot({ context, npmPackage: this.npmPackage });
+                            const clientAssignment = ts.factory.createVariableStatement(
+                                undefined,
+                                ts.factory.createVariableDeclarationList(
+                                    [
+                                        ts.factory.createVariableDeclaration(
+                                            context.sdkInstanceReferenceForSnippet,
+                                            undefined,
+                                            undefined,
+                                            clientInstantiation
+                                        ),
+                                    ],
+                                    ts.NodeFlags.Const
+                                )
+                            );
+                            const endpointInvocation = context.sdkClientClass
                                 .getGeneratedSdkClientClass(packageId)
-                                .getSnippetForEndpoint({ context, endpointId: endpoint.id, example });
-                            if (expression != null) {
-                                context.sourceFile.addStatements(getTextOfTsNode(expression));
+                                .invokeEndpoint({
+                                    context,
+                                    endpointId: endpoint.id,
+                                    example,
+                                    clientReference: context.sdkInstanceReferenceForSnippet,
+                                });
+                            if (endpointInvocation != null) {
+                                context.sourceFile.addStatements([
+                                    getTextOfTsNode(clientAssignment),
+                                    getTextOfTsNode(ts.factory.createExpressionStatement(endpointInvocation)),
+                                ]);
                             }
                         },
                     });

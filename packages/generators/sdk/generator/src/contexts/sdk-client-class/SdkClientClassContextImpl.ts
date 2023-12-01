@@ -1,4 +1,4 @@
-import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ImportsManager, NpmPackage, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
@@ -40,7 +40,18 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
         });
     }
 
-    public getReferenceToClientClass(packageId: PackageId, { importAlias }: { importAlias?: string } = {}): Reference {
+    public getReferenceToClientClass(
+        packageId: PackageId,
+        { importAlias, npmPackage }: { importAlias?: string; npmPackage?: NpmPackage } = {}
+    ): Reference {
+        if (npmPackage != null) {
+            return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
+                name: packageId,
+                referencedIn: this.sourceFile,
+                importsManager: this.importsManager,
+                importStrategy: { type: "fromPackage", packageName: npmPackage.packageName },
+            });
+        }
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
             name: packageId,
             referencedIn: this.sourceFile,

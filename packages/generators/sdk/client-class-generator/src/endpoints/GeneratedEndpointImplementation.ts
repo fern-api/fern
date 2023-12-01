@@ -14,13 +14,10 @@ export interface GeneratedEndpointImplementation {
     getOverloads: (context: SdkContext) => EndpointSignature[];
     getSignature: (context: SdkContext) => EndpointSignature;
     getDocs: (context: SdkContext) => string | undefined;
-    getExample: ({
-        context,
-        example,
-        opts,
-    }: {
+    getExample: (args: {
         context: SdkContext;
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
+        clientReference: ts.Identifier;
     }) => ts.Expression | undefined;
 }
