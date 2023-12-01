@@ -1,7 +1,7 @@
 ---
 name: Feature request
-about: 'Let us know a feature you would want in Fern'
-title: ''
+about: Let us know a feature you would want in Fern
+title: "[Feature]"
 labels: ''
 assignees: ''
 

@@ -1,8 +1,8 @@
 ---
 name: Documentation improvement
 about: Suggest a change to Fern's documentation docs.buildwithfern.com
-title: ''
-labels: ''
+title: "[Fern's Documentation] "
+labels: documentation
 assignees: ''
 
 ---
