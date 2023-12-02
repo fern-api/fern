@@ -2,16 +2,6 @@
     "endpoints": [
         {
             "id": {
-                "path": "/",
-                "method": "POST"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExamplesClient } from \"\";\n"
-            }
-        },
-        {
-            "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET"
             },
@@ -58,16 +48,6 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMovie(\"movie-c06a4ad7\");\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/movie",
-                "method": "POST"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedExamplesClient } from \"\";\n"
             }
         },
         {

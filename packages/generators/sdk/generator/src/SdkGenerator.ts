@@ -476,7 +476,7 @@ export class SdkGenerator {
                 const example = endpoint.examples[0];
                 if (example != null) {
                     const snippet = this.withSnippet({
-                        run: async ({ sourceFile, importsManager }) => {
+                        run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
                             const context = this.generateSdkContext(
                                 { sourceFile, importsManager },
                                 { isForSnippet: true }
@@ -506,23 +506,23 @@ export class SdkGenerator {
                                     example,
                                     clientReference: context.sdkInstanceReferenceForSnippet,
                                 });
-                            if (endpointInvocation != null) {
-                                context.sourceFile.addStatements([
-                                    getTextOfTsNode(clientAssignment),
-                                    getTextOfTsNode(ts.factory.createExpressionStatement(endpointInvocation)),
-                                ]);
+                            if (endpointInvocation == null) {
+                                return undefined;
                             }
+                            return [clientAssignment, ts.factory.createExpressionStatement(endpointInvocation)];
                         },
                     });
-                    this.endpointSnippets.push({
-                        id: {
-                            path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                            method: endpoint.method,
-                        },
-                        snippet: FernGeneratorExec.EndpointSnippet.typescript({
-                            client: snippet,
-                        }),
-                    });
+                    if (snippet != null) {
+                        this.endpointSnippets.push({
+                            id: {
+                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                method: endpoint.method,
+                            },
+                            snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                                client: snippet,
+                            }),
+                        });
+                    }
                 }
             }
         });
@@ -584,16 +584,20 @@ export class SdkGenerator {
     private withSnippet({
         run,
     }: {
-        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
-    }): string {
+        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => ts.Node[] | undefined;
+    }): string | undefined {
         const project = new Project({
             useInMemoryFileSystem: true,
         });
         const sourceFile = project.createSourceFile("snippet");
         const importsManager = new ImportsManager();
-        run({ sourceFile, importsManager });
-        importsManager.writeImportsToSourceFile(sourceFile);
-        return sourceFile.getText();
+        const statements = run({ sourceFile, importsManager });
+        if (statements != null) {
+            sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
+            importsManager.writeImportsToSourceFile(sourceFile);
+            return sourceFile.getText();
+        }
+        return undefined;
     }
 
     private withSourceFile({
