@@ -6,7 +6,7 @@ import { GeneratedFile } from "../../commons/GeneratedFile";
 
 export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
     instantiate: (args: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }) => ts.Expression;
-    accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.PropertyAccessExpression;
+    accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression;
     instantiateAsRoot(args: { context: SdkContext; npmPackage?: NpmPackage | undefined }): ts.Expression;
     invokeEndpoint(args: {
         context: SdkContext;

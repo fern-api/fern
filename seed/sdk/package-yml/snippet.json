@@ -2,6 +2,16 @@
     "endpoints": [
         {
             "id": {
+                "path": "/{id}/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPackageYmlClient } from \"\";\n\nconst seedPackageYml = new SeedPackageYmlClient;\nawait seedPackageYml.echo(\"Hello world!\");\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{id}/{nestedId}",
                 "method": "GET"
             },

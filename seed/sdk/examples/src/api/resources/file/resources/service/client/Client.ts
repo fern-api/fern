@@ -28,7 +28,7 @@ export class Service {
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example
-     *     await seedExamples.service.getFile("file.txt", {
+     *     await seedExamples.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
      *     })
      */
