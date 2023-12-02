@@ -1,5 +1,6 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-fern/ir-sdk";
+import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
     return irType._visit<APIV1Write.TypeShape>({
@@ -15,7 +16,11 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                 values: enum_.values.map(
                     (value): APIV1Write.EnumValue => ({
                         description: value.docs ?? undefined,
-                        value: value.name.wireValue
+                        value: value.name.wireValue,
+                        availability:
+                            value.availability != null
+                                ? convertIrAvailability({ availability: value.availability })
+                                : undefined
                     })
                 )
             };
@@ -28,7 +33,11 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                     (property): APIV1Write.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
-                        valueType: convertTypeReference(property.valueType)
+                        valueType: convertTypeReference(property.valueType),
+                        availability:
+                            property.availability != null
+                                ? convertIrAvailability({ availability: property.availability })
+                                : undefined
                     })
                 )
             };
@@ -37,7 +46,11 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
             const baseProperties = union.baseProperties.map((baseProperty) => {
                 return {
                     key: baseProperty.name.wireValue,
-                    valueType: convertTypeReference(baseProperty.valueType)
+                    valueType: convertTypeReference(baseProperty.valueType),
+                    availability:
+                        baseProperty.availability != null
+                            ? convertIrAvailability({ availability: baseProperty.availability })
+                            : undefined
                 };
             });
             return {
