@@ -33,9 +33,6 @@ types:
           rating: 8.0
           type: movie
           tag: $commons.Tag.One
-          cast: 
-            - $CastMember.Example0
-            - $CastMember.Example1
   
   CastMember: 
     discriminated: false
