@@ -309,3 +309,29 @@ In the example above, a property named `stream` is sent as `true` for the stream
 and sent as `false` for the non-streaming variant. Additionally, a stream of the `Log` type
 is returned in the streaming variant, whereas the `Logs` array is returned in the non-streaming
 variant.
+
+## Ignoring Schemas or endpoints
+
+If you want Fern to skip reading any endpoint or schemas, you can use the 
+`x-fern-ignore` extension. 
+
+To skip an endpoint, you must add `x-fern-ignore: true` at the operation 
+level. 
+
+```yaml openapi.yml 
+paths:
+  /users: 
+    get: 
+      x-fern-ignore: true # <-----------
+      ...
+```
+
+To skip a schema, you msut add `x-fern-ignore: true` at the schema level. 
+
+```yaml openapi.yml 
+components: 
+  schemas: 
+    SchemaToSkip: 
+      x-fern-ignore: true # <-----------
+      ...
+```
