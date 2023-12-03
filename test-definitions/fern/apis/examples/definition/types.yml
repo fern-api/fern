@@ -24,7 +24,6 @@ types:
       type: literal<"movie">
       tag: commons.Tag
       book: optional<string>
-      cast: optional<list<CastMember>>
     examples:
       - name: One
         value:
@@ -54,14 +53,21 @@ types:
   Actor: 
     properties: 
       name: string
+      id: string
   
   Actress: 
     properties: 
       name: string
+      id: string
     examples: 
       - name: Example0
         value: 
           name: Jennifer Lawrence
+  
+  StuntDouble: 
+    properties: 
+      name: string
+      actorOrActressId: string
 
   ExtendedMovie:
     extends: Movie
