@@ -1,9 +1,14 @@
-import { ErrorResolver, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import {
+    ErrorResolver,
+    ExampleResolver,
+    ExampleValidators,
+    FernFileContext,
+    TypeResolver
+} from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
-import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
 
 export function validateResponse({
     example,
@@ -26,7 +31,7 @@ export function validateResponse({
     if (example?.error == null) {
         if (endpoint.response != null) {
             violations.push(
-                ...validateTypeReferenceExample({
+                ...ExampleValidators.validateTypeReferenceExample({
                     rawTypeReference:
                         typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
                     example: example?.body,
@@ -34,6 +39,11 @@ export function validateResponse({
                     exampleResolver,
                     file,
                     workspace
+                }).map((val): RuleViolation => {
+                    return {
+                        severity: "error",
+                        message: val.message
+                    };
                 })
             );
         } else if (example?.body != null) {
@@ -67,13 +77,15 @@ export function validateResponse({
 
             if (errorDeclaration.declaration.type != null) {
                 violations.push(
-                    ...validateTypeReferenceExample({
+                    ...ExampleValidators.validateTypeReferenceExample({
                         rawTypeReference: errorDeclaration.declaration.type,
                         example: example.body,
                         typeResolver,
                         exampleResolver,
                         file: errorDeclaration.file,
                         workspace
+                    }).map((val): RuleViolation => {
+                        return { severity: "error", message: val.message };
                     })
                 );
             } else if (example.body != null) {

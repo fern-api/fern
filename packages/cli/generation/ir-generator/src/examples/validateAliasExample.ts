@@ -1,7 +1,9 @@
-import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { RuleViolation } from "../../Rule";
+import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
+import { ExampleViolation } from "./exampleViolation";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
 export function validateAliasExample({
@@ -18,7 +20,7 @@ export function validateAliasExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): ExampleViolation[] {
     return validateTypeReferenceExample({
         rawTypeReference: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
         example,

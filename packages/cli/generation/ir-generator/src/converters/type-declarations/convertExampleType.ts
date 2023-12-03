@@ -1,4 +1,5 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
     isRawObjectDefinition,
     RawSchemas,
@@ -17,6 +18,7 @@ import {
     ExampleTypeShape,
     PrimitiveType
 } from "@fern-fern/ir-sdk/api";
+import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -37,7 +39,8 @@ export function convertTypeExample({
     typeResolver,
     exampleResolver,
     fileContainingType,
-    fileContainingExample
+    fileContainingExample,
+    workspace
 }: {
     typeName: DeclaredTypeName;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -46,6 +49,7 @@ export function convertTypeExample({
     exampleResolver: ExampleResolver;
     fileContainingType: FernFileContext;
     fileContainingExample: FernFileContext;
+    workspace: FernWorkspace;
 }): ExampleTypeShape {
     return visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
@@ -56,7 +60,8 @@ export function convertTypeExample({
                     fileContainingRawTypeReference: fileContainingType,
                     fileContainingExample,
                     typeResolver,
-                    exampleResolver
+                    exampleResolver,
+                    workspace
                 })
             });
         },
@@ -68,7 +73,8 @@ export function convertTypeExample({
                 fileContainingType,
                 fileContainingExample,
                 typeResolver,
-                exampleResolver
+                exampleResolver,
+                workspace
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -110,7 +116,8 @@ export function convertTypeExample({
                     exampleResolver,
                     example,
                     discriminant,
-                    discriminantValueForExample
+                    discriminantValueForExample,
+                    workspace
                 })
             });
         },
@@ -125,8 +132,32 @@ export function convertTypeExample({
                 })
             });
         },
-        undiscriminatedUnion: () => {
-            throw new Error("Examples are not supported for undiscriminated unions");
+        undiscriminatedUnion: (undiscriminatedUnion) => {
+            for (const [index, variant] of undiscriminatedUnion.union.entries()) {
+                const violationsForMember = validateTypeReferenceExample({
+                    rawTypeReference: typeof variant === "string" ? variant : variant.type,
+                    example,
+                    typeResolver,
+                    exampleResolver,
+                    file: fileContainingExample,
+                    workspace
+                });
+                if (violationsForMember.length === 0) {
+                    return ExampleTypeShape.undiscriminatedUnion({
+                        index,
+                        singleUnionType: convertTypeReferenceExample({
+                            example,
+                            rawTypeBeingExemplified: typeof variant === "string" ? variant : variant.type,
+                            fileContainingRawTypeReference: fileContainingType,
+                            fileContainingExample,
+                            typeResolver,
+                            exampleResolver,
+                            workspace
+                        })
+                    });
+                }
+            }
+            throw new Error("Example doesn't match any of the undiscriminated unions");
         }
     });
 }
@@ -137,7 +168,8 @@ export function convertTypeReferenceExample({
     rawTypeBeingExemplified,
     fileContainingRawTypeReference,
     typeResolver,
-    exampleResolver
+    exampleResolver,
+    workspace
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
     fileContainingExample: FernFileContext;
@@ -145,6 +177,7 @@ export function convertTypeReferenceExample({
     fileContainingRawTypeReference: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
 }): ExampleTypeReference {
     const { resolvedExample, file: fileContainingResolvedExample } = exampleResolver.resolveExampleOrThrow({
         example,
@@ -175,7 +208,8 @@ export function convertTypeReferenceExample({
                             rawTypeBeingExemplified: keyType,
                             fileContainingRawTypeReference,
                             typeResolver,
-                            exampleResolver
+                            exampleResolver,
+                            workspace
                         }),
                         value: convertTypeReferenceExample({
                             example: value,
@@ -183,7 +217,8 @@ export function convertTypeReferenceExample({
                             rawTypeBeingExemplified: valueType,
                             fileContainingRawTypeReference,
                             typeResolver,
-                            exampleResolver
+                            exampleResolver,
+                            workspace
                         })
                     }))
                 )
@@ -202,7 +237,8 @@ export function convertTypeReferenceExample({
                             rawTypeBeingExemplified: itemType,
                             fileContainingRawTypeReference,
                             typeResolver,
-                            exampleResolver
+                            exampleResolver,
+                            workspace
                         })
                     )
                 )
@@ -221,7 +257,8 @@ export function convertTypeReferenceExample({
                             rawTypeBeingExemplified: itemType,
                             fileContainingRawTypeReference,
                             typeResolver,
-                            exampleResolver
+                            exampleResolver,
+                            workspace
                         })
                     )
                 )
@@ -237,7 +274,8 @@ export function convertTypeReferenceExample({
                               rawTypeBeingExemplified: itemType,
                               fileContainingRawTypeReference,
                               typeResolver,
-                              exampleResolver
+                              exampleResolver,
+                              workspace
                           })
                         : undefined
                 )
@@ -280,7 +318,8 @@ export function convertTypeReferenceExample({
                     fileContainingExample: fileContainingResolvedExample,
                     example: resolvedExample,
                     typeResolver,
-                    exampleResolver
+                    exampleResolver,
+                    workspace
                 })
             });
         },
@@ -378,7 +417,8 @@ function convertObject({
     fileContainingType,
     fileContainingExample,
     typeResolver,
-    exampleResolver
+    exampleResolver,
+    workspace
 }: {
     typeName: DeclaredTypeName;
     rawObject: RawSchemas.ObjectSchema;
@@ -387,6 +427,7 @@ function convertObject({
     fileContainingExample: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
 }): ExampleTypeShape.Object_ {
     if (!isPlainObject(example)) {
         throw new Error("Example is not an object");
@@ -416,7 +457,8 @@ function convertObject({
                                       : originalTypeDeclaration.rawPropertyType.type,
                               fileContainingRawTypeReference: originalTypeDeclaration.file,
                               typeResolver,
-                              exampleResolver
+                              exampleResolver,
+                              workspace
                           });
                           exampleProperties.push({
                               name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -514,7 +556,8 @@ function convertSingleUnionType({
     exampleResolver,
     example,
     discriminant,
-    discriminantValueForExample
+    discriminantValueForExample,
+    workspace
 }: {
     rawValueType: string | undefined;
     rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
@@ -525,6 +568,7 @@ function convertSingleUnionType({
     example: RawSchemas.ExampleTypeValueSchema;
     discriminant: string;
     discriminantValueForExample: string;
+    workspace: FernWorkspace;
 }): ExampleSingleUnionType {
     const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
         name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
@@ -559,7 +603,8 @@ function convertSingleUnionType({
                         typeResolver,
                         exampleResolver,
                         fileContainingRawTypeReference: fileContainingType,
-                        fileContainingExample
+                        fileContainingExample,
+                        workspace
                     })
                 )
             };
@@ -592,7 +637,8 @@ function convertSingleUnionType({
                         fileContainingExample,
                         typeResolver,
                         exampleResolver,
-                        typeName
+                        typeName,
+                        workspace
                     })
                 })
             };

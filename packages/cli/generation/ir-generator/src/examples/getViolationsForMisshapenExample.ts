@@ -1,13 +1,12 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { RuleViolation } from "../../Rule";
+import { ExampleViolation } from "./exampleViolation";
 
-export function getRuleViolationsForMisshapenExample(
+export function getViolationsForMisshapenExample(
     example: RawSchemas.ExampleTypeReferenceSchema,
     expectedTypeIncludingArticle: string
-): RuleViolation[] {
+): ExampleViolation[] {
     return [
         {
-            severity: "error",
             message: `Expected example to be ${expectedTypeIncludingArticle}. Example is: ${JSON.stringify(example)}`
         }
     ];

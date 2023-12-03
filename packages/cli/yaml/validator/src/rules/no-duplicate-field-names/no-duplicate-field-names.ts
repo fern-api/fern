@@ -10,10 +10,7 @@ import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-s
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import {
-    convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject
-} from "../../utils/getAllPropertiesForObject";
+import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "@fern-api/ir-generator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
 export const NoDuplicateFieldNamesRule: Rule = {

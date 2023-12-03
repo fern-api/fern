@@ -7,7 +7,7 @@ groups:
         output:
           location: npm
           url: npm.buildwithfern.com
-          package-name: '@fern-fern/ir-v31-sdk'
+          package-name: '@fern-fern/ir-sdk'
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
@@ -18,7 +18,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV31
+          coordinate: com.fern.fern:irV32
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -27,7 +27,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v31
+          package-name: fern_fern_ir_v32
         config:
           wrapped_aliases: true
           include_union_utils: true

@@ -4,6 +4,7 @@ export { assertVoidNoThrow } from "./assertVoidNoThrow";
 export { delay } from "./delay/delay";
 export { withMinimumTime } from "./delay/withMinimumTime";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
+export { getDuplicates } from "./getDuplicates";
 export { identity } from "./identity";
 export { isNonNullish } from "./isNonNullish";
 export { noop } from "./noop";
