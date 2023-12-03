@@ -1,4 +1,5 @@
 import { isPlainObject } from "@fern-api/core-utils";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ExampleEndpointCall,
@@ -30,7 +31,8 @@ export function convertExampleEndpointCall({
     errorResolver,
     exampleResolver,
     variableResolver,
-    file
+    file,
+    workspace
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -40,6 +42,7 @@ export function convertExampleEndpointCall({
     exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }): ExampleEndpointCall {
     const convertedPathParameters = convertPathParameters({
         service,
@@ -48,14 +51,15 @@ export function convertExampleEndpointCall({
         typeResolver,
         exampleResolver,
         variableResolver,
-        file
+        file,
+        workspace
     });
     return {
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
-        ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file }),
+        ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
             example["query-parameters"] != null
                 ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
@@ -83,13 +87,22 @@ export function convertExampleEndpointCall({
                               typeResolver,
                               exampleResolver,
                               fileContainingRawTypeReference: file,
-                              fileContainingExample: file
+                              fileContainingExample: file,
+                              workspace
                           })
                       };
                   })
                 : [],
-        request: convertExampleRequestBody({ endpoint, example, typeResolver, exampleResolver, file }),
-        response: convertExampleResponse({ endpoint, example, typeResolver, errorResolver, exampleResolver, file })
+        request: convertExampleRequestBody({ endpoint, example, typeResolver, exampleResolver, file, workspace }),
+        response: convertExampleResponse({
+            endpoint,
+            example,
+            typeResolver,
+            errorResolver,
+            exampleResolver,
+            file,
+            workspace
+        })
     };
 }
 
@@ -100,7 +113,8 @@ function convertPathParameters({
     typeResolver,
     exampleResolver,
     variableResolver,
-    file
+    file,
+    workspace
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -109,6 +123,7 @@ function convertPathParameters({
     exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }): Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters"> {
     const rootPathParameters: ExamplePathParameter[] = [];
     const servicePathParameters: ExamplePathParameter[] = [];
@@ -136,7 +151,8 @@ function convertPathParameters({
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: resolvedPathParameter.file,
-                fileContainingExample: file
+                fileContainingExample: file,
+                workspace
             })
         };
     };
@@ -190,7 +206,8 @@ function convertHeaders({
     example,
     typeResolver,
     exampleResolver,
-    file
+    file,
+    workspace
 }: {
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
@@ -198,6 +215,7 @@ function convertHeaders({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }): Pick<ExampleEndpointCall, "endpointHeaders" | "serviceHeaders"> {
     const serviceHeaders: ExampleHeader[] = [];
     const endpointHeaders: ExampleHeader[] = [];
@@ -222,7 +240,8 @@ function convertHeaders({
                         typeResolver,
                         exampleResolver,
                         fileContainingRawTypeReference: file,
-                        fileContainingExample: file
+                        fileContainingExample: file,
+                        workspace
                     })
                 });
             } else if (serviceHeaderDeclaration != null) {
@@ -240,7 +259,8 @@ function convertHeaders({
                         typeResolver,
                         exampleResolver,
                         fileContainingRawTypeReference: file,
-                        fileContainingExample: file
+                        fileContainingExample: file,
+                        workspace
                     })
                 });
             } else {
@@ -260,13 +280,15 @@ function convertExampleRequestBody({
     example,
     typeResolver,
     exampleResolver,
-    file
+    file,
+    workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }): ExampleRequestBody | undefined {
     const requestType = typeof endpoint.request !== "string" ? endpoint.request?.body : endpoint.request;
     if (requestType == null) {
@@ -280,7 +302,8 @@ function convertExampleRequestBody({
                 typeResolver,
                 exampleResolver,
                 fileContainingRawTypeReference: file,
-                fileContainingExample: file
+                fileContainingExample: file,
+                workspace
             })
         );
     }
@@ -307,7 +330,8 @@ function convertExampleRequestBody({
                     typeResolver,
                     exampleResolver,
                     fileContainingRawTypeReference: file,
-                    fileContainingExample: file
+                    fileContainingExample: file,
+                    workspace
                 }),
                 originalTypeDeclaration: undefined
             });
@@ -336,7 +360,8 @@ function convertExampleRequestBody({
                     typeResolver,
                     exampleResolver,
                     fileContainingRawTypeReference: originalTypeDeclaration.file,
-                    fileContainingExample: file
+                    fileContainingExample: file,
+                    workspace
                 }),
                 originalTypeDeclaration: originalTypeDeclaration.typeName
             });
@@ -356,7 +381,8 @@ function convertExampleResponse({
     typeResolver,
     errorResolver,
     exampleResolver,
-    file
+    file,
+    workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
@@ -364,6 +390,7 @@ function convertExampleResponse({
     errorResolver: ErrorResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }): ExampleResponse {
     if (example.response?.error != null) {
         const errorDeclaration = errorResolver.getDeclarationOrThrow(example.response.error, file);
@@ -380,14 +407,15 @@ function convertExampleResponse({
                           typeResolver,
                           exampleResolver,
                           fileContainingRawTypeReference: errorDeclaration.file,
-                          fileContainingExample: file
+                          fileContainingExample: file,
+                          workspace
                       })
                     : undefined
         });
     }
 
     return ExampleResponse.ok({
-        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file })
+        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
     });
 }
 
@@ -396,13 +424,15 @@ function convertExampleResponseBody({
     example,
     typeResolver,
     exampleResolver,
-    file
+    file,
+    workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
+    workspace: FernWorkspace;
 }) {
     const responseBodyType = typeof endpoint.response !== "string" ? endpoint.response?.type : endpoint.response;
     if (responseBodyType == null) {
@@ -414,7 +444,8 @@ function convertExampleResponseBody({
         typeResolver,
         exampleResolver,
         fileContainingRawTypeReference: file,
-        fileContainingExample: file
+        fileContainingExample: file,
+        workspace
     });
 }
 

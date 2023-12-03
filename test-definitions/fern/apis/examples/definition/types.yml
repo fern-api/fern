@@ -24,6 +24,7 @@ types:
       type: literal<"movie">
       tag: commons.Tag
       book: optional<string>
+      cast: optional<list<CastMember>>
     examples:
       - name: One
         value:
@@ -33,6 +34,34 @@ types:
           rating: 8.0
           type: movie
           tag: $commons.Tag.One
+          cast: 
+            - $CastMember.Example0
+            - $CastMember.Example1
+  
+  CastMember: 
+    discriminated: false
+    union: 
+      - Actor
+      - Actress
+      - StuntDouble
+    examples: 
+      - name: Example0
+        value: 
+          name: "Brad Pitt"
+      - name: Example1
+        value: $Actress.Eample0
+          
+  Actor: 
+    properties: 
+      name: string
+  
+  Actress: 
+    properties: 
+      name: string
+    examples: 
+      - name: Example0
+        value: 
+          name: Jennifer Lawrence
 
   ExtendedMovie:
     extends: Movie

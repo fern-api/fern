@@ -1,3 +1,4 @@
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
@@ -23,13 +24,15 @@ export function convertTypeDeclaration({
     typeDeclaration,
     file,
     typeResolver,
-    exampleResolver
+    exampleResolver,
+    workspace
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
 }): TypeDeclarationWithDescendantFilepaths {
     const declaration = convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
@@ -60,7 +63,8 @@ export function convertTypeDeclaration({
                                   exampleResolver,
                                   typeDeclaration,
                                   fileContainingType: file,
-                                  fileContainingExample: file
+                                  fileContainingExample: file,
+                                  workspace
                               })
                           })
                       )

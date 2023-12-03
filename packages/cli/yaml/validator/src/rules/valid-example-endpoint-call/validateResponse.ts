@@ -1,9 +1,14 @@
-import { ErrorResolver, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import {
+    ErrorResolver,
+    ExampleResolver,
+    ExampleValidators,
+    FernFileContext,
+    TypeResolver
+} from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
-import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
 
 export function validateResponse({
     example,
@@ -25,17 +30,20 @@ export function validateResponse({
     const violations: RuleViolation[] = [];
     if (example?.error == null) {
         if (endpoint.response != null) {
-            violations.push(
-                ...validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
-                    example: example?.body,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                })
-            );
+            const violations: RuleViolation[] = ExampleValidators.validateTypeReferenceExample({
+                rawTypeReference: typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
+                example: example?.body,
+                typeResolver,
+                exampleResolver,
+                file,
+                workspace
+            }).map((violation) => {
+                return {
+                    severity: "error",
+                    message: violation.message
+                };
+            });
+            violations.push(...violations);
         } else if (example?.body != null) {
             violations.push({
                 severity: "error",
@@ -66,16 +74,20 @@ export function validateResponse({
             }
 
             if (errorDeclaration.declaration.type != null) {
-                violations.push(
-                    ...validateTypeReferenceExample({
-                        rawTypeReference: errorDeclaration.declaration.type,
-                        example: example.body,
-                        typeResolver,
-                        exampleResolver,
-                        file: errorDeclaration.file,
-                        workspace
-                    })
-                );
+                const violations: RuleViolation[] = ExampleValidators.validateTypeReferenceExample({
+                    rawTypeReference: errorDeclaration.declaration.type,
+                    example: example.body,
+                    typeResolver,
+                    exampleResolver,
+                    file: errorDeclaration.file,
+                    workspace
+                }).map((violation) => {
+                    return {
+                        severity: "error",
+                        message: violation.message
+                    };
+                });
+                violations.push(...violations);
             } else if (example.body != null) {
                 violations.push({
                     severity: "error",

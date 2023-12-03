@@ -1,14 +1,13 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { constructFernFileContext, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { keyBy } from "lodash-es";
-import { RuleViolation } from "../../Rule";
-import {
-    convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject
-} from "../../utils/getAllPropertiesForObject";
-import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
+import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
+import { ExampleViolation } from "./exampleViolation";
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
 export function validateObjectExample({
@@ -30,12 +29,12 @@ export function validateObjectExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): ExampleViolation[] {
     if (!isPlainObject(example)) {
-        return getRuleViolationsForMisshapenExample(example, "an object");
+        return getViolationsForMisshapenExample(example, "an object");
     }
 
-    const violations: RuleViolation[] = [];
+    const violations: ExampleViolation[] = [];
 
     const allPropertiesForObject = getAllPropertiesForObject({
         typeName,
@@ -62,7 +61,6 @@ export function validateObjectExample({
                     });
             }
             violations.push({
-                severity: "error",
                 message
             });
         }
@@ -73,7 +71,6 @@ export function validateObjectExample({
         const propertyWithPath = allPropertiesByWireKey[exampleKey];
         if (propertyWithPath == null) {
             violations.push({
-                severity: "error",
                 message: `Unexpected property "${exampleKey}"`
             });
         } else {

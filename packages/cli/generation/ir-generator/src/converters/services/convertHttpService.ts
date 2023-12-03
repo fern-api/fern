@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isVariablePathParameter, RawSchemas } from "@fern-api/yaml-schema";
 import {
     HttpEndpoint,
@@ -33,7 +34,8 @@ export function convertHttpService({
     typeResolver,
     exampleResolver,
     variableResolver,
-    globalErrors
+    globalErrors,
+    workspace
 }: {
     rootPathParameters: PathParameter[];
     serviceDefinition: RawSchemas.HttpServiceSchema;
@@ -43,6 +45,7 @@ export function convertHttpService({
     exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
     globalErrors: ResponseErrors;
+    workspace: FernWorkspace;
 }): HttpService {
     const servicePathParameters = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
@@ -136,7 +139,8 @@ export function convertHttpService({
                                   errorResolver,
                                   exampleResolver,
                                   variableResolver,
-                                  file
+                                  file,
+                                  workspace
                               })
                           )
                         : []

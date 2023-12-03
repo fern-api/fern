@@ -2,10 +2,13 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     constructFernFileContext,
+    convertObjectPropertyWithPathToString,
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     doesRequestHaveNonBodyProperties,
+    getAllPropertiesForObject,
     getHeaderName,
     getQueryParameterName,
+    ObjectPropertyWithPath,
     TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -13,11 +16,6 @@ import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import {
-    convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject,
-    ObjectPropertyWithPath
-} from "../../utils/getAllPropertiesForObject";
 
 export const NoConflictingRequestWrapperPropertiesRule: Rule = {
     name: "no-conflicting-request-wrapper-properties",

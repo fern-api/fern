@@ -1,3 +1,3 @@
-name: ir
+name: ir-v31
 docs: |
   Adds `idempotencyHeaders`.
