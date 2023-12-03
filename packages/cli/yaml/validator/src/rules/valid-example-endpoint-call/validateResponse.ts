@@ -30,20 +30,22 @@ export function validateResponse({
     const violations: RuleViolation[] = [];
     if (example?.error == null) {
         if (endpoint.response != null) {
-            const violations: RuleViolation[] = ExampleValidators.validateTypeReferenceExample({
-                rawTypeReference: typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
-                example: example?.body,
-                typeResolver,
-                exampleResolver,
-                file,
-                workspace
-            }).map((violation) => {
-                return {
-                    severity: "error",
-                    message: violation.message
-                };
-            });
-            violations.push(...violations);
+            violations.push(
+                ...ExampleValidators.validateTypeReferenceExample({
+                    rawTypeReference:
+                        typeof endpoint.response !== "string" ? endpoint.response.type : endpoint.response,
+                    example: example?.body,
+                    typeResolver,
+                    exampleResolver,
+                    file,
+                    workspace
+                }).map((val): RuleViolation => {
+                    return {
+                        severity: "error",
+                        message: val.message
+                    };
+                })
+            );
         } else if (example?.body != null) {
             violations.push({
                 severity: "error",
@@ -74,20 +76,18 @@ export function validateResponse({
             }
 
             if (errorDeclaration.declaration.type != null) {
-                const violations: RuleViolation[] = ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference: errorDeclaration.declaration.type,
-                    example: example.body,
-                    typeResolver,
-                    exampleResolver,
-                    file: errorDeclaration.file,
-                    workspace
-                }).map((violation) => {
-                    return {
-                        severity: "error",
-                        message: violation.message
-                    };
-                });
-                violations.push(...violations);
+                violations.push(
+                    ...ExampleValidators.validateTypeReferenceExample({
+                        rawTypeReference: errorDeclaration.declaration.type,
+                        example: example.body,
+                        typeResolver,
+                        exampleResolver,
+                        file: errorDeclaration.file,
+                        workspace
+                    }).map((val): RuleViolation => {
+                        return { severity: "error", message: val.message };
+                    })
+                );
             } else if (example.body != null) {
                 violations.push({
                     severity: "error",
