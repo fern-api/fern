@@ -85,7 +85,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
             .map(([key, schema]) => {
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
-                    if (ignoreSchema) {
+                    if (ignoreSchema != null && ignoreSchema) {
                         return [];
                     }
                 }
