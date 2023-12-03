@@ -43,9 +43,10 @@ types:
     examples: 
       - name: Example0
         value: 
+          id: actor_123
           name: "Brad Pitt"
       - name: Example1
-        value: $Actress.Eample0
+        value: $Actress.Example0
           
   Actor: 
     properties: 
@@ -60,6 +61,7 @@ types:
       - name: Example0
         value: 
           name: Jennifer Lawrence
+          id: actor_456
   
   StuntDouble: 
     properties: 
