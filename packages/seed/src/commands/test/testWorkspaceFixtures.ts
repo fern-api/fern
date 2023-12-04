@@ -5,7 +5,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { GeneratorType, ScriptConfig } from "@fern-fern/seed-config/api";
+import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -68,7 +68,6 @@ interface TestFailure {
 }
 
 export async function testWorkspaceFixtures({
-    generatorType,
     workspace,
     irVersion,
     language,
@@ -79,7 +78,6 @@ export async function testWorkspaceFixtures({
     numDockers
 }: {
     workspace: SeedWorkspace;
-    generatorType: GeneratorType;
     irVersion: string | undefined;
     language: GenerationLanguage | undefined;
     fixtures: string[];
@@ -104,7 +102,6 @@ export async function testWorkspaceFixtures({
                     acquireLocksAndRunTest({
                         absolutePathToWorkspace,
                         lock,
-                        generatorType,
                         irVersion,
                         outputVersion: fixtureConfigInstance.outputVersion,
                         language,
@@ -119,7 +116,8 @@ export async function testWorkspaceFixtures({
                             workspace.absolutePathToWorkspace,
                             RelativeFilePath.of(fixture),
                             RelativeFilePath.of(fixtureConfigInstance.outputFolder)
-                        )
+                        ),
+                        outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode
                     })
                 );
             }
@@ -130,14 +128,14 @@ export async function testWorkspaceFixtures({
                     lock,
                     irVersion,
                     outputVersion: undefined,
-                    generatorType,
                     language,
                     fixture,
                     docker,
                     scripts,
                     customConfig: undefined,
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
-                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture))
+                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
+                    outputMode: workspace.workspaceConfig.defaultOutputMode
                 })
             );
         }
@@ -157,7 +155,6 @@ export async function testWorkspaceFixtures({
 
 export async function acquireLocksAndRunTest({
     lock,
-    generatorType,
     irVersion,
     outputVersion,
     language,
@@ -167,10 +164,10 @@ export async function acquireLocksAndRunTest({
     scripts,
     taskContext,
     outputDir,
-    absolutePathToWorkspace
+    absolutePathToWorkspace,
+    outputMode
 }: {
     lock: Semaphore;
-    generatorType: GeneratorType;
     irVersion: string | undefined;
     outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
@@ -181,6 +178,7 @@ export async function acquireLocksAndRunTest({
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
+    outputMode: OutputMode;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -192,11 +190,11 @@ export async function acquireLocksAndRunTest({
         language,
         docker,
         customConfig,
-        generatorType,
         scripts,
         taskContext,
         outputDir,
-        absolutePathToWorkspace
+        absolutePathToWorkspace,
+        outputMode
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -204,7 +202,6 @@ export async function acquireLocksAndRunTest({
 }
 
 async function testWithWriteToDisk({
-    generatorType,
     fixture,
     irVersion,
     outputVersion,
@@ -214,19 +211,20 @@ async function testWithWriteToDisk({
     scripts,
     taskContext,
     outputDir,
-    absolutePathToWorkspace
+    absolutePathToWorkspace,
+    outputMode
 }: {
     fixture: string;
     irVersion: string | undefined;
     outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
-    generatorType: GeneratorType;
     customConfig: unknown;
     scripts: ScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
+    outputMode: OutputMode;
 }): Promise<TestResult> {
     try {
         const workspace = await loadAPIWorkspace({
@@ -258,11 +256,12 @@ async function testWithWriteToDisk({
             docker,
             workspace: workspace.workspace,
             language,
-            generatorType,
             customConfig,
             taskContext,
             irVersion,
-            outputVersion
+            outputVersion,
+            outputMode,
+            fixtureName: fixture
         });
         for (const script of scripts ?? []) {
             const scriptFile = await tmp.file();

@@ -3,6 +3,7 @@ types:
     properties:
       irVersion: string
       language: optional<Language>
+      defaultOutputMode: OutputMode
       generatorType: GeneratorType
       docker: string
       dockerCommand: optional<string>
@@ -34,3 +35,12 @@ types:
       customConfig: unknown
       outputFolder: string
       outputVersion: optional<string>
+      outputMode: 
+        type: optional<OutputMode>
+        docs: Overrides the default output mode
+  
+  OutputMode: 
+    enum: 
+      - github
+      - local_files
+      - publish
