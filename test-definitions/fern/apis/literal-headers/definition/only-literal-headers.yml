@@ -12,3 +12,8 @@ service:
         headers:
           literalEndpointHeader: literal<"endpoint header">
           falseEndpointHeader: literal<false>
+      examples:
+        - headers:
+            literalServiceHeader: service header
+            literalEndpointHeader: endpoint header
+            falseEndpointHeader: false
