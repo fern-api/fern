@@ -16,3 +16,11 @@ service:
           nonLiteralEndpointHeader: string
           literalEndpointHeader: literal<"endpoint header">
           trueEndpointHeader: literal<true>
+      examples:
+        - headers:
+            integer: 42
+            literalServiceHeader: service header
+            trueServiceHeader: true
+            nonLiteralEndpointHeader: custom header
+            literalEndpointHeader: endpoint header
+            trueEndpointHeader: true
