@@ -11,11 +11,11 @@ Dump the generated SDK to the local file system. Available on the open source pl
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    local:
+groups:
+  local:
+    generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.13
+        version: 0.5.15
         output:
           location: local-file-system
           path: ../../generated/sdk/java
@@ -28,11 +28,11 @@ Publish the generated SDK to a private Maven repository hosted by Fern. Availabl
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    internal:
+groups:
+  internal:
+    generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.13
+        version: 0.5.15
         output:
           location: npm.buildwithfern.com
           package-name: @fern-imdb/api # replace with your package name
@@ -45,11 +45,11 @@ Publish the generated SDK to Maven Central. Available on the Starter plan.
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    public:
+groups:
+  publish:
+    generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.13
+        version: 0.5.15
         output:
           location: maven
           # replace with your coordinate

@@ -10,9 +10,9 @@ Dump the generated SDK to the local file system. Available on the open source pl
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    local:
+groups:
+  local:
+    generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13
         output:
@@ -27,9 +27,9 @@ Publish the generated SDK to a private NPM hosted by Fern. Available on the Star
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    internal:
+groups:
+  internal:
+    generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13
         output:
@@ -44,9 +44,9 @@ Publish the generated SDK to [npmjs.com](https://www.npmjs.com/). Available on t
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    public:
+groups:
+  publish:
+    generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.8.13
         output:

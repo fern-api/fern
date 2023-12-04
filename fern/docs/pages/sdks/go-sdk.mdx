@@ -10,9 +10,9 @@ Dump the generated SDK to the local file system. Available on the open source pl
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    local:
+groups:
+  local:
+    generators:
       - name: fernapi/fern-go-sdk
         version: 0.9.2
         output:
@@ -27,9 +27,9 @@ Publish the generated SDK to GitHub.
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    publish:
+groups:
+  publish:
+    generators:
       - name: fernapi/fern-go-sdk
         version: 0.9.2
         github:

@@ -11,9 +11,9 @@ Dump the generated SDK to the local file system. Available on the open source pl
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    local:
+groups:
+  local:
+    generators:
       - name: fernapi/fern-python-sdk
         version: 0.7.2
         output:
@@ -28,9 +28,9 @@ Publish the generated SDK to a private PyPI repository hosted by Fern. Available
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    internal:
+groups:
+  internal:
+    generators:
       - name: fernapi/fern-python-sdk
         version: 0.7.2
         output:
@@ -45,9 +45,9 @@ Publish the generated SDK to PyPI. Available on the Starter plan.
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    public:
+groups:
+  public:
+    generators:
       - name: fernapi/fern-python-sdk
         version: 0.7.2
         output:

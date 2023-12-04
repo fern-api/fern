@@ -9,9 +9,9 @@ SDK for usage in the browser. It can publish the SDK to npmjs.org (or any other 
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    local:
+groups:
+  local:
+    generators:
       - name: fernapi/fern-typescript-browser-sdk
         version: 0.8.13
         output:
@@ -26,9 +26,9 @@ Publish the generated SDK to a private NPM hosted by Fern. Available on the Star
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    internal:
+groups:
+  internal:
+    generators:
       - name: fernapi/fern-typescript-browser-sdk
         version: 0.8.13
         output:
@@ -41,9 +41,9 @@ generators:
 
 <CodeBlock title="generators.yml">
 ```yaml
-generators:
-  groups:
-    public:
+groups:
+  publish:
+    generators:
       - name: fernapi/fern-typescript-browser-sdk
         version: 0.8.13
         output:
