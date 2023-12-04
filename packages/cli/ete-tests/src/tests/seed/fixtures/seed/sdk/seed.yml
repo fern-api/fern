@@ -2,6 +2,7 @@ irVersion: v30
 docker: fernapi/fern-python-sdk:0.6.6
 language: python
 generatorType: SDK
+defaultOutputMode: github
 fixtures:
   exhaustive:
     - customConfig: null

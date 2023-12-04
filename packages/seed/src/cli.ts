@@ -94,7 +94,6 @@ function addTestCommand(cli: Argv) {
                     workspace,
                     irVersion: workspace.workspaceConfig.irVersion,
                     language: workspace.workspaceConfig.language,
-                    generatorType: workspace.workspaceConfig.generatorType,
                     docker: parsedDockerImage,
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel
@@ -105,7 +104,6 @@ function addTestCommand(cli: Argv) {
                     fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
                     irVersion: workspace.workspaceConfig.irVersion,
                     language: workspace.workspaceConfig.language,
-                    generatorType: workspace.workspaceConfig.generatorType,
                     docker: parsedDockerImage,
                     dockerCommand: workspace.workspaceConfig.dockerCommand,
                     scripts: workspace.workspaceConfig.scripts,
