@@ -26,9 +26,9 @@ types:
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Versioning:**
- - Fern CLI: [e.g. iOS]
- - Generator [e.g. chrome, safari]
+**Versions**
+ - Fern CLI: [found in `fern.config.json` e.g. 0.15.3]
+ - Generator: [found in `generators.yml` e.g. 0.6.7]
 
 **Additional context**
 Add any other context about the problem here.
