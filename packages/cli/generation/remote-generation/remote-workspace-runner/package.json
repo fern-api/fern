@@ -62,7 +62,7 @@
     "@types/node": "^18.7.18",
     "@types/terminal-link": "^1.2.0",
     "depcheck": "^1.4.6",
-    "eslint": "^8.26.0",
+    "eslint": "^8.55.0",
     "jest": "^29.7.0",
     "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
