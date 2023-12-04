@@ -40,6 +40,7 @@ class HttpX:
         request_body: Optional[AST.Expression],
         headers: Optional[AST.Expression],
         files: Optional[AST.Expression],
+        content: Optional[AST.Expression],
         auth: Optional[AST.Expression],
         timeout: AST.Expression,
         response_variable_name: str,
@@ -62,6 +63,11 @@ class HttpX:
             if files is not None:
                 writer.write("files=")
                 writer.write_node(files)
+                writer.write_line(",")
+
+            if content is not None:
+                writer.write("content=")
+                writer.write_node(content)
                 writer.write_line(",")
 
             if headers is not None:

@@ -50,7 +50,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_body_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
         return property.name.name.snake_case.unsafe_name
 
-    def get_reference_to_request_body(self) -> AST.Expression:
+    def get_json_body(self) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_line("{")
             with writer.indent():
@@ -83,3 +83,6 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
     def is_default_body_parameter_used(self) -> bool:
         return False
+
+    def get_content(self) -> Optional[AST.Expression]:
+        return None

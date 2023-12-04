@@ -10,7 +10,7 @@ class AbstractRequestBodyParameters:
         ...
 
     @abstractmethod
-    def get_reference_to_request_body(self) -> AST.Expression:
+    def get_json_body(self) -> Optional[AST.Expression]:
         ...
 
     @abstractmethod
@@ -23,4 +23,8 @@ class AbstractRequestBodyParameters:
 
     @abstractmethod
     def is_default_body_parameter_used(self) -> bool:
+        ...
+
+    @abstractmethod
+    def get_content(self) -> Optional[AST.Expression]:
         ...

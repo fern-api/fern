@@ -21,6 +21,7 @@ from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
+    BytesRequestBodyParameters,
     FileUploadRequestBodyParameters,
     InlinedRequestBodyParameters,
     ReferencedRequestBodyParameters,
@@ -82,7 +83,9 @@ class EndpointFunctionGenerator:
                 file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
                     endpoint=self._endpoint, request=file_upload_request, context=self._context
                 ),
-                bytes=lambda _: raise_bytes_unsupported(),  # TODO: We probably just need to wrap AST.TypeHint.bytes().
+                bytes=lambda bytes_request: BytesRequestBodyParameters(
+                    endpoint=self._endpoint, request=bytes_request, context=self._context
+                ),
             )
             if self._endpoint.request_body is not None
             else None
@@ -185,9 +188,7 @@ class EndpointFunctionGenerator:
             if request_pre_fetch_statements is not None:
                 writer.write_node(AST.Expression(request_pre_fetch_statements))
 
-            reference_to_request_body = (
-                request_body_parameters.get_reference_to_request_body() if request_body_parameters is not None else None
-            )
+            json_request_body = request_body_parameters.get_json_body() if request_body_parameters is not None else None
 
             is_streaming = (
                 True
@@ -221,10 +222,11 @@ class EndpointFunctionGenerator:
                     ),
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
                     request_body=(
-                        self._context.core_utilities.jsonable_encoder(reference_to_request_body)
-                        if reference_to_request_body is not None
+                        self._context.core_utilities.jsonable_encoder(json_request_body)
+                        if json_request_body is not None
                         else None
                     ),
+                    content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=request_body_parameters.get_files() if request_body_parameters is not None else None,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
                     headers=self._get_headers_for_endpoint(service=service, endpoint=endpoint),
@@ -778,10 +780,6 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
-
-
-def raise_bytes_unsupported() -> Never:
-    raise RuntimeError("bytes request is not supported")
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:

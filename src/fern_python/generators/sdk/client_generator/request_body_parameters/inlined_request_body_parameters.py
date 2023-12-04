@@ -60,7 +60,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
         return property.name.name.snake_case.unsafe_name
 
-    def get_reference_to_request_body(self) -> AST.Expression:
+    def get_json_body(self) -> Optional[AST.Expression]:
         if self._are_any_properties_optional():
             return AST.Expression(InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME)
 
@@ -127,3 +127,6 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def is_default_body_parameter_used(self) -> bool:
         return self._are_any_properties_optional()
+
+    def get_content(self) -> Optional[AST.Expression]:
+        return None
