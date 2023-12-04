@@ -38,7 +38,8 @@ export async function generateDocsWorkspace({
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern generate --docs"
+        command: "fern generate --docs",
+        url: instance
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
