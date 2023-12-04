@@ -8,10 +8,7 @@ from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model import (
-    PydanticModelGenerator,
-    SnippetRegistry,
-)
+from fern_python.generators.pydantic_model import PydanticModelGenerator
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.context.sdk_generator_context_impl import (
     SdkGeneratorContextImpl,
@@ -19,7 +16,9 @@ from fern_python.generators.sdk.context.sdk_generator_context_impl import (
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
+from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.source_file_factory import SourceFileFactory
+from fern_python.utils import build_snippet_writer
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
@@ -84,8 +83,8 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             ),
         )
-        snippet_registry = SnippetRegistry(
-            ir=ir,
+        snippet_registry = SnippetRegistry()
+        snippet_writer = build_snippet_writer(
             context=context.pydantic_generator_context,
         )
         PydanticModelGenerator().generate_types(
@@ -95,6 +94,7 @@ class SdkGenerator(AbstractGenerator):
             project=project,
             context=context.pydantic_generator_context,
             snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
         )
 
         generated_environment: Optional[GeneratedEnvironment] = None
@@ -119,7 +119,8 @@ class SdkGenerator(AbstractGenerator):
             generated_environment=generated_environment,
             generator_exec_wrapper=generator_exec_wrapper,
             project=project,
-            snippet_regsitry=snippet_registry,
+            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
         )
 
         for subpackage_id in ir.subpackages.keys():
@@ -133,12 +134,12 @@ class SdkGenerator(AbstractGenerator):
                     project=project,
                     generated_root_client=generated_root_client,
                     snippet_registry=snippet_registry,
+                    snippet_writer=snippet_writer,
                 )
 
         for error in ir.errors.values():
             self._generate_error(
                 context=context,
-                ir=ir,
                 generator_exec_wrapper=generator_exec_wrapper,
                 error=error,
                 project=project,
@@ -212,7 +213,8 @@ class SdkGenerator(AbstractGenerator):
         generated_environment: Optional[GeneratedEnvironment],
         generator_exec_wrapper: GeneratorExecWrapper,
         project: Project,
-        snippet_regsitry: SnippetRegistry,
+        snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
     ) -> GeneratedRootClient:
         filepath = context.get_filepath_for_root_client()
         source_file = SourceFileFactory.create(
@@ -224,7 +226,8 @@ class SdkGenerator(AbstractGenerator):
             generated_environment=generated_environment,
             class_name=context.get_class_name_for_root_client(),
             async_class_name="Async" + context.get_class_name_for_root_client(),
-            snippet_registry=snippet_regsitry,
+            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
         return generated_root_client
@@ -238,6 +241,7 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
         source_file = SourceFileFactory.create(
@@ -250,13 +254,13 @@ class SdkGenerator(AbstractGenerator):
             async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             generated_root_client=generated_root_client,
             snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
     def _generate_error(
         self,
         context: SdkGeneratorContext,
-        ir: ir_types.IntermediateRepresentation,
         generator_exec_wrapper: GeneratorExecWrapper,
         error: ir_types.ErrorDeclaration,
         project: Project,

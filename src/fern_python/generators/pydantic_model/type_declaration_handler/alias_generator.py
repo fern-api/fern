@@ -3,8 +3,9 @@ from typing import Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.snippet import SnippetWriter
 
-from ..context import PydanticGeneratorContext
+from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from ..fern_aware_pydantic_model import FernAwarePydanticModel
 from .abstract_type_generator import AbstractTypeGenerator
@@ -111,4 +112,19 @@ class AliasGenerator(AbstractTypeGenerator):
                 base_64=lambda: "get_as_str",
             ),
             unknown=lambda: "get_value",
+        )
+
+
+class AliasSnippetGenerator:
+    def __init__(
+        self,
+        snippet_writer: SnippetWriter,
+        example: ir_types.ExampleAliasType,
+    ):
+        self.snippet_writer = snippet_writer
+        self.example = example
+
+    def generate_snippet(self) -> Optional[AST.Expression]:
+        return self.snippet_writer.get_snippet_for_example_type_reference(
+            example_type_reference=self.example.value,
         )

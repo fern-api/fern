@@ -6,10 +6,10 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.generators.pydantic_model import SnippetRegistry
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
+from fern_python.snippet import SnippetRegistry, SnippetWriter
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -51,6 +51,7 @@ class ClientGenerator:
         async_class_name: str,
         generated_root_client: GeneratedRootClient,
         snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
     ):
         self._context = context
         self._package = package
@@ -58,6 +59,7 @@ class ClientGenerator:
         self._async_class_name = async_class_name
         self._generated_root_client = generated_root_client
         self._snippet_registry = snippet_registry
+        self._snippet_writer = snippet_writer
         self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:
@@ -101,13 +103,12 @@ class ClientGenerator:
                 endpoint_function_generator = EndpointFunctionGenerator(
                     context=self._context,
                     package=self._package,
-                    serviceId=self._package.service,
                     service=service,
                     endpoint=endpoint,
                     is_async=is_async,
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
                     generated_root_client=self._generated_root_client,
-                    snippet_registry=self._snippet_registry,
+                    snippet_writer=self._snippet_writer,
                 )
                 generated_endpoint_function = endpoint_function_generator.generate()
                 class_declaration.add_method(generated_endpoint_function.function)
@@ -116,6 +117,16 @@ class ClientGenerator:
                     and generated_endpoint_function.is_default_body_parameter_used
                 ):
                     self._is_default_body_parameter_used = True
+
+                if generated_endpoint_function.snippet is not None:
+                    if is_async:
+                        self._snippet_registry.register_async_client_endpoint_snippet(
+                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                        )
+                    else:
+                        self._snippet_registry.register_sync_client_endpoint_snippet(
+                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                        )
 
         return class_declaration
 

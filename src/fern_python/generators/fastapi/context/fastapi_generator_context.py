@@ -4,8 +4,8 @@ import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
-from fern_python.generators.pydantic_model import PydanticGeneratorContextImpl
 
+from ...context import PydanticGeneratorContextImpl
 from ..core_utilities import CoreUtilities
 from ..declaration_referencers import TypeDeclarationReferencer
 

@@ -3,8 +3,9 @@ from typing import Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
+from fern_python.snippet import SnippetWriter
 
-from ..context import PydanticGeneratorContext
+from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abstract_type_generator import AbstractTypeGenerator
 from .get_visit_method import VisitableItem, get_visit_method
@@ -48,7 +49,7 @@ class EnumGenerator(AbstractTypeGenerator):
         for value in self._enum.values:
             enum_class.add_class_var(
                 AST.VariableDeclaration(
-                    name=self._get_class_var_name(value),
+                    name=get_class_var_name(value.name.name),
                     initializer=AST.Expression(f'"{value.name.wire_value}"'),
                     docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                 )
@@ -59,7 +60,7 @@ class EnumGenerator(AbstractTypeGenerator):
                 items=[
                     VisitableItem(
                         parameter_name=self._get_visitor_parameter_name_for_enum_value(value),
-                        expected_value=f"{self._get_class_name()}.{self._get_class_var_name(value)}",
+                        expected_value=f"{self._get_class_name()}.{get_class_var_name(value.name.name)}",
                         visitor_argument=None,
                     )
                     for value in self._enum.values
@@ -69,11 +70,35 @@ class EnumGenerator(AbstractTypeGenerator):
             )
         )
 
-    def _get_class_var_name(self, enum_value: ir_types.EnumValue) -> str:
-        return enum_value.name.name.screaming_snake_case.unsafe_name
-
     def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
         return enum_value.name.name.snake_case.safe_name
 
     def _get_class_name(self) -> str:
         return self._name.name.pascal_case.unsafe_name
+
+
+class EnumSnippetGenerator:
+    def __init__(
+        self,
+        snippet_writer: SnippetWriter,
+        name: ir_types.DeclaredTypeName,
+        example: ir_types.ExampleEnumType,
+    ):
+        self.snippet_writer = snippet_writer
+        self.name = name
+        self.example = example
+
+    def generate_snippet(self) -> AST.Expression:
+        class_reference = self.snippet_writer.get_class_reference_for_declared_type_name(
+            name=self.name,
+        )
+
+        def write_enum(writer: AST.NodeWriter) -> None:
+            writer.write_node(AST.Expression(class_reference))
+            writer.write(f".{get_class_var_name(self.example.value.name)}")
+
+        return AST.Expression(AST.CodeWriter(write_enum))
+
+
+def get_class_var_name(name: ir_types.Name) -> str:
+    return name.screaming_snake_case.unsafe_name

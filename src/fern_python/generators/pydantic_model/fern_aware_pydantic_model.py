@@ -8,7 +8,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-from .context import HashableDeclaredTypeName, PydanticGeneratorContext
+from ..context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
 from .validators import (
     CustomRootTypeValidatorsGenerator,
@@ -131,9 +131,7 @@ class FernAwarePydanticModel:
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
         if self._type_name is None:
             return False
-        is_circular_reference = HashableDeclaredTypeName.of(self._type_name) in self._context.get_referenced_types(
-            type_name
-        )
+        is_circular_reference = self._context.do_types_reference_each_other(self._type_name, type_name)
         if is_circular_reference:
             self._model_contains_forward_refs = True
         return is_circular_reference

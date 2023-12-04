@@ -6,12 +6,22 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.snippet import (
+    SnippetRegistry,
+    SnippetWriter,
+    TypeDeclarationSnippetGenerator,
+)
 from fern_python.source_file_factory import SourceFileFactory
 
-from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
+from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
-from .type_declaration_handler import TypeDeclarationHandler
-from .type_declaration_handler.snippet_regsitry import SnippetRegistry
+from .type_declaration_handler import (
+    AliasSnippetGenerator,
+    DiscriminatedUnionSnippetGenerator,
+    EnumSnippetGenerator,
+    ObjectSnippetGenerator,
+    TypeDeclarationHandler,
+)
 from .type_declaration_referencer import TypeDeclarationReferencer
 
 
@@ -53,8 +63,8 @@ class PydanticModelGenerator(AbstractGenerator):
                 ir=ir,
             ),
         )
-        snippet_registry = SnippetRegistry(
-            ir=ir,
+        snippet_registry = SnippetRegistry()
+        snippet_writer = self._build_snippet_writer(
             context=context,
         )
         self.generate_types(
@@ -64,6 +74,7 @@ class PydanticModelGenerator(AbstractGenerator):
             project=project,
             context=context,
             snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
         )
         context.core_utilities.copy_to_project(project=project)
 
@@ -76,6 +87,7 @@ class PydanticModelGenerator(AbstractGenerator):
         project: Project,
         context: PydanticGeneratorContext,
         snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
     ) -> None:
         for type_to_generate in ir.types.values():
             self._generate_type(
@@ -85,6 +97,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 custom_config=custom_config,
                 context=context,
                 snippet_registry=snippet_registry,
+                snippet_writer=snippet_writer,
             )
 
     def _generate_type(
@@ -95,6 +108,7 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config: PydanticModelCustomConfig,
         context: PydanticGeneratorContext,
         snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
     ) -> None:
         filepath = context.get_filepath_for_type_name(type_name=type.name)
         source_file = SourceFileFactory.create(
@@ -105,9 +119,14 @@ class PydanticModelGenerator(AbstractGenerator):
             context=context,
             custom_config=custom_config,
             source_file=source_file,
-            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
         )
-        type_declaration_handler.run()
+        generated_type = type_declaration_handler.run()
+        if generated_type.snippet is not None:
+            snippet_registry.register_snippet(
+                type_id=type.name.type_id,
+                expr=generated_type.snippet,
+            )
         project.write_source_file(source_file=source_file, filepath=filepath)
 
     def get_sorted_modules(self) -> None:
@@ -119,3 +138,39 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
     ) -> bool:
         return False
+
+    def _build_snippet_writer(self, context: PydanticGeneratorContext) -> SnippetWriter:
+        """
+        Note that this function is a copy of the function with the same name in
+        the fern_python.utils package. This is redeclared here to prevent an import
+        cycle.
+        """
+        snippet_writer = SnippetWriter(
+            context=context,
+        )
+
+        type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(
+            alias=lambda example: AliasSnippetGenerator(
+                snippet_writer=snippet_writer,
+                example=example,
+            ).generate_snippet(),
+            enum=lambda name, example: EnumSnippetGenerator(
+                snippet_writer=snippet_writer,
+                name=name,
+                example=example,
+            ).generate_snippet(),
+            object=lambda name, example: ObjectSnippetGenerator(
+                snippet_writer=snippet_writer,
+                name=name,
+                example=example,
+            ).generate_snippet(),
+            discriminated_union=lambda name, example: DiscriminatedUnionSnippetGenerator(
+                snippet_writer=snippet_writer,
+                name=name,
+                example=example,
+            ).generate_snippet(),
+        )
+
+        snippet_writer._type_declaration_snippet_generator = type_declaration_snippet_generator
+
+        return snippet_writer

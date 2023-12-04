@@ -7,7 +7,6 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
-from fern_python.generators.pydantic_model import SnippetRegistry
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -15,6 +14,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
+from fern_python.snippet import SnippetRegistry, SnippetWriter
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
@@ -59,6 +59,7 @@ class RootClientGenerator:
         class_name: str,
         async_class_name: str,
         snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
     ):
         self._context = context
         self._package = package
@@ -68,6 +69,7 @@ class RootClientGenerator:
         self._environments_config = self._context.ir.environments
         self._generated_environment = generated_environment
         self._snippet_registry = snippet_registry
+        self._snippet_writer = snippet_writer
 
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
@@ -87,6 +89,7 @@ class RootClientGenerator:
         )
 
         self._snippet_registry = snippet_registry
+        self._snippet_writer = snippet_writer
 
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         builder = RootClientGenerator.GeneratedRootClientBuilder(
@@ -177,13 +180,12 @@ class RootClientGenerator:
                 endpoint_function_generator = EndpointFunctionGenerator(
                     context=self._context,
                     package=self._package,
-                    serviceId=self._package.service,
                     service=service,
                     endpoint=endpoint,
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
                     is_async=is_async,
                     generated_root_client=generated_root_client,
-                    snippet_registry=self._snippet_registry,
+                    snippet_writer=self._snippet_writer,
                 )
                 generated_endpoint_function = endpoint_function_generator.generate()
                 class_declaration.add_method(generated_endpoint_function.function)
@@ -192,6 +194,16 @@ class RootClientGenerator:
                     and generated_endpoint_function.is_default_body_parameter_used
                 ):
                     self._is_default_body_parameter_used = True
+
+                if generated_endpoint_function.snippet is not None:
+                    if is_async:
+                        self._snippet_registry.register_async_client_endpoint_snippet(
+                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                        )
+                    else:
+                        self._snippet_registry.register_sync_client_endpoint_snippet(
+                            endpoint=endpoint, expr=generated_endpoint_function.snippet
+                        )
 
         return class_declaration
 

@@ -4,7 +4,7 @@ import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, SourceFile
 
-from ..context import PydanticGeneratorContext
+from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abstract_type_generator import AbstractTypeGenerator
 
@@ -27,7 +27,6 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
         self._union = union
 
     def generate(self) -> None:
-
         self._source_file.add_declaration(
             AST.TypeAliasDeclaration(
                 type_hint=AST.TypeHint.union(

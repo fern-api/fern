@@ -5,8 +5,8 @@ from fern.generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
-from fern_python.generators.pydantic_model import PydanticGeneratorContextImpl
 
+from ...context import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
 from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (

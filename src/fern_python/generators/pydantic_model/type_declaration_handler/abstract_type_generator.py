@@ -3,7 +3,7 @@ from typing import Optional
 
 from fern_python.codegen import SourceFile
 
-from ..context import PydanticGeneratorContext
+from ...context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 
 
