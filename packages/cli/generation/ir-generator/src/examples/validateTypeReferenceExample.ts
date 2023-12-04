@@ -1,4 +1,4 @@
-import { assertNever, isPlainObject, getDuplicates } from "@fern-api/core-utils";
+import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
@@ -86,7 +86,7 @@ export function validateTypeReferenceExample({
             return validateTypeExample({
                 typeName: declaration.typeName,
                 typeDeclaration: declaration.declaration,
-                file: declaration.file,
+                file,
                 example,
                 typeResolver,
                 exampleResolver,
