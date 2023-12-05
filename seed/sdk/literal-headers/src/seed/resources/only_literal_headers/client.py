@@ -13,6 +13,14 @@ class OnlyLiteralHeadersClient:
         self._client_wrapper = client_wrapper
 
     def get(self) -> None:
+        """
+        from seed.client import SeedLiteralHeaders
+
+        client = SeedLiteralHeaders(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.only_literal_headers.get()
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "only-literal-headers"),
@@ -40,6 +48,14 @@ class AsyncOnlyLiteralHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def get(self) -> None:
+        """
+        from seed.client import AsyncSeedLiteralHeaders
+
+        client = AsyncSeedLiteralHeaders(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.only_literal_headers.get()
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "only-literal-headers"),

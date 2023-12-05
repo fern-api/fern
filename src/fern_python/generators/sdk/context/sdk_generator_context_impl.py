@@ -1,3 +1,5 @@
+from typing import Optional
+
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
 
@@ -97,3 +99,25 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage)
+
+    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
+        type = header.value_type.get_as_union()
+        if type.type == "named":
+            shape = self.pydantic_generator_context.get_declaration_for_type_name(type).shape.get_as_union()
+            if shape.type == "alias":
+                resolved_type = shape.resolved_type.get_as_union()
+                if resolved_type.type == "container":
+                    resolved_container_type = resolved_type.container.get_as_union()
+                    if resolved_container_type.type == "literal":
+                        return resolved_container_type.literal.visit(
+                            boolean=lambda boolean: "true" if boolean else "false",
+                            string=lambda string: string,
+                        )
+        if type.type == "container":
+            container_type = type.container.get_as_union()
+            if container_type.type == "literal":
+                return container_type.literal.visit(
+                    boolean=lambda boolean: "true" if boolean else "false",
+                    string=lambda string: string,
+                )
+        return None

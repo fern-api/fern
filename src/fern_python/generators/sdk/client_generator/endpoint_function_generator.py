@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -96,6 +96,7 @@ class EndpointFunctionGenerator:
         )
         endpoint_snippet = self._generate_endpoint_snippet(
             package=self._package,
+            service=self._service,
             endpoint=self._endpoint,
             generated_root_client=self._generated_root_client,
             snippet_writer=self.snippet_writer,
@@ -333,6 +334,7 @@ class EndpointFunctionGenerator:
     def _generate_endpoint_snippet(
         self,
         package: ir_types.Package,
+        service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
@@ -342,7 +344,11 @@ class EndpointFunctionGenerator:
             return None
 
         endpoint_snippet = EndpointFunctionSnippetGenerator(
-            snippet_writer=snippet_writer, endpoint=endpoint, example=endpoint.examples[0]
+            context=self._context,
+            snippet_writer=snippet_writer,
+            service=service,
+            endpoint=endpoint,
+            example=endpoint.examples[0],
         ).generate_snippet()
 
         def write(writer: AST.NodeWriter) -> None:
@@ -540,7 +546,7 @@ class EndpointFunctionGenerator:
         headers: List[Tuple[str, AST.Expression]] = []
 
         for header in service.headers + endpoint.headers:
-            literal_header_value = self._get_literal_header_value(header)
+            literal_header_value = self._context.get_literal_header_value(header)
             headers.append(
                 (
                     header.name.wire_value,
@@ -681,7 +687,7 @@ class EndpointFunctionGenerator:
         )
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
-        return self._get_literal_header_value(header) is not None
+        return self._context.get_literal_header_value(header) is not None
 
     def _environment_is_enum(self) -> bool:
         return self._context.ir.environments is not None
@@ -715,37 +721,19 @@ class EndpointFunctionGenerator:
             )
         return query_parameter_type_hint
 
-    def _get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
-        type = header.value_type.get_as_union()
-        if type.type == "named":
-            shape = self._context.pydantic_generator_context.get_declaration_for_type_name(type).shape.get_as_union()
-            if shape.type == "alias":
-                resolved_type = shape.resolved_type.get_as_union()
-                if resolved_type.type == "container":
-                    resolved_container_type = resolved_type.container.get_as_union()
-                    if resolved_container_type.type == "literal":
-                        return resolved_container_type.literal.visit(
-                            boolean=lambda boolean: "true" if boolean else "false",
-                            string=lambda string: string,
-                        )
-        if type.type == "container":
-            container_type = type.container.get_as_union()
-            if container_type.type == "literal":
-                return container_type.literal.visit(
-                    boolean=lambda boolean: "true" if boolean else "false",
-                    string=lambda string: string,
-                )
-        return None
-
 
 class EndpointFunctionSnippetGenerator:
     def __init__(
         self,
+        context: SdkGeneratorContext,
         snippet_writer: SnippetWriter,
+        service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         example: ir_types.ExampleEndpointCall,
     ):
+        self.context = context
         self.snippet_writer = snippet_writer
+        self.service = service
         self.endpoint = endpoint
         self.example = example
 
@@ -768,16 +756,25 @@ class EndpointFunctionSnippetGenerator:
                     ),
                 )
 
-        all_headers = self.example.service_headers + self.example.endpoint_headers
-        for header in all_headers:
-            header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
-                example_type_reference=header.value,
+        headers: Dict[str, ir_types.HttpHeader] = {}
+        for header in self.service.headers + self.endpoint.headers:
+            headers[header.name.wire_value] = header
+
+        all_example_headers = self.example.service_headers + self.example.endpoint_headers
+        for example_header in all_example_headers:
+            if (
+                example_header.name.wire_value in headers
+                and self.context.get_literal_header_value(headers[example_header.name.wire_value]) is not None
+            ):
+                continue
+            example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
+                example_type_reference=example_header.value,
             )
-            if header_parameter_value is not None:
+            if example_header_parameter_value is not None:
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(header.name.name),
-                        value=header_parameter_value,
+                        parameter_name=get_parameter_name(example_header.name.name),
+                        value=example_header_parameter_value,
                     ),
                 )
 

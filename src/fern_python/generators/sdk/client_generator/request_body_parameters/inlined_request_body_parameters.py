@@ -33,9 +33,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         property.value_type
                     ),
-                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
-                    if AST.TypeHint.is_optional(type_hint)
-                    else None,
+                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                 ),
             )
         return parameters
@@ -75,9 +73,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def _are_any_properties_optional(self) -> bool:
         return any(
-            AST.TypeHint.is_optional(
-                self._context.pydantic_generator_context.get_type_hint_for_type_reference(body_property.value_type)
-            )
+            self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                body_property.value_type
+            ).is_optional
             for body_property in self._get_all_properties_for_inlined_request_body()
         )
 
@@ -94,7 +92,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 body_property.value_type
             )
-            if AST.TypeHint.is_optional(type_hint):
+            if type_hint.is_optional:
                 optional_properties.append(body_property)
             else:
                 required_properties.append(body_property)

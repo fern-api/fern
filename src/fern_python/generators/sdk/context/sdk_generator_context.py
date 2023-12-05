@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -92,4 +93,8 @@ class SdkGeneratorContext(ABC):
 
     @abstractmethod
     def get_class_name_for_root_client(self) -> str:
+        ...
+
+    @abstractmethod
+    def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
         ...

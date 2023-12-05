@@ -9,6 +9,7 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
 from ....types.resources.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ....types.resources.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
+from ....types.resources.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ....types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 from ....types.resources.object.types.object_with_required_field import ObjectWithRequiredField
 
@@ -63,6 +64,26 @@ class ObjectClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_and_return_with_map_of_map(self, *, request: ObjectWithMapOfMap) -> ObjectWithMapOfMap:
+        """
+        Parameters:
+            - request: ObjectWithMapOfMap.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=5,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -160,6 +181,26 @@ class AsyncObjectClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_and_return_with_map_of_map(self, *, request: ObjectWithMapOfMap) -> ObjectWithMapOfMap:
+        """
+        Parameters:
+            - request: ObjectWithMapOfMap.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=5,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

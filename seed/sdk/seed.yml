@@ -3,6 +3,7 @@ docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
 language: python
 generatorType: sdk
+defaultOutputMode: github
 fixtures:
   exhaustive:
     - customConfig: null

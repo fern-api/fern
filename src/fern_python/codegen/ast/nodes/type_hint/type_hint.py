@@ -14,21 +14,15 @@ class TypeHint(AstNode):
         type: Union[ClassReference, GenericTypeVar],
         type_parameters: Sequence[TypeParameter] = None,
         arguments: Sequence[Expression] = None,
+        is_optional: bool = False,
+        is_literal: bool = False,
     ):
         self._type = type
         self._type_parameters = type_parameters or []
         self._arguments = arguments or []
 
-    def is_optional(self) -> bool:
-        return (
-            isinstance(self._type, ClassReference)
-            and self._type.import_ is not None
-            and self._type.import_.module == Module.built_in(("typing",))
-            and (
-                self._type.qualified_name_excluding_import == ("Optional",)
-                or self._type.import_.named_import == "Optional"
-            )
-        )
+        self.is_optional = is_optional
+        self.is_literal = is_literal
 
     @staticmethod
     def str_() -> TypeHint:
@@ -78,6 +72,7 @@ class TypeHint(AstNode):
         return TypeHint(
             type=get_reference_to_typing_import("Optional"),
             type_parameters=[TypeParameter(wrapped_type)],
+            is_optional=True,
         )
 
     @staticmethod
@@ -175,6 +170,7 @@ class TypeHint(AstNode):
         return TypeHint(
             type=get_reference_to_typing_extensions_import("Literal"),
             type_parameters=[TypeParameter(value)],
+            is_literal=True,
         )
 
     @staticmethod

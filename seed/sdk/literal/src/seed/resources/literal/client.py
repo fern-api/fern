@@ -11,6 +11,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from .types.create_options_response import CreateOptionsResponse
 from .types.options import Options
+from .types.undiscriminated_options import UndiscriminatedOptions
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -65,6 +66,26 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_undiscriminated_options(self, *, dry_run: typing_extensions.Literal[True]) -> UndiscriminatedOptions:
+        """
+        Parameters:
+            - dry_run: typing_extensions.Literal[True].
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            json=jsonable_encoder({"dryRun": dry_run}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(UndiscriminatedOptions, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncLiteralClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -104,6 +125,26 @@ class AsyncLiteralClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Options, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_undiscriminated_options(self, *, dry_run: typing_extensions.Literal[True]) -> UndiscriminatedOptions:
+        """
+        Parameters:
+            - dry_run: typing_extensions.Literal[True].
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            json=jsonable_encoder({"dryRun": dry_run}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(UndiscriminatedOptions, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

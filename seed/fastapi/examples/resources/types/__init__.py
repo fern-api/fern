@@ -2,6 +2,9 @@
 
 from .errors import NotFoundError
 from .types import (
+    Actor,
+    Actress,
+    CastMember,
     Directory,
     Exception,
     ExceptionInfo,
@@ -16,11 +19,15 @@ from .types import (
     Node,
     Request,
     Response,
+    StuntDouble,
     Test,
     Tree,
 )
 
 __all__ = [
+    "Actor",
+    "Actress",
+    "CastMember",
     "Directory",
     "Exception",
     "ExceptionInfo",
@@ -36,6 +43,7 @@ __all__ = [
     "NotFoundError",
     "Request",
     "Response",
+    "StuntDouble",
     "Test",
     "Tree",
 ]

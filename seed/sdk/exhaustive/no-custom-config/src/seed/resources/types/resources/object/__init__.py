@@ -3,6 +3,7 @@
 from .types import (
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
+    ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
 )
@@ -18,6 +19,7 @@ __all__ = [
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
     "NestedObjectWithRequiredFieldError",
+    "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",

@@ -13,8 +13,10 @@ from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
 from ..types.create_options_response import CreateOptionsResponse
 from ..types.options import Options
+from ..types.undiscriminated_options import UndiscriminatedOptions
 from .create_options_request import CreateOptionsRequest
 from .get_options_request import GetOptionsRequest
+from .get_undiscriminated_options_request import GetUndiscriminatedOptionsRequest
 
 
 class AbstractLiteralService(AbstractFernService):
@@ -34,6 +36,10 @@ class AbstractLiteralService(AbstractFernService):
     def get_options(self, *, body: GetOptionsRequest) -> Options:
         ...
 
+    @abc.abstractmethod
+    def get_undiscriminated_options(self, *, body: GetUndiscriminatedOptionsRequest) -> UndiscriminatedOptions:
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -43,6 +49,7 @@ class AbstractLiteralService(AbstractFernService):
     def _init_fern(cls, router: fastapi.APIRouter) -> None:
         cls.__init_create_options(router=router)
         cls.__init_get_options(router=router)
+        cls.__init_get_undiscriminated_options(router=router)
 
     @classmethod
     def __init_create_options(cls, router: fastapi.APIRouter) -> None:
@@ -114,4 +121,40 @@ class AbstractLiteralService(AbstractFernService):
             response_model=Options,
             description=AbstractLiteralService.get_options.__doc__,
             **get_route_args(cls.get_options, default_tag="literal"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_undiscriminated_options(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_undiscriminated_options)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_undiscriminated_options, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_undiscriminated_options)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> UndiscriminatedOptions:
+            try:
+                return cls.get_undiscriminated_options(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_undiscriminated_options' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_undiscriminated_options.__globals__)
+
+        router.post(
+            path="//options",
+            response_model=UndiscriminatedOptions,
+            description=AbstractLiteralService.get_undiscriminated_options.__doc__,
+            **get_route_args(cls.get_undiscriminated_options, default_tag="literal"),
         )(wrapper)

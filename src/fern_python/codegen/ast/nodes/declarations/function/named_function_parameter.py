@@ -20,7 +20,7 @@ class NamedFunctionParameter(FunctionParameter):
             type_hint=type_hint,
             initializer=(
                 Expression(TypeHint.none())
-                if initializer is None and type_hint is not None and TypeHint.is_optional(type_hint)
+                if initializer is None and type_hint is not None and type_hint.is_optional
                 else initializer
             ),
         )

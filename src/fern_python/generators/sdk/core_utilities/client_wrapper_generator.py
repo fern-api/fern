@@ -27,8 +27,15 @@ class ConstructorParameter:
 
 
 @dataclass
+class LiteralHeader:
+    header: ir_types.HttpHeader
+    header_key: typing.Optional[str] = None
+
+
+@dataclass
 class ConstructorInfo:
     constructor_parameters: List[ConstructorParameter]
+    literal_headers: List[LiteralHeader]
 
 
 @dataclass
@@ -73,7 +80,9 @@ class ClientWrapperGenerator:
 
         source_file.add_class_declaration(
             declaration=self._create_base_client_wrapper_class_declaration(
-                constructor_parameters=constructor_parameters, project=project
+                constructor_parameters=constructor_parameters,
+                literal_headers=constructor_info.literal_headers,
+                project=project,
             ),
             should_export=True,
         )
@@ -132,9 +141,12 @@ class ClientWrapperGenerator:
         )
 
     def _create_base_client_wrapper_class_declaration(
-        self, *, constructor_parameters: typing.List[ConstructorParameter], project: Project
+        self,
+        *,
+        constructor_parameters: typing.List[ConstructorParameter],
+        literal_headers: typing.List[LiteralHeader],
+        project: Project,
     ) -> AST.ClassDeclaration:
-
         named_parameters = self._get_named_parameters(constructor_parameters=constructor_parameters)
 
         class_declaration = AST.ClassDeclaration(
@@ -156,6 +168,7 @@ class ClientWrapperGenerator:
                 body=AST.CodeWriter(
                     self._get_write_get_headers_body(
                         constructor_parameters=constructor_parameters,
+                        literal_headers=literal_headers,
                         project=project,
                     )
                 ),
@@ -258,7 +271,11 @@ class ClientWrapperGenerator:
         ]
 
     def _get_write_get_headers_body(
-        self, *, constructor_parameters: List[ConstructorParameter], project: Project
+        self,
+        *,
+        constructor_parameters: List[ConstructorParameter],
+        literal_headers: List[LiteralHeader],
+        project: Project,
     ) -> CodeWriterFunction:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             writer.write("headers: ")
@@ -314,7 +331,7 @@ class ClientWrapperGenerator:
                 if param.header_key is not None:
                     if param.header_prefix is not None:
                         if param.getter_method is not None:
-                            if param.type_hint.is_optional():
+                            if param.type_hint.is_optional:
                                 writer.write_line(
                                     f"{param.constructor_parameter_name} = self.{param.getter_method.name}()"
                                 )
@@ -328,17 +345,17 @@ class ClientWrapperGenerator:
                                     f'headers["{param.header_key}"] = f"{param.header_prefix} {{self.{param.getter_method.name}()}}"'
                                 )
                         elif param.private_member_name is not None:
-                            if param.type_hint.is_optional():
+                            if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
                             writer.write_line(
                                 f'headers["{param.header_key}"] = f"{param.header_prefix} {{self.{param.private_member_name}}}"'
                             )
-                            if param.type_hint.is_optional():
+                            if param.type_hint.is_optional:
                                 writer.outdent()
                     else:
                         if param.getter_method is not None:
-                            if param.type_hint.is_optional():
+                            if param.type_hint.is_optional:
                                 writer.write_line(
                                     f"{param.constructor_parameter_name} = self.{param.getter_method.name}()"
                                 )
@@ -350,12 +367,17 @@ class ClientWrapperGenerator:
                             else:
                                 writer.write_line(f'headers["{param.header_key}"] = self.{param.getter_method.name}()')
                         elif param.private_member_name is not None:
-                            if param.type_hint.is_optional():
+                            if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
                             writer.write_line(f'headers["{param.header_key}"] = self.{param.private_member_name}')
-                            if param.type_hint.is_optional():
+                            if param.type_hint.is_optional:
                                 writer.outdent()
+            for literal_header in literal_headers:
+                writer.write(
+                    f'headers["{literal_header.header_key}"] = "{self._context.get_literal_header_value(literal_header.header)}"'
+                )
+                writer.write_line()
             writer.write_line("return headers")
 
         return _write_get_headers_body
@@ -374,17 +396,25 @@ class ClientWrapperGenerator:
 
     def _get_constructor_info(self) -> ConstructorInfo:
         parameters: List[ConstructorParameter] = []
+        literal_headers: List[LiteralHeader] = []
 
         # TODO(dsinghvi): Support suppliers for global headers
         for header in self._context.ir.headers:
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(header.value_type)
+            if type_hint.is_literal:
+                literal_headers.append(
+                    LiteralHeader(
+                        header=header,
+                        header_key=header.name.wire_value,
+                    )
+                )
+                continue
             constructor_parameter_name = self._get_header_constructor_parameter_name(header)
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=self._get_header_private_member_name(header),
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        header.value_type
-                    ),
+                    type_hint=type_hint,
                     instantiation=AST.Expression(
                         f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
                     ),
@@ -517,6 +547,7 @@ class ClientWrapperGenerator:
 
         return ConstructorInfo(
             constructor_parameters=parameters,
+            literal_headers=literal_headers,
         )
 
     def _get_optional_getter_body_writer(self, *, member_name: str) -> AST.CodeWriterFunction:

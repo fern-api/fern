@@ -3,19 +3,10 @@
 import typing
 
 import httpx
-import typing_extensions
 
 
 class BaseClientWrapper:
-    def __init__(
-        self,
-        *,
-        api_header: typing_extensions.Literal["api header value"],
-        api_test: typing_extensions.Literal[False],
-        base_url: str
-    ):
-        self._api_header = api_header
-        self._api_test = api_test
+    def __init__(self, *, base_url: str):
         self._base_url = base_url
 
     def get_headers(self) -> typing.Dict[str, str]:
@@ -24,8 +15,8 @@ class BaseClientWrapper:
             "X-Fern-SDK-Name": "seed",
             "X-Fern-SDK-Version": "0.0.0",
         }
-        headers["X-API-Header"] = self._api_header
-        headers["X-API-Test"] = self._api_test
+        headers["X-API-Header"] = "api header value"
+        headers["X-API-Test"] = "false"
         return headers
 
     def get_base_url(self) -> str:
@@ -33,26 +24,12 @@ class BaseClientWrapper:
 
 
 class SyncClientWrapper(BaseClientWrapper):
-    def __init__(
-        self,
-        *,
-        api_header: typing_extensions.Literal["api header value"],
-        api_test: typing_extensions.Literal[False],
-        base_url: str,
-        httpx_client: httpx.Client
-    ):
-        super().__init__(api_header=api_header, api_test=api_test, base_url=base_url)
+    def __init__(self, *, base_url: str, httpx_client: httpx.Client):
+        super().__init__(base_url=base_url)
         self.httpx_client = httpx_client
 
 
 class AsyncClientWrapper(BaseClientWrapper):
-    def __init__(
-        self,
-        *,
-        api_header: typing_extensions.Literal["api header value"],
-        api_test: typing_extensions.Literal[False],
-        base_url: str,
-        httpx_client: httpx.AsyncClient
-    ):
-        super().__init__(api_header=api_header, api_test=api_test, base_url=base_url)
+    def __init__(self, *, base_url: str, httpx_client: httpx.AsyncClient):
+        super().__init__(base_url=base_url)
         self.httpx_client = httpx_client

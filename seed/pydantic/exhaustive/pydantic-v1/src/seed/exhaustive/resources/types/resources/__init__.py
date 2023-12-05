@@ -5,6 +5,7 @@ from .enum import WeatherReport
 from .object import (
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
+    ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
 )
@@ -18,6 +19,7 @@ __all__ = [
     "Dog",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
+    "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
     "WeatherReport",

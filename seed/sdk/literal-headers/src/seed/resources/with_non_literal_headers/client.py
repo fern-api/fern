@@ -23,6 +23,16 @@ class WithNonLiteralHeadersClient:
             - maybe_integer: typing.Optional[int].
 
             - non_literal_endpoint_header: str.
+        ---
+        from seed.client import SeedLiteralHeaders
+
+        client = SeedLiteralHeaders(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.with_non_literal_headers.get(
+            integer=42,
+            non_literal_endpoint_header="custom header",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -64,6 +74,16 @@ class AsyncWithNonLiteralHeadersClient:
             - maybe_integer: typing.Optional[int].
 
             - non_literal_endpoint_header: str.
+        ---
+        from seed.client import AsyncSeedLiteralHeaders
+
+        client = AsyncSeedLiteralHeaders(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.with_non_literal_headers.get(
+            integer=42,
+            non_literal_endpoint_header="custom header",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

@@ -5,7 +5,7 @@ description = ""
 readme = "README.md"
 authors = []
 packages = [
-    { include = "seed/nursery_api", from = "src"}
+    { include = "seed/literal_headers", from = "src"}
 ]
 
 [tool.poetry.dependencies]
