@@ -1181,6 +1181,336 @@ exports[`generate IR 1`] = `
             },
           },
         },
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "/just-file-with-query-params",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_service.justFileWithQueryParams",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "justFileWithQueryParams",
+              "unsafeName": "justFileWithQueryParams",
+            },
+            "originalName": "justFileWithQueryParams",
+            "pascalCase": {
+              "safeName": "JustFileWithQueryParams",
+              "unsafeName": "JustFileWithQueryParams",
+            },
+            "screamingSnakeCase": {
+              "safeName": "JUST_FILE_WITH_QUERY_PARAMS",
+              "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS",
+            },
+            "snakeCase": {
+              "safeName": "just_file_with_query_params",
+              "unsafeName": "just_file_with_query_params",
+            },
+          },
+          "path": {
+            "head": "/just-file-with-query-params",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "maybeString",
+                    "unsafeName": "maybeString",
+                  },
+                  "originalName": "maybeString",
+                  "pascalCase": {
+                    "safeName": "MaybeString",
+                    "unsafeName": "MaybeString",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "MAYBE_STRING",
+                    "unsafeName": "MAYBE_STRING",
+                  },
+                  "snakeCase": {
+                    "safeName": "maybe_string",
+                    "unsafeName": "maybe_string",
+                  },
+                },
+                "wireValue": "maybeString",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "optional",
+                  "optional": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                },
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "integer",
+                    "unsafeName": "integer",
+                  },
+                  "originalName": "integer",
+                  "pascalCase": {
+                    "safeName": "Integer",
+                    "unsafeName": "Integer",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "INTEGER",
+                    "unsafeName": "INTEGER",
+                  },
+                  "snakeCase": {
+                    "safeName": "integer",
+                    "unsafeName": "integer",
+                  },
+                },
+                "wireValue": "integer",
+              },
+              "valueType": {
+                "_type": "primitive",
+                "primitive": "INTEGER",
+              },
+            },
+            {
+              "allowMultiple": false,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "maybeInteger",
+                    "unsafeName": "maybeInteger",
+                  },
+                  "originalName": "maybeInteger",
+                  "pascalCase": {
+                    "safeName": "MaybeInteger",
+                    "unsafeName": "MaybeInteger",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "MAYBE_INTEGER",
+                    "unsafeName": "MAYBE_INTEGER",
+                  },
+                  "snakeCase": {
+                    "safeName": "maybe_integer",
+                    "unsafeName": "maybe_integer",
+                  },
+                },
+                "wireValue": "maybeInteger",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "optional",
+                  "optional": {
+                    "_type": "primitive",
+                    "primitive": "INTEGER",
+                  },
+                },
+              },
+            },
+            {
+              "allowMultiple": true,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "listOfStrings",
+                    "unsafeName": "listOfStrings",
+                  },
+                  "originalName": "listOfStrings",
+                  "pascalCase": {
+                    "safeName": "ListOfStrings",
+                    "unsafeName": "ListOfStrings",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "LIST_OF_STRINGS",
+                    "unsafeName": "LIST_OF_STRINGS",
+                  },
+                  "snakeCase": {
+                    "safeName": "list_of_strings",
+                    "unsafeName": "list_of_strings",
+                  },
+                },
+                "wireValue": "listOfStrings",
+              },
+              "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+            },
+            {
+              "allowMultiple": true,
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "optionalListOfStrings",
+                    "unsafeName": "optionalListOfStrings",
+                  },
+                  "originalName": "optionalListOfStrings",
+                  "pascalCase": {
+                    "safeName": "OptionalListOfStrings",
+                    "unsafeName": "OptionalListOfStrings",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "OPTIONAL_LIST_OF_STRINGS",
+                    "unsafeName": "OPTIONAL_LIST_OF_STRINGS",
+                  },
+                  "snakeCase": {
+                    "safeName": "optional_list_of_strings",
+                    "unsafeName": "optional_list_of_strings",
+                  },
+                },
+                "wireValue": "optionalListOfStrings",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "optional",
+                  "optional": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                },
+              },
+            },
+          ],
+          "requestBody": {
+            "name": {
+              "camelCase": {
+                "safeName": "justFileWithQueryParamsRequet",
+                "unsafeName": "justFileWithQueryParamsRequet",
+              },
+              "originalName": "JustFileWithQueryParamsRequet",
+              "pascalCase": {
+                "safeName": "JustFileWithQueryParamsRequet",
+                "unsafeName": "JustFileWithQueryParamsRequet",
+              },
+              "screamingSnakeCase": {
+                "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
+                "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
+              },
+              "snakeCase": {
+                "safeName": "just_file_with_query_params_requet",
+                "unsafeName": "just_file_with_query_params_requet",
+              },
+            },
+            "properties": [
+              {
+                "isOptional": false,
+                "key": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "file",
+                      "unsafeName": "file",
+                    },
+                    "originalName": "file",
+                    "pascalCase": {
+                      "safeName": "File",
+                      "unsafeName": "File",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FILE",
+                      "unsafeName": "FILE",
+                    },
+                    "snakeCase": {
+                      "safeName": "file",
+                      "unsafeName": "file",
+                    },
+                  },
+                  "wireValue": "file",
+                },
+                "type": "file",
+              },
+            ],
+            "type": "fileUpload",
+          },
+          "response": null,
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "justFileWithQueryParamsRequet",
+                  "unsafeName": "justFileWithQueryParamsRequet",
+                },
+                "originalName": "JustFileWithQueryParamsRequet",
+                "pascalCase": {
+                  "safeName": "JustFileWithQueryParamsRequet",
+                  "unsafeName": "JustFileWithQueryParamsRequet",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
+                  "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUET",
+                },
+                "snakeCase": {
+                  "safeName": "just_file_with_query_params_requet",
+                  "unsafeName": "just_file_with_query_params_requet",
+                },
+              },
+            },
+          },
+        },
       ],
       "headers": [],
       "name": {
