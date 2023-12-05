@@ -1604,6 +1604,7 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 	)
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		isOptional = true
+		prefix = "*"
 	}
 	if primitive := maybePrimitive(typeReference); primitive != "" {
 		// Several of the primitive types require special handling for query parameter serialization.
