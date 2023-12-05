@@ -22,3 +22,7 @@ fixtures:
         pydantic_config:
           version: v1
       outputFolder: pydantic-v1
+    - customConfig:
+        extra_dependencies:
+          boto3: 1.28.57
+      outputFolder: extra_dependencies

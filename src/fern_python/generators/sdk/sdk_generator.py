@@ -5,7 +5,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import Project
+from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
@@ -71,6 +71,9 @@ class SdkGenerator(AbstractGenerator):
 
         if not custom_config.client_filename.endswith(".py"):
             raise RuntimeError("client_filename must end in .py")
+
+        for dep, version in custom_config.extra_dependencies.items():
+            project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
 
         self._pydantic_model_custom_config = custom_config.pydantic_config
 

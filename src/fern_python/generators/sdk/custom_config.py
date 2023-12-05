@@ -1,4 +1,4 @@
-from typing import Literal, Optional, Union
+from typing import Dict, Literal, Optional, Union
 
 import pydantic
 
@@ -14,6 +14,7 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
 
 
 class SDKCustomConfig(pydantic.BaseModel):
+    extra_dependencies: Dict[str, str] = {}
     skip_formatting: bool = False
     client_class_name: Optional[str] = None
     client_filename: str = "client.py"

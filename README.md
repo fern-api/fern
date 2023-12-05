@@ -90,6 +90,21 @@ name of the client class. You can customize it by overriding this value.
 
 **Default:** `true`
 
+#### ✨ `extra_dependencies`
+
+**Type:** map<string, string>
+
+**Default:** {}
+
+If you want to add custom dependencies to your generated SDK, you can specify them using
+this configuration. For example, to add a dependency on boto3, your config would look like
+
+```yaml
+config:
+  extra_dependencies:
+    boto3: 1.28.15
+```
+
 #### ✨ `pydantic_config.include_union_utils`
 
 **Type:** boolean
