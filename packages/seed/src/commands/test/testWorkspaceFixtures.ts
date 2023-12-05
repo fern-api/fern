@@ -26,6 +26,7 @@ export const FIXTURES = {
     CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
     ENUM: "enum",
+    ENUM_QUERY_PARAMS: "enum-query-params",
     ERROR_PROPERTY: "error-property",
     EXAMPLES: "examples",
     EXHAUSTIVE: "exhaustive",
