@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/fern-api/generator-exec-go v0.0.468 h1:RVGwh4lbsJJmETODoCz0kXWOKotEcNPyVO/aOjVzUnU=
-github.com/fern-api/generator-exec-go v0.0.468/go.mod h1:Z7V5lZnaD8PblJAynK087662md2wBNhQcAl+W6IIydw=
+github.com/fern-api/generator-exec-go v0.0.491 h1:arIA8hvze7fr2Zh5y/xtUY3WaFIvxJCZnfMF/CqIqJM=
+github.com/fern-api/generator-exec-go v0.0.491/go.mod h1:Z7V5lZnaD8PblJAynK087662md2wBNhQcAl+W6IIydw=
 github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=
 github.com/google/uuid v1.4.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/hmdsefi/gograph v0.4.0 h1:eiWprSQ+lSogrcay0yvgvJWEMsVT/VsZ+NR4uW2k+2k=
