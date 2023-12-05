@@ -4,8 +4,8 @@ package literal
 
 import (
 	context "context"
-	seedgo "github.com/fern-api/seed-go"
-	core "github.com/fern-api/seed-go/core"
+	fern "github.com/literal/fern"
+	core "github.com/literal/fern/core"
 	http "net/http"
 )
 
@@ -27,14 +27,14 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 }
 
-func (c *Client) CreateOptions(ctx context.Context, request *seedgo.CreateOptionsRequest) (*seedgo.CreateOptionsResponse, error) {
+func (c *Client) CreateOptions(ctx context.Context, request *fern.CreateOptionsRequest) (*fern.CreateOptionsResponse, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "options"
 
-	var response *seedgo.CreateOptionsResponse
+	var response *fern.CreateOptionsResponse
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -50,14 +50,14 @@ func (c *Client) CreateOptions(ctx context.Context, request *seedgo.CreateOption
 	return response, nil
 }
 
-func (c *Client) GetOptions(ctx context.Context, request *seedgo.GetOptionsRequest) (*seedgo.Options, error) {
+func (c *Client) GetOptions(ctx context.Context, request *fern.GetOptionsRequest) (*fern.Options, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "options"
 
-	var response *seedgo.Options
+	var response *fern.Options
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -73,14 +73,14 @@ func (c *Client) GetOptions(ctx context.Context, request *seedgo.GetOptionsReque
 	return response, nil
 }
 
-func (c *Client) GetUndiscriminatedOptions(ctx context.Context, request *seedgo.GetUndiscriminatedOptionsRequest) (*seedgo.UndiscriminatedOptions, error) {
+func (c *Client) GetUndiscriminatedOptions(ctx context.Context, request *fern.GetUndiscriminatedOptionsRequest) (*fern.UndiscriminatedOptions, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "options"
 
-	var response *seedgo.UndiscriminatedOptions
+	var response *fern.UndiscriminatedOptions
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{

@@ -5,8 +5,8 @@ package withnonliteralheaders
 import (
 	context "context"
 	fmt "fmt"
-	seedgo "github.com/fern-api/seed-go"
-	core "github.com/fern-api/seed-go/core"
+	fern "github.com/literal-headers/fern"
+	core "github.com/literal-headers/fern/core"
 	http "net/http"
 )
 
@@ -28,7 +28,7 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 }
 
-func (c *Client) Get(ctx context.Context, request *seedgo.WithNonLiteralHeadersRequest) error {
+func (c *Client) Get(ctx context.Context, request *fern.WithNonLiteralHeadersRequest) error {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL

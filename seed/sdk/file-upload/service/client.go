@@ -6,8 +6,8 @@ import (
 	bytes "bytes"
 	context "context"
 	fmt "fmt"
-	seedgo "github.com/fern-api/seed-go"
-	core "github.com/fern-api/seed-go/core"
+	fern "github.com/file-upload/fern"
+	core "github.com/file-upload/fern/core"
 	io "io"
 	multipart "mime/multipart"
 	http "net/http"
@@ -31,7 +31,7 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 }
 
-func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, request *seedgo.MyRequest) error {
+func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, request *fern.MyRequest) error {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -97,7 +97,7 @@ func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, 
 		return err
 	}
 	if request.OptionalMaybeList != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalMaybeList", request.OptionalMaybeList); err != nil {
+		if err := core.WriteMultipartJSON(writer, "optionalMaybeList", *request.OptionalMaybeList); err != nil {
 			return err
 		}
 	}
@@ -105,7 +105,7 @@ func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, 
 		return err
 	}
 	if request.OptionalMaybeListOrSet != nil {
-		if err := core.WriteMultipartJSON(writer, "optionalMaybeListOrSet", request.OptionalMaybeListOrSet); err != nil {
+		if err := core.WriteMultipartJSON(writer, "optionalMaybeListOrSet", *request.OptionalMaybeListOrSet); err != nil {
 			return err
 		}
 	}

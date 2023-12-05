@@ -1,4 +1,4 @@
-module github.com/literal-headers/fern
+module github.com/enum-query-params/fern
 
 go 1.13
 

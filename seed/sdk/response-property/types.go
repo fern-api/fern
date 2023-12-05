@@ -5,7 +5,7 @@ package responseproperty
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/seed-go/core"
+	core "github.com/response-property/fern/core"
 )
 
 type WithMetadata struct {

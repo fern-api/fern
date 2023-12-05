@@ -3,8 +3,8 @@
 package client
 
 import (
-	core "github.com/response-property/fern/core"
-	service "github.com/response-property/fern/service"
+	core "github.com/enum-query-params/fern/core"
+	svc "github.com/enum-query-params/fern/svc"
 	http "net/http"
 )
 
@@ -13,7 +13,7 @@ type Client struct {
 	caller  *core.Caller
 	header  http.Header
 
-	Service *service.Client
+	Svc *svc.Client
 }
 
 func NewClient(opts ...core.ClientOption) *Client {
@@ -25,6 +25,6 @@ func NewClient(opts ...core.ClientOption) *Client {
 		baseURL: options.BaseURL,
 		caller:  core.NewCaller(options.HTTPClient),
 		header:  options.ToHeader(),
-		Service: service.NewClient(opts...),
+		Svc:     svc.NewClient(opts...),
 	}
 }

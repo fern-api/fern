@@ -5,7 +5,7 @@ package literal
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/seed-go/core"
+	core "github.com/literal/fern/core"
 )
 
 type CreateOptionsRequest struct {

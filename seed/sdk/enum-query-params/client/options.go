@@ -3,7 +3,7 @@
 package client
 
 import (
-	core "github.com/literal/fern/core"
+	core "github.com/enum-query-params/fern/core"
 	http "net/http"
 )
 
@@ -28,5 +28,12 @@ func WithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		// Clone the headers so they can't be modified after the option call.
 		opts.HTTPHeader = httpHeader.Clone()
+	}
+}
+
+// WithToken sets the 'Authorization: Bearer <token>' header on every request.
+func WithToken(token string) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.Token = token
 	}
 }

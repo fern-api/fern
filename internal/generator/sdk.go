@@ -1604,7 +1604,9 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 	)
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		isOptional = true
-		prefix = "*"
+		if needsOptionalDereference(typeReference.Container.Optional) {
+			prefix = "*"
+		}
 	}
 	if primitive := maybePrimitive(typeReference); primitive != "" {
 		// Several of the primitive types require special handling for query parameter serialization.
@@ -1685,4 +1687,12 @@ func maybePrimitive(typeReference *ir.TypeReference) ir.PrimitiveType {
 		return maybePrimitive(typeReference.Container.Optional)
 	}
 	return ""
+}
+
+// needsOptionalDereference returns true if the optional type needs to be referenced.
+//
+// Container types like lists, maps, and sets are already nil-able, so they don't
+// require a dereference prefix.
+func needsOptionalDereference(optionalTypeReference *ir.TypeReference) bool {
+	return optionalTypeReference.Container == nil
 }

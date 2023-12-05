@@ -3,6 +3,7 @@ docker: fernapi/fern-go-sdk:latest
 dockerCommand: docker build -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: sdk
+defaultOutputMode: github
 fixtures:
   streaming:
     - outputFolder: .

@@ -4,8 +4,8 @@ package service
 
 import (
 	context "context"
-	seedgo "github.com/fern-api/seed-go"
-	core "github.com/fern-api/seed-go/core"
+	fern "github.com/response-property/fern"
+	core "github.com/response-property/fern/core"
 	http "net/http"
 )
 
@@ -27,14 +27,14 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 }
 
-func (c *Client) GetMovie(ctx context.Context, request string) (*seedgo.Movie, error) {
+func (c *Client) GetMovie(ctx context.Context, request string) (*fern.Movie, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response *seedgo.Response
+	var response *fern.Response
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -57,7 +57,7 @@ func (c *Client) GetMovieDocs(ctx context.Context, request string) (string, erro
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response *seedgo.Response
+	var response *fern.Response
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -80,7 +80,7 @@ func (c *Client) GetMovieName(ctx context.Context, request string) (string, erro
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response *seedgo.StringResponse
+	var response *fern.StringResponse
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -103,7 +103,7 @@ func (c *Client) GetMovieMetadata(ctx context.Context, request string) (map[stri
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response *seedgo.Response
+	var response *fern.Response
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -119,14 +119,14 @@ func (c *Client) GetMovieMetadata(ctx context.Context, request string) (map[stri
 	return response.Metadata, nil
 }
 
-func (c *Client) GetOptionalMovie(ctx context.Context, request string) (*seedgo.Movie, error) {
+func (c *Client) GetOptionalMovie(ctx context.Context, request string) (*fern.Movie, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response *seedgo.Response
+	var response *fern.Response
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -150,7 +150,7 @@ func (c *Client) GetOptionalMovieDocs(ctx context.Context, request string) (stri
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response seedgo.OptionalWithDocs
+	var response fern.OptionalWithDocs
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
@@ -173,7 +173,7 @@ func (c *Client) GetOptionalMovieName(ctx context.Context, request string) (stri
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	var response seedgo.OptionalStringResponse
+	var response fern.OptionalStringResponse
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{

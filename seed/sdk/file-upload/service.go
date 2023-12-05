@@ -5,7 +5,7 @@ package fileupload
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/seed-go/core"
+	core "github.com/file-upload/fern/core"
 )
 
 type MyRequest struct {

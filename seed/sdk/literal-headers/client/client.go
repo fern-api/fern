@@ -3,10 +3,10 @@
 package client
 
 import (
-	core "github.com/fern-api/seed-go/core"
-	noheaders "github.com/fern-api/seed-go/noheaders"
-	onlyliteralheaders "github.com/fern-api/seed-go/onlyliteralheaders"
-	withnonliteralheaders "github.com/fern-api/seed-go/withnonliteralheaders"
+	core "github.com/literal-headers/fern/core"
+	noheaders "github.com/literal-headers/fern/noheaders"
+	onlyliteralheaders "github.com/literal-headers/fern/onlyliteralheaders"
+	withnonliteralheaders "github.com/literal-headers/fern/withnonliteralheaders"
 	http "net/http"
 )
 

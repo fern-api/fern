@@ -1,4 +1,4 @@
-module github.com/fern-api/seed-go
+module github.com/literal/fern
 
 go 1.13
 

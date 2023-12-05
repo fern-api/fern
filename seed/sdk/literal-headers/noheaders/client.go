@@ -4,7 +4,7 @@ package noheaders
 
 import (
 	context "context"
-	core "github.com/fern-api/seed-go/core"
+	core "github.com/literal-headers/fern/core"
 	http "net/http"
 )
 
