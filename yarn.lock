@@ -4213,7 +4213,7 @@ __metadata:
     jest: ^28.1.1
     lint-staged: ^12.4.1
     lodash: ^4.17.21
-    postman-collection: ^4.1.4
+    postman-collection: ^4.3.0
     prettier: ^2.6.2
     simple-progress-webpack-plugin: ^2.0.0
     tmp-promise: ^3.0.3
@@ -6277,9 +6277,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postman-collection@npm:^4.1.4":
-  version: 4.1.4
-  resolution: "postman-collection@npm:4.1.4"
+"postman-collection@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "postman-collection@npm:4.3.0"
   dependencies:
     "@faker-js/faker": 5.5.3
     file-type: 3.9.0
@@ -6290,9 +6290,9 @@ __metadata:
     mime-format: 2.0.1
     mime-types: 2.1.35
     postman-url-encoder: 3.0.5
-    semver: 7.3.7
+    semver: 7.5.4
     uuid: 8.3.2
-  checksum: cd8edd6720777b13015107d92c4dba8a778eee765e8dc30debd5204a18d7c38c5795f17e72e1ad5f53ec68bc9083808201f104f98d98b3bda965fe7859772a3c
+  checksum: a07757d826101a60a2498ee57ce64a197e1f09e6f0836604539d8037b01d2f204ea29106769f67168524e393fc3cb52ec2c0b68eec3e92b85d2c93958356d8a7
   languageName: node
   linkType: hard
 
@@ -6728,14 +6728,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.3.7, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
-  version: 7.3.7
-  resolution: "semver@npm:7.3.7"
+"semver@npm:7.5.4":
+  version: 7.5.4
+  resolution: "semver@npm:7.5.4"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
+  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
   languageName: node
   linkType: hard
 
@@ -6745,6 +6745,17 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: ae47d06de28836adb9d3e25f22a92943477371292d9b665fb023fae278d345d508ca1958232af086d85e0155aee22e313e100971898bbb8d5d89b8b1d4054ca2
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
+  version: 7.3.7
+  resolution: "semver@npm:7.3.7"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: 2fa3e877568cd6ce769c75c211beaed1f9fce80b28338cadd9d0b6c40f2e2862bafd62c19a6cff42f3d54292b7c623277bcab8816a2b5521cf15210d43e75232
   languageName: node
   linkType: hard
 
