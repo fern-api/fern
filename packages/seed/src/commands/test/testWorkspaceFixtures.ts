@@ -268,7 +268,7 @@ async function testWithWriteToDisk({
 function readDirectories(filepath: string): string[] {
     const files = fs.readdirSync(filepath);
     return files
-      .map(file => path.join(filepath, file))
-      .filter(fullPath => fs.statSync(fullPath).isDirectory())
-      .map(fullPath => path.basename(fullPath));
-  }
+        .map((file) => path.join(filepath, file))
+        .filter((fullPath) => fs.statSync(fullPath).isDirectory())
+        .map((fullPath) => path.basename(fullPath));
+}
