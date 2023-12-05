@@ -6,6 +6,7 @@ import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration"
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
+import fs from "fs";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -15,44 +16,7 @@ import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
 
-export const FIXTURES = {
-    ALIAS: "alias",
-    API_WIDE_BASE_PATH: "api-wide-base-path",
-    AUDIENCES: "audiences",
-    AUTH_ENVIRONMENT_VARIABLES: "auth-environment-variables",
-    BASIC_AUTH: "basic-auth",
-    BEARER_TOKEN_ENVIRONMENT_VARIABLE: "bearer-token-environment-variable",
-    BYTES: "bytes",
-    CIRCULAR_REFERENCES: "circular-references",
-    CUSTOM_AUTH: "custom-auth",
-    ENUM: "enum",
-    ERROR_PROPERTY: "error-property",
-    EXAMPLES: "examples",
-    EXHAUSTIVE: "exhaustive",
-    EXTENDS: "extends",
-    FOLDERS: "folders",
-    FILE_DOWNLOAD: "file-download",
-    FILE_UPLOAD: "file-upload",
-    IMDB: "imdb",
-    LITERAL: "literal",
-    LITERAL_HEADERS: "literal-headers",
-    MULTI_URL_ENVIRONMENT: "multi-url-environment",
-    NO_ENVIRONMENT: "no-environment",
-    OBJECT: "object",
-    OBJECTS_WITH_IMPORTS: "objects-with-imports",
-    PACKAGE_YML: "package-yml",
-    PLAIN_TEXT: "plain-text",
-    RESPONSE_PROPERTY: "response-property",
-    SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
-    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
-    STREAMING: "streaming",
-    TRACE: "trace",
-    UNDISCRIMINATED_UNIONS: "undiscriminated-unions",
-    UNKNOWN: "unknown",
-    VARIABLES: "variables",
-    RESERVED_KEYWORDS: "reserved-keywords",
-    IDEMPOTENCY_HEADERS: "idempotency-headers"
-} as const;
+export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
 
 type TestResult = TestSuccess | TestFailure;
 
@@ -299,4 +263,12 @@ async function testWithWriteToDisk({
             fixture
         };
     }
+}
+
+function readDirectories(filepath: string): string[] {
+    const files = fs.readdirSync(filepath);
+    return files
+        .map((file) => path.join(filepath, file))
+        .filter((fullPath) => fs.statSync(fullPath).isDirectory())
+        .map((fullPath) => path.basename(fullPath));
 }
