@@ -100,7 +100,6 @@ export function convertPackage({
     };
 
     if (openApiFile.tags.orderedTagIds != null) {
-        context.logger.info("associated tag is null");
         const visited: RelativeFilePath[] = [];
         for (const tagId of openApiFile.tags.orderedTagIds) {
             const filepath = tagIdsByFiles[tagId];
