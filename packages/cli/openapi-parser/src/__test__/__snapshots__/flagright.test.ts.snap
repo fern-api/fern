@@ -11643,7 +11643,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "url": "https://sandbox.api.flagright.com",
     },
   ],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": [],
+    "tagsById": {},
+  },
   "title": "Flagright API",
   "variables": {},
   "webhooks": [],

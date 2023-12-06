@@ -1,7 +1,15 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { DefinitionFileSchema, isRawAliasDefinition, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
+import {
+    DefinitionFileSchema,
+    isRawAliasDefinition,
+    PackageMarkerFileSchema,
+    RawSchemas,
+    RootApiFileSchema
+} from "@fern-api/yaml-schema";
+import { TagId } from "@fern-fern/openapi-ir-model/commons";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
+import { difference } from "lodash-es";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
@@ -21,6 +29,7 @@ export const EXTERNAL_AUDIENCE = "external";
 export interface ConvertedPackage {
     rootApiFile: RootApiFileSchema;
     definitionFiles: Record<RelativeFilePath, DefinitionFileSchema>;
+    packageMarkerFile: PackageMarkerFileSchema;
 }
 
 export function convertPackage({
@@ -46,40 +55,73 @@ export function convertPackage({
             return !(file in convertedServices.services);
         })
     );
+
+    const tagIdsByFiles: Record<TagId, RelativeFilePath> = {};
+    const relativeFilepaths: RelativeFilePath[] = [];
+    const navigation: string[] = [];
+
+    const definitionFiles: Record<RelativeFilePath, DefinitionFileSchema> = {
+        ...Object.fromEntries(
+            Object.entries(convertedServices.services).map(([file, service]) => {
+                const filepath = RelativeFilePath.of(file);
+                if (service.associatedTag != null) {
+                    tagIdsByFiles[service.associatedTag.id] = filepath;
+                }
+                if (filepath.split("/").length === 1 && !filepath.includes(FERN_PACKAGE_MARKER_FILENAME)) {
+                    relativeFilepaths.push(filepath);
+                }
+                const definitionFile: DefinitionFileSchema = {
+                    imports: {
+                        [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
+                    },
+                    service: service.value
+                };
+                const maybeWebhooks = convertedWebhooks?.webhooks[RelativeFilePath.of(file)];
+                if (maybeWebhooks != null) {
+                    definitionFile.webhooks = maybeWebhooks;
+                }
+                if (service.docs != null) {
+                    definitionFile.docs = service.docs;
+                }
+                return [file, definitionFile];
+            })
+        ),
+        ...Object.fromEntries(
+            Object.entries(onlyWebhookFiles).map(([file, webhooks]) => {
+                const definitionFile: DefinitionFileSchema = {
+                    imports: {
+                        [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
+                    },
+                    webhooks
+                };
+                return [file, definitionFile];
+            })
+        )
+    };
+
+    if (openApiFile.tags.orderedTagIds != null) {
+        context.logger.info("associated tag is null");
+        const visited: RelativeFilePath[] = [];
+        for (const tagId of openApiFile.tags.orderedTagIds) {
+            const filepath = tagIdsByFiles[tagId];
+            if (filepath != null) {
+                navigation.push(filepath);
+                visited.push(filepath);
+            }
+        }
+        const remainingFilesToAdd = difference(relativeFilepaths, visited);
+        navigation.push(...remainingFilesToAdd);
+    }
+
+    const packageMarkerFile = getPackageYml(openApiFile, convertedServices);
+    if (navigation.length > 0) {
+        packageMarkerFile.navigation = navigation;
+    }
+
     return {
         rootApiFile,
-        definitionFiles: {
-            ...Object.fromEntries(
-                Object.entries(convertedServices.services).map(([file, service]) => {
-                    const definitionFile: DefinitionFileSchema = {
-                        imports: {
-                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
-                        },
-                        service: service.value
-                    };
-                    const maybeWebhooks = convertedWebhooks?.webhooks[RelativeFilePath.of(file)];
-                    if (maybeWebhooks != null) {
-                        definitionFile.webhooks = maybeWebhooks;
-                    }
-                    if (service.docs != null) {
-                        definitionFile.docs = service.docs;
-                    }
-                    return [file, definitionFile];
-                })
-            ),
-            ...Object.fromEntries(
-                Object.entries(onlyWebhookFiles).map(([file, webhooks]) => {
-                    const definitionFile: DefinitionFileSchema = {
-                        imports: {
-                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
-                        },
-                        webhooks
-                    };
-                    return [file, definitionFile];
-                })
-            ),
-            [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices)
-        }
+        definitionFiles,
+        packageMarkerFile
     };
 }
 
@@ -166,7 +208,7 @@ function getRootApiFile(
 function getPackageYml(
     openApiFile: OpenAPIIntermediateRepresentation,
     convertedServices: ConvertedServices
-): DefinitionFileSchema {
+): RawSchemas.PackageMarkerFileSchema {
     let types: Record<string, RawSchemas.TypeDeclarationSchema> = { ...convertedServices.additionalTypeDeclarations };
     for (const [schemaId, schema] of Object.entries(openApiFile.schemas)) {
         if (convertedServices.schemaIdsToExclude.includes(schemaId)) {

@@ -6774,17 +6774,24 @@ The default value is 'en_us'.
     },
   ],
   "tags": {
-    "LeMUR": {
-      "description": "LeMUR related operations",
-      "id": "LeMUR",
-    },
-    "realtime": {
-      "description": "Real-time transcription",
-      "id": "realtime",
-    },
-    "transcript": {
-      "description": "Transcript related operations",
-      "id": "transcript",
+    "orderedTagIds": [
+      "transcript",
+      "LeMUR",
+      "realtime",
+    ],
+    "tagsById": {
+      "LeMUR": {
+        "description": "LeMUR related operations",
+        "id": "LeMUR",
+      },
+      "realtime": {
+        "description": "Real-time transcription",
+        "id": "realtime",
+      },
+      "transcript": {
+        "description": "Transcript related operations",
+        "id": "transcript",
+      },
     },
   },
   "title": "AssemblyAI API",

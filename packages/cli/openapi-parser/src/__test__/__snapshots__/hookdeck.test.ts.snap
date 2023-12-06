@@ -37407,69 +37407,89 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
   ],
   "tags": {
-    "Attempts": {
-      "description": "An attempt is any request that Hookdeck makes on behalf of an event.",
-      "id": "Attempts",
-    },
-    "Bookmarks": {
-      "description": "A bookmark lets you conveniently store and replay a specific request.",
-      "id": "Bookmarks",
-    },
-    "Bulk retry events": {
-      "description": "",
-      "id": "Bulk retry events",
-    },
-    "Bulk retry ignored events": {
-      "description": "",
-      "id": "Bulk retry ignored events",
-    },
-    "Bulk retry requests": {
-      "description": "",
-      "id": "Bulk retry requests",
-    },
-    "Connections": {
-      "description": "A connection lets you route webhooks from a source to a destination, using a ruleset.",
-      "id": "Connections",
-    },
-    "Destinations": {
-      "description": "A destination is any endpoint to which your webhooks can be routed.",
-      "id": "Destinations",
-    },
-    "Events": {
-      "description": "An event is any request that Hookdeck receives from a source.",
-      "id": "Events",
-    },
-    "Integrations": {
-      "description": "An integration configures platform-specific behaviors, such as signature verification.",
-      "id": "Integrations",
-    },
-    "Issue Triggers": {
-      "description": "Issue Triggers lets you setup rules that trigger issues when certain conditions are met.",
-      "id": "Issue Triggers",
-    },
-    "Issues": {
-      "description": "Issues lets you track problems in your workspace and communicate resolution steps with your team.",
-      "id": "Issues",
-    },
-    "Notifications": {
-      "description": "Notifications let your team receive alerts anytime an issue changes.",
-      "id": "Notifications",
-    },
-    "Requests": {
-      "description": "A request represent a webhook received by Hookdeck.",
-      "id": "Requests",
-    },
-    "Rulesets": {
-      "description": "A ruleset defines a group of rules that can be used across many connections.",
-      "id": "Rulesets",
-    },
-    "Sources": {
-      "description": "A source represents any third party that sends webhooks to Hookdeck.",
-      "id": "Sources",
-    },
-    "Transformations": {
-      "description": "A transformation represents JavaScript code that will be executed on a connection's requests. Transformations are applied to connections using Rules.",
-      "id": "Transformations",
+    "orderedTagIds": [
+      "Issue Triggers",
+      "Attempts",
+      "Bookmarks",
+      "Destinations",
+      "Events",
+      "Bulk retry events",
+      "Bulk retry ignored events",
+      "Integrations",
+      "Issues",
+      "Requests",
+      "Bulk retry requests",
+      "Rulesets",
+      "Sources",
+      "Notifications",
+      "Transformations",
+      "Connections",
+    ],
+    "tagsById": {
+      "Attempts": {
+        "description": "An attempt is any request that Hookdeck makes on behalf of an event.",
+        "id": "Attempts",
+      },
+      "Bookmarks": {
+        "description": "A bookmark lets you conveniently store and replay a specific request.",
+        "id": "Bookmarks",
+      },
+      "Bulk retry events": {
+        "description": "",
+        "id": "Bulk retry events",
+      },
+      "Bulk retry ignored events": {
+        "description": "",
+        "id": "Bulk retry ignored events",
+      },
+      "Bulk retry requests": {
+        "description": "",
+        "id": "Bulk retry requests",
+      },
+      "Connections": {
+        "description": "A connection lets you route webhooks from a source to a destination, using a ruleset.",
+        "id": "Connections",
+      },
+      "Destinations": {
+        "description": "A destination is any endpoint to which your webhooks can be routed.",
+        "id": "Destinations",
+      },
+      "Events": {
+        "description": "An event is any request that Hookdeck receives from a source.",
+        "id": "Events",
+      },
+      "Integrations": {
+        "description": "An integration configures platform-specific behaviors, such as signature verification.",
+        "id": "Integrations",
+      },
+      "Issue Triggers": {
+        "description": "Issue Triggers lets you setup rules that trigger issues when certain conditions are met.",
+        "id": "Issue Triggers",
+      },
+      "Issues": {
+        "description": "Issues lets you track problems in your workspace and communicate resolution steps with your team.",
+        "id": "Issues",
+      },
+      "Notifications": {
+        "description": "Notifications let your team receive alerts anytime an issue changes.",
+        "id": "Notifications",
+      },
+      "Requests": {
+        "description": "A request represent a webhook received by Hookdeck.",
+        "id": "Requests",
+      },
+      "Rulesets": {
+        "description": "A ruleset defines a group of rules that can be used across many connections.",
+        "id": "Rulesets",
+      },
+      "Sources": {
+        "description": "A source represents any third party that sends webhooks to Hookdeck.",
+        "id": "Sources",
+      },
+      "Transformations": {
+        "description": "A transformation represents JavaScript code that will be executed on a connection's requests. Transformations are applied to connections using Rules.",
+        "id": "Transformations",
+      },
     },
   },
   "title": "Hookdeck Admin REST API",

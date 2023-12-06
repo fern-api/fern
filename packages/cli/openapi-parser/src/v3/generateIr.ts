@@ -151,11 +151,14 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
-        tags: Object.fromEntries(
-            (openApi.tags ?? []).map((tag) => {
-                return [tag.name, { id: tag.name, description: tag.description }];
-            })
-        ),
+        tags: {
+            tagsById: Object.fromEntries(
+                (openApi.tags ?? []).map((tag) => {
+                    return [tag.name, { id: tag.name, description: tag.description }];
+                })
+            ),
+            orderedTagIds: openApi.tags?.map((tag) => tag.name)
+        },
         endpoints,
         webhooks,
         schemas: maybeRemoveDiscriminantsFromSchemas(schemas, context),
