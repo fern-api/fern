@@ -3,3 +3,4 @@ docker: java-model:latest
 dockerCommand: ./gradlew :model-generator:dockerTagLatest
 language: java
 generatorType: Model
+defaultOutputMode: github

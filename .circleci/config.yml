@@ -90,7 +90,7 @@ jobs:
       - run:
           name: Install Seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc74
+            npm install -g @fern-api/seed-cli@0.15.11-1-gb469b3780 
             seed test --workspace sdk --parallel 8
             git --no-pager diff --exit-code
 
@@ -110,7 +110,7 @@ jobs:
       - run:
           name: Install Seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc74
+            npm install -g @fern-api/seed-cli@0.15.11-1-gb469b3780
             seed test --workspace spring --parallel 8
             git --no-pager diff --exit-code
 
@@ -130,7 +130,7 @@ jobs:
       - run:
           name: Install Seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc74
+            npm install -g @fern-api/seed-cli@0.15.11-1-gb469b3780
             seed test --workspace model --parallel 8
             git --no-pager diff --exit-code
 

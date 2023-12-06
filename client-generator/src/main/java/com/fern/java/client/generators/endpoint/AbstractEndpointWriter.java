@@ -40,7 +40,6 @@ import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.http.SdkRequestShape;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.http.StreamingResponse;
-import com.fern.ir.model.http.StreamingResponseChunkType;
 import com.fern.ir.model.http.StreamingResponseChunkType.Visitor;
 import com.fern.ir.model.http.TextResponse;
 import com.fern.ir.model.types.AliasTypeDeclaration;
@@ -498,23 +497,28 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitStreaming(StreamingResponse streaming) {
-            com.fern.ir.model.types.TypeReference bodyType = streaming.getDataEventType().visit(new Visitor<>() {
-                @Override
-                public com.fern.ir.model.types.TypeReference visitJson(com.fern.ir.model.types.TypeReference json) {
-                    return json;
-                }
+            com.fern.ir.model.types.TypeReference bodyType = streaming
+                    .getDataEventType()
+                    .visit(new Visitor<>() {
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitJson(
+                                com.fern.ir.model.types.TypeReference json) {
+                            return json;
+                        }
 
-                @Override
-                public com.fern.ir.model.types.TypeReference visitText() {
-                    throw new RuntimeException("Returning streamed text is not supported.");
-                }
+                        @Override
+                        public com.fern.ir.model.types.TypeReference visitText() {
+                            throw new RuntimeException("Returning streamed text is not supported.");
+                        }
 
-                @Override
-                public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
-                    throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
-                }
-            });
-            String terminator = streaming.getTerminator().isPresent() ? streaming.getTerminator().get() : "\n";
+                        @Override
+                        public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
+                            throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
+                        }
+                    });
+            String terminator = streaming.getTerminator().isPresent()
+                    ? streaming.getTerminator().get()
+                    : "\n";
 
             TypeName bodyTypeName =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, bodyType);

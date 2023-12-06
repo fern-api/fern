@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.literal.requests.CreateOptionsRequest;
 import resources.literal.requests.GetOptionsRequest;
+import resources.literal.requests.GetUndiscriminatedOptionsRequest;
 import resources.literal.types.CreateOptionsResponse;
 import resources.literal.types.Options;
+import resources.literal.types.UndiscriminatedOptions;
 
 @RequestMapping(
     path = "/"
@@ -29,4 +31,12 @@ public interface LiteralService {
       consumes = "application/json"
   )
   Options getOptions(@RequestBody GetOptionsRequest body);
+
+  @PostMapping(
+      value = "/options",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  UndiscriminatedOptions getUndiscriminatedOptions(
+      @RequestBody GetUndiscriminatedOptionsRequest body);
 }

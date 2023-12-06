@@ -9,6 +9,7 @@ import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.io.IOException;
@@ -104,6 +105,43 @@ public class ObjectClient {
 
     public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
         return getAndReturnWithRequiredField(request, null);
+    }
+
+    public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("object")
+                .addPathSegments("get-and-return-with-map-of-map")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ObjectWithMapOfMap.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
+        return getAndReturnWithMapOfMap(request, null);
     }
 
     public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {

@@ -9,8 +9,10 @@ import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
 import com.seed.literal.resources.literal.requests.CreateOptionsRequest;
 import com.seed.literal.resources.literal.requests.GetOptionsRequest;
+import com.seed.literal.resources.literal.requests.GetUndiscriminatedOptionsRequest;
 import com.seed.literal.resources.literal.types.CreateOptionsResponse;
 import com.seed.literal.resources.literal.types.Options;
+import com.seed.literal.resources.literal.types.UndiscriminatedOptions;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -96,5 +98,42 @@ public class LiteralClient {
 
     public Options getOptions(GetOptionsRequest request) {
         return getOptions(request, null);
+    }
+
+    public UndiscriminatedOptions getUndiscriminatedOptions(
+            GetUndiscriminatedOptionsRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("options")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UndiscriminatedOptions.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UndiscriminatedOptions getUndiscriminatedOptions(GetUndiscriminatedOptionsRequest request) {
+        return getUndiscriminatedOptions(request, null);
     }
 }

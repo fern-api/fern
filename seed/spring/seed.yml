@@ -3,3 +3,4 @@ docker: java-spring:latest
 dockerCommand: ./gradlew :spring-server-generator:dockerTagLatest
 language: java
 generatorType: Server
+defaultOutputMode: local_files

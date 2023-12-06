@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class StreamGenerator extends AbstractFileGenerator {
+public final class StreamGenerator extends AbstractFileGenerator {
     public static final String GET_MODULE_METHOD_NAME = "getModule";
 
-    public StreamGenerator (AbstractGeneratorContext<?, ?> generatorContext) {
+    public StreamGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getStreamClassName(), generatorContext);
     }
 

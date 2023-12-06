@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import resources.types.object.types.NestedObjectWithOptionalField;
 import resources.types.object.types.NestedObjectWithRequiredField;
+import resources.types.object.types.ObjectWithMapOfMap;
 import resources.types.object.types.ObjectWithOptionalField;
 import resources.types.object.types.ObjectWithRequiredField;
 
@@ -36,6 +37,14 @@ public interface ObjectService {
   ObjectWithRequiredField getAndReturnWithRequiredField(
       @RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestBody ObjectWithRequiredField body);
+
+  @PostMapping(
+      value = "/get-and-return-with-map-of-map",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  ObjectWithMapOfMap getAndReturnWithMapOfMap(@RequestHeader("Authorization") BearerAuth auth,
+      Principal principal, @RequestBody ObjectWithMapOfMap body);
 
   @PostMapping(
       value = "/get-and-return-nested-with-optional-field",

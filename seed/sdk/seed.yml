@@ -3,6 +3,9 @@ docker: java-client:latest
 dockerCommand: ./gradlew :client-generator:dockerTagLatest
 language: java
 generatorType: SDK
+defaultOutputMode: github
+compileCommands:
+
 fixtures:
   exhaustive:
     - customConfig: null
@@ -14,3 +17,7 @@ fixtures:
     - customConfig:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
+    - customConfig:
+        package-prefix: com.fern.sdk
+      outputMode: local_files
+      outputFolder: local-files
