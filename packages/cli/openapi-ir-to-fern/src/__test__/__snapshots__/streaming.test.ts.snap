@@ -4,7 +4,9 @@ exports[`open api parser streaming simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
-      "errors": {},
+      "imports": {
+        "root": "__package__.yml",
+      },
       "service": {
         "auth": false,
         "base-path": "",
@@ -202,87 +204,288 @@ exports[`open api parser streaming simple 1`] = `
           },
         },
       },
-      "types": {
-        "StreamUser": {
+    },
+  },
+  "packageMarkerFile": {
+    "errors": {},
+    "navigation": [],
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "user": {
+          "auth": false,
           "docs": undefined,
-          "properties": {
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "errors": [],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "stream": false,
+              },
+              "response": {
+                "body": {},
+              },
             },
+          ],
+          "method": "POST",
+          "path": "/v1/users",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "",
+                  "type": "optional<string>",
+                },
+                "stream": "literal<false>",
+              },
+            },
+            "headers": undefined,
+            "name": "UserRequest",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "",
+            "type": "User",
           },
         },
-        "StreamUser2": {
+        "user_stream": {
+          "auth": false,
           "docs": undefined,
-          "properties": {
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "errors": [],
+          "method": "POST",
+          "path": "/v1/users",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "",
+                  "type": "optional<string>",
+                },
+                "stream": "literal<true>",
+              },
             },
-            "name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "streamed": {
-              "docs": undefined,
-              "type": "optional<literal<true>>",
-            },
+            "headers": undefined,
+            "name": "UserStreamRequest",
+            "query-parameters": undefined,
+          },
+          "response-stream": {
+            "docs": "",
+            "type": "StreamUser",
           },
         },
-        "User": {
+        "user_v2": {
+          "auth": false,
           "docs": undefined,
-          "properties": {
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "errors": [],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "stream": false,
+              },
+              "response": {
+                "body": {
+                  "streamed": false,
+                },
+              },
             },
+          ],
+          "method": "POST",
+          "path": "/v2/users",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "",
+                  "type": "optional<string>",
+                },
+                "stream": "literal<false>",
+              },
+            },
+            "headers": undefined,
+            "name": "UserV2Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "",
+            "type": "User2",
           },
         },
-        "User2": {
+        "user_v2_stream": {
+          "auth": false,
           "docs": undefined,
-          "properties": {
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "errors": [],
+          "method": "POST",
+          "path": "/v2/users",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "",
+                  "type": "optional<string>",
+                },
+                "stream": "literal<true>",
+              },
             },
-            "name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "streamed": {
-              "docs": undefined,
-              "type": "optional<literal<false>>",
-            },
+            "headers": undefined,
+            "name": "UserV2StreamRequest",
+            "query-parameters": undefined,
+          },
+          "response-stream": {
+            "docs": "",
+            "type": "StreamUser2",
           },
         },
-        "UserV3Response": {
+        "user_v3": {
+          "auth": false,
           "docs": undefined,
-          "properties": {
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "errors": [],
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {
+                "stream": false,
+              },
+              "response": {
+                "body": {},
+              },
             },
-            "inline": {
-              "docs": undefined,
-              "type": "optional<boolean>",
+          ],
+          "method": "POST",
+          "path": "/v3/users",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "",
+                  "type": "optional<string>",
+                },
+                "stream": "literal<false>",
+              },
             },
+            "headers": undefined,
+            "name": "UserV3Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "",
+            "type": "UserV3Response",
           },
         },
-        "UserV3StreamResponse": {
+        "user_v3_stream": {
+          "auth": false,
           "docs": undefined,
-          "properties": {
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "errors": [],
+          "method": "POST",
+          "path": "/v3/users",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "",
+                  "type": "optional<string>",
+                },
+                "stream": "literal<true>",
+              },
             },
-            "inline": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
-            "streamed": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
+            "headers": undefined,
+            "name": "UserV3StreamRequest",
+            "query-parameters": undefined,
+          },
+          "response-stream": {
+            "docs": "",
+            "type": "UserV3StreamResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "StreamUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+        },
+      },
+      "StreamUser2": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+          "streamed": {
+            "docs": undefined,
+            "type": "optional<literal<true>>",
+          },
+        },
+      },
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+        },
+      },
+      "User2": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+          "streamed": {
+            "docs": undefined,
+            "type": "optional<literal<false>>",
+          },
+        },
+      },
+      "UserV3Response": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+          "inline": {
+            "docs": undefined,
+            "type": "optional<boolean>",
+          },
+        },
+      },
+      "UserV3StreamResponse": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": undefined,
+            "type": "optional<string>",
+          },
+          "inline": {
+            "docs": undefined,
+            "type": "optional<boolean>",
+          },
+          "streamed": {
+            "docs": undefined,
+            "type": "optional<boolean>",
           },
         },
       },

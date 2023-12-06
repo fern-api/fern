@@ -831,7 +831,10 @@ exports[`open api parser streaming parse open api 1`] = `
   },
   "securitySchemes": {},
   "servers": [],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Streaming API",
   "variables": {},
   "webhooks": [],

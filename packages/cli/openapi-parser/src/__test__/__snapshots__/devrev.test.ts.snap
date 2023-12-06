@@ -13096,49 +13096,64 @@ empty.
     },
   ],
   "tags": {
-    "artifacts": {
-      "description": "Artifact (file) management APIs.",
-      "id": "artifacts",
-    },
-    "auth-connection": {
-      "description": "Auth Connections of DevOrg.",
-      "id": "auth-connection",
-    },
-    "auth-tokens": {
-      "description": "Security token interactions.",
-      "id": "auth-tokens",
-    },
-    "dev-orgs": {
-      "description": "Dev organization interactions.",
-      "id": "dev-orgs",
-    },
-    "dev-users": {
-      "description": "Dev user interactions.",
-      "id": "dev-users",
-    },
-    "parts": {
-      "description": "DevRev part interactions.",
-      "id": "parts",
-    },
-    "rev-orgs": {
-      "description": "Rev organization interactions.",
-      "id": "rev-orgs",
-    },
-    "tags": {
-      "description": "DevRev tag interactions.",
-      "id": "tags",
-    },
-    "timeline-entries": {
-      "description": "APIs to manage timeline entries for objects.",
-      "id": "timeline-entries",
-    },
-    "webhooks": {
-      "description": "Webhook event APIs.",
-      "id": "webhooks",
-    },
-    "works": {
-      "description": "DevRev work interactions.",
-      "id": "works",
+    "orderedTagIds": [
+      "artifacts",
+      "auth-connection",
+      "auth-tokens",
+      "dev-orgs",
+      "dev-users",
+      "parts",
+      "rev-orgs",
+      "tags",
+      "timeline-entries",
+      "webhooks",
+      "works",
+    ],
+    "tagsById": {
+      "artifacts": {
+        "description": "Artifact (file) management APIs.",
+        "id": "artifacts",
+      },
+      "auth-connection": {
+        "description": "Auth Connections of DevOrg.",
+        "id": "auth-connection",
+      },
+      "auth-tokens": {
+        "description": "Security token interactions.",
+        "id": "auth-tokens",
+      },
+      "dev-orgs": {
+        "description": "Dev organization interactions.",
+        "id": "dev-orgs",
+      },
+      "dev-users": {
+        "description": "Dev user interactions.",
+        "id": "dev-users",
+      },
+      "parts": {
+        "description": "DevRev part interactions.",
+        "id": "parts",
+      },
+      "rev-orgs": {
+        "description": "Rev organization interactions.",
+        "id": "rev-orgs",
+      },
+      "tags": {
+        "description": "DevRev tag interactions.",
+        "id": "tags",
+      },
+      "timeline-entries": {
+        "description": "APIs to manage timeline entries for objects.",
+        "id": "timeline-entries",
+      },
+      "webhooks": {
+        "description": "Webhook event APIs.",
+        "id": "webhooks",
+      },
+      "works": {
+        "description": "DevRev work interactions.",
+        "id": "works",
+      },
     },
   },
   "title": "DevRev REST API",

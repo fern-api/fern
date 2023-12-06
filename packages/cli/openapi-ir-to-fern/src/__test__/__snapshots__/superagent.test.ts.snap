@@ -3,45 +3,6 @@
 exports[`open api parser superagent simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "errors": {
-        "UnprocessableEntityError": {
-          "status-code": 422,
-          "type": "HttpValidationError",
-        },
-      },
-      "service": undefined,
-      "types": {
-        "HttpValidationError": {
-          "docs": undefined,
-          "properties": {
-            "detail": {
-              "docs": undefined,
-              "type": "optional<list<ValidationError>>",
-            },
-          },
-        },
-        "ValidationError": {
-          "docs": undefined,
-          "properties": {
-            "loc": {
-              "docs": undefined,
-              "type": "list<ValidationErrorLocItem>",
-            },
-            "msg": "string",
-            "type": "string",
-          },
-        },
-        "ValidationErrorLocItem": {
-          "discriminated": false,
-          "docs": undefined,
-          "union": [
-            "string",
-            "integer",
-          ],
-        },
-      },
-    },
     "agent.yml": {
       "imports": {
         "root": "__package__.yml",
@@ -748,6 +709,46 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "errors": {
+      "UnprocessableEntityError": {
+        "status-code": 422,
+        "type": "HttpValidationError",
+      },
+    },
+    "navigation": [],
+    "service": undefined,
+    "types": {
+      "HttpValidationError": {
+        "docs": undefined,
+        "properties": {
+          "detail": {
+            "docs": undefined,
+            "type": "optional<list<ValidationError>>",
+          },
+        },
+      },
+      "ValidationError": {
+        "docs": undefined,
+        "properties": {
+          "loc": {
+            "docs": undefined,
+            "type": "list<ValidationErrorLocItem>",
+          },
+          "msg": "string",
+          "type": "string",
+        },
+      },
+      "ValidationErrorLocItem": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "string",
+          "integer",
+        ],
       },
     },
   },

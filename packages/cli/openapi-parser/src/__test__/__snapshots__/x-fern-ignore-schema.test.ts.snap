@@ -39,7 +39,10 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
   },
   "securitySchemes": {},
   "servers": [],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Test extension \`x-fern-ignore\` for schemas",
   "variables": {},
   "webhooks": [],

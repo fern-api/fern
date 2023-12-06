@@ -1999,9 +1999,14 @@ exports[`open api parser dopt parse open api 1`] = `
     },
   ],
   "tags": {
-    "Blocks": {
-      "description": "Blocks API end-points",
-      "id": "Blocks",
+    "orderedTagIds": [
+      "Blocks",
+    ],
+    "tagsById": {
+      "Blocks": {
+        "description": "Blocks API end-points",
+        "id": "Blocks",
+      },
     },
   },
   "title": "Dopt Blocks API",

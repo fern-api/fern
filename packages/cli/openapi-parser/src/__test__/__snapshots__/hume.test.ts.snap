@@ -3719,17 +3719,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
   ],
   "tags": {
-    "Get Job Predictions": {
-      "description": undefined,
-      "id": "Get Job Predictions",
-    },
-    "List Jobs": {
-      "description": undefined,
-      "id": "List Jobs",
-    },
-    "Start Job": {
-      "description": undefined,
-      "id": "Start Job",
+    "orderedTagIds": [
+      "Start Job",
+      "Get Job Predictions",
+      "List Jobs",
+    ],
+    "tagsById": {
+      "Get Job Predictions": {
+        "description": undefined,
+        "id": "Get Job Predictions",
+      },
+      "List Jobs": {
+        "description": undefined,
+        "id": "List Jobs",
+      },
+      "Start Job": {
+        "description": undefined,
+        "id": "Start Job",
+      },
     },
   },
   "title": "Hume AI Batch API",

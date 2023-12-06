@@ -6677,13 +6677,19 @@ exports[`open api parser vocode parse open api 1`] = `
     },
   ],
   "tags": {
-    "calls": {
-      "description": "Manage calls.",
-      "id": "calls",
-    },
-    "numbers": {
-      "description": "Operations with phone numbers.",
-      "id": "numbers",
+    "orderedTagIds": [
+      "numbers",
+      "calls",
+    ],
+    "tagsById": {
+      "calls": {
+        "description": "Manage calls.",
+        "id": "calls",
+      },
+      "numbers": {
+        "description": "Operations with phone numbers.",
+        "id": "numbers",
+      },
     },
   },
   "title": "Vocode Hosted API",

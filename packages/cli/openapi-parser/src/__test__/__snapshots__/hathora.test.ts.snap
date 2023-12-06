@@ -5701,7 +5701,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "url": "/",
     },
   ],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Hathora Cloud API",
   "variables": {},
   "webhooks": [],
