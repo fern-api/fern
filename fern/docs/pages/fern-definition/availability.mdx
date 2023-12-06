@@ -52,8 +52,18 @@ In Fern Docs, this will look like:
 
 <CodeBlock title="imdb.yml">
 ```diff
+ Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+      whereToWatch: 
+        type: WhereToWatch
++       availability: pre-release
+
   WhereToWatch: 
-+   availability: pre-release
     enum:
       - theater
       - netflix
