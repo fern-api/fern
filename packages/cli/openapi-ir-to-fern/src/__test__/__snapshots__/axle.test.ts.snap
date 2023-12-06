@@ -261,7 +261,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
   },
   "packageMarkerFile": {
     "errors": {},
-    "navigation": [],
     "service": undefined,
     "types": {
       "Account": {

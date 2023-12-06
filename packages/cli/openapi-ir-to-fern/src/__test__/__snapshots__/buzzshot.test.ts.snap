@@ -405,7 +405,6 @@ exports[`open api parser buzzshot simple 1`] = `
   },
   "packageMarkerFile": {
     "errors": {},
-    "navigation": [],
     "service": undefined,
     "types": {
       "Game": {

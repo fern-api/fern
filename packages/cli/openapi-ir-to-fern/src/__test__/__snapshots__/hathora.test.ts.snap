@@ -1559,7 +1559,6 @@ exports[`open api parser hathora simple 1`] = `
         "type": "string",
       },
     },
-    "navigation": [],
     "service": undefined,
     "types": {
       "ActiveConnectionInfo": {

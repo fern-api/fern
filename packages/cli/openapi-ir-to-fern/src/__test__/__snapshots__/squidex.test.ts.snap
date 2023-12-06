@@ -6737,7 +6737,6 @@ You will be assigned as owner of the new team automatically.",
         "type": "ErrorDto",
       },
     },
-    "navigation": [],
     "service": undefined,
     "types": {
       "ActionTypeEnum": {

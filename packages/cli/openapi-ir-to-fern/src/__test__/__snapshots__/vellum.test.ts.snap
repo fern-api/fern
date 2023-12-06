@@ -854,7 +854,6 @@ or overwritten with default values.",
         "type": "unknown",
       },
     },
-    "navigation": [],
     "service": {
       "auth": false,
       "base-path": "",

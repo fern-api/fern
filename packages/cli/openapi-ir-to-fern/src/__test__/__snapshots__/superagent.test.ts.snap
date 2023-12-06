@@ -719,7 +719,6 @@ exports[`open api parser superagent simple 1`] = `
         "type": "HttpValidationError",
       },
     },
-    "navigation": [],
     "service": undefined,
     "types": {
       "HttpValidationError": {

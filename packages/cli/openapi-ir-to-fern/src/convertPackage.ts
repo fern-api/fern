@@ -113,13 +113,15 @@ export function convertPackage({
         navigation.push(...remainingFilesToAdd);
     }
 
+    const packageMarkerFile = getPackageYml(openApiFile, convertedServices);
+    if (navigation.length > 0) {
+        packageMarkerFile.navigation = navigation;
+    }
+
     return {
         rootApiFile,
         definitionFiles,
-        packageMarkerFile: {
-            ...getPackageYml(openApiFile, convertedServices),
-            navigation
-        }
+        packageMarkerFile
     };
 }
 

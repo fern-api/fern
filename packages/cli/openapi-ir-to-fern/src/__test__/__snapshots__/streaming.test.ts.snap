@@ -208,7 +208,6 @@ exports[`open api parser streaming simple 1`] = `
   },
   "packageMarkerFile": {
     "errors": {},
-    "navigation": [],
     "service": {
       "auth": false,
       "base-path": "",

@@ -5022,7 +5022,6 @@ exports[`open api parser suger simple 1`] = `
         "type": "string",
       },
     },
-    "navigation": [],
     "service": undefined,
     "types": {
       "AzureAudience": {
