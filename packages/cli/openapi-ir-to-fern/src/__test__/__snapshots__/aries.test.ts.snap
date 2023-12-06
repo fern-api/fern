@@ -15436,7 +15436,6 @@ exports[`open api parser aries simple 1`] = `
       "trustping.yml",
       "wallet.yml",
       "server.yml",
-      "__package__.yml",
     ],
     "service": {
       "auth": false,

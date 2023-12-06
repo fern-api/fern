@@ -67,7 +67,7 @@ export function convertPackage({
                 if (service.associatedTag != null) {
                     tagIdsByFiles[service.associatedTag.id] = filepath;
                 }
-                if (filepath.split("/").length === 1) {
+                if (filepath.split("/").length === 1 && !filepath.includes(FERN_PACKAGE_MARKER_FILENAME)) {
                     relativeFilepaths.push(filepath);
                 }
                 const definitionFile: DefinitionFileSchema = {

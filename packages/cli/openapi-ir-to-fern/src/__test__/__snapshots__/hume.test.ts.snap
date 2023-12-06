@@ -204,7 +204,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "errors": {},
     "navigation": [
       "getJobPredictions.yml",
-      "__package__.yml",
     ],
     "service": {
       "auth": false,
