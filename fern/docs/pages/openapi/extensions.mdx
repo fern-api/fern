@@ -339,8 +339,8 @@ components:
 ## Overlaying extensions 
 
 Because of the number of tools that use OpenAPI, it may be more convenient to 
-"overlay" your fern specific OpenAPI extensions onto the spec. In order to do 
-this you can use the `x-fern-overrides-filepath` extension. 
+"overlay" your fern specific OpenAPI extensions onto your original definition. \
+In order to do this you can use the `x-fern-overrides-filepath` extension.
 
 Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and 
 `x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is 
@@ -353,7 +353,7 @@ shown in the third tab.
     info:
       title: User API
       version: 1.0.0
-    x-fern-overrides-filepath: overrides.yml
+    x-fern-overrides-filepath: overrides.yml # <--------- 
     paths:
       /users:
         get:
