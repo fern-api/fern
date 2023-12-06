@@ -119,7 +119,7 @@ function convertResolvedResponse({
             description: resolvedResponse.description
         };
     }
-    
+
     if (resolvedResponse.content?.[APPLICATION_PDF]?.schema != null) {
         return {
             type: "file",
