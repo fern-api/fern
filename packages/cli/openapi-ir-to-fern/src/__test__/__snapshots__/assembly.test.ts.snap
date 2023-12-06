@@ -569,7 +569,12 @@ The LLM response data, as well as any context provided in the original request w
         "type": "Error",
       },
     },
-    "navigation": [],
+    "navigation": [
+      "files.yml",
+      "transcript.yml",
+      "realtime.yml",
+      "lemur.yml",
+    ],
     "service": undefined,
     "types": {
       "AudioIntelligenceModelStatus": {

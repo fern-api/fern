@@ -202,7 +202,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
   },
   "packageMarkerFile": {
     "errors": {},
-    "navigation": [],
+    "navigation": [
+      "getJobPredictions.yml",
+      "__package__.yml",
+    ],
     "service": {
       "auth": false,
       "base-path": "",

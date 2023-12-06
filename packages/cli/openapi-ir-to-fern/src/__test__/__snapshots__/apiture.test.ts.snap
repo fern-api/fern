@@ -1045,7 +1045,16 @@ Note: This operation requires an identity challenge if the financial institution
         "type": "ProblemResponse",
       },
     },
-    "navigation": [],
+    "navigation": [
+      "accounts.yml",
+      "accountJointOwners.yml",
+      "overdraftProtection.yml",
+      "jointOwners.yml",
+      "institutions.yml",
+      "transactions.yml",
+      "transactionCategories.yml",
+      "transfers.yml",
+    ],
     "service": undefined,
     "types": {
       "AbstractBody": {

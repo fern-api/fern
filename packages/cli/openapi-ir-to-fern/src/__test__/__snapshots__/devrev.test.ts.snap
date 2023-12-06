@@ -2201,7 +2201,18 @@ organizations.
         "type": "ErrorUnauthorized",
       },
     },
-    "navigation": [],
+    "navigation": [
+      "artifacts.yml",
+      "authConnection.yml",
+      "authTokens.yml",
+      "devUsers.yml",
+      "parts.yml",
+      "revOrgs.yml",
+      "tags.yml",
+      "timelineEntries.yml",
+      "webhooks.yml",
+      "works.yml",
+    ],
     "service": undefined,
     "types": {
       "ArtifactSummary": {

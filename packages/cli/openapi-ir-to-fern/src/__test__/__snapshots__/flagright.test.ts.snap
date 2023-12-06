@@ -442,7 +442,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "type": "unknown",
       },
     },
-    "navigation": [],
+    "navigation": [
+      "__package__.yml",
+    ],
     "service": {
       "auth": false,
       "base-path": "",

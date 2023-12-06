@@ -60,7 +60,47 @@ export function convertPackage({
     const relativeFilepaths: RelativeFilePath[] = [];
     const navigation: string[] = [];
 
+    const definitionFiles: Record<RelativeFilePath, DefinitionFileSchema> = {
+        ...Object.fromEntries(
+            Object.entries(convertedServices.services).map(([file, service]) => {
+                const filepath = RelativeFilePath.of(file);
+                if (service.associatedTag != null) {
+                    tagIdsByFiles[service.associatedTag.id] = filepath;
+                }
+                if (filepath.split("/").length === 1) {
+                    relativeFilepaths.push(filepath);
+                }
+                const definitionFile: DefinitionFileSchema = {
+                    imports: {
+                        [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
+                    },
+                    service: service.value
+                };
+                const maybeWebhooks = convertedWebhooks?.webhooks[RelativeFilePath.of(file)];
+                if (maybeWebhooks != null) {
+                    definitionFile.webhooks = maybeWebhooks;
+                }
+                if (service.docs != null) {
+                    definitionFile.docs = service.docs;
+                }
+                return [file, definitionFile];
+            })
+        ),
+        ...Object.fromEntries(
+            Object.entries(onlyWebhookFiles).map(([file, webhooks]) => {
+                const definitionFile: DefinitionFileSchema = {
+                    imports: {
+                        [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
+                    },
+                    webhooks
+                };
+                return [file, definitionFile];
+            })
+        )
+    };
+
     if (openApiFile.tags.orderedTagIds != null) {
+        context.logger.info("associated tag is null");
         const visited: RelativeFilePath[] = [];
         for (const tagId of openApiFile.tags.orderedTagIds) {
             const filepath = tagIdsByFiles[tagId];
@@ -75,44 +115,7 @@ export function convertPackage({
 
     return {
         rootApiFile,
-        definitionFiles: {
-            ...Object.fromEntries(
-                Object.entries(convertedServices.services).map(([file, service]) => {
-                    const filepath = RelativeFilePath.of(file);
-                    if (service.associatedTag != null) {
-                        tagIdsByFiles[service.associatedTag.id] = filepath;
-                    }
-                    if (filepath.split("/").length === 1) {
-                        relativeFilepaths.push(filepath);
-                    }
-                    const definitionFile: DefinitionFileSchema = {
-                        imports: {
-                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
-                        },
-                        service: service.value
-                    };
-                    const maybeWebhooks = convertedWebhooks?.webhooks[RelativeFilePath.of(file)];
-                    if (maybeWebhooks != null) {
-                        definitionFile.webhooks = maybeWebhooks;
-                    }
-                    if (service.docs != null) {
-                        definitionFile.docs = service.docs;
-                    }
-                    return [file, definitionFile];
-                })
-            ),
-            ...Object.fromEntries(
-                Object.entries(onlyWebhookFiles).map(([file, webhooks]) => {
-                    const definitionFile: DefinitionFileSchema = {
-                        imports: {
-                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file)
-                        },
-                        webhooks
-                    };
-                    return [file, definitionFile];
-                })
-            )
-        },
+        definitionFiles,
         packageMarkerFile: {
             ...getPackageYml(openApiFile, convertedServices),
             navigation
