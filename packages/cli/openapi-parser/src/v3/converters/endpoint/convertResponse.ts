@@ -11,7 +11,7 @@ const APPLICATION_JSON_CONTENT = "application/json";
 const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 const TEXT_PLAIN_CONTENT = "text/plain";
 const APPLICATION_VND_JSON = "application/x-ndjson";
-
+const AUDIO_MPEG = "audio/mpeg";
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 
 // The converter will attempt to get response in priority order
@@ -138,6 +138,13 @@ function convertResolvedResponse({
         }
         return {
             type: "text",
+            description: resolvedResponse.description
+        };
+    }
+
+    if (resolvedResponse.content?.[AUDIO_MPEG] != null) {
+        return {
+            type: "file",
             description: resolvedResponse.description
         };
     }
