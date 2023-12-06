@@ -86,7 +86,7 @@ export function validateTypeReferenceExample({
             return validateTypeExample({
                 typeName: declaration.typeName,
                 typeDeclaration: declaration.declaration,
-                file,
+                file: declaration.file,
                 example,
                 typeResolver,
                 exampleResolver,
