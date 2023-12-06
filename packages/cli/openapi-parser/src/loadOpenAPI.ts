@@ -66,8 +66,8 @@ export async function loadOpenAPI({
     });
     const parsed = await SwaggerParser.parse(result.bundle.parsed);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const overridesFilepath =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         typeof parsed === "object" ? (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] : undefined;
 
     if (overridesFilepath != null) {
