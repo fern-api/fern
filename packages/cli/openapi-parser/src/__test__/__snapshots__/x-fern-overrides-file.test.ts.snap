@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] = `
+{
+  "description": undefined,
+  "endpoints": [
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": undefined,
+      "description": "Retrieve a list of users from the system.",
+      "errorStatusCode": [
+        500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
+      "generatedRequestName": "UsersGetRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "GET",
+      "operationId": undefined,
+      "path": "/users",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": undefined,
+      "sdkName": {
+        "groupName": [
+          "users",
+        ],
+        "methodName": "get",
+      },
+      "server": [],
+      "summary": "Get a list of users",
+      "tags": [],
+    },
+  ],
+  "errors": {
+    "500": {
+      "description": undefined,
+      "generatedName": "InternalServerError",
+      "nameOverride": null,
+      "schema": {
+        "description": undefined,
+        "example": undefined,
+        "type": "unknown",
+      },
+    },
+  },
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {},
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
+  "title": "User API",
+  "variables": {},
+  "webhooks": [],
+}
+`;
