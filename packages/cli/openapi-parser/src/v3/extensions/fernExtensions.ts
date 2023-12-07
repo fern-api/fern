@@ -12,6 +12,14 @@ export const FernOpenAPIExtension = {
     SERVER_NAME_V2: "x-fern-server-name",
 
     /**
+     * Filepath that contains any OpenAPI overrides
+     * that you wan't Fern to add on top of your existing spec.
+     *
+     * x-fern-overrides-filepath: relative/path/to/file
+     */
+    OPENAPI_OVERIDES_FILEPATH: "x-fern-overrides-filepath",
+
+    /**
      * Used to override the type with fern's type syntax
      * Bar:
      *  properties:

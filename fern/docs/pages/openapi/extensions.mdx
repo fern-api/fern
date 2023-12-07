@@ -335,3 +335,62 @@ components:
       x-fern-ignore: true # <-----------
       ...
 ```
+
+## Overlaying extensions 
+
+Because of the number of tools that use OpenAPI, it may be more convenient to 
+"overlay" your fern specific OpenAPI extensions onto your original definition. \
+In order to do this you can use the `x-fern-overrides-filepath` extension.
+
+Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and 
+`x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is 
+shown in the third tab. 
+
+<CodeBlocks>
+    <CodeBlock title="openapi.yml">
+    ```yaml
+    openapi: 3.0.0
+    info:
+      title: User API
+      version: 1.0.0
+    x-fern-overrides-filepath: overrides.yml # <--------- 
+    paths:
+      /users:
+        get:
+          summary: Get a list of users
+          description: Retrieve a list of users from the system.
+          responses:
+            '200':
+              description: Successful response
+            '500':
+              description: Internal Server Error
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="overrides.yml">
+    ```yaml
+    paths:
+      /users:
+        get:
+          x-fern-sdk-group-name: users
+          x-fern-sdk-method-name: get
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Overlayed OpenAPI">
+    ```yaml
+    paths:
+      /users:
+        get:
+          x-fern-sdk-group-name: users # <---------------
+          x-fern-sdk-method-name: get  # <---------------
+          summary: Get a list of users
+          description: Retrieve a list of users from the system.
+          responses:
+            '200':
+              description: Successful response
+            '500':
+              description: Internal Server Error
+    ```
+    </CodeBlock>
+</CodeBlocks>
