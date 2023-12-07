@@ -1,5 +1,7 @@
 The `Callout Component` is used when you want to visually highlight important content for the user. There are different props available to design callout component properly.
 
+Note: it is helpful to add a `<br />` after the callout component to ensure that the next component is not too close to the callout.
+
 Callout Prop:
 
 **intent**: 'info' | 'success' | 'warn'
@@ -10,6 +12,8 @@ Callout Prop:
 This is an info callout. 
 </Callout>
 
+<br />
+
 <CodeBlock title = "info">
 ```mdx
 <Callout intent="info">
@@ -18,11 +22,15 @@ This is an info callout.
 ```
 </CodeBlock>
 
+<br />
+
 ## Success 
 
 <Callout intent="success">
 This is a success callout. 
 </Callout>
+
+<br />
 
 <CodeBlock title = "success">
 ```mdx
@@ -37,6 +45,8 @@ This is a success callout.
 <Callout intent="warn">
 This is a warn callout. 
 </Callout>
+
+<br />
 
 <CodeBlock title = "warn">
 ```mdx
