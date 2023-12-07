@@ -83,7 +83,7 @@ export async function loadOpenAPI({
         } catch (err) {
             return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`);
         }
-        const merged = merge(parsed, parsedOverrides) as OpenAPI.Document;
+        const merged = merge({}, parsed, parsedOverrides) as OpenAPI.Document;
         return merged;
     }
     return parsed;
