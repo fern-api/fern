@@ -145,6 +145,9 @@ navigation:
     layout:
       - section: Overview
         contents:
+          - page: Quickstart 
+            path: ./docs/pages/docs/quickstart.mdx
+            slug: quickstart
           - page: Configuration
             path: ./docs/pages/docs/configuration.mdx
             slug: configuration
