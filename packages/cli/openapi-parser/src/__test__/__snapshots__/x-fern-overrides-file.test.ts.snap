@@ -39,7 +39,7 @@ exports[`x-fern-overrides-filepath x-fern-overrides-filepath parse open api 1`] 
         "methodName": "get",
       },
       "server": [],
-      "summary": "Get a list of users",
+      "summary": "List users (Overriden description)",
       "tags": [],
     },
   ],
