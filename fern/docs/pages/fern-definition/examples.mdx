@@ -288,3 +288,26 @@ errors:
     status-code: 422
     type: InsufficientFundsBody
 ```
+
+## Examples for path parameters
+
+```yml
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    TrackShipment:
+      docs: Track the status of a shipment.
+      method: GET
+      path: /shipping/{trackingNumber}
+      path-parameters: 
+        trackingNumber: string
+      response: ShipmentStatus
+      examples:
+        - path-parameters: 
+            trackingNumber: "1Z26W8370303469306"
+          response:
+            body:
+              status: "InTransit"
+              estimatedDeliveryDate: "2024-01-11"
+```
