@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { convertPackage } from "./convertPackage";
+import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
 import { convertAuth } from "./covertAuth";
 
@@ -28,7 +28,9 @@ export function convertIrToFdrApi(
         fdrApi.types[typeId] = {
             description: type.docs ?? undefined,
             name: type.name.name.originalName,
-            shape: convertTypeShape(type.shape)
+            shape: convertTypeShape(type.shape),
+            availability:
+                type.availability != null ? convertIrAvailability({ availability: type.availability }) : undefined
         };
     }
 

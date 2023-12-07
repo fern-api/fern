@@ -1,7 +1,9 @@
-import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { RuleViolation } from "../../Rule";
+import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
+import { ExampleViolation } from "./exampleViolation";
 import { validateAliasExample } from "./validateAliasExample";
 import { validateEnumExample } from "./validateEnumExample";
 import { validateObjectExample } from "./validateObjectExample";
@@ -24,7 +26,7 @@ export function validateTypeExample({
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): ExampleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
             return validateAliasExample({

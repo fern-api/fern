@@ -5,7 +5,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { GeneratorType, ScriptConfig } from "@fern-fern/seed-config/api";
+import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
+import fs from "fs";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -15,44 +16,7 @@ import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
 
-export const FIXTURES = {
-    ALIAS: "alias",
-    API_WIDE_BASE_PATH: "api-wide-base-path",
-    AUDIENCES: "audiences",
-    AUTH_ENVIRONMENT_VARIABLES: "auth-environment-variables",
-    BASIC_AUTH: "basic-auth",
-    BEARER_TOKEN_ENVIRONMENT_VARIABLE: "bearer-token-environment-variable",
-    BYTES: "bytes",
-    CIRCULAR_REFERENCES: "circular-references",
-    CUSTOM_AUTH: "custom-auth",
-    ENUM: "enum",
-    ERROR_PROPERTY: "error-property",
-    EXAMPLES: "examples",
-    EXHAUSTIVE: "exhaustive",
-    EXTENDS: "extends",
-    FOLDERS: "folders",
-    FILE_DOWNLOAD: "file-download",
-    FILE_UPLOAD: "file-upload",
-    IMDB: "imdb",
-    LITERAL: "literal",
-    LITERAL_HEADERS: "literal-headers",
-    MULTI_URL_ENVIRONMENT: "multi-url-environment",
-    NO_ENVIRONMENT: "no-environment",
-    OBJECT: "object",
-    OBJECTS_WITH_IMPORTS: "objects-with-imports",
-    PACKAGE_YML: "package-yml",
-    PLAIN_TEXT: "plain-text",
-    RESPONSE_PROPERTY: "response-property",
-    SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
-    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
-    STREAMING: "streaming",
-    TRACE: "trace",
-    UNDISCRIMINATED_UNIONS: "undiscriminated-unions",
-    UNKNOWN: "unknown",
-    VARIABLES: "variables",
-    RESERVED_KEYWORDS: "reserved-keywords",
-    IDEMPOTENCY_HEADERS: "idempotency-headers"
-} as const;
+export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY));
 
 type TestResult = TestSuccess | TestFailure;
 
@@ -68,19 +32,16 @@ interface TestFailure {
 }
 
 export async function testWorkspaceFixtures({
-    generatorType,
     workspace,
     irVersion,
     language,
     fixtures,
     docker,
-    dockerCommand,
     scripts,
-    logLevel,
+    taskContextFactory,
     numDockers
 }: {
     workspace: SeedWorkspace;
-    generatorType: GeneratorType;
     irVersion: string | undefined;
     language: GenerationLanguage | undefined;
     fixtures: string[];
@@ -88,24 +49,10 @@ export async function testWorkspaceFixtures({
     dockerCommand: string | undefined;
     scripts: ScriptConfig[] | undefined;
     logLevel: LogLevel;
+    taskContextFactory: TaskContextFactory;
     numDockers: number;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
-    const taskContextFactory = new TaskContextFactory(logLevel);
-
-    if (dockerCommand != null) {
-        const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
-        const spaceDelimitedCommand = dockerCommand.split(" ");
-        await loggingExeca(
-            workspaceTaskContext.logger,
-            spaceDelimitedCommand[0] ?? dockerCommand,
-            spaceDelimitedCommand.slice(1),
-            {
-                cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
-                doNotPipeOutput: false
-            }
-        );
-    }
 
     const testCases = [];
     for (const fixture of fixtures) {
@@ -119,8 +66,8 @@ export async function testWorkspaceFixtures({
                     acquireLocksAndRunTest({
                         absolutePathToWorkspace,
                         lock,
-                        generatorType,
                         irVersion,
+                        outputVersion: fixtureConfigInstance.outputVersion,
                         language,
                         fixture,
                         docker,
@@ -133,7 +80,8 @@ export async function testWorkspaceFixtures({
                             workspace.absolutePathToWorkspace,
                             RelativeFilePath.of(fixture),
                             RelativeFilePath.of(fixtureConfigInstance.outputFolder)
-                        )
+                        ),
+                        outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode
                     })
                 );
             }
@@ -143,14 +91,15 @@ export async function testWorkspaceFixtures({
                     absolutePathToWorkspace,
                     lock,
                     irVersion,
-                    generatorType,
+                    outputVersion: undefined,
                     language,
                     fixture,
                     docker,
                     scripts,
                     customConfig: undefined,
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
-                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture))
+                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
+                    outputMode: workspace.workspaceConfig.defaultOutputMode
                 })
             );
         }
@@ -170,8 +119,8 @@ export async function testWorkspaceFixtures({
 
 export async function acquireLocksAndRunTest({
     lock,
-    generatorType,
     irVersion,
+    outputVersion,
     language,
     fixture,
     docker,
@@ -179,11 +128,12 @@ export async function acquireLocksAndRunTest({
     scripts,
     taskContext,
     outputDir,
-    absolutePathToWorkspace
+    absolutePathToWorkspace,
+    outputMode
 }: {
     lock: Semaphore;
-    generatorType: GeneratorType;
     irVersion: string | undefined;
+    outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
     fixture: string;
     docker: ParsedDockerName;
@@ -192,6 +142,7 @@ export async function acquireLocksAndRunTest({
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
+    outputMode: OutputMode;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -199,14 +150,15 @@ export async function acquireLocksAndRunTest({
     const result = await testWithWriteToDisk({
         fixture,
         irVersion,
+        outputVersion,
         language,
         docker,
         customConfig,
-        generatorType,
         scripts,
         taskContext,
         outputDir,
-        absolutePathToWorkspace
+        absolutePathToWorkspace,
+        outputMode
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -214,27 +166,29 @@ export async function acquireLocksAndRunTest({
 }
 
 async function testWithWriteToDisk({
-    generatorType,
     fixture,
     irVersion,
+    outputVersion,
     language,
     docker,
     customConfig,
     scripts,
     taskContext,
     outputDir,
-    absolutePathToWorkspace
+    absolutePathToWorkspace,
+    outputMode
 }: {
     fixture: string;
     irVersion: string | undefined;
+    outputVersion: string | undefined;
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
-    generatorType: GeneratorType;
     customConfig: unknown;
     scripts: ScriptConfig[] | undefined;
     taskContext: TaskContext;
     outputDir: AbsoluteFilePath;
     absolutePathToWorkspace: AbsoluteFilePath;
+    outputMode: OutputMode;
 }): Promise<TestResult> {
     try {
         const workspace = await loadAPIWorkspace({
@@ -266,14 +220,16 @@ async function testWithWriteToDisk({
             docker,
             workspace: workspace.workspace,
             language,
-            generatorType,
             customConfig,
             taskContext,
-            irVersion
+            irVersion,
+            outputVersion,
+            outputMode,
+            fixtureName: fixture
         });
         for (const script of scripts ?? []) {
             const scriptFile = await tmp.file();
-            await writeFile(scriptFile.path, ["cd generated", ...script.commands].join("\n"));
+            await writeFile(scriptFile.path, ["cd /generated", ...script.commands].join("\n"));
             taskContext.logger.info(`Running script ${scriptFile.path}`);
             const command = await loggingExeca(
                 taskContext.logger,
@@ -285,8 +241,8 @@ async function testWithWriteToDisk({
                     "-v",
                     `${scriptFile.path}:/test.sh`,
                     script.docker,
-                    "bash",
-                    "test.sh"
+                    "/bin/sh",
+                    "/test.sh"
                 ],
                 {
                     doNotPipeOutput: true
@@ -307,4 +263,12 @@ async function testWithWriteToDisk({
             fixture
         };
     }
+}
+
+function readDirectories(filepath: string): string[] {
+    const files = fs.readdirSync(filepath);
+    return files
+        .map((file) => path.join(filepath, file))
+        .filter((fullPath) => fs.statSync(fullPath).isDirectory())
+        .map((fullPath) => path.basename(fullPath));
 }

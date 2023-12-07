@@ -36,7 +36,7 @@ export async function parse({
         asyncAPISchemas = generateSchemasFromAsyncAPI(asyncAPI, taskContext);
     }
 
-    const openApiDocument = await loadOpenAPI(absolutePathToOpenAPI);
+    const openApiDocument = await loadOpenAPI({ absolutePathToOpenAPI, context: taskContext });
     let openApiIr: OpenAPIIntermediateRepresentation | undefined = undefined;
     if (isOpenApiV3(openApiDocument)) {
         openApiIr = generateIrFromV3(openApiDocument, taskContext);

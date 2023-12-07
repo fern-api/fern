@@ -151,7 +151,8 @@ export async function generateIntermediateRepresentation({
                         typeDeclaration,
                         file,
                         typeResolver,
-                        exampleResolver
+                        exampleResolver,
+                        workspace
                     });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
                     const subpackageFilepaths = convertedTypeDeclarationWithFilepaths.descendantFilepaths;
@@ -205,7 +206,8 @@ export async function generateIntermediateRepresentation({
                     typeResolver,
                     exampleResolver,
                     globalErrors,
-                    variableResolver
+                    variableResolver,
+                    workspace
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);

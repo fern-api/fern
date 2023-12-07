@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-ignore` for schemas
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    SchemaToKeep:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+    SchemaToSkip:
+      x-fern-ignore: true
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid

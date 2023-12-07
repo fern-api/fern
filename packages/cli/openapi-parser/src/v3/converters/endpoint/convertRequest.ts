@@ -135,7 +135,7 @@ export function convertRequest({
                         description: undefined
                     };
                 }
-                const schemaWithExample = convertSchema(definition, false, context, []);
+                const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
                 return {
                     key,
                     schema: MultipartSchema.json(convertSchemaWithExampleToSchema(schemaWithExample)),

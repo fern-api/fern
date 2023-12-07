@@ -1,9 +1,12 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { ExampleResolver, FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
-import { RuleViolation } from "../../Rule";
-import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
+import { getUnionDiscriminant } from "../converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
+import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
+import { ExampleViolation } from "./exampleViolation";
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateObjectExample } from "./validateObjectExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
 
@@ -23,9 +26,9 @@ export function validateUnionExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): ExampleViolation[] {
     if (!isPlainObject(example)) {
-        return getRuleViolationsForMisshapenExample(example, "an object");
+        return getViolationsForMisshapenExample(example, "an object");
     }
 
     const discriminant = getUnionDiscriminant(rawUnion);
@@ -34,21 +37,19 @@ export function validateUnionExample({
     if (discriminantValue == null) {
         return [
             {
-                severity: "error",
                 message: `Missing discriminant property ("${discriminant}")`
             }
         ];
     }
 
     if (typeof discriminantValue !== "string") {
-        return getRuleViolationsForMisshapenExample(discriminantValue, "a string");
+        return getViolationsForMisshapenExample(discriminantValue, "a string");
     }
 
     const singleUnionTypeDefinition = rawUnion.union[discriminantValue];
     if (singleUnionTypeDefinition == null) {
         return [
             {
-                severity: "error",
                 message:
                     `Invalid discriminant property: "${discriminantValue}". Allowed discriminant values:\n` +
                     Object.keys(rawUnion.union)
@@ -100,10 +101,9 @@ export function validateUnionExample({
 
     const { [singlePropertyKey]: singlePropertyExample, ...extraProperties } = nonDiscriminantPropertyExamples;
 
-    const violations: RuleViolation[] = [];
+    const violations: ExampleViolation[] = [];
     if (singlePropertyExample == null) {
         violations.push({
-            severity: "error",
             message: `Missing property "${singlePropertyKey}"`
         });
     } else {
@@ -124,7 +124,7 @@ export function validateUnionExample({
     return violations;
 }
 
-function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): RuleViolation[] {
+function getRuleViolationForExtraProperties(extraProperties: Record<string, unknown>): ExampleViolation[] {
     return Object.keys(extraProperties).map((key) => ({
         severity: "error",
         message: `Unexpected property "${key}"`

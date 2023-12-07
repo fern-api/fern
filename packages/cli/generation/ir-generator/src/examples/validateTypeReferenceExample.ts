@@ -1,11 +1,13 @@
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { ExampleResolver, FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
-import { RuleViolation } from "../../Rule";
-import { getDuplicates } from "../../utils/getDuplicates";
-import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
+import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { ResolvedType } from "../resolvers/ResolvedType";
+import { TypeResolver } from "../resolvers/TypeResolver";
+import { ExampleViolation } from "./exampleViolation";
+import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateTypeExample } from "./validateTypeExample";
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
@@ -29,7 +31,7 @@ export function validateTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): RuleViolation[] {
+}): ExampleViolation[] {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
         // expected type with the referenced type
@@ -62,7 +64,6 @@ export function validateTypeReferenceExample({
         } else {
             return [
                 {
-                    severity: "error",
                     message: `Expected example to be: ${rawTypeReference}. Example is ${example}.`
                 }
             ];
@@ -94,7 +95,7 @@ export function validateTypeReferenceExample({
         },
         map: ({ keyType, valueType }) => {
             if (!isPlainObject(example)) {
-                return getRuleViolationsForMisshapenExample(example, "a map");
+                return getViolationsForMisshapenExample(example, "a map");
             }
             return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
                 ...validateTypeReferenceExample({
@@ -117,7 +118,7 @@ export function validateTypeReferenceExample({
         },
         list: (itemType) => {
             if (!Array.isArray(example)) {
-                return getRuleViolationsForMisshapenExample(example, "a list");
+                return getViolationsForMisshapenExample(example, "a list");
             }
             return example.flatMap((exampleItem) =>
                 validateTypeReferenceExample({
@@ -132,7 +133,7 @@ export function validateTypeReferenceExample({
         },
         set: (itemType) => {
             if (!Array.isArray(example)) {
-                return getRuleViolationsForMisshapenExample(example, "a list");
+                return getViolationsForMisshapenExample(example, "a list");
             }
 
             const duplicates = getDuplicates(example);
@@ -196,8 +197,8 @@ function validatePrimitiveExample({
 }: {
     primitiveType: PrimitiveType;
     example: RawSchemas.ExampleTypeReferenceSchema;
-}): RuleViolation[] {
-    return PrimitiveType._visit<RuleViolation[]>(primitiveType, {
+}): ExampleViolation[] {
+    return PrimitiveType._visit<ExampleViolation[]>(primitiveType, {
         string: () => validateString(example),
         integer: () => validateInteger(example),
         double: () => validateDouble(example),
@@ -227,12 +228,12 @@ const validateDateTime = createValidator(
 function createValidator(
     validate: (example: RawSchemas.ExampleTypeReferenceSchema) => boolean,
     expectedTypeIncludingArticle: string
-): (example: RawSchemas.ExampleTypeReferenceSchema) => RuleViolation[] {
+): (example: RawSchemas.ExampleTypeReferenceSchema) => ExampleViolation[] {
     return (example) => {
         if (validate(example)) {
             return [];
         }
-        return getRuleViolationsForMisshapenExample(example, expectedTypeIncludingArticle);
+        return getViolationsForMisshapenExample(example, expectedTypeIncludingArticle);
     };
 }
 

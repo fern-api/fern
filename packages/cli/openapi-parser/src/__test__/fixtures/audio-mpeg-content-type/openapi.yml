@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  title: Test audio/mpeg response 
+  version: 1.0.0
+paths: 
+  /audio:
+    get: 
+      tags: 
+        - audio
+      operationId: audio_get
+      responses:
+        "200":
+          description: ""
+          content:
+            audio/mpeg: {}
+

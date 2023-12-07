@@ -1,5 +1,11 @@
 name: fern
-on: [push]
+
+on:
+  push:
+    paths-ignore:
+      - ".github/**"
+      - "fern/docs/**"
+      - "fern/docs.yml"
 
 jobs:
   check-ir-definitions:
@@ -12,6 +18,8 @@ jobs:
         run: npm install -g fern-api
 
       - name: Check Fern API is valid
+        env:
+          FORCE_COLOR: "2"
         run: fern check
 
   check-test-definitions:
@@ -29,6 +37,8 @@ jobs:
         run: yarn install
 
       - name: Fern check
+        env:
+          FORCE_COLOR: "2"
         run: |
           yarn workspace @fern-api/cli dist:cli:dev
           cd test-definitions

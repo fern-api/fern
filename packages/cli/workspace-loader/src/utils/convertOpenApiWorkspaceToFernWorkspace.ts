@@ -1,6 +1,7 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
@@ -36,12 +37,20 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile)
             },
-            namedDefinitionFiles: mapValues(definition.definitionFiles, (definitionFile) => ({
-                // these files doesn't live on disk, so there's no absolute filepath
-                absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
-                rawContents: yaml.dump(definitionFile),
-                contents: definitionFile
-            })),
+            namedDefinitionFiles: {
+                ...mapValues(definition.definitionFiles, (definitionFile) => ({
+                    // these files doesn't live on disk, so there's no absolute filepath
+                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                    rawContents: yaml.dump(definitionFile),
+                    contents: definitionFile
+                })),
+                [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: {
+                    // these files doesn't live on disk, so there's no absolute filepath
+                    absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
+                    rawContents: yaml.dump(definition.packageMarkerFile),
+                    contents: definition.packageMarkerFile
+                }
+            },
             packageMarkers: {},
             importedDefinitions: {}
         }

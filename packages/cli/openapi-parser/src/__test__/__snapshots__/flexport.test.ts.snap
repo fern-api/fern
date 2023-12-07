@@ -67461,33 +67461,69 @@ This parameter is mutually exclusive with the f.shipment.id filter.
     },
   ],
   "tags": {
-    "Authentication": {
-      "description": "Flexport provides secure access to our public API using OAuth 2.0. We also provide granular access controls for
+    "orderedTagIds": [
+      "Changelog",
+      "Authentication",
+      "Response Semantics",
+      "Pagination",
+      "Expansion",
+      "Versioning",
+      "Errors",
+      "Metadata",
+      "Milestones",
+      "Terms and Conditions",
+      "Webhook Endpoints",
+      "Document Types",
+      "BookingAmendment",
+      "BookingLineItem",
+      "Booking",
+      "Carbon Calculation",
+      "Commercial Invoices",
+      "Customs Entries",
+      "Document",
+      "Event",
+      "Invoices",
+      "Company",
+      "CompanyEntity",
+      "Contact",
+      "Location",
+      "ContainerLeg",
+      "Container",
+      "Ports",
+      "Product",
+      "PurchaseOrderLineItem",
+      "PurchaseOrder",
+      "ShipmentLeg",
+      "Shipment",
+    ],
+    "tagsById": {
+      "Authentication": {
+        "description": "Flexport provides secure access to our public API using OAuth 2.0. We also provide granular access controls for
 various resources. This allows the admins of a client account to create multiple credentials for different developers or environments.
 
 A detailed tutorial on how to create and generate credentials [can be found here.](https://developers.flexport.com/tutorials/using-api-credentials)
 ",
-      "id": "Authentication",
-    },
-    "Booking": {
-      "description": "Endpoints relating to Booking objects",
-      "id": "Booking",
-    },
-    "BookingAmendment": {
-      "description": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
-      "id": "BookingAmendment",
-    },
-    "BookingLineItem": {
-      "description": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
+        "id": "Authentication",
+      },
+      "Booking": {
+        "description": "Endpoints relating to Booking objects",
+        "id": "Booking",
+      },
+      "BookingAmendment": {
+        "description": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
+        "id": "BookingAmendment",
+      },
+      "BookingLineItem": {
+        "description": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
   your Flexport Sales representative if you are interested in using these endpoints.**",
-      "id": "BookingLineItem",
-    },
-    "Carbon Calculation": {
-      "description": "Endpoints relating to Carbon Calculations",
-      "id": "Carbon Calculation",
-    },
-    "Changelog": {
-      "description": "## v2 to v3
+        "id": "BookingLineItem",
+      },
+      "Carbon Calculation": {
+        "description": "Endpoints relating to Carbon Calculations",
+        "id": "Carbon Calculation",
+      },
+      "Changelog": {
+        "description": "## v2 to v3
 
 ### New Endpoints
 
@@ -67586,42 +67622,42 @@ A detailed tutorial on how to create and generate credentials [can be found here
 \`\`\`
 
 ",
-      "id": "Changelog",
-    },
-    "Commercial Invoices": {
-      "description": "Endpoints relating to Commercial Invoice objects",
-      "id": "Commercial Invoices",
-    },
-    "Company": {
-      "description": "Endpoints relating to Company objects",
-      "id": "Company",
-    },
-    "CompanyEntity": {
-      "description": "Endpoints relating to CompanyEntity objects",
-      "id": "CompanyEntity",
-    },
-    "Contact": {
-      "description": "Endpoints relating to Contact objects",
-      "id": "Contact",
-    },
-    "Container": {
-      "description": "Endpoints relating to Container objects",
-      "id": "Container",
-    },
-    "ContainerLeg": {
-      "description": "Endpoints relating to ContainerLeg objects",
-      "id": "ContainerLeg",
-    },
-    "Customs Entries": {
-      "description": "Endpoints relating to Customs Entry objects",
-      "id": "Customs Entries",
-    },
-    "Document": {
-      "description": "Endpoints relating to Document objects",
-      "id": "Document",
-    },
-    "Document Types": {
-      "description": "Documents can be filtered by type. Below is a list of commonly used document types, along with their slug to use for filtering. This list is not comprehensive - any \`document_type\` that is returned from the API is a valid parameter for this filter.
+        "id": "Changelog",
+      },
+      "Commercial Invoices": {
+        "description": "Endpoints relating to Commercial Invoice objects",
+        "id": "Commercial Invoices",
+      },
+      "Company": {
+        "description": "Endpoints relating to Company objects",
+        "id": "Company",
+      },
+      "CompanyEntity": {
+        "description": "Endpoints relating to CompanyEntity objects",
+        "id": "CompanyEntity",
+      },
+      "Contact": {
+        "description": "Endpoints relating to Contact objects",
+        "id": "Contact",
+      },
+      "Container": {
+        "description": "Endpoints relating to Container objects",
+        "id": "Container",
+      },
+      "ContainerLeg": {
+        "description": "Endpoints relating to ContainerLeg objects",
+        "id": "ContainerLeg",
+      },
+      "Customs Entries": {
+        "description": "Endpoints relating to Customs Entry objects",
+        "id": "Customs Entries",
+      },
+      "Document": {
+        "description": "Endpoints relating to Document objects",
+        "id": "Document",
+      },
+      "Document Types": {
+        "description": "Documents can be filtered by type. Below is a list of commonly used document types, along with their slug to use for filtering. This list is not comprehensive - any \`document_type\` that is returned from the API is a valid parameter for this filter.
 |Document Type|Slug|
 |----|----|
 |Air Waybill|air_waybill|
@@ -67652,10 +67688,10 @@ A detailed tutorial on how to create and generate credentials [can be found here
 |Unknown Message|unknown_message|
 |Warehouse Receipt|warehouse_receipt|
 ",
-      "id": "Document Types",
-    },
-    "Errors": {
-      "description": "It may occur that we have issues in understanding or processing your request. Under these circumstances,
+        "id": "Document Types",
+      },
+      "Errors": {
+        "description": "It may occur that we have issues in understanding or processing your request. Under these circumstances,
 the response will resolve with an error object (under the \`error\` attribute) providing insight on what went
 wrong.
 
@@ -67666,14 +67702,14 @@ wrong.
 | **code** _string_ | Specialized identifier for this type of error in our API |
 | **message** _string_ | Human readable error message |
 ",
-      "id": "Errors",
-    },
-    "Event": {
-      "description": "Endpoints relating to Event objects",
-      "id": "Event",
-    },
-    "Expansion": {
-      "description": "Many resources in the Flexport API contain attributes that are references to another resource or a collection of
+        "id": "Errors",
+      },
+      "Event": {
+        "description": "Endpoints relating to Event objects",
+        "id": "Event",
+      },
+      "Expansion": {
+        "description": "Many resources in the Flexport API contain attributes that are references to another resource or a collection of
 resources. For example, a shipment has a reference to a collection of legs. Expansion can be used to replace
 those references with the actual data that they represent. This is helpful in eliminating subsequent calls
 required to retrieve all data relevant to a resource.
@@ -67957,18 +67993,18 @@ curl -X GET  \\
 }
 \`\`\`
 ",
-      "id": "Expansion",
-    },
-    "Invoices": {
-      "description": "Endpoints relating to Invoice objects",
-      "id": "Invoices",
-    },
-    "Location": {
-      "description": "Endpoints relating to Location objects",
-      "id": "Location",
-    },
-    "Metadata": {
-      "description": "Certain resource objects (like Shipments and Containers) have a \`metadata\` attribute in their response
+        "id": "Expansion",
+      },
+      "Invoices": {
+        "description": "Endpoints relating to Invoice objects",
+        "id": "Invoices",
+      },
+      "Location": {
+        "description": "Endpoints relating to Location objects",
+        "id": "Location",
+      },
+      "Metadata": {
+        "description": "Certain resource objects (like Shipments and Containers) have a \`metadata\` attribute in their response
 payloads. Metadata attributes are known as Tags on the user-facing side of the application. Metadata is useful
 for storing information on a resource that is not already captured in a Flexport-defined field.
 
@@ -67991,10 +68027,10 @@ The response payload for metadata will always display the default metadata hash 
 metadata array format, a URL parameter will need to provided called \`use_name_value_metadata_format=true\`.
 By default, this is false.
 ",
-      "id": "Metadata",
-    },
-    "Milestones": {
-      "description": "This page describes the different event types which will trigger a Event object to be sent to your registered Webhook Endpoints.
+        "id": "Metadata",
+      },
+      "Milestones": {
+        "description": "This page describes the different event types which will trigger a Event object to be sent to your registered Webhook Endpoints.
 Milestones designated with an asterisk are available upon request.
 
 ## Estimated Transit Events
@@ -68116,10 +68152,10 @@ For all PurchaseOrder Events, the data field of the Event webhook payload is a P
 |PurchaseOrder Acknowledged|\`/purchase_order#acknowledged\`|PurchaseOrder has been acknowledged|
 |PurchaseOrder Updated|\`/purchase_order#updated\`|PurchaseOrder has been updated, currently only supports update through order collaboration flow|
 ",
-      "id": "Milestones",
-    },
-    "Pagination": {
-      "description": "All list endpoints return paginated responses. The response object contains elements of the current page,
+        "id": "Milestones",
+      },
+      "Pagination": {
+        "description": "All list endpoints return paginated responses. The response object contains elements of the current page,
 and links to the previous and next pages.
 
 | Attribute | Description |
@@ -68138,26 +68174,26 @@ All list endpoint support the following query parameter to retrieve a specific p
 | **page** _integer_ | Page number of the page to retrieve. Defaults to page 1. |
 | **per** _integer_ | Count of items in each page. Defaults to 20. Maximum allowed value is 100. |
 ",
-      "id": "Pagination",
-    },
-    "Ports": {
-      "description": "Endpoints relating to Ports objects",
-      "id": "Ports",
-    },
-    "Product": {
-      "description": "Endpoints relating to Product objects",
-      "id": "Product",
-    },
-    "PurchaseOrder": {
-      "description": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
-      "id": "PurchaseOrder",
-    },
-    "PurchaseOrderLineItem": {
-      "description": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
-      "id": "PurchaseOrderLineItem",
-    },
-    "Response Semantics": {
-      "description": "All responses to authenticated API requests follow the same structure, wrapping resource data within an
+        "id": "Pagination",
+      },
+      "Ports": {
+        "description": "Endpoints relating to Ports objects",
+        "id": "Ports",
+      },
+      "Product": {
+        "description": "Endpoints relating to Product objects",
+        "id": "Product",
+      },
+      "PurchaseOrder": {
+        "description": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
+        "id": "PurchaseOrder",
+      },
+      "PurchaseOrderLineItem": {
+        "description": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
+        "id": "PurchaseOrderLineItem",
+      },
+      "Response Semantics": {
+        "description": "All responses to authenticated API requests follow the same structure, wrapping resource data within an
 \`/api/response\` object of the following form:
 
 | Attribute | Description |
@@ -68169,23 +68205,23 @@ All list endpoint support the following query parameter to retrieve a specific p
 | **error** _object_ | The error object indicating what went wrong (see the Errors docs section) |
 | **errors** _list_ | List of legacy error object JSONs of structure {"code": _, "message": _} |
 ",
-      "id": "Response Semantics",
-    },
-    "Shipment": {
-      "description": "Endpoints relating to Shipment objects",
-      "id": "Shipment",
-    },
-    "ShipmentLeg": {
-      "description": "Endpoints relating to ShipmentLeg objects",
-      "id": "ShipmentLeg",
-    },
-    "Terms and Conditions": {
-      "description": "[Click here to see the Terms & Conditions for the Flexport API](https://www.flexport.com/terms-and-conditions/software_visibility_terms_and_conditions/)
+        "id": "Response Semantics",
+      },
+      "Shipment": {
+        "description": "Endpoints relating to Shipment objects",
+        "id": "Shipment",
+      },
+      "ShipmentLeg": {
+        "description": "Endpoints relating to ShipmentLeg objects",
+        "id": "ShipmentLeg",
+      },
+      "Terms and Conditions": {
+        "description": "[Click here to see the Terms & Conditions for the Flexport API](https://www.flexport.com/terms-and-conditions/software_visibility_terms_and_conditions/)
 ",
-      "id": "Terms and Conditions",
-    },
-    "Versioning": {
-      "description": "Your API version has a large impact on your experience with Flexport's APIs. Currently, there are three
+        "id": "Terms and Conditions",
+      },
+      "Versioning": {
+        "description": "Your API version has a large impact on your experience with Flexport's APIs. Currently, there are three
 versions available for consumption. You can see your account's current API version in your
 [API settings](https://app.flexport.com/account_settings/api) page.
 
@@ -68203,10 +68239,10 @@ backwards-compatible changes:
 - Adding a new possible value to an \`enum\` type attribute.
 - Adding new event types. (Webhook listeners will also receive new events)
 ",
-      "id": "Versioning",
-    },
-    "Webhook Endpoints": {
-      "description": "Webhook endpoints can be created in your account's Settings section. They allow you to be notified of changes
+        "id": "Versioning",
+      },
+      "Webhook Endpoints": {
+        "description": "Webhook endpoints can be created in your account's Settings section. They allow you to be notified of changes
 on your Flexport data and milestone events for your shipments.
 
 ## Setting a Secret Token
@@ -68229,7 +68265,8 @@ Flexport expects to receive an HTTP \`200\` response code from your endpoint. We
 the message a number of times if we don’t receive one. To prevent time outs, it is wise to configure your
 endpoints to send a \`200\` and then do any long running processing on the data.
 ",
-      "id": "Webhook Endpoints",
+        "id": "Webhook Endpoints",
+      },
     },
   },
   "title": "Flexport API",

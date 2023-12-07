@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Test application/pdf response
+  version: 1.0.0
+paths: 
+  /pdf:
+    get: 
+      tags: 
+        - pdf
+      operationId: pdf_get
+      responses:
+        "200":
+          description: ""
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary

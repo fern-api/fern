@@ -1,0 +1,1470 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate IR 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "literalHeaders",
+      "unsafeName": "literalHeaders",
+    },
+    "originalName": "literal-headers",
+    "pascalCase": {
+      "safeName": "LiteralHeaders",
+      "unsafeName": "LiteralHeaders",
+    },
+    "screamingSnakeCase": {
+      "safeName": "LITERAL_HEADERS",
+      "unsafeName": "LITERAL_HEADERS",
+    },
+    "snakeCase": {
+      "safeName": "literal_headers",
+      "unsafeName": "literal_headers",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [
+    {
+      "availability": null,
+      "docs": null,
+      "name": {
+        "name": {
+          "camelCase": {
+            "safeName": "apiHeader",
+            "unsafeName": "apiHeader",
+          },
+          "originalName": "apiHeader",
+          "pascalCase": {
+            "safeName": "ApiHeader",
+            "unsafeName": "ApiHeader",
+          },
+          "screamingSnakeCase": {
+            "safeName": "API_HEADER",
+            "unsafeName": "API_HEADER",
+          },
+          "snakeCase": {
+            "safeName": "api_header",
+            "unsafeName": "api_header",
+          },
+        },
+        "wireValue": "X-API-Header",
+      },
+      "valueType": {
+        "_type": "container",
+        "container": {
+          "_type": "literal",
+          "literal": {
+            "string": "api header value",
+            "type": "string",
+          },
+        },
+      },
+    },
+    {
+      "availability": null,
+      "docs": null,
+      "name": {
+        "name": {
+          "camelCase": {
+            "safeName": "apiTest",
+            "unsafeName": "apiTest",
+          },
+          "originalName": "apiTest",
+          "pascalCase": {
+            "safeName": "ApiTest",
+            "unsafeName": "ApiTest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "API_TEST",
+            "unsafeName": "API_TEST",
+          },
+          "snakeCase": {
+            "safeName": "api_test",
+            "unsafeName": "api_test",
+          },
+        },
+        "wireValue": "X-API-Test",
+      },
+      "valueType": {
+        "_type": "container",
+        "container": {
+          "_type": "literal",
+          "literal": {
+            "boolean": false,
+            "type": "boolean",
+          },
+        },
+      },
+    },
+  ],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_no-headers",
+      "subpackage_only-literal-headers",
+      "subpackage_with-non-literal-headers",
+    ],
+    "types": [],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_no-headers": {
+      "availability": null,
+      "basePath": {
+        "head": "/no-headers",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "/no-headers",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_no-headers.get",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "get",
+              "unsafeName": "get",
+            },
+            "originalName": "get",
+            "pascalCase": {
+              "safeName": "Get",
+              "unsafeName": "Get",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET",
+              "unsafeName": "GET",
+            },
+            "snakeCase": {
+              "safeName": "get",
+              "unsafeName": "get",
+            },
+          },
+          "path": {
+            "head": "",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": null,
+          "response": null,
+          "sdkRequest": null,
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "noHeaders",
+                "unsafeName": "noHeaders",
+              },
+              "originalName": "no-headers",
+              "pascalCase": {
+                "safeName": "NoHeaders",
+                "unsafeName": "NoHeaders",
+              },
+              "screamingSnakeCase": {
+                "safeName": "NO_HEADERS",
+                "unsafeName": "NO_HEADERS",
+              },
+              "snakeCase": {
+                "safeName": "no_headers",
+                "unsafeName": "no_headers",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "noHeaders",
+              "unsafeName": "noHeaders",
+            },
+            "originalName": "no-headers",
+            "pascalCase": {
+              "safeName": "NoHeaders",
+              "unsafeName": "NoHeaders",
+            },
+            "screamingSnakeCase": {
+              "safeName": "NO_HEADERS",
+              "unsafeName": "NO_HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "no_headers",
+              "unsafeName": "no_headers",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+    "service_only-literal-headers": {
+      "availability": null,
+      "basePath": {
+        "head": "/only-literal-headers",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "docs": null,
+              "endpointHeaders": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "literalEndpointHeader",
+                        "unsafeName": "literalEndpointHeader",
+                      },
+                      "originalName": "literalEndpointHeader",
+                      "pascalCase": {
+                        "safeName": "LiteralEndpointHeader",
+                        "unsafeName": "LiteralEndpointHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LITERAL_ENDPOINT_HEADER",
+                        "unsafeName": "LITERAL_ENDPOINT_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "literal_endpoint_header",
+                        "unsafeName": "literal_endpoint_header",
+                      },
+                    },
+                    "wireValue": "literalEndpointHeader",
+                  },
+                  "value": {
+                    "jsonExample": "endpoint header",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "endpoint header",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "falseEndpointHeader",
+                        "unsafeName": "falseEndpointHeader",
+                      },
+                      "originalName": "falseEndpointHeader",
+                      "pascalCase": {
+                        "safeName": "FalseEndpointHeader",
+                        "unsafeName": "FalseEndpointHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FALSE_ENDPOINT_HEADER",
+                        "unsafeName": "FALSE_ENDPOINT_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "false_endpoint_header",
+                        "unsafeName": "false_endpoint_header",
+                      },
+                    },
+                    "wireValue": "falseEndpointHeader",
+                  },
+                  "value": {
+                    "jsonExample": false,
+                    "shape": {
+                      "primitive": {
+                        "boolean": false,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "literalServiceHeader",
+                        "unsafeName": "literalServiceHeader",
+                      },
+                      "originalName": "literalServiceHeader",
+                      "pascalCase": {
+                        "safeName": "LiteralServiceHeader",
+                        "unsafeName": "LiteralServiceHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LITERAL_SERVICE_HEADER",
+                        "unsafeName": "LITERAL_SERVICE_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "literal_service_header",
+                        "unsafeName": "literal_service_header",
+                      },
+                    },
+                    "wireValue": "literalServiceHeader",
+                  },
+                  "value": {
+                    "jsonExample": "service header",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "service header",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "servicePathParameters": [],
+              "url": "/only-literal-headers",
+            },
+          ],
+          "fullPath": {
+            "head": "/only-literal-headers",
+            "parts": [],
+          },
+          "headers": [
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "literalEndpointHeader",
+                    "unsafeName": "literalEndpointHeader",
+                  },
+                  "originalName": "literalEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "LiteralEndpointHeader",
+                    "unsafeName": "LiteralEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "LITERAL_ENDPOINT_HEADER",
+                    "unsafeName": "LITERAL_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "literal_endpoint_header",
+                    "unsafeName": "literal_endpoint_header",
+                  },
+                },
+                "wireValue": "literalEndpointHeader",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "string": "endpoint header",
+                    "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "falseEndpointHeader",
+                    "unsafeName": "falseEndpointHeader",
+                  },
+                  "originalName": "falseEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "FalseEndpointHeader",
+                    "unsafeName": "FalseEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FALSE_ENDPOINT_HEADER",
+                    "unsafeName": "FALSE_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "false_endpoint_header",
+                    "unsafeName": "false_endpoint_header",
+                  },
+                },
+                "wireValue": "falseEndpointHeader",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "boolean": false,
+                    "type": "boolean",
+                  },
+                },
+              },
+            },
+          ],
+          "id": "endpoint_only-literal-headers.get",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "get",
+              "unsafeName": "get",
+            },
+            "originalName": "get",
+            "pascalCase": {
+              "safeName": "Get",
+              "unsafeName": "Get",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET",
+              "unsafeName": "GET",
+            },
+            "snakeCase": {
+              "safeName": "get",
+              "unsafeName": "get",
+            },
+          },
+          "path": {
+            "head": "",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": null,
+          "response": null,
+          "sdkRequest": null,
+        },
+      ],
+      "headers": [
+        {
+          "availability": null,
+          "docs": null,
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "literalServiceHeader",
+                "unsafeName": "literalServiceHeader",
+              },
+              "originalName": "literalServiceHeader",
+              "pascalCase": {
+                "safeName": "LiteralServiceHeader",
+                "unsafeName": "LiteralServiceHeader",
+              },
+              "screamingSnakeCase": {
+                "safeName": "LITERAL_SERVICE_HEADER",
+                "unsafeName": "LITERAL_SERVICE_HEADER",
+              },
+              "snakeCase": {
+                "safeName": "literal_service_header",
+                "unsafeName": "literal_service_header",
+              },
+            },
+            "wireValue": "literalServiceHeader",
+          },
+          "valueType": {
+            "_type": "container",
+            "container": {
+              "_type": "literal",
+              "literal": {
+                "string": "service header",
+                "type": "string",
+              },
+            },
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "onlyLiteralHeaders",
+                "unsafeName": "onlyLiteralHeaders",
+              },
+              "originalName": "only-literal-headers",
+              "pascalCase": {
+                "safeName": "OnlyLiteralHeaders",
+                "unsafeName": "OnlyLiteralHeaders",
+              },
+              "screamingSnakeCase": {
+                "safeName": "ONLY_LITERAL_HEADERS",
+                "unsafeName": "ONLY_LITERAL_HEADERS",
+              },
+              "snakeCase": {
+                "safeName": "only_literal_headers",
+                "unsafeName": "only_literal_headers",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "onlyLiteralHeaders",
+              "unsafeName": "onlyLiteralHeaders",
+            },
+            "originalName": "only-literal-headers",
+            "pascalCase": {
+              "safeName": "OnlyLiteralHeaders",
+              "unsafeName": "OnlyLiteralHeaders",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONLY_LITERAL_HEADERS",
+              "unsafeName": "ONLY_LITERAL_HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "only_literal_headers",
+              "unsafeName": "only_literal_headers",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+    "service_with-non-literal-headers": {
+      "availability": null,
+      "basePath": {
+        "head": "/with-non-literal-headers",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [
+            {
+              "docs": null,
+              "endpointHeaders": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "nonLiteralEndpointHeader",
+                        "unsafeName": "nonLiteralEndpointHeader",
+                      },
+                      "originalName": "nonLiteralEndpointHeader",
+                      "pascalCase": {
+                        "safeName": "NonLiteralEndpointHeader",
+                        "unsafeName": "NonLiteralEndpointHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "NON_LITERAL_ENDPOINT_HEADER",
+                        "unsafeName": "NON_LITERAL_ENDPOINT_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "non_literal_endpoint_header",
+                        "unsafeName": "non_literal_endpoint_header",
+                      },
+                    },
+                    "wireValue": "nonLiteralEndpointHeader",
+                  },
+                  "value": {
+                    "jsonExample": "custom header",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "custom header",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "literalEndpointHeader",
+                        "unsafeName": "literalEndpointHeader",
+                      },
+                      "originalName": "literalEndpointHeader",
+                      "pascalCase": {
+                        "safeName": "LiteralEndpointHeader",
+                        "unsafeName": "LiteralEndpointHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LITERAL_ENDPOINT_HEADER",
+                        "unsafeName": "LITERAL_ENDPOINT_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "literal_endpoint_header",
+                        "unsafeName": "literal_endpoint_header",
+                      },
+                    },
+                    "wireValue": "literalEndpointHeader",
+                  },
+                  "value": {
+                    "jsonExample": "endpoint header",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "endpoint header",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "trueEndpointHeader",
+                        "unsafeName": "trueEndpointHeader",
+                      },
+                      "originalName": "trueEndpointHeader",
+                      "pascalCase": {
+                        "safeName": "TrueEndpointHeader",
+                        "unsafeName": "TrueEndpointHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TRUE_ENDPOINT_HEADER",
+                        "unsafeName": "TRUE_ENDPOINT_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "true_endpoint_header",
+                        "unsafeName": "true_endpoint_header",
+                      },
+                    },
+                    "wireValue": "trueEndpointHeader",
+                  },
+                  "value": {
+                    "jsonExample": true,
+                    "shape": {
+                      "primitive": {
+                        "boolean": true,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "endpointPathParameters": [],
+              "name": null,
+              "queryParameters": [],
+              "request": null,
+              "response": {
+                "body": null,
+                "type": "ok",
+              },
+              "rootPathParameters": [],
+              "serviceHeaders": [
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "integer",
+                        "unsafeName": "integer",
+                      },
+                      "originalName": "integer",
+                      "pascalCase": {
+                        "safeName": "Integer",
+                        "unsafeName": "Integer",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "INTEGER",
+                        "unsafeName": "INTEGER",
+                      },
+                      "snakeCase": {
+                        "safeName": "integer",
+                        "unsafeName": "integer",
+                      },
+                    },
+                    "wireValue": "integer",
+                  },
+                  "value": {
+                    "jsonExample": 42,
+                    "shape": {
+                      "primitive": {
+                        "integer": 42,
+                        "type": "integer",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "literalServiceHeader",
+                        "unsafeName": "literalServiceHeader",
+                      },
+                      "originalName": "literalServiceHeader",
+                      "pascalCase": {
+                        "safeName": "LiteralServiceHeader",
+                        "unsafeName": "LiteralServiceHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "LITERAL_SERVICE_HEADER",
+                        "unsafeName": "LITERAL_SERVICE_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "literal_service_header",
+                        "unsafeName": "literal_service_header",
+                      },
+                    },
+                    "wireValue": "literalServiceHeader",
+                  },
+                  "value": {
+                    "jsonExample": "service header",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "service header",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
+                        "safeName": "trueServiceHeader",
+                        "unsafeName": "trueServiceHeader",
+                      },
+                      "originalName": "trueServiceHeader",
+                      "pascalCase": {
+                        "safeName": "TrueServiceHeader",
+                        "unsafeName": "TrueServiceHeader",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TRUE_SERVICE_HEADER",
+                        "unsafeName": "TRUE_SERVICE_HEADER",
+                      },
+                      "snakeCase": {
+                        "safeName": "true_service_header",
+                        "unsafeName": "true_service_header",
+                      },
+                    },
+                    "wireValue": "trueServiceHeader",
+                  },
+                  "value": {
+                    "jsonExample": true,
+                    "shape": {
+                      "primitive": {
+                        "boolean": true,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              ],
+              "servicePathParameters": [],
+              "url": "/with-non-literal-headers",
+            },
+          ],
+          "fullPath": {
+            "head": "/with-non-literal-headers",
+            "parts": [],
+          },
+          "headers": [
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "nonLiteralEndpointHeader",
+                    "unsafeName": "nonLiteralEndpointHeader",
+                  },
+                  "originalName": "nonLiteralEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "NonLiteralEndpointHeader",
+                    "unsafeName": "NonLiteralEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "NON_LITERAL_ENDPOINT_HEADER",
+                    "unsafeName": "NON_LITERAL_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "non_literal_endpoint_header",
+                    "unsafeName": "non_literal_endpoint_header",
+                  },
+                },
+                "wireValue": "nonLiteralEndpointHeader",
+              },
+              "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+            },
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "literalEndpointHeader",
+                    "unsafeName": "literalEndpointHeader",
+                  },
+                  "originalName": "literalEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "LiteralEndpointHeader",
+                    "unsafeName": "LiteralEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "LITERAL_ENDPOINT_HEADER",
+                    "unsafeName": "LITERAL_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "literal_endpoint_header",
+                    "unsafeName": "literal_endpoint_header",
+                  },
+                },
+                "wireValue": "literalEndpointHeader",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "string": "endpoint header",
+                    "type": "string",
+                  },
+                },
+              },
+            },
+            {
+              "availability": null,
+              "docs": null,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "trueEndpointHeader",
+                    "unsafeName": "trueEndpointHeader",
+                  },
+                  "originalName": "trueEndpointHeader",
+                  "pascalCase": {
+                    "safeName": "TrueEndpointHeader",
+                    "unsafeName": "TrueEndpointHeader",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TRUE_ENDPOINT_HEADER",
+                    "unsafeName": "TRUE_ENDPOINT_HEADER",
+                  },
+                  "snakeCase": {
+                    "safeName": "true_endpoint_header",
+                    "unsafeName": "true_endpoint_header",
+                  },
+                },
+                "wireValue": "trueEndpointHeader",
+              },
+              "valueType": {
+                "_type": "container",
+                "container": {
+                  "_type": "literal",
+                  "literal": {
+                    "boolean": true,
+                    "type": "boolean",
+                  },
+                },
+              },
+            },
+          ],
+          "id": "endpoint_with-non-literal-headers.get",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "get",
+              "unsafeName": "get",
+            },
+            "originalName": "get",
+            "pascalCase": {
+              "safeName": "Get",
+              "unsafeName": "Get",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET",
+              "unsafeName": "GET",
+            },
+            "snakeCase": {
+              "safeName": "get",
+              "unsafeName": "get",
+            },
+          },
+          "path": {
+            "head": "",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": null,
+          "response": null,
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "withNonLiteralHeadersRequest",
+                  "unsafeName": "withNonLiteralHeadersRequest",
+                },
+                "originalName": "WithNonLiteralHeadersRequest",
+                "pascalCase": {
+                  "safeName": "WithNonLiteralHeadersRequest",
+                  "unsafeName": "WithNonLiteralHeadersRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "WITH_NON_LITERAL_HEADERS_REQUEST",
+                  "unsafeName": "WITH_NON_LITERAL_HEADERS_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "with_non_literal_headers_request",
+                  "unsafeName": "with_non_literal_headers_request",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [
+        {
+          "availability": null,
+          "docs": null,
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "integer",
+                "unsafeName": "integer",
+              },
+              "originalName": "integer",
+              "pascalCase": {
+                "safeName": "Integer",
+                "unsafeName": "Integer",
+              },
+              "screamingSnakeCase": {
+                "safeName": "INTEGER",
+                "unsafeName": "INTEGER",
+              },
+              "snakeCase": {
+                "safeName": "integer",
+                "unsafeName": "integer",
+              },
+            },
+            "wireValue": "integer",
+          },
+          "valueType": {
+            "_type": "primitive",
+            "primitive": "INTEGER",
+          },
+        },
+        {
+          "availability": null,
+          "docs": null,
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "maybeInteger",
+                "unsafeName": "maybeInteger",
+              },
+              "originalName": "maybeInteger",
+              "pascalCase": {
+                "safeName": "MaybeInteger",
+                "unsafeName": "MaybeInteger",
+              },
+              "screamingSnakeCase": {
+                "safeName": "MAYBE_INTEGER",
+                "unsafeName": "MAYBE_INTEGER",
+              },
+              "snakeCase": {
+                "safeName": "maybe_integer",
+                "unsafeName": "maybe_integer",
+              },
+            },
+            "wireValue": "maybeInteger",
+          },
+          "valueType": {
+            "_type": "container",
+            "container": {
+              "_type": "optional",
+              "optional": {
+                "_type": "primitive",
+                "primitive": "INTEGER",
+              },
+            },
+          },
+        },
+        {
+          "availability": null,
+          "docs": null,
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "literalServiceHeader",
+                "unsafeName": "literalServiceHeader",
+              },
+              "originalName": "literalServiceHeader",
+              "pascalCase": {
+                "safeName": "LiteralServiceHeader",
+                "unsafeName": "LiteralServiceHeader",
+              },
+              "screamingSnakeCase": {
+                "safeName": "LITERAL_SERVICE_HEADER",
+                "unsafeName": "LITERAL_SERVICE_HEADER",
+              },
+              "snakeCase": {
+                "safeName": "literal_service_header",
+                "unsafeName": "literal_service_header",
+              },
+            },
+            "wireValue": "literalServiceHeader",
+          },
+          "valueType": {
+            "_type": "container",
+            "container": {
+              "_type": "literal",
+              "literal": {
+                "string": "service header",
+                "type": "string",
+              },
+            },
+          },
+        },
+        {
+          "availability": null,
+          "docs": null,
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "trueServiceHeader",
+                "unsafeName": "trueServiceHeader",
+              },
+              "originalName": "trueServiceHeader",
+              "pascalCase": {
+                "safeName": "TrueServiceHeader",
+                "unsafeName": "TrueServiceHeader",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TRUE_SERVICE_HEADER",
+                "unsafeName": "TRUE_SERVICE_HEADER",
+              },
+              "snakeCase": {
+                "safeName": "true_service_header",
+                "unsafeName": "true_service_header",
+              },
+            },
+            "wireValue": "trueServiceHeader",
+          },
+          "valueType": {
+            "_type": "container",
+            "container": {
+              "_type": "literal",
+              "literal": {
+                "boolean": true,
+                "type": "boolean",
+              },
+            },
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "withNonLiteralHeaders",
+                "unsafeName": "withNonLiteralHeaders",
+              },
+              "originalName": "with-non-literal-headers",
+              "pascalCase": {
+                "safeName": "WithNonLiteralHeaders",
+                "unsafeName": "WithNonLiteralHeaders",
+              },
+              "screamingSnakeCase": {
+                "safeName": "WITH_NON_LITERAL_HEADERS",
+                "unsafeName": "WITH_NON_LITERAL_HEADERS",
+              },
+              "snakeCase": {
+                "safeName": "with_non_literal_headers",
+                "unsafeName": "with_non_literal_headers",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "withNonLiteralHeaders",
+              "unsafeName": "withNonLiteralHeaders",
+            },
+            "originalName": "with-non-literal-headers",
+            "pascalCase": {
+              "safeName": "WithNonLiteralHeaders",
+              "unsafeName": "WithNonLiteralHeaders",
+            },
+            "screamingSnakeCase": {
+              "safeName": "WITH_NON_LITERAL_HEADERS",
+              "unsafeName": "WITH_NON_LITERAL_HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "with_non_literal_headers",
+              "unsafeName": "with_non_literal_headers",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_no-headers": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "noHeaders",
+              "unsafeName": "noHeaders",
+            },
+            "originalName": "no-headers",
+            "pascalCase": {
+              "safeName": "NoHeaders",
+              "unsafeName": "NoHeaders",
+            },
+            "screamingSnakeCase": {
+              "safeName": "NO_HEADERS",
+              "unsafeName": "NO_HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "no_headers",
+              "unsafeName": "no_headers",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "noHeaders",
+            "unsafeName": "noHeaders",
+          },
+          "originalName": "no-headers",
+          "pascalCase": {
+            "safeName": "NoHeaders",
+            "unsafeName": "NoHeaders",
+          },
+          "screamingSnakeCase": {
+            "safeName": "NO_HEADERS",
+            "unsafeName": "NO_HEADERS",
+          },
+          "snakeCase": {
+            "safeName": "no_headers",
+            "unsafeName": "no_headers",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "noHeaders",
+          "unsafeName": "noHeaders",
+        },
+        "originalName": "no-headers",
+        "pascalCase": {
+          "safeName": "NoHeaders",
+          "unsafeName": "NoHeaders",
+        },
+        "screamingSnakeCase": {
+          "safeName": "NO_HEADERS",
+          "unsafeName": "NO_HEADERS",
+        },
+        "snakeCase": {
+          "safeName": "no_headers",
+          "unsafeName": "no_headers",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_no-headers",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+    },
+    "subpackage_only-literal-headers": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "onlyLiteralHeaders",
+              "unsafeName": "onlyLiteralHeaders",
+            },
+            "originalName": "only-literal-headers",
+            "pascalCase": {
+              "safeName": "OnlyLiteralHeaders",
+              "unsafeName": "OnlyLiteralHeaders",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ONLY_LITERAL_HEADERS",
+              "unsafeName": "ONLY_LITERAL_HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "only_literal_headers",
+              "unsafeName": "only_literal_headers",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "onlyLiteralHeaders",
+            "unsafeName": "onlyLiteralHeaders",
+          },
+          "originalName": "only-literal-headers",
+          "pascalCase": {
+            "safeName": "OnlyLiteralHeaders",
+            "unsafeName": "OnlyLiteralHeaders",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ONLY_LITERAL_HEADERS",
+            "unsafeName": "ONLY_LITERAL_HEADERS",
+          },
+          "snakeCase": {
+            "safeName": "only_literal_headers",
+            "unsafeName": "only_literal_headers",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "onlyLiteralHeaders",
+          "unsafeName": "onlyLiteralHeaders",
+        },
+        "originalName": "only-literal-headers",
+        "pascalCase": {
+          "safeName": "OnlyLiteralHeaders",
+          "unsafeName": "OnlyLiteralHeaders",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ONLY_LITERAL_HEADERS",
+          "unsafeName": "ONLY_LITERAL_HEADERS",
+        },
+        "snakeCase": {
+          "safeName": "only_literal_headers",
+          "unsafeName": "only_literal_headers",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_only-literal-headers",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+    },
+    "subpackage_with-non-literal-headers": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "withNonLiteralHeaders",
+              "unsafeName": "withNonLiteralHeaders",
+            },
+            "originalName": "with-non-literal-headers",
+            "pascalCase": {
+              "safeName": "WithNonLiteralHeaders",
+              "unsafeName": "WithNonLiteralHeaders",
+            },
+            "screamingSnakeCase": {
+              "safeName": "WITH_NON_LITERAL_HEADERS",
+              "unsafeName": "WITH_NON_LITERAL_HEADERS",
+            },
+            "snakeCase": {
+              "safeName": "with_non_literal_headers",
+              "unsafeName": "with_non_literal_headers",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "withNonLiteralHeaders",
+            "unsafeName": "withNonLiteralHeaders",
+          },
+          "originalName": "with-non-literal-headers",
+          "pascalCase": {
+            "safeName": "WithNonLiteralHeaders",
+            "unsafeName": "WithNonLiteralHeaders",
+          },
+          "screamingSnakeCase": {
+            "safeName": "WITH_NON_LITERAL_HEADERS",
+            "unsafeName": "WITH_NON_LITERAL_HEADERS",
+          },
+          "snakeCase": {
+            "safeName": "with_non_literal_headers",
+            "unsafeName": "with_non_literal_headers",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "withNonLiteralHeaders",
+          "unsafeName": "withNonLiteralHeaders",
+        },
+        "originalName": "with-non-literal-headers",
+        "pascalCase": {
+          "safeName": "WithNonLiteralHeaders",
+          "unsafeName": "WithNonLiteralHeaders",
+        },
+        "screamingSnakeCase": {
+          "safeName": "WITH_NON_LITERAL_HEADERS",
+          "unsafeName": "WITH_NON_LITERAL_HEADERS",
+        },
+        "snakeCase": {
+          "safeName": "with_non_literal_headers",
+          "unsafeName": "with_non_literal_headers",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_with-non-literal-headers",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+    },
+  },
+  "types": {},
+  "variables": [],
+  "webhookGroups": {},
+}
+`;

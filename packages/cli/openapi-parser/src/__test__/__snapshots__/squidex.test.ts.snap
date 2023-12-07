@@ -31273,7 +31273,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "url": "https://localhost:5001",
     },
   ],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Squidex API",
   "variables": {
     "appName": {

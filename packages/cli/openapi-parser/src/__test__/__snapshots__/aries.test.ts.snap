@@ -76216,101 +76216,129 @@ exports[`open api parser aries parse open api 1`] = `
     },
   ],
   "tags": {
-    "action-menu": {
-      "description": "Menu interaction over connection",
-      "id": "action-menu",
-    },
-    "basicmessage": {
-      "description": "Simple messaging",
-      "id": "basicmessage",
-    },
-    "connection": {
-      "description": "Connection management",
-      "id": "connection",
-    },
-    "credential-definition": {
-      "description": "Credential definition operations",
-      "id": "credential-definition",
-    },
-    "credentials": {
-      "description": "Holder credential management",
-      "id": "credentials",
-    },
-    "did-exchange": {
-      "description": "Connection management via DID exchange",
-      "id": "did-exchange",
-    },
-    "discover-features": {
-      "description": "Feature discovery",
-      "id": "discover-features",
-    },
-    "discover-features v2.0": {
-      "description": "Feature discovery v2",
-      "id": "discover-features v2.0",
-    },
-    "endorse-transaction": {
-      "description": "Endorse a Transaction",
-      "id": "endorse-transaction",
-    },
-    "introduction": {
-      "description": "Introduction of known parties",
-      "id": "introduction",
-    },
-    "issue-credential v1.0": {
-      "description": "Credential issue v1.0",
-      "id": "issue-credential v1.0",
-    },
-    "issue-credential v2.0": {
-      "description": "Credential issue v2.0",
-      "id": "issue-credential v2.0",
-    },
-    "jsonld": {
-      "description": "Sign and verify json-ld data",
-      "id": "jsonld",
-    },
-    "ledger": {
-      "description": "Interaction with ledger",
-      "id": "ledger",
-    },
-    "mediation": {
-      "description": "Mediation management",
-      "id": "mediation",
-    },
-    "multitenancy": {
-      "description": "Multitenant wallet management",
-      "id": "multitenancy",
-    },
-    "out-of-band": {
-      "description": "Out-of-band connections",
-      "id": "out-of-band",
-    },
-    "present-proof v1.0": {
-      "description": "Proof presentation v1.0",
-      "id": "present-proof v1.0",
-    },
-    "present-proof v2.0": {
-      "description": "Proof presentation v2.0",
-      "id": "present-proof v2.0",
-    },
-    "resolver": {
-      "description": "did resolver interface.",
-      "id": "resolver",
-    },
-    "revocation": {
-      "description": "Revocation registry management",
-      "id": "revocation",
-    },
-    "schema": {
-      "description": "Schema operations",
-      "id": "schema",
-    },
-    "trustping": {
-      "description": "Trust-ping over connection",
-      "id": "trustping",
-    },
-    "wallet": {
-      "description": "DID and tag policy management",
-      "id": "wallet",
+    "orderedTagIds": [
+      "action-menu",
+      "basicmessage",
+      "connection",
+      "credential-definition",
+      "credentials",
+      "did-exchange",
+      "discover-features",
+      "discover-features v2.0",
+      "endorse-transaction",
+      "introduction",
+      "issue-credential v1.0",
+      "issue-credential v2.0",
+      "jsonld",
+      "ledger",
+      "mediation",
+      "multitenancy",
+      "out-of-band",
+      "present-proof v1.0",
+      "present-proof v2.0",
+      "resolver",
+      "revocation",
+      "schema",
+      "trustping",
+      "wallet",
+    ],
+    "tagsById": {
+      "action-menu": {
+        "description": "Menu interaction over connection",
+        "id": "action-menu",
+      },
+      "basicmessage": {
+        "description": "Simple messaging",
+        "id": "basicmessage",
+      },
+      "connection": {
+        "description": "Connection management",
+        "id": "connection",
+      },
+      "credential-definition": {
+        "description": "Credential definition operations",
+        "id": "credential-definition",
+      },
+      "credentials": {
+        "description": "Holder credential management",
+        "id": "credentials",
+      },
+      "did-exchange": {
+        "description": "Connection management via DID exchange",
+        "id": "did-exchange",
+      },
+      "discover-features": {
+        "description": "Feature discovery",
+        "id": "discover-features",
+      },
+      "discover-features v2.0": {
+        "description": "Feature discovery v2",
+        "id": "discover-features v2.0",
+      },
+      "endorse-transaction": {
+        "description": "Endorse a Transaction",
+        "id": "endorse-transaction",
+      },
+      "introduction": {
+        "description": "Introduction of known parties",
+        "id": "introduction",
+      },
+      "issue-credential v1.0": {
+        "description": "Credential issue v1.0",
+        "id": "issue-credential v1.0",
+      },
+      "issue-credential v2.0": {
+        "description": "Credential issue v2.0",
+        "id": "issue-credential v2.0",
+      },
+      "jsonld": {
+        "description": "Sign and verify json-ld data",
+        "id": "jsonld",
+      },
+      "ledger": {
+        "description": "Interaction with ledger",
+        "id": "ledger",
+      },
+      "mediation": {
+        "description": "Mediation management",
+        "id": "mediation",
+      },
+      "multitenancy": {
+        "description": "Multitenant wallet management",
+        "id": "multitenancy",
+      },
+      "out-of-band": {
+        "description": "Out-of-band connections",
+        "id": "out-of-band",
+      },
+      "present-proof v1.0": {
+        "description": "Proof presentation v1.0",
+        "id": "present-proof v1.0",
+      },
+      "present-proof v2.0": {
+        "description": "Proof presentation v2.0",
+        "id": "present-proof v2.0",
+      },
+      "resolver": {
+        "description": "did resolver interface.",
+        "id": "resolver",
+      },
+      "revocation": {
+        "description": "Revocation registry management",
+        "id": "revocation",
+      },
+      "schema": {
+        "description": "Schema operations",
+        "id": "schema",
+      },
+      "trustping": {
+        "description": "Trust-ping over connection",
+        "id": "trustping",
+      },
+      "wallet": {
+        "description": "DID and tag policy management",
+        "id": "wallet",
+      },
     },
   },
   "title": "Aries Cloud Agent",

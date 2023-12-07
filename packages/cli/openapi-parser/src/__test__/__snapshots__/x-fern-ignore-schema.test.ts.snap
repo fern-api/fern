@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
+{
+  "description": undefined,
+  "endpoints": [],
+  "errors": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "SchemaToKeep": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": undefined,
+      "generatedName": "SchemaToKeep",
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "conflict": {},
+          "generatedName": "schemaToKeepId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
+  "title": "Test extension \`x-fern-ignore\` for schemas",
+  "variables": {},
+  "webhooks": [],
+}
+`;

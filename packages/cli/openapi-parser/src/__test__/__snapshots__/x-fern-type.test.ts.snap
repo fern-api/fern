@@ -33,7 +33,10 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   },
   "securitySchemes": {},
   "servers": [],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Test extension \`x-fern-type\`",
   "variables": {},
   "webhooks": [],

@@ -1,0 +1,6 @@
+paths:
+  /users:
+    get:
+      summary: List users (Overriden description)
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: get

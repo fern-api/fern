@@ -10,6 +10,7 @@ export declare namespace runGenerator {
     export interface Args {
         workspaceName: string;
         organization: string;
+        outputVersion?: string | undefined;
 
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
@@ -25,6 +26,7 @@ export declare namespace runGenerator {
 export async function runGenerator({
     workspaceName,
     organization,
+    outputVersion,
     absolutePathToOutput,
     absolutePathToSnippet,
     absolutePathToIr,
@@ -44,6 +46,7 @@ export async function runGenerator({
         generatorInvocation,
         customConfig,
         workspaceName,
+        outputVersion,
         organization,
         absolutePathToSnippet
     });

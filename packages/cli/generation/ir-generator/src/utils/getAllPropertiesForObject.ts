@@ -1,8 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { constructFernFileContext, getPropertyName, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
-import { CASINGS_GENERATOR } from "./casingsGenerator";
+import { constructCasingsGenerator } from "../casings/CasingsGenerator";
+import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration";
+import { constructFernFileContext } from "../FernFileContext";
+import { ResolvedType } from "../resolvers/ResolvedType";
+import { TypeResolver } from "../resolvers/TypeResolver";
+
+export const CASINGS_GENERATOR = constructCasingsGenerator(undefined);
 
 export interface ObjectPropertyWithPath {
     wireKey: string;

@@ -92,5 +92,8 @@
     "jsonc-parser@2.2.1": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "terminal-link": "^3.0.0"
   }
 }
