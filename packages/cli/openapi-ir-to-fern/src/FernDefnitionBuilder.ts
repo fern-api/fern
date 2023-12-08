@@ -86,20 +86,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.service["display-name"] = displayName;
         }
         if (docs != null) {
-            fernFile.service["display-name"] = docs;
+            fernFile.docs = docs;
         }
-    }
-
-    public setServiceDisplayName(file: RelativeFilePath, name: string): void {
-        const fernFile = this.getOrCreateFile(file);
-        if (fernFile.service == null) {
-            fernFile.service = {
-                auth: false,
-                "base-path": "",
-                endpoints: {}
-            };
-        }
-        fernFile.service["display-name"] = name;
     }
 
     public addAudience(name: string): void {

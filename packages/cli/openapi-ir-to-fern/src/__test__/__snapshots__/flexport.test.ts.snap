@@ -4,13 +4,14 @@ exports[`open api parser flexport simple 1`] = `
 {
   "definitionFiles": {
     "booking.yml": {
+      "docs": "Endpoints relating to Booking objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Booking objects",
+        "display-name": "Booking",
         "endpoints": {
           "bookings_index": {
             "auth": false,
@@ -1361,13 +1362,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "bookingAmendment.yml": {
+      "docs": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
+        "display-name": "BookingAmendment",
         "endpoints": {
           "booking_amendment_create": {
             "auth": false,
@@ -1674,14 +1676,15 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "bookingLineItem.yml": {
+      "docs": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
+  your Flexport Sales representative if you are interested in using these endpoints.**",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
-  your Flexport Sales representative if you are interested in using these endpoints.**",
+        "display-name": "BookingLineItem",
         "endpoints": {
           "booking_line_item_create": {
             "auth": false,
@@ -1957,13 +1960,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "carbonCalculation.yml": {
+      "docs": "Endpoints relating to Carbon Calculations",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Carbon Calculations",
+        "display-name": "Carbon Calculation",
         "endpoints": {
           "create": {
             "auth": false,
@@ -2210,13 +2214,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "commercialInvoices.yml": {
+      "docs": "Endpoints relating to Commercial Invoice objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Commercial Invoice objects",
+        "display-name": "Commercial Invoices",
         "endpoints": {
           "create": {
             "auth": false,
@@ -3105,13 +3110,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "company.yml": {
+      "docs": "Endpoints relating to Company objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Company objects",
+        "display-name": "Company",
         "endpoints": {
           "network_company_create": {
             "auth": false,
@@ -3561,13 +3567,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "companyEntity.yml": {
+      "docs": "Endpoints relating to CompanyEntity objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to CompanyEntity objects",
+        "display-name": "CompanyEntity",
         "endpoints": {
           "company_entity_index": {
             "auth": false,
@@ -3991,13 +3998,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "contact.yml": {
+      "docs": "Endpoints relating to Contact objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Contact objects",
+        "display-name": "Contact",
         "endpoints": {
           "network_contact_create": {
             "auth": false,
@@ -4314,13 +4322,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "container.yml": {
+      "docs": "Endpoints relating to Container objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Container objects",
+        "display-name": "Container",
         "endpoints": {
           "list": {
             "auth": false,
@@ -4607,13 +4616,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "containerLeg.yml": {
+      "docs": "Endpoints relating to ContainerLeg objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to ContainerLeg objects",
+        "display-name": "ContainerLeg",
         "endpoints": {
           "ocean_container_legs_index": {
             "auth": false,
@@ -4784,13 +4794,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "customsEntries.yml": {
+      "docs": "Endpoints relating to Customs Entry objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Customs Entry objects",
+        "display-name": "Customs Entries",
         "endpoints": {
           "customs_entry_index": {
             "auth": false,
@@ -4941,13 +4952,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "document.yml": {
+      "docs": "Endpoints relating to Document objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Document objects",
+        "display-name": "Document",
         "endpoints": {
           "documents_create": {
             "auth": false,
@@ -5241,13 +5253,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "event.yml": {
+      "docs": "Endpoints relating to Event objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Event objects",
+        "display-name": "Event",
         "endpoints": {
           "events_index": {
             "auth": false,
@@ -6266,13 +6279,14 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "invoices.yml": {
+      "docs": "Endpoints relating to Invoice objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Invoice objects",
+        "display-name": "Invoices",
         "endpoints": {
           "invoice_index": {
             "auth": false,
@@ -6751,13 +6765,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "location.yml": {
+      "docs": "Endpoints relating to Location objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Location objects",
+        "display-name": "Location",
         "endpoints": {
           "index": {
             "auth": false,
@@ -7139,13 +7154,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "ports.yml": {
+      "docs": "Endpoints relating to Ports objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Ports objects",
+        "display-name": "Ports",
         "endpoints": {
           "index": {
             "auth": false,
@@ -7280,13 +7296,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "product.yml": {
+      "docs": "Endpoints relating to Product objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Product objects",
+        "display-name": "Product",
         "endpoints": {
           "create": {
             "auth": false,
@@ -7778,13 +7795,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "purchaseOrder.yml": {
+      "docs": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
+        "display-name": "PurchaseOrder",
         "endpoints": {
           "purchase_order_create": {
             "auth": false,
@@ -9137,13 +9155,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "purchaseOrderLineItem.yml": {
+      "docs": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
+        "display-name": "PurchaseOrderLineItem",
         "endpoints": {
           "purchase_order_line_item_index": {
             "auth": false,
@@ -9578,13 +9597,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "shipment.yml": {
+      "docs": "Endpoints relating to Shipment objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to Shipment objects",
+        "display-name": "Shipment",
         "endpoints": {
           "index": {
             "auth": false,
@@ -10920,13 +10940,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "shipmentLeg.yml": {
+      "docs": "Endpoints relating to ShipmentLeg objects",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endpoints relating to ShipmentLeg objects",
+        "display-name": "ShipmentLeg",
         "endpoints": {
           "shipment_leg_index": {
             "auth": false,

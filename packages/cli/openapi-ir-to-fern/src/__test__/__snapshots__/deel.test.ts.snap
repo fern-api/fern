@@ -4,13 +4,14 @@ exports[`open api parser deel simple 1`] = `
 {
   "definitionFiles": {
     "accounting.yml": {
+      "docs": "End-points to retrieve paid invoices and reciepts.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "End-points to retrieve paid invoices and reciepts.",
+        "display-name": "Accounting",
         "endpoints": {
           "GetPaymentsBreakDownById": {
             "audiences": [
@@ -487,13 +488,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "contractors.yml": {
+      "docs": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
+        "display-name": "Contractors",
         "endpoints": {
           "addPremium": {
             "audiences": [
@@ -863,13 +865,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "contracts.yml": {
+      "docs": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
+        "display-name": "Contracts",
         "endpoints": {
           "addContractDocument": {
             "audiences": [
@@ -1457,13 +1460,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "eor.yml": {
+      "docs": "Employee of Record (EOR).",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Employee of Record (EOR).",
+        "display-name": "EOR",
         "endpoints": {
           "createEorContract": {
             "audiences": [
@@ -1662,13 +1666,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "hris.yml": {
+      "docs": "API end-points related to HRIS data.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "API end-points related to HRIS data.",
+        "display-name": "Hris",
         "endpoints": {
           "createDirectEmployee": {
             "audiences": [
@@ -1736,13 +1741,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "invoices.yml": {
+      "docs": "The Invoices resource lets you create, amend and retrieve invoices related to Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "The Invoices resource lets you create, amend and retrieve invoices related to Deel contracts.",
+        "display-name": "Invoices",
         "endpoints": {
           "createInvoiceAdjustment": {
             "audiences": [
@@ -2081,13 +2087,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "lookups.yml": {
+      "docs": "Helper end-points for choosing options for other operations",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Helper end-points for choosing options for other operations",
+        "display-name": "Lookups",
         "endpoints": {
           "getCountries": {
             "audiences": [
@@ -2312,13 +2319,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "milestones.yml": {
+      "docs": "Helper end-points for managing milestones of Deel contracts",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Helper end-points for managing milestones of Deel contracts",
+        "display-name": "Milestones",
         "endpoints": {
           "createMilestone": {
             "audiences": [
@@ -2599,13 +2607,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "offCyclePayments.yml": {
+      "docs": "End-points to manage off-cycle payments for a given contract",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "End-points to manage off-cycle payments for a given contract",
+        "display-name": "Off-cycle Payments",
         "endpoints": {
           "createOffCyclePayment": {
             "audiences": [
@@ -2724,13 +2733,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "organizations.yml": {
+      "docs": "Helper end-points for additional information about your organizations",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Helper end-points for additional information about your organizations",
+        "display-name": "Organizations",
         "endpoints": {
           "getAgreements": {
             "auth": true,
@@ -2890,13 +2900,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "tasks.yml": {
+      "docs": "End-points to manage tasks for a given contract",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "End-points to manage tasks for a given contract",
+        "display-name": "Tasks",
         "endpoints": {
           "createContractPgoTak": {
             "audiences": [
@@ -3171,13 +3182,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "timeOff.yml": {
+      "docs": "Manage time off requests.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Manage time off requests.",
+        "display-name": "Time Off",
         "endpoints": {
           "createEorTimeOffs": {
             "audiences": [
@@ -3523,13 +3535,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "timesheets.yml": {
+      "docs": "The Invoices resource lets you create, amend and retrieve timesheets of Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "The Invoices resource lets you create, amend and retrieve timesheets of Deel contracts.",
+        "display-name": "Timesheets",
         "endpoints": {
           "createTimesheet": {
             "audiences": [

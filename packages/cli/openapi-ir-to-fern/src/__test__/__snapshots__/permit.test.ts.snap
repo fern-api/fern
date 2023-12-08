@@ -4,13 +4,14 @@ exports[`open api parser permit simple 1`] = `
 {
   "definitionFiles": {
     "bulkOperations.yml": {
+      "docs": "None",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "None",
+        "display-name": "Bulk Operations",
         "endpoints": {
           "bulk_create_tenants": {
             "auth": true,
@@ -266,13 +267,7 @@ exports[`open api parser permit simple 1`] = `
       },
     },
     "conditionSetRules.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
 
 If such tuple exists, it means all users matching the UserSet
@@ -284,6 +279,13 @@ Example:
 - \`repository:clone\` is an action
 - \`private_repos\` is a resource set
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Condition Set Rules",
         "endpoints": {
           "assign_set_permissions": {
             "auth": true,
@@ -466,13 +468,7 @@ If the permission is not granted, it is skipped.",
       },
     },
     "conditionSets.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Condition sets are sets of objects that are dynamically defined based on conditions on the objects' attributes.
 Conditions sets allows you the flexibility of ABAC with the simplicity of RBAC.
 
@@ -491,6 +487,13 @@ Example:
 If we check the checkbox where \`us_based_employees\` and \`private_repos->clone\` action intersect, we are setting a rule:
 *all US based employees can clone private repos*.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Condition Sets",
         "endpoints": {
           "create_condition_set": {
             "auth": true,
@@ -852,13 +855,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "environments.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Environments are silos contained within projects that enables you to safely iterate on changes.
 
 Environments allow you to manage your policy throughout your entire development lifecycle,
@@ -869,6 +866,13 @@ Each project must contain at least one environment.
 You may clone an environment from a base environment, similar to git branches.
 You can later safely merge the changes, after you tested them.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Environments",
         "endpoints": {
           "copy_environment": {
             "auth": true,
@@ -1183,19 +1187,20 @@ allowed.",
       },
     },
     "organizations.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 The Organizations API gives you access to control and manage your Permit organizations.
 
 An organization represents a **single billable account** (i.e: a company using Permit).
 You may invite your team members to your Permit account, and thus multiple team members
 may control an organization simultaniously (each member has access according to his role).
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Organizations",
         "endpoints": {
           "create_organization": {
             "auth": true,
@@ -1378,18 +1383,19 @@ authenticated actor (i.e: human team member or api key).",
       },
     },
     "projects.yml": {
+      "docs": "
+Projects let you manage permissions for different business objectives from a single Permit account.
+
+For example, you can create one project called "Billing App" and another project called "Web App".
+Every project is a separate silo, and has its own unique set of environments and policies.
+",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "
-Projects let you manage permissions for different business objectives from a single Permit account.
-
-For example, you can create one project called "Billing App" and another project called "Web App".
-Every project is a separate silo, and has its own unique set of environments and policies.
-",
+        "display-name": "Projects",
         "endpoints": {
           "create_project": {
             "auth": true,
@@ -1574,16 +1580,17 @@ Every project is a separate silo, and has its own unique set of environments and
       },
     },
     "resourceActionGroups.yml": {
+      "docs": "
+Resource Action Groups are groups of actions that are assigned
+to a role as one action.
+",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "
-Resource Action Groups are groups of actions that are assigned
-to a role as one action.
-",
+        "display-name": "Resource Action Groups",
         "endpoints": {
           "create_resource_action_group": {
             "auth": true,
@@ -1831,16 +1838,17 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "resourceActions.yml": {
+      "docs": "
+Actions are the various ways you can interact with a resource or affect the resource.
+Each (resource, action) pair defines a unique permission level.
+",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "
-Actions are the various ways you can interact with a resource or affect the resource.
-Each (resource, action) pair defines a unique permission level.
-",
+        "display-name": "Resource Actions",
         "endpoints": {
           "create_resource_action": {
             "auth": true,
@@ -2086,13 +2094,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "resourceAttributes.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Resource attributes allow you to specify an arbitrary schema attributes that are part
 of the definition of resource and must be included in any of its instances.
 
@@ -2102,6 +2104,13 @@ For example, if we are building the github's permissions system, we might want t
 on the \`Repository\` resource whether the repo is private or now. In such case we will
 define a boolean \`private\` attributes that we can now use in our policies.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Resource Attributes",
         "endpoints": {
           "create_resource_attribute": {
             "auth": true,
@@ -2356,18 +2365,19 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "resourceInstances.yml": {
+      "docs": "
+Resource instances are instances of resource types.
+
+An instance represents **a single object** in your system on which you'd want to enforce authorization.
+You can use this API to store tenancy data (tenant) and arbitraty data (attributes).
+",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "
-Resource instances are instances of resource types.
-
-An instance represents **a single object** in your system on which you'd want to enforce authorization.
-You can use this API to store tenancy data (tenant) and arbitraty data (attributes).
-",
+        "display-name": "Resource Instances",
         "endpoints": {
           "create_resource_instance": {
             "auth": true,
@@ -2585,13 +2595,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "resourceRoles.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Roles allow you to associate permissions indirectly via a job function.
 
 Resource roles allow you to grant roles that are scoped to a resource, thus
@@ -2601,6 +2605,13 @@ a specific object.
 This API allows you to manipulate roles: assign or unassign permissions to a role,
 define hierarchy (inheritance) between two roles or define relationships between two roles.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Resource Roles",
         "endpoints": {
           "assign_permissions_to_resource_role": {
             "auth": true,
@@ -3020,13 +3031,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "resources.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Resources are *types* of objects or feature names that you wish to protect (or gate) with permissions.
 
 For example, if you build a document-sharing app like google docs, you might want to define a "document" resource.
@@ -3039,6 +3044,13 @@ A resource may also contain:
 - relations to other resources (if your permissions model is relational, i.e: you work with a ReBAC model)
 - attributes (attributes that are typically defined on the resource, typically used in ABAC models)
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Resources",
         "endpoints": {
           "create_resource": {
             "auth": true,
@@ -3360,18 +3372,19 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "roleAssignments.yml": {
+      "docs": "
+Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
+
+With role assignments you can assign or unassign roles to a user.
+Role assignment define the relationship between users and tenants.
+",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "
-Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
-
-With role assignments you can assign or unassign roles to a user.
-Role assignment define the relationship between users and tenants.
-",
+        "display-name": "Role Assignments",
         "endpoints": {
           "assign_role": {
             "auth": true,
@@ -3623,13 +3636,7 @@ If the role is not actually assigned, will return 404.",
       },
     },
     "roles.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Roles allow you to associate permissions indirectly via a job function.
 
 The Roles API allows you to manipulate roles: assign or unassign permissions to a role,
@@ -3638,6 +3645,13 @@ define hierarchy between roles or define relationships between resource roles.
 Roles manipulated by this API are **tenant roles**, meaning when they are assigned, they are
 assigned on a tenant.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Roles",
         "endpoints": {
           "assign_permissions_to_role": {
             "auth": true,
@@ -4023,13 +4037,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "tenants.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 A tenant is a group of users that share a common organizational identity.
 
 Each tenant is a silo that can enforce strict boundaries between your customers.
@@ -4040,6 +4048,13 @@ Usually, each tenant will represent one of the end-customer companies in your pr
 (i.e. the company that you sell to). Through the tenant feature we enable you to have
 multi-tenancy straight out of the box.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Tenants",
         "endpoints": {
           "create_tenant": {
             "auth": true,
@@ -4365,13 +4380,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "userAttributes.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 User attributes allow you to specify an arbitrary schema attributes that are part
 of the definition of the User resource.
 
@@ -4383,6 +4392,13 @@ For example, if we are building the github's permissions system, we might want t
 whether the user is an owner of the organization or not. In such case we will
 define a string \`owner\` attribute that we can now use in our policies.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "User Attributes",
         "endpoints": {
           "create_user_attribute": {
             "auth": true,
@@ -4651,13 +4667,7 @@ Fields that will be provided will be completely overwritten.",
       },
     },
     "users.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "
+      "docs": "
 Users represent human end-users of your applications that you'd like to enforce permissions on.
 
 You must create a user object in Permit.io prior to trying to enforce permissions for that user.
@@ -4666,6 +4676,13 @@ You can place users within tenants via role assignments in order to enforce mult
 
 You may create users via the API (shown below), with one of the SDKs, or via the Permit cloud console.
 ",
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Users",
         "endpoints": {
           "assign_role_to_user": {
             "auth": true,
