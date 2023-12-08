@@ -48,14 +48,14 @@ export function buildTypeReference({
     } else if (schema.type === "nullable") {
         return buildOptionalTypeReference({ schema, fileContainingReference, context });
     } else if (schema.type === "enum") {
-        // return convertEnumToTypeReference({ schema, prefix });
+        return buildEnumTypeReference({ schema, fileContainingReference, context });
     } else if (schema.type === "literal") {
         return buildLiteralTypeReference(schema.value);
     } else if (schema.type === "object") {
-        // return convertObjectToTypeReference({ schema, prefix, schemas });
+        return buildObjectTypeReference({ schema, fileContainingReference, context });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (schema.type === "oneOf") {
-        // return convertOneOfToTypeReference({ schema: schema.oneOf, prefix, schemas });
+        return buildOneOfTypeReference({ schema: schema.oneOf, fileContainingReference, context });
     }
     throw new Error(`Failed to convert to type reference: ${JSON.stringify(schema)}`);
 }
@@ -243,7 +243,7 @@ export function buildObjectTypeReference({
     };
 }
 
-export function convertOneOfToTypeReference({
+export function buildOneOfTypeReference({
     schema,
     fileContainingReference,
     context

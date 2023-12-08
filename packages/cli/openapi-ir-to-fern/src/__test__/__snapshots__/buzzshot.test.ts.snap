@@ -14,7 +14,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "listAccounts": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -44,13 +43,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListAccountsResponse",
+              "type": "ListAccountsResponse",
             },
           },
           "listGames": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -100,13 +98,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListGamesResponse",
+              "type": "ListGamesResponse",
             },
           },
           "listGroups": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -146,13 +143,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListGroupsResponse",
+              "type": "ListGroupsResponse",
             },
           },
           "listLocations": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -182,13 +178,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListLocationsResponse",
+              "type": "ListLocationsResponse",
             },
           },
           "listPhotos": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -218,13 +213,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListPhotosResponse",
+              "type": "ListPhotosResponse",
             },
           },
           "listPlayers": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -254,13 +248,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListPlayersResponse",
+              "type": "ListPlayersResponse",
             },
           },
           "retrieveAccount": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "method": "GET",
             "path": "/api/v2/accounts/{id}",
             "path-parameters": {
@@ -277,7 +270,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveGame": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "method": "GET",
             "path": "/api/v2/games/{id}",
             "path-parameters": {
@@ -319,7 +311,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveGroup": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "method": "GET",
             "path": "/api/v2/groups/{id}",
             "path-parameters": {
@@ -351,7 +342,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveLocation": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "method": "GET",
             "path": "/api/v2/rooms/{id}",
             "path-parameters": {
@@ -368,7 +358,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrievePhoto": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "method": "GET",
             "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
@@ -385,7 +374,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrievePlayer": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "method": "GET",
             "path": "/api/v2/players/{id}",
             "path-parameters": {
@@ -401,549 +389,257 @@ exports[`open api parser buzzshot simple 1`] = `
           },
         },
       },
+      "types": {
+        "ListAccountsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Room>>",
+          },
+        },
+        "ListGamesResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Game>>",
+          },
+        },
+        "ListGroupsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Group>>",
+          },
+        },
+        "ListLocationsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Room>>",
+          },
+        },
+        "ListPhotosResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Photo>>",
+          },
+        },
+        "ListPlayersResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Player>>",
+          },
+        },
+      },
     },
   },
   "packageMarkerFile": {
-    "errors": {},
-    "service": undefined,
     "types": {
       "Game": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "complete": {
-            "docs": undefined,
-            "type": "GameComplete",
-          },
+          "added_at": "optional<datetime>",
+          "complete": "GameComplete",
           "date": "string",
-          "extra_fields": {
-            "docs": undefined,
-            "type": "list<GameExtraFieldsItem>",
-          },
-          "group": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "photos": {
-            "docs": undefined,
-            "type": "optional<list<GamePhotosItem>>",
-          },
-          "room": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "start_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "extra_fields": "list<GameExtraFieldsItem>",
+          "group": "optional<string>",
+          "id": "optional<integer>",
+          "name": "optional<string>",
+          "photos": "optional<list<GamePhotosItem>>",
+          "room": "optional<string>",
+          "start_at": "optional<datetime>",
           "time": "string",
-          "updated_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "updated_at": "optional<datetime>",
         },
       },
       "GameComplete": {
         "docs": undefined,
         "properties": {
           "completed_at": "datetime",
-          "completion_time": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "did_win": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
-          "hints": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "score": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
+          "completion_time": "optional<integer>",
+          "did_win": "optional<boolean>",
+          "hints": "optional<integer>",
+          "score": "optional<integer>",
         },
       },
       "GameExtraFieldsItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
-          "label": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "label": "optional<string>",
           "present": "boolean",
-          "value": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
+          "value": "optional<map<string, unknown>>",
         },
       },
       "GamePhotosItem": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "added_at": "optional<datetime>",
           "photo": "string",
-          "processed_image": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "ready": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "processed_image": "optional<string>",
+          "ready": "optional<string>",
         },
       },
       "Group": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "added_at": "optional<datetime>",
           "date": "string",
-          "games": {
-            "docs": undefined,
-            "type": "optional<list<GroupGamesItem>>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "is_event": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
-          "name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "photos": {
-            "docs": undefined,
-            "type": "optional<list<GroupPhotosItem>>",
-          },
-          "players": {
-            "docs": undefined,
-            "type": "list<GroupPlayersItem>",
-          },
-          "start_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "games": "optional<list<GroupGamesItem>>",
+          "id": "optional<integer>",
+          "is_event": "optional<boolean>",
+          "name": "optional<string>",
+          "photos": "optional<list<GroupPhotosItem>>",
+          "players": "list<GroupPlayersItem>",
+          "start_at": "optional<datetime>",
           "time": "string",
-          "updated_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "updated_at": "optional<datetime>",
         },
       },
       "GroupGamesItem": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "complete": {
-            "docs": undefined,
-            "type": "GroupGamesItemComplete",
-          },
+          "added_at": "optional<datetime>",
+          "complete": "GroupGamesItemComplete",
           "date": "string",
-          "extra_fields": {
-            "docs": undefined,
-            "type": "list<GroupGamesItemExtraFieldsItem>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "room": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "start_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
+          "id": "optional<integer>",
+          "name": "optional<string>",
+          "room": "optional<string>",
+          "start_at": "optional<datetime>",
           "time": "string",
-          "updated_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "updated_at": "optional<datetime>",
         },
       },
       "GroupGamesItemComplete": {
         "docs": undefined,
         "properties": {
           "completed_at": "datetime",
-          "completion_time": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "did_win": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
-          "hints": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "score": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
+          "completion_time": "optional<integer>",
+          "did_win": "optional<boolean>",
+          "hints": "optional<integer>",
+          "score": "optional<integer>",
         },
       },
       "GroupGamesItemExtraFieldsItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
-          "label": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "label": "optional<string>",
           "present": "boolean",
-          "value": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
+          "value": "optional<map<string, unknown>>",
         },
       },
       "GroupPhotosItem": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "game": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "added_at": "optional<datetime>",
+          "game": "optional<string>",
           "photo": "string",
-          "processed_image": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "ready": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "processed_image": "optional<string>",
+          "ready": "optional<string>",
         },
       },
       "GroupPlayersItem": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "added_at": "optional<datetime>",
           "email": "string",
-          "extra_fields": {
-            "docs": undefined,
-            "type": "list<GroupPlayersItemExtraFieldsItem>",
-          },
-          "first_name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "last_name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
+          "first_name": "optional<string>",
+          "last_name": "optional<string>",
           "phone": "string",
-          "player": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "signature": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "updated_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "player": "optional<string>",
+          "signature": "optional<string>",
+          "updated_at": "optional<datetime>",
         },
       },
       "GroupPlayersItemExtraFieldsItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
-          "label": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "label": "optional<string>",
           "present": "boolean",
-          "value": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
-        },
-      },
-      "ListAccountsResponse": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<Room>>",
-          },
-        },
-      },
-      "ListGamesResponse": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<Game>>",
-          },
-        },
-      },
-      "ListGroupsResponse": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<Group>>",
-          },
-        },
-      },
-      "ListLocationsResponse": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<Room>>",
-          },
-        },
-      },
-      "ListPhotosResponse": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<Photo>>",
-          },
-        },
-      },
-      "ListPlayersResponse": {
-        "docs": undefined,
-        "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<Player>>",
-          },
+          "value": "optional<map<string, unknown>>",
         },
       },
       "Photo": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "added_at": "optional<datetime>",
+          "id": "optional<string>",
           "original_image": "string",
-          "processed": {
-            "docs": undefined,
-            "type": "list<PhotoProcessedItem>",
-          },
+          "processed": "list<PhotoProcessedItem>",
         },
       },
       "PhotoProcessedItem": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "game": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "group": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "added_at": "optional<datetime>",
+          "game": "optional<string>",
+          "group": "optional<string>",
           "photo": "string",
-          "processed_image": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "ready": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "processed_image": "optional<string>",
+          "ready": "optional<string>",
         },
       },
       "Player": {
         "docs": undefined,
         "properties": {
-          "added_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "added_at": "optional<datetime>",
           "email": "string",
-          "extra_fields": {
-            "docs": undefined,
-            "type": "list<PlayerExtraFieldsItem>",
-          },
-          "first_name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "last_name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "marketing_email_allowed": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
+          "extra_fields": "list<PlayerExtraFieldsItem>",
+          "first_name": "optional<string>",
+          "id": "optional<integer>",
+          "last_name": "optional<string>",
+          "marketing_email_allowed": "optional<boolean>",
           "phone": "string",
-          "updated_at": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "updated_at": "optional<datetime>",
         },
       },
       "PlayerExtraFieldsItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
-          "label": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "label": "optional<string>",
           "present": "boolean",
-          "value": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
+          "value": "optional<map<string, unknown>>",
         },
       },
       "Room": {
         "docs": undefined,
         "properties": {
-          "hidden": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
+          "hidden": "optional<boolean>",
+          "id": "optional<integer>",
           "name": "string",
         },
       },
     },
   },
   "rootApiFile": {
-    "auth": "bearer",
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
     "display-name": "",
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

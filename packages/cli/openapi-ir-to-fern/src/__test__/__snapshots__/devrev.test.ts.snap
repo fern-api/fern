@@ -4,7 +4,6 @@ exports[`open api parser devrev simple 1`] = `
 {
   "definitionFiles": {
     "artifacts.yml": {
-      "docs": "Artifact (file) management APIs.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -78,7 +77,6 @@ exports[`open api parser devrev simple 1`] = `
       },
     },
     "authConnection.yml": {
-      "docs": "Auth Connections of DevOrg.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -110,7 +108,7 @@ enterprise connections can be created by an organization.
               "body": {
                 "docs": "Request to create a new enterprise authentication connection.
 ",
-                "type": "root.DevOrgAuthConnectionsCreateRequest",
+                "type": "DevOrgAuthConnectionsCreateRequest",
               },
             },
             "response": {
@@ -239,10 +237,7 @@ disabled.
                     "docs": "ID of the authentication connection to be toggled.",
                     "type": "string",
                   },
-                  "toggle": {
-                    "docs": undefined,
-                    "type": "optional<root.AuthConnectionToggle>",
-                  },
+                  "toggle": "optional<root.AuthConnectionToggle>",
                 },
               },
               "headers": undefined,
@@ -269,7 +264,7 @@ disabled.
                 "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
-                "type": "root.DevOrgAuthConnectionsUpdateRequest",
+                "type": "DevOrgAuthConnectionsUpdateRequest",
               },
             },
             "response": {
@@ -279,9 +274,59 @@ organization.
           },
         },
       },
+      "types": {
+        "DevOrgAuthConnectionsCreateRequest": {
+          "base-properties": {
+            "display_name": {
+              "docs": "Display name of the authentication connection. This name will be
+visible to all the users when they sign in to this Dev
+organization. For example, if the display_name is 'abclogin', then
+it would appear on the login button as 'Log in to abclogin'.
+",
+              "type": "optional<string>",
+            },
+          },
+          "discriminant": "type",
+          "docs": "Request to create a new enterprise authentication connection.
+",
+          "union": {
+            "google_apps": "root.AuthConnectionOptionsGoogleApps",
+            "oidc": "root.AuthConnectionOptionsOidc",
+            "samlp": "root.AuthConnectionOptionsSaml",
+            "waad": "root.AuthConnectionOptionsAzureAd",
+          },
+        },
+        "DevOrgAuthConnectionsUpdateRequest": {
+          "base-properties": {
+            "display_name": {
+              "docs": "New display name of the authentication connection. This name will
+be visible to all the users when they sign in to this Dev
+organization. For example, if the display_name is 'abclogin', then
+it would appear on the login button as 'Log in to abclogin'.
+",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "ID of the authentication connection which is to be updated.
+",
+              "type": "string",
+            },
+          },
+          "discriminant": "type",
+          "docs": "Request to update an enterprise authentication connection for a Dev
+organization.
+",
+          "union": {
+            "google_apps": "root.AuthConnectionOptionsGoogleApps",
+            "none": "root.empty",
+            "oidc": "root.AuthConnectionOptionsOidc",
+            "samlp": "root.AuthConnectionOptionsSaml",
+            "waad": "root.AuthConnectionOptionsAzureAd",
+          },
+        },
+      },
     },
     "authTokens.yml": {
-      "docs": "Security token interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -325,18 +370,9 @@ This client_id is only associated with an AAT.
 ",
                     "type": "optional<integer>",
                   },
-                  "grant_type": {
-                    "docs": undefined,
-                    "type": "optional<root.AuthTokenGrantType>",
-                  },
-                  "requested_token_type": {
-                    "docs": undefined,
-                    "type": "optional<root.AuthTokenRequestedTokenType>",
-                  },
-                  "rev_info": {
-                    "docs": undefined,
-                    "type": "optional<root.AuthTokensRevInfo>",
-                  },
+                  "grant_type": "optional<root.AuthTokenGrantType>",
+                  "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
+                  "rev_info": "optional<root.AuthTokensRevInfo>",
                   "scope": {
                     "docs": "The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
@@ -350,10 +386,7 @@ requesting an application access token (AAT).
 ",
                     "type": "optional<string>",
                   },
-                  "subject_token_type": {
-                    "docs": undefined,
-                    "type": "optional<root.AuthTokenSubjectTokenType>",
-                  },
+                  "subject_token_type": "optional<root.AuthTokenSubjectTokenType>",
                   "token_hint": {
                     "docs": "A hint that identifies the token.",
                     "type": "optional<string>",
@@ -536,10 +569,7 @@ authenticated user.
             "request": {
               "body": {
                 "properties": {
-                  "requested_token_type": {
-                    "docs": undefined,
-                    "type": "optional<root.AuthTokenRequestedTokenType>",
-                  },
+                  "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
                 },
               },
               "headers": undefined,
@@ -590,7 +620,6 @@ organization.
       },
     },
     "devUsers.yml": {
-      "docs": "Dev user interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -696,7 +725,6 @@ used.
       },
     },
     "parts.yml": {
-      "docs": "DevRev part interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -719,10 +747,7 @@ used.
             "method": "POST",
             "path": "/parts.create",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.PartsCreateRequest",
-              },
+              "body": "PartsCreateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -900,10 +925,7 @@ used.
             "method": "POST",
             "path": "/parts.update",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.PartsUpdateRequest",
-              },
+              "body": "PartsUpdateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -912,9 +934,60 @@ used.
           },
         },
       },
+      "types": {
+        "PartsCreateRequest": {
+          "base-properties": {
+            "description": {
+              "docs": "Description of the part.",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "Name of the part.",
+              "type": "string",
+            },
+            "owned_by": {
+              "docs": "The users that own the part.",
+              "type": "list<string>",
+            },
+          },
+          "discriminant": "type",
+          "docs": undefined,
+          "union": {
+            "capability": "root.PartsCreateRequestCapability",
+            "enhancement": "root.PartsCreateRequestEnhancement",
+            "feature": "root.PartsCreateRequestFeature",
+            "product": "root.parts-create-request-product",
+          },
+        },
+        "PartsUpdateRequest": {
+          "base-properties": {
+            "description": {
+              "docs": "The updated description of the part.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "The ID of the part to update.",
+              "type": "string",
+            },
+            "name": {
+              "docs": "The updated name of the part.",
+              "type": "optional<string>",
+            },
+            "owned_by": "optional<root.PartsUpdateRequestOwnedBy>",
+          },
+          "discriminant": "type",
+          "docs": undefined,
+          "union": {
+            "capability": "root.parts-update-request-capability",
+            "enhancement": "root.PartsUpdateRequestEnhancement",
+            "feature": "root.parts-update-request-feature",
+            "none": "root.empty",
+            "product": "root.parts-update-request-product",
+          },
+        },
+      },
     },
     "revOrgs.yml": {
-      "docs": "Rev organization interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -953,10 +1026,7 @@ organization.
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
                   },
-                  "environment": {
-                    "docs": undefined,
-                    "type": "optional<root.OrgEnvironment>",
-                  },
+                  "environment": "optional<root.OrgEnvironment>",
                   "external_ref": {
                     "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
@@ -1187,10 +1257,7 @@ them.
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
                   },
-                  "environment": {
-                    "docs": undefined,
-                    "type": "optional<root.OrgEnvironment>",
-                  },
+                  "environment": "optional<root.OrgEnvironment>",
                   "external_ref": {
                     "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
@@ -1221,7 +1288,6 @@ records.
       },
     },
     "tags.yml": {
-      "docs": "DevRev tag interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -1422,10 +1488,7 @@ used.
             "request": {
               "body": {
                 "properties": {
-                  "allowed_values": {
-                    "docs": undefined,
-                    "type": "optional<root.TagsUpdateAllowedValues>",
-                  },
+                  "allowed_values": "optional<root.TagsUpdateAllowedValues>",
                   "description": {
                     "docs": "The updated description of the tag.",
                     "type": "optional<string>",
@@ -1455,7 +1518,6 @@ tags.
       },
     },
     "timelineEntries.yml": {
-      "docs": "APIs to manage timeline entries for objects.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -1480,7 +1542,7 @@ tags.
             "request": {
               "body": {
                 "docs": "The request to create a timeline entry for an object.",
-                "type": "root.TimelineEntriesCreateRequest",
+                "type": "TimelineEntriesCreateRequest",
               },
             },
             "response": {
@@ -1599,7 +1661,7 @@ used.
             "request": {
               "body": {
                 "docs": "The request to update a timeline entry.",
-                "type": "root.TimelineEntriesUpdateRequest",
+                "type": "TimelineEntriesUpdateRequest",
               },
             },
             "response": {
@@ -1609,9 +1671,37 @@ used.
           },
         },
       },
+      "types": {
+        "TimelineEntriesCreateRequest": {
+          "base-properties": {
+            "object": {
+              "docs": "The ID of the object to create the timeline entry for.",
+              "type": "string",
+            },
+            "visibility": "optional<root.timeline-entry-visibility>",
+          },
+          "discriminant": "type",
+          "docs": "The request to create a timeline entry for an object.",
+          "union": {
+            "timeline_comment": "root.TimelineEntriesCreateRequestTimelineComment",
+          },
+        },
+        "TimelineEntriesUpdateRequest": {
+          "base-properties": {
+            "id": {
+              "docs": "The ID of the timeline entry to update.",
+              "type": "string",
+            },
+          },
+          "discriminant": "type",
+          "docs": "The request to update a timeline entry.",
+          "union": {
+            "timeline_comment": "root.TimelineEntriesUpdateRequestTimelineComment",
+          },
+        },
+      },
     },
     "webhooks.yml": {
-      "docs": "Webhook event APIs.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -1785,14 +1875,8 @@ response.
             "request": {
               "body": {
                 "properties": {
-                  "action": {
-                    "docs": undefined,
-                    "type": "optional<root.WebhooksUpdateAction>",
-                  },
-                  "event_types": {
-                    "docs": undefined,
-                    "type": "optional<root.WebhooksUpdateRequestEventTypes>",
-                  },
+                  "action": "optional<root.WebhooksUpdateAction>",
+                  "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
                   "id": {
                     "docs": "ID for the webhook.",
                     "type": "string",
@@ -1828,7 +1912,6 @@ won't receive any object events until successfully verified.
       },
     },
     "works.yml": {
-      "docs": "DevRev work interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -1853,10 +1936,7 @@ won't receive any object events until successfully verified.
             "method": "POST",
             "path": "/works.create",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.WorksCreateRequest",
-              },
+              "body": "WorksCreateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -2156,15 +2236,100 @@ organizations.
             "method": "POST",
             "path": "/works.update",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.WorksUpdateRequest",
-              },
+              "body": "WorksUpdateRequest",
             },
             "response": {
               "docs": "Success.",
               "type": "root.WorksUpdateResponse",
             },
+          },
+        },
+      },
+      "types": {
+        "WorksCreateRequest": {
+          "base-properties": {
+            "applies_to_part": {
+              "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
+applies to. Specifying a part is required when creating tickets and
+issues.
+",
+              "type": "string",
+            },
+            "artifacts": {
+              "docs": "The IDs of the artifacts to associate with the work item.
+",
+              "type": "optional<list<string>>",
+            },
+            "body": {
+              "docs": "Body of the work object.",
+              "type": "optional<string>",
+            },
+            "owned_by": {
+              "docs": "The users that own the work.",
+              "type": "list<string>",
+            },
+            "reported_by": {
+              "docs": "The users that reported the work.",
+              "type": "optional<list<string>>",
+            },
+            "stage": "optional<root.StageInit>",
+            "tags": {
+              "docs": "Tags associated with the work item.",
+              "type": "optional<list<root.SetTagWithValue>>",
+            },
+            "target_close_date": {
+              "docs": "Timestamp for when the work is expected to be complete.",
+              "type": "optional<datetime>",
+            },
+            "title": {
+              "docs": "Title of the work object.",
+              "type": "string",
+            },
+          },
+          "discriminant": "type",
+          "docs": undefined,
+          "union": {
+            "issue": "root.WorksCreateRequestIssue",
+            "ticket": "root.WorksCreateRequestTicket",
+          },
+        },
+        "WorksUpdateRequest": {
+          "base-properties": {
+            "applies_to_part": {
+              "docs": "Updates the part that the work applies to.",
+              "type": "optional<string>",
+            },
+            "artifacts": "optional<root.WorksUpdateRequestArtifactIds>",
+            "body": {
+              "docs": "Updated body of the work object, or unchanged if not provided.
+",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "The work's ID.",
+              "type": "string",
+            },
+            "owned_by": "optional<root.WorksUpdateRequestOwnedBy>",
+            "reported_by": "optional<root.WorksUpdateRequestReportedBy>",
+            "stage": "optional<root.StageUpdate>",
+            "tags": "optional<root.WorksUpdateRequestTags>",
+            "target_close_date": {
+              "docs": "Updates the timestamp for when the work is expected to be complete.
+",
+              "type": "optional<datetime>",
+            },
+            "title": {
+              "docs": "Updated title of the work object, or unchanged if not provided.
+",
+              "type": "optional<string>",
+            },
+          },
+          "discriminant": "type",
+          "docs": undefined,
+          "union": {
+            "issue": "root.WorksUpdateRequestIssue",
+            "none": "root.empty",
+            "ticket": "root.WorksUpdateRequestTicket",
           },
         },
       },
@@ -2201,24 +2366,8 @@ organizations.
         "type": "ErrorUnauthorized",
       },
     },
-    "navigation": [
-      "artifacts.yml",
-      "authConnection.yml",
-      "authTokens.yml",
-      "devUsers.yml",
-      "parts.yml",
-      "revOrgs.yml",
-      "tags.yml",
-      "timelineEntries.yml",
-      "webhooks.yml",
-      "works.yml",
-    ],
-    "service": undefined,
     "types": {
-      "ArtifactSummary": {
-        "docs": undefined,
-        "type": "AtomBaseSummary",
-      },
+      "ArtifactSummary": "AtomBaseSummary",
       "ArtifactsLocateResponse": {
         "docs": "The response to getting an artifact's download URL.",
         "properties": {
@@ -2265,10 +2414,7 @@ organizations.
       "AtomBase": {
         "docs": undefined,
         "properties": {
-          "created_by": {
-            "docs": undefined,
-            "type": "optional<UserSummary>",
-          },
+          "created_by": "optional<UserSummary>",
           "created_date": {
             "docs": "Timestamp when the object was created.",
             "type": "optional<datetime>",
@@ -2281,10 +2427,7 @@ organizations.
             "docs": "Globally unique object ID.",
             "type": "string",
           },
-          "modified_by": {
-            "docs": undefined,
-            "type": "optional<UserSummary>",
-          },
+          "modified_by": "optional<UserSummary>",
           "modified_date": {
             "docs": "Timestamp when the object was last modified.",
             "type": "optional<datetime>",
@@ -2331,26 +2474,11 @@ login screen as a login option.
 authentication connection that is set up for a Dev organization.
 ",
         "union": {
-          "google_apps": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsGoogleApps",
-          },
-          "oidc": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsOidc",
-          },
-          "samlp": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsSaml",
-          },
-          "social": {
-            "docs": undefined,
-            "type": "auth-connection-options-social",
-          },
-          "waad": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsAzureAd",
-          },
+          "google_apps": "AuthConnectionOptionsGoogleApps",
+          "oidc": "AuthConnectionOptionsOidc",
+          "samlp": "AuthConnectionOptionsSaml",
+          "social": "auth-connection-options-social",
+          "waad": "AuthConnectionOptionsAzureAd",
         },
       },
       "AuthConnectionOptionsAzureAd": {
@@ -2495,18 +2623,12 @@ token. Only applicable for application access tokens.
             "docs": "The time at which the token was issued.",
             "type": "optional<datetime>",
           },
-          "requested_token_type": {
-            "docs": undefined,
-            "type": "optional<AuthTokenRequestedTokenType>",
-          },
+          "requested_token_type": "optional<AuthTokenRequestedTokenType>",
           "scopes": {
             "docs": "The scopes associated with the issued token.",
             "type": "optional<list<string>>",
           },
-          "status": {
-            "docs": undefined,
-            "type": "optional<AuthTokenStatus>",
-          },
+          "status": "optional<AuthTokenStatus>",
           "subject": {
             "docs": "The subject of the token.",
             "type": "optional<string>",
@@ -2676,19 +2798,13 @@ of values in which the order of values does not matter.
 ",
             "type": "optional<string>",
           },
-          "token_type": {
-            "docs": undefined,
-            "type": "auth-token-token-type",
-          },
+          "token_type": "auth-token-token-type",
         },
       },
       "AuthTokensGetResponse": {
         "docs": "The response to get the token metadata.",
         "properties": {
-          "token": {
-            "docs": undefined,
-            "type": "AuthToken",
-          },
+          "token": "AuthToken",
         },
       },
       "AuthTokensListResponse": {
@@ -2722,10 +2838,7 @@ issue a Rev session token.
             "docs": "An identifier which uniquely identifies a Rev org.",
             "type": "optional<string>",
           },
-          "org_traits": {
-            "docs": undefined,
-            "type": "optional<AuthTokensOrgTraits>",
-          },
+          "org_traits": "optional<AuthTokensOrgTraits>",
           "rev_user_id": {
             "docs": "The unique ID of the Rev user.",
             "type": "optional<string>",
@@ -2734,19 +2847,13 @@ issue a Rev session token.
             "docs": "An identifier which uniquely identifies a Rev user.",
             "type": "string",
           },
-          "user_traits": {
-            "docs": undefined,
-            "type": "optional<AuthTokensUserTraits>",
-          },
+          "user_traits": "optional<AuthTokensUserTraits>",
         },
       },
       "AuthTokensUpdateResponse": {
         "docs": "Response for the request to update the token metadata.",
         "properties": {
-          "token": {
-            "docs": undefined,
-            "type": "AuthToken",
-          },
+          "token": "AuthToken",
         },
       },
       "AuthTokensUserTraits": {
@@ -2766,14 +2873,8 @@ issue a Rev session token.
           },
         },
       },
-      "Capability": {
-        "docs": undefined,
-        "type": "PartBase",
-      },
-      "CapabilitySummary": {
-        "docs": undefined,
-        "type": "PartBaseSummary",
-      },
+      "Capability": "PartBase",
+      "CapabilitySummary": "PartBaseSummary",
       "DevOrgAuthConnectionsCreateRequest": {
         "base-properties": {
           "display_name": {
@@ -2789,22 +2890,10 @@ it would appear on the login button as 'Log in to abclogin'.
         "docs": "Request to create a new enterprise authentication connection.
 ",
         "union": {
-          "google_apps": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsGoogleApps",
-          },
-          "oidc": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsOidc",
-          },
-          "samlp": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsSaml",
-          },
-          "waad": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsAzureAd",
-          },
+          "google_apps": "AuthConnectionOptionsGoogleApps",
+          "oidc": "AuthConnectionOptionsOidc",
+          "samlp": "AuthConnectionOptionsSaml",
+          "waad": "AuthConnectionOptionsAzureAd",
         },
       },
       "DevOrgAuthConnectionsCreateRequestType": {
@@ -2839,10 +2928,7 @@ authentication connections have different configuration parameters.
 connection.
 ",
         "properties": {
-          "auth_connection": {
-            "docs": undefined,
-            "type": "AuthConnection",
-          },
+          "auth_connection": "AuthConnection",
         },
       },
       "DevOrgAuthConnectionsGetResponse": {
@@ -2850,10 +2936,7 @@ connection.
 authentication connection.
 ",
         "properties": {
-          "auth_connection": {
-            "docs": undefined,
-            "type": "AuthConnection",
-          },
+          "auth_connection": "AuthConnection",
         },
       },
       "DevOrgAuthConnectionsListResponse": {
@@ -2890,26 +2973,11 @@ it would appear on the login button as 'Log in to abclogin'.
 organization.
 ",
         "union": {
-          "google_apps": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsGoogleApps",
-          },
-          "none": {
-            "docs": undefined,
-            "type": "empty",
-          },
-          "oidc": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsOidc",
-          },
-          "samlp": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsSaml",
-          },
-          "waad": {
-            "docs": undefined,
-            "type": "AuthConnectionOptionsAzureAd",
-          },
+          "google_apps": "AuthConnectionOptionsGoogleApps",
+          "none": "empty",
+          "oidc": "AuthConnectionOptionsOidc",
+          "samlp": "AuthConnectionOptionsSaml",
+          "waad": "AuthConnectionOptionsAzureAd",
         },
       },
       "DevOrgAuthConnectionsUpdateRequestType": {
@@ -2950,10 +3018,7 @@ that can be updated.
 connection.
 ",
         "properties": {
-          "auth_connection": {
-            "docs": undefined,
-            "type": "AuthConnection",
-          },
+          "auth_connection": "AuthConnection",
         },
       },
       "DevUser": {
@@ -2968,10 +3033,7 @@ connection.
           },
         },
       },
-      "DevUserSummary": {
-        "docs": undefined,
-        "type": "UserBaseSummary",
-      },
+      "DevUserSummary": "UserBaseSummary",
       "DevUsersListResponse": {
         "docs": "The response to listing the Dev users.",
         "properties": {
@@ -2997,10 +3059,7 @@ sort order. If not set, then no prior elements exist.
         "docs": "The response to getting the information for the authenticated user.
 ",
         "properties": {
-          "dev_user": {
-            "docs": undefined,
-            "type": "DevUser",
-          },
+          "dev_user": "DevUser",
         },
       },
       "Enhancement": {
@@ -3015,20 +3074,14 @@ sort order. If not set, then no prior elements exist.
           },
         },
       },
-      "EnhancementSummary": {
-        "docs": undefined,
-        "type": "PartBaseSummary",
-      },
+      "EnhancementSummary": "PartBaseSummary",
       "ErrorBadRequest": {
         "docs": undefined,
         "extends": [
           "ErrorBase",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "ErrorBadRequestType",
-          },
+          "type": "ErrorBadRequestType",
         },
       },
       "ErrorBadRequestInvalidEnumValue": {
@@ -3115,10 +3168,7 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "error-forbidden-type",
-          },
+          "type": "error-forbidden-type",
         },
       },
       "ErrorInternalServerError": {
@@ -3133,10 +3183,7 @@ inquiry.
 ",
             "type": "optional<string>",
           },
-          "type": {
-            "docs": undefined,
-            "type": "error-internal-server-error-type",
-          },
+          "type": "error-internal-server-error-type",
         },
       },
       "ErrorNotFound": {
@@ -3145,10 +3192,7 @@ inquiry.
           "ErrorBase",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "error-not-found-type",
-          },
+          "type": "error-not-found-type",
         },
       },
       "ErrorServiceUnavailable": {
@@ -3157,10 +3201,7 @@ inquiry.
           "ErrorBase",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "error-service-unavailable-type",
-          },
+          "type": "error-service-unavailable-type",
         },
       },
       "ErrorTooManyRequests": {
@@ -3174,10 +3215,7 @@ inquiry.
 ",
             "type": "optional<integer>",
           },
-          "type": {
-            "docs": undefined,
-            "type": "error-too-many-requests-type",
-          },
+          "type": "error-too-many-requests-type",
         },
       },
       "ErrorUnauthorized": {
@@ -3186,19 +3224,13 @@ inquiry.
           "ErrorBase",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "error-unauthorized-type",
-          },
+          "type": "error-unauthorized-type",
         },
       },
       "EventPartCreated": {
         "docs": undefined,
         "properties": {
-          "part": {
-            "docs": undefined,
-            "type": "Part",
-          },
+          "part": "Part",
         },
       },
       "EventPartDeleted": {
@@ -3213,19 +3245,13 @@ inquiry.
       "EventPartUpdated": {
         "docs": undefined,
         "properties": {
-          "part": {
-            "docs": undefined,
-            "type": "Part",
-          },
+          "part": "Part",
         },
       },
       "EventRevOrgCreated": {
         "docs": undefined,
         "properties": {
-          "rev_org": {
-            "docs": undefined,
-            "type": "RevOrg",
-          },
+          "rev_org": "RevOrg",
         },
       },
       "EventRevOrgDeleted": {
@@ -3240,19 +3266,13 @@ inquiry.
       "EventRevOrgUpdated": {
         "docs": undefined,
         "properties": {
-          "rev_org": {
-            "docs": undefined,
-            "type": "RevOrg",
-          },
+          "rev_org": "RevOrg",
         },
       },
       "EventTagCreated": {
         "docs": undefined,
         "properties": {
-          "tag": {
-            "docs": undefined,
-            "type": "Tag",
-          },
+          "tag": "Tag",
         },
       },
       "EventTagDeleted": {
@@ -3267,19 +3287,13 @@ inquiry.
       "EventTagUpdated": {
         "docs": undefined,
         "properties": {
-          "tag": {
-            "docs": undefined,
-            "type": "Tag",
-          },
+          "tag": "Tag",
         },
       },
       "EventTimelineEntryCreated": {
         "docs": undefined,
         "properties": {
-          "entry": {
-            "docs": undefined,
-            "type": "TimelineEntry",
-          },
+          "entry": "TimelineEntry",
         },
       },
       "EventTimelineEntryDeleted": {
@@ -3294,19 +3308,13 @@ inquiry.
       "EventTimelineEntryUpdated": {
         "docs": undefined,
         "properties": {
-          "entry": {
-            "docs": undefined,
-            "type": "TimelineEntry",
-          },
+          "entry": "TimelineEntry",
         },
       },
       "EventWebhookCreated": {
         "docs": undefined,
         "properties": {
-          "webhook": {
-            "docs": undefined,
-            "type": "Webhook",
-          },
+          "webhook": "Webhook",
         },
       },
       "EventWebhookDeleted": {
@@ -3321,19 +3329,13 @@ inquiry.
       "EventWebhookUpdated": {
         "docs": undefined,
         "properties": {
-          "webhook": {
-            "docs": undefined,
-            "type": "Webhook",
-          },
+          "webhook": "Webhook",
         },
       },
       "EventWorkCreated": {
         "docs": undefined,
         "properties": {
-          "work": {
-            "docs": undefined,
-            "type": "Work",
-          },
+          "work": "Work",
         },
       },
       "EventWorkDeleted": {
@@ -3348,34 +3350,19 @@ inquiry.
       "EventWorkUpdated": {
         "docs": undefined,
         "properties": {
-          "work": {
-            "docs": undefined,
-            "type": "Work",
-          },
+          "work": "Work",
         },
       },
-      "Feature": {
-        "docs": undefined,
-        "type": "PartBase",
-      },
-      "FeatureSummary": {
-        "docs": undefined,
-        "type": "PartBaseSummary",
-      },
-      "GroupSummary": {
-        "docs": undefined,
-        "type": "AtomBaseSummary",
-      },
+      "Feature": "PartBase",
+      "FeatureSummary": "PartBaseSummary",
+      "GroupSummary": "AtomBaseSummary",
       "Issue": {
         "docs": undefined,
         "extends": [
           "WorkBase",
         ],
         "properties": {
-          "priority": {
-            "docs": undefined,
-            "type": "optional<IssuePriority>",
-          },
+          "priority": "optional<IssuePriority>",
         },
       },
       "IssuePriority": {
@@ -3473,10 +3460,7 @@ always be returned in the specified sort-by order.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "rev_org": {
-            "docs": undefined,
-            "type": "RevOrgSummary",
-          },
+          "rev_org": "RevOrgSummary",
         },
       },
       "Part": {
@@ -3484,22 +3468,10 @@ always be returned in the specified sort-by order.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "capability": {
-            "docs": undefined,
-            "type": "Capability",
-          },
-          "enhancement": {
-            "docs": undefined,
-            "type": "Enhancement",
-          },
-          "feature": {
-            "docs": undefined,
-            "type": "Feature",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "Product",
-          },
+          "capability": "Capability",
+          "enhancement": "Enhancement",
+          "feature": "Feature",
+          "product": "Product",
         },
       },
       "PartBase": {
@@ -3547,22 +3519,10 @@ always be returned in the specified sort-by order.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "capability": {
-            "docs": undefined,
-            "type": "CapabilitySummary",
-          },
-          "enhancement": {
-            "docs": undefined,
-            "type": "EnhancementSummary",
-          },
-          "feature": {
-            "docs": undefined,
-            "type": "FeatureSummary",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "ProductSummary",
-          },
+          "capability": "CapabilitySummary",
+          "enhancement": "EnhancementSummary",
+          "feature": "FeatureSummary",
+          "product": "ProductSummary",
         },
       },
       "PartType": {
@@ -3608,22 +3568,10 @@ always be returned in the specified sort-by order.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "capability": {
-            "docs": undefined,
-            "type": "PartsCreateRequestCapability",
-          },
-          "enhancement": {
-            "docs": undefined,
-            "type": "PartsCreateRequestEnhancement",
-          },
-          "feature": {
-            "docs": undefined,
-            "type": "PartsCreateRequestFeature",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "parts-create-request-product",
-          },
+          "capability": "PartsCreateRequestCapability",
+          "enhancement": "PartsCreateRequestEnhancement",
+          "feature": "PartsCreateRequestFeature",
+          "product": "parts-create-request-product",
         },
       },
       "PartsCreateRequestCapability": {
@@ -3662,19 +3610,13 @@ always be returned in the specified sort-by order.
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
-          "part": {
-            "docs": undefined,
-            "type": "Part",
-          },
+          "part": "Part",
         },
       },
       "PartsGetResponse": {
         "docs": undefined,
         "properties": {
-          "part": {
-            "docs": undefined,
-            "type": "Part",
-          },
+          "part": "Part",
         },
       },
       "PartsListResponse": {
@@ -3712,34 +3654,16 @@ sort order. If not set, then no prior elements exist.
             "docs": "The updated name of the part.",
             "type": "optional<string>",
           },
-          "owned_by": {
-            "docs": undefined,
-            "type": "optional<PartsUpdateRequestOwnedBy>",
-          },
+          "owned_by": "optional<PartsUpdateRequestOwnedBy>",
         },
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "capability": {
-            "docs": undefined,
-            "type": "parts-update-request-capability",
-          },
-          "enhancement": {
-            "docs": undefined,
-            "type": "PartsUpdateRequestEnhancement",
-          },
-          "feature": {
-            "docs": undefined,
-            "type": "parts-update-request-feature",
-          },
-          "none": {
-            "docs": undefined,
-            "type": "empty",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "parts-update-request-product",
-          },
+          "capability": "parts-update-request-capability",
+          "enhancement": "PartsUpdateRequestEnhancement",
+          "feature": "parts-update-request-feature",
+          "none": "empty",
+          "product": "parts-update-request-product",
         },
       },
       "PartsUpdateRequestEnhancement": {
@@ -3765,20 +3689,11 @@ empty.
       "PartsUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "part": {
-            "docs": undefined,
-            "type": "Part",
-          },
+          "part": "Part",
         },
       },
-      "Product": {
-        "docs": undefined,
-        "type": "PartBase",
-      },
-      "ProductSummary": {
-        "docs": undefined,
-        "type": "PartBaseSummary",
-      },
+      "Product": "PartBase",
+      "ProductSummary": "PartBaseSummary",
       "RevOrg": {
         "docs": undefined,
         "extends": [
@@ -3803,27 +3718,18 @@ organization.
           },
         },
       },
-      "RevOrgSummary": {
-        "docs": undefined,
-        "type": "OrgBaseSummary",
-      },
+      "RevOrgSummary": "OrgBaseSummary",
       "RevOrgsCreateResponse": {
         "docs": "Response object for request to create a new Rev organization.
 ",
         "properties": {
-          "rev_org": {
-            "docs": undefined,
-            "type": "RevOrg",
-          },
+          "rev_org": "RevOrg",
         },
       },
       "RevOrgsGetResponse": {
         "docs": "The response to getting a Rev organization's information.",
         "properties": {
-          "rev_org": {
-            "docs": undefined,
-            "type": "RevOrg",
-          },
+          "rev_org": "RevOrg",
         },
       },
       "RevOrgsListResponse": {
@@ -3851,10 +3757,7 @@ sort order. If not set, then no prior elements exist.
       "RevOrgsUpdateResponse": {
         "docs": "Response object to updating Rev organization's information.",
         "properties": {
-          "rev_org": {
-            "docs": undefined,
-            "type": "RevOrg",
-          },
+          "rev_org": "RevOrg",
         },
       },
       "RevUserSummary": {
@@ -3872,10 +3775,7 @@ system-generated identifier will be assigned to the user.
 ",
             "type": "optional<string>",
           },
-          "rev_org": {
-            "docs": undefined,
-            "type": "optional<OrgSummary>",
-          },
+          "rev_org": "optional<OrgSummary>",
         },
       },
       "SetTagWithValue": {
@@ -3921,10 +3821,7 @@ the value must be one that's specified in the tag's allowed values.
           },
         },
       },
-      "SysUserSummary": {
-        "docs": undefined,
-        "type": "UserBaseSummary",
-      },
+      "SysUserSummary": "UserBaseSummary",
       "Tag": {
         "docs": undefined,
         "extends": [
@@ -3971,10 +3868,7 @@ unique.
       "TagWithValue": {
         "docs": undefined,
         "properties": {
-          "tag": {
-            "docs": undefined,
-            "type": "TagSummary",
-          },
+          "tag": "TagSummary",
           "value": {
             "docs": "The value for the object's association with the tag.",
             "type": "optional<string>",
@@ -3984,19 +3878,13 @@ unique.
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
-          "tag": {
-            "docs": undefined,
-            "type": "Tag",
-          },
+          "tag": "Tag",
         },
       },
       "TagsGetResponse": {
         "docs": "The response to getting a tag's information.",
         "properties": {
-          "tag": {
-            "docs": undefined,
-            "type": "Tag",
-          },
+          "tag": "Tag",
         },
       },
       "TagsListResponse": {
@@ -4032,10 +3920,7 @@ sort order. If not set, then no prior elements exist.
       "TagsUpdateResponse": {
         "docs": "The response for updating a tag.",
         "properties": {
-          "tag": {
-            "docs": undefined,
-            "type": "Tag",
-          },
+          "tag": "Tag",
         },
       },
       "Ticket": {
@@ -4044,18 +3929,9 @@ sort order. If not set, then no prior elements exist.
           "WorkBase",
         ],
         "properties": {
-          "group": {
-            "docs": undefined,
-            "type": "optional<GroupSummary>",
-          },
-          "rev_org": {
-            "docs": undefined,
-            "type": "optional<OrgSummary>",
-          },
-          "severity": {
-            "docs": undefined,
-            "type": "optional<TicketSeverity>",
-          },
+          "group": "optional<GroupSummary>",
+          "rev_org": "optional<OrgSummary>",
+          "severity": "optional<TicketSeverity>",
         },
       },
       "TicketSeverity": {
@@ -4099,10 +3975,7 @@ will appear in the response.
 ",
             "type": "optional<string>",
           },
-          "body_type": {
-            "docs": undefined,
-            "type": "optional<TimelineCommentBodyType>",
-          },
+          "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
             "docs": "The SnapKit Body of the comment.",
             "type": "optional<map<string, unknown>>",
@@ -4130,18 +4003,12 @@ will appear in the response.
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
           },
-          "visibility": {
-            "docs": undefined,
-            "type": "optional<timeline-entry-visibility>",
-          },
+          "visibility": "optional<timeline-entry-visibility>",
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
         "union": {
-          "timeline_comment": {
-            "docs": undefined,
-            "type": "TimelineEntriesCreateRequestTimelineComment",
-          },
+          "timeline_comment": "TimelineEntriesCreateRequestTimelineComment",
         },
       },
       "TimelineEntriesCreateRequestTimelineComment": {
@@ -4155,10 +4022,7 @@ will appear in the response.
             "docs": "The comment's body.",
             "type": "optional<string>",
           },
-          "body_type": {
-            "docs": undefined,
-            "type": "optional<TimelineCommentBodyType>",
-          },
+          "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
             "docs": "The SnapKit body of the comment.",
             "type": "optional<map<string, unknown>>",
@@ -4168,19 +4032,13 @@ will appear in the response.
       "TimelineEntriesCreateResponse": {
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
-          "timeline_entry": {
-            "docs": undefined,
-            "type": "TimelineEntry",
-          },
+          "timeline_entry": "TimelineEntry",
         },
       },
       "TimelineEntriesGetResponse": {
         "docs": "The request to getting a timeline entry.",
         "properties": {
-          "timeline_entry": {
-            "docs": undefined,
-            "type": "TimelineEntry",
-          },
+          "timeline_entry": "TimelineEntry",
         },
       },
       "TimelineEntriesListResponse": {
@@ -4214,27 +4072,18 @@ sort order. If not set, then no prior elements exist.
         "discriminant": "type",
         "docs": "The request to update a timeline entry.",
         "union": {
-          "timeline_comment": {
-            "docs": undefined,
-            "type": "TimelineEntriesUpdateRequestTimelineComment",
-          },
+          "timeline_comment": "TimelineEntriesUpdateRequestTimelineComment",
         },
       },
       "TimelineEntriesUpdateRequestTimelineComment": {
         "docs": undefined,
         "properties": {
-          "artifacts": {
-            "docs": undefined,
-            "type": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
-          },
+          "artifacts": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
           "body": {
             "docs": "The updated comment's body.",
             "type": "optional<string>",
           },
-          "body_type": {
-            "docs": undefined,
-            "type": "optional<TimelineCommentBodyType>",
-          },
+          "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
             "docs": "The SnapKit body of the comment.",
             "type": "optional<map<string, unknown>>",
@@ -4266,10 +4115,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "TimelineEntriesUpdateResponse": {
         "docs": "The response to updating a timeline entry.",
         "properties": {
-          "timeline_entry": {
-            "docs": undefined,
-            "type": "TimelineEntry",
-          },
+          "timeline_entry": "TimelineEntry",
         },
       },
       "TimelineEntry": {
@@ -4277,16 +4123,10 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "timeline_comment": {
-            "docs": undefined,
-            "type": "TimelineComment",
-          },
+          "timeline_comment": "TimelineComment",
         },
       },
-      "TimelineEntryBase": {
-        "docs": undefined,
-        "type": "AtomBase",
-      },
+      "TimelineEntryBase": "AtomBase",
       "UserBase": {
         "docs": undefined,
         "extends": [
@@ -4298,10 +4138,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
 ",
             "type": "optional<string>",
           },
-          "display_picture": {
-            "docs": undefined,
-            "type": "optional<ArtifactSummary>",
-          },
+          "display_picture": "optional<ArtifactSummary>",
           "email": {
             "docs": "Email address of the user.",
             "type": "optional<string>",
@@ -4314,10 +4151,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             "docs": "Phone numbers of the user.",
             "type": "optional<list<string>>",
           },
-          "state": {
-            "docs": undefined,
-            "type": "optional<UserState>",
-          },
+          "state": "optional<UserState>",
         },
       },
       "UserBaseSummary": {
@@ -4331,10 +4165,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
 ",
             "type": "optional<string>",
           },
-          "display_picture": {
-            "docs": undefined,
-            "type": "optional<ArtifactSummary>",
-          },
+          "display_picture": "optional<ArtifactSummary>",
           "email": {
             "docs": "Email address of the user.",
             "type": "optional<string>",
@@ -4343,10 +4174,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             "docs": "Full name of the user.",
             "type": "optional<string>",
           },
-          "state": {
-            "docs": undefined,
-            "type": "optional<UserState>",
-          },
+          "state": "optional<UserState>",
         },
       },
       "UserState": {
@@ -4384,18 +4212,9 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "dev_user": {
-            "docs": undefined,
-            "type": "DevUserSummary",
-          },
-          "rev_user": {
-            "docs": undefined,
-            "type": "RevUserSummary",
-          },
-          "sys_user": {
-            "docs": undefined,
-            "type": "SysUserSummary",
-          },
+          "dev_user": "DevUserSummary",
+          "rev_user": "RevUserSummary",
+          "sys_user": "SysUserSummary",
         },
       },
       "UserType": {
@@ -4432,10 +4251,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             "docs": "The secret to use for verifying webhook events.",
             "type": "string",
           },
-          "status": {
-            "docs": undefined,
-            "type": "WebhookStatus",
-          },
+          "status": "WebhookStatus",
           "url": {
             "docs": "The URL of the webhook endpoint.",
             "type": "string",
@@ -4449,54 +4265,18 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             "docs": "The event's ID.",
             "type": "string",
           },
-          "part_created": {
-            "docs": undefined,
-            "type": "optional<EventPartCreated>",
-          },
-          "part_deleted": {
-            "docs": undefined,
-            "type": "optional<EventPartDeleted>",
-          },
-          "part_updated": {
-            "docs": undefined,
-            "type": "optional<EventPartUpdated>",
-          },
-          "rev_org_created": {
-            "docs": undefined,
-            "type": "optional<EventRevOrgCreated>",
-          },
-          "rev_org_deleted": {
-            "docs": undefined,
-            "type": "optional<EventRevOrgDeleted>",
-          },
-          "rev_org_updated": {
-            "docs": undefined,
-            "type": "optional<EventRevOrgUpdated>",
-          },
-          "tag_created": {
-            "docs": undefined,
-            "type": "optional<EventTagCreated>",
-          },
-          "tag_deleted": {
-            "docs": undefined,
-            "type": "optional<EventTagDeleted>",
-          },
-          "tag_updated": {
-            "docs": undefined,
-            "type": "optional<EventTagUpdated>",
-          },
-          "timeline_entry_created": {
-            "docs": undefined,
-            "type": "optional<EventTimelineEntryCreated>",
-          },
-          "timeline_entry_deleted": {
-            "docs": undefined,
-            "type": "optional<EventTimelineEntryDeleted>",
-          },
-          "timeline_entry_updated": {
-            "docs": undefined,
-            "type": "optional<EventTimelineEntryUpdated>",
-          },
+          "part_created": "optional<EventPartCreated>",
+          "part_deleted": "optional<EventPartDeleted>",
+          "part_updated": "optional<EventPartUpdated>",
+          "rev_org_created": "optional<EventRevOrgCreated>",
+          "rev_org_deleted": "optional<EventRevOrgDeleted>",
+          "rev_org_updated": "optional<EventRevOrgUpdated>",
+          "tag_created": "optional<EventTagCreated>",
+          "tag_deleted": "optional<EventTagDeleted>",
+          "tag_updated": "optional<EventTagUpdated>",
+          "timeline_entry_created": "optional<EventTimelineEntryCreated>",
+          "timeline_entry_deleted": "optional<EventTimelineEntryDeleted>",
+          "timeline_entry_updated": "optional<EventTimelineEntryUpdated>",
           "timestamp": {
             "docs": "Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
@@ -4505,42 +4285,18 @@ seconds.
 ",
             "type": "optional<datetime>",
           },
-          "type": {
-            "docs": undefined,
-            "type": "optional<WebhookEventType>",
-          },
-          "verify": {
-            "docs": undefined,
-            "type": "optional<WebhookEventVerify>",
-          },
-          "webhook_created": {
-            "docs": undefined,
-            "type": "optional<EventWebhookCreated>",
-          },
-          "webhook_deleted": {
-            "docs": undefined,
-            "type": "optional<EventWebhookDeleted>",
-          },
+          "type": "optional<WebhookEventType>",
+          "verify": "optional<WebhookEventVerify>",
+          "webhook_created": "optional<EventWebhookCreated>",
+          "webhook_deleted": "optional<EventWebhookDeleted>",
           "webhook_id": {
             "docs": "ID of the webhook for the event.",
             "type": "string",
           },
-          "webhook_updated": {
-            "docs": undefined,
-            "type": "optional<EventWebhookUpdated>",
-          },
-          "work_created": {
-            "docs": undefined,
-            "type": "optional<EventWorkCreated>",
-          },
-          "work_deleted": {
-            "docs": undefined,
-            "type": "optional<EventWorkDeleted>",
-          },
-          "work_updated": {
-            "docs": undefined,
-            "type": "optional<EventWorkUpdated>",
-          },
+          "webhook_updated": "optional<EventWebhookUpdated>",
+          "work_created": "optional<EventWorkCreated>",
+          "work_deleted": "optional<EventWorkDeleted>",
+          "work_updated": "optional<EventWorkUpdated>",
         },
       },
       "WebhookEventResponse": {
@@ -4686,19 +4442,13 @@ be set for other request types.
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
-          "webhook": {
-            "docs": undefined,
-            "type": "Webhook",
-          },
+          "webhook": "Webhook",
         },
       },
       "WebhooksGetResponse": {
         "docs": "The response to getting the information for the webhook.",
         "properties": {
-          "webhook": {
-            "docs": undefined,
-            "type": "Webhook",
-          },
+          "webhook": "Webhook",
         },
       },
       "WebhooksListResponse": {
@@ -4754,10 +4504,7 @@ event types. Note this is mutually exclusive with 'add' and
       "WebhooksUpdateResponse": {
         "docs": "The response to updating the webhook.",
         "properties": {
-          "webhook": {
-            "docs": undefined,
-            "type": "Webhook",
-          },
+          "webhook": "Webhook",
         },
       },
       "Work": {
@@ -4765,14 +4512,8 @@ event types. Note this is mutually exclusive with 'add' and
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "issue": {
-            "docs": undefined,
-            "type": "Issue",
-          },
-          "ticket": {
-            "docs": undefined,
-            "type": "Ticket",
-          },
+          "issue": "Issue",
+          "ticket": "Ticket",
         },
       },
       "WorkBase": {
@@ -4781,10 +4522,7 @@ event types. Note this is mutually exclusive with 'add' and
           "AtomBase",
         ],
         "properties": {
-          "applies_to_part": {
-            "docs": undefined,
-            "type": "optional<PartSummary>",
-          },
+          "applies_to_part": "optional<PartSummary>",
           "artifacts": {
             "docs": "The artifacts attached to the work item.",
             "type": "optional<list<ArtifactSummary>>",
@@ -4801,10 +4539,7 @@ event types. Note this is mutually exclusive with 'add' and
             "docs": "Users that reported the work.",
             "type": "optional<list<UserSummary>>",
           },
-          "stage": {
-            "docs": undefined,
-            "type": "optional<Stage>",
-          },
+          "stage": "optional<Stage>",
           "tags": {
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
@@ -4860,10 +4595,7 @@ issues.
             "docs": "The users that reported the work.",
             "type": "optional<list<string>>",
           },
-          "stage": {
-            "docs": undefined,
-            "type": "optional<StageInit>",
-          },
+          "stage": "optional<StageInit>",
           "tags": {
             "docs": "Tags associated with the work item.",
             "type": "optional<list<SetTagWithValue>>",
@@ -4880,23 +4612,14 @@ issues.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "issue": {
-            "docs": undefined,
-            "type": "WorksCreateRequestIssue",
-          },
-          "ticket": {
-            "docs": undefined,
-            "type": "WorksCreateRequestTicket",
-          },
+          "issue": "WorksCreateRequestIssue",
+          "ticket": "WorksCreateRequestTicket",
         },
       },
       "WorksCreateRequestIssue": {
         "docs": undefined,
         "properties": {
-          "priority": {
-            "docs": undefined,
-            "type": "optional<IssuePriority>",
-          },
+          "priority": "optional<IssuePriority>",
           "sprint": {
             "docs": "The sprint that the issue belongs to.",
             "type": "optional<string>",
@@ -4914,19 +4637,13 @@ issues.
             "docs": "The Rev organization that the ticket is associated with.",
             "type": "optional<string>",
           },
-          "severity": {
-            "docs": undefined,
-            "type": "optional<TicketSeverity>",
-          },
+          "severity": "optional<TicketSeverity>",
         },
       },
       "WorksCreateResponse": {
         "docs": undefined,
         "properties": {
-          "work": {
-            "docs": undefined,
-            "type": "Work",
-          },
+          "work": "Work",
         },
       },
       "WorksExportResponse": {
@@ -4941,10 +4658,7 @@ issues.
       "WorksGetResponse": {
         "docs": undefined,
         "properties": {
-          "work": {
-            "docs": undefined,
-            "type": "Work",
-          },
+          "work": "Work",
         },
       },
       "WorksListResponse": {
@@ -4974,10 +4688,7 @@ sort order. If not set, then no prior elements exist.
             "docs": "Updates the part that the work applies to.",
             "type": "optional<string>",
           },
-          "artifacts": {
-            "docs": undefined,
-            "type": "optional<WorksUpdateRequestArtifactIds>",
-          },
+          "artifacts": "optional<WorksUpdateRequestArtifactIds>",
           "body": {
             "docs": "Updated body of the work object, or unchanged if not provided.
 ",
@@ -4987,22 +4698,10 @@ sort order. If not set, then no prior elements exist.
             "docs": "The work's ID.",
             "type": "string",
           },
-          "owned_by": {
-            "docs": undefined,
-            "type": "optional<WorksUpdateRequestOwnedBy>",
-          },
-          "reported_by": {
-            "docs": undefined,
-            "type": "optional<WorksUpdateRequestReportedBy>",
-          },
-          "stage": {
-            "docs": undefined,
-            "type": "optional<StageUpdate>",
-          },
-          "tags": {
-            "docs": undefined,
-            "type": "optional<WorksUpdateRequestTags>",
-          },
+          "owned_by": "optional<WorksUpdateRequestOwnedBy>",
+          "reported_by": "optional<WorksUpdateRequestReportedBy>",
+          "stage": "optional<StageUpdate>",
+          "tags": "optional<WorksUpdateRequestTags>",
           "target_close_date": {
             "docs": "Updates the timestamp for when the work is expected to be complete.
 ",
@@ -5017,18 +4716,9 @@ sort order. If not set, then no prior elements exist.
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "issue": {
-            "docs": undefined,
-            "type": "WorksUpdateRequestIssue",
-          },
-          "none": {
-            "docs": undefined,
-            "type": "empty",
-          },
-          "ticket": {
-            "docs": undefined,
-            "type": "WorksUpdateRequestTicket",
-          },
+          "issue": "WorksUpdateRequestIssue",
+          "none": "empty",
+          "ticket": "WorksUpdateRequestTicket",
         },
       },
       "WorksUpdateRequestArtifactIds": {
@@ -5043,10 +4733,7 @@ sort order. If not set, then no prior elements exist.
       "WorksUpdateRequestIssue": {
         "docs": undefined,
         "properties": {
-          "priority": {
-            "docs": undefined,
-            "type": "optional<IssuePriority>",
-          },
+          "priority": "optional<IssuePriority>",
           "sprint": {
             "docs": "Updates the sprint that the issue belongs to.",
             "type": "optional<string>",
@@ -5095,93 +4782,42 @@ empty.
 ",
             "type": "optional<string>",
           },
-          "severity": {
-            "docs": undefined,
-            "type": "optional<TicketSeverity>",
-          },
+          "severity": "optional<TicketSeverity>",
         },
       },
       "WorksUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "work": {
-            "docs": undefined,
-            "type": "Work",
-          },
+          "work": "Work",
         },
       },
-      "auth-connection-options-social": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "auth-connection-options-social": "map<string, unknown>",
       "auth-token-token-type": "literal<"bearer">",
-      "empty": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "error-bad-request-bad-request": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "error-bad-request-parse-error": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "error-forbidden-forbidden": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "empty": "map<string, unknown>",
+      "error-bad-request-bad-request": "map<string, unknown>",
+      "error-bad-request-parse-error": "map<string, unknown>",
+      "error-forbidden-forbidden": "map<string, unknown>",
       "error-forbidden-type": "literal<"forbidden">",
-      "error-internal-server-error-internal-error": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "error-internal-server-error-internal-error": "map<string, unknown>",
       "error-internal-server-error-type": "literal<"internal_error">",
-      "error-not-found-not-found": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "error-not-found-not-found": "map<string, unknown>",
       "error-not-found-type": "literal<"not_found">",
-      "error-service-unavailable-service-unavailable": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "error-service-unavailable-service-unavailable": "map<string, unknown>",
       "error-service-unavailable-type": "literal<"service_unavailable">",
-      "error-too-many-requests-too-many-requests": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "error-too-many-requests-too-many-requests": "map<string, unknown>",
       "error-too-many-requests-type": "literal<"too_many_requests">",
       "error-unauthorized-type": "literal<"unauthenticated">",
-      "error-unauthorized-unauthenticated": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "error-unauthorized-unauthenticated": "map<string, unknown>",
       "external-identity": {
         "docs": "External identity of a user.",
         "type": "map<string, unknown>",
       },
       "org-type": "literal<"rev_org">",
-      "parts-create-request-product": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "parts-delete-response": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "parts-update-request-capability": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "parts-update-request-feature": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
-      "parts-update-request-product": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "parts-create-request-product": "map<string, unknown>",
+      "parts-delete-response": "map<string, unknown>",
+      "parts-update-request-capability": "map<string, unknown>",
+      "parts-update-request-feature": "map<string, unknown>",
+      "parts-update-request-product": "map<string, unknown>",
       "rev-orgs-delete-response": {
         "docs": "The response to deleting a Rev organization.",
         "type": "map<string, unknown>",
@@ -5198,10 +4834,7 @@ empty.
         "docs": "The response to deleting the webhook.",
         "type": "map<string, unknown>",
       },
-      "works-delete-response": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "works-delete-response": "map<string, unknown>",
     },
   },
   "rootApiFile": {
@@ -5214,16 +4847,13 @@ empty.
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "DevRev REST API",
     "environments": {
-      "default": "https://api.devrev.ai",
+      "Default": "https://api.devrev.ai",
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

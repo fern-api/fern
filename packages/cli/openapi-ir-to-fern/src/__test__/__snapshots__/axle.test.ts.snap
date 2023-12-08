@@ -15,10 +15,12 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Account",
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
-            "errors": [],
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": {
                   "id": "id",
                 },
@@ -38,6 +40,18 @@ exports[`open api parser axle simple 1`] = `
               },
             },
             "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "GetAccountRequest",
               "query-parameters": {
                 "expand": {
@@ -49,8 +63,17 @@ exports[`open api parser axle simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.GetAccountResponse",
+              "type": "GetAccountResponse",
             },
+          },
+        },
+      },
+      "types": {
+        "GetAccountResponse": {
+          "docs": undefined,
+          "properties": {
+            "data": "optional<root.Account>",
+            "success": "optional<root.Success>",
           },
         },
       },
@@ -67,10 +90,12 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Carrier",
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
-            "errors": [],
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": {
                   "id": "id",
                 },
@@ -89,19 +114,36 @@ exports[`open api parser axle simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
+              "name": "GetCarrierRequest",
+            },
             "response": {
               "docs": "",
-              "type": "root.GetCarrierResponse",
+              "type": "GetCarrierResponse",
             },
           },
           "GetCarriers": {
             "auth": false,
             "display-name": "Get Carriers",
             "docs": "The Get Carriers method returns an array of Carrier objects.",
-            "errors": [],
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": undefined,
@@ -112,10 +154,41 @@ exports[`open api parser axle simple 1`] = `
             ],
             "method": "GET",
             "path": "/carriers",
+            "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
+              "name": "GetCarriersRequest",
+            },
             "response": {
               "docs": "",
-              "type": "root.GetCarriersResponse",
+              "type": "GetCarriersResponse",
             },
+          },
+        },
+      },
+      "types": {
+        "GetCarrierResponse": {
+          "docs": undefined,
+          "properties": {
+            "data": "optional<root.Carrier>",
+            "success": "optional<root.Success>",
+          },
+        },
+        "GetCarriersResponse": {
+          "docs": undefined,
+          "properties": {
+            "data": "optional<list<root.Carrier>>",
+            "success": "optional<root.Success>",
           },
         },
       },
@@ -132,7 +205,6 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Start Ignition",
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
-            "errors": [],
             "method": "POST",
             "path": "/ignition",
             "request": {
@@ -146,23 +218,53 @@ exports[`open api parser axle simple 1`] = `
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
                   },
-                  "user": {
-                    "docs": undefined,
-                    "type": "optional<root.User>",
-                  },
+                  "user": "optional<root.User>",
                   "webhookUri": {
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "StartIgnitionRequest",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.StartIgnitionResponse",
+              "type": "StartIgnitionResponse",
+            },
+          },
+        },
+      },
+      "types": {
+        "StartIgnitionResponse": {
+          "docs": "",
+          "properties": {
+            "data": "StartIgnitionResponseData",
+            "success": "root.Success",
+          },
+        },
+        "StartIgnitionResponseData": {
+          "docs": undefined,
+          "properties": {
+            "ignitionToken": {
+              "docs": "The unique ID for the ignition session.",
+              "type": "string",
+            },
+            "ignitionUri": {
+              "docs": "The url you should direct the user to to link their account.",
+              "type": "string",
             },
           },
         },
@@ -180,10 +282,12 @@ exports[`open api parser axle simple 1`] = `
             "auth": false,
             "display-name": "Get Policy",
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
-            "errors": [],
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": {
                   "id": "id",
                 },
@@ -203,6 +307,18 @@ exports[`open api parser axle simple 1`] = `
               },
             },
             "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "GetPolicyRequest",
               "query-parameters": {
                 "expand": {
@@ -214,8 +330,17 @@ exports[`open api parser axle simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.GetPolicyResponse",
+              "type": "GetPolicyResponse",
             },
+          },
+        },
+      },
+      "types": {
+        "GetPolicyResponse": {
+          "docs": undefined,
+          "properties": {
+            "data": "optional<root.Policy>",
+            "success": "optional<root.Success>",
           },
         },
       },
@@ -234,7 +359,6 @@ exports[`open api parser axle simple 1`] = `
             "docs": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.
 
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
-            "errors": [],
             "method": "POST",
             "path": "/token/exchange",
             "request": {
@@ -246,13 +370,50 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "ExchangeTokenRequest",
               "query-parameters": undefined,
             },
             "response": {
               "docs": "",
-              "type": "root.ExchangeTokenResponse",
+              "type": "ExchangeTokenResponse",
+            },
+          },
+        },
+      },
+      "types": {
+        "ExchangeTokenResponse": {
+          "docs": "",
+          "properties": {
+            "data": "ExchangeTokenResponseData",
+            "success": "root.Success",
+          },
+        },
+        "ExchangeTokenResponseData": {
+          "docs": undefined,
+          "properties": {
+            "accessToken": {
+              "docs": "The token required for access to the requested Account and Policy objects.",
+              "type": "string",
+            },
+            "account": {
+              "docs": "The unique id for the Account object.",
+              "type": "string",
+            },
+            "policies": {
+              "docs": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
+              "type": "list<unknown>",
             },
           },
         },
@@ -260,75 +421,40 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
     },
   },
   "packageMarkerFile": {
-    "errors": {},
-    "service": undefined,
     "types": {
       "Account": {
         "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
         "properties": {
           "carrier": "string",
           "createdAt": "string",
-          "email": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "email": "optional<string>",
           "firstName": "string",
           "id": "string",
           "lastName": "string",
           "modifiedAt": "string",
-          "phone": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "policies": {
-            "docs": undefined,
-            "type": "list<string>",
-          },
+          "phone": "optional<string>",
+          "policies": "list<string>",
           "refreshedAt": "string",
         },
       },
       "Address": {
         "docs": undefined,
         "properties": {
-          "addressLine1": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "addressLine2": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "city": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "country": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "postalCode": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "addressLine1": "optional<string>",
+          "addressLine2": "optional<string>",
+          "city": "optional<string>",
+          "country": "optional<string>",
+          "postalCode": "optional<string>",
+          "state": "optional<string>",
         },
       },
       "Carrier": {
         "docs": undefined,
         "properties": {
-          "address": {
-            "docs": undefined,
-            "type": "Address",
-          },
+          "address": "Address",
           "domain": "string",
           "id": "string",
-          "logoUrl": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "logoUrl": "optional<string>",
           "modifiedAt": "string",
           "name": "string",
           "phone": "string",
@@ -337,27 +463,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Coverage": {
         "docs": undefined,
         "properties": {
-          "code": {
-            "docs": undefined,
-            "type": "CoverageCode",
-          },
-          "deductible": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
+          "code": "CoverageCode",
+          "deductible": "optional<integer>",
           "label": "string",
-          "limitPerAccident": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "limitPerPerson": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "property": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "limitPerAccident": "optional<integer>",
+          "limitPerPerson": "optional<integer>",
+          "property": "optional<string>",
         },
       },
       "CoverageCode": {
@@ -412,137 +523,28 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
           },
-          "success": {
-            "docs": undefined,
-            "type": "optional<Success>",
-          },
-        },
-      },
-      "ExchangeTokenResponse": {
-        "docs": "",
-        "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "ExchangeTokenResponseData",
-          },
-          "success": {
-            "docs": undefined,
-            "type": "Success",
-          },
-        },
-      },
-      "ExchangeTokenResponseData": {
-        "docs": undefined,
-        "properties": {
-          "accessToken": {
-            "docs": "The token required for access to the requested Account and Policy objects.",
-            "type": "string",
-          },
-          "account": {
-            "docs": "The unique id for the Account object.",
-            "type": "string",
-          },
-          "policies": {
-            "docs": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
-            "type": "list<unknown>",
-          },
-        },
-      },
-      "GetAccountResponse": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "optional<Account>",
-          },
-          "success": {
-            "docs": undefined,
-            "type": "optional<Success>",
-          },
-        },
-      },
-      "GetCarrierResponse": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "optional<Carrier>",
-          },
-          "success": {
-            "docs": undefined,
-            "type": "optional<Success>",
-          },
-        },
-      },
-      "GetCarriersResponse": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "optional<list<Carrier>>",
-          },
-          "success": {
-            "docs": undefined,
-            "type": "optional<Success>",
-          },
-        },
-      },
-      "GetPolicyResponse": {
-        "docs": undefined,
-        "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "optional<Policy>",
-          },
-          "success": {
-            "docs": undefined,
-            "type": "optional<Success>",
-          },
+          "success": "optional<Success>",
         },
       },
       "Insured": {
         "docs": undefined,
         "properties": {
-          "dateOfBirth": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "dateOfBirthYear": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "dateOfBirth": "optional<string>",
+          "dateOfBirthYear": "optional<string>",
           "firstName": "string",
           "lastName": "string",
-          "licenseNo": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "licenseState": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "licenseStatus": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "property": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "type": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "licenseNo": "optional<string>",
+          "licenseState": "optional<string>",
+          "licenseStatus": "optional<string>",
+          "property": "optional<string>",
+          "type": "optional<string>",
         },
       },
       "Policy": {
         "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
         "properties": {
           "account": "string",
-          "address": {
-            "docs": undefined,
-            "type": "Address",
-          },
+          "address": "Address",
           "carrier": "string",
           "coverages": {
             "docs": "",
@@ -568,10 +570,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "docs": "",
             "type": "list<ThirdParty>",
           },
-          "type": {
-            "docs": undefined,
-            "type": "PolicyType",
-          },
+          "type": "PolicyType",
         },
       },
       "PolicyType": {
@@ -592,38 +591,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Property": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "Vehicle",
-          },
+          "data": "Vehicle",
           "id": "string",
           "type": "literal<"vehicle">",
-        },
-      },
-      "StartIgnitionResponse": {
-        "docs": "",
-        "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "StartIgnitionResponseData",
-          },
-          "success": {
-            "docs": undefined,
-            "type": "Success",
-          },
-        },
-      },
-      "StartIgnitionResponseData": {
-        "docs": undefined,
-        "properties": {
-          "ignitionToken": {
-            "docs": "The unique ID for the ignition session.",
-            "type": "string",
-          },
-          "ignitionUri": {
-            "docs": "The url you should direct the user to to link their account.",
-            "type": "string",
-          },
         },
       },
       "Success": {
@@ -633,19 +603,10 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "ThirdParty": {
         "docs": undefined,
         "properties": {
-          "address": {
-            "docs": undefined,
-            "type": "optional<Address>",
-          },
+          "address": "optional<Address>",
           "name": "string",
-          "property": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "type": {
-            "docs": undefined,
-            "type": "ThirdPartyType",
-          },
+          "property": "optional<string>",
+          "type": "ThirdPartyType",
         },
       },
       "ThirdPartyType": {
@@ -696,10 +657,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Vehicle": {
         "docs": undefined,
         "properties": {
-          "bodyStyle": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "bodyStyle": "optional<string>",
           "make": "string",
           "model": "string",
           "vin": "string",
@@ -738,9 +696,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "name": "clientSecret",
         "type": "string",
       },
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

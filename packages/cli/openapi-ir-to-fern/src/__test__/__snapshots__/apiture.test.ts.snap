@@ -158,7 +158,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "location": {
                   "allow-multiple": undefined,
                   "docs": "Filter accounts to just a subset of \`internal\` or \`external\` accounts (per the \`location\` property on the [\`accountItem\`](#schema-accountItem) schema).",
-                  "type": "optional<root.AccountsListAccountsRequestLocation>",
+                  "type": "optional<AccountsListAccountsRequestLocation>",
                 },
                 "productType": {
                   "allow-multiple": true,
@@ -226,6 +226,23 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "type": "root.Accounts",
             },
           },
+        },
+      },
+      "types": {
+        "AccountsListAccountsRequestLocation": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "internal",
+              "value": "internal",
+            },
+            {
+              "docs": undefined,
+              "name": "external",
+              "value": "external",
+            },
+          ],
         },
       },
     },
@@ -1045,17 +1062,6 @@ Note: This operation requires an identity challenge if the financial institution
         "type": "ProblemResponse",
       },
     },
-    "navigation": [
-      "accounts.yml",
-      "accountJointOwners.yml",
-      "overdraftProtection.yml",
-      "jointOwners.yml",
-      "institutions.yml",
-      "transactions.yml",
-      "transactionCategories.yml",
-      "transfers.yml",
-    ],
-    "service": undefined,
     "types": {
       "AbstractBody": {
         "docs": "An abstract schema used to define other request and response body model schemas.",
@@ -1240,27 +1246,15 @@ Note: This operation requires an identity challenge if the financial institution
             "docs": "Indicates where an account is held.",
             "type": "AccountLocation",
           },
-          "maskedNumber": {
-            "docs": undefined,
-            "type": "maskedAccountNumber",
-          },
-          "nickname": {
-            "docs": undefined,
-            "type": "optional<accountNickname>",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "ProductReference",
-          },
+          "maskedNumber": "maskedAccountNumber",
+          "nickname": "optional<accountNickname>",
+          "product": "ProductReference",
         },
       },
       "AccountItem": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
-          "allows": {
-            "docs": undefined,
-            "type": "AccountPermissions",
-          },
+          "allows": "AccountPermissions",
           "id": {
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
@@ -1273,18 +1267,9 @@ Note: This operation requires an identity challenge if the financial institution
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
           },
-          "maskedNumber": {
-            "docs": undefined,
-            "type": "optional<maskedAccountNumber>",
-          },
-          "nickname": {
-            "docs": undefined,
-            "type": "optional<accountNickname>",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "optional<ProductReference>",
-          },
+          "maskedNumber": "optional<maskedAccountNumber>",
+          "nickname": "optional<accountNickname>",
+          "product": "optional<ProductReference>",
         },
       },
       "AccountJointOwner": {
@@ -1293,10 +1278,7 @@ Note: This operation requires an identity challenge if the financial institution
           "AbstractBody",
         ],
         "properties": {
-          "id": {
-            "docs": undefined,
-            "type": "ReadOnlyResourceId",
-          },
+          "id": "ReadOnlyResourceId",
           "name": {
             "docs": "The full name of the joint owner.",
             "type": "string",
@@ -1397,21 +1379,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "optional<string>",
           },
         },
-      },
-      "AccountsListAccountsRequestLocation": {
-        "docs": undefined,
-        "enum": [
-          {
-            "docs": undefined,
-            "name": "internal",
-            "value": "internal",
-          },
-          {
-            "docs": undefined,
-            "name": "external",
-            "value": "external",
-          },
-        ],
       },
       "AchAccountRisk": {
         "docs": "Describes the risk level of a payment batch's settlement account.
@@ -1657,14 +1624,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
             "type": "optional<list<string>>",
           },
-          "securityQuestions": {
-            "docs": undefined,
-            "type": "optional<ChallengeSecurityQuestions>",
-          },
-          "type": {
-            "docs": undefined,
-            "type": "ChallengeFactorType",
-          },
+          "securityQuestions": "optional<ChallengeSecurityQuestions>",
+          "type": "ChallengeFactorType",
         },
       },
       "ChallengeFactorType": {
@@ -1762,10 +1723,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "type": "string",
           },
-          "type": {
-            "docs": undefined,
-            "type": "CutoffTimeType",
-          },
+          "type": "CutoffTimeType",
         },
       },
       "CutoffTimeType": {
@@ -2095,10 +2053,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
           },
-          "maskedNumber": {
-            "docs": undefined,
-            "type": "optional<maskedAccountNumber>",
-          },
+          "maskedNumber": "optional<maskedAccountNumber>",
         },
       },
       "OverdraftAccountItem": {
@@ -2121,10 +2076,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "OverdraftProtectionFields": {
         "docs": "Fields used to compose other overdraft protection schemas.",
         "properties": {
-          "accounts": {
-            "docs": undefined,
-            "type": "optional<unknown>",
-          },
+          "accounts": "optional<unknown>",
         },
       },
       "ProblemResponse": {
@@ -2298,10 +2250,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The unique ID of this transaction's category.",
             "type": "string",
           },
-          "label": {
-            "docs": undefined,
-            "type": "transactionCategoryLabel",
-          },
+          "label": "transactionCategoryLabel",
         },
       },
       "TransactionCategory": {
@@ -2311,10 +2260,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransactionCategorization",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "TransactionCategoryType",
-          },
+          "type": "TransactionCategoryType",
         },
       },
       "TransactionCategoryType": {
@@ -2384,10 +2330,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The transaction category, if assigned.",
             "type": "optional<TransactionCategorization>",
           },
-          "check": {
-            "docs": undefined,
-            "type": "optional<TransactionCheck>",
-          },
+          "check": "optional<TransactionCheck>",
           "createdOn": {
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
@@ -2404,10 +2347,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
           },
-          "merchant": {
-            "docs": undefined,
-            "type": "optional<TransactionMerchant>",
-          },
+          "merchant": "optional<TransactionMerchant>",
           "occurredOn": {
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
@@ -2940,14 +2880,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<string>",
           },
-          "frequency": {
-            "docs": undefined,
-            "type": "TransferFrequency",
-          },
-          "recurrenceType": {
-            "docs": undefined,
-            "type": "optional<TransferRecurrenceType>",
-          },
+          "frequency": "TransferFrequency",
+          "recurrenceType": "optional<TransferRecurrenceType>",
           "scheduledOn": {
             "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
             "type": "optional<string>",
@@ -3273,6 +3207,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   "rootApiFile": {
     "auth": "apiKey",
     "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
       "apiKey": {
         "header": "API-Key",
         "name": "apiKey",
@@ -3280,16 +3217,13 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "Apiture Digital Banking",
     "environments": {
-      "default": "https://api.apiture.com/banking",
+      "Default": "https://api.apiture.com/banking",
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

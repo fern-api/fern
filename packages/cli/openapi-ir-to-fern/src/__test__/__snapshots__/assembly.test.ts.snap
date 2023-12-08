@@ -60,10 +60,7 @@ exports[`open api parser assembly simple 1`] = `
             "method": "POST",
             "path": "/lemur/v3/generate/action-items",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.LemurBaseParameters",
-              },
+              "body": "root.LemurBaseParameters",
             },
             "response": {
               "docs": "LeMUR action items response",
@@ -421,7 +418,6 @@ The LLM response data, as well as any context provided in the original request w
             "auth": true,
             "display-name": "Export transcript as SRT or VTT captions.",
             "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
-            "errors": [],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
             "path-parameters": {
@@ -489,7 +485,7 @@ The LLM response data, as well as any context provided in the original request w
                 "status": {
                   "allow-multiple": undefined,
                   "docs": "Filter by transcript status",
-                  "type": "optional<root.TranscriptListRequestStatus>",
+                  "type": "optional<TranscriptListRequestStatus>",
                 },
                 "throttled_only": {
                   "allow-multiple": undefined,
@@ -540,6 +536,33 @@ The LLM response data, as well as any context provided in the original request w
           },
         },
       },
+      "types": {
+        "TranscriptListRequestStatus": {
+          "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
+          "enum": [
+            {
+              "docs": "The audio file is in the queue to be processed by the API.",
+              "name": "queued",
+              "value": "queued",
+            },
+            {
+              "docs": "The audio file is being processed by the API.",
+              "name": "processing",
+              "value": "processing",
+            },
+            {
+              "docs": "The transcription job has been completed successfully.",
+              "name": "completed",
+              "value": "completed",
+            },
+            {
+              "docs": "An error occurred while processing the audio file.",
+              "name": "error",
+              "value": "error",
+            },
+          ],
+        },
+      },
     },
   },
   "packageMarkerFile": {
@@ -569,13 +592,6 @@ The LLM response data, as well as any context provided in the original request w
         "type": "Error",
       },
     },
-    "navigation": [
-      "files.yml",
-      "transcript.yml",
-      "realtime.yml",
-      "lemur.yml",
-    ],
-    "service": undefined,
     "types": {
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
@@ -617,12 +633,7 @@ The LLM response data, as well as any context provided in the original request w
         "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
-        "properties": {
-          "results": {
-            "docs": "A temporally-sequential array of Key Phrases",
-            "type": "list<AutoHighlightResult>",
-          },
-        },
+        "type": "optional<AutoHighlightsResult>",
       },
       "Chapter": {
         "docs": "Chapter of the audio file",
@@ -1025,16 +1036,10 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "Error message",
             "type": "string",
           },
-          "status": {
-            "docs": undefined,
-            "type": "optional<literal<"error">>",
-          },
+          "status": "optional<literal<"error">>",
         },
       },
-      "LemurActionItemsParameters": {
-        "docs": undefined,
-        "type": "LemurBaseParameters",
-      },
+      "LemurActionItemsParameters": "LemurBaseParameters",
       "LemurActionItemsResponse": {
         "docs": undefined,
         "extends": [
@@ -1054,10 +1059,7 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
             "type": "optional<LemurBaseParametersContext>",
           },
-          "final_model": {
-            "docs": undefined,
-            "type": "optional<LemurModel>",
-          },
+          "final_model": "optional<LemurModel>",
           "max_output_size": {
             "docs": "Max output size in tokens. Up to 4000 allowed.",
             "type": "optional<integer>",
@@ -1080,10 +1082,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
         "union": [
           "string",
-          {
-            "docs": undefined,
-            "type": "map<string, unknown>",
-          },
+          "map<string, unknown>",
         ],
       },
       "LemurBaseResponse": {
@@ -1164,10 +1163,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
         "union": [
           "string",
-          {
-            "docs": undefined,
-            "type": "map<string, unknown>",
-          },
+          "map<string, unknown>",
         ],
       },
       "LemurSummaryResponse": {
@@ -1199,10 +1195,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "current_url": "string",
           "limit": "integer",
-          "next_url": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "next_url": "optional<string>",
           "prev_url": "string",
           "result_count": "integer",
         },
@@ -1213,10 +1206,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "audio_duration": "double",
           "confidence": "double",
           "id": "string",
-          "paragraphs": {
-            "docs": undefined,
-            "type": "list<TranscriptParagraph>",
-          },
+          "paragraphs": "list<TranscriptParagraph>",
         },
       },
       "PiiPolicy": {
@@ -1405,10 +1395,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "audio_duration": "double",
           "confidence": "double",
           "id": "string",
-          "sentences": {
-            "docs": undefined,
-            "type": "list<TranscriptSentence>",
-          },
+          "sentences": "list<TranscriptSentence>",
         },
       },
       "Sentiment": {
@@ -1564,18 +1551,12 @@ Can be any value between 0.0 and 1.0 inclusive.
       "TopicDetectionResult": {
         "docs": "THe result of the topic detection model.",
         "properties": {
-          "labels": {
-            "docs": undefined,
-            "type": "optional<list<TopicDetectionResultLabelsItem>>",
-          },
+          "labels": "optional<list<TopicDetectionResultLabelsItem>>",
           "text": {
             "docs": "The text in the transcript in which a detected topic occurs",
             "type": "string",
           },
-          "timestamp": {
-            "docs": undefined,
-            "type": "optional<Timestamp>",
-          },
+          "timestamp": "optional<Timestamp>",
         },
       },
       "TopicDetectionResultLabelsItem": {
@@ -1868,10 +1849,7 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
         "properties": {
-          "results": {
-            "docs": undefined,
-            "type": "list<ContentSafetyLabelResult>",
-          },
+          "results": "list<ContentSafetyLabelResult>",
           "status": {
             "docs": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
             "type": "AudioIntelligenceModelStatus",
@@ -2020,31 +1998,19 @@ The default value is 'en_us'.
       "TranscriptList": {
         "docs": undefined,
         "properties": {
-          "page_details": {
-            "docs": undefined,
-            "type": "PageDetails",
-          },
-          "transcripts": {
-            "docs": undefined,
-            "type": "list<TranscriptListItem>",
-          },
+          "page_details": "PageDetails",
+          "transcripts": "list<TranscriptListItem>",
         },
       },
       "TranscriptListItem": {
         "docs": undefined,
         "properties": {
           "audio_url": "string",
-          "completed": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "completed": "optional<datetime>",
           "created": "datetime",
           "id": "string",
           "resource_url": "string",
-          "status": {
-            "docs": undefined,
-            "type": "TranscriptStatus",
-          },
+          "status": "TranscriptStatus",
         },
       },
       "TranscriptListParameters": {
@@ -2076,31 +2042,6 @@ The default value is 'en_us'.
           },
         },
       },
-      "TranscriptListRequestStatus": {
-        "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
-        "enum": [
-          {
-            "docs": "The audio file is in the queue to be processed by the API.",
-            "name": "queued",
-            "value": "queued",
-          },
-          {
-            "docs": "The audio file is being processed by the API.",
-            "name": "processing",
-            "value": "processing",
-          },
-          {
-            "docs": "The transcription job has been completed successfully.",
-            "name": "completed",
-            "value": "completed",
-          },
-          {
-            "docs": "An error occurred while processing the audio file.",
-            "name": "error",
-            "value": "error",
-          },
-        ],
-      },
       "TranscriptParagraph": {
         "docs": undefined,
         "properties": {
@@ -2108,10 +2049,7 @@ The default value is 'en_us'.
           "end": "integer",
           "start": "integer",
           "text": "string",
-          "words": {
-            "docs": undefined,
-            "type": "list<TranscriptWord>",
-          },
+          "words": "list<TranscriptWord>",
         },
       },
       "TranscriptSentence": {
@@ -2121,10 +2059,7 @@ The default value is 'en_us'.
           "end": "integer",
           "start": "integer",
           "text": "string",
-          "words": {
-            "docs": undefined,
-            "type": "list<TranscriptWord>",
-          },
+          "words": "list<TranscriptWord>",
         },
       },
       "TranscriptStatus": {
@@ -2160,10 +2095,7 @@ The default value is 'en_us'.
           "end": "integer",
           "start": "integer",
           "text": "string",
-          "words": {
-            "docs": undefined,
-            "type": "list<TranscriptWord>",
-          },
+          "words": "list<TranscriptWord>",
         },
       },
       "TranscriptWord": {
@@ -2171,10 +2103,7 @@ The default value is 'en_us'.
         "properties": {
           "confidence": "double",
           "end": "integer",
-          "speaker": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "speaker": "optional<string>",
           "start": "integer",
           "text": "string",
         },
@@ -2242,16 +2171,13 @@ The default value is 'en_us'.
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "AssemblyAI API",
     "environments": {
-      "default": "https://api.assemblyai.com",
+      "Default": "https://api.assemblyai.com",
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },
