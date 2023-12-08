@@ -36,6 +36,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -102,6 +103,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "google",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "optional",
                       "value": {
                         "allOf": [],
@@ -117,6 +119,7 @@ exports[`open api parser hathora parse open api 1`] = `
                             "key": "clientId",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -136,6 +139,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "nickname",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -153,6 +157,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "anonymous",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -174,6 +179,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "appName",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -269,6 +275,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "google",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "optional",
                       "value": {
                         "allOf": [],
@@ -284,6 +291,7 @@ exports[`open api parser hathora parse open api 1`] = `
                             "key": "clientId",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -303,6 +311,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "nickname",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -320,6 +329,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "anonymous",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -341,6 +351,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "appName",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -536,6 +547,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "token",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -604,6 +616,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "nickname",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -634,6 +647,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "token",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -703,6 +717,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "idToken",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -733,6 +748,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "token",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -812,6 +828,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -1162,6 +1179,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -1392,6 +1410,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1426,6 +1445,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1442,9 +1462,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "local",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1494,6 +1516,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1528,6 +1551,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1544,9 +1568,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "local",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1634,6 +1660,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1668,9 +1695,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "local",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1683,6 +1712,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1701,6 +1731,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -1740,6 +1771,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1774,6 +1806,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "roomId",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1803,8 +1836,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -1876,6 +1911,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1910,6 +1946,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "roomId",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1939,8 +1976,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2012,6 +2051,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2046,6 +2086,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "roomId",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2075,8 +2116,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2148,6 +2191,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "Authorization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2182,6 +2226,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "roomId",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2243,8 +2288,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2360,6 +2407,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2378,6 +2426,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -2524,8 +2573,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "state",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2598,9 +2649,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "follow",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2613,9 +2666,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "tailLines",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2628,6 +2683,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2700,9 +2756,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "follow",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2715,9 +2773,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "tailLines",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2786,9 +2846,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "follow",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2801,9 +2863,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "tailLines",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2920,9 +2984,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "metrics",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -2940,9 +3006,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "end",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2955,9 +3023,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "start",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2970,9 +3040,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "step",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3068,6 +3140,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -3086,6 +3159,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3171,6 +3245,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "name": "region",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -3189,6 +3264,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3501,6 +3577,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3602,6 +3679,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "schema": {
           "description": undefined,
+          "groupName": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3864,6 +3942,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -3879,6 +3958,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -3894,6 +3974,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -3909,6 +3990,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -3924,6 +4006,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -3996,6 +4079,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "port",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4008,6 +4092,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "host",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4034,6 +4119,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "AppId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -4055,9 +4141,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "deletedBy",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4073,9 +4161,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "deletedAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4089,6 +4179,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4101,6 +4192,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4140,6 +4232,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "google",
                 "schema": {
                   "description": undefined,
+                  "groupName": undefined,
                   "type": "optional",
                   "value": {
                     "allOf": [],
@@ -4155,6 +4248,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "key": "clientId",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "schema": {
                             "maxLength": undefined,
                             "minLength": undefined,
@@ -4174,6 +4268,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "nickname",
                 "schema": {
                   "description": undefined,
+                  "groupName": undefined,
                   "type": "optional",
                   "value": {
                     "description": undefined,
@@ -4191,6 +4286,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "anonymous",
                 "schema": {
                   "description": undefined,
+                  "groupName": undefined,
                   "type": "optional",
                   "value": {
                     "description": undefined,
@@ -4212,6 +4308,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "appSecret",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4226,6 +4323,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "appId",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4240,6 +4338,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "appName",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4298,6 +4397,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "regionalContainerTags",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "allOf": [],
@@ -4313,6 +4413,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "containerTag",
                   "schema": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4345,6 +4446,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "imageSize",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4395,9 +4497,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "deletedAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4411,9 +4515,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "finishedAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4427,9 +4533,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "startedAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4443,6 +4551,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4455,6 +4564,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4494,6 +4604,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "BuildId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "type": "double",
       },
@@ -4552,6 +4663,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4564,6 +4676,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4578,6 +4691,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "requestedMemoryMB",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4590,6 +4704,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "requestedCPU",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4652,6 +4767,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "env",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "allOf": [],
@@ -4667,6 +4783,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "value",
                   "schema": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4681,6 +4798,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "name",
                   "schema": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4700,6 +4818,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "roomsPerProcess",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4738,6 +4857,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "containerPort",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4749,6 +4869,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "DeploymentId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "type": "double",
       },
@@ -4756,6 +4877,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "DiscoveryResponse": {
       "description": undefined,
+      "groupName": undefined,
       "type": "array",
       "value": {
         "allOf": [],
@@ -4771,6 +4893,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "key": "port",
             "schema": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4783,6 +4906,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "key": "host",
             "schema": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4822,11 +4946,14 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "key": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4847,8 +4974,10 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "initialConfig",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4868,6 +4997,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4880,6 +5010,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4894,6 +5025,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "local",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5021,6 +5153,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5033,6 +5166,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "timestamp",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5060,6 +5194,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "OrgId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5120,6 +5255,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "currentAllocation",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -5181,6 +5317,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "egressedBytes",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5193,9 +5330,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "idleSince",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5209,6 +5348,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "activeConnections",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5221,6 +5361,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "roomSlotsAvailable",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5233,6 +5374,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "draining",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5245,9 +5387,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "terminatedAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5261,9 +5405,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "stoppingAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5277,9 +5423,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "startedAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5293,6 +5441,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "startingAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -5305,6 +5454,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "roomsPerProcess",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5317,6 +5467,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "port",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5329,6 +5480,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "host",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5394,6 +5546,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "ProcessId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5424,6 +5577,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "rooms",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5441,6 +5595,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "totalRooms",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5464,9 +5619,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "cpu",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5485,9 +5642,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "memory",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5506,9 +5665,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "rate_egress",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5527,9 +5688,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "total_egress",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5638,6 +5801,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "currentAllocation",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -5668,6 +5832,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "allocations",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5722,9 +5887,11 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "unscheduledAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5738,6 +5905,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "scheduledAt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -5775,6 +5943,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "RoomAllocationId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5784,6 +5953,7 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "RoomId": {
       "description": undefined,
+      "groupName": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,

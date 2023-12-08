@@ -52,7 +52,8 @@ function getQueryParameterTypeReference({
                 value: buildTypeReference({
                     schema: Schema.optional({
                         value: resolvedSchema.value,
-                        description: schema.description ?? resolvedSchema.description
+                        description: schema.description ?? resolvedSchema.description,
+                        groupName: undefined
                     }),
                     context,
                     fileContainingReference
@@ -81,7 +82,8 @@ function getQueryParameterTypeReference({
                     value: buildTypeReference({
                         schema: Schema.optional({
                             value: resolvedSchema.value,
-                            description: schema.description ?? resolvedSchema.description
+                            description: schema.description ?? resolvedSchema.description,
+                            groupName: undefined
                         }),
                         context,
                         fileContainingReference
@@ -93,7 +95,11 @@ function getQueryParameterTypeReference({
         if (schema.value.type === "array") {
             return {
                 value: buildTypeReference({
-                    schema: Schema.optional({ value: schema.value.value, description: schema.description }),
+                    schema: Schema.optional({
+                        value: schema.value.value,
+                        description: schema.description,
+                        groupName: undefined
+                    }),
                     context,
                     fileContainingReference
                 }),
@@ -103,7 +109,7 @@ function getQueryParameterTypeReference({
             // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
             for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
-                    schema: Schema.optional({ value: oneOfSchema, description: undefined }),
+                    schema: Schema.optional({ value: oneOfSchema, description: undefined, groupName: undefined }),
                     context,
                     fileContainingReference
                 });
@@ -124,7 +130,7 @@ function getQueryParameterTypeReference({
     if (schema.type === "array") {
         return {
             value: buildTypeReference({
-                schema: Schema.optional({ value: schema.value, description: schema.description }),
+                schema: Schema.optional({ value: schema.value, description: schema.description, groupName: undefined }),
                 context,
                 fileContainingReference
             }),

@@ -1,3 +1,4 @@
+import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
 import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { wrapPrimitive } from "../convertSchemas";
 
@@ -5,12 +6,14 @@ export function convertNumber({
     format,
     description,
     wrapAsNullable,
-    example
+    example,
+    groupName
 }: {
     format: string | undefined;
     description: string | undefined;
     wrapAsNullable: boolean;
     example: number | undefined;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (format == null || format === "double") {
         return wrapPrimitive({
@@ -18,7 +21,8 @@ export function convertNumber({
                 example
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     } else if (format === "float") {
         return wrapPrimitive({
@@ -26,7 +30,8 @@ export function convertNumber({
                 example
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     } else if (format === "int32") {
         return wrapPrimitive({
@@ -34,7 +39,8 @@ export function convertNumber({
                 example
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     } else if (format === "int64") {
         return wrapPrimitive({
@@ -42,7 +48,8 @@ export function convertNumber({
                 example
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     } else if (format === "time-delta") {
         return wrapPrimitive({
@@ -50,7 +57,8 @@ export function convertNumber({
                 example
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     }
     return wrapPrimitive({
@@ -58,6 +66,7 @@ export function convertNumber({
             example
         }),
         wrapAsNullable,
-        description
+        description,
+        groupName
     });
 }

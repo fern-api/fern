@@ -12,6 +12,7 @@ export function getFernTypeExtension({
     schema: OpenAPIV3.SchemaObject;
     description: string | undefined;
 }): SchemaWithExample | undefined {
+    const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const typeDefinition = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION);
     if (typeDefinition == null) {
         return;
@@ -22,6 +23,7 @@ export function getFernTypeExtension({
                 case "BASE_64":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.base64({
                             example: undefined
                         })
@@ -29,6 +31,7 @@ export function getFernTypeExtension({
                 case "BOOLEAN":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.boolean({
                             example: undefined
                         })
@@ -36,6 +39,7 @@ export function getFernTypeExtension({
                 case "DATE":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.date({
                             example: undefined
                         })
@@ -43,6 +47,7 @@ export function getFernTypeExtension({
                 case "DATE_TIME":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.datetime({
                             example: undefined
                         })
@@ -50,6 +55,7 @@ export function getFernTypeExtension({
                 case "DOUBLE":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.double({
                             example: undefined
                         })
@@ -57,6 +63,7 @@ export function getFernTypeExtension({
                 case "INTEGER":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.int({
                             example: undefined
                         })
@@ -64,6 +71,7 @@ export function getFernTypeExtension({
                 case "LONG":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.int64({
                             example: undefined
                         })
@@ -72,6 +80,7 @@ export function getFernTypeExtension({
                 case "UUID":
                     return SchemaWithExample.primitive({
                         description,
+                        groupName,
                         schema: PrimitiveSchemaValueWithExample.string({
                             maxLength: undefined,
                             minLength: undefined,
@@ -85,7 +94,8 @@ export function getFernTypeExtension({
         unknown: () => {
             return SchemaWithExample.unknown({
                 example: undefined,
-                description
+                description,
+                groupName
             });
         },
         map: ({ keyType, valueType }) =>
@@ -93,34 +103,39 @@ export function getFernTypeExtension({
                 ? SchemaWithExample.map({
                       key: keyType,
                       value: valueType,
-                      description
+                      description,
+                      groupName
                   })
                 : undefined,
         list: (itemType) =>
             itemType != null
                 ? SchemaWithExample.array({
                       value: itemType,
-                      description
+                      description,
+                      groupName
                   })
                 : undefined,
         optional: (itemType) =>
             itemType != null
                 ? SchemaWithExample.optional({
                       value: itemType,
-                      description
+                      description,
+                      groupName
                   })
                 : undefined,
         set: (itemType) =>
             itemType != null
                 ? SchemaWithExample.array({
                       value: itemType,
-                      description
+                      description,
+                      groupName
                   })
                 : undefined,
         literal: (literal) =>
             SchemaWithExample.literal({
                 value: literal,
-                description
+                description,
+                groupName
             }),
         named: () => {
             return undefined;

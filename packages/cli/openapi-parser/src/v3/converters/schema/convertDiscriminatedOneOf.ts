@@ -171,6 +171,7 @@ export function wrapDiscriminantedOneOf({
                 commonProperties: properties,
                 groupName
             }),
+            groupName,
             description
         });
     }

@@ -73,7 +73,8 @@ export function wrapEnum({
                 example: undefined,
                 groupName
             }),
-            description
+            description,
+            groupName
         });
     }
     return SchemaWithExample.enum({

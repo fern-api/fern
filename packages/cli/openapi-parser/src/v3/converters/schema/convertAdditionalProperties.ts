@@ -1,3 +1,4 @@
+import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
 import {
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
@@ -13,13 +14,15 @@ export function convertAdditionalProperties({
     additionalProperties,
     description,
     wrapAsNullable,
-    context
+    context,
+    groupName
 }: {
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
     wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({
@@ -31,12 +34,15 @@ export function convertAdditionalProperties({
                     minLength: undefined,
                     maxLength: undefined,
                     example: undefined
-                })
+                }),
+                groupName: undefined
             },
             valueSchema: SchemaWithExample.unknown({
                 description: undefined,
-                example: undefined
-            })
+                example: undefined,
+                groupName: undefined
+            }),
+            groupName
         });
     }
     return wrapMap({
@@ -48,9 +54,11 @@ export function convertAdditionalProperties({
                 minLength: undefined,
                 maxLength: undefined,
                 example: undefined
-            })
+            }),
+            groupName: undefined
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"])
+        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
+        groupName
     });
 }
 
@@ -64,26 +72,31 @@ export function wrapMap({
     keySchema,
     valueSchema,
     wrapAsNullable,
-    description
+    description,
+    groupName
 }: {
     keySchema: PrimitiveSchemaWithExample;
     valueSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: SchemaWithExample.map({
                 description,
                 key: keySchema,
-                value: valueSchema
+                value: valueSchema,
+                groupName
             }),
-            description
+            description,
+            groupName
         });
     }
     return SchemaWithExample.map({
         description,
         key: keySchema,
-        value: valueSchema
+        value: valueSchema,
+        groupName
     });
 }

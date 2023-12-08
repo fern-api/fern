@@ -103,7 +103,8 @@ export function convertObject({
             ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
             : SchemaWithExample.optional({
                   description: undefined,
-                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
+                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
+                  groupName
               });
 
         const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
@@ -168,7 +169,8 @@ export function wrapObject({
                 allOfPropertyConflicts,
                 groupName
             }),
-            description
+            description,
+            groupName
         });
     }
     return SchemaWithExample.object({

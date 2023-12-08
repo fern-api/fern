@@ -36,9 +36,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -54,6 +56,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": true,
@@ -138,9 +141,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -156,6 +161,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": false,
@@ -218,9 +224,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -236,6 +244,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": true,
@@ -328,9 +337,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -346,6 +357,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": false,
@@ -408,9 +420,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -426,6 +440,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": true,
@@ -455,9 +470,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -473,9 +490,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "inline",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -489,9 +508,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "streamed",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -563,9 +584,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -581,6 +604,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": false,
@@ -610,9 +634,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "id",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -628,9 +654,11 @@ exports[`open api parser streaming parse open api 1`] = `
               "key": "inline",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -672,9 +700,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -701,9 +731,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -730,9 +762,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -748,9 +782,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -766,9 +802,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "streamed",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "literal",
               "value": {
                 "boolean": true,
@@ -794,9 +832,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -812,9 +852,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -830,9 +872,11 @@ exports[`open api parser streaming parse open api 1`] = `
           "key": "streamed",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "literal",
               "value": {
                 "boolean": false,

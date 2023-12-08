@@ -97,23 +97,31 @@ types:
       unknown: UnknownSchemaWithExample
 
   ArraySchemaWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithSdkGroupName
+      - commons.WithDescription
     properties:
       value: SchemaWithExample
 
   MapSchemaWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithSdkGroupName 
+      - commons.WithDescription
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
 
   OptionalSchemaWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithSdkGroupName 
+      - commons.WithDescription
     properties:
       value: SchemaWithExample
 
   NullableSchemaWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithSdkGroupName 
+      - commons.WithDescription
     properties:
       value: SchemaWithExample
 
@@ -127,7 +135,9 @@ types:
       example: optional<string>
 
   UnknownSchemaWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithSdkGroupName
+      - commons.WithDescription
     properties:
       example: unknown
 
@@ -182,7 +192,9 @@ types:
       schemas: list<SchemaWithExample>
 
   PrimitiveSchemaWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValueWithExample
 

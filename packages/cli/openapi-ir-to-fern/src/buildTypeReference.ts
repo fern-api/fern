@@ -15,12 +15,14 @@ import {
     ReferencedSchema,
     Schema
 } from "@fern-fern/openapi-ir-model/finalIr";
+import { camelCase } from "lodash-es";
 import {
     buildEnumTypeDeclaration,
     buildObjectTypeDeclaration,
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildTypeReference({
@@ -96,7 +98,7 @@ export function buildReferenceTypeReference({
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
-        groupName: schema.groupName,
+        groupName: getGroupNameForSchema(resolvedSchema),
         type: schemaName
     });
     const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix;
@@ -285,12 +287,13 @@ function getPrefixedType({
     if (groupName == null && fileContainingReference === FERN_PACKAGE_MARKER_FILENAME) {
         return type;
     }
+    const fileToImport =
+        groupName != null
+            ? RelativeFilePath.of(`${camelCase(groupName)}.yml`)
+            : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
     const prefix = context.builder.addImport({
         file: fileContainingReference,
-        fileToImport:
-            groupName != null
-                ? RelativeFilePath.of(`${groupName}.yml`)
-                : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
+        fileToImport
     });
     return prefix != null ? `${prefix}.${type}` : type;
 }

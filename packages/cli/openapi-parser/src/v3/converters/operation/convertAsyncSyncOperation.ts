@@ -63,7 +63,8 @@ export function convertAsyncSyncOperation({
         name: headerToIgnore,
         schema: Schema.literal({
             description: null,
-            value: LiteralSchemaValue.string(headerValue)
+            value: LiteralSchemaValue.string(headerValue),
+            groupName: undefined
         }),
         description: undefined
     });

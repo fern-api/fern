@@ -55,6 +55,7 @@ Used to retrieve a deployment given its ID or name.
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -194,9 +195,11 @@ Used to list documents. Optionally filter on supported fields.
           "name": "document_index_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -211,9 +214,11 @@ Used to list documents. Optionally filter on supported fields.
           "name": "limit",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -226,9 +231,11 @@ Used to list documents. Optionally filter on supported fields.
           "name": "offset",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -241,9 +248,11 @@ Used to list documents. Optionally filter on supported fields.
           "name": "ordering",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -538,6 +547,7 @@ Used to retrieve a model version given its ID.
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -591,6 +601,7 @@ Compiles the prompt backing the model version using the provided input values.",
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -717,6 +728,7 @@ or overwritten with default values.",
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -811,6 +823,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -825,6 +838,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "name": "scenario_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1045,6 +1059,7 @@ or overwritten with default values.",
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1139,6 +1154,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1153,6 +1169,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "name": "test_case_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1207,12 +1224,15 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                "groupName": undefined,
                 "type": "nullable",
                 "value": {
                   "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                  "groupName": undefined,
                   "type": "array",
                   "value": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": 1,
@@ -1231,9 +1251,11 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                "groupName": undefined,
                 "type": "nullable",
                 "value": {
                   "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -1251,6 +1273,7 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "A human-friendly name for this document. Typically the filename.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -1274,12 +1297,15 @@ Upload a document to be indexed and used for search.
             "schema": {
               "json": {
                 "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                "groupName": undefined,
                 "type": "nullable",
                 "value": {
                   "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                  "groupName": undefined,
                   "type": "array",
                   "value": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": 1,
@@ -1521,6 +1547,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1559,6 +1586,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1657,12 +1685,15 @@ Upload a document to be indexed and used for search.
           "key": "source_handle_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1736,6 +1767,7 @@ Upload a document to be indexed and used for search.
           "key": "output_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1750,12 +1782,15 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1772,12 +1807,15 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1805,6 +1843,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1819,6 +1858,7 @@ Upload a document to be indexed and used for search.
           "key": "created",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -1831,6 +1871,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-readable label for the deployment",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -1845,6 +1886,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A name that uniquely identifies this deployment within its workspace",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -1859,6 +1901,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The current status of the deployment
@@ -1880,6 +1923,7 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The environment this deployment is used in
@@ -1917,9 +1961,11 @@ Upload a document to be indexed and used for search.
           "key": "active_model_version_ids",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1935,6 +1981,7 @@ Upload a document to be indexed and used for search.
           "key": "last_deployed_on",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -1987,6 +2034,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the document.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2001,6 +2049,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "The human-readable name for the document.",
+            "groupName": undefined,
             "schema": {
               "maxLength": 1000,
               "minLength": undefined,
@@ -2015,12 +2064,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": 1000,
                   "minLength": undefined,
@@ -2048,6 +2100,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this link.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2062,6 +2115,7 @@ Upload a document to be indexed and used for search.
           "key": "document_index_id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2076,6 +2130,7 @@ Upload a document to be indexed and used for search.
           "key": "indexing_state",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An enum value representing where this document is along its indexing lifecycle for this index.
@@ -2110,6 +2165,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-readable label for the document index",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": 1,
@@ -2124,6 +2180,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A name that uniquely identifies this index within its workspace",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": 1,
@@ -2138,6 +2195,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The current status of the document index
@@ -2158,6 +2216,7 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The environment this document index is used in
@@ -2179,8 +2238,10 @@ Upload a document to be indexed and used for search.
           "key": "indexing_config",
           "schema": {
             "description": "Configuration representing how documents should be indexed",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2200,9 +2261,11 @@ Upload a document to be indexed and used for search.
           "key": "copy_documents_from_index_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2229,6 +2292,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2243,6 +2307,7 @@ Upload a document to be indexed and used for search.
           "key": "created",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -2255,6 +2320,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-readable label for the document index",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -2269,6 +2335,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A name that uniquely identifies this index within its workspace",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -2283,6 +2350,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The current status of the document index
@@ -2303,6 +2371,7 @@ Upload a document to be indexed and used for search.
           "key": "environment",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The environment this document index is used in
@@ -2324,8 +2393,10 @@ Upload a document to be indexed and used for search.
           "key": "indexing_config",
           "schema": {
             "description": "Configuration representing how documents should be indexed",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2378,6 +2449,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The Vellum-generated ID of the completion.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2392,12 +2464,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -2414,6 +2489,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": "The text generated by the LLM.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2432,6 +2508,7 @@ Upload a document to be indexed and used for search.
 * \`LENGTH\` - LENGTH
 * \`STOP\` - STOP
 * \`UNKNOWN\` - UNKNOWN",
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2449,9 +2526,11 @@ Upload a document to be indexed and used for search.
           "key": "logprobs",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The logprobs of the completion. Only present if specified in the original request options.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -2470,6 +2549,7 @@ Upload a document to be indexed and used for search.
           "key": "model_version_id",
           "schema": {
             "description": "The ID of the model version used to generate this completion.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2484,6 +2564,7 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2541,9 +2622,11 @@ Upload a document to be indexed and used for search.
           "key": "target",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2570,9 +2653,11 @@ Upload a document to be indexed and used for search.
           "key": "target",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2599,12 +2684,15 @@ Upload a document to be indexed and used for search.
           "key": "workflow_deployment_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -2621,12 +2709,15 @@ Upload a document to be indexed and used for search.
           "key": "workflow_deployment_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -2643,12 +2734,15 @@ Upload a document to be indexed and used for search.
           "key": "release_tag",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -2665,6 +2759,7 @@ Upload a document to be indexed and used for search.
           "key": "inputs",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -2682,12 +2777,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include a unique identifier for tracking purposes.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include a unique identifier for tracking purposes.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -2744,12 +2842,15 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -2766,12 +2867,15 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -2788,6 +2892,7 @@ Upload a document to be indexed and used for search.
           "key": "requests",
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -2805,9 +2910,11 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Additional configuration that can be used to control what's included in the response.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -2837,6 +2944,7 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2862,6 +2970,7 @@ Upload a document to be indexed and used for search.
           "key": "logprobs",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Which logprobs to include, if any. Defaults to NONE.
@@ -2893,8 +3002,10 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2914,9 +3025,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -2935,15 +3048,19 @@ Upload a document to be indexed and used for search.
           "key": "external_ids",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -2972,6 +3089,7 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": "The results of each generation request.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3000,6 +3118,7 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
@@ -3017,6 +3136,7 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
@@ -3045,6 +3165,7 @@ Upload a document to be indexed and used for search.
           "key": "completions",
           "schema": {
             "description": "The generated completions. This will generally be a list of length one.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3073,6 +3194,7 @@ Upload a document to be indexed and used for search.
           "key": "message",
           "schema": {
             "description": "The error message returned by the LLM provider.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3098,12 +3220,15 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3120,12 +3245,15 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -3142,6 +3270,7 @@ Upload a document to be indexed and used for search.
           "key": "requests",
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3159,9 +3288,11 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Additional configuration that can be used to control what's included in the response.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -3215,6 +3346,7 @@ Upload a document to be indexed and used for search.
           "key": "request_index",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3227,6 +3359,7 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3244,6 +3377,7 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3272,6 +3406,7 @@ Upload a document to be indexed and used for search.
           "key": "completion_index",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3395,6 +3530,7 @@ Upload a document to be indexed and used for search.
           "key": "base_model",
           "schema": {
             "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3409,9 +3545,11 @@ Upload a document to be indexed and used for search.
           "key": "sandbox_snapshot",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -3441,8 +3579,10 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3497,6 +3637,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3511,6 +3652,7 @@ Upload a document to be indexed and used for search.
           "key": "num_tokens",
           "schema": {
             "description": "The approximate number of tokens used by the compiled prompt.",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3547,6 +3689,7 @@ Upload a document to be indexed and used for search.
           "key": "input_variables",
           "schema": {
             "description": "Names of the input variables specified in the prompt template.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3564,9 +3707,11 @@ Upload a document to be indexed and used for search.
           "key": "prompt_template",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The template used to generate prompts for this model version.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3582,6 +3727,7 @@ Upload a document to be indexed and used for search.
           "key": "prompt_block_data",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3599,9 +3745,11 @@ Upload a document to be indexed and used for search.
           "key": "prompt_syntax_version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3626,6 +3774,7 @@ Upload a document to be indexed and used for search.
           "key": "temperature",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3638,6 +3787,7 @@ Upload a document to be indexed and used for search.
           "key": "max_tokens",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3650,6 +3800,7 @@ Upload a document to be indexed and used for search.
           "key": "top_p",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3662,6 +3813,7 @@ Upload a document to be indexed and used for search.
           "key": "frequency_penalty",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3674,6 +3826,7 @@ Upload a document to be indexed and used for search.
           "key": "presence_penalty",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3686,14 +3839,18 @@ Upload a document to be indexed and used for search.
           "key": "logit_bias",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -3704,9 +3861,11 @@ Upload a document to be indexed and used for search.
                 "type": "map",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "type": "nullable",
                   "value": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "double",
                     },
@@ -3723,15 +3882,19 @@ Upload a document to be indexed and used for search.
           "key": "stop",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -3749,9 +3912,11 @@ Upload a document to be indexed and used for search.
           "key": "top_k",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3776,6 +3941,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this model version.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3790,6 +3956,7 @@ Upload a document to be indexed and used for search.
           "key": "created",
           "schema": {
             "description": "Timestamp of when this model version was created.",
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -3802,6 +3969,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "Human-friendly name for this model version.",
+            "groupName": undefined,
             "schema": {
               "maxLength": 150,
               "minLength": undefined,
@@ -3854,6 +4022,7 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": "The unique id of this model version as it exists in the above provider's system.",
+            "groupName": undefined,
             "schema": {
               "maxLength": 250,
               "minLength": undefined,
@@ -3894,6 +4063,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3958,6 +4128,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the sandbox snapshot.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3972,9 +4143,11 @@ Upload a document to be indexed and used for search.
           "key": "prompt_index",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The index of the prompt in the sandbox snapshot.",
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3988,9 +4161,11 @@ Upload a document to be indexed and used for search.
           "key": "prompt_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the prompt in the sandbox snapshot.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4006,9 +4181,11 @@ Upload a document to be indexed and used for search.
           "key": "sandbox_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4035,6 +4212,7 @@ Upload a document to be indexed and used for search.
           "key": "tokens",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4052,9 +4230,11 @@ Upload a document to be indexed and used for search.
           "key": "likelihood",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4079,6 +4259,7 @@ Upload a document to be indexed and used for search.
           "key": "token",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4093,9 +4274,11 @@ Upload a document to be indexed and used for search.
           "key": "logprob",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4109,11 +4292,14 @@ Upload a document to be indexed and used for search.
           "key": "top_logprobs",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "key": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4124,9 +4310,11 @@ Upload a document to be indexed and used for search.
               "type": "map",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "nullable",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "type": "double",
                   },
@@ -4142,6 +4330,7 @@ Upload a document to be indexed and used for search.
           "key": "text_offset",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4165,9 +4354,11 @@ Upload a document to be indexed and used for search.
           "key": "count",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -4181,12 +4372,15 @@ Upload a document to be indexed and used for search.
           "key": "next",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4203,12 +4397,15 @@ Upload a document to be indexed and used for search.
           "key": "previous",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4225,9 +4422,11 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -4245,6 +4444,7 @@ Upload a document to be indexed and used for search.
     },
     "ProcessingFailureReasonEnum": {
       "description": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
+      "groupName": undefined,
       "type": "literal",
       "value": {
         "string": "EXCEEDED_CHARACTER_LIMIT",
@@ -4325,6 +4525,7 @@ Upload a document to be indexed and used for search.
           "key": "output_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4339,12 +4540,15 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4361,12 +4565,15 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4394,6 +4601,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4445,6 +4653,7 @@ Upload a document to be indexed and used for search.
           "key": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4457,6 +4666,7 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4485,6 +4695,7 @@ Upload a document to be indexed and used for search.
           "key": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4497,6 +4708,7 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4525,9 +4737,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_role",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4546,9 +4760,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_message_unterminated",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -4562,12 +4778,15 @@ Upload a document to be indexed and used for search.
           "key": "template",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4584,9 +4803,11 @@ Upload a document to be indexed and used for search.
           "key": "template_type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4605,12 +4826,15 @@ Upload a document to be indexed and used for search.
           "key": "function_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4627,12 +4851,15 @@ Upload a document to be indexed and used for search.
           "key": "function_description",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4649,14 +4876,18 @@ Upload a document to be indexed and used for search.
           "key": "function_parameters",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -4678,12 +4909,15 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -4714,9 +4948,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_role",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4735,9 +4971,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_message_unterminated",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -4751,12 +4989,15 @@ Upload a document to be indexed and used for search.
           "key": "template",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4773,9 +5014,11 @@ Upload a document to be indexed and used for search.
           "key": "template_type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -4794,12 +5037,15 @@ Upload a document to be indexed and used for search.
           "key": "function_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -4816,12 +5062,15 @@ Upload a document to be indexed and used for search.
           "key": "function_description",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -4838,14 +5087,18 @@ Upload a document to be indexed and used for search.
           "key": "function_parameters",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -4867,12 +5120,15 @@ Upload a document to be indexed and used for search.
           "key": "blocks",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -4903,6 +5159,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -4954,6 +5211,7 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": "The name of the input variable.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4979,6 +5237,7 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": "The name of the input variable.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -5068,6 +5327,7 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5093,6 +5353,7 @@ Upload a document to be indexed and used for search.
           "key": "temperature",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5105,6 +5366,7 @@ Upload a document to be indexed and used for search.
           "key": "max_tokens",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -5117,12 +5379,15 @@ Upload a document to be indexed and used for search.
           "key": "stop",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5139,6 +5404,7 @@ Upload a document to be indexed and used for search.
           "key": "top_p",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5151,9 +5417,11 @@ Upload a document to be indexed and used for search.
           "key": "top_k",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -5167,6 +5435,7 @@ Upload a document to be indexed and used for search.
           "key": "frequency_penalty",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5179,6 +5448,7 @@ Upload a document to be indexed and used for search.
           "key": "presence_penalty",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -5191,14 +5461,18 @@ Upload a document to be indexed and used for search.
           "key": "logit_bias",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -5209,9 +5483,11 @@ Upload a document to be indexed and used for search.
                 "type": "map",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "type": "nullable",
                   "value": {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "double",
                     },
@@ -5239,6 +5515,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated prompt.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5253,6 +5530,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated prompt.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5278,9 +5556,11 @@ Upload a document to be indexed and used for search.
           "key": "prompt_syntax_version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -5307,6 +5587,7 @@ Upload a document to be indexed and used for search.
           "key": "input_variables",
           "schema": {
             "description": "Names of the input variables specified in the prompt template.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5335,6 +5616,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for corresponding entities created in Vellum.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -5349,6 +5631,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A uniquely-identifying name for corresponding entities created in Vellum.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -5398,6 +5681,7 @@ Upload a document to be indexed and used for search.
           "key": "model",
           "schema": {
             "description": "The initial model to use for this prompt",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -5425,11 +5709,14 @@ Upload a document to be indexed and used for search.
           "key": "meta",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include additional metadata to store along with the prompt.",
+              "groupName": undefined,
               "key": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5537,6 +5824,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated deployment.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5551,6 +5839,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "A uniquely-identifying name for generated deployment.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5565,6 +5854,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated deployment.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5590,6 +5880,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated model version.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5604,6 +5895,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated model version.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5629,6 +5921,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated sandbox.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5643,6 +5936,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly label for the generated sandbox.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5668,6 +5962,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The ID of the generated sandbox snapshot.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5693,9 +5988,11 @@ Upload a document to be indexed and used for search.
           "key": "params",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -5725,9 +6022,11 @@ Upload a document to be indexed and used for search.
           "key": "params",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -5781,6 +6080,7 @@ Upload a document to be indexed and used for search.
           "key": "output_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5795,12 +6095,15 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5817,12 +6120,15 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5850,9 +6156,11 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5868,6 +6176,7 @@ Upload a document to be indexed and used for search.
           "key": "inputs",
           "schema": {
             "description": "The inputs for the scenario",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5885,6 +6194,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "The id of the scenario",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5923,6 +6233,7 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5937,9 +6248,11 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -5958,9 +6271,11 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5976,9 +6291,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -6008,6 +6325,7 @@ Upload a document to be indexed and used for search.
           "key": "key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -6022,9 +6340,11 @@ Upload a document to be indexed and used for search.
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6043,9 +6363,11 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6061,9 +6383,11 @@ Upload a document to be indexed and used for search.
           "key": "chat_history",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -6115,6 +6439,7 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6140,15 +6465,19 @@ Upload a document to be indexed and used for search.
           "key": "external_ids",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The document external IDs to filter by",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The document external IDs to filter by",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -6201,6 +6530,7 @@ Upload a document to be indexed and used for search.
           "key": "results_output_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6215,11 +6545,14 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "key": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6240,12 +6573,15 @@ Upload a document to be indexed and used for search.
           "key": "text_output_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6262,12 +6598,15 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6295,12 +6634,15 @@ Upload a document to be indexed and used for search.
           "key": "index_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the index to search against. Must provide either this or index_name.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the index to search against. Must provide either this or index_name.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6317,12 +6659,15 @@ Upload a document to be indexed and used for search.
           "key": "index_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the index to search against. Must provide either this or index_id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the index to search against. Must provide either this or index_id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -6339,6 +6684,7 @@ Upload a document to be indexed and used for search.
           "key": "query",
           "schema": {
             "description": "The query to search for.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -6353,9 +6699,11 @@ Upload a document to be indexed and used for search.
           "key": "options",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Configuration options for the search.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6385,12 +6733,15 @@ Upload a document to be indexed and used for search.
           "key": "limit",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The maximum number of results to return.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The maximum number of results to return.",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -6405,9 +6756,11 @@ Upload a document to be indexed and used for search.
           "key": "weights",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The weights to use for the search. Must add up to 1.0.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6426,9 +6779,11 @@ Upload a document to be indexed and used for search.
           "key": "result_merging",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The configuration for merging results.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6447,9 +6802,11 @@ Upload a document to be indexed and used for search.
           "key": "filters",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The filters to apply to the search.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6479,6 +6836,7 @@ Upload a document to be indexed and used for search.
           "key": "results",
           "schema": {
             "description": "The results of the search. Each result represents a chunk that matches the search query.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6520,6 +6878,7 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": "The text of the chunk that matched the search query.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6534,9 +6893,11 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6552,6 +6913,7 @@ Upload a document to be indexed and used for search.
           "key": "score",
           "schema": {
             "description": "A score representing how well the chunk matches the search query.",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6575,6 +6937,7 @@ Upload a document to be indexed and used for search.
           "key": "enabled",
           "schema": {
             "description": "Whether to enable merging results",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -6598,6 +6961,7 @@ Upload a document to be indexed and used for search.
           "key": "semantic_similarity",
           "schema": {
             "description": "The relative weight to give to semantic similarity",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6610,6 +6974,7 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": "The relative weight to give to keyword matches",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6633,6 +6998,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this document.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6647,12 +7013,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The external ID that was originally provided when uploading the document.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The external ID that was originally provided when uploading the document.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": 1000,
                   "minLength": undefined,
@@ -6669,6 +7038,7 @@ Upload a document to be indexed and used for search.
           "key": "last_uploaded_at",
           "schema": {
             "description": "A timestamp representing when this document was most recently uploaded.",
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -6681,6 +7051,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "Human-friendly name for this document.",
+            "groupName": undefined,
             "schema": {
               "maxLength": 1000,
               "minLength": undefined,
@@ -6695,6 +7066,7 @@ Upload a document to be indexed and used for search.
           "key": "processing_state",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
@@ -6717,11 +7089,13 @@ Upload a document to be indexed and used for search.
           "key": "processing_failure_reason",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
 
 * \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -6740,6 +7114,7 @@ Upload a document to be indexed and used for search.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The document's current status.
@@ -6759,12 +7134,15 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6781,6 +7159,7 @@ Upload a document to be indexed and used for search.
           "key": "document_to_document_indexes",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6797,6 +7176,7 @@ Upload a document to be indexed and used for search.
     },
     "SlimDocumentStatusEnum": {
       "description": "* \`ACTIVE\` - Active",
+      "groupName": undefined,
       "type": "literal",
       "value": {
         "string": "ACTIVE",
@@ -6817,12 +7197,15 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -6839,12 +7222,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -6861,12 +7247,15 @@ Upload a document to be indexed and used for search.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Text representing what the completion _should_ have been.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Text representing what the completion _should_ have been.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6883,12 +7272,15 @@ Upload a document to be indexed and used for search.
           "key": "quality",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+                "groupName": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -6903,12 +7295,15 @@ Upload a document to be indexed and used for search.
           "key": "timestamp",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+                "groupName": undefined,
                 "schema": {
                   "type": "datetime",
                 },
@@ -6934,6 +7329,7 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6959,12 +7355,15 @@ Upload a document to be indexed and used for search.
           "key": "deployment_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6981,12 +7380,15 @@ Upload a document to be indexed and used for search.
           "key": "deployment_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The name of the deployment. Must provide either this or deployment_id.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -7003,6 +7405,7 @@ Upload a document to be indexed and used for search.
           "key": "actuals",
           "schema": {
             "description": "Feedback regarding the quality of previously generated completions",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -7031,6 +7434,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7045,6 +7449,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -7073,6 +7478,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7087,8 +7493,10 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7205,6 +7613,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7219,6 +7628,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7244,9 +7654,11 @@ Upload a document to be indexed and used for search.
           "key": "test_case_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7262,12 +7674,15 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "A human-friendly label for the test case.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "A human-friendly label for the test case.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7284,8 +7699,10 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7329,9 +7746,11 @@ Upload a document to be indexed and used for search.
           "key": "test_case_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -7347,12 +7766,15 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "A human-friendly label for the test case.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "A human-friendly label for the test case.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7369,8 +7791,10 @@ Upload a document to be indexed and used for search.
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7414,15 +7838,19 @@ Upload a document to be indexed and used for search.
           "key": "add_to_index_names",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -7440,12 +7868,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": 1,
@@ -7462,6 +7893,7 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": "A human-friendly name for this document. Typically the filename.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -7476,6 +7908,7 @@ Upload a document to be indexed and used for search.
           "key": "contents",
           "schema": {
             "description": "The file contents of the document.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7490,15 +7923,19 @@ Upload a document to be indexed and used for search.
           "key": "keywords",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": 1,
@@ -7527,6 +7964,7 @@ Upload a document to be indexed and used for search.
           "key": "detail",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7552,6 +7990,7 @@ Upload a document to be indexed and used for search.
           "key": "document_id",
           "schema": {
             "description": "The ID of the newly created document.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7577,9 +8016,11 @@ Upload a document to be indexed and used for search.
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -7595,6 +8036,7 @@ Upload a document to be indexed and used for search.
           "key": "inputs",
           "schema": {
             "description": "The inputs for the scenario",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -7612,9 +8054,11 @@ Upload a document to be indexed and used for search.
           "key": "scenario_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": 1,
@@ -7630,6 +8074,7 @@ Upload a document to be indexed and used for search.
           "key": "metric_input_params",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -7658,6 +8103,7 @@ Upload a document to be indexed and used for search.
           "key": "message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7718,6 +8164,7 @@ Upload a document to be indexed and used for search.
           "key": "run_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7732,12 +8179,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7778,6 +8228,7 @@ Upload a document to be indexed and used for search.
           "key": "run_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7792,12 +8243,15 @@ Upload a document to be indexed and used for search.
           "key": "external_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -7900,6 +8354,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7914,6 +8369,7 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7928,6 +8384,7 @@ Upload a document to be indexed and used for search.
           "key": "node_result_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -7955,12 +8412,15 @@ Upload a document to be indexed and used for search.
           "key": "ts",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "type": "datetime",
                 },
@@ -7975,6 +8435,7 @@ Upload a document to be indexed and used for search.
           "key": "data",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -7992,9 +8453,11 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8060,6 +8523,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -8074,6 +8538,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -8140,6 +8605,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -8154,8 +8620,10 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -8186,6 +8654,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": 1,
@@ -8200,6 +8669,7 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8225,6 +8695,7 @@ Upload a document to be indexed and used for search.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8252,6 +8723,7 @@ Upload a document to be indexed and used for search.
           "key": "ts",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -8264,6 +8736,7 @@ Upload a document to be indexed and used for search.
           "key": "output",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -8281,9 +8754,11 @@ Upload a document to be indexed and used for search.
           "key": "error",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
@@ -8351,6 +8826,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8378,6 +8854,7 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8392,9 +8869,11 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -8410,12 +8889,15 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -8446,6 +8928,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8473,6 +8956,7 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8487,9 +8971,11 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -8505,11 +8991,14 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "key": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -8541,6 +9030,7 @@ Upload a document to be indexed and used for search.
           "key": "name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8568,6 +9058,7 @@ Upload a document to be indexed and used for search.
           "key": "node_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -8582,9 +9073,11 @@ Upload a document to be indexed and used for search.
           "key": "delta",
           "schema": {
             "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -8600,9 +9093,11 @@ Upload a document to be indexed and used for search.
           "key": "value",
           "schema": {
             "description": "The entire string value. Will be non-null for events of state FULFILLED.",
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "The entire string value. Will be non-null for events of state FULFILLED.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,

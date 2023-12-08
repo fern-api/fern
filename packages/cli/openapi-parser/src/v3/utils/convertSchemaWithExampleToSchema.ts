@@ -22,7 +22,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
         case "array":
             return Schema.array({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
             });
         case "enum":
             return Schema.enum({
@@ -35,31 +36,37 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
         case "literal":
             return Schema.literal({
                 description: schema.description,
-                value: schema.value
+                value: schema.value,
+                groupName: schema.groupName
             });
         case "nullable":
             return Schema.nullable({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
             });
         case "optional":
             return Schema.optional({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
             });
         case "primitive":
             return Schema.primitive({
                 description: schema.description,
-                schema: convertToPrimitiveSchemaValue(schema.schema)
+                schema: convertToPrimitiveSchemaValue(schema.schema),
+                groupName: schema.groupName
             });
         case "map":
             return Schema.map({
                 description: schema.description,
                 key: Schema.primitive({
                     description: schema.key.description,
-                    schema: convertToPrimitiveSchemaValue(schema.key.schema)
+                    schema: convertToPrimitiveSchemaValue(schema.key.schema),
+                    groupName: schema.groupName
                 }),
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
             });
         case "reference":
             return Schema.reference({
