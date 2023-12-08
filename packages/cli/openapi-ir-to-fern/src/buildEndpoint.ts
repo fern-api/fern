@@ -11,6 +11,7 @@ import {
     Schema
 } from "@fern-fern/openapi-ir-model/finalIr";
 import { buildEndpointExample } from "./buildEndpointExample";
+import { EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
@@ -210,6 +211,13 @@ export function buildEndpoint({
             endpointExamples: endpoint.examples,
             context
         });
+    }
+
+    // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
+    if (context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
+        convertedEndpoint.audiences = [EXTERNAL_AUDIENCE, ...endpoint.audiences];
+    } else if (endpoint.audiences.length > 0) {
+        convertedEndpoint.audiences = endpoint.audiences;
     }
 
     return {

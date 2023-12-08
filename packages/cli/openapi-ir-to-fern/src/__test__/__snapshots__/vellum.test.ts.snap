@@ -12,7 +12,6 @@ exports[`open api parser vellum simple 1`] = `
         "base-path": "",
         "endpoints": {
           "retrieve": {
-            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -45,7 +44,6 @@ Used to retrieve a deployment given its ID or name.
         "base-path": "",
         "endpoints": {
           "create": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -110,7 +108,6 @@ Creates a new document index.",
         "base-path": "",
         "endpoints": {
           "list": {
-            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
@@ -166,7 +163,6 @@ Used to list documents. Optionally filter on supported fields.
             },
           },
           "upload": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -223,7 +219,6 @@ Upload a document to be indexed and used for search.
         "base-path": "",
         "endpoints": {
           "model_version_compile_prompt": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -256,7 +251,6 @@ Compiles the prompt backing the model version using the provided input values.",
             },
           },
           "retrieve": {
-            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -289,7 +283,6 @@ Used to retrieve a model version given its ID.
         "base-path": "",
         "endpoints": {
           "register_prompt": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -365,7 +358,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
         "base-path": "",
         "endpoints": {
           "delete_sandbox_scenario": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -397,7 +389,6 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             },
           },
           "upsert_sandbox_scenario": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -453,7 +444,6 @@ or overwritten with default values.",
         "base-path": "",
         "endpoints": {
           "delete_test_suite_test_case": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -485,7 +475,6 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             },
           },
           "upsert_test_suite_test_case": {
-            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -586,7 +575,6 @@ or overwritten with default values.",
       "base-path": "",
       "endpoints": {
         "execute-workflow-stream": {
-          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -626,7 +614,6 @@ Executes a deployed Workflow and streams back its results.",
           },
         },
         "generate": {
-          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -700,7 +687,6 @@ Generate a completion using a previously defined deployment.
           },
         },
         "generate-stream": {
-          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -746,7 +732,6 @@ Generate a stream of completions using a previously defined deployment.
           },
         },
         "search": {
-          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -791,7 +776,6 @@ Perform a search against a document index.
           },
         },
         "submit-completion-actuals": {
-          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 

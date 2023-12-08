@@ -122,7 +122,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     }
 
     public addImport({ file, fileToImport }: { file: RelativeFilePath; fileToImport: RelativeFilePath }): string {
-        const importPrefix = camelCase(basename(fileToImport, extname(fileToImport)).replace("__package__", "root"));
+        const importPrefix = camelCase(basename(fileToImport, extname(fileToImport)).replaceAll("__package__", "root"));
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.imports == null) {
             fernFile.imports = {};

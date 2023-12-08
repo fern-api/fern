@@ -1,5 +1,4 @@
 import { buildEndpoint } from "./buildEndpoint";
-import { EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
@@ -17,14 +16,7 @@ export function buildServices(context: OpenApiIrConverterContext): { schemaIdsTo
         schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
         context.builder.addEndpoint(file, {
             name: endpointId,
-            schema: {
-                ...convertedEndpoint.value,
-                audiences:
-                    // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
-                    context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)
-                        ? [EXTERNAL_AUDIENCE, ...endpoint.audiences]
-                        : endpoint.audiences
-            }
+            schema: convertedEndpoint.value
         });
         if (irTag != null) {
             context.builder.setServiceDisplayName(file, irTag.id);

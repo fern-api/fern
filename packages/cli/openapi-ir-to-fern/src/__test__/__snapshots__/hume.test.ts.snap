@@ -13,7 +13,6 @@ exports[`open api parser hume simple 1`] = `
         "display-name": "Get Job Predictions",
         "endpoints": {
           "get_job": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
@@ -32,7 +31,6 @@ exports[`open api parser hume simple 1`] = `
             },
           },
           "get_job_artifacts": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
@@ -60,7 +58,6 @@ exports[`open api parser hume simple 1`] = `
       "base-path": "",
       "endpoints": {
         "Get Job Predictions": {
-          "audiences": [],
           "auth": true,
           "display-name": "Get Job Predictions",
           "docs": "Get the JSON predictions of a completed job.",
@@ -92,7 +89,6 @@ exports[`open api parser hume simple 1`] = `
           },
         },
         "List Jobs": {
-          "audiences": [],
           "auth": true,
           "display-name": "List Jobs",
           "docs": "Sort and filter jobs.",
@@ -156,7 +152,6 @@ exports[`open api parser hume simple 1`] = `
           },
         },
         "Start Job": {
-          "audiences": [],
           "auth": true,
           "display-name": "Start Job",
           "docs": "Start a new batch job.",
