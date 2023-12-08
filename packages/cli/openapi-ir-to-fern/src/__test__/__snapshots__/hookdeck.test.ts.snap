@@ -100,16 +100,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetAttemptsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
       },
@@ -393,31 +385,15 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetBookmarksRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "TriggerBookmarkRequestTarget": {
           "docs": "Bookmark target",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "http",
-              "value": "http",
-            },
-            {
-              "docs": undefined,
-              "name": "cli",
-              "value": "cli",
-            },
+            "http",
+            "cli",
           ],
         },
       },
@@ -928,16 +904,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetEventBulkRetriesRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
       },
@@ -1171,16 +1139,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetIgnoredEventBulkRetriesRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
       },
@@ -1595,31 +1555,15 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateRequestBulkRetryRequestQueryStatus": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "accepted",
-              "value": "accepted",
-            },
-            {
-              "docs": undefined,
-              "name": "rejected",
-              "value": "rejected",
-            },
+            "accepted",
+            "rejected",
           ],
         },
         "GetRequestBulkRetriesRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
       },
@@ -2021,21 +1965,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "second",
-              "value": "second",
-            },
-            {
-              "docs": undefined,
-              "name": "minute",
-              "value": "minute",
-            },
-            {
-              "docs": undefined,
-              "name": "hour",
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "CreateConnectionRequestRuleset": {
@@ -2064,16 +1996,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetConnectionsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "UpdateConnectionRequestRuleset": {
@@ -2119,21 +2043,9 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpsertConnectionRequestDestinationRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "second",
-              "value": "second",
-            },
-            {
-              "docs": undefined,
-              "name": "minute",
-              "value": "minute",
-            },
-            {
-              "docs": undefined,
-              "name": "hour",
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "UpsertConnectionRequestRuleset": {
@@ -2469,76 +2381,32 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "second",
-              "value": "second",
-            },
-            {
-              "docs": undefined,
-              "name": "minute",
-              "value": "minute",
-            },
-            {
-              "docs": undefined,
-              "name": "hour",
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "GetDestinationsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "UpdateDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "second",
-              "value": "second",
-            },
-            {
-              "docs": undefined,
-              "name": "minute",
-              "value": "minute",
-            },
-            {
-              "docs": undefined,
-              "name": "hour",
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
         "UpsertDestinationRequestRateLimitPeriod": {
           "docs": "Period to rate limit attempts",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "second",
-              "value": "second",
-            },
-            {
-              "docs": undefined,
-              "name": "minute",
-              "value": "minute",
-            },
-            {
-              "docs": undefined,
-              "name": "hour",
-              "value": "hour",
-            },
+            "second",
+            "minute",
+            "hour",
           ],
         },
       },
@@ -2802,36 +2670,16 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetEventsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetEventsRequestOrderBy": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "last_attempt_at",
-              "value": "last_attempt_at",
-            },
-            {
-              "docs": undefined,
-              "name": "next_attempt_at",
-              "value": "next_attempt_at",
-            },
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
+            "last_attempt_at",
+            "next_attempt_at",
+            "created_at",
           ],
         },
       },
@@ -3390,31 +3238,15 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetIssueTriggersRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetIssueTriggersRequestOrderBy": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-            {
-              "docs": undefined,
-              "name": "type",
-              "value": "type",
-            },
+            "created_at",
+            "type",
           ],
         },
         "UpdateIssueTriggerRequestConfigs": {
@@ -3730,206 +3562,78 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetIssueCountRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetIssueCountRequestOrderBy": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-            {
-              "docs": undefined,
-              "name": "first_seen_at",
-              "value": "first_seen_at",
-            },
-            {
-              "docs": undefined,
-              "name": "last_seen_at",
-              "value": "last_seen_at",
-            },
-            {
-              "docs": undefined,
-              "name": "opened_at",
-              "value": "opened_at",
-            },
-            {
-              "docs": undefined,
-              "name": "status",
-              "value": "status",
-            },
+            "created_at",
+            "first_seen_at",
+            "last_seen_at",
+            "opened_at",
+            "status",
           ],
         },
         "GetIssueCountRequestStatus": {
           "docs": "Issue status",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "OPENED",
-              "value": "OPENED",
-            },
-            {
-              "docs": undefined,
-              "name": "IGNORED",
-              "value": "IGNORED",
-            },
-            {
-              "docs": undefined,
-              "name": "ACKNOWLEDGED",
-              "value": "ACKNOWLEDGED",
-            },
-            {
-              "docs": undefined,
-              "name": "RESOLVED",
-              "value": "RESOLVED",
-            },
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
           ],
         },
         "GetIssueCountRequestType": {
           "docs": "Issue type",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "delivery",
-              "value": "delivery",
-            },
-            {
-              "docs": undefined,
-              "name": "transformation",
-              "value": "transformation",
-            },
-            {
-              "docs": undefined,
-              "name": "backpressure",
-              "value": "backpressure",
-            },
+            "delivery",
+            "transformation",
+            "backpressure",
           ],
         },
         "GetIssuesRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetIssuesRequestOrderBy": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-            {
-              "docs": undefined,
-              "name": "first_seen_at",
-              "value": "first_seen_at",
-            },
-            {
-              "docs": undefined,
-              "name": "last_seen_at",
-              "value": "last_seen_at",
-            },
-            {
-              "docs": undefined,
-              "name": "opened_at",
-              "value": "opened_at",
-            },
-            {
-              "docs": undefined,
-              "name": "status",
-              "value": "status",
-            },
+            "created_at",
+            "first_seen_at",
+            "last_seen_at",
+            "opened_at",
+            "status",
           ],
         },
         "GetIssuesRequestStatus": {
           "docs": "Issue status",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "OPENED",
-              "value": "OPENED",
-            },
-            {
-              "docs": undefined,
-              "name": "IGNORED",
-              "value": "IGNORED",
-            },
-            {
-              "docs": undefined,
-              "name": "ACKNOWLEDGED",
-              "value": "ACKNOWLEDGED",
-            },
-            {
-              "docs": undefined,
-              "name": "RESOLVED",
-              "value": "RESOLVED",
-            },
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
           ],
         },
         "GetIssuesRequestType": {
           "docs": "Issue type",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "delivery",
-              "value": "delivery",
-            },
-            {
-              "docs": undefined,
-              "name": "transformation",
-              "value": "transformation",
-            },
-            {
-              "docs": undefined,
-              "name": "backpressure",
-              "value": "backpressure",
-            },
+            "delivery",
+            "transformation",
+            "backpressure",
           ],
         },
         "UpdateIssueRequestStatus": {
           "docs": "New status",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "OPENED",
-              "value": "OPENED",
-            },
-            {
-              "docs": undefined,
-              "name": "IGNORED",
-              "value": "IGNORED",
-            },
-            {
-              "docs": undefined,
-              "name": "ACKNOWLEDGED",
-              "value": "ACKNOWLEDGED",
-            },
-            {
-              "docs": undefined,
-              "name": "RESOLVED",
-              "value": "RESOLVED",
-            },
+            "OPENED",
+            "IGNORED",
+            "ACKNOWLEDGED",
+            "RESOLVED",
           ],
         },
       },
@@ -4446,96 +4150,44 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetRequestEventsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetRequestEventsRequestOrderBy": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "last_attempt_at",
-              "value": "last_attempt_at",
-            },
-            {
-              "docs": undefined,
-              "name": "next_attempt_at",
-              "value": "next_attempt_at",
-            },
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
+            "last_attempt_at",
+            "next_attempt_at",
+            "created_at",
           ],
         },
         "GetRequestIgnoredEventsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetRequestsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetRequestsRequestOrderBy": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "ingested_at",
-              "value": "ingested_at",
-            },
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
+            "ingested_at",
+            "created_at",
           ],
         },
         "GetRequestsRequestStatus": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "accepted",
-              "value": "accepted",
-            },
-            {
-              "docs": undefined,
-              "name": "rejected",
-              "value": "rejected",
-            },
+            "accepted",
+            "rejected",
           ],
         },
       },
@@ -4802,16 +4454,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetRulesetsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
       },
@@ -5068,16 +4712,8 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetSourcesRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
       },
@@ -5477,61 +5113,25 @@ exports[`open api parser hookdeck simple 1`] = `
         "GetTransformationExecutionsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "GetTransformationExecutionsRequestLogLevel": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "debug",
-              "value": "debug",
-            },
-            {
-              "docs": undefined,
-              "name": "info",
-              "value": "info",
-            },
-            {
-              "docs": undefined,
-              "name": "warn",
-              "value": "warn",
-            },
-            {
-              "docs": undefined,
-              "name": "error",
-              "value": "error",
-            },
-            {
-              "docs": undefined,
-              "name": "fatal",
-              "value": "fatal",
-            },
+            "debug",
+            "info",
+            "warn",
+            "error",
+            "fatal",
           ],
         },
         "GetTransformationsRequestDir": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "TestTransformationRequestEnv": {
@@ -5624,16 +5224,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "AlertStrategy": {
         "docs": "Alert strategy to use",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "each_attempt",
-            "value": "each_attempt",
-          },
-          {
-            "docs": undefined,
-            "name": "last_attempt",
-            "value": "last_attempt",
-          },
+          "each_attempt",
+          "last_attempt",
         ],
       },
       "ApiErrorResponse": {
@@ -5674,127 +5266,35 @@ exports[`open api parser hookdeck simple 1`] = `
       "AttemptErrorCodes": {
         "docs": "Attempt could not complete because of an error",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "TIMEOUT",
-            "value": "TIMEOUT",
-          },
-          {
-            "docs": undefined,
-            "name": "NOT_FOUND",
-            "value": "NOT_FOUND",
-          },
-          {
-            "docs": undefined,
-            "name": "CONNECTION_REFUSED",
-            "value": "CONNECTION_REFUSED",
-          },
-          {
-            "docs": undefined,
-            "name": "CONNECTION_RESET",
-            "value": "CONNECTION_RESET",
-          },
-          {
-            "docs": undefined,
-            "name": "MISSING_URL",
-            "value": "MISSING_URL",
-          },
-          {
-            "docs": undefined,
-            "name": "CLI",
-            "value": "CLI",
-          },
-          {
-            "docs": undefined,
-            "name": "CLI_UNAVAILABLE",
-            "value": "CLI_UNAVAILABLE",
-          },
-          {
-            "docs": undefined,
-            "name": "SELF_SIGNED_CERT",
-            "value": "SELF_SIGNED_CERT",
-          },
-          {
-            "docs": undefined,
-            "name": "ERR_TLS_CERT_ALTNAME_INVALID",
-            "value": "ERR_TLS_CERT_ALTNAME_INVALID",
-          },
-          {
-            "docs": undefined,
-            "name": "SSL_ERROR_CA_UNKNOWN",
-            "value": "SSL_ERROR_CA_UNKNOWN",
-          },
-          {
-            "docs": undefined,
-            "name": "TTL_EXPIRED",
-            "value": "TTL_EXPIRED",
-          },
-          {
-            "docs": undefined,
-            "name": "DATA_ARCHIVED",
-            "value": "DATA_ARCHIVED",
-          },
-          {
-            "docs": undefined,
-            "name": "SSL_CERT_EXPIRED",
-            "value": "SSL_CERT_EXPIRED",
-          },
-          {
-            "docs": undefined,
-            "name": "BULK_RETRY_CANCELLED",
-            "value": "BULK_RETRY_CANCELLED",
-          },
-          {
-            "docs": undefined,
-            "name": "DNS_LOOKUP_FAILED",
-            "value": "DNS_LOOKUP_FAILED",
-          },
-          {
-            "docs": undefined,
-            "name": "HOST_UNREACHABLE",
-            "value": "HOST_UNREACHABLE",
-          },
-          {
-            "docs": undefined,
-            "name": "PROTOCOL_ERROR",
-            "value": "PROTOCOL_ERROR",
-          },
-          {
-            "docs": undefined,
-            "name": "SOCKET_CLOSED",
-            "value": "SOCKET_CLOSED",
-          },
-          {
-            "docs": undefined,
-            "name": "UNKNOWN",
-            "value": "UNKNOWN",
-          },
+          "TIMEOUT",
+          "NOT_FOUND",
+          "CONNECTION_REFUSED",
+          "CONNECTION_RESET",
+          "MISSING_URL",
+          "CLI",
+          "CLI_UNAVAILABLE",
+          "SELF_SIGNED_CERT",
+          "ERR_TLS_CERT_ALTNAME_INVALID",
+          "SSL_ERROR_CA_UNKNOWN",
+          "TTL_EXPIRED",
+          "DATA_ARCHIVED",
+          "SSL_CERT_EXPIRED",
+          "BULK_RETRY_CANCELLED",
+          "DNS_LOOKUP_FAILED",
+          "HOST_UNREACHABLE",
+          "PROTOCOL_ERROR",
+          "SOCKET_CLOSED",
+          "UNKNOWN",
         ],
       },
       "AttemptState": "optional<AttemptState>",
       "AttemptStatus": {
         "docs": "Attempt status",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "QUEUED",
-            "value": "QUEUED",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
-          {
-            "docs": undefined,
-            "name": "SUCCESSFUL",
-            "value": "SUCCESSFUL",
-          },
-          {
-            "docs": undefined,
-            "name": "HOLD",
-            "value": "HOLD",
-          },
+          "QUEUED",
+          "FAILED",
+          "SUCCESSFUL",
+          "HOLD",
         ],
       },
       "AttemptTrigger": {
@@ -6023,31 +5523,11 @@ exports[`open api parser hookdeck simple 1`] = `
       "ConsoleLineType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "error",
-            "value": "error",
-          },
-          {
-            "docs": undefined,
-            "name": "log",
-            "value": "log",
-          },
-          {
-            "docs": undefined,
-            "name": "warn",
-            "value": "warn",
-          },
-          {
-            "docs": undefined,
-            "name": "info",
-            "value": "info",
-          },
-          {
-            "docs": undefined,
-            "name": "debug",
-            "value": "debug",
-          },
+          "error",
+          "log",
+          "warn",
+          "info",
+          "debug",
         ],
       },
       "DelayRule": {
@@ -6390,31 +5870,11 @@ exports[`open api parser hookdeck simple 1`] = `
       "EventStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "SCHEDULED",
-            "value": "SCHEDULED",
-          },
-          {
-            "docs": undefined,
-            "name": "QUEUED",
-            "value": "QUEUED",
-          },
-          {
-            "docs": undefined,
-            "name": "HOLD",
-            "value": "HOLD",
-          },
-          {
-            "docs": undefined,
-            "name": "SUCCESSFUL",
-            "value": "SUCCESSFUL",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
+          "SCHEDULED",
+          "QUEUED",
+          "HOLD",
+          "SUCCESSFUL",
+          "FAILED",
         ],
       },
       "FilterRule": {
@@ -6430,26 +5890,10 @@ exports[`open api parser hookdeck simple 1`] = `
       "FilteredMeta": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "body",
-            "value": "body",
-          },
-          {
-            "docs": undefined,
-            "name": "headers",
-            "value": "headers",
-          },
-          {
-            "docs": undefined,
-            "name": "path",
-            "value": "path",
-          },
-          {
-            "docs": undefined,
-            "name": "query",
-            "value": "query",
-          },
+          "body",
+          "headers",
+          "path",
+          "query",
         ],
       },
       "HandledHmacConfigs": {
@@ -6461,26 +5905,10 @@ exports[`open api parser hookdeck simple 1`] = `
       "HmacAlgorithms": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "md5",
-            "value": "md5",
-          },
-          {
-            "docs": undefined,
-            "name": "sha1",
-            "value": "sha1",
-          },
-          {
-            "docs": undefined,
-            "name": "sha256",
-            "value": "sha256",
-          },
-          {
-            "docs": undefined,
-            "name": "sha512",
-            "value": "sha512",
-          },
+          "md5",
+          "sha1",
+          "sha256",
+          "sha512",
         ],
       },
       "HmacIntegrationConfigs": {
@@ -6495,16 +5923,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "HmacIntegrationConfigsEncoding": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "base64",
-            "value": "base64",
-          },
-          {
-            "docs": undefined,
-            "name": "hex",
-            "value": "hex",
-          },
+          "base64",
+          "hex",
         ],
       },
       "IgnoredEvent": {
@@ -6523,26 +5943,10 @@ exports[`open api parser hookdeck simple 1`] = `
       "IgnoredEventCause": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ARCHIVED",
-            "value": "ARCHIVED",
-          },
-          {
-            "docs": undefined,
-            "name": "FILTERED",
-            "value": "FILTERED",
-          },
-          {
-            "docs": undefined,
-            "name": "TRANSFORMATION_FAILED",
-            "value": "TRANSFORMATION_FAILED",
-          },
-          {
-            "docs": undefined,
-            "name": "CLI_DISCONNECTED",
-            "value": "CLI_DISCONNECTED",
-          },
+          "ARCHIVED",
+          "FILTERED",
+          "TRANSFORMATION_FAILED",
+          "CLI_DISCONNECTED",
         ],
       },
       "IgnoredEventMeta": {
@@ -6613,21 +6017,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "IntegrationFeature": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "VERIFICATION",
-            "value": "VERIFICATION",
-          },
-          {
-            "docs": undefined,
-            "name": "HANDSHAKE",
-            "value": "HANDSHAKE",
-          },
-          {
-            "docs": undefined,
-            "name": "POLLING",
-            "value": "POLLING",
-          },
+          "VERIFICATION",
+          "HANDSHAKE",
+          "POLLING",
         ],
       },
       "IntegrationPaginatedResult": {
@@ -6641,121 +6033,34 @@ exports[`open api parser hookdeck simple 1`] = `
       "IntegrationProvider": {
         "docs": "The provider name",
         "enum": [
+          "twitter",
+          "stripe",
+          "recharge",
+          "github",
+          "shopify",
+          "postmark",
+          "typeform",
+          "hmac",
+          "basic_auth",
+          "api_key",
+          "xero",
+          "svix",
+          "zoom",
+          "akeneo",
+          "adyen",
+          "gitlab",
           {
-            "docs": undefined,
-            "name": "twitter",
-            "value": "twitter",
-          },
-          {
-            "docs": undefined,
-            "name": "stripe",
-            "value": "stripe",
-          },
-          {
-            "docs": undefined,
-            "name": "recharge",
-            "value": "recharge",
-          },
-          {
-            "docs": undefined,
-            "name": "github",
-            "value": "github",
-          },
-          {
-            "docs": undefined,
-            "name": "shopify",
-            "value": "shopify",
-          },
-          {
-            "docs": undefined,
-            "name": "postmark",
-            "value": "postmark",
-          },
-          {
-            "docs": undefined,
-            "name": "typeform",
-            "value": "typeform",
-          },
-          {
-            "docs": undefined,
-            "name": "hmac",
-            "value": "hmac",
-          },
-          {
-            "docs": undefined,
-            "name": "basic_auth",
-            "value": "basic_auth",
-          },
-          {
-            "docs": undefined,
-            "name": "api_key",
-            "value": "api_key",
-          },
-          {
-            "docs": undefined,
-            "name": "xero",
-            "value": "xero",
-          },
-          {
-            "docs": undefined,
-            "name": "svix",
-            "value": "svix",
-          },
-          {
-            "docs": undefined,
-            "name": "zoom",
-            "value": "zoom",
-          },
-          {
-            "docs": undefined,
-            "name": "akeneo",
-            "value": "akeneo",
-          },
-          {
-            "docs": undefined,
-            "name": "adyen",
-            "value": "adyen",
-          },
-          {
-            "docs": undefined,
-            "name": "gitlab",
-            "value": "gitlab",
-          },
-          {
-            "docs": undefined,
-            "name": "PropertyFinder",
+            "description": undefined,
+            "generatedName": "PropertyFinder",
+            "nameOverride": undefined,
             "value": "property-finder",
           },
-          {
-            "docs": undefined,
-            "name": "woocommerce",
-            "value": "woocommerce",
-          },
-          {
-            "docs": undefined,
-            "name": "oura",
-            "value": "oura",
-          },
-          {
-            "docs": undefined,
-            "name": "commercelayer",
-            "value": "commercelayer",
-          },
-          {
-            "docs": undefined,
-            "name": "mailgun",
-            "value": "mailgun",
-          },
-          {
-            "docs": undefined,
-            "name": "pipedrive",
-            "value": "pipedrive",
-          },
-          {
-            "docs": undefined,
-            "name": "sendgrid",
-            "value": "sendgrid",
-          },
+          "woocommerce",
+          "oura",
+          "commercelayer",
+          "mailgun",
+          "pipedrive",
+          "sendgrid",
         ],
       },
       "Issue": {
@@ -6779,26 +6084,10 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueStatus": {
         "docs": "Issue status",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "OPENED",
-            "value": "OPENED",
-          },
-          {
-            "docs": undefined,
-            "name": "IGNORED",
-            "value": "IGNORED",
-          },
-          {
-            "docs": undefined,
-            "name": "ACKNOWLEDGED",
-            "value": "ACKNOWLEDGED",
-          },
-          {
-            "docs": undefined,
-            "name": "RESOLVED",
-            "value": "RESOLVED",
-          },
+          "OPENED",
+          "IGNORED",
+          "ACKNOWLEDGED",
+          "RESOLVED",
         ],
       },
       "IssueTrigger": {
@@ -6918,16 +6207,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueTriggerStrategy": {
         "docs": "The strategy uses to open the issue",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "first_attempt",
-            "value": "first_attempt",
-          },
-          {
-            "docs": undefined,
-            "name": "final_attempt",
-            "value": "final_attempt",
-          },
+          "first_attempt",
+          "final_attempt",
         ],
       },
       "IssueTriggerTransformationConfigs": {
@@ -6951,21 +6232,9 @@ exports[`open api parser hookdeck simple 1`] = `
       "IssueType": {
         "docs": "Issue type",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "delivery",
-            "value": "delivery",
-          },
-          {
-            "docs": undefined,
-            "name": "transformation",
-            "value": "transformation",
-          },
-          {
-            "docs": undefined,
-            "name": "backpressure",
-            "value": "backpressure",
-          },
+          "delivery",
+          "transformation",
+          "backpressure",
         ],
       },
       "IssueWithData": {
@@ -6988,26 +6257,10 @@ exports[`open api parser hookdeck simple 1`] = `
       "OrderByDirection": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "asc",
-            "value": "asc",
-          },
-          {
-            "docs": undefined,
-            "name": "desc",
-            "value": "desc",
-          },
-          {
-            "docs": undefined,
-            "name": "ASC",
-            "value": "ASC",
-          },
-          {
-            "docs": undefined,
-            "name": "DESC",
-            "value": "DESC",
-          },
+          "asc",
+          "desc",
+          "ASC",
+          "DESC",
         ],
       },
       "RawBody": {
@@ -7124,16 +6377,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "RequestIngestPriority": {
         "docs": "The priority attributed to the request when received",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "NORMAL",
-            "value": "NORMAL",
-          },
-          {
-            "docs": undefined,
-            "name": "LOW",
-            "value": "LOW",
-          },
+          "NORMAL",
+          "LOW",
         ],
       },
       "RequestPaginatedResult": {
@@ -7147,51 +6392,15 @@ exports[`open api parser hookdeck simple 1`] = `
       "RequestRejectionCause": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "SOURCE_ARCHIVED",
-            "value": "SOURCE_ARCHIVED",
-          },
-          {
-            "docs": undefined,
-            "name": "NO_WEBHOOK",
-            "value": "NO_WEBHOOK",
-          },
-          {
-            "docs": undefined,
-            "name": "VERIFICATION_FAILED",
-            "value": "VERIFICATION_FAILED",
-          },
-          {
-            "docs": undefined,
-            "name": "UNSUPPORTED_HTTP_METHOD",
-            "value": "UNSUPPORTED_HTTP_METHOD",
-          },
-          {
-            "docs": undefined,
-            "name": "UNSUPPORTED_CONTENT_TYPE",
-            "value": "UNSUPPORTED_CONTENT_TYPE",
-          },
-          {
-            "docs": undefined,
-            "name": "UNPARSABLE_JSON",
-            "value": "UNPARSABLE_JSON",
-          },
-          {
-            "docs": undefined,
-            "name": "PAYLOAD_TOO_LARGE",
-            "value": "PAYLOAD_TOO_LARGE",
-          },
-          {
-            "docs": undefined,
-            "name": "INGESTION_FATAL",
-            "value": "INGESTION_FATAL",
-          },
-          {
-            "docs": undefined,
-            "name": "UNKNOWN",
-            "value": "UNKNOWN",
-          },
+          "SOURCE_ARCHIVED",
+          "NO_WEBHOOK",
+          "VERIFICATION_FAILED",
+          "UNSUPPORTED_HTTP_METHOD",
+          "UNSUPPORTED_CONTENT_TYPE",
+          "UNPARSABLE_JSON",
+          "PAYLOAD_TOO_LARGE",
+          "INGESTION_FATAL",
+          "UNKNOWN",
         ],
       },
       "RetriedEvent": {
@@ -7226,16 +6435,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "RetryStrategy": {
         "docs": "Algorithm to use when calculating delay between retries",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "linear",
-            "value": "linear",
-          },
-          {
-            "docs": undefined,
-            "name": "exponential",
-            "value": "exponential",
-          },
+          "linear",
+          "exponential",
         ],
       },
       "Rule": {
@@ -7301,16 +6502,8 @@ exports[`open api parser hookdeck simple 1`] = `
       "ShopifyIntegrationConfigsRateLimitPeriod": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "minute",
-            "value": "minute",
-          },
-          {
-            "docs": undefined,
-            "name": "second",
-            "value": "second",
-          },
+          "minute",
+          "second",
         ],
       },
       "ShortEventData": "optional<ShortEventData>",
@@ -7426,23 +6619,27 @@ exports[`open api parser hookdeck simple 1`] = `
         "docs": "Supported topics",
         "enum": [
           {
-            "docs": undefined,
-            "name": "IssueOpened",
+            "description": undefined,
+            "generatedName": "IssueOpened",
+            "nameOverride": undefined,
             "value": "issue.opened",
           },
           {
-            "docs": undefined,
-            "name": "IssueUpdated",
+            "description": undefined,
+            "generatedName": "IssueUpdated",
+            "nameOverride": undefined,
             "value": "issue.updated",
           },
           {
-            "docs": undefined,
-            "name": "DeprecatedAttemptFailed",
+            "description": undefined,
+            "generatedName": "DeprecatedAttemptFailed",
+            "nameOverride": undefined,
             "value": "deprecated.attempt-failed",
           },
           {
-            "docs": undefined,
-            "name": "EventSuccessful",
+            "description": undefined,
+            "generatedName": "EventSuccessful",
+            "nameOverride": undefined,
             "value": "event.successful",
           },
         ],
@@ -7552,31 +6749,11 @@ exports[`open api parser hookdeck simple 1`] = `
       "TransformationExecutionLogLevel": {
         "docs": "The minimum log level to open the issue on",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "debug",
-            "value": "debug",
-          },
-          {
-            "docs": undefined,
-            "name": "info",
-            "value": "info",
-          },
-          {
-            "docs": undefined,
-            "name": "warn",
-            "value": "warn",
-          },
-          {
-            "docs": undefined,
-            "name": "error",
-            "value": "error",
-          },
-          {
-            "docs": undefined,
-            "name": "fatal",
-            "value": "fatal",
-          },
+          "debug",
+          "info",
+          "warn",
+          "error",
+          "fatal",
         ],
       },
       "TransformationExecutionPaginatedResult": {

@@ -542,22 +542,18 @@ The LLM response data, as well as any context provided in the original request w
           "enum": [
             {
               "docs": "The audio file is in the queue to be processed by the API.",
-              "name": "queued",
               "value": "queued",
             },
             {
               "docs": "The audio file is being processed by the API.",
-              "name": "processing",
               "value": "processing",
             },
             {
               "docs": "The transcription job has been completed successfully.",
-              "name": "completed",
               "value": "completed",
             },
             {
               "docs": "An error occurred while processing the audio file.",
-              "name": "error",
               "value": "error",
             },
           ],
@@ -596,16 +592,8 @@ The LLM response data, as well as any context provided in the original request w
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "success",
-            "value": "success",
-          },
-          {
-            "docs": undefined,
-            "name": "unavailable",
-            "value": "unavailable",
-          },
+          "success",
+          "unavailable",
         ],
       },
       "AutoHighlightResult": {
@@ -881,150 +869,121 @@ Valid values are in the range [0, 1] inclusive.
         "enum": [
           {
             "docs": "Banking information, including account and routing numbers",
-            "name": "banking_information",
             "value": "banking_information",
           },
           {
             "docs": "Blood type (e.g., O-, AB positive)",
-            "name": "blood_type",
             "value": "blood_type",
           },
           {
             "docs": "Credit card verification code (e.g., CVV: 080)
 ",
-            "name": "credit_card_cvv",
             "value": "credit_card_cvv",
           },
           {
             "docs": "Expiration date of a credit card",
-            "name": "credit_card_expiration",
             "value": "credit_card_expiration",
           },
           {
             "docs": "Credit card number",
-            "name": "credit_card_number",
             "value": "credit_card_number",
           },
           {
             "docs": "Specific calendar date (e.g., December 18)",
-            "name": "date",
             "value": "date",
           },
           {
             "docs": "Date of Birth (e.g., Date of Birth: March 7, 1961)
 ",
-            "name": "date_of_birth",
             "value": "date_of_birth",
           },
           {
             "docs": "Driver's license number (e.g., DL #356933-540)
 ",
-            "name": "drivers_license",
             "value": "drivers_license",
           },
           {
             "docs": "Medications, vitamins, or supplements (e.g., Advil, Acetaminophen, Panadol)",
-            "name": "drug",
             "value": "drug",
           },
           {
             "docs": "Email address (e.g., support@assemblyai.com)",
-            "name": "email_address",
             "value": "email_address",
           },
           {
             "docs": "Name of an event or holiday (e.g., Olympics, Yom Kippur)",
-            "name": "event",
             "value": "event",
           },
           {
             "docs": "Bodily injury (e.g., I broke my arm, I have a sprained wrist)",
-            "name": "injury",
             "value": "injury",
           },
           {
             "docs": "Name of a natural language (e.g., Spanish, French)",
-            "name": "language",
             "value": "language",
           },
           {
             "docs": "Any location reference including mailing address, postal code, city, state, province, or country",
-            "name": "location",
             "value": "location",
           },
           {
             "docs": "Name of a medical condition, disease, syndrome, deficit, or disorder (e.g., chronic fatigue syndrome, arrhythmia, depression)",
-            "name": "medical_condition",
             "value": "medical_condition",
           },
           {
             "docs": "Medical process, including treatments, procedures, and tests (e.g., heart surgery, CT scan)",
-            "name": "medical_process",
             "value": "medical_process",
           },
           {
             "docs": "Name and/or amount of currency (e.g., 15 pesos, $94.50)",
-            "name": "money_amount",
             "value": "money_amount",
           },
           {
             "docs": "Terms indicating nationality, ethnicity, or race (e.g., American, Asian, Caucasian)",
-            "name": "nationality",
             "value": "nationality",
           },
           {
             "docs": "Job title or profession (e.g., professor, actors, engineer, CPA)",
-            "name": "occupation",
             "value": "occupation",
           },
           {
             "docs": "Name of an organization (e.g., CNN, McDonalds, University of Alaska)",
-            "name": "organization",
             "value": "organization",
           },
           {
             "docs": "Account passwords, PINs, access keys, or verification answers (e.g., 27%alfalfa, temp1234, My mother's maiden name is Smith)",
-            "name": "password",
             "value": "password",
           },
           {
             "docs": "Number associated with an age (e.g., 27, 75)",
-            "name": "person_age",
             "value": "person_age",
           },
           {
             "docs": "Name of a person (e.g., Bob, Doug Jones)",
-            "name": "person_name",
             "value": "person_name",
           },
           {
             "docs": "Telephone or fax number",
-            "name": "phone_number",
             "value": "phone_number",
           },
           {
             "docs": "Terms referring to a political party, movement, or ideology (e.g., Republican, Liberal)",
-            "name": "political_affiliation",
             "value": "political_affiliation",
           },
           {
             "docs": "Terms indicating religious affiliation (e.g., Hindu, Catholic)",
-            "name": "religion",
             "value": "religion",
           },
           {
             "docs": "Expressions indicating clock times (e.g., 19:37:28, 10pm EST)",
-            "name": "time",
             "value": "time",
           },
           {
             "docs": "Internet addresses (e.g., www.assemblyai.com)",
-            "name": "url",
             "value": "url",
           },
           {
             "docs": "Social Security Number or equivalent",
-            "name": "us_social_security_number",
             "value": "us_social_security_number",
           },
         ],
@@ -1098,16 +1057,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "default",
-            "value": "default",
-          },
-          {
-            "docs": undefined,
-            "name": "basic",
-            "value": "basic",
-          },
+          "default",
+          "basic",
         ],
       },
       "LemurQuestion": {
@@ -1212,141 +1163,33 @@ Can be any value between 0.0 and 1.0 inclusive.
       "PiiPolicy": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "medical_process",
-            "value": "medical_process",
-          },
-          {
-            "docs": undefined,
-            "name": "medical_condition",
-            "value": "medical_condition",
-          },
-          {
-            "docs": undefined,
-            "name": "blood_type",
-            "value": "blood_type",
-          },
-          {
-            "docs": undefined,
-            "name": "drug",
-            "value": "drug",
-          },
-          {
-            "docs": undefined,
-            "name": "injury",
-            "value": "injury",
-          },
-          {
-            "docs": undefined,
-            "name": "number_sequence",
-            "value": "number_sequence",
-          },
-          {
-            "docs": undefined,
-            "name": "email_address",
-            "value": "email_address",
-          },
-          {
-            "docs": undefined,
-            "name": "date_of_birth",
-            "value": "date_of_birth",
-          },
-          {
-            "docs": undefined,
-            "name": "phone_number",
-            "value": "phone_number",
-          },
-          {
-            "docs": undefined,
-            "name": "us_social_security_number",
-            "value": "us_social_security_number",
-          },
-          {
-            "docs": undefined,
-            "name": "credit_card_number",
-            "value": "credit_card_number",
-          },
-          {
-            "docs": undefined,
-            "name": "credit_card_expiration",
-            "value": "credit_card_expiration",
-          },
-          {
-            "docs": undefined,
-            "name": "credit_card_cvv",
-            "value": "credit_card_cvv",
-          },
-          {
-            "docs": undefined,
-            "name": "date",
-            "value": "date",
-          },
-          {
-            "docs": undefined,
-            "name": "nationality",
-            "value": "nationality",
-          },
-          {
-            "docs": undefined,
-            "name": "event",
-            "value": "event",
-          },
-          {
-            "docs": undefined,
-            "name": "language",
-            "value": "language",
-          },
-          {
-            "docs": undefined,
-            "name": "location",
-            "value": "location",
-          },
-          {
-            "docs": undefined,
-            "name": "money_amount",
-            "value": "money_amount",
-          },
-          {
-            "docs": undefined,
-            "name": "person_name",
-            "value": "person_name",
-          },
-          {
-            "docs": undefined,
-            "name": "person_age",
-            "value": "person_age",
-          },
-          {
-            "docs": undefined,
-            "name": "organization",
-            "value": "organization",
-          },
-          {
-            "docs": undefined,
-            "name": "political_affiliation",
-            "value": "political_affiliation",
-          },
-          {
-            "docs": undefined,
-            "name": "occupation",
-            "value": "occupation",
-          },
-          {
-            "docs": undefined,
-            "name": "religion",
-            "value": "religion",
-          },
-          {
-            "docs": undefined,
-            "name": "drivers_license",
-            "value": "drivers_license",
-          },
-          {
-            "docs": undefined,
-            "name": "banking_information",
-            "value": "banking_information",
-          },
+          "medical_process",
+          "medical_condition",
+          "blood_type",
+          "drug",
+          "injury",
+          "number_sequence",
+          "email_address",
+          "date_of_birth",
+          "phone_number",
+          "us_social_security_number",
+          "credit_card_number",
+          "credit_card_expiration",
+          "credit_card_cvv",
+          "date",
+          "nationality",
+          "event",
+          "language",
+          "location",
+          "money_amount",
+          "person_name",
+          "person_age",
+          "organization",
+          "political_affiliation",
+          "occupation",
+          "religion",
+          "drivers_license",
+          "banking_information",
         ],
       },
       "PurgeLemurRequestDataResponse": {
@@ -1401,21 +1244,9 @@ Can be any value between 0.0 and 1.0 inclusive.
       "Sentiment": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "POSITIVE",
-            "value": "POSITIVE",
-          },
-          {
-            "docs": undefined,
-            "name": "NEUTRAL",
-            "value": "NEUTRAL",
-          },
-          {
-            "docs": undefined,
-            "name": "NEGATIVE",
-            "value": "NEGATIVE",
-          },
+          "POSITIVE",
+          "NEUTRAL",
+          "NEGATIVE",
         ],
       },
       "SentimentAnalysisResult": {
@@ -1458,81 +1289,33 @@ Can be any value between 0.0 and 1.0 inclusive.
       "SubstitutionPolicy": {
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "entity_type",
-            "value": "entity_type",
-          },
-          {
-            "docs": undefined,
-            "name": "hash",
-            "value": "hash",
-          },
+          "entity_type",
+          "hash",
         ],
       },
       "SubtitleFormat": {
         "docs": "Format of the subtitles",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "srt",
-            "value": "srt",
-          },
-          {
-            "docs": undefined,
-            "name": "vtt",
-            "value": "vtt",
-          },
+          "srt",
+          "vtt",
         ],
       },
       "SummaryModel": {
         "docs": "The model to summarize the transcript",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "informative",
-            "value": "informative",
-          },
-          {
-            "docs": undefined,
-            "name": "conversational",
-            "value": "conversational",
-          },
-          {
-            "docs": undefined,
-            "name": "catchy",
-            "value": "catchy",
-          },
+          "informative",
+          "conversational",
+          "catchy",
         ],
       },
       "SummaryType": {
         "docs": "The type of summary",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "bullets",
-            "value": "bullets",
-          },
-          {
-            "docs": undefined,
-            "name": "bullets_verbose",
-            "value": "bullets_verbose",
-          },
-          {
-            "docs": undefined,
-            "name": "gist",
-            "value": "gist",
-          },
-          {
-            "docs": undefined,
-            "name": "headline",
-            "value": "headline",
-          },
-          {
-            "docs": undefined,
-            "name": "paragraph",
-            "value": "paragraph",
-          },
+          "bullets",
+          "bullets_verbose",
+          "gist",
+          "headline",
+          "paragraph",
         ],
       },
       "Timestamp": {
@@ -1827,21 +1610,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
       "TranscriptBoostParam": {
         "docs": "The word boost parameter value, if provided in the transcription request.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "low",
-            "value": "low",
-          },
-          {
-            "docs": undefined,
-            "name": "default",
-            "value": "default",
-          },
-          {
-            "docs": undefined,
-            "name": "high",
-            "value": "high",
-          },
+          "low",
+          "default",
+          "high",
         ],
       },
       "TranscriptContentSafetyLabels": {
@@ -1893,106 +1664,26 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
 The default value is 'en_us'.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "en",
-            "value": "en",
-          },
-          {
-            "docs": undefined,
-            "name": "en_au",
-            "value": "en_au",
-          },
-          {
-            "docs": undefined,
-            "name": "en_uk",
-            "value": "en_uk",
-          },
-          {
-            "docs": undefined,
-            "name": "en_us",
-            "value": "en_us",
-          },
-          {
-            "docs": undefined,
-            "name": "es",
-            "value": "es",
-          },
-          {
-            "docs": undefined,
-            "name": "fr",
-            "value": "fr",
-          },
-          {
-            "docs": undefined,
-            "name": "de",
-            "value": "de",
-          },
-          {
-            "docs": undefined,
-            "name": "it",
-            "value": "it",
-          },
-          {
-            "docs": undefined,
-            "name": "pt",
-            "value": "pt",
-          },
-          {
-            "docs": undefined,
-            "name": "nl",
-            "value": "nl",
-          },
-          {
-            "docs": undefined,
-            "name": "hi",
-            "value": "hi",
-          },
-          {
-            "docs": undefined,
-            "name": "ja",
-            "value": "ja",
-          },
-          {
-            "docs": undefined,
-            "name": "zh",
-            "value": "zh",
-          },
-          {
-            "docs": undefined,
-            "name": "fi",
-            "value": "fi",
-          },
-          {
-            "docs": undefined,
-            "name": "ko",
-            "value": "ko",
-          },
-          {
-            "docs": undefined,
-            "name": "pl",
-            "value": "pl",
-          },
-          {
-            "docs": undefined,
-            "name": "ru",
-            "value": "ru",
-          },
-          {
-            "docs": undefined,
-            "name": "tr",
-            "value": "tr",
-          },
-          {
-            "docs": undefined,
-            "name": "uk",
-            "value": "uk",
-          },
-          {
-            "docs": undefined,
-            "name": "vi",
-            "value": "vi",
-          },
+          "en",
+          "en_au",
+          "en_uk",
+          "en_us",
+          "es",
+          "fr",
+          "de",
+          "it",
+          "pt",
+          "nl",
+          "hi",
+          "ja",
+          "zh",
+          "fi",
+          "ko",
+          "pl",
+          "ru",
+          "tr",
+          "uk",
+          "vi",
         ],
       },
       "TranscriptList": {
@@ -2067,22 +1758,18 @@ The default value is 'en_us'.
         "enum": [
           {
             "docs": "The audio file is in the queue to be processed by the API.",
-            "name": "queued",
             "value": "queued",
           },
           {
             "docs": "The audio file is being processed by the API.",
-            "name": "processing",
             "value": "processing",
           },
           {
             "docs": "The transcription job has been completed successfully.",
-            "name": "completed",
             "value": "completed",
           },
           {
             "docs": "An error occurred while processing the audio file.",
-            "name": "error",
             "value": "error",
           },
         ],

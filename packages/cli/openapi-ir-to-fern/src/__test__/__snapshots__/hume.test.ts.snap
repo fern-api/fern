@@ -189,151 +189,80 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Bcp47Tag": {
         "docs": undefined,
         "enum": [
+          "zh",
+          "da",
+          "nl",
+          "en",
           {
-            "docs": undefined,
-            "name": "zh",
-            "value": "zh",
-          },
-          {
-            "docs": undefined,
-            "name": "da",
-            "value": "da",
-          },
-          {
-            "docs": undefined,
-            "name": "nl",
-            "value": "nl",
-          },
-          {
-            "docs": undefined,
-            "name": "en",
-            "value": "en",
-          },
-          {
-            "docs": undefined,
-            "name": "EnAu",
+            "description": undefined,
+            "generatedName": "EnAu",
+            "nameOverride": undefined,
             "value": "en-AU",
           },
           {
-            "docs": undefined,
-            "name": "EnIn",
+            "description": undefined,
+            "generatedName": "EnIn",
+            "nameOverride": undefined,
             "value": "en-IN",
           },
           {
-            "docs": undefined,
-            "name": "EnNz",
+            "description": undefined,
+            "generatedName": "EnNz",
+            "nameOverride": undefined,
             "value": "en-NZ",
           },
           {
-            "docs": undefined,
-            "name": "EnGb",
+            "description": undefined,
+            "generatedName": "EnGb",
+            "nameOverride": undefined,
             "value": "en-GB",
           },
+          "fr",
           {
-            "docs": undefined,
-            "name": "fr",
-            "value": "fr",
-          },
-          {
-            "docs": undefined,
-            "name": "FrCa",
+            "description": undefined,
+            "generatedName": "FrCa",
+            "nameOverride": undefined,
             "value": "fr-CA",
           },
+          "de",
+          "hi",
           {
-            "docs": undefined,
-            "name": "de",
-            "value": "de",
-          },
-          {
-            "docs": undefined,
-            "name": "hi",
-            "value": "hi",
-          },
-          {
-            "docs": undefined,
-            "name": "HiLatn",
+            "description": undefined,
+            "generatedName": "HiLatn",
+            "nameOverride": undefined,
             "value": "hi-Latn",
           },
+          "id",
+          "it",
+          "ja",
+          "ko",
+          "no",
+          "pl",
+          "pt",
           {
-            "docs": undefined,
-            "name": "id",
-            "value": "id",
-          },
-          {
-            "docs": undefined,
-            "name": "it",
-            "value": "it",
-          },
-          {
-            "docs": undefined,
-            "name": "ja",
-            "value": "ja",
-          },
-          {
-            "docs": undefined,
-            "name": "ko",
-            "value": "ko",
-          },
-          {
-            "docs": undefined,
-            "name": "no",
-            "value": "no",
-          },
-          {
-            "docs": undefined,
-            "name": "pl",
-            "value": "pl",
-          },
-          {
-            "docs": undefined,
-            "name": "pt",
-            "value": "pt",
-          },
-          {
-            "docs": undefined,
-            "name": "PtBr",
+            "description": undefined,
+            "generatedName": "PtBr",
+            "nameOverride": undefined,
             "value": "pt-BR",
           },
           {
-            "docs": undefined,
-            "name": "PtPt",
+            "description": undefined,
+            "generatedName": "PtPt",
+            "nameOverride": undefined,
             "value": "pt-PT",
           },
+          "ru",
+          "es",
           {
-            "docs": undefined,
-            "name": "ru",
-            "value": "ru",
-          },
-          {
-            "docs": undefined,
-            "name": "es",
-            "value": "es",
-          },
-          {
-            "docs": undefined,
-            "name": "Es419",
+            "description": undefined,
+            "generatedName": "Es419",
+            "nameOverride": undefined,
             "value": "es-419",
           },
-          {
-            "docs": undefined,
-            "name": "sv",
-            "value": "sv",
-          },
-          {
-            "docs": undefined,
-            "name": "ta",
-            "value": "ta",
-          },
-          {
-            "docs": undefined,
-            "name": "tr",
-            "value": "tr",
-          },
-          {
-            "docs": undefined,
-            "name": "uk",
-            "value": "uk",
-          },
+          "sv",
+          "ta",
+          "tr",
+          "uk",
         ],
       },
       "BoundingBox": {
@@ -412,16 +341,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Direction": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "asc",
-            "value": "asc",
-          },
-          {
-            "docs": undefined,
-            "name": "desc",
-            "value": "desc",
-          },
+          "asc",
+          "desc",
         ],
       },
       "EmotionScore": {
@@ -574,26 +495,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Granularity": {
         "docs": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "word",
-            "value": "word",
-          },
-          {
-            "docs": undefined,
-            "name": "sentence",
-            "value": "sentence",
-          },
-          {
-            "docs": undefined,
-            "name": "utterance",
-            "value": "utterance",
-          },
-          {
-            "docs": undefined,
-            "name": "conversational_turn",
-            "value": "conversational_turn",
-          },
+          "word",
+          "sentence",
+          "utterance",
+          "conversational_turn",
         ],
       },
       "GroupedPredictionsBurstPrediction": {
@@ -964,21 +869,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "SortBy": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "created",
-            "value": "created",
-          },
-          {
-            "docs": undefined,
-            "name": "started",
-            "value": "started",
-          },
-          {
-            "docs": undefined,
-            "name": "ended",
-            "value": "ended",
-          },
+          "created",
+          "started",
+          "ended",
         ],
       },
       "Source": {
@@ -1057,26 +950,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Status": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "QUEUED",
-            "value": "QUEUED",
-          },
-          {
-            "docs": undefined,
-            "name": "IN_PROGRESS",
-            "value": "IN_PROGRESS",
-          },
-          {
-            "docs": undefined,
-            "name": "COMPLETED",
-            "value": "COMPLETED",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
+          "QUEUED",
+          "IN_PROGRESS",
+          "COMPLETED",
+          "FAILED",
         ],
       },
       "TimeInterval": {
@@ -1133,16 +1010,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "When": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "created_before",
-            "value": "created_before",
-          },
-          {
-            "docs": undefined,
-            "name": "created_after",
-            "value": "created_after",
-          },
+          "created_before",
+          "created_after",
         ],
       },
       "Window": {

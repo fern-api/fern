@@ -1435,26 +1435,10 @@ exports[`open api parser deel simple 1`] = `
         "CalculateFinalPaymentRequestCalculationType": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "CUSTOM_AMOUNT",
-              "value": "CUSTOM_AMOUNT",
-            },
-            {
-              "docs": undefined,
-              "name": "WORK_DAYS",
-              "value": "WORK_DAYS",
-            },
-            {
-              "docs": undefined,
-              "name": "CALENDAR_DAYS",
-              "value": "CALENDAR_DAYS",
-            },
-            {
-              "docs": undefined,
-              "name": "FULL_AMOUNT",
-              "value": "FULL_AMOUNT",
-            },
+            "CUSTOM_AMOUNT",
+            "WORK_DAYS",
+            "CALENDAR_DAYS",
+            "FULL_AMOUNT",
           ],
         },
       },
@@ -4120,31 +4104,15 @@ exports[`open api parser deel simple 1`] = `
         "CreateWebhookRequestStatus": {
           "docs": "Status of webhook.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "enabled",
-              "value": "enabled",
-            },
-            {
-              "docs": undefined,
-              "name": "disabled",
-              "value": "disabled",
-            },
+            "enabled",
+            "disabled",
           ],
         },
         "PatchWebhookRequestStatus": {
           "docs": "Status of webhook.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "enabled",
-              "value": "enabled",
-            },
-            {
-              "docs": undefined,
-              "name": "disabled",
-              "value": "disabled",
-            },
+            "enabled",
+            "disabled",
           ],
         },
       },
@@ -4682,16 +4650,8 @@ exports[`open api parser deel simple 1`] = `
       "ContractFirstSignEnum": {
         "docs": "Flag to indicate who is supposed to sign a contract",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "client",
-            "value": "client",
-          },
-          {
-            "docs": undefined,
-            "name": "contractor",
-            "value": "contractor",
-          },
+          "client",
+          "contractor",
         ],
       },
       "ContractInvitationToCreate": {
@@ -4809,81 +4769,21 @@ exports[`open api parser deel simple 1`] = `
       "ContractStatusEnum": {
         "docs": "Status of a contract in Deel workflow",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "new",
-            "value": "new",
-          },
-          {
-            "docs": undefined,
-            "name": "under_review",
-            "value": "under_review",
-          },
-          {
-            "docs": undefined,
-            "name": "waiting_for_employee_contract",
-            "value": "waiting_for_employee_contract",
-          },
-          {
-            "docs": undefined,
-            "name": "waiting_for_client_sign",
-            "value": "waiting_for_client_sign",
-          },
-          {
-            "docs": undefined,
-            "name": "processing_payment",
-            "value": "processing_payment",
-          },
-          {
-            "docs": undefined,
-            "name": "waiting_for_contractor_sign",
-            "value": "waiting_for_contractor_sign",
-          },
-          {
-            "docs": undefined,
-            "name": "waiting_for_eor_sign",
-            "value": "waiting_for_eor_sign",
-          },
-          {
-            "docs": undefined,
-            "name": "waiting_for_employee_sign",
-            "value": "waiting_for_employee_sign",
-          },
-          {
-            "docs": undefined,
-            "name": "awaiting_deposit_payment",
-            "value": "awaiting_deposit_payment",
-          },
-          {
-            "docs": undefined,
-            "name": "in_progress",
-            "value": "in_progress",
-          },
-          {
-            "docs": undefined,
-            "name": "completed",
-            "value": "completed",
-          },
-          {
-            "docs": undefined,
-            "name": "cancelled",
-            "value": "cancelled",
-          },
-          {
-            "docs": undefined,
-            "name": "user_cancelled",
-            "value": "user_cancelled",
-          },
-          {
-            "docs": undefined,
-            "name": "rejected",
-            "value": "rejected",
-          },
-          {
-            "docs": undefined,
-            "name": "waiting_for_client_payment",
-            "value": "waiting_for_client_payment",
-          },
+          "new",
+          "under_review",
+          "waiting_for_employee_contract",
+          "waiting_for_client_sign",
+          "processing_payment",
+          "waiting_for_contractor_sign",
+          "waiting_for_eor_sign",
+          "waiting_for_employee_sign",
+          "awaiting_deposit_payment",
+          "in_progress",
+          "completed",
+          "cancelled",
+          "user_cancelled",
+          "rejected",
+          "waiting_for_client_payment",
         ],
       },
       "ContractStatusEnumList": {
@@ -5153,71 +5053,19 @@ exports[`open api parser deel simple 1`] = `
       "ContractTypeEnum": {
         "docs": "Type of a contract",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ongoing_time_based",
-            "value": "ongoing_time_based",
-          },
-          {
-            "docs": undefined,
-            "name": "milestones",
-            "value": "milestones",
-          },
-          {
-            "docs": undefined,
-            "name": "time_based",
-            "value": "time_based",
-          },
-          {
-            "docs": undefined,
-            "name": "pay_as_you_go_time_based",
-            "value": "pay_as_you_go_time_based",
-          },
-          {
-            "docs": undefined,
-            "name": "commission",
-            "value": "commission",
-          },
-          {
-            "docs": undefined,
-            "name": "payg_milestones",
-            "value": "payg_milestones",
-          },
-          {
-            "docs": undefined,
-            "name": "payg_tasks",
-            "value": "payg_tasks",
-          },
-          {
-            "docs": undefined,
-            "name": "eor",
-            "value": "eor",
-          },
-          {
-            "docs": undefined,
-            "name": "unknown",
-            "value": "unknown",
-          },
-          {
-            "docs": undefined,
-            "name": "employee",
-            "value": "employee",
-          },
-          {
-            "docs": undefined,
-            "name": "global_payroll",
-            "value": "global_payroll",
-          },
-          {
-            "docs": undefined,
-            "name": "shield_msa",
-            "value": "shield_msa",
-          },
-          {
-            "docs": undefined,
-            "name": "hris_direct_employee",
-            "value": "hris_direct_employee",
-          },
+          "ongoing_time_based",
+          "milestones",
+          "time_based",
+          "pay_as_you_go_time_based",
+          "commission",
+          "payg_milestones",
+          "payg_tasks",
+          "eor",
+          "unknown",
+          "employee",
+          "global_payroll",
+          "shield_msa",
+          "hris_direct_employee",
         ],
       },
       "ContractTypeEnumList": {
@@ -5227,71 +5075,27 @@ exports[`open api parser deel simple 1`] = `
       "ContractTypeEnumToCreate": {
         "docs": "Type of a contract",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pay_as_you_go_time_based",
-            "value": "pay_as_you_go_time_based",
-          },
-          {
-            "docs": undefined,
-            "name": "payg_tasks",
-            "value": "payg_tasks",
-          },
-          {
-            "docs": undefined,
-            "name": "payg_milestones",
-            "value": "payg_milestones",
-          },
+          "pay_as_you_go_time_based",
+          "payg_tasks",
+          "payg_milestones",
         ],
       },
       "ContractWhoReportsEnum": {
         "docs": "Flag to indicate who is supposed to provide regular reports",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "both",
-            "value": "both",
-          },
-          {
-            "docs": undefined,
-            "name": "client",
-            "value": "client",
-          },
-          {
-            "docs": undefined,
-            "name": "contractor",
-            "value": "contractor",
-          },
+          "both",
+          "client",
+          "contractor",
         ],
       },
       "ContractsSortByEnum": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "contract_title",
-            "value": "contract_title",
-          },
-          {
-            "docs": undefined,
-            "name": "client_name",
-            "value": "client_name",
-          },
-          {
-            "docs": undefined,
-            "name": "worker_name",
-            "value": "worker_name",
-          },
-          {
-            "docs": undefined,
-            "name": "total",
-            "value": "total",
-          },
-          {
-            "docs": undefined,
-            "name": "status",
-            "value": "status",
-          },
+          "contract_title",
+          "client_name",
+          "worker_name",
+          "total",
+          "status",
         ],
       },
       "Country": {
@@ -5379,21 +5183,9 @@ exports[`open api parser deel simple 1`] = `
       "CreateTimeoffType": {
         "docs": "Time off type.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "VACATION",
-            "value": "VACATION",
-          },
-          {
-            "docs": undefined,
-            "name": "SICK_LEAVE",
-            "value": "SICK_LEAVE",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHER",
-            "value": "OTHER",
-          },
+          "VACATION",
+          "SICK_LEAVE",
+          "OTHER",
         ],
       },
       "Currency": {
@@ -5934,29 +5726,23 @@ exports[`open api parser deel simple 1`] = `
       "EorContractToCreateEmploymentTimeOffType": {
         "docs": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "STANDARD",
-            "value": "STANDARD",
-          },
-          {
-            "docs": undefined,
-            "name": "SPECIFIC",
-            "value": "SPECIFIC",
-          },
+          "STANDARD",
+          "SPECIFIC",
         ],
       },
       "EorContractToCreateEmploymentType": {
         "docs": "Is it a full-time contract or a part-time contract?",
         "enum": [
           {
-            "docs": undefined,
-            "name": "FullTime",
+            "description": undefined,
+            "generatedName": "FullTime",
+            "nameOverride": undefined,
             "value": "Full-time",
           },
           {
-            "docs": undefined,
-            "name": "PartTime",
+            "description": undefined,
+            "generatedName": "PartTime",
+            "nameOverride": undefined,
             "value": "Part-time",
           },
         ],
@@ -5981,16 +5767,8 @@ exports[`open api parser deel simple 1`] = `
       "EorContractToCreateQuoteAdditionalFieldsWorkerType": {
         "docs": "Type of worker.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Skilled",
-            "value": "Skilled",
-          },
-          {
-            "docs": undefined,
-            "name": "Unskilled",
-            "value": "Unskilled",
-          },
+          "Skilled",
+          "Unskilled",
         ],
       },
       "EorContractToCreateSeniority": {
@@ -6073,21 +5851,9 @@ exports[`open api parser deel simple 1`] = `
       "EorCountryValidationsDefiniteContractType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ALLOWED_WITHOUT_LIMITATION",
-            "value": "ALLOWED_WITHOUT_LIMITATION",
-          },
-          {
-            "docs": undefined,
-            "name": "ALLOWED_WITH_MAXIMUM_LIMITATION",
-            "value": "ALLOWED_WITH_MAXIMUM_LIMITATION",
-          },
-          {
-            "docs": undefined,
-            "name": "NOT_ALLOWED",
-            "value": "NOT_ALLOWED",
-          },
+          "ALLOWED_WITHOUT_LIMITATION",
+          "ALLOWED_WITH_MAXIMUM_LIMITATION",
+          "NOT_ALLOWED",
         ],
       },
       "EorCountryValidationsHealthInsurance": {
@@ -6119,21 +5885,9 @@ exports[`open api parser deel simple 1`] = `
       "EorCountryValidationsPartTimeHolidayType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "PRORATED",
-            "value": "PRORATED",
-          },
-          {
-            "docs": undefined,
-            "name": "STANDARD",
-            "value": "STANDARD",
-          },
-          {
-            "docs": undefined,
-            "name": "SPECIFIC",
-            "value": "SPECIFIC",
-          },
+          "PRORATED",
+          "STANDARD",
+          "SPECIFIC",
         ],
       },
       "EorCountryValidationsPartTimeProbation": {
@@ -6289,31 +6043,11 @@ exports[`open api parser deel simple 1`] = `
       "EorHolidaysRolloverType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXPIRATION",
-            "value": "EXPIRATION",
-          },
-          {
-            "docs": undefined,
-            "name": "PAY_OUT",
-            "value": "PAY_OUT",
-          },
-          {
-            "docs": undefined,
-            "name": "UNLIMITED_ROLLOVER",
-            "value": "UNLIMITED_ROLLOVER",
-          },
-          {
-            "docs": undefined,
-            "name": "LIMITED_ROLLOVER",
-            "value": "LIMITED_ROLLOVER",
-          },
-          {
-            "docs": undefined,
-            "name": "UNSET",
-            "value": "UNSET",
-          },
+          "EXPIRATION",
+          "PAY_OUT",
+          "UNLIMITED_ROLLOVER",
+          "LIMITED_ROLLOVER",
+          "UNSET",
         ],
       },
       "EorTimeoffs": {
@@ -6491,26 +6225,10 @@ exports[`open api parser deel simple 1`] = `
       "EstimateFirstPaymentCompensationDetailsCalculationType": {
         "docs": "Either works days or calendar days",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CUSTOM_AMOUNT",
-            "value": "CUSTOM_AMOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "WORK_DAYS",
-            "value": "WORK_DAYS",
-          },
-          {
-            "docs": undefined,
-            "name": "CALENDAR_DAYS",
-            "value": "CALENDAR_DAYS",
-          },
-          {
-            "docs": undefined,
-            "name": "FULL_AMOUNT",
-            "value": "FULL_AMOUNT",
-          },
+          "CUSTOM_AMOUNT",
+          "WORK_DAYS",
+          "CALENDAR_DAYS",
+          "FULL_AMOUNT",
         ],
       },
       "ExchangeRates": {
@@ -6537,28 +6255,33 @@ exports[`open api parser deel simple 1`] = `
         "docs": "type of files allowed when uploading attachments",
         "enum": [
           {
-            "docs": undefined,
-            "name": "ApplicationPdf",
+            "description": undefined,
+            "generatedName": "ApplicationPdf",
+            "nameOverride": undefined,
             "value": "application/pdf",
           },
           {
-            "docs": undefined,
-            "name": "TextCsv",
+            "description": undefined,
+            "generatedName": "TextCsv",
+            "nameOverride": undefined,
             "value": "text/csv",
           },
           {
-            "docs": undefined,
-            "name": "TextPlain",
+            "description": undefined,
+            "generatedName": "TextPlain",
+            "nameOverride": undefined,
             "value": "text/plain",
           },
           {
-            "docs": undefined,
-            "name": "ImageJpeg",
+            "description": undefined,
+            "generatedName": "ImageJpeg",
+            "nameOverride": undefined,
             "value": "image/jpeg",
           },
           {
-            "docs": undefined,
-            "name": "ImagePng",
+            "description": undefined,
+            "generatedName": "ImagePng",
+            "nameOverride": undefined,
             "value": "image/png",
           },
         ],
@@ -6599,26 +6322,10 @@ exports[`open api parser deel simple 1`] = `
       "FinalPaymentCalculatedCalculationType": {
         "docs": "Either works days or calendar days",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CUSTOM_AMOUNT",
-            "value": "CUSTOM_AMOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "WORK_DAYS",
-            "value": "WORK_DAYS",
-          },
-          {
-            "docs": undefined,
-            "name": "CALENDAR_DAYS",
-            "value": "CALENDAR_DAYS",
-          },
-          {
-            "docs": undefined,
-            "name": "FULL_AMOUNT",
-            "value": "FULL_AMOUNT",
-          },
+          "CUSTOM_AMOUNT",
+          "WORK_DAYS",
+          "CALENDAR_DAYS",
+          "FULL_AMOUNT",
         ],
       },
       "FinalPaymentCalculatedContainer": {
@@ -6775,21 +6482,9 @@ exports[`open api parser deel simple 1`] = `
       "HealthInsuranceStatusEnum": {
         "docs": "Health insurance status.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "REQUIRED",
-            "value": "REQUIRED",
-          },
-          {
-            "docs": undefined,
-            "name": "ENABLED",
-            "value": "ENABLED",
-          },
-          {
-            "docs": undefined,
-            "name": "DISABLED",
-            "value": "DISABLED",
-          },
+          "REQUIRED",
+          "ENABLED",
+          "DISABLED",
         ],
       },
       "HrisCompensation": {
@@ -7072,16 +6767,8 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentReviewToCreateStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "InvoiceAdjustmentReviewsToCreate": {
@@ -7095,16 +6782,8 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentReviewsToCreateStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "InvoiceAdjustmentSearchContainer": {
@@ -7196,212 +6875,52 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentTypeEnum": {
         "docs": "Type of invoice adjustment.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "accrued_holiday",
-            "value": "accrued_holiday",
-          },
-          {
-            "docs": undefined,
-            "name": "additional_fee",
-            "value": "additional_fee",
-          },
-          {
-            "docs": undefined,
-            "name": "allowance",
-            "value": "allowance",
-          },
-          {
-            "docs": undefined,
-            "name": "bonus",
-            "value": "bonus",
-          },
-          {
-            "docs": undefined,
-            "name": "commission",
-            "value": "commission",
-          },
-          {
-            "docs": undefined,
-            "name": "deduction",
-            "value": "deduction",
-          },
-          {
-            "docs": undefined,
-            "name": "deposit",
-            "value": "deposit",
-          },
-          {
-            "docs": undefined,
-            "name": "deposit_refund",
-            "value": "deposit_refund",
-          },
-          {
-            "docs": undefined,
-            "name": "employer_cost",
-            "value": "employer_cost",
-          },
-          {
-            "docs": undefined,
-            "name": "expense",
-            "value": "expense",
-          },
-          {
-            "docs": undefined,
-            "name": "health_allowance",
-            "value": "health_allowance",
-          },
-          {
-            "docs": undefined,
-            "name": "health_benefit",
-            "value": "health_benefit",
-          },
-          {
-            "docs": undefined,
-            "name": "health_insurance_fee",
-            "value": "health_insurance_fee",
-          },
-          {
-            "docs": undefined,
-            "name": "legal_fee",
-            "value": "legal_fee",
-          },
-          {
-            "docs": undefined,
-            "name": "management_fee",
-            "value": "management_fee",
-          },
-          {
-            "docs": undefined,
-            "name": "milestone",
-            "value": "milestone",
-          },
-          {
-            "docs": undefined,
-            "name": "offcycle",
-            "value": "offcycle",
-          },
-          {
-            "docs": undefined,
-            "name": "other",
-            "value": "other",
-          },
-          {
-            "docs": undefined,
-            "name": "overtime",
-            "value": "overtime",
-          },
-          {
-            "docs": undefined,
-            "name": "pension",
-            "value": "pension",
-          },
-          {
-            "docs": undefined,
-            "name": "pro_rata",
-            "value": "pro_rata",
-          },
-          {
-            "docs": undefined,
-            "name": "setup_fee",
-            "value": "setup_fee",
-          },
-          {
-            "docs": undefined,
-            "name": "severance",
-            "value": "severance",
-          },
-          {
-            "docs": undefined,
-            "name": "shield_service",
-            "value": "shield_service",
-          },
-          {
-            "docs": undefined,
-            "name": "signing_bonus",
-            "value": "signing_bonus",
-          },
-          {
-            "docs": undefined,
-            "name": "signing_bonus_employer_cost",
-            "value": "signing_bonus_employer_cost",
-          },
-          {
-            "docs": undefined,
-            "name": "refund",
-            "value": "refund",
-          },
-          {
-            "docs": undefined,
-            "name": "task",
-            "value": "task",
-          },
-          {
-            "docs": undefined,
-            "name": "time_off",
-            "value": "time_off",
-          },
-          {
-            "docs": undefined,
-            "name": "vat",
-            "value": "vat",
-          },
-          {
-            "docs": undefined,
-            "name": "withholding_tax",
-            "value": "withholding_tax",
-          },
-          {
-            "docs": undefined,
-            "name": "work",
-            "value": "work",
-          },
+          "accrued_holiday",
+          "additional_fee",
+          "allowance",
+          "bonus",
+          "commission",
+          "deduction",
+          "deposit",
+          "deposit_refund",
+          "employer_cost",
+          "expense",
+          "health_allowance",
+          "health_benefit",
+          "health_insurance_fee",
+          "legal_fee",
+          "management_fee",
+          "milestone",
+          "offcycle",
+          "other",
+          "overtime",
+          "pension",
+          "pro_rata",
+          "setup_fee",
+          "severance",
+          "shield_service",
+          "signing_bonus",
+          "signing_bonus_employer_cost",
+          "refund",
+          "task",
+          "time_off",
+          "vat",
+          "withholding_tax",
+          "work",
         ],
       },
       "InvoiceAdjustmentTypeEnumList": "list<InvoiceAdjustmentTypeEnum>",
       "InvoiceAdjustmentTypeToCreateEnum": {
         "docs": "Type of invoice adjustment.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "bonus",
-            "value": "bonus",
-          },
-          {
-            "docs": undefined,
-            "name": "commission",
-            "value": "commission",
-          },
-          {
-            "docs": undefined,
-            "name": "deduction",
-            "value": "deduction",
-          },
-          {
-            "docs": undefined,
-            "name": "expense",
-            "value": "expense",
-          },
-          {
-            "docs": undefined,
-            "name": "other",
-            "value": "other",
-          },
-          {
-            "docs": undefined,
-            "name": "overtime",
-            "value": "overtime",
-          },
-          {
-            "docs": undefined,
-            "name": "time_off",
-            "value": "time_off",
-          },
-          {
-            "docs": undefined,
-            "name": "vat",
-            "value": "vat",
-          },
+          "bonus",
+          "commission",
+          "deduction",
+          "expense",
+          "other",
+          "overtime",
+          "time_off",
+          "vat",
         ],
       },
       "InvoiceContract": {
@@ -7424,41 +6943,13 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceContractTypes": {
         "docs": "invoice's allowed contract types",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pending",
-            "value": "pending",
-          },
-          {
-            "docs": undefined,
-            "name": "paid",
-            "value": "paid",
-          },
-          {
-            "docs": undefined,
-            "name": "processing",
-            "value": "processing",
-          },
-          {
-            "docs": undefined,
-            "name": "canceled",
-            "value": "canceled",
-          },
-          {
-            "docs": undefined,
-            "name": "skipped",
-            "value": "skipped",
-          },
-          {
-            "docs": undefined,
-            "name": "failed",
-            "value": "failed",
-          },
-          {
-            "docs": undefined,
-            "name": "refunded",
-            "value": "refunded",
-          },
+          "pending",
+          "paid",
+          "processing",
+          "canceled",
+          "skipped",
+          "failed",
+          "refunded",
         ],
       },
       "InvoiceContractor": {
@@ -7507,41 +6998,13 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceStatusEnum": {
         "docs": "Current status of the invoice.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pending",
-            "value": "pending",
-          },
-          {
-            "docs": undefined,
-            "name": "paid",
-            "value": "paid",
-          },
-          {
-            "docs": undefined,
-            "name": "processing",
-            "value": "processing",
-          },
-          {
-            "docs": undefined,
-            "name": "canceled",
-            "value": "canceled",
-          },
-          {
-            "docs": undefined,
-            "name": "skipped",
-            "value": "skipped",
-          },
-          {
-            "docs": undefined,
-            "name": "failed",
-            "value": "failed",
-          },
-          {
-            "docs": undefined,
-            "name": "refunded",
-            "value": "refunded",
-          },
+          "pending",
+          "paid",
+          "processing",
+          "canceled",
+          "skipped",
+          "failed",
+          "refunded",
         ],
       },
       "InvoiceStatusEnumList": {
@@ -7551,66 +7014,18 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceTypeEnum": {
         "docs": "invoice's type",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "PAYMENT",
-            "value": "PAYMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "EOR_DEPOSIT",
-            "value": "EOR_DEPOSIT",
-          },
-          {
-            "docs": undefined,
-            "name": "EOR_FIRST_PAYMENT",
-            "value": "EOR_FIRST_PAYMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "EOR_TERMINATION_OFFCYCLE",
-            "value": "EOR_TERMINATION_OFFCYCLE",
-          },
-          {
-            "docs": undefined,
-            "name": "SIGNING_BONUS",
-            "value": "SIGNING_BONUS",
-          },
-          {
-            "docs": undefined,
-            "name": "REFUND_STATEMENT",
-            "value": "REFUND_STATEMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "EOR_TAX_RULING",
-            "value": "EOR_TAX_RULING",
-          },
-          {
-            "docs": undefined,
-            "name": "GP_DEPOSIT_STATEMENT",
-            "value": "GP_DEPOSIT_STATEMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "GP_FUNDING_STATEMENT",
-            "value": "GP_FUNDING_STATEMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "GLOBAL_PAYROLL_FEES",
-            "value": "GLOBAL_PAYROLL_FEES",
-          },
-          {
-            "docs": undefined,
-            "name": "SHIELD_DEPOSIT",
-            "value": "SHIELD_DEPOSIT",
-          },
-          {
-            "docs": undefined,
-            "name": "EOR_MANAGEMENT_FEE",
-            "value": "EOR_MANAGEMENT_FEE",
-          },
+          "PAYMENT",
+          "EOR_DEPOSIT",
+          "EOR_FIRST_PAYMENT",
+          "EOR_TERMINATION_OFFCYCLE",
+          "SIGNING_BONUS",
+          "REFUND_STATEMENT",
+          "EOR_TAX_RULING",
+          "GP_DEPOSIT_STATEMENT",
+          "GP_FUNDING_STATEMENT",
+          "GLOBAL_PAYROLL_FEES",
+          "SHIELD_DEPOSIT",
+          "EOR_MANAGEMENT_FEE",
         ],
       },
       "JobTitle": {
@@ -7655,16 +7070,8 @@ exports[`open api parser deel simple 1`] = `
       "LegalEntityType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "individual",
-            "value": "individual",
-          },
-          {
-            "docs": undefined,
-            "name": "company",
-            "value": "company",
-          },
+          "individual",
+          "company",
         ],
       },
       "MetaDataOfContractToCreate": {
@@ -7768,16 +7175,8 @@ exports[`open api parser deel simple 1`] = `
       "MilestoneReviewToCreateStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "MilestoneReviewedBy": {
@@ -7804,16 +7203,8 @@ exports[`open api parser deel simple 1`] = `
       "MilestoneReviewsToCreateStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "MilestoneToCreate": "MilestoneProperties",
@@ -8073,76 +7464,20 @@ exports[`open api parser deel simple 1`] = `
       "PaymentMethodEnum": {
         "docs": "All the supported payment types",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "stripe_bacs_debit",
-            "value": "stripe_bacs_debit",
-          },
-          {
-            "docs": undefined,
-            "name": "pay_pal",
-            "value": "pay_pal",
-          },
-          {
-            "docs": undefined,
-            "name": "stripe_card",
-            "value": "stripe_card",
-          },
-          {
-            "docs": undefined,
-            "name": "bt_card",
-            "value": "bt_card",
-          },
-          {
-            "docs": undefined,
-            "name": "stripe_ach",
-            "value": "stripe_ach",
-          },
-          {
-            "docs": undefined,
-            "name": "coinbase",
-            "value": "coinbase",
-          },
-          {
-            "docs": undefined,
-            "name": "go_cardless",
-            "value": "go_cardless",
-          },
-          {
-            "docs": undefined,
-            "name": "brex",
-            "value": "brex",
-          },
-          {
-            "docs": undefined,
-            "name": "stripe_sepa_debit",
-            "value": "stripe_sepa_debit",
-          },
-          {
-            "docs": undefined,
-            "name": "transferwise",
-            "value": "transferwise",
-          },
-          {
-            "docs": undefined,
-            "name": "go_cardless_becs",
-            "value": "go_cardless_becs",
-          },
-          {
-            "docs": undefined,
-            "name": "bank_transfer",
-            "value": "bank_transfer",
-          },
-          {
-            "docs": undefined,
-            "name": "mercury_wire",
-            "value": "mercury_wire",
-          },
-          {
-            "docs": undefined,
-            "name": "bt_pay_pal",
-            "value": "bt_pay_pal",
-          },
+          "stripe_bacs_debit",
+          "pay_pal",
+          "stripe_card",
+          "bt_card",
+          "stripe_ach",
+          "coinbase",
+          "go_cardless",
+          "brex",
+          "stripe_sepa_debit",
+          "transferwise",
+          "go_cardless_becs",
+          "bank_transfer",
+          "mercury_wire",
+          "bt_pay_pal",
         ],
       },
       "PaymentMethodEnumList": {
@@ -8166,16 +7501,8 @@ exports[`open api parser deel simple 1`] = `
       "PaymentStatusEnum": {
         "docs": "status of payment",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "paid",
-            "value": "paid",
-          },
-          {
-            "docs": undefined,
-            "name": "processing",
-            "value": "processing",
-          },
+          "paid",
+          "processing",
         ],
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
@@ -8471,16 +7798,8 @@ exports[`open api parser deel simple 1`] = `
       "PgoTaskReviewsByIdToCreateStatus": {
         "docs": "Review status.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "PgoTaskReviewsToCreate": {
@@ -8500,16 +7819,8 @@ exports[`open api parser deel simple 1`] = `
       "PgoTaskReviewsToCreateStatus": {
         "docs": "Review status.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "PgoTaskToCreate": {
@@ -8646,61 +7957,21 @@ exports[`open api parser deel simple 1`] = `
       "ProRataCalculationType": {
         "docs": "Either works days or calendar days",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CUSTOM_AMOUNT",
-            "value": "CUSTOM_AMOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "WORK_DAYS",
-            "value": "WORK_DAYS",
-          },
-          {
-            "docs": undefined,
-            "name": "CALENDAR_DAYS",
-            "value": "CALENDAR_DAYS",
-          },
-          {
-            "docs": undefined,
-            "name": "FULL_AMOUNT",
-            "value": "FULL_AMOUNT",
-          },
+          "CUSTOM_AMOUNT",
+          "WORK_DAYS",
+          "CALENDAR_DAYS",
+          "FULL_AMOUNT",
         ],
       },
       "ProfileTypeEnum": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "client",
-            "value": "client",
-          },
-          {
-            "docs": undefined,
-            "name": "contractor",
-            "value": "contractor",
-          },
-          {
-            "docs": undefined,
-            "name": "icp",
-            "value": "icp",
-          },
-          {
-            "docs": undefined,
-            "name": "direct_employee",
-            "value": "direct_employee",
-          },
-          {
-            "docs": undefined,
-            "name": "hris_direct_employee",
-            "value": "hris_direct_employee",
-          },
-          {
-            "docs": undefined,
-            "name": "service_account",
-            "value": "service_account",
-          },
+          "client",
+          "contractor",
+          "icp",
+          "direct_employee",
+          "hris_direct_employee",
+          "service_account",
         ],
       },
       "PublicId": {
@@ -8778,16 +8049,8 @@ exports[`open api parser deel simple 1`] = `
       "SortDirEnum": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "asc",
-            "value": "asc",
-          },
-          {
-            "docs": undefined,
-            "name": "desc",
-            "value": "desc",
-          },
+          "asc",
+          "desc",
         ],
       },
       "StateOfCountry": {
@@ -8913,41 +8176,17 @@ exports[`open api parser deel simple 1`] = `
       "TimeoffsStatusEnum": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "REQUESTED",
-            "value": "REQUESTED",
-          },
-          {
-            "docs": undefined,
-            "name": "APPROVED",
-            "value": "APPROVED",
-          },
-          {
-            "docs": undefined,
-            "name": "REJECTED",
-            "value": "REJECTED",
-          },
+          "REQUESTED",
+          "APPROVED",
+          "REJECTED",
         ],
       },
       "TimeoffsTypeEnum": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "VACATION",
-            "value": "VACATION",
-          },
-          {
-            "docs": undefined,
-            "name": "SICK_LEAVE",
-            "value": "SICK_LEAVE",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHER",
-            "value": "OTHER",
-          },
+          "VACATION",
+          "SICK_LEAVE",
+          "OTHER",
         ],
       },
       "Timesheet": {
@@ -9021,16 +8260,8 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetReviewToCreateStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "TimesheetReviewsToCreate": {
@@ -9044,16 +8275,8 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetReviewsToCreateStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "approved",
-            "value": "approved",
-          },
-          {
-            "docs": undefined,
-            "name": "declined",
-            "value": "declined",
-          },
+          "approved",
+          "declined",
         ],
       },
       "TimesheetSearchContainer": {
@@ -9206,16 +8429,8 @@ exports[`open api parser deel simple 1`] = `
       "WebhookItemStatus": {
         "docs": "Status of webhook.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "enabled",
-            "value": "enabled",
-          },
-          {
-            "docs": undefined,
-            "name": "disabled",
-            "value": "disabled",
-          },
+          "enabled",
+          "disabled",
         ],
       },
       "WebhookListResponse": {
@@ -9227,89 +8442,34 @@ exports[`open api parser deel simple 1`] = `
       "WeekDaysEnum": {
         "docs": "Days of the week.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Sunday",
-            "value": "Sunday",
-          },
-          {
-            "docs": undefined,
-            "name": "Monday",
-            "value": "Monday",
-          },
-          {
-            "docs": undefined,
-            "name": "Tuesday",
-            "value": "Tuesday",
-          },
-          {
-            "docs": undefined,
-            "name": "Wednesday",
-            "value": "Wednesday",
-          },
-          {
-            "docs": undefined,
-            "name": "Thursday",
-            "value": "Thursday",
-          },
-          {
-            "docs": undefined,
-            "name": "Friday",
-            "value": "Friday",
-          },
-          {
-            "docs": undefined,
-            "name": "Saturday",
-            "value": "Saturday",
-          },
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
         ],
       },
       "WorkStatementCycleEndTypeEnum": {
         "docs": "Cycle end can be weekly 1-7 (Monday = 1) or monthly 1-31.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "DAY_OF_WEEK",
-            "value": "DAY_OF_WEEK",
-          },
-          {
-            "docs": undefined,
-            "name": "DAY_OF_LAST_WEEK",
-            "value": "DAY_OF_LAST_WEEK",
-          },
-          {
-            "docs": undefined,
-            "name": "DAY_OF_MONTH",
-            "value": "DAY_OF_MONTH",
-          },
+          "DAY_OF_WEEK",
+          "DAY_OF_LAST_WEEK",
+          "DAY_OF_MONTH",
         ],
       },
       "WorkStatementCycleScaleEnum": {
         "docs": "Scale of the invoice cycle.",
         "enum": [
+          "weekly",
+          "monthly",
+          "biweekly",
+          "semimonthly",
           {
-            "docs": undefined,
-            "name": "weekly",
-            "value": "weekly",
-          },
-          {
-            "docs": undefined,
-            "name": "monthly",
-            "value": "monthly",
-          },
-          {
-            "docs": undefined,
-            "name": "biweekly",
-            "value": "biweekly",
-          },
-          {
-            "docs": undefined,
-            "name": "semimonthly",
-            "value": "semimonthly",
-          },
-          {
-            "docs": undefined,
-            "name": "CalendarMonth",
+            "description": undefined,
+            "generatedName": "CalendarMonth",
+            "nameOverride": undefined,
             "value": "calendar-month",
           },
         ],
@@ -9317,56 +8477,20 @@ exports[`open api parser deel simple 1`] = `
       "WorkStatementPaymentDueTypeEnum": {
         "docs": "Type of payment due. If the payment is due on the last day of month, enter 'WITHIN_MONTH'.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "REGULAR",
-            "value": "REGULAR",
-          },
-          {
-            "docs": undefined,
-            "name": "WITHIN_MONTH",
-            "value": "WITHIN_MONTH",
-          },
+          "REGULAR",
+          "WITHIN_MONTH",
         ],
       },
       "WorkStatementScaleEnum": {
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "hourly",
-            "value": "hourly",
-          },
-          {
-            "docs": undefined,
-            "name": "daily",
-            "value": "daily",
-          },
-          {
-            "docs": undefined,
-            "name": "weekly",
-            "value": "weekly",
-          },
-          {
-            "docs": undefined,
-            "name": "monthly",
-            "value": "monthly",
-          },
-          {
-            "docs": undefined,
-            "name": "biweekly",
-            "value": "biweekly",
-          },
-          {
-            "docs": undefined,
-            "name": "semimonthly",
-            "value": "semimonthly",
-          },
-          {
-            "docs": undefined,
-            "name": "custom",
-            "value": "custom",
-          },
+          "hourly",
+          "daily",
+          "weekly",
+          "monthly",
+          "biweekly",
+          "semimonthly",
+          "custom",
         ],
       },
       "WorkStatementScaleEnumOptional": {

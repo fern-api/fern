@@ -386,46 +386,14 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "CoverageCode": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "BI",
-            "value": "BI",
-          },
-          {
-            "docs": undefined,
-            "name": "PD",
-            "value": "PD",
-          },
-          {
-            "docs": undefined,
-            "name": "UMBI",
-            "value": "UMBI",
-          },
-          {
-            "docs": undefined,
-            "name": "UMPD",
-            "value": "UMPD",
-          },
-          {
-            "docs": undefined,
-            "name": "UIMBI",
-            "value": "UIMBI",
-          },
-          {
-            "docs": undefined,
-            "name": "UIMPD",
-            "value": "UIMPD",
-          },
-          {
-            "docs": undefined,
-            "name": "COLL",
-            "value": "COLL",
-          },
-          {
-            "docs": undefined,
-            "name": "COMP",
-            "value": "COMP",
-          },
+          "BI",
+          "PD",
+          "UMBI",
+          "UMPD",
+          "UIMBI",
+          "UIMPD",
+          "COLL",
+          "COMP",
         ],
       },
       "Error": {
@@ -488,16 +456,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "PolicyType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "auto",
-            "value": "auto",
-          },
-          {
-            "docs": undefined,
-            "name": "motorcycle",
-            "value": "motorcycle",
-          },
+          "auto",
+          "motorcycle",
         ],
       },
       "Property": {
@@ -524,21 +484,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "ThirdPartyType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "lienholder",
-            "value": "lienholder",
-          },
-          {
-            "docs": undefined,
-            "name": "lessor",
-            "value": "lessor",
-          },
-          {
-            "docs": undefined,
-            "name": "interest",
-            "value": "interest",
-          },
+          "lienholder",
+          "lessor",
+          "interest",
         ],
       },
       "User": {

@@ -1279,46 +1279,22 @@ exports[`open api parser flexport simple 1`] = `
         "BookingsIndexRequestDirection": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "BookingsIndexRequestFStatus": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "booked",
-              "value": "booked",
-            },
-            {
-              "docs": undefined,
-              "name": "submitted",
-              "value": "submitted",
-            },
+            "booked",
+            "submitted",
           ],
         },
         "BookingsIndexRequestSort": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "cargo_ready_date",
-              "value": "cargo_ready_date",
-            },
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
+            "cargo_ready_date",
+            "created_at",
           ],
         },
         "BookingsIndexResponse": {
@@ -1342,21 +1318,9 @@ exports[`open api parser flexport simple 1`] = `
         "CreateBookingDeclaredAsStrategy": {
           "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "yes",
-              "value": "yes",
-            },
-            {
-              "docs": undefined,
-              "name": "no",
-              "value": "no",
-            },
-            {
-              "docs": undefined,
-              "name": "notsure",
-              "value": "notsure",
-            },
+            "yes",
+            "no",
+            "notsure",
           ],
         },
       },
@@ -1918,16 +1882,8 @@ exports[`open api parser flexport simple 1`] = `
         "BookingLineItemIndexRequestDirection": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "BookingLineItemIndexResponse": {
@@ -2129,86 +2085,30 @@ exports[`open api parser flexport simple 1`] = `
         "CreateCarbonCalculationFlightType": {
           "docs": "For \`transportation_mode: air\`, the type of plane used. One of \`freighter\`, \`belly_freighter\`, or \`unknown\`. Defaults to \`unknown\`.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "freighter",
-              "value": "freighter",
-            },
-            {
-              "docs": undefined,
-              "name": "belly_freighter",
-              "value": "belly_freighter",
-            },
-            {
-              "docs": undefined,
-              "name": "unknown",
-              "value": "unknown",
-            },
+            "freighter",
+            "belly_freighter",
+            "unknown",
           ],
         },
         "CreateCarbonCalculationTransportationMode": {
           "docs": "The mode of transportation for calculation. One of \`air\`, \`ocean\`, \`truck\`, or \`rail\`. If \`transportation_mode\` is \`truck\`, \`ocean\`, or \`rail\`, \`country_code\` in both \`origin_address\` and \`destination_address\` is required.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "air",
-              "value": "air",
-            },
-            {
-              "docs": undefined,
-              "name": "ocean",
-              "value": "ocean",
-            },
-            {
-              "docs": undefined,
-              "name": "truck",
-              "value": "truck",
-            },
-            {
-              "docs": undefined,
-              "name": "rail",
-              "value": "rail",
-            },
+            "air",
+            "ocean",
+            "truck",
+            "rail",
           ],
         },
         "CreateCarbonCalculationTruckingServiceType": {
           "docs": "For \`transportation_mode: truck\`, the type of service used. One of \`ftl\`, \`ltl\`, \`drayage\`, \`cartage\`, \`last_mile\`, \`airport_transfer\`, or \`air_cartage\`.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "ftl",
-              "value": "ftl",
-            },
-            {
-              "docs": undefined,
-              "name": "ltl",
-              "value": "ltl",
-            },
-            {
-              "docs": undefined,
-              "name": "drayage",
-              "value": "drayage",
-            },
-            {
-              "docs": undefined,
-              "name": "cartage",
-              "value": "cartage",
-            },
-            {
-              "docs": undefined,
-              "name": "last_mile",
-              "value": "last_mile",
-            },
-            {
-              "docs": undefined,
-              "name": "airport_transfer",
-              "value": "airport_transfer",
-            },
-            {
-              "docs": undefined,
-              "name": "air_cartage",
-              "value": "air_cartage",
-            },
+            "ftl",
+            "ltl",
+            "drayage",
+            "cartage",
+            "last_mile",
+            "airport_transfer",
+            "air_cartage",
           ],
         },
       },
@@ -6218,33 +6118,39 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "docs": undefined,
-              "name": "Document",
+              "description": undefined,
+              "generatedName": "Document",
+              "nameOverride": undefined,
               "value": "/document",
             },
             {
-              "docs": undefined,
-              "name": "Invoice",
+              "description": undefined,
+              "generatedName": "Invoice",
+              "nameOverride": undefined,
               "value": "/invoice",
             },
             {
-              "docs": undefined,
-              "name": "OceanShipmentContainer",
+              "description": undefined,
+              "generatedName": "OceanShipmentContainer",
+              "nameOverride": undefined,
               "value": "/ocean/shipment_container",
             },
             {
-              "docs": undefined,
-              "name": "OceanShipmentContainerLeg",
+              "description": undefined,
+              "generatedName": "OceanShipmentContainerLeg",
+              "nameOverride": undefined,
               "value": "/ocean/shipment_container_leg",
             },
             {
-              "docs": undefined,
-              "name": "Shipment",
+              "description": undefined,
+              "generatedName": "Shipment",
+              "nameOverride": undefined,
               "value": "/shipment",
             },
             {
-              "docs": undefined,
-              "name": "ShipmentLeg",
+              "description": undefined,
+              "generatedName": "ShipmentLeg",
+              "nameOverride": undefined,
               "value": "/shipment_leg",
             },
           ],
@@ -6698,41 +6604,17 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "InvoiceIndexRequestDirection": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "InvoiceIndexRequestFStatus": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "outstanding",
-              "value": "outstanding",
-            },
-            {
-              "docs": undefined,
-              "name": "past_due",
-              "value": "past_due",
-            },
-            {
-              "docs": undefined,
-              "name": "void",
-              "value": "void",
-            },
-            {
-              "docs": undefined,
-              "name": "paid",
-              "value": "paid",
-            },
+            "outstanding",
+            "past_due",
+            "void",
+            "paid",
           ],
         },
         "InvoiceIndexResponse": {
@@ -7252,26 +7134,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "PortsIndexRequestFPortType": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "airport",
-              "value": "airport",
-            },
-            {
-              "docs": undefined,
-              "name": "railport",
-              "value": "railport",
-            },
-            {
-              "docs": undefined,
-              "name": "roadport",
-              "value": "roadport",
-            },
-            {
-              "docs": undefined,
-              "name": "seaport",
-              "value": "seaport",
-            },
+            "airport",
+            "railport",
+            "roadport",
+            "seaport",
           ],
         },
         "PortsIndexResponse": {
@@ -8863,266 +8729,90 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "CreateOrUpdatePurchaseOrderFreightPaymentTerms": {
           "docs": "The freight payment term for the purchase order",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "freight_collect",
-              "value": "freight_collect",
-            },
-            {
-              "docs": undefined,
-              "name": "freight_prepaid",
-              "value": "freight_prepaid",
-            },
+            "freight_collect",
+            "freight_prepaid",
           ],
         },
         "CreateOrUpdatePurchaseOrderIncoterm": {
           "docs": "Required if there is no incoterm in each line item. The incoterm of your purchase order.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "EXW",
-              "value": "EXW",
-            },
-            {
-              "docs": undefined,
-              "name": "FOB",
-              "value": "FOB",
-            },
-            {
-              "docs": undefined,
-              "name": "FAS",
-              "value": "FAS",
-            },
-            {
-              "docs": undefined,
-              "name": "FCA",
-              "value": "FCA",
-            },
-            {
-              "docs": undefined,
-              "name": "CPT",
-              "value": "CPT",
-            },
-            {
-              "docs": undefined,
-              "name": "CFR",
-              "value": "CFR",
-            },
-            {
-              "docs": undefined,
-              "name": "CIF",
-              "value": "CIF",
-            },
-            {
-              "docs": undefined,
-              "name": "CIP",
-              "value": "CIP",
-            },
-            {
-              "docs": undefined,
-              "name": "DAT",
-              "value": "DAT",
-            },
-            {
-              "docs": undefined,
-              "name": "DAP",
-              "value": "DAP",
-            },
-            {
-              "docs": undefined,
-              "name": "DDP",
-              "value": "DDP",
-            },
+            "EXW",
+            "FOB",
+            "FAS",
+            "FCA",
+            "CPT",
+            "CFR",
+            "CIF",
+            "CIP",
+            "DAT",
+            "DAP",
+            "DDP",
           ],
         },
         "CreateOrUpdatePurchaseOrderOrderClass": {
           "docs": "Class of the purchase order.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "purchase_order",
-              "value": "purchase_order",
-            },
-            {
-              "docs": undefined,
-              "name": "sales_order",
-              "value": "sales_order",
-            },
-            {
-              "docs": undefined,
-              "name": "transfer_order",
-              "value": "transfer_order",
-            },
-            {
-              "docs": undefined,
-              "name": "delivery_order",
-              "value": "delivery_order",
-            },
-            {
-              "docs": undefined,
-              "name": "work_order",
-              "value": "work_order",
-            },
+            "purchase_order",
+            "sales_order",
+            "transfer_order",
+            "delivery_order",
+            "work_order",
           ],
         },
         "CreateOrUpdatePurchaseOrderPriority": {
           "docs": "priority of the purchase order.",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "high",
-              "value": "high",
-            },
-            {
-              "docs": undefined,
-              "name": "standard",
-              "value": "standard",
-            },
+            "high",
+            "standard",
           ],
         },
         "CreateOrUpdatePurchaseOrderStatus": {
           "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "open",
-              "value": "open",
-            },
-            {
-              "docs": undefined,
-              "name": "cancelled",
-              "value": "cancelled",
-            },
-            {
-              "docs": undefined,
-              "name": "closed",
-              "value": "closed",
-            },
+            "open",
+            "cancelled",
+            "closed",
           ],
         },
         "CreateOrUpdatePurchaseOrderTransportationMode": {
           "docs": "Required if there is no transportation_mode in purchase order",
           "enum": [
-            {
-              "docs": undefined,
-              "name": "air",
-              "value": "air",
-            },
-            {
-              "docs": undefined,
-              "name": "ocean",
-              "value": "ocean",
-            },
-            {
-              "docs": undefined,
-              "name": "truck",
-              "value": "truck",
-            },
-            {
-              "docs": undefined,
-              "name": "rail",
-              "value": "rail",
-            },
+            "air",
+            "ocean",
+            "truck",
+            "rail",
           ],
         },
         "PurchaseOrderIndexRequestDirection": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "PurchaseOrderIndexRequestFRolesItem": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "buyer",
-              "value": "buyer",
-            },
-            {
-              "docs": undefined,
-              "name": "seller",
-              "value": "seller",
-            },
-            {
-              "docs": undefined,
-              "name": "owner",
-              "value": "owner",
-            },
-            {
-              "docs": undefined,
-              "name": "shipper",
-              "value": "shipper",
-            },
-            {
-              "docs": undefined,
-              "name": "consignee",
-              "value": "consignee",
-            },
-            {
-              "docs": undefined,
-              "name": "freight_forwarder",
-              "value": "freight_forwarder",
-            },
-            {
-              "docs": undefined,
-              "name": "notify_party",
-              "value": "notify_party",
-            },
-            {
-              "docs": undefined,
-              "name": "customs_broker",
-              "value": "customs_broker",
-            },
-            {
-              "docs": undefined,
-              "name": "carrier",
-              "value": "carrier",
-            },
-            {
-              "docs": undefined,
-              "name": "manufacturer",
-              "value": "manufacturer",
-            },
-            {
-              "docs": undefined,
-              "name": "buyers_agent",
-              "value": "buyers_agent",
-            },
-            {
-              "docs": undefined,
-              "name": "sellers_agent",
-              "value": "sellers_agent",
-            },
+            "buyer",
+            "seller",
+            "owner",
+            "shipper",
+            "consignee",
+            "freight_forwarder",
+            "notify_party",
+            "customs_broker",
+            "carrier",
+            "manufacturer",
+            "buyers_agent",
+            "sellers_agent",
           ],
         },
         "PurchaseOrderIndexRequestFStatus": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "open",
-              "value": "open",
-            },
-            {
-              "docs": undefined,
-              "name": "closed",
-              "value": "closed",
-            },
-            {
-              "docs": undefined,
-              "name": "cancelled",
-              "value": "cancelled",
-            },
+            "open",
+            "closed",
+            "cancelled",
           ],
         },
         "PurchaseOrderIndexResponse": {
@@ -9555,16 +9245,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "PurchaseOrderLineItemIndexRequestDirection": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "PurchaseOrderLineItemIndexResponse": {
@@ -10835,46 +10517,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "ShipmentIndexRequestDirection": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "asc",
-              "value": "asc",
-            },
-            {
-              "docs": undefined,
-              "name": "desc",
-              "value": "desc",
-            },
+            "asc",
+            "desc",
           ],
         },
         "ShipmentIndexRequestSort": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "id",
-              "value": "id",
-            },
-            {
-              "docs": undefined,
-              "name": "transportation_mode",
-              "value": "transportation_mode",
-            },
-            {
-              "docs": undefined,
-              "name": "status",
-              "value": "status",
-            },
-            {
-              "docs": undefined,
-              "name": "updated_at",
-              "value": "updated_at",
-            },
-            {
-              "docs": undefined,
-              "name": "archived_at",
-              "value": "archived_at",
-            },
+            "id",
+            "transportation_mode",
+            "status",
+            "updated_at",
+            "archived_at",
           ],
         },
         "ShipmentIndexResponse": {
@@ -11438,66 +11092,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "AirBookingDetailIncoterm": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "AirShipmentDetail": "optional<AirShipmentDetail>",
@@ -11711,56 +11317,16 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "BookingQuoteStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pending_quote",
-            "value": "pending_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "sent_quote",
-            "value": "sent_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "received_quote",
-            "value": "received_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "shared_quote",
-            "value": "shared_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "expired_quote",
-            "value": "expired_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "ready_to_share_quote",
-            "value": "ready_to_share_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "accepted_quote",
-            "value": "accepted_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "rejected_quote",
-            "value": "rejected_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "requoted_quote",
-            "value": "requoted_quote",
-          },
-          {
-            "docs": undefined,
-            "name": "archived_quote",
-            "value": "archived_quote",
-          },
+          "pending_quote",
+          "sent_quote",
+          "received_quote",
+          "shared_quote",
+          "expired_quote",
+          "ready_to_share_quote",
+          "accepted_quote",
+          "rejected_quote",
+          "requoted_quote",
+          "archived_quote",
         ],
       },
       "BookingRef": {
@@ -11775,31 +11341,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "BookingStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "archived",
-            "value": "archived",
-          },
-          {
-            "docs": undefined,
-            "name": "draft",
-            "value": "draft",
-          },
-          {
-            "docs": undefined,
-            "name": "submitted",
-            "value": "submitted",
-          },
-          {
-            "docs": undefined,
-            "name": "booked",
-            "value": "booked",
-          },
-          {
-            "docs": undefined,
-            "name": "shipment",
-            "value": "shipment",
-          },
+          "archived",
+          "draft",
+          "submitted",
+          "booked",
+          "shipment",
         ],
       },
       "CarbonCalculation": {
@@ -11855,26 +11401,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CargoLithiumBatteriesPackingTypesItem": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "packed_loose",
-            "value": "packed_loose",
-          },
-          {
-            "docs": undefined,
-            "name": "packed_with_equipment",
-            "value": "packed_with_equipment",
-          },
-          {
-            "docs": undefined,
-            "name": "contained_in_equipment",
-            "value": "contained_in_equipment",
-          },
-          {
-            "docs": undefined,
-            "name": "contained_in_battery_powered_vehicles",
-            "value": "contained_in_battery_powered_vehicles",
-          },
+          "packed_loose",
+          "packed_with_equipment",
+          "contained_in_equipment",
+          "contained_in_battery_powered_vehicles",
         ],
       },
       "CommercialInvoice": {
@@ -11934,21 +11464,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CommercialInvoiceDigitizationStatus": {
         "docs": "Status about if the digitization process for this commercial invoice is complete. If it is not complete, then the commercial invoice should be considered a draft that can change.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pending",
-            "value": "pending",
-          },
-          {
-            "docs": undefined,
-            "name": "reviewed",
-            "value": "reviewed",
-          },
-          {
-            "docs": undefined,
-            "name": "complete",
-            "value": "complete",
-          },
+          "pending",
+          "reviewed",
+          "complete",
         ],
       },
       "CommercialInvoiceLineItem": {
@@ -12199,66 +11717,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateAirBookingIncoterm": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "CreateBookingAmendmentHsCode": {
@@ -12338,26 +11808,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateCargoLithiumBatteriesPackingTypesItem": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "packed_loose",
-            "value": "packed_loose",
-          },
-          {
-            "docs": undefined,
-            "name": "packed_with_equipment",
-            "value": "packed_with_equipment",
-          },
-          {
-            "docs": undefined,
-            "name": "contained_in_equipment",
-            "value": "contained_in_equipment",
-          },
-          {
-            "docs": undefined,
-            "name": "contained_in_battery_powered_vehicles",
-            "value": "contained_in_battery_powered_vehicles",
-          },
+          "packed_loose",
+          "packed_with_equipment",
+          "contained_in_equipment",
+          "contained_in_battery_powered_vehicles",
         ],
       },
       "CreateCommercialInvoiceLineItem": {
@@ -12553,81 +12007,25 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateLineItemIncoterm": {
         "docs": "Required if there is no incoterm in the line item's purchase order. The Incoterm of your line item.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
         ],
       },
       "CreateLineItemLineType": {
         "docs": "type of the line item",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "main_line",
-            "value": "main_line",
-          },
-          {
-            "docs": undefined,
-            "name": "sub_line",
-            "value": "sub_line",
-          },
-          {
-            "docs": undefined,
-            "name": "component_line",
-            "value": "component_line",
-          },
+          "main_line",
+          "sub_line",
+          "component_line",
         ],
       },
       "CreateLineItemMeasurement": {
@@ -12650,686 +12048,170 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateLineItemMeasurementMeasureType": {
         "docs": "The type of measure",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "length",
-            "value": "length",
-          },
-          {
-            "docs": undefined,
-            "name": "width",
-            "value": "width",
-          },
-          {
-            "docs": undefined,
-            "name": "height",
-            "value": "height",
-          },
-          {
-            "docs": undefined,
-            "name": "gross_weight",
-            "value": "gross_weight",
-          },
-          {
-            "docs": undefined,
-            "name": "net_weight",
-            "value": "net_weight",
-          },
-          {
-            "docs": undefined,
-            "name": "net_net_weight",
-            "value": "net_net_weight",
-          },
-          {
-            "docs": undefined,
-            "name": "gross_volume",
-            "value": "gross_volume",
-          },
-          {
-            "docs": undefined,
-            "name": "volume_weight",
-            "value": "volume_weight",
-          },
+          "length",
+          "width",
+          "height",
+          "gross_weight",
+          "net_weight",
+          "net_net_weight",
+          "gross_volume",
+          "volume_weight",
         ],
       },
       "CreateLineItemTransportationMode": {
         "docs": "Required if there is no transportation_mode in purchase order",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "air",
-            "value": "air",
-          },
-          {
-            "docs": undefined,
-            "name": "ocean",
-            "value": "ocean",
-          },
-          {
-            "docs": undefined,
-            "name": "truck",
-            "value": "truck",
-          },
-          {
-            "docs": undefined,
-            "name": "rail",
-            "value": "rail",
-          },
+          "air",
+          "ocean",
+          "truck",
+          "rail",
         ],
       },
       "CreateLineItemUnitOfMeasure": {
         "docs": "The measurement per unit for this line item.",
         "enum": [
+          "BBL",
+          "CAR",
+          "CGM",
+          "CKG",
+          "CM",
+          "CM2",
+          "CTN",
+          "CYK",
+          "DOZ",
+          "DPC",
+          "DPR",
+          "DS",
+          "FBM",
+          "G",
+          "GBQ",
+          "GR",
+          "GRL",
+          "HUN",
+          "IRG",
+          "JWL",
+          "K",
+          "KG",
+          "KM3",
+          "KM",
+          "KWH",
+          "L",
+          "LNM",
+          "M",
+          "M2",
+          "M3",
+          "MBQ",
+          "NO",
+          "OSG",
+          "PCS",
+          "PDG",
+          "PFL",
+          "PK",
+          "PRS",
+          "PTG",
+          "PX",
+          "RHG",
+          "RUG",
+          "T",
+          "TDWB",
+          "THS",
+          "W",
+          "X",
           {
-            "docs": undefined,
-            "name": "BBL",
-            "value": "BBL",
-          },
-          {
-            "docs": undefined,
-            "name": "CAR",
-            "value": "CAR",
-          },
-          {
-            "docs": undefined,
-            "name": "CGM",
-            "value": "CGM",
-          },
-          {
-            "docs": undefined,
-            "name": "CKG",
-            "value": "CKG",
-          },
-          {
-            "docs": undefined,
-            "name": "CM",
-            "value": "CM",
-          },
-          {
-            "docs": undefined,
-            "name": "CM2",
-            "value": "CM2",
-          },
-          {
-            "docs": undefined,
-            "name": "CTN",
-            "value": "CTN",
-          },
-          {
-            "docs": undefined,
-            "name": "CYK",
-            "value": "CYK",
-          },
-          {
-            "docs": undefined,
-            "name": "DOZ",
-            "value": "DOZ",
-          },
-          {
-            "docs": undefined,
-            "name": "DPC",
-            "value": "DPC",
-          },
-          {
-            "docs": undefined,
-            "name": "DPR",
-            "value": "DPR",
-          },
-          {
-            "docs": undefined,
-            "name": "DS",
-            "value": "DS",
-          },
-          {
-            "docs": undefined,
-            "name": "FBM",
-            "value": "FBM",
-          },
-          {
-            "docs": undefined,
-            "name": "G",
-            "value": "G",
-          },
-          {
-            "docs": undefined,
-            "name": "GBQ",
-            "value": "GBQ",
-          },
-          {
-            "docs": undefined,
-            "name": "GR",
-            "value": "GR",
-          },
-          {
-            "docs": undefined,
-            "name": "GRL",
-            "value": "GRL",
-          },
-          {
-            "docs": undefined,
-            "name": "HUN",
-            "value": "HUN",
-          },
-          {
-            "docs": undefined,
-            "name": "IRG",
-            "value": "IRG",
-          },
-          {
-            "docs": undefined,
-            "name": "JWL",
-            "value": "JWL",
-          },
-          {
-            "docs": undefined,
-            "name": "K",
-            "value": "K",
-          },
-          {
-            "docs": undefined,
-            "name": "KG",
-            "value": "KG",
-          },
-          {
-            "docs": undefined,
-            "name": "KM3",
-            "value": "KM3",
-          },
-          {
-            "docs": undefined,
-            "name": "KM",
-            "value": "KM",
-          },
-          {
-            "docs": undefined,
-            "name": "KWH",
-            "value": "KWH",
-          },
-          {
-            "docs": undefined,
-            "name": "L",
-            "value": "L",
-          },
-          {
-            "docs": undefined,
-            "name": "LNM",
-            "value": "LNM",
-          },
-          {
-            "docs": undefined,
-            "name": "M",
-            "value": "M",
-          },
-          {
-            "docs": undefined,
-            "name": "M2",
-            "value": "M2",
-          },
-          {
-            "docs": undefined,
-            "name": "M3",
-            "value": "M3",
-          },
-          {
-            "docs": undefined,
-            "name": "MBQ",
-            "value": "MBQ",
-          },
-          {
-            "docs": undefined,
-            "name": "NO",
-            "value": "NO",
-          },
-          {
-            "docs": undefined,
-            "name": "OSG",
-            "value": "OSG",
-          },
-          {
-            "docs": undefined,
-            "name": "PCS",
-            "value": "PCS",
-          },
-          {
-            "docs": undefined,
-            "name": "PDG",
-            "value": "PDG",
-          },
-          {
-            "docs": undefined,
-            "name": "PFL",
-            "value": "PFL",
-          },
-          {
-            "docs": undefined,
-            "name": "PK",
-            "value": "PK",
-          },
-          {
-            "docs": undefined,
-            "name": "PRS",
-            "value": "PRS",
-          },
-          {
-            "docs": undefined,
-            "name": "PTG",
-            "value": "PTG",
-          },
-          {
-            "docs": undefined,
-            "name": "PX",
-            "value": "PX",
-          },
-          {
-            "docs": undefined,
-            "name": "RHG",
-            "value": "RHG",
-          },
-          {
-            "docs": undefined,
-            "name": "RUG",
-            "value": "RUG",
-          },
-          {
-            "docs": undefined,
-            "name": "T",
-            "value": "T",
-          },
-          {
-            "docs": undefined,
-            "name": "TDWB",
-            "value": "TDWB",
-          },
-          {
-            "docs": undefined,
-            "name": "THS",
-            "value": "THS",
-          },
-          {
-            "docs": undefined,
-            "name": "W",
-            "value": "W",
-          },
-          {
-            "docs": undefined,
-            "name": "X",
-            "value": "X",
-          },
-          {
-            "docs": undefined,
-            "name": "Twenty",
+            "description": undefined,
+            "generatedName": "Twenty",
+            "nameOverride": undefined,
             "value": "20",
           },
           {
-            "docs": undefined,
-            "name": "TwentyOne",
+            "description": undefined,
+            "generatedName": "TwentyOne",
+            "nameOverride": undefined,
             "value": "21",
           },
           {
-            "docs": undefined,
-            "name": "TwoW",
+            "description": undefined,
+            "generatedName": "TwoW",
+            "nameOverride": undefined,
             "value": "2W",
           },
           {
-            "docs": undefined,
-            "name": "FortyThree",
+            "description": undefined,
+            "generatedName": "FortyThree",
+            "nameOverride": undefined,
             "value": "43",
           },
-          {
-            "docs": undefined,
-            "name": "AS",
-            "value": "AS",
-          },
-          {
-            "docs": undefined,
-            "name": "BA",
-            "value": "BA",
-          },
-          {
-            "docs": undefined,
-            "name": "BC",
-            "value": "BC",
-          },
-          {
-            "docs": undefined,
-            "name": "BD",
-            "value": "BD",
-          },
-          {
-            "docs": undefined,
-            "name": "BG",
-            "value": "BG",
-          },
-          {
-            "docs": undefined,
-            "name": "BJ",
-            "value": "BJ",
-          },
-          {
-            "docs": undefined,
-            "name": "BK",
-            "value": "BK",
-          },
-          {
-            "docs": undefined,
-            "name": "BN",
-            "value": "BN",
-          },
-          {
-            "docs": undefined,
-            "name": "BO",
-            "value": "BO",
-          },
-          {
-            "docs": undefined,
-            "name": "BU",
-            "value": "BU",
-          },
-          {
-            "docs": undefined,
-            "name": "BX",
-            "value": "BX",
-          },
-          {
-            "docs": undefined,
-            "name": "CA",
-            "value": "CA",
-          },
-          {
-            "docs": undefined,
-            "name": "CB",
-            "value": "CB",
-          },
-          {
-            "docs": undefined,
-            "name": "CC",
-            "value": "CC",
-          },
-          {
-            "docs": undefined,
-            "name": "CF",
-            "value": "CF",
-          },
-          {
-            "docs": undefined,
-            "name": "CI",
-            "value": "CI",
-          },
-          {
-            "docs": undefined,
-            "name": "CN",
-            "value": "CN",
-          },
-          {
-            "docs": undefined,
-            "name": "CP",
-            "value": "CP",
-          },
-          {
-            "docs": undefined,
-            "name": "CQ",
-            "value": "CQ",
-          },
-          {
-            "docs": undefined,
-            "name": "CR",
-            "value": "CR",
-          },
-          {
-            "docs": undefined,
-            "name": "CS",
-            "value": "CS",
-          },
-          {
-            "docs": undefined,
-            "name": "CT",
-            "value": "CT",
-          },
-          {
-            "docs": undefined,
-            "name": "CX",
-            "value": "CX",
-          },
-          {
-            "docs": undefined,
-            "name": "CY",
-            "value": "CY",
-          },
-          {
-            "docs": undefined,
-            "name": "DF",
-            "value": "DF",
-          },
-          {
-            "docs": undefined,
-            "name": "DH",
-            "value": "DH",
-          },
-          {
-            "docs": undefined,
-            "name": "DR",
-            "value": "DR",
-          },
-          {
-            "docs": undefined,
-            "name": "DZ",
-            "value": "DZ",
-          },
-          {
-            "docs": undefined,
-            "name": "EA",
-            "value": "EA",
-          },
-          {
-            "docs": undefined,
-            "name": "FT",
-            "value": "FT",
-          },
-          {
-            "docs": undefined,
-            "name": "GA",
-            "value": "GA",
-          },
-          {
-            "docs": undefined,
-            "name": "GRAM",
-            "value": "GRAM",
-          },
-          {
-            "docs": undefined,
-            "name": "GS",
-            "value": "GS",
-          },
-          {
-            "docs": undefined,
-            "name": "IN",
-            "value": "IN",
-          },
-          {
-            "docs": undefined,
-            "name": "JO",
-            "value": "JO",
-          },
-          {
-            "docs": undefined,
-            "name": "JR",
-            "value": "JR",
-          },
-          {
-            "docs": undefined,
-            "name": "LB",
-            "value": "LB",
-          },
-          {
-            "docs": undefined,
-            "name": "LT",
-            "value": "LT",
-          },
-          {
-            "docs": undefined,
-            "name": "MP",
-            "value": "MP",
-          },
-          {
-            "docs": undefined,
-            "name": "MR",
-            "value": "MR",
-          },
-          {
-            "docs": undefined,
-            "name": "MT",
-            "value": "MT",
-          },
-          {
-            "docs": undefined,
-            "name": "OZ",
-            "value": "OZ",
-          },
-          {
-            "docs": undefined,
-            "name": "PC",
-            "value": "PC",
-          },
-          {
-            "docs": undefined,
-            "name": "PQ",
-            "value": "PQ",
-          },
-          {
-            "docs": undefined,
-            "name": "PR",
-            "value": "PR",
-          },
-          {
-            "docs": undefined,
-            "name": "PS",
-            "value": "PS",
-          },
-          {
-            "docs": undefined,
-            "name": "PT",
-            "value": "PT",
-          },
-          {
-            "docs": undefined,
-            "name": "QT",
-            "value": "QT",
-          },
-          {
-            "docs": undefined,
-            "name": "RA",
-            "value": "RA",
-          },
-          {
-            "docs": undefined,
-            "name": "RL",
-            "value": "RL",
-          },
-          {
-            "docs": undefined,
-            "name": "RM",
-            "value": "RM",
-          },
-          {
-            "docs": undefined,
-            "name": "RO",
-            "value": "RO",
-          },
-          {
-            "docs": undefined,
-            "name": "SC",
-            "value": "SC",
-          },
-          {
-            "docs": undefined,
-            "name": "SF",
-            "value": "SF",
-          },
-          {
-            "docs": undefined,
-            "name": "SH",
-            "value": "SH",
-          },
-          {
-            "docs": undefined,
-            "name": "SI",
-            "value": "SI",
-          },
-          {
-            "docs": undefined,
-            "name": "SJ",
-            "value": "SJ",
-          },
-          {
-            "docs": undefined,
-            "name": "SL",
-            "value": "SL",
-          },
-          {
-            "docs": undefined,
-            "name": "SM",
-            "value": "SM",
-          },
-          {
-            "docs": undefined,
-            "name": "SO",
-            "value": "SO",
-          },
-          {
-            "docs": undefined,
-            "name": "SQ",
-            "value": "SQ",
-          },
-          {
-            "docs": undefined,
-            "name": "ST",
-            "value": "ST",
-          },
-          {
-            "docs": undefined,
-            "name": "SV",
-            "value": "SV",
-          },
-          {
-            "docs": undefined,
-            "name": "SX",
-            "value": "SX",
-          },
-          {
-            "docs": undefined,
-            "name": "SY",
-            "value": "SY",
-          },
-          {
-            "docs": undefined,
-            "name": "TE",
-            "value": "TE",
-          },
-          {
-            "docs": undefined,
-            "name": "TN",
-            "value": "TN",
-          },
-          {
-            "docs": undefined,
-            "name": "TO",
-            "value": "TO",
-          },
-          {
-            "docs": undefined,
-            "name": "UN",
-            "value": "UN",
-          },
-          {
-            "docs": undefined,
-            "name": "YD",
-            "value": "YD",
-          },
-          {
-            "docs": undefined,
-            "name": "Z3",
-            "value": "Z3",
-          },
+          "AS",
+          "BA",
+          "BC",
+          "BD",
+          "BG",
+          "BJ",
+          "BK",
+          "BN",
+          "BO",
+          "BU",
+          "BX",
+          "CA",
+          "CB",
+          "CC",
+          "CF",
+          "CI",
+          "CN",
+          "CP",
+          "CQ",
+          "CR",
+          "CS",
+          "CT",
+          "CX",
+          "CY",
+          "DF",
+          "DH",
+          "DR",
+          "DZ",
+          "EA",
+          "FT",
+          "GA",
+          "GRAM",
+          "GS",
+          "IN",
+          "JO",
+          "JR",
+          "LB",
+          "LT",
+          "MP",
+          "MR",
+          "MT",
+          "OZ",
+          "PC",
+          "PQ",
+          "PR",
+          "PS",
+          "PT",
+          "QT",
+          "RA",
+          "RL",
+          "RM",
+          "RO",
+          "SC",
+          "SF",
+          "SH",
+          "SI",
+          "SJ",
+          "SL",
+          "SM",
+          "SO",
+          "SQ",
+          "ST",
+          "SV",
+          "SX",
+          "SY",
+          "TE",
+          "TN",
+          "TO",
+          "UN",
+          "YD",
+          "Z3",
         ],
       },
       "CreateOceanBooking": {
@@ -13374,66 +12256,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateOceanBookingIncoterm": {
         "docs": "Always required. The Incoterm of your shipment",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "CreateOrUpdatePurchaseOrder": {
@@ -13521,166 +12355,58 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateOrUpdatePurchaseOrderFreightPaymentTerms": {
         "docs": "The freight payment term for the purchase order",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "freight_collect",
-            "value": "freight_collect",
-          },
-          {
-            "docs": undefined,
-            "name": "freight_prepaid",
-            "value": "freight_prepaid",
-          },
+          "freight_collect",
+          "freight_prepaid",
         ],
       },
       "CreateOrUpdatePurchaseOrderIncoterm": {
         "docs": "Required if there is no incoterm in each line item. The incoterm of your purchase order.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
         ],
       },
       "CreateOrUpdatePurchaseOrderOrderClass": {
         "docs": "Class of the purchase order.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "purchase_order",
-            "value": "purchase_order",
-          },
-          {
-            "docs": undefined,
-            "name": "sales_order",
-            "value": "sales_order",
-          },
-          {
-            "docs": undefined,
-            "name": "transfer_order",
-            "value": "transfer_order",
-          },
-          {
-            "docs": undefined,
-            "name": "delivery_order",
-            "value": "delivery_order",
-          },
-          {
-            "docs": undefined,
-            "name": "work_order",
-            "value": "work_order",
-          },
+          "purchase_order",
+          "sales_order",
+          "transfer_order",
+          "delivery_order",
+          "work_order",
         ],
       },
       "CreateOrUpdatePurchaseOrderPriority": {
         "docs": "priority of the purchase order.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "high",
-            "value": "high",
-          },
-          {
-            "docs": undefined,
-            "name": "standard",
-            "value": "standard",
-          },
+          "high",
+          "standard",
         ],
       },
       "CreateOrUpdatePurchaseOrderStatus": {
         "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open",
-            "value": "open",
-          },
-          {
-            "docs": undefined,
-            "name": "cancelled",
-            "value": "cancelled",
-          },
-          {
-            "docs": undefined,
-            "name": "closed",
-            "value": "closed",
-          },
+          "open",
+          "cancelled",
+          "closed",
         ],
       },
       "CreateOrUpdatePurchaseOrderTransportationMode": {
         "docs": "Required if there is no transportation_mode in purchase order",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "air",
-            "value": "air",
-          },
-          {
-            "docs": undefined,
-            "name": "ocean",
-            "value": "ocean",
-          },
-          {
-            "docs": undefined,
-            "name": "truck",
-            "value": "truck",
-          },
-          {
-            "docs": undefined,
-            "name": "rail",
-            "value": "rail",
-          },
+          "air",
+          "ocean",
+          "truck",
+          "rail",
         ],
       },
       "CreateParty": {
@@ -13717,66 +12443,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreatePartyRole": {
         "docs": "The role that the party has",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "buyer",
-            "value": "buyer",
-          },
-          {
-            "docs": undefined,
-            "name": "seller",
-            "value": "seller",
-          },
-          {
-            "docs": undefined,
-            "name": "owner",
-            "value": "owner",
-          },
-          {
-            "docs": undefined,
-            "name": "shipper",
-            "value": "shipper",
-          },
-          {
-            "docs": undefined,
-            "name": "consignee",
-            "value": "consignee",
-          },
-          {
-            "docs": undefined,
-            "name": "freight_forwarder",
-            "value": "freight_forwarder",
-          },
-          {
-            "docs": undefined,
-            "name": "notify_party",
-            "value": "notify_party",
-          },
-          {
-            "docs": undefined,
-            "name": "customs_broker",
-            "value": "customs_broker",
-          },
-          {
-            "docs": undefined,
-            "name": "carrier",
-            "value": "carrier",
-          },
-          {
-            "docs": undefined,
-            "name": "manufacturer",
-            "value": "manufacturer",
-          },
-          {
-            "docs": undefined,
-            "name": "buyers_agent",
-            "value": "buyers_agent",
-          },
-          {
-            "docs": undefined,
-            "name": "sellers_agent",
-            "value": "sellers_agent",
-          },
+          "buyer",
+          "seller",
+          "owner",
+          "shipper",
+          "consignee",
+          "freight_forwarder",
+          "notify_party",
+          "customs_broker",
+          "carrier",
+          "manufacturer",
+          "buyers_agent",
+          "sellers_agent",
         ],
       },
       "CreatePurchaseOrderHsCode": {
@@ -13808,26 +12486,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreatePurchaseOrderPortCodeType": {
         "docs": "The code type of the port",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "unlocode",
-            "value": "unlocode",
-          },
-          {
-            "docs": undefined,
-            "name": "iata",
-            "value": "iata",
-          },
-          {
-            "docs": undefined,
-            "name": "icao",
-            "value": "icao",
-          },
-          {
-            "docs": undefined,
-            "name": "us_cbp",
-            "value": "us_cbp",
-          },
+          "unlocode",
+          "iata",
+          "icao",
+          "us_cbp",
         ],
       },
       "CreatePurchaseOrderProduct": {
@@ -13899,41 +12561,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateQuantityUnit": {
         "docs": "Required. Unit of measurement.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pcs",
-            "value": "pcs",
-          },
-          {
-            "docs": undefined,
-            "name": "dpc",
-            "value": "dpc",
-          },
-          {
-            "docs": undefined,
-            "name": "doz",
-            "value": "doz",
-          },
-          {
-            "docs": undefined,
-            "name": "hun",
-            "value": "hun",
-          },
-          {
-            "docs": undefined,
-            "name": "ths",
-            "value": "ths",
-          },
-          {
-            "docs": undefined,
-            "name": "prs",
-            "value": "prs",
-          },
-          {
-            "docs": undefined,
-            "name": "dpr",
-            "value": "dpr",
-          },
+          "pcs",
+          "dpc",
+          "doz",
+          "hun",
+          "ths",
+          "prs",
+          "dpr",
         ],
       },
       "CreateTruckingBooking": {
@@ -13956,16 +12590,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CreateTruckingBookingPaymentTerms": {
         "docs": "Whether the shipper or consignee is responsible for payment of trucking freight. This can be \`collect\` (consignee) or \`prepaid\` (shipper).",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "collect",
-            "value": "collect",
-          },
-          {
-            "docs": undefined,
-            "name": "prepaid",
-            "value": "prepaid",
-          },
+          "collect",
+          "prepaid",
         ],
       },
       "CreditMemo": {
@@ -14029,21 +12655,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "CustomsEntryReleaseStatus": {
         "docs": "The release status for this entry.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "cleared",
-            "value": "cleared",
-          },
-          {
-            "docs": undefined,
-            "name": "customs_hold",
-            "value": "customs_hold",
-          },
-          {
-            "docs": undefined,
-            "name": "pending",
-            "value": "pending",
-          },
+          "cleared",
+          "customs_hold",
+          "pending",
         ],
       },
       "CustomsInvolvedParty": {
@@ -14081,16 +12695,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "DistanceCreateUnit": {
         "docs": "Required. Unit of measurement. "km" for kilometers. "mi" for miles.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "km",
-            "value": "km",
-          },
-          {
-            "docs": undefined,
-            "name": "mi",
-            "value": "mi",
-          },
+          "km",
+          "mi",
         ],
       },
       "Document": {
@@ -14175,81 +12781,21 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "ExceptionRootCauseSlug": {
         "docs": "The main reason for the exception as an identifier.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "carrier",
-            "value": "carrier",
-          },
-          {
-            "docs": undefined,
-            "name": "client",
-            "value": "client",
-          },
-          {
-            "docs": undefined,
-            "name": "consignee",
-            "value": "consignee",
-          },
-          {
-            "docs": undefined,
-            "name": "destination_agent",
-            "value": "destination_agent",
-          },
-          {
-            "docs": undefined,
-            "name": "destination_trucking_carrier",
-            "value": "destination_trucking_carrier",
-          },
-          {
-            "docs": undefined,
-            "name": "export_customs_agent",
-            "value": "export_customs_agent",
-          },
-          {
-            "docs": undefined,
-            "name": "flexport",
-            "value": "flexport",
-          },
-          {
-            "docs": undefined,
-            "name": "government_agency",
-            "value": "government_agency",
-          },
-          {
-            "docs": undefined,
-            "name": "import_customs_agent",
-            "value": "import_customs_agent",
-          },
-          {
-            "docs": undefined,
-            "name": "natural_event",
-            "value": "natural_event",
-          },
-          {
-            "docs": undefined,
-            "name": "origin_agent",
-            "value": "origin_agent",
-          },
-          {
-            "docs": undefined,
-            "name": "origin_trucking_carrier",
-            "value": "origin_trucking_carrier",
-          },
-          {
-            "docs": undefined,
-            "name": "shipper",
-            "value": "shipper",
-          },
-          {
-            "docs": undefined,
-            "name": "terminal",
-            "value": "terminal",
-          },
-          {
-            "docs": undefined,
-            "name": "unknown",
-            "value": "unknown",
-          },
+          "carrier",
+          "client",
+          "consignee",
+          "destination_agent",
+          "destination_trucking_carrier",
+          "export_customs_agent",
+          "flexport",
+          "government_agency",
+          "import_customs_agent",
+          "natural_event",
+          "origin_agent",
+          "origin_trucking_carrier",
+          "shipper",
+          "terminal",
+          "unknown",
         ],
       },
       "FileMetadata": {
@@ -14272,26 +12818,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "FreightType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "port_to_door",
-            "value": "port_to_door",
-          },
-          {
-            "docs": undefined,
-            "name": "port_to_port",
-            "value": "port_to_port",
-          },
-          {
-            "docs": undefined,
-            "name": "door_to_door",
-            "value": "door_to_door",
-          },
-          {
-            "docs": undefined,
-            "name": "door_to_port",
-            "value": "door_to_port",
-          },
+          "port_to_door",
+          "port_to_port",
+          "door_to_door",
+          "door_to_port",
         ],
       },
       "GenericCollectionRef": {
@@ -14432,36 +12962,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "InvoiceItemCategory": {
         "docs": "Category of the charge.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "freight",
-            "value": "freight",
-          },
-          {
-            "docs": undefined,
-            "name": "origin",
-            "value": "origin",
-          },
-          {
-            "docs": undefined,
-            "name": "destination",
-            "value": "destination",
-          },
-          {
-            "docs": undefined,
-            "name": "customs",
-            "value": "customs",
-          },
-          {
-            "docs": undefined,
-            "name": "additional",
-            "value": "additional",
-          },
-          {
-            "docs": undefined,
-            "name": "capital",
-            "value": "capital",
-          },
+          "freight",
+          "origin",
+          "destination",
+          "customs",
+          "additional",
+          "capital",
         ],
       },
       "InvoiceQuantity": {
@@ -14501,46 +13007,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "InvoiceStatus": {
         "docs": "Status of the invoice",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "outstanding",
-            "value": "outstanding",
-          },
-          {
-            "docs": undefined,
-            "name": "past_due",
-            "value": "past_due",
-          },
-          {
-            "docs": undefined,
-            "name": "void",
-            "value": "void",
-          },
-          {
-            "docs": undefined,
-            "name": "paid",
-            "value": "paid",
-          },
-          {
-            "docs": undefined,
-            "name": "payment_pending",
-            "value": "payment_pending",
-          },
+          "outstanding",
+          "past_due",
+          "void",
+          "paid",
+          "payment_pending",
         ],
       },
       "InvoiceType": {
         "docs": "What the invoice is being issued for. Shipment related charges are type \`Shipment\` and non-shipment related charges are type \`Client\`",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Shipment",
-            "value": "Shipment",
-          },
-          {
-            "docs": undefined,
-            "name": "Client",
-            "value": "Client",
-          },
+          "Shipment",
+          "Client",
         ],
       },
       "LegCollectionRef": {
@@ -14602,31 +13080,15 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "LengthCreateUnit": {
         "docs": "Required. Unit of measurement. "cm" for centimeters. "in" for inches.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "cm",
-            "value": "cm",
-          },
-          {
-            "docs": undefined,
-            "name": "in",
-            "value": "in",
-          },
+          "cm",
+          "in",
         ],
       },
       "LengthUnit": {
         "docs": "Required. Unit of measurement. "cm" for centimeters. "in" for inches.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "cm",
-            "value": "cm",
-          },
-          {
-            "docs": undefined,
-            "name": "in",
-            "value": "in",
-          },
+          "cm",
+          "in",
         ],
       },
       "LineItemMeasurement": {
@@ -14649,46 +13111,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "LineItemMeasurementMeasureType": {
         "docs": "The type of measure",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "length",
-            "value": "length",
-          },
-          {
-            "docs": undefined,
-            "name": "width",
-            "value": "width",
-          },
-          {
-            "docs": undefined,
-            "name": "height",
-            "value": "height",
-          },
-          {
-            "docs": undefined,
-            "name": "gross_weight",
-            "value": "gross_weight",
-          },
-          {
-            "docs": undefined,
-            "name": "net_weight",
-            "value": "net_weight",
-          },
-          {
-            "docs": undefined,
-            "name": "net_net_weight",
-            "value": "net_net_weight",
-          },
-          {
-            "docs": undefined,
-            "name": "gross_volume",
-            "value": "gross_volume",
-          },
-          {
-            "docs": undefined,
-            "name": "volume_weight",
-            "value": "volume_weight",
-          },
+          "length",
+          "width",
+          "height",
+          "gross_weight",
+          "net_weight",
+          "net_net_weight",
+          "gross_volume",
+          "volume_weight",
         ],
       },
       "Location": {
@@ -14776,66 +13206,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "OceanBookingDetailIncoterm": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "OceanShipmentContainerLeg": {
@@ -14893,66 +13275,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "PartiesRole": {
         "docs": "The role that the party has",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "buyer",
-            "value": "buyer",
-          },
-          {
-            "docs": undefined,
-            "name": "seller",
-            "value": "seller",
-          },
-          {
-            "docs": undefined,
-            "name": "owner",
-            "value": "owner",
-          },
-          {
-            "docs": undefined,
-            "name": "shipper",
-            "value": "shipper",
-          },
-          {
-            "docs": undefined,
-            "name": "consignee",
-            "value": "consignee",
-          },
-          {
-            "docs": undefined,
-            "name": "freight_forwarder",
-            "value": "freight_forwarder",
-          },
-          {
-            "docs": undefined,
-            "name": "notify_party",
-            "value": "notify_party",
-          },
-          {
-            "docs": undefined,
-            "name": "customs_broker",
-            "value": "customs_broker",
-          },
-          {
-            "docs": undefined,
-            "name": "carrier",
-            "value": "carrier",
-          },
-          {
-            "docs": undefined,
-            "name": "manufacturer",
-            "value": "manufacturer",
-          },
-          {
-            "docs": undefined,
-            "name": "buyers_agent",
-            "value": "buyers_agent",
-          },
-          {
-            "docs": undefined,
-            "name": "sellers_agent",
-            "value": "sellers_agent",
-          },
+          "buyer",
+          "seller",
+          "owner",
+          "shipper",
+          "consignee",
+          "freight_forwarder",
+          "notify_party",
+          "customs_broker",
+          "carrier",
+          "manufacturer",
+          "buyers_agent",
+          "sellers_agent",
         ],
       },
       "Place": "optional<Place>",
@@ -14979,18 +13313,21 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "docs": "Type of the object",
         "enum": [
           {
-            "docs": undefined,
-            "name": "OceanRailport",
+            "description": undefined,
+            "generatedName": "OceanRailport",
+            "nameOverride": undefined,
             "value": "/ocean/railport",
           },
           {
-            "docs": undefined,
-            "name": "TruckingPort",
+            "description": undefined,
+            "generatedName": "TruckingPort",
+            "nameOverride": undefined,
             "value": "/trucking/port",
           },
           {
-            "docs": undefined,
-            "name": "OceanPort",
+            "description": undefined,
+            "generatedName": "OceanPort",
+            "nameOverride": undefined,
             "value": "/ocean/port",
           },
         ],
@@ -15144,81 +13481,25 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "PurchaseOrderFreightPaymnetTerms": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "freight_collect",
-            "value": "freight_collect",
-          },
-          {
-            "docs": undefined,
-            "name": "freight_prepaid",
-            "value": "freight_prepaid",
-          },
+          "freight_collect",
+          "freight_prepaid",
         ],
       },
       "PurchaseOrderIncoterm": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "PurchaseOrderLineItem": {
@@ -15300,86 +13581,26 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "PurchaseOrderLineItemIncoterm": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "PurchaseOrderLineItemLineType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "main_line",
-            "value": "main_line",
-          },
-          {
-            "docs": undefined,
-            "name": "sub_line",
-            "value": "sub_line",
-          },
-          {
-            "docs": undefined,
-            "name": "component_line",
-            "value": "component_line",
-          },
+          "main_line",
+          "sub_line",
+          "component_line",
         ],
       },
       "PurchaseOrderLineItemRef": {
@@ -15394,276 +13615,68 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "PurchaseOrderLineItemUnitOfMeasure": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "BBL",
-            "value": "BBL",
-          },
-          {
-            "docs": undefined,
-            "name": "CAR",
-            "value": "CAR",
-          },
-          {
-            "docs": undefined,
-            "name": "CGM",
-            "value": "CGM",
-          },
-          {
-            "docs": undefined,
-            "name": "CKG",
-            "value": "CKG",
-          },
-          {
-            "docs": undefined,
-            "name": "CM",
-            "value": "CM",
-          },
-          {
-            "docs": undefined,
-            "name": "CM2",
-            "value": "CM2",
-          },
-          {
-            "docs": undefined,
-            "name": "CTN",
-            "value": "CTN",
-          },
-          {
-            "docs": undefined,
-            "name": "CYK",
-            "value": "CYK",
-          },
-          {
-            "docs": undefined,
-            "name": "DPC",
-            "value": "DPC",
-          },
-          {
-            "docs": undefined,
-            "name": "DPR",
-            "value": "DPR",
-          },
-          {
-            "docs": undefined,
-            "name": "DS",
-            "value": "DS",
-          },
-          {
-            "docs": undefined,
-            "name": "FBM",
-            "value": "FBM",
-          },
-          {
-            "docs": undefined,
-            "name": "G",
-            "value": "G",
-          },
-          {
-            "docs": undefined,
-            "name": "GBQ",
-            "value": "GBQ",
-          },
-          {
-            "docs": undefined,
-            "name": "GR",
-            "value": "GR",
-          },
-          {
-            "docs": undefined,
-            "name": "GRL",
-            "value": "GRL",
-          },
-          {
-            "docs": undefined,
-            "name": "HUN",
-            "value": "HUN",
-          },
-          {
-            "docs": undefined,
-            "name": "IRG",
-            "value": "IRG",
-          },
-          {
-            "docs": undefined,
-            "name": "JWL",
-            "value": "JWL",
-          },
-          {
-            "docs": undefined,
-            "name": "K",
-            "value": "K",
-          },
-          {
-            "docs": undefined,
-            "name": "KG",
-            "value": "KG",
-          },
-          {
-            "docs": undefined,
-            "name": "KM",
-            "value": "KM",
-          },
-          {
-            "docs": undefined,
-            "name": "KM3",
-            "value": "KM3",
-          },
-          {
-            "docs": undefined,
-            "name": "KWH",
-            "value": "KWH",
-          },
-          {
-            "docs": undefined,
-            "name": "L",
-            "value": "L",
-          },
-          {
-            "docs": undefined,
-            "name": "LNM",
-            "value": "LNM",
-          },
-          {
-            "docs": undefined,
-            "name": "M",
-            "value": "M",
-          },
-          {
-            "docs": undefined,
-            "name": "M2",
-            "value": "M2",
-          },
-          {
-            "docs": undefined,
-            "name": "M3",
-            "value": "M3",
-          },
-          {
-            "docs": undefined,
-            "name": "MBQ",
-            "value": "MBQ",
-          },
-          {
-            "docs": undefined,
-            "name": "NO",
-            "value": "NO",
-          },
-          {
-            "docs": undefined,
-            "name": "OSG",
-            "value": "OSG",
-          },
-          {
-            "docs": undefined,
-            "name": "PCS",
-            "value": "PCS",
-          },
-          {
-            "docs": undefined,
-            "name": "PDG",
-            "value": "PDG",
-          },
-          {
-            "docs": undefined,
-            "name": "PFL",
-            "value": "PFL",
-          },
-          {
-            "docs": undefined,
-            "name": "PK",
-            "value": "PK",
-          },
-          {
-            "docs": undefined,
-            "name": "PRS",
-            "value": "PRS",
-          },
-          {
-            "docs": undefined,
-            "name": "PTG",
-            "value": "PTG",
-          },
-          {
-            "docs": undefined,
-            "name": "PX",
-            "value": "PX",
-          },
-          {
-            "docs": undefined,
-            "name": "RHG",
-            "value": "RHG",
-          },
-          {
-            "docs": undefined,
-            "name": "RUG",
-            "value": "RUG",
-          },
-          {
-            "docs": undefined,
-            "name": "T",
-            "value": "T",
-          },
-          {
-            "docs": undefined,
-            "name": "TDWB",
-            "value": "TDWB",
-          },
-          {
-            "docs": undefined,
-            "name": "W",
-            "value": "W",
-          },
-          {
-            "docs": undefined,
-            "name": "X",
-            "value": "X",
-          },
+          "BBL",
+          "CAR",
+          "CGM",
+          "CKG",
+          "CM",
+          "CM2",
+          "CTN",
+          "CYK",
+          "DPC",
+          "DPR",
+          "DS",
+          "FBM",
+          "G",
+          "GBQ",
+          "GR",
+          "GRL",
+          "HUN",
+          "IRG",
+          "JWL",
+          "K",
+          "KG",
+          "KM",
+          "KM3",
+          "KWH",
+          "L",
+          "LNM",
+          "M",
+          "M2",
+          "M3",
+          "MBQ",
+          "NO",
+          "OSG",
+          "PCS",
+          "PDG",
+          "PFL",
+          "PK",
+          "PRS",
+          "PTG",
+          "PX",
+          "RHG",
+          "RUG",
+          "T",
+          "TDWB",
+          "W",
+          "X",
         ],
       },
       "PurchaseOrderOrderClass": {
         "docs": "Class of the purchase order.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "purchase_order",
-            "value": "purchase_order",
-          },
-          {
-            "docs": undefined,
-            "name": "sales_order",
-            "value": "sales_order",
-          },
-          {
-            "docs": undefined,
-            "name": "transfer_order",
-            "value": "transfer_order",
-          },
-          {
-            "docs": undefined,
-            "name": "delivery_order",
-            "value": "delivery_order",
-          },
-          {
-            "docs": undefined,
-            "name": "work_order",
-            "value": "work_order",
-          },
+          "purchase_order",
+          "sales_order",
+          "transfer_order",
+          "delivery_order",
+          "work_order",
         ],
       },
       "PurchaseOrderPriority": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "standard",
-            "value": "standard",
-          },
-          {
-            "docs": undefined,
-            "name": "high",
-            "value": "high",
-          },
+          "standard",
+          "high",
         ],
       },
       "PurchaseOrderProduct": {
@@ -15731,21 +13744,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "PurchaseOrderStatus": {
         "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open",
-            "value": "open",
-          },
-          {
-            "docs": undefined,
-            "name": "closed",
-            "value": "closed",
-          },
-          {
-            "docs": undefined,
-            "name": "cancelled",
-            "value": "cancelled",
-          },
+          "open",
+          "closed",
+          "cancelled",
         ],
       },
       "RailShipmentLeg": "optional<RailShipmentLeg>",
@@ -15948,91 +13949,27 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "ShipmentContainerContainerSize": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "twenty_ft",
-            "value": "twenty_ft",
-          },
-          {
-            "docs": undefined,
-            "name": "fourty_ft",
-            "value": "fourty_ft",
-          },
-          {
-            "docs": undefined,
-            "name": "fourty_ft_hc",
-            "value": "fourty_ft_hc",
-          },
-          {
-            "docs": undefined,
-            "name": "fourty_five_ft_hc",
-            "value": "fourty_five_ft_hc",
-          },
-          {
-            "docs": undefined,
-            "name": "fifty_three_ft",
-            "value": "fifty_three_ft",
-          },
-          {
-            "docs": undefined,
-            "name": "fifty_three_ft_hc",
-            "value": "fifty_three_ft_hc",
-          },
+          "twenty_ft",
+          "fourty_ft",
+          "fourty_ft_hc",
+          "fourty_five_ft_hc",
+          "fifty_three_ft",
+          "fifty_three_ft_hc",
         ],
       },
       "ShipmentContainerContainerType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "dry",
-            "value": "dry",
-          },
-          {
-            "docs": undefined,
-            "name": "flat_rack",
-            "value": "flat_rack",
-          },
-          {
-            "docs": undefined,
-            "name": "headload",
-            "value": "headload",
-          },
-          {
-            "docs": undefined,
-            "name": "open",
-            "value": "open",
-          },
-          {
-            "docs": undefined,
-            "name": "reefer",
-            "value": "reefer",
-          },
-          {
-            "docs": undefined,
-            "name": "lcl",
-            "value": "lcl",
-          },
-          {
-            "docs": undefined,
-            "name": "tank",
-            "value": "tank",
-          },
-          {
-            "docs": undefined,
-            "name": "ventilated",
-            "value": "ventilated",
-          },
-          {
-            "docs": undefined,
-            "name": "bulk",
-            "value": "bulk",
-          },
-          {
-            "docs": undefined,
-            "name": "special",
-            "value": "special",
-          },
+          "dry",
+          "flat_rack",
+          "headload",
+          "open",
+          "reefer",
+          "lcl",
+          "tank",
+          "ventilated",
+          "bulk",
+          "special",
         ],
       },
       "ShipmentDangerousGoods": {
@@ -16052,36 +13989,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "ShipmentDangerousGoodsReviewStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pending",
-            "value": "pending",
-          },
-          {
-            "docs": undefined,
-            "name": "in_progress",
-            "value": "in_progress",
-          },
-          {
-            "docs": undefined,
-            "name": "complete",
-            "value": "complete",
-          },
-          {
-            "docs": undefined,
-            "name": "denied",
-            "value": "denied",
-          },
-          {
-            "docs": undefined,
-            "name": "not_applicable",
-            "value": "not_applicable",
-          },
-          {
-            "docs": undefined,
-            "name": "misflagged",
-            "value": "misflagged",
-          },
+          "pending",
+          "in_progress",
+          "complete",
+          "denied",
+          "not_applicable",
+          "misflagged",
         ],
       },
       "ShipmentEventData": {
@@ -16116,66 +14029,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "ShipmentIncoterm": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "EXW",
-            "value": "EXW",
-          },
-          {
-            "docs": undefined,
-            "name": "FOB",
-            "value": "FOB",
-          },
-          {
-            "docs": undefined,
-            "name": "FAS",
-            "value": "FAS",
-          },
-          {
-            "docs": undefined,
-            "name": "FCA",
-            "value": "FCA",
-          },
-          {
-            "docs": undefined,
-            "name": "CPT",
-            "value": "CPT",
-          },
-          {
-            "docs": undefined,
-            "name": "CFR",
-            "value": "CFR",
-          },
-          {
-            "docs": undefined,
-            "name": "CIF",
-            "value": "CIF",
-          },
-          {
-            "docs": undefined,
-            "name": "CIP",
-            "value": "CIP",
-          },
-          {
-            "docs": undefined,
-            "name": "DAT",
-            "value": "DAT",
-          },
-          {
-            "docs": undefined,
-            "name": "DAP",
-            "value": "DAP",
-          },
-          {
-            "docs": undefined,
-            "name": "DDP",
-            "value": "DDP",
-          },
-          {
-            "docs": undefined,
-            "name": "DPU",
-            "value": "DPU",
-          },
+          "EXW",
+          "FOB",
+          "FAS",
+          "FCA",
+          "CPT",
+          "CFR",
+          "CIF",
+          "CIP",
+          "DAT",
+          "DAP",
+          "DDP",
+          "DPU",
         ],
       },
       "ShipmentItem": {
@@ -16240,16 +14105,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "ShipmentPriority": {
         "docs": "The level of attention Flexport should give to this shipment",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "standard",
-            "value": "standard",
-          },
-          {
-            "docs": undefined,
-            "name": "high",
-            "value": "high",
-          },
+          "standard",
+          "high",
         ],
       },
       "ShipmentRef": {
@@ -16276,71 +14133,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "ShipmentStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "seller_location",
-            "value": "seller_location",
-          },
-          {
-            "docs": undefined,
-            "name": "origin_stop_off",
-            "value": "origin_stop_off",
-          },
-          {
-            "docs": undefined,
-            "name": "in_transit_to_departure_port",
-            "value": "in_transit_to_departure_port",
-          },
-          {
-            "docs": undefined,
-            "name": "departure_port",
-            "value": "departure_port",
-          },
-          {
-            "docs": undefined,
-            "name": "in_transit_to_intermediary_port",
-            "value": "in_transit_to_intermediary_port",
-          },
-          {
-            "docs": undefined,
-            "name": "intermediary_port",
-            "value": "intermediary_port",
-          },
-          {
-            "docs": undefined,
-            "name": "in_transit_to_arrival_port",
-            "value": "in_transit_to_arrival_port",
-          },
-          {
-            "docs": undefined,
-            "name": "arrival_port",
-            "value": "arrival_port",
-          },
-          {
-            "docs": undefined,
-            "name": "deconsolidation",
-            "value": "deconsolidation",
-          },
-          {
-            "docs": undefined,
-            "name": "in_transit_to_final_destination",
-            "value": "in_transit_to_final_destination",
-          },
-          {
-            "docs": undefined,
-            "name": "destination_stop_off",
-            "value": "destination_stop_off",
-          },
-          {
-            "docs": undefined,
-            "name": "gated_out",
-            "value": "gated_out",
-          },
-          {
-            "docs": undefined,
-            "name": "final_destination",
-            "value": "final_destination",
-          },
+          "seller_location",
+          "origin_stop_off",
+          "in_transit_to_departure_port",
+          "departure_port",
+          "in_transit_to_intermediary_port",
+          "intermediary_port",
+          "in_transit_to_arrival_port",
+          "arrival_port",
+          "deconsolidation",
+          "in_transit_to_final_destination",
+          "destination_stop_off",
+          "gated_out",
+          "final_destination",
         ],
       },
       "ShippingUnit": {
@@ -16406,88 +14211,32 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "TransportationMode": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ocean",
-            "value": "ocean",
-          },
-          {
-            "docs": undefined,
-            "name": "air",
-            "value": "air",
-          },
-          {
-            "docs": undefined,
-            "name": "truck",
-            "value": "truck",
-          },
-          {
-            "docs": undefined,
-            "name": "rail",
-            "value": "rail",
-          },
-          {
-            "docs": undefined,
-            "name": "unknown_transportation",
-            "value": "unknown_transportation",
-          },
-          {
-            "docs": undefined,
-            "name": "ocean_air",
-            "value": "ocean_air",
-          },
-          {
-            "docs": undefined,
-            "name": "truck_intl",
-            "value": "truck_intl",
-          },
-          {
-            "docs": undefined,
-            "name": "warehouse_storage",
-            "value": "warehouse_storage",
-          },
+          "ocean",
+          "air",
+          "truck",
+          "rail",
+          "unknown_transportation",
+          "ocean_air",
+          "truck_intl",
+          "warehouse_storage",
         ],
       },
       "TruckingBookingDetail": "optional<TruckingBookingDetail>",
       "TruckingBookingDetailPaymentTerms": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "collect",
-            "value": "collect",
-          },
-          {
-            "docs": undefined,
-            "name": "prepaid",
-            "value": "prepaid",
-          },
+          "collect",
+          "prepaid",
         ],
       },
       "TruckingShipmentLeg": "optional<TruckingShipmentLeg>",
       "TruckingShipmentLegServiceType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ltl",
-            "value": "ltl",
-          },
-          {
-            "docs": undefined,
-            "name": "ftl",
-            "value": "ftl",
-          },
-          {
-            "docs": undefined,
-            "name": "drayage",
-            "value": "drayage",
-          },
-          {
-            "docs": undefined,
-            "name": "cartage",
-            "value": "cartage",
-          },
+          "ltl",
+          "ftl",
+          "drayage",
+          "cartage",
         ],
       },
       "VatNumber": {
@@ -16532,16 +14281,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "VolumeCreateUnit": {
         "docs": "unit of measurement. "cbm" for cubic meters. "cbft" for cubic feet.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "cbm",
-            "value": "cbm",
-          },
-          {
-            "docs": undefined,
-            "name": "cbft",
-            "value": "cbft",
-          },
+          "cbm",
+          "cbft",
         ],
       },
       "WebhookEvent": {
@@ -16587,16 +14328,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "WeightCreateUnit": {
         "docs": "Required. Unit of measurement. "kg" for kilograms, "lbs" for pounds",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "kg",
-            "value": "kg",
-          },
-          {
-            "docs": undefined,
-            "name": "lbs",
-            "value": "lbs",
-          },
+          "kg",
+          "lbs",
         ],
       },
       "WriteProductClassification": {

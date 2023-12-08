@@ -6840,13 +6840,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
           "docs": undefined,
           "enum": [
             {
-              "docs": undefined,
-              "name": "Ascending",
+              "description": undefined,
+              "generatedName": "created_at",
+              "nameOverride": "Ascending",
               "value": "created_at",
             },
             {
-              "docs": undefined,
-              "name": "Descending",
+              "description": undefined,
+              "generatedName": "CreatedAt",
+              "nameOverride": "Descending",
               "value": "-created_at",
             },
           ],
@@ -6854,16 +6856,8 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "ListPaymentLinksRequestStatus": {
           "docs": undefined,
           "enum": [
-            {
-              "docs": undefined,
-              "name": "ACTIVE",
-              "value": "ACTIVE",
-            },
-            {
-              "docs": undefined,
-              "name": "INACTIVE",
-              "value": "INACTIVE",
-            },
+            "ACTIVE",
+            "INACTIVE",
           ],
         },
       },
@@ -13071,21 +13065,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "The current status of the charge.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "PENDING",
-            "value": "PENDING",
-          },
-          {
-            "docs": undefined,
-            "name": "SUCCEEDED",
-            "value": "SUCCEEDED",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
+          "PENDING",
+          "SUCCEEDED",
+          "FAILED",
         ],
       },
       "CreateBankAccountOfpi": {
@@ -13890,16 +13872,8 @@ We return one of the following enum values:
       "EnumBankAccountHolderTypeOfpi": {
         "docs": "The type of bank account. Can be either \`INDIVIDUAL\` or \`BUSINESS\`.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "INDIVIDUAL",
-            "value": "INDIVIDUAL",
-          },
-          {
-            "docs": undefined,
-            "name": "BUSINESS",
-            "value": "BUSINESS",
-          },
+          "INDIVIDUAL",
+          "BUSINESS",
         ],
       },
       "EnumBankAccountHolderTypePse": "literal<"BUSINESS">",
@@ -13910,21 +13884,9 @@ We return one of the following enum values:
   - \`SAVINGS\`
   - \`SALARY\`",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CHECKINGS",
-            "value": "CHECKINGS",
-          },
-          {
-            "docs": undefined,
-            "name": "SAVINGS",
-            "value": "SAVINGS",
-          },
-          {
-            "docs": undefined,
-            "name": "SALARY",
-            "value": "SALARY",
-          },
+          "CHECKINGS",
+          "SAVINGS",
+          "SALARY",
         ],
       },
       "EnumCategorizationAccountCategory": {
@@ -13935,26 +13897,10 @@ Can be either:
   - \`LOAN_ACCOUNT\`
   - \`SAVINGS_ACCOUNT\`",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CHECKING_ACCOUNT",
-            "value": "CHECKING_ACCOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "CREDIT_CARD",
-            "value": "CREDIT_CARD",
-          },
-          {
-            "docs": undefined,
-            "name": "LOAN_ACCOUNT",
-            "value": "LOAN_ACCOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "SAVINGS_ACCOUNT",
-            "value": "SAVINGS_ACCOUNT",
-          },
+          "CHECKING_ACCOUNT",
+          "CREDIT_CARD",
+          "LOAN_ACCOUNT",
+          "SAVINGS_ACCOUNT",
         ],
       },
       "EnumCategorizationAccountHolderType": {
@@ -13964,16 +13910,8 @@ Can be either:
   - \`INDIVIDUAL\`
   - \`BUSINESS\`",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "INDIVIDUAL",
-            "value": "INDIVIDUAL",
-          },
-          {
-            "docs": undefined,
-            "name": "BUSINESS",
-            "value": "BUSINESS",
-          },
+          "INDIVIDUAL",
+          "BUSINESS",
         ],
       },
       "EnumCategorizationTransactionCategory": {
@@ -14093,16 +14031,8 @@ Can be either:
   - \`INFLOW\` indicates a received transaction.
   - \`OUTFLOW\` indicates a sent transaction.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "INFLOW",
-            "value": "INFLOW",
-          },
-          {
-            "docs": undefined,
-            "name": "OUTFLOW",
-            "value": "OUTFLOW",
-          },
+          "INFLOW",
+          "OUTFLOW",
         ],
       },
       "EnumCustomerIdentifierTypeOfpi": {
@@ -14111,16 +14041,8 @@ Can be either:
 - 🇧🇷 Brazil options: \`CPF\` or \`CNPJ\`.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CPF",
-            "value": "CPF",
-          },
-          {
-            "docs": undefined,
-            "name": "CNPJ",
-            "value": "CNPJ",
-          },
+          "CPF",
+          "CNPJ",
         ],
       },
       "EnumCustomerIdentifierTypePse": {
@@ -14129,31 +14051,11 @@ Can be either:
 - 🇨🇴 Colombia options: \`CC\`, \`PP\`, \`CE\`, \`TI\`, or \`NIT\`.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CC",
-            "value": "CC",
-          },
-          {
-            "docs": undefined,
-            "name": "PP",
-            "value": "PP",
-          },
-          {
-            "docs": undefined,
-            "name": "CE",
-            "value": "CE",
-          },
-          {
-            "docs": undefined,
-            "name": "TI",
-            "value": "TI",
-          },
-          {
-            "docs": undefined,
-            "name": "NIT",
-            "value": "NIT",
-          },
+          "CC",
+          "PP",
+          "CE",
+          "TI",
+          "NIT",
         ],
       },
       "EnumCustomerType": {
@@ -14166,16 +14068,8 @@ Can be either:
 **Notes:** For 🇨🇴 Colombia's PSE, you can only create customers of type \`INDIVIDUAL\`.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "INDIVIDUAL",
-            "value": "INDIVIDUAL",
-          },
-          {
-            "docs": undefined,
-            "name": "BUSINESS",
-            "value": "BUSINESS",
-          },
+          "INDIVIDUAL",
+          "BUSINESS",
         ],
       },
       "EnumEmploymentRecordDocumentType": {
@@ -14202,36 +14096,12 @@ Can be either:
   - \`SICK_LEAVE\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "DISMISSED_RESIGNED",
-            "value": "DISMISSED_RESIGNED",
-          },
-          {
-            "docs": undefined,
-            "name": "SALARY_MODIFICATION",
-            "value": "SALARY_MODIFICATION",
-          },
-          {
-            "docs": undefined,
-            "name": "HIRED",
-            "value": "HIRED",
-          },
-          {
-            "docs": undefined,
-            "name": "VOLUNTARY_CONTRIBUTION",
-            "value": "VOLUNTARY_CONTRIBUTION",
-          },
-          {
-            "docs": undefined,
-            "name": "ABSENCE",
-            "value": "ABSENCE",
-          },
-          {
-            "docs": undefined,
-            "name": "SICK_LEAVE",
-            "value": "SICK_LEAVE",
-          },
+          "DISMISSED_RESIGNED",
+          "SALARY_MODIFICATION",
+          "HIRED",
+          "VOLUNTARY_CONTRIBUTION",
+          "ABSENCE",
+          "SICK_LEAVE",
         ],
       },
       "EnumIncomeMinimumConfidenceLevelRequest": {
@@ -14244,21 +14114,9 @@ You can send through one of the following values:
   - \`LOW\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "HIGH",
-            "value": "HIGH",
-          },
-          {
-            "docs": undefined,
-            "name": "MEDIUM",
-            "value": "MEDIUM",
-          },
-          {
-            "docs": undefined,
-            "name": "LOW",
-            "value": "LOW",
-          },
+          "HIGH",
+          "MEDIUM",
+          "LOW",
         ],
       },
       "EnumIncomeSourceType": "literal<"BANK">",
@@ -14272,21 +14130,9 @@ We return one of the following enum values:
   - \`LOW\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "HIGH",
-            "value": "HIGH",
-          },
-          {
-            "docs": undefined,
-            "name": "MEDIUM",
-            "value": "MEDIUM",
-          },
-          {
-            "docs": undefined,
-            "name": "LOW",
-            "value": "LOW",
-          },
+          "HIGH",
+          "MEDIUM",
+          "LOW",
         ],
       },
       "EnumIncomeStreamFrequency": {
@@ -14301,31 +14147,11 @@ We return one of the following enum values:
   - \`SINGLE\` - For transactions that occur only once and do not repeat.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "MONTHLY",
-            "value": "MONTHLY",
-          },
-          {
-            "docs": undefined,
-            "name": "FORTNIGHTLY",
-            "value": "FORTNIGHTLY",
-          },
-          {
-            "docs": undefined,
-            "name": "WEEKLY",
-            "value": "WEEKLY",
-          },
-          {
-            "docs": undefined,
-            "name": "IRREGULAR",
-            "value": "IRREGULAR",
-          },
-          {
-            "docs": undefined,
-            "name": "SINGLE",
-            "value": "SINGLE",
-          },
+          "MONTHLY",
+          "FORTNIGHTLY",
+          "WEEKLY",
+          "IRREGULAR",
+          "SINGLE",
         ],
       },
       "EnumIncomeStreamType": {
@@ -14345,56 +14171,16 @@ We return one of the following enum values:
   - \`UNKNOWN\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "SALARY",
-            "value": "SALARY",
-          },
-          {
-            "docs": undefined,
-            "name": "GOVERNMENT",
-            "value": "GOVERNMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "INTEREST",
-            "value": "INTEREST",
-          },
-          {
-            "docs": undefined,
-            "name": "RENT",
-            "value": "RENT",
-          },
-          {
-            "docs": undefined,
-            "name": "RETIREMENT",
-            "value": "RETIREMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "FREELANCE",
-            "value": "FREELANCE",
-          },
-          {
-            "docs": undefined,
-            "name": "ALTERNATIVE_INCOME",
-            "value": "ALTERNATIVE_INCOME",
-          },
-          {
-            "docs": undefined,
-            "name": "TRANSFER",
-            "value": "TRANSFER",
-          },
-          {
-            "docs": undefined,
-            "name": "DEPOSIT",
-            "value": "DEPOSIT",
-          },
-          {
-            "docs": undefined,
-            "name": "UNKNOWN",
-            "value": "UNKNOWN",
-          },
+          "SALARY",
+          "GOVERNMENT",
+          "INTEREST",
+          "RENT",
+          "RETIREMENT",
+          "FREELANCE",
+          "ALTERNATIVE_INCOME",
+          "TRANSFER",
+          "DEPOSIT",
+          "UNKNOWN",
         ],
       },
       "EnumIncomeVerificationAccountCategory": {
@@ -14403,16 +14189,8 @@ Can be either:
   - \`CHECKING_ACCOUNT\`
   - \`SAVINGS_ACCOUNT\`",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CHECKING_ACCOUNT",
-            "value": "CHECKING_ACCOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "SAVINGS_ACCOUNT",
-            "value": "SAVINGS_ACCOUNT",
-          },
+          "CHECKING_ACCOUNT",
+          "SAVINGS_ACCOUNT",
         ],
       },
       "EnumIncomeVerificationAccountHolderType": "literal<"INDIVIDUAL">",
@@ -14430,32 +14208,16 @@ Can be either:
 - \`openbanking\`: Uses the bank's openbanking API to perform requests.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "credentials",
-            "value": "credentials",
-          },
-          {
-            "docs": undefined,
-            "name": "openbanking",
-            "value": "openbanking",
-          },
+          "credentials",
+          "openbanking",
         ],
       },
       "EnumInstitutionStatus": {
         "docs": "Indicates whether Belvo's integration with the institution is currently active (\`healthy\`) or undergoing maintenance (\`down\`).
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "healthy",
-            "value": "healthy",
-          },
-          {
-            "docs": undefined,
-            "name": "down",
-            "value": "down",
-          },
+          "healthy",
+          "down",
         ],
       },
       "EnumInstitutionType": {
@@ -14466,21 +14228,9 @@ Can be either:
   - \`employment\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "bank",
-            "value": "bank",
-          },
-          {
-            "docs": undefined,
-            "name": "fiscal",
-            "value": "fiscal",
-          },
-          {
-            "docs": undefined,
-            "name": "employment",
-            "value": "employment",
-          },
+          "bank",
+          "fiscal",
+          "employment",
         ],
       },
       "EnumInvestmentPortfolioInstrumentType": {
@@ -14497,41 +14247,13 @@ We return one of the following values:
   - \`STOCK\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "BOND",
-            "value": "BOND",
-          },
-          {
-            "docs": undefined,
-            "name": "DEPOSIT",
-            "value": "DEPOSIT",
-          },
-          {
-            "docs": undefined,
-            "name": "ETF",
-            "value": "ETF",
-          },
-          {
-            "docs": undefined,
-            "name": "FUND",
-            "value": "FUND",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHER",
-            "value": "OTHER",
-          },
-          {
-            "docs": undefined,
-            "name": "PENSION",
-            "value": "PENSION",
-          },
-          {
-            "docs": undefined,
-            "name": "STOCK",
-            "value": "STOCK",
-          },
+          "BOND",
+          "DEPOSIT",
+          "ETF",
+          "FUND",
+          "OTHER",
+          "PENSION",
+          "STOCK",
         ],
       },
       "EnumInvestmentPortfolioType": {
@@ -14545,26 +14267,10 @@ We return one of the following values:
   - \`VARIABLE_INCOME\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "FIXED_INCOME",
-            "value": "FIXED_INCOME",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHER",
-            "value": "OTHER",
-          },
-          {
-            "docs": undefined,
-            "name": "PENSION",
-            "value": "PENSION",
-          },
-          {
-            "docs": undefined,
-            "name": "VARIABLE_INCOME",
-            "value": "VARIABLE_INCOME",
-          },
+          "FIXED_INCOME",
+          "OTHER",
+          "PENSION",
+          "VARIABLE_INCOME",
         ],
       },
       "EnumInvoiceAllowedIncomeTypesRequest": {
@@ -14581,56 +14287,16 @@ You can send through one or more of the following values:
   - \`DEPOSIT\`
   - \`UNKNOWN\`",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "SALARY",
-            "value": "SALARY",
-          },
-          {
-            "docs": undefined,
-            "name": "GOVERNMENT",
-            "value": "GOVERNMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "INTEREST",
-            "value": "INTEREST",
-          },
-          {
-            "docs": undefined,
-            "name": "RENT",
-            "value": "RENT",
-          },
-          {
-            "docs": undefined,
-            "name": "RETIREMENT",
-            "value": "RETIREMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "FREELANCE",
-            "value": "FREELANCE",
-          },
-          {
-            "docs": undefined,
-            "name": "ALTERNATIVE_INCOME",
-            "value": "ALTERNATIVE_INCOME",
-          },
-          {
-            "docs": undefined,
-            "name": "TRANSFER",
-            "value": "TRANSFER",
-          },
-          {
-            "docs": undefined,
-            "name": "DEPOSIT",
-            "value": "DEPOSIT",
-          },
-          {
-            "docs": undefined,
-            "name": "UNKNOWN",
-            "value": "UNKNOWN",
-          },
+          "SALARY",
+          "GOVERNMENT",
+          "INTEREST",
+          "RENT",
+          "RETIREMENT",
+          "FREELANCE",
+          "ALTERNATIVE_INCOME",
+          "TRANSFER",
+          "DEPOSIT",
+          "UNKNOWN",
         ],
       },
       "EnumInvoiceDianInvoiceType": {
@@ -14688,16 +14354,8 @@ For Mexico's SAT, we return one of the following values:
 For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "single",
-            "value": "single",
-          },
-          {
-            "docs": undefined,
-            "name": "recurrent",
-            "value": "recurrent",
-          },
+          "single",
+          "recurrent",
         ],
       },
       "EnumLinkAccessModeResponse": {
@@ -14731,26 +14389,10 @@ We return one of the following values:
   - \`token_required\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "valid",
-            "value": "valid",
-          },
-          {
-            "docs": undefined,
-            "name": "invalid",
-            "value": "invalid",
-          },
-          {
-            "docs": undefined,
-            "name": "unconfirmed",
-            "value": "unconfirmed",
-          },
-          {
-            "docs": undefined,
-            "name": "token_required",
-            "value": "token_required",
-          },
+          "valid",
+          "invalid",
+          "unconfirmed",
+          "token_required",
         ],
       },
       "EnumLoanDataFeeType": {
@@ -14761,21 +14403,9 @@ We return one of the following values:
   - \`OTHERS\`
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "OPERATION_FEE",
-            "value": "OPERATION_FEE",
-          },
-          {
-            "docs": undefined,
-            "name": "INSURANCE_FEE",
-            "value": "INSURANCE_FEE",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHERS",
-            "value": "OTHERS",
-          },
+          "OPERATION_FEE",
+          "INSURANCE_FEE",
+          "OTHERS",
         ],
       },
       "EnumLoanDataInterestRateType": {
@@ -14789,47 +14419,19 @@ We return one of the following values:
       "EnumPaymentIntentHolderTypePse": {
         "docs": "Type of bank account holder. For PSE, this value must be \`INDIVIDUAL\`.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "INDIVIDUAL",
-            "value": "INDIVIDUAL",
-          },
-          {
-            "docs": undefined,
-            "name": "BUSINESS",
-            "value": "BUSINESS",
-          },
+          "INDIVIDUAL",
+          "BUSINESS",
         ],
       },
       "EnumPaymentIntentStatus": {
         "docs": "The current status of the payment intent.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "REQUIRES_PAYMENT_METHOD",
-            "value": "REQUIRES_PAYMENT_METHOD",
-          },
-          {
-            "docs": undefined,
-            "name": "REQUIRES_ACTION",
-            "value": "REQUIRES_ACTION",
-          },
-          {
-            "docs": undefined,
-            "name": "SUCCEEDED",
-            "value": "SUCCEEDED",
-          },
-          {
-            "docs": undefined,
-            "name": "PROCESSING",
-            "value": "PROCESSING",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
+          "REQUIRES_PAYMENT_METHOD",
+          "REQUIRES_ACTION",
+          "SUCCEEDED",
+          "PROCESSING",
+          "FAILED",
         ],
       },
       "EnumPaymentLinkAllowedPaymentMethod": {
@@ -14838,16 +14440,8 @@ We return one of the following values:
   - For 🇧🇷 Brazil's OFPI, the value must be \`open_finance\`.  
   - For 🇨🇴 Colombia's PSE, the value must be \`pse\`.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance",
-            "value": "open_finance",
-          },
-          {
-            "docs": undefined,
-            "name": "pse",
-            "value": "pse",
-          },
+          "open_finance",
+          "pse",
         ],
       },
       "EnumPaymentLinkProvider": {
@@ -14858,16 +14452,8 @@ We return one of the following values:
 - For 🇨🇴 Colombia's PSE, the value must be \`payments_way\`.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "belvo",
-            "value": "belvo",
-          },
-          {
-            "docs": undefined,
-            "name": "payments_way",
-            "value": "payments_way",
-          },
+          "belvo",
+          "payments_way",
         ],
       },
       "EnumPaymentLinksStatus": {
@@ -14878,16 +14464,8 @@ We return one of the following values:
 
 **Note:** You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ACTIVE",
-            "value": "ACTIVE",
-          },
-          {
-            "docs": undefined,
-            "name": "INACTIVE",
-            "value": "INACTIVE",
-          },
+          "ACTIVE",
+          "INACTIVE",
         ],
       },
       "EnumPaymentTransactionType": {
@@ -14896,16 +14474,8 @@ We return one of the following values:
   - \`INFLOW\` indicates money coming into the account.
   - \`OUTFLOW\` indicates money coming out of the account.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "INFLOW",
-            "value": "INFLOW",
-          },
-          {
-            "docs": undefined,
-            "name": "OUTFLOW",
-            "value": "OUTFLOW",
-          },
+          "INFLOW",
+          "OUTFLOW",
         ],
       },
       "EnumPaymentsCountry": {
@@ -14916,16 +14486,8 @@ We return one of the following values:
 -  COL (🇨🇴 Colombia)
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "BRA",
-            "value": "BRA",
-          },
-          {
-            "docs": undefined,
-            "name": "COL",
-            "value": "COL",
-          },
+          "BRA",
+          "COL",
         ],
       },
       "EnumPaymentsCurrency": {
@@ -14935,16 +14497,8 @@ We return one of the following values:
   - 🇧🇷 BRL (Brazilian Real)
   - 🇨🇴 COP (Colombian Peso)",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "BRL",
-            "value": "BRL",
-          },
-          {
-            "docs": undefined,
-            "name": "COP",
-            "value": "COP",
-          },
+          "BRL",
+          "COP",
         ],
       },
       "EnumReceivableTransactionFeeType": {
@@ -14989,35 +14543,31 @@ We return one of the following values:
 ",
         "enum": [
           {
-            "docs": undefined,
-            "name": "BillsUtilities",
+            "description": undefined,
+            "generatedName": "BillsUtilities",
+            "nameOverride": undefined,
             "value": "Bills & Utilities",
           },
           {
-            "docs": undefined,
-            "name": "CreditsLoans",
+            "description": undefined,
+            "generatedName": "CreditsLoans",
+            "nameOverride": undefined,
             "value": "Credits & Loans",
           },
+          "Insurance",
           {
-            "docs": undefined,
-            "name": "Insurance",
-            "value": "Insurance",
-          },
-          {
-            "docs": undefined,
-            "name": "OnlinePlatformsLeisure",
+            "description": undefined,
+            "generatedName": "OnlinePlatformsLeisure",
+            "nameOverride": undefined,
             "value": "Online Platforms & Leisure",
           },
           {
-            "docs": undefined,
-            "name": "TransportTravel",
+            "description": undefined,
+            "generatedName": "TransportTravel",
+            "nameOverride": undefined,
             "value": "Transport & Travel",
           },
-          {
-            "docs": undefined,
-            "name": "Taxes",
-            "value": "Taxes",
-          },
+          "Taxes",
         ],
       },
       "EnumRecurringExpenseFrequency": "literal<"MONTHLY">",
@@ -15054,16 +14604,8 @@ We return one of the following values:
 - \`INFLOW\` related to a tax retention for a received invoice.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "OUTFLOW",
-            "value": "OUTFLOW",
-          },
-          {
-            "docs": undefined,
-            "name": "INFLOW",
-            "value": "INFLOW",
-          },
+          "OUTFLOW",
+          "INFLOW",
         ],
       },
       "EnumTransactionBillStatus": {
@@ -17162,36 +16704,12 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_method_information",
-            "value": "open_finance_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_confirmation_required",
-            "value": "open_finance_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_needs_redirect",
-            "value": "open_finance_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_processing",
-            "value": "open_finance_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_succeeded",
-            "value": "open_finance_display_payment_succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_failed",
-            "value": "open_finance_display_payment_failed",
-          },
+          "open_finance_display_payment_method_information",
+          "open_finance_display_confirmation_required",
+          "open_finance_display_needs_redirect",
+          "open_finance_display_payment_processing",
+          "open_finance_display_payment_succeeded",
+          "open_finance_display_payment_failed",
         ],
       },
       "NextStepDisplayConfirmationRequiredPse": {
@@ -17215,51 +16733,15 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_method_information",
-            "value": "pse_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_credentials_required",
-            "value": "pse_display_credentials_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_needs_redirect",
-            "value": "pse_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_token_required",
-            "value": "pse_display_token_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_customer_bank_accounts",
-            "value": "pse_display_customer_bank_accounts",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_confirmation_required",
-            "value": "pse_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_processing",
-            "value": "pse_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_failed",
-            "value": "pse_display_payment_failed",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_succeeded",
-            "value": "pse_display_payment_succeeded",
-          },
+          "pse_display_payment_method_information",
+          "pse_display_credentials_required",
+          "pse_display_needs_redirect",
+          "pse_display_token_required",
+          "pse_display_customer_bank_accounts",
+          "pse_display_confirmation_required",
+          "pse_display_payment_processing",
+          "pse_display_payment_failed",
+          "pse_display_payment_succeeded",
         ],
       },
       "NextStepDisplayCredentialsRequiredPse": {
@@ -17283,51 +16765,15 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_method_information",
-            "value": "pse_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_credentials_required",
-            "value": "pse_display_credentials_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_needs_redirect",
-            "value": "pse_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_token_required",
-            "value": "pse_display_token_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_customer_bank_accounts",
-            "value": "pse_display_customer_bank_accounts",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_confirmation_required",
-            "value": "pse_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_processing",
-            "value": "pse_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_failed",
-            "value": "pse_display_payment_failed",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_succeeded",
-            "value": "pse_display_payment_succeeded",
-          },
+          "pse_display_payment_method_information",
+          "pse_display_credentials_required",
+          "pse_display_needs_redirect",
+          "pse_display_token_required",
+          "pse_display_customer_bank_accounts",
+          "pse_display_confirmation_required",
+          "pse_display_payment_processing",
+          "pse_display_payment_failed",
+          "pse_display_payment_succeeded",
         ],
       },
       "NextStepDisplayCustomerBankAccountsPse": {
@@ -17351,51 +16797,15 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_method_information",
-            "value": "pse_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_credentials_required",
-            "value": "pse_display_credentials_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_needs_redirect",
-            "value": "pse_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_token_required",
-            "value": "pse_display_token_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_customer_bank_accounts",
-            "value": "pse_display_customer_bank_accounts",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_confirmation_required",
-            "value": "pse_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_processing",
-            "value": "pse_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_failed",
-            "value": "pse_display_payment_failed",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_succeeded",
-            "value": "pse_display_payment_succeeded",
-          },
+          "pse_display_payment_method_information",
+          "pse_display_credentials_required",
+          "pse_display_needs_redirect",
+          "pse_display_token_required",
+          "pse_display_customer_bank_accounts",
+          "pse_display_confirmation_required",
+          "pse_display_payment_processing",
+          "pse_display_payment_failed",
+          "pse_display_payment_succeeded",
         ],
       },
       "NextStepDisplayNeedsRedirectPse": {
@@ -17419,51 +16829,15 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_method_information",
-            "value": "pse_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_credentials_required",
-            "value": "pse_display_credentials_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_needs_redirect",
-            "value": "pse_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_token_required",
-            "value": "pse_display_token_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_customer_bank_accounts",
-            "value": "pse_display_customer_bank_accounts",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_confirmation_required",
-            "value": "pse_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_processing",
-            "value": "pse_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_failed",
-            "value": "pse_display_payment_failed",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_succeeded",
-            "value": "pse_display_payment_succeeded",
-          },
+          "pse_display_payment_method_information",
+          "pse_display_credentials_required",
+          "pse_display_needs_redirect",
+          "pse_display_token_required",
+          "pse_display_customer_bank_accounts",
+          "pse_display_confirmation_required",
+          "pse_display_payment_processing",
+          "pse_display_payment_failed",
+          "pse_display_payment_succeeded",
         ],
       },
       "NextStepDisplayPaymentFailed": {
@@ -17487,36 +16861,12 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_method_information",
-            "value": "open_finance_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_confirmation_required",
-            "value": "open_finance_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_needs_redirect",
-            "value": "open_finance_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_processing",
-            "value": "open_finance_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_succeeded",
-            "value": "open_finance_display_payment_succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_failed",
-            "value": "open_finance_display_payment_failed",
-          },
+          "open_finance_display_payment_method_information",
+          "open_finance_display_confirmation_required",
+          "open_finance_display_needs_redirect",
+          "open_finance_display_payment_processing",
+          "open_finance_display_payment_succeeded",
+          "open_finance_display_payment_failed",
         ],
       },
       "NextStepDisplayPaymentMethodInformation": {
@@ -17557,87 +16907,27 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_method_information",
-            "value": "pse_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_credentials_required",
-            "value": "pse_display_credentials_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_needs_redirect",
-            "value": "pse_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_token_required",
-            "value": "pse_display_token_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_customer_bank_accounts",
-            "value": "pse_display_customer_bank_accounts",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_confirmation_required",
-            "value": "pse_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_processing",
-            "value": "pse_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_failed",
-            "value": "pse_display_payment_failed",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_succeeded",
-            "value": "pse_display_payment_succeeded",
-          },
+          "pse_display_payment_method_information",
+          "pse_display_credentials_required",
+          "pse_display_needs_redirect",
+          "pse_display_token_required",
+          "pse_display_customer_bank_accounts",
+          "pse_display_confirmation_required",
+          "pse_display_payment_processing",
+          "pse_display_payment_failed",
+          "pse_display_payment_succeeded",
         ],
       },
       "NextStepDisplayPaymentMethodInformationType": {
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_method_information",
-            "value": "open_finance_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_confirmation_required",
-            "value": "open_finance_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_needs_redirect",
-            "value": "open_finance_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_processing",
-            "value": "open_finance_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_succeeded",
-            "value": "open_finance_display_payment_succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_failed",
-            "value": "open_finance_display_payment_failed",
-          },
+          "open_finance_display_payment_method_information",
+          "open_finance_display_confirmation_required",
+          "open_finance_display_needs_redirect",
+          "open_finance_display_payment_processing",
+          "open_finance_display_payment_succeeded",
+          "open_finance_display_payment_failed",
         ],
       },
       "NextStepDisplayPaymentProcessing": {
@@ -17661,36 +16951,12 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_method_information",
-            "value": "open_finance_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_confirmation_required",
-            "value": "open_finance_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_needs_redirect",
-            "value": "open_finance_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_processing",
-            "value": "open_finance_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_succeeded",
-            "value": "open_finance_display_payment_succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_failed",
-            "value": "open_finance_display_payment_failed",
-          },
+          "open_finance_display_payment_method_information",
+          "open_finance_display_confirmation_required",
+          "open_finance_display_needs_redirect",
+          "open_finance_display_payment_processing",
+          "open_finance_display_payment_succeeded",
+          "open_finance_display_payment_failed",
         ],
       },
       "NextStepDisplayPaymentSucceeded": {
@@ -17714,36 +16980,12 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_method_information",
-            "value": "open_finance_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_confirmation_required",
-            "value": "open_finance_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_needs_redirect",
-            "value": "open_finance_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_processing",
-            "value": "open_finance_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_succeeded",
-            "value": "open_finance_display_payment_succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_failed",
-            "value": "open_finance_display_payment_failed",
-          },
+          "open_finance_display_payment_method_information",
+          "open_finance_display_confirmation_required",
+          "open_finance_display_needs_redirect",
+          "open_finance_display_payment_processing",
+          "open_finance_display_payment_succeeded",
+          "open_finance_display_payment_failed",
         ],
       },
       "NextStepDisplayTokenRequiredPse": {
@@ -17771,51 +17013,15 @@ For \`login_error\` errors, the description can be one of the following:
         "docs": "The type of \`next_step\` you need to follow.
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_method_information",
-            "value": "pse_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_credentials_required",
-            "value": "pse_display_credentials_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_needs_redirect",
-            "value": "pse_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_token_required",
-            "value": "pse_display_token_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_customer_bank_accounts",
-            "value": "pse_display_customer_bank_accounts",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_confirmation_required",
-            "value": "pse_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_processing",
-            "value": "pse_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_failed",
-            "value": "pse_display_payment_failed",
-          },
-          {
-            "docs": undefined,
-            "name": "pse_display_payment_succeeded",
-            "value": "pse_display_payment_succeeded",
-          },
+          "pse_display_payment_method_information",
+          "pse_display_credentials_required",
+          "pse_display_needs_redirect",
+          "pse_display_token_required",
+          "pse_display_customer_bank_accounts",
+          "pse_display_confirmation_required",
+          "pse_display_payment_processing",
+          "pse_display_payment_failed",
+          "pse_display_payment_succeeded",
         ],
       },
       "NextStepNeedsRedirect": {
@@ -17837,36 +17043,12 @@ For \`login_error\` errors, the description can be one of the following:
       "NextStepNeedsRedirectType": {
         "docs": "The type of \`next_step\` you need to follow.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_method_information",
-            "value": "open_finance_display_payment_method_information",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_confirmation_required",
-            "value": "open_finance_display_confirmation_required",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_needs_redirect",
-            "value": "open_finance_display_needs_redirect",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_processing",
-            "value": "open_finance_display_payment_processing",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_succeeded",
-            "value": "open_finance_display_payment_succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "open_finance_display_payment_failed",
-            "value": "open_finance_display_payment_failed",
-          },
+          "open_finance_display_payment_method_information",
+          "open_finance_display_confirmation_required",
+          "open_finance_display_needs_redirect",
+          "open_finance_display_payment_processing",
+          "open_finance_display_payment_succeeded",
+          "open_finance_display_payment_failed",
         ],
       },
       "NonTaxableIncomeIndividual": {

@@ -6853,21 +6853,9 @@ You will be assigned as owner of the new team automatically.",
       "ActionTypeEnum": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Broadcast",
-            "value": "Broadcast",
-          },
-          {
-            "docs": undefined,
-            "name": "User",
-            "value": "User",
-          },
-          {
-            "docs": undefined,
-            "name": "Group",
-            "value": "Group",
-          },
+          "Broadcast",
+          "User",
+          "Group",
         ],
       },
       "AddFieldDto": {
@@ -7227,21 +7215,9 @@ You will be assigned as owner of the new team automatically.",
       "AssetFolderScope": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "PathAndItems",
-            "value": "PathAndItems",
-          },
-          {
-            "docs": undefined,
-            "name": "Path",
-            "value": "Path",
-          },
-          {
-            "docs": undefined,
-            "name": "Items",
-            "value": "Items",
-          },
+          "PathAndItems",
+          "Path",
+          "Items",
         ],
       },
       "AssetFoldersDto": {
@@ -7276,21 +7252,9 @@ You will be assigned as owner of the new team automatically.",
       "AssetPreviewMode": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ImageAndFileName",
-            "value": "ImageAndFileName",
-          },
-          {
-            "docs": undefined,
-            "name": "Image",
-            "value": "Image",
-          },
-          {
-            "docs": undefined,
-            "name": "FileName",
-            "value": "FileName",
-          },
+          "ImageAndFileName",
+          "Image",
+          "FileName",
         ],
       },
       "AssetScriptsDto": {
@@ -7336,26 +7300,10 @@ You will be assigned as owner of the new team automatically.",
       "AssetType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Unknown",
-            "value": "Unknown",
-          },
-          {
-            "docs": undefined,
-            "name": "Image",
-            "value": "Image",
-          },
-          {
-            "docs": undefined,
-            "name": "Audio",
-            "value": "Audio",
-          },
-          {
-            "docs": undefined,
-            "name": "Video",
-            "value": "Video",
-          },
+          "Unknown",
+          "Image",
+          "Audio",
+          "Video",
         ],
       },
       "AssetsDto": {
@@ -7544,16 +7492,8 @@ You will be assigned as owner of the new team automatically.",
       "BooleanFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Checkbox",
-            "value": "Checkbox",
-          },
-          {
-            "docs": undefined,
-            "name": "Toggle",
-            "value": "Toggle",
-          },
+          "Checkbox",
+          "Toggle",
         ],
       },
       "BooleanFieldPropertiesDto": {
@@ -7601,21 +7541,9 @@ You will be assigned as owner of the new team automatically.",
       "BulkUpdateAssetType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Annotate",
-            "value": "Annotate",
-          },
-          {
-            "docs": undefined,
-            "name": "Move",
-            "value": "Move",
-          },
-          {
-            "docs": undefined,
-            "name": "Delete",
-            "value": "Delete",
-          },
+          "Annotate",
+          "Move",
+          "Delete",
         ],
       },
       "BulkUpdateAssetsJobDto": {
@@ -7666,41 +7594,13 @@ You will be assigned as owner of the new team automatically.",
       "BulkUpdateContentType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Upsert",
-            "value": "Upsert",
-          },
-          {
-            "docs": undefined,
-            "name": "ChangeStatus",
-            "value": "ChangeStatus",
-          },
-          {
-            "docs": undefined,
-            "name": "Create",
-            "value": "Create",
-          },
-          {
-            "docs": undefined,
-            "name": "Delete",
-            "value": "Delete",
-          },
-          {
-            "docs": undefined,
-            "name": "Patch",
-            "value": "Patch",
-          },
-          {
-            "docs": undefined,
-            "name": "Update",
-            "value": "Update",
-          },
-          {
-            "docs": undefined,
-            "name": "Validate",
-            "value": "Validate",
-          },
+          "Upsert",
+          "ChangeStatus",
+          "Create",
+          "Delete",
+          "Patch",
+          "Update",
+          "Validate",
         ],
       },
       "BulkUpdateContentsJobDto": {
@@ -8193,31 +8093,15 @@ You will be assigned as owner of the new team automatically.",
       "DateTimeCalculatedDefaultValue": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Now",
-            "value": "Now",
-          },
-          {
-            "docs": undefined,
-            "name": "Today",
-            "value": "Today",
-          },
+          "Now",
+          "Today",
         ],
       },
       "DateTimeFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Date",
-            "value": "Date",
-          },
-          {
-            "docs": undefined,
-            "name": "DateTime",
-            "value": "DateTime",
-          },
+          "Date",
+          "DateTime",
         ],
       },
       "DateTimeFieldPropertiesDto": {
@@ -8574,21 +8458,9 @@ You will be assigned as owner of the new team automatically.",
       "FieldRuleAction": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Disable",
-            "value": "Disable",
-          },
-          {
-            "docs": undefined,
-            "name": "Hide",
-            "value": "Hide",
-          },
-          {
-            "docs": undefined,
-            "name": "Require",
-            "value": "Require",
-          },
+          "Disable",
+          "Hide",
+          "Require",
         ],
       },
       "FieldRuleDto": {
@@ -8650,71 +8522,23 @@ You will be assigned as owner of the new team automatically.",
       "ImageFormat": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "AVIF",
-            "value": "AVIF",
-          },
-          {
-            "docs": undefined,
-            "name": "BMP",
-            "value": "BMP",
-          },
-          {
-            "docs": undefined,
-            "name": "GIF",
-            "value": "GIF",
-          },
-          {
-            "docs": undefined,
-            "name": "JPEG",
-            "value": "JPEG",
-          },
-          {
-            "docs": undefined,
-            "name": "PNG",
-            "value": "PNG",
-          },
-          {
-            "docs": undefined,
-            "name": "TGA",
-            "value": "TGA",
-          },
-          {
-            "docs": undefined,
-            "name": "TIFF",
-            "value": "TIFF",
-          },
-          {
-            "docs": undefined,
-            "name": "WEBP",
-            "value": "WEBP",
-          },
+          "AVIF",
+          "BMP",
+          "GIF",
+          "JPEG",
+          "PNG",
+          "TGA",
+          "TIFF",
+          "WEBP",
         ],
       },
       "JobStatus": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Created",
-            "value": "Created",
-          },
-          {
-            "docs": undefined,
-            "name": "Started",
-            "value": "Started",
-          },
-          {
-            "docs": undefined,
-            "name": "Completed",
-            "value": "Completed",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
+          "Created",
+          "Started",
+          "Completed",
+          "Failed",
         ],
       },
       "JsonFieldPropertiesDto": {
@@ -8850,26 +8674,10 @@ You will be assigned as owner of the new team automatically.",
       "NumberFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Input",
-            "value": "Input",
-          },
-          {
-            "docs": undefined,
-            "name": "Radio",
-            "value": "Radio",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Stars",
-            "value": "Stars",
-          },
+          "Input",
+          "Radio",
+          "Dropdown",
+          "Stars",
         ],
       },
       "NumberFieldPropertiesDto": {
@@ -9045,26 +8853,10 @@ You will be assigned as owner of the new team automatically.",
       "PlansLockedReason": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "None",
-            "value": "None",
-          },
-          {
-            "docs": undefined,
-            "name": "NotOwner",
-            "value": "NotOwner",
-          },
-          {
-            "docs": undefined,
-            "name": "NoPermission",
-            "value": "NoPermission",
-          },
-          {
-            "docs": undefined,
-            "name": "ManagedByTeam",
-            "value": "ManagedByTeam",
-          },
+          "None",
+          "NotOwner",
+          "NoPermission",
+          "ManagedByTeam",
         ],
       },
       "PrerenderRuleActionDto": {
@@ -9114,31 +8906,11 @@ You will be assigned as owner of the new team automatically.",
       "ReferencesFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "List",
-            "value": "List",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Tags",
-            "value": "Tags",
-          },
-          {
-            "docs": undefined,
-            "name": "Checkboxes",
-            "value": "Checkboxes",
-          },
-          {
-            "docs": undefined,
-            "name": "Input",
-            "value": "Input",
-          },
+          "List",
+          "Dropdown",
+          "Tags",
+          "Checkboxes",
+          "Input",
         ],
       },
       "ReferencesFieldPropertiesDto": {
@@ -9202,41 +8974,13 @@ You will be assigned as owner of the new team automatically.",
       "ResizeMode": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Crop",
-            "value": "Crop",
-          },
-          {
-            "docs": undefined,
-            "name": "CropUpsize",
-            "value": "CropUpsize",
-          },
-          {
-            "docs": undefined,
-            "name": "Pad",
-            "value": "Pad",
-          },
-          {
-            "docs": undefined,
-            "name": "BoxPad",
-            "value": "BoxPad",
-          },
-          {
-            "docs": undefined,
-            "name": "Max",
-            "value": "Max",
-          },
-          {
-            "docs": undefined,
-            "name": "Min",
-            "value": "Min",
-          },
-          {
-            "docs": undefined,
-            "name": "Stretch",
-            "value": "Stretch",
-          },
+          "Crop",
+          "CropUpsize",
+          "Pad",
+          "BoxPad",
+          "Max",
+          "Min",
+          "Stretch",
         ],
       },
       "Resource": {
@@ -9555,106 +9299,34 @@ You will be assigned as owner of the new team automatically.",
       "RuleFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Checkbox",
-            "value": "Checkbox",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Email",
-            "value": "Email",
-          },
-          {
-            "docs": undefined,
-            "name": "Javascript",
-            "value": "Javascript",
-          },
-          {
-            "docs": undefined,
-            "name": "Number",
-            "value": "Number",
-          },
-          {
-            "docs": undefined,
-            "name": "Password",
-            "value": "Password",
-          },
-          {
-            "docs": undefined,
-            "name": "Text",
-            "value": "Text",
-          },
-          {
-            "docs": undefined,
-            "name": "TextArea",
-            "value": "TextArea",
-          },
-          {
-            "docs": undefined,
-            "name": "Url",
-            "value": "Url",
-          },
+          "Checkbox",
+          "Dropdown",
+          "Email",
+          "Javascript",
+          "Number",
+          "Password",
+          "Text",
+          "TextArea",
+          "Url",
         ],
       },
       "RuleJobResult": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Pending",
-            "value": "Pending",
-          },
-          {
-            "docs": undefined,
-            "name": "Success",
-            "value": "Success",
-          },
-          {
-            "docs": undefined,
-            "name": "Retry",
-            "value": "Retry",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
-          {
-            "docs": undefined,
-            "name": "Cancelled",
-            "value": "Cancelled",
-          },
+          "Pending",
+          "Success",
+          "Retry",
+          "Failed",
+          "Cancelled",
         ],
       },
       "RuleResult": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Pending",
-            "value": "Pending",
-          },
-          {
-            "docs": undefined,
-            "name": "Success",
-            "value": "Success",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
-          {
-            "docs": undefined,
-            "name": "Timeout",
-            "value": "Timeout",
-          },
+          "Pending",
+          "Success",
+          "Failed",
+          "Timeout",
         ],
       },
       "RuleTriggerDto": {
@@ -9872,21 +9544,9 @@ You will be assigned as owner of the new team automatically.",
       "SchemaType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Default",
-            "value": "Default",
-          },
-          {
-            "docs": undefined,
-            "name": "Singleton",
-            "value": "Singleton",
-          },
-          {
-            "docs": undefined,
-            "name": "Component",
-            "value": "Component",
-          },
+          "Default",
+          "Singleton",
+          "Component",
         ],
       },
       "SchemasDto": {
@@ -9933,36 +9593,12 @@ You will be assigned as owner of the new team automatically.",
       "SearchResultType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Asset",
-            "value": "Asset",
-          },
-          {
-            "docs": undefined,
-            "name": "Content",
-            "value": "Content",
-          },
-          {
-            "docs": undefined,
-            "name": "Dashboard",
-            "value": "Dashboard",
-          },
-          {
-            "docs": undefined,
-            "name": "Setting",
-            "value": "Setting",
-          },
-          {
-            "docs": undefined,
-            "name": "Rule",
-            "value": "Rule",
-          },
-          {
-            "docs": undefined,
-            "name": "Schema",
-            "value": "Schema",
-          },
+          "Asset",
+          "Content",
+          "Dashboard",
+          "Setting",
+          "Rule",
+          "Schema",
         ],
       },
       "SignalRRuleActionDto": {
@@ -10050,61 +9686,17 @@ You will be assigned as owner of the new team automatically.",
       "SkipReason": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "None",
-            "value": "None",
-          },
-          {
-            "docs": undefined,
-            "name": "ConditionDoesNotMatch",
-            "value": "ConditionDoesNotMatch",
-          },
-          {
-            "docs": undefined,
-            "name": "ConditionPrecheckDoesNotMatch",
-            "value": "ConditionPrecheckDoesNotMatch",
-          },
-          {
-            "docs": undefined,
-            "name": "Disabled",
-            "value": "Disabled",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
-          {
-            "docs": undefined,
-            "name": "FromRule",
-            "value": "FromRule",
-          },
-          {
-            "docs": undefined,
-            "name": "NoAction",
-            "value": "NoAction",
-          },
-          {
-            "docs": undefined,
-            "name": "NoTrigger",
-            "value": "NoTrigger",
-          },
-          {
-            "docs": undefined,
-            "name": "TooOld",
-            "value": "TooOld",
-          },
-          {
-            "docs": undefined,
-            "name": "WrongEvent",
-            "value": "WrongEvent",
-          },
-          {
-            "docs": undefined,
-            "name": "WrongEventForTrigger",
-            "value": "WrongEventForTrigger",
-          },
+          "None",
+          "ConditionDoesNotMatch",
+          "ConditionPrecheckDoesNotMatch",
+          "Disabled",
+          "Failed",
+          "FromRule",
+          "NoAction",
+          "NoTrigger",
+          "TooOld",
+          "WrongEvent",
+          "WrongEventForTrigger",
         ],
       },
       "SlackRuleActionDto": {
@@ -10130,16 +9722,8 @@ You will be assigned as owner of the new team automatically.",
       "SortOrder": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Ascending",
-            "value": "Ascending",
-          },
-          {
-            "docs": undefined,
-            "name": "Descending",
-            "value": "Descending",
-          },
+          "Ascending",
+          "Descending",
         ],
       },
       "StatusInfoDto": {
@@ -10175,76 +9759,24 @@ You will be assigned as owner of the new team automatically.",
       "StringContentType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Unspecified",
-            "value": "Unspecified",
-          },
-          {
-            "docs": undefined,
-            "name": "Html",
-            "value": "Html",
-          },
-          {
-            "docs": undefined,
-            "name": "Markdown",
-            "value": "Markdown",
-          },
+          "Unspecified",
+          "Html",
+          "Markdown",
         ],
       },
       "StringFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Input",
-            "value": "Input",
-          },
-          {
-            "docs": undefined,
-            "name": "Color",
-            "value": "Color",
-          },
-          {
-            "docs": undefined,
-            "name": "Markdown",
-            "value": "Markdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Html",
-            "value": "Html",
-          },
-          {
-            "docs": undefined,
-            "name": "Radio",
-            "value": "Radio",
-          },
-          {
-            "docs": undefined,
-            "name": "RichText",
-            "value": "RichText",
-          },
-          {
-            "docs": undefined,
-            "name": "Slug",
-            "value": "Slug",
-          },
-          {
-            "docs": undefined,
-            "name": "StockPhoto",
-            "value": "StockPhoto",
-          },
-          {
-            "docs": undefined,
-            "name": "TextArea",
-            "value": "TextArea",
-          },
+          "Input",
+          "Color",
+          "Markdown",
+          "Dropdown",
+          "Html",
+          "Radio",
+          "RichText",
+          "Slug",
+          "StockPhoto",
+          "TextArea",
         ],
       },
       "StringFieldPropertiesDto": {
@@ -10331,21 +9863,9 @@ You will be assigned as owner of the new team automatically.",
       "TagsFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Tags",
-            "value": "Tags",
-          },
-          {
-            "docs": undefined,
-            "name": "Checkboxes",
-            "value": "Checkboxes",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
+          "Tags",
+          "Checkboxes",
+          "Dropdown",
         ],
       },
       "TagsFieldPropertiesDto": {
@@ -10477,36 +9997,12 @@ You will be assigned as owner of the new team automatically.",
       "TranslationResultCode": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Translated",
-            "value": "Translated",
-          },
-          {
-            "docs": undefined,
-            "name": "LanguageNotSupported",
-            "value": "LanguageNotSupported",
-          },
-          {
-            "docs": undefined,
-            "name": "NotTranslated",
-            "value": "NotTranslated",
-          },
-          {
-            "docs": undefined,
-            "name": "NotConfigured",
-            "value": "NotConfigured",
-          },
-          {
-            "docs": undefined,
-            "name": "Unauthorized",
-            "value": "Unauthorized",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
+          "Translated",
+          "LanguageNotSupported",
+          "NotTranslated",
+          "NotConfigured",
+          "Unauthorized",
+          "Failed",
         ],
       },
       "TweetRuleActionDto": {
@@ -10768,31 +10264,11 @@ You will be assigned as owner of the new team automatically.",
       "WebhookMethod": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "POST",
-            "value": "POST",
-          },
-          {
-            "docs": undefined,
-            "name": "PUT",
-            "value": "PUT",
-          },
-          {
-            "docs": undefined,
-            "name": "GET",
-            "value": "GET",
-          },
-          {
-            "docs": undefined,
-            "name": "DELETE",
-            "value": "DELETE",
-          },
-          {
-            "docs": undefined,
-            "name": "PATCH",
-            "value": "PATCH",
-          },
+          "POST",
+          "PUT",
+          "GET",
+          "DELETE",
+          "PATCH",
         ],
       },
       "WebhookRuleActionDto": {

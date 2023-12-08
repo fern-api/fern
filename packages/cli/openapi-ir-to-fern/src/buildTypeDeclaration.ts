@@ -235,11 +235,24 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
         schema: {
             docs: schema.description ?? undefined,
             enum: schema.values.map((enumValue) => {
-                return {
+                const name = enumValue.nameOverride ?? enumValue.generatedName;
+                const value = enumValue.value;
+                if (name === value && enumValue.description == null) {
+                    return name;
+                } else if (name === value && enumValue.description != null) {
+                    return {
+                        value,
+                        docs: enumValue.description
+                    };
+                }
+                const enumValueDeclaration: RawSchemas.EnumValueSchema = {
                     name: enumValue.nameOverride ?? enumValue.generatedName,
-                    value: enumValue.value,
-                    docs: enumValue.description ?? undefined
+                    value: enumValue.value
                 };
+                if (enumValue.description != null) {
+                    enumValueDeclaration.docs = enumValue.description;
+                }
+                return enumValue;
             })
         }
     };
