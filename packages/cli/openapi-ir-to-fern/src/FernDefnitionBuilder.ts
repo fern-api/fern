@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase } from "lodash-es";
 import { basename, extname } from "path";
@@ -17,6 +17,8 @@ export interface FernDefinitionBuilder {
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
     setDefaultEnvironment(name: string): void;
+
+    getEnvironmentType(): "single" | "multi" | undefined;
 
     addAudience(name: string): void;
 
@@ -101,6 +103,17 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setDefaultEnvironment(name: string): void {
         this.rootApiFile["default-environment"] = name;
+    }
+
+    public getEnvironmentType(): "single" | "multi" | undefined {
+        const environmentEntry = Object.entries(this.rootApiFile.environments ?? {})[0];
+        if (environmentEntry == null) {
+            return undefined;
+        }
+        return visitRawEnvironmentDeclaration<"single" | "multi">(environmentEntry[1], {
+            singleBaseUrl: () => "single",
+            multipleBaseUrls: () => "multi"
+        });
     }
 
     public addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void {

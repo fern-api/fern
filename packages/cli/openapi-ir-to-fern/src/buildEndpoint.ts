@@ -173,18 +173,14 @@ export function buildEndpoint({
         });
     }
 
-    // if (environments?.type === "multi") {
-    //     const serverOverride = endpoint.server[0];
-    //     if (endpoint.server.length === 0) {
-    //         convertedEndpoint.url = environments.defaultUrl;
-    //     } else if (serverOverride != null) {
-    //         convertedEndpoint.url = serverOverride.name ?? undefined;
-    //     } else {
-    //         throw new Error(
-    //             `${endpoint.method} ${endpoint.path} can only have a single server override, but has more.`
-    //         );
-    //     }
-    // }
+    if (context.builder.getEnvironmentType() === "multi") {
+        const serverOverride = endpoint.server[0];
+        if (serverOverride == null) {
+            convertedEndpoint.url = context.getOrThrowDefaultServerName();
+        } else {
+            convertedEndpoint.url = serverOverride.name ?? undefined;
+        }
+    }
 
     if (endpoint.availability === EndpointAvailability.Beta) {
         convertedEndpoint.availability = "pre-release";

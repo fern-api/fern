@@ -63,6 +63,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 )} because x-fern-server-name was not provided.`
             );
         }
+        const toplevelServerURLEntries = Object.entries(topLevelServerURLsWithName)[0];
+        if (toplevelServerURLEntries != null) {
+            const [name, _] = toplevelServerURLEntries;
+            context.setDefaultServerName(name);
+        }
         context.builder.addEnvironment({
             name: PRODUCTION_ENVNIRONMENT_NAME,
             schema: {
