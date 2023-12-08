@@ -69,6 +69,363 @@ exports[`generate IR 1`] = `
       "file": null,
       "packagePath": [],
     },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_optional",
+    ],
+    "types": [],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_optional": {
+      "availability": null,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "send-optional-body",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_optional.sendOptionalBody",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "sendOptionalBody",
+              "unsafeName": "sendOptionalBody",
+            },
+            "originalName": "sendOptionalBody",
+            "pascalCase": {
+              "safeName": "SendOptionalBody",
+              "unsafeName": "SendOptionalBody",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SEND_OPTIONAL_BODY",
+              "unsafeName": "SEND_OPTIONAL_BODY",
+            },
+            "snakeCase": {
+              "safeName": "send_optional_body",
+              "unsafeName": "send_optional_body",
+            },
+          },
+          "path": {
+            "head": "/send-optional-body",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "docs": null,
+            "requestBodyType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "map",
+                    "keyType": {
+                      "_type": "primitive",
+                      "primitive": "STRING",
+                    },
+                    "valueType": {
+                      "_type": "unknown",
+                    },
+                  },
+                },
+              },
+            },
+            "type": "reference",
+          },
+          "response": {
+            "type": "json",
+            "value": {
+              "docs": "Id of the created resource",
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "type": "justRequestBody",
+              "value": {
+                "contentType": null,
+                "docs": null,
+                "requestBodyType": {
+                  "_type": "container",
+                  "container": {
+                    "_type": "optional",
+                    "optional": {
+                      "_type": "container",
+                      "container": {
+                        "_type": "map",
+                        "keyType": {
+                          "_type": "primitive",
+                          "primitive": "STRING",
+                        },
+                        "valueType": {
+                          "_type": "unknown",
+                        },
+                      },
+                    },
+                  },
+                },
+                "type": "typeReference",
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "optional",
+                "unsafeName": "optional",
+              },
+              "originalName": "optional",
+              "pascalCase": {
+                "safeName": "Optional",
+                "unsafeName": "Optional",
+              },
+              "screamingSnakeCase": {
+                "safeName": "OPTIONAL",
+                "unsafeName": "OPTIONAL",
+              },
+              "snakeCase": {
+                "safeName": "optional",
+                "unsafeName": "optional",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "optional",
+              "unsafeName": "optional",
+            },
+            "originalName": "optional",
+            "pascalCase": {
+              "safeName": "Optional",
+              "unsafeName": "Optional",
+            },
+            "screamingSnakeCase": {
+              "safeName": "OPTIONAL",
+              "unsafeName": "OPTIONAL",
+            },
+            "snakeCase": {
+              "safeName": "optional",
+              "unsafeName": "optional",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_optional": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "optional",
+              "unsafeName": "optional",
+            },
+            "originalName": "optional",
+            "pascalCase": {
+              "safeName": "Optional",
+              "unsafeName": "Optional",
+            },
+            "screamingSnakeCase": {
+              "safeName": "OPTIONAL",
+              "unsafeName": "OPTIONAL",
+            },
+            "snakeCase": {
+              "safeName": "optional",
+              "unsafeName": "optional",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "optional",
+            "unsafeName": "optional",
+          },
+          "originalName": "optional",
+          "pascalCase": {
+            "safeName": "Optional",
+            "unsafeName": "Optional",
+          },
+          "screamingSnakeCase": {
+            "safeName": "OPTIONAL",
+            "unsafeName": "OPTIONAL",
+          },
+          "snakeCase": {
+            "safeName": "optional",
+            "unsafeName": "optional",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "optional",
+          "unsafeName": "optional",
+        },
+        "originalName": "optional",
+        "pascalCase": {
+          "safeName": "Optional",
+          "unsafeName": "Optional",
+        },
+        "screamingSnakeCase": {
+          "safeName": "OPTIONAL",
+          "unsafeName": "OPTIONAL",
+        },
+        "snakeCase": {
+          "safeName": "optional",
+          "unsafeName": "optional",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_optional",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+    },
+  },
+  "types": {},
+  "variables": [],
+  "webhookGroups": {},
+}
+`;
+
+exports[`generate IR 2`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "objectsWithImports",
+      "unsafeName": "objectsWithImports",
+    },
+    "originalName": "objects-with-imports",
+    "pascalCase": {
+      "safeName": "ObjectsWithImports",
+      "unsafeName": "ObjectsWithImports",
+    },
+    "screamingSnakeCase": {
+      "safeName": "OBJECTS_WITH_IMPORTS",
+      "unsafeName": "OBJECTS_WITH_IMPORTS",
+    },
+    "snakeCase": {
+      "safeName": "objects_with_imports",
+      "unsafeName": "objects_with_imports",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
     "hasEndpointsInTree": false,
     "navigationConfig": null,
     "service": null,

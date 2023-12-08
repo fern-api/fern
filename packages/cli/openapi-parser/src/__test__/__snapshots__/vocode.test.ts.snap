@@ -36,9 +36,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -51,9 +53,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -105,6 +109,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "phone_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -193,6 +198,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "phone_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -257,6 +263,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "phone_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -309,9 +316,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -324,9 +333,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -378,6 +389,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -430,6 +442,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -532,6 +545,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -615,6 +629,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -697,9 +712,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -712,9 +729,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -846,6 +865,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -940,6 +960,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -992,9 +1013,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1007,9 +1030,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1111,6 +1136,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1175,6 +1201,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1265,9 +1292,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1280,9 +1309,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1422,6 +1453,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1524,6 +1556,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1576,9 +1609,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1591,9 +1626,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1695,6 +1732,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1803,6 +1841,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "items",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "oneOf": {
@@ -1850,6 +1889,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1862,6 +1902,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1874,6 +1915,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "has_more",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -1973,6 +2015,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1987,6 +2030,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2001,6 +2045,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "prompt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2015,6 +2060,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2032,6 +2078,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "oneOf": {
@@ -2130,9 +2177,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2148,6 +2197,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2165,6 +2215,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2182,6 +2233,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2210,6 +2262,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "items",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -2227,6 +2280,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -2239,6 +2293,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -2251,6 +2306,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "has_more",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -2274,6 +2330,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "prompt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2288,6 +2345,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2305,9 +2363,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "oneOf": {
@@ -2318,6 +2378,7 @@ exports[`open api parser vocode parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "maxLength": undefined,
                         "minLength": undefined,
@@ -2384,6 +2445,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "schemas": [
                 {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2449,9 +2511,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2467,6 +2531,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2477,6 +2542,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2505,6 +2571,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2515,6 +2582,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2543,6 +2611,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2571,6 +2640,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "prompt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2581,6 +2651,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2609,6 +2680,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2646,6 +2718,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2656,6 +2729,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "type": "array",
                     "value": {
                       "oneOf": {
@@ -2666,6 +2740,7 @@ exports[`open api parser vocode parse open api 1`] = `
                         "schemas": [
                           {
                             "description": undefined,
+                            "groupName": undefined,
                             "schema": {
                               "maxLength": undefined,
                               "minLength": undefined,
@@ -2738,6 +2813,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2748,6 +2824,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2822,6 +2899,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2832,6 +2910,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2860,6 +2939,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2870,6 +2950,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2906,6 +2987,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2916,6 +2998,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2952,6 +3035,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3000,6 +3084,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3014,6 +3099,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3028,6 +3114,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3042,9 +3129,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "pitch",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3058,9 +3147,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3085,6 +3176,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3099,9 +3191,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "pitch",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3115,9 +3209,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -3142,6 +3238,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3152,6 +3249,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -3180,6 +3278,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "pitch",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3190,6 +3289,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "int",
                     },
@@ -3216,6 +3316,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3226,6 +3327,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "int",
                     },
@@ -3263,6 +3365,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3277,6 +3380,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3291,6 +3395,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3308,9 +3413,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "error_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3326,9 +3433,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "recording_available",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -3342,9 +3451,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "transcript",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3360,6 +3471,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "to_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3374,6 +3486,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "from_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3401,6 +3514,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "agent_phone_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3415,9 +3529,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "start_time",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -3431,9 +3547,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "end_time",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -3458,6 +3576,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "items",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3475,6 +3594,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3487,6 +3607,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3499,6 +3620,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "has_more",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3555,6 +3677,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "prompt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3569,6 +3692,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3586,9 +3710,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "oneOf": {
@@ -3599,6 +3725,7 @@ exports[`open api parser vocode parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "maxLength": undefined,
                         "minLength": undefined,
@@ -3658,6 +3785,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3668,6 +3796,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -3734,9 +3863,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3752,6 +3883,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3762,6 +3894,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -3790,6 +3923,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -3800,6 +3934,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -3828,6 +3963,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3856,6 +3992,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "from_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3870,6 +4007,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "to_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3891,6 +4029,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "schemas": [
                 {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -3929,6 +4068,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3943,6 +4083,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3957,6 +4098,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -3985,6 +4127,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4013,6 +4156,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4061,6 +4205,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4075,6 +4220,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4089,6 +4235,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4103,9 +4250,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "stability",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4119,9 +4268,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "similarity_boost",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4135,6 +4286,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4160,6 +4312,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4174,9 +4327,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "stability",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4190,9 +4345,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "similarity_boost",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -4206,6 +4363,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4231,6 +4389,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4241,6 +4400,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4269,6 +4429,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "stability",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4279,6 +4440,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "double",
                     },
@@ -4305,6 +4467,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "similarity_boost",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4315,6 +4478,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "double",
                     },
@@ -4341,6 +4505,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4351,6 +4516,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4400,6 +4566,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4414,6 +4581,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4428,6 +4596,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4456,6 +4625,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4484,6 +4654,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4598,9 +4769,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "detail",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -4678,6 +4851,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4692,6 +4866,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4706,6 +4881,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "prompt",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4720,6 +4896,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4737,9 +4914,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4755,6 +4934,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4769,9 +4949,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4787,9 +4969,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4805,6 +4989,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -4815,6 +5000,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4843,6 +5029,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4871,6 +5058,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4885,6 +5073,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4899,6 +5088,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4916,9 +5106,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "error_message",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4934,9 +5126,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "recording_available",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -4950,9 +5144,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "transcript",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4968,6 +5164,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "to_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4982,6 +5179,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "from_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4996,6 +5194,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "agent",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5010,6 +5209,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "agent_phone_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5024,9 +5224,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "start_time",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5040,9 +5242,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "end_time",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5067,6 +5271,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5081,6 +5286,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5095,9 +5301,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "active",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -5111,9 +5319,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5129,6 +5339,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "inbound_agent",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5143,6 +5354,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5168,6 +5380,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5182,6 +5395,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5196,9 +5410,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "active",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -5212,9 +5428,11 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5243,6 +5461,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5268,6 +5487,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "items",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5285,6 +5505,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -5297,6 +5518,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -5309,6 +5531,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "has_more",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5332,6 +5555,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5346,6 +5570,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5360,6 +5585,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "vector_database_pinecone",
@@ -5373,6 +5599,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "index",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5387,6 +5614,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5401,6 +5629,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_environment",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5426,6 +5655,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "vector_database_pinecone",
@@ -5439,6 +5669,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "index",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5453,6 +5684,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5467,6 +5699,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_environment",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5492,6 +5725,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "vector_database_pinecone",
@@ -5505,6 +5739,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "index",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -5515,6 +5750,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -5543,6 +5779,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -5553,6 +5790,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -5581,6 +5819,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_environment",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -5591,6 +5830,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -5657,6 +5897,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5671,6 +5912,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5685,6 +5927,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5699,6 +5942,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5713,6 +5957,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5738,6 +5983,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5752,6 +5998,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5766,6 +6013,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5791,6 +6039,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -5801,6 +6050,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -5829,6 +6079,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -5839,6 +6090,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -5867,6 +6119,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -5877,6 +6130,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -5916,6 +6170,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5930,6 +6185,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5944,6 +6200,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "speaker",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5969,6 +6226,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "speaker",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5994,6 +6252,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "speaker",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -6004,6 +6263,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -6043,6 +6303,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6057,6 +6318,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6119,6 +6381,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -6167,6 +6430,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "phone_number",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6202,6 +6466,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -6212,6 +6477,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -6240,6 +6506,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "inbound_agent",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -6250,6 +6517,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -6297,6 +6565,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6324,6 +6593,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "monthly_usage_minutes",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6336,6 +6606,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "monthly_usage_limit_minutes",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6359,6 +6630,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "loc",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "oneOf": {
@@ -6369,6 +6641,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -6378,6 +6651,7 @@ exports[`open api parser vocode parse open api 1`] = `
                   },
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "type": "int",
                     },
@@ -6396,6 +6670,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "msg",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6410,6 +6685,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6435,6 +6711,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "items",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "oneOf": {
@@ -6490,6 +6767,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6502,6 +6780,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6514,6 +6793,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "has_more",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -6629,6 +6909,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6643,6 +6924,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6657,6 +6939,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "subscriptions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6674,6 +6957,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6688,6 +6972,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -6716,6 +7001,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "items",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6733,6 +7019,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6745,6 +7032,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6757,6 +7045,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "has_more",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -6780,6 +7069,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "subscriptions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6797,6 +7087,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6811,6 +7102,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -6839,6 +7131,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "subscriptions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -6849,6 +7142,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "type": "array",
                     "value": {
                       "description": undefined,
@@ -6880,6 +7174,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -6890,6 +7185,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -6918,6 +7214,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {

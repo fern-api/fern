@@ -228,7 +228,9 @@ types:
       unknown: {}
 
   PrimitiveSchema:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValue
 
@@ -250,7 +252,9 @@ types:
       maxLength: optional<integer>
 
   LiteralSchema:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       value: LiteralSchemaValue
 
@@ -299,23 +303,31 @@ types:
       differentSchema: boolean
 
   ArraySchema:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       value: Schema
 
   MapSchema:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       value: Schema
 
   NullableSchema:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithSdkGroupName
     properties:
       value: Schema
 

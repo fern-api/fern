@@ -9,17 +9,26 @@ const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER
 export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
     switch (schema.type) {
         case "object":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "enum":
             return getDeclarationFileFromGroupName(schema.groupName);
         case "oneOf":
+            return getDeclarationFileFromGroupName(schema.oneOf.groupName);
         case "array":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "map":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "reference":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "literal":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "optional":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "nullable":
-        case "unknown":
+            return getDeclarationFileFromGroupName(schema.groupName);
         case "primitive":
+            return getDeclarationFileFromGroupName(schema.groupName);
+        case "unknown":
             return PACKAGE_MARKER_RELATIVE_FILEPATH;
         default:
             assertNever(schema);

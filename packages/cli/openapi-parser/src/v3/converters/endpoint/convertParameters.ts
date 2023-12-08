@@ -57,7 +57,8 @@ export function convertParameters({
                           maxLength: undefined,
                           example: getExamplesString(resolvedParameter.example)
                       }),
-                      description: undefined
+                      description: undefined,
+                      groupName: undefined
                   })
                 : SchemaWithExample.optional({
                       value: SchemaWithExample.primitive({
@@ -66,9 +67,11 @@ export function convertParameters({
                               maxLength: undefined,
                               example: getExamplesString(resolvedParameter.example)
                           }),
-                          description: undefined
+                          description: undefined,
+                          groupName: undefined
                       }),
-                      description: undefined
+                      description: undefined,
+                      groupName: undefined
                   });
         if (
             resolvedParameter.in === "header" &&
@@ -82,7 +85,8 @@ export function convertParameters({
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({
                     value: LiteralSchemaValue.string(defaultValue),
-                    description: undefined
+                    description: undefined,
+                    groupName: undefined
                 });
             }
         }

@@ -23,7 +23,8 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                             minLength: undefined,
                             maxLength: undefined
                         }),
-                        description: schema.description
+                        description: schema.description,
+                        groupName: undefined
                     }
                 ];
             } else {

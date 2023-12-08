@@ -84,12 +84,15 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "limit",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "Maximum amount of transcripts to retrieve",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Maximum amount of transcripts to retrieve",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -103,9 +106,11 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
@@ -148,12 +153,15 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "created_on",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "Only get transcripts created on this date",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Only get transcripts created on this date",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -169,12 +177,15 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "before_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "Get transcripts that were created before this transcript ID",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Get transcripts that were created before this transcript ID",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -190,12 +201,15 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "after_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "Get transcripts that were created after this transcript ID",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Get transcripts that were created after this transcript ID",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -211,12 +225,15 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "throttled_only",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": "Only get throttled transcripts, overrides the status filter",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Only get throttled transcripts, overrides the status filter",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -340,6 +357,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -404,6 +422,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -460,6 +479,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -489,9 +509,11 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "chars_per_caption",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -545,6 +567,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -609,6 +632,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -673,6 +697,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -689,9 +714,11 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "words",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -755,6 +782,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "name": "transcript_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1126,6 +1154,7 @@ The LLM response data, as well as any context provided in the original request w
           "name": "request_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1237,6 +1266,7 @@ The LLM response data, as well as any context provided in the original request w
       "schema": {
         "description": undefined,
         "example": undefined,
+        "groupName": undefined,
         "type": "unknown",
       },
     },
@@ -1316,6 +1346,7 @@ The LLM response data, as well as any context provided in the original request w
           "key": "audio_data",
           "schema": {
             "description": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1362,6 +1393,7 @@ The LLM response data, as well as any context provided in the original request w
           "key": "count",
           "schema": {
             "description": "The total number of times the key phrase appears in the audio file",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1374,6 +1406,7 @@ The LLM response data, as well as any context provided in the original request w
           "key": "rank",
           "schema": {
             "description": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
+            "groupName": undefined,
             "schema": {
               "type": "float",
             },
@@ -1386,6 +1419,7 @@ The LLM response data, as well as any context provided in the original request w
           "key": "text",
           "schema": {
             "description": "The text itself of the key phrase",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1400,6 +1434,7 @@ The LLM response data, as well as any context provided in the original request w
           "key": "timestamps",
           "schema": {
             "description": "The timestamp of the of the key phrase",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -1418,6 +1453,7 @@ The LLM response data, as well as any context provided in the original request w
       "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
+      "groupName": undefined,
       "type": "nullable",
       "value": {
         "allOf": [],
@@ -1435,6 +1471,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "key": "results",
             "schema": {
               "description": "A temporally-sequential array of Key Phrases",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1464,6 +1501,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "gist",
           "schema": {
             "description": "An ultra-short summary (just a few words) of the content spoken in the chapter",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1478,6 +1516,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "headline",
           "schema": {
             "description": "A single sentence summary of the content spoken during the chapter",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1492,6 +1531,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "summary",
           "schema": {
             "description": "A one paragraph summary of the content spoken during the chapter",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1506,6 +1546,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "start",
           "schema": {
             "description": "The starting time, in milliseconds, for the chapter",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1518,6 +1559,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "end",
           "schema": {
             "description": "The starting time, in milliseconds, for the chapter",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1541,6 +1583,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "label",
           "schema": {
             "description": "The label of the sensitive topic",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1555,6 +1598,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "confidence",
           "schema": {
             "description": "The confidence score for the topic being discussed, from 0 to 1",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1567,6 +1611,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "severity",
           "schema": {
             "description": "How severely the topic is discussed in the section, from 0 to 1",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1590,6 +1635,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "text",
           "schema": {
             "description": "The transcript of the section flagged by the Content Moderation model",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1604,6 +1650,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "labels",
           "schema": {
             "description": "An array of objects, one per sensitive topic that was detected in the section",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -1621,6 +1668,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "sentences_idx_start",
           "schema": {
             "description": "The sentence index at which the section begins",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1633,6 +1681,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "sentences_idx_end",
           "schema": {
             "description": "The sentence index at which the section ends",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1658,8 +1707,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "summary",
           "schema": {
             "description": "A summary of the Content Moderation confidence results for the entire audio file",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1670,6 +1721,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "map",
             "value": {
               "description": "A confidence score for the presence of the sensitive topic "topic" across the entire audio file",
+              "groupName": undefined,
               "schema": {
                 "type": "double",
               },
@@ -1683,8 +1735,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "severity_score_summary",
           "schema": {
             "description": "A summary of the Content Moderation severity results for the entire audio file",
+            "groupName": undefined,
             "key": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1720,6 +1774,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "expires_in",
           "schema": {
             "description": "The amount of time until the token expires in seconds.",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1743,6 +1798,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "language_code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
@@ -1762,9 +1818,11 @@ The default value is 'en_us'.
           "key": "punctuate",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable Automatic Punctuation, can be true or false.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1778,9 +1836,11 @@ The default value is 'en_us'.
           "key": "format_text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable Text Formatting, can be true or false.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1794,9 +1854,11 @@ The default value is 'en_us'.
           "key": "dual_channel",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Dual Channel](https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) transcription, can be true or false.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1810,9 +1872,11 @@ The default value is 'en_us'.
           "key": "webhook_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1828,12 +1892,15 @@ The default value is 'en_us'.
           "key": "webhook_auth_header_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1850,12 +1917,15 @@ The default value is 'en_us'.
           "key": "webhook_auth_header_value",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1872,9 +1942,11 @@ The default value is 'en_us'.
           "key": "auto_highlights",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether Key Phrases was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1888,9 +1960,11 @@ The default value is 'en_us'.
           "key": "audio_start_from",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The point in time, in milliseconds, to begin transcription from in your media file",
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1904,9 +1978,11 @@ The default value is 'en_us'.
           "key": "audio_end_at",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The point in time, in milliseconds, to stop transcribing in your media file",
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1920,12 +1996,15 @@ The default value is 'en_us'.
           "key": "word_boost",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1942,6 +2021,7 @@ The default value is 'en_us'.
           "key": "boost_param",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The word boost parameter value, if provided in the transcription request.",
@@ -1959,9 +2039,11 @@ The default value is 'en_us'.
           "key": "filter_profanity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Filter profanity from the transcribed text, can be true or false.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1975,9 +2057,11 @@ The default value is 'en_us'.
           "key": "redact_pii",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Redact PII from the transcribed text using the Redact PII model, can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1991,9 +2075,11 @@ The default value is 'en_us'.
           "key": "redact_pii_audio",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Generate a copy of the original media file with spoken PII "beeped" out, can be true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2007,9 +2093,11 @@ The default value is 'en_us'.
           "key": "redact_pii_audio_quality",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2025,9 +2113,11 @@ The default value is 'en_us'.
           "key": "redact_pii_policies",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The list of PII Redaction policies to enable. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -2046,6 +2136,7 @@ The default value is 'en_us'.
           "key": "redact_pii_sub",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
@@ -2063,9 +2154,11 @@ The default value is 'en_us'.
           "key": "speaker_labels",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2079,12 +2172,15 @@ The default value is 'en_us'.
           "key": "speakers_expected",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -2099,9 +2195,11 @@ The default value is 'en_us'.
           "key": "content_safety",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2115,9 +2213,11 @@ The default value is 'en_us'.
           "key": "iab_categories",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2131,9 +2231,11 @@ The default value is 'en_us'.
           "key": "language_detection",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2147,9 +2249,11 @@ The default value is 'en_us'.
           "key": "custom_spelling",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Customize how words are spelled and formatted using to and from values",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -2168,9 +2272,11 @@ The default value is 'en_us'.
           "key": "disfluencies",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Transcribe Filler Words, like "umm", in your media file; can be true or false.",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2184,9 +2290,11 @@ The default value is 'en_us'.
           "key": "sentiment_analysis",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2200,9 +2308,11 @@ The default value is 'en_us'.
           "key": "auto_chapters",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2216,9 +2326,11 @@ The default value is 'en_us'.
           "key": "entity_detection",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2232,16 +2344,19 @@ The default value is 'en_us'.
           "key": "speech_threshold",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
+                "groupName": undefined,
                 "schema": {
                   "type": "float",
                 },
@@ -2256,9 +2371,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "summarization",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2272,6 +2389,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "summary_model",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The model to summarize the transcript",
@@ -2289,6 +2407,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "summary_type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The type of summary",
@@ -2306,9 +2425,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "custom_topics",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether custom topics was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2322,12 +2443,15 @@ Valid values are in the range [0, 1] inclusive.
           "key": "topics",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The list of custom topics provided if custom topics was enabled in the transcription request",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -2364,6 +2488,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "audio_url",
           "schema": {
             "description": "The URL of the audio or video file to transcribe.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2402,6 +2527,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "text",
           "schema": {
             "description": "The text for the detected entity",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2416,6 +2542,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "start",
           "schema": {
             "description": "The starting time, in milliseconds, at which the detected entity appears in the audio file",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -2428,6 +2555,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "end",
           "schema": {
             "description": "The ending time, in milliseconds, for the detected entity in the audio file",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -2637,6 +2765,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "error",
           "schema": {
             "description": "Error message",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2651,9 +2780,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "literal",
               "value": {
                 "string": "error",
@@ -2688,6 +2819,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "message_type",
           "schema": {
             "description": "Describes the type of message.",
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "FinalTranscript",
@@ -2701,6 +2833,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "punctuated",
           "schema": {
             "description": "Whether the text has been punctuated and cased.",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -2713,6 +2846,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "text_formatted",
           "schema": {
             "description": "Whether the text has been formatted (e.g. Dollar -> $)",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -2753,6 +2887,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "response",
           "schema": {
             "description": "The response generated by LeMUR.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2778,9 +2913,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "transcript_ids",
           "schema": {
             "description": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2796,6 +2933,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "context",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2806,6 +2944,7 @@ Valid values are in the range [0, 1] inclusive.
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2815,8 +2954,10 @@ Valid values are in the range [0, 1] inclusive.
                   },
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "key": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "maxLength": undefined,
                         "minLength": undefined,
@@ -2842,6 +2983,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "final_model",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -2859,9 +3001,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "max_output_size",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Max output size in tokens. Up to 4000 allowed.",
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -2875,12 +3019,14 @@ Valid values are in the range [0, 1] inclusive.
           "key": "temperature",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The temperature to use for the model.
 Higher values result in answers that are more creative, lower values are more conservative.
 Can be any value between 0.0 and 1.0 inclusive.
 ",
+              "groupName": undefined,
               "schema": {
                 "type": "float",
               },
@@ -2905,6 +3051,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "request_id",
           "schema": {
             "description": "The ID of the LeMUR request",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2952,6 +3099,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "question",
           "schema": {
             "description": "The question you wish to ask. For more complex questions use default model.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2966,6 +3114,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "context",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "oneOf": {
@@ -2976,6 +3125,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "schemas": [
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -2985,8 +3135,10 @@ Can be any value between 0.0 and 1.0 inclusive.
                   },
                   {
                     "description": undefined,
+                    "groupName": undefined,
                     "key": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "maxLength": undefined,
                         "minLength": undefined,
@@ -3012,10 +3164,12 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "answer_format",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: "short sentence", "bullet points"
 ",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3031,13 +3185,16 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "answer_options",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: ["Yes", "No"]
 ",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3065,6 +3222,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "question",
           "schema": {
             "description": "The question for LeMUR to answer.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3079,6 +3237,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "answer",
           "schema": {
             "description": "The answer generated by LeMUR.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3113,6 +3272,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "questions",
           "schema": {
             "description": "A list of questions to ask.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3150,6 +3310,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "response",
           "schema": {
             "description": "The answers generated by LeMUR and their questions.",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3187,10 +3348,12 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "answer_format",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
 ",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3226,6 +3389,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "response",
           "schema": {
             "description": "The response generated by LeMUR.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3260,6 +3424,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "prompt",
           "schema": {
             "description": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3294,6 +3459,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "response",
           "schema": {
             "description": "The response generated by LeMUR.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3352,6 +3518,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "limit",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3364,6 +3531,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "result_count",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3376,6 +3544,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "current_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3390,6 +3559,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "prev_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3404,12 +3574,15 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "next_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3437,6 +3610,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3451,6 +3625,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3463,6 +3638,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "audio_duration",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3475,6 +3651,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "paragraphs",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3512,6 +3689,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "message_type",
           "schema": {
             "description": "Describes the type of message.",
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "PartialTranscript",
@@ -3707,6 +3885,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "request_id",
           "schema": {
             "description": "The ID of the LeMUR request",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3721,6 +3900,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "request_id_to_purge",
           "schema": {
             "description": "The ID of the deletion request of the LeMUR request",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3735,6 +3915,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "deleted",
           "schema": {
             "description": "Whether the request data was deleted.",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -3782,6 +3963,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "audio_start",
           "schema": {
             "description": "Start time of audio sample relative to session start, in milliseconds.",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3794,6 +3976,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "audio_end",
           "schema": {
             "description": "End time of audio sample relative to session start, in milliseconds.",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -3806,6 +3989,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "confidence",
           "schema": {
             "description": "The confidence score of the entire transcription, between 0 and 1.",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -3818,6 +4002,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "text",
           "schema": {
             "description": "The partial transcript for your audio.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3832,6 +4017,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "words",
           "schema": {
             "description": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3849,6 +4035,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "created",
           "schema": {
             "description": "The timestamp for the partial transcript.",
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -3872,6 +4059,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "error",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3949,6 +4137,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "token",
           "schema": {
             "description": "The temporary authentication token for real-time transcription",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4036,6 +4225,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "redacted_audio_url",
           "schema": {
             "description": "The URL of the redacted audio file",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4049,6 +4239,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     },
     "RedactedAudioStatus": {
       "description": "The status of the redacted audio",
+      "groupName": undefined,
       "type": "literal",
       "value": {
         "string": "redacted_audio_ready",
@@ -4069,6 +4260,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4083,6 +4275,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4095,6 +4288,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "audio_duration",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4107,6 +4301,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "sentences",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4162,6 +4357,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "text",
           "schema": {
             "description": "The transcript of the sentence",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4176,6 +4372,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "start",
           "schema": {
             "description": "The starting time, in milliseconds, of the sentence",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4188,6 +4385,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "end",
           "schema": {
             "description": "The ending time, in milliseconds, of the sentence",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4213,6 +4411,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "confidence",
           "schema": {
             "description": "The confidence score for the detected sentiment of the sentence, from 0 to 1",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4225,12 +4424,15 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "speaker",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The speaker of the sentence if Speaker Diarization is enabled, else null",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The speaker of the sentence if Speaker Diarization is enabled, else null",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4271,6 +4473,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "message_type",
           "schema": {
             "description": "Describes the type of the message.",
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "SessionBegins",
@@ -4284,6 +4487,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "session_id",
           "schema": {
             "description": "Unique identifier for the established session.",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4298,6 +4502,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "expires_at",
           "schema": {
             "description": "Timestamp when this session will expire.",
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4334,6 +4539,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "message_type",
           "schema": {
             "description": "Describes the type of the message.",
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "SessionTerminated",
@@ -4358,6 +4564,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "low",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4370,6 +4577,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "medium",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4382,6 +4590,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "high",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -4522,6 +4731,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "terminate_session",
           "schema": {
             "description": "A boolean value to communicate that you wish to end your real-time session forever.",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -4545,6 +4755,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "start",
           "schema": {
             "description": "The start time in milliseconds",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4557,6 +4768,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "end",
           "schema": {
             "description": "The end time in milliseconds",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -4580,6 +4792,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "text",
           "schema": {
             "description": "The text in the transcript in which a detected topic occurs",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4594,9 +4807,11 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "labels",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "allOf": [],
@@ -4612,6 +4827,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                     "key": "relevance",
                     "schema": {
                       "description": "How relevant the detected topic is of a detected topic",
+                      "groupName": undefined,
                       "schema": {
                         "type": "double",
                       },
@@ -4624,6 +4840,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                     "key": "label",
                     "schema": {
                       "description": "The IAB taxonomical label for the label of the detected topic, where > denotes supertopic/subtopic relationship",
+                      "groupName": undefined,
                       "schema": {
                         "maxLength": undefined,
                         "minLength": undefined,
@@ -4644,6 +4861,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "timestamp",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -4672,6 +4890,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "id",
           "schema": {
             "description": "The unique identifier of your transcription",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4686,6 +4905,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "language_model",
           "schema": {
             "description": "The language model that was used for the transcription",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4700,6 +4920,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "acoustic_model",
           "schema": {
             "description": "The acoustic model that was used for the transcription",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4727,6 +4948,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "key": "language_code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The language of your audio file.
@@ -4747,6 +4969,7 @@ The default value is 'en_us'.
           "key": "audio_url",
           "schema": {
             "description": "The URL of the media that was transcribed",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4761,12 +4984,15 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The textual transcript of your media file",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The textual transcript of your media file",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4783,16 +5009,19 @@ The default value is 'en_us'.
           "key": "words",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of temporally-sequential word objects, one for each word in the transcript.
 See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "An array of temporally-sequential word objects, one for each word in the transcript.
 See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
 ",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -4812,16 +5041,19 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           "key": "utterances",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
 See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
 See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
 ",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -4841,12 +5073,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
+                "groupName": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -4861,12 +5096,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "audio_duration",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The duration of this transcript object's media file, in seconds",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The duration of this transcript object's media file, in seconds",
+                "groupName": undefined,
                 "schema": {
                   "type": "float",
                 },
@@ -4881,12 +5119,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "punctuate",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -4901,12 +5142,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "format_text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether Text Formatting was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether Text Formatting was enabled in the transcription request, either true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -4921,12 +5165,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "dual_channel",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -4941,12 +5188,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "webhook_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -4963,12 +5213,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "webhook_status_code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -4983,6 +5236,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "webhook_auth",
           "schema": {
             "description": "Whether webhook authentication details were provided in the transcription request",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -4995,12 +5249,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "webhook_auth_header_name",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The header name which should be sent back with webhook calls, if provided in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The header name which should be sent back with webhook calls, if provided in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5017,12 +5274,15 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "speed_boost",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether speed boost was enabled in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether speed boost was enabled in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5037,6 +5297,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "auto_highlights",
           "schema": {
             "description": "Whether Key Phrases was enabled in the transcription request, either true or false",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5049,6 +5310,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "key": "auto_highlights_result",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
@@ -5068,12 +5330,15 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "audio_start_from",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -5088,12 +5353,15 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "audio_end_at",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -5108,12 +5376,15 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "word_boost",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5130,12 +5401,15 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "boost_param",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The word boost parameter value, if provided in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The word boost parameter value, if provided in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5152,12 +5426,15 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "filter_profanity",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5172,6 +5449,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "redact_pii",
           "schema": {
             "description": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5184,16 +5462,19 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "key": "redact_pii_audio",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
 either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
 either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5208,16 +5489,19 @@ either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models
           "key": "redact_pii_audio_quality",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5234,16 +5518,19 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "key": "redact_pii_policies",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -5263,6 +5550,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "key": "redact_pii_sub",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
@@ -5280,12 +5568,15 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "key": "speaker_labels",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5300,12 +5591,15 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "key": "speakers_expected",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
+                "groupName": undefined,
                 "schema": {
                   "type": "int",
                 },
@@ -5320,12 +5614,15 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "key": "content_safety",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5340,11 +5637,13 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "key": "content_safety_labels",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "allOf": [],
@@ -5375,6 +5674,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                     "key": "results",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "type": "array",
                       "value": {
                         "description": undefined,
@@ -5398,12 +5698,15 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
           "key": "iab_categories",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5418,11 +5721,13 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
           "key": "iab_categories_result",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "allOf": [],
@@ -5453,6 +5758,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "key": "results",
                     "schema": {
                       "description": "An array of results for the Topic Detection model.",
+                      "groupName": undefined,
                       "type": "array",
                       "value": {
                         "description": undefined,
@@ -5470,8 +5776,10 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "key": "summary",
                     "schema": {
                       "description": "The overall relevance of topic to the entire audio file",
+                      "groupName": undefined,
                       "key": {
                         "description": undefined,
+                        "groupName": undefined,
                         "schema": {
                           "maxLength": undefined,
                           "minLength": undefined,
@@ -5482,6 +5790,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                       "type": "map",
                       "value": {
                         "description": undefined,
+                        "groupName": undefined,
                         "schema": {
                           "type": "double",
                         },
@@ -5501,12 +5810,15 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "language_detection",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5521,12 +5833,15 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "custom_spelling",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Customize how words are spelled and formatted using to and from values",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Customize how words are spelled and formatted using to and from values",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -5546,12 +5861,15 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "auto_chapters",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5566,12 +5884,15 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "chapters",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of temporally sequential chapters for the audio file",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "An array of temporally sequential chapters for the audio file",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -5591,6 +5912,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "summarization",
           "schema": {
             "description": "Whether [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request, either true or false",
+            "groupName": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5603,12 +5925,15 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "summary_type",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5625,16 +5950,19 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "key": "summary_model",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The Summarization model used to generate the summary,
 if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The Summarization model used to generate the summary,
 if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
 ",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5651,12 +5979,15 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "key": "summary",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5673,12 +6004,15 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "key": "custom_topics",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Whether custom topics was enabled in the transcription request, either true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Whether custom topics was enabled in the transcription request, either true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5693,12 +6027,15 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "key": "topics",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "The list of custom topics provided if custom topics was enabled in the transcription request",
+              "groupName": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5715,12 +6052,15 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "key": "disfluencies",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5735,12 +6075,15 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "key": "sentiment_analysis",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5755,16 +6098,19 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "key": "sentiment_analysis_results",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
 See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
 See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
 ",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -5784,12 +6130,15 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
           "key": "entity_detection",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5804,16 +6153,19 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
           "key": "entities",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
 See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
 See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
 ",
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -5833,16 +6185,19 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
           "key": "speech_threshold",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
+                "groupName": undefined,
                 "schema": {
                   "type": "float",
                 },
@@ -5857,12 +6212,15 @@ Valid values are in the range [0, 1] inclusive.
           "key": "throttled",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "True while a request is throttled and false when a request is no longer throttled",
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": "True while a request is throttled and false when a request is no longer throttled",
+                "groupName": undefined,
                 "schema": {
                   "type": "boolean",
                 },
@@ -5877,9 +6235,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "error",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Error message of why the transcript failed",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5933,9 +6293,11 @@ Valid values are in the range [0, 1] inclusive.
           "key": "from",
           "schema": {
             "description": "Words or phrases to replace",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": "Word or phrase to replace",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5951,6 +6313,7 @@ Valid values are in the range [0, 1] inclusive.
           "key": "to",
           "schema": {
             "description": "Word or phrase to replace with",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6120,6 +6483,7 @@ The default value is 'en_us'.
           "key": "transcripts",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6148,6 +6512,7 @@ The default value is 'en_us'.
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6162,6 +6527,7 @@ The default value is 'en_us'.
           "key": "resource_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6189,6 +6555,7 @@ The default value is 'en_us'.
           "key": "created",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -6201,9 +6568,11 @@ The default value is 'en_us'.
           "key": "completed",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -6217,6 +6586,7 @@ The default value is 'en_us'.
           "key": "audio_url",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6242,9 +6612,11 @@ The default value is 'en_us'.
           "key": "limit",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Maximum amount of transcripts to retrieve",
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -6258,6 +6630,7 @@ The default value is 'en_us'.
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Filter by transcript status",
@@ -6275,9 +6648,11 @@ The default value is 'en_us'.
           "key": "created_on",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Only get transcripts created on this date",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6293,9 +6668,11 @@ The default value is 'en_us'.
           "key": "before_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Get transcripts that were created before this transcript ID",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6311,9 +6688,11 @@ The default value is 'en_us'.
           "key": "after_id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Get transcripts that were created after this transcript ID",
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -6329,9 +6708,11 @@ The default value is 'en_us'.
           "key": "throttled_only",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": "Only get throttled transcripts, overrides the status filter",
+              "groupName": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -6356,6 +6737,7 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6370,6 +6752,7 @@ The default value is 'en_us'.
           "key": "start",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6382,6 +6765,7 @@ The default value is 'en_us'.
           "key": "end",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6394,6 +6778,7 @@ The default value is 'en_us'.
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6406,6 +6791,7 @@ The default value is 'en_us'.
           "key": "words",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6434,6 +6820,7 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6448,6 +6835,7 @@ The default value is 'en_us'.
           "key": "start",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6460,6 +6848,7 @@ The default value is 'en_us'.
           "key": "end",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6472,6 +6861,7 @@ The default value is 'en_us'.
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6484,6 +6874,7 @@ The default value is 'en_us'.
           "key": "words",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6545,6 +6936,7 @@ The default value is 'en_us'.
           "key": "channel",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6559,6 +6951,7 @@ The default value is 'en_us'.
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6571,6 +6964,7 @@ The default value is 'en_us'.
           "key": "start",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6583,6 +6977,7 @@ The default value is 'en_us'.
           "key": "end",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6595,6 +6990,7 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6609,6 +7005,7 @@ The default value is 'en_us'.
           "key": "words",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6637,6 +7034,7 @@ The default value is 'en_us'.
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6649,6 +7047,7 @@ The default value is 'en_us'.
           "key": "start",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6661,6 +7060,7 @@ The default value is 'en_us'.
           "key": "end",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6673,6 +7073,7 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6687,12 +7088,15 @@ The default value is 'en_us'.
           "key": "speaker",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "nullable",
               "value": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -6720,6 +7124,7 @@ The default value is 'en_us'.
           "key": "upload_url",
           "schema": {
             "description": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6745,6 +7150,7 @@ The default value is 'en_us'.
           "key": "start",
           "schema": {
             "description": "Start time of the word in milliseconds",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6757,6 +7163,7 @@ The default value is 'en_us'.
           "key": "end",
           "schema": {
             "description": "End time of the word in milliseconds",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6769,6 +7176,7 @@ The default value is 'en_us'.
           "key": "confidence",
           "schema": {
             "description": "Confidence score of the word",
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -6781,6 +7189,7 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": "The word itself",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6806,6 +7215,7 @@ The default value is 'en_us'.
           "key": "text",
           "schema": {
             "description": "The matched word",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6820,6 +7230,7 @@ The default value is 'en_us'.
           "key": "count",
           "schema": {
             "description": "The total amount of times the word is in the transcript",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6832,6 +7243,7 @@ The default value is 'en_us'.
           "key": "timestamps",
           "schema": {
             "description": "An array of timestamps",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6849,9 +7261,11 @@ The default value is 'en_us'.
           "key": "indexes",
           "schema": {
             "description": "An array of all index locations for that word within the \`words\` array of the completed transcript",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "type": "int",
               },
@@ -6876,6 +7290,7 @@ The default value is 'en_us'.
           "key": "id",
           "schema": {
             "description": "The ID of the transcript",
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -6890,6 +7305,7 @@ The default value is 'en_us'.
           "key": "total_count",
           "schema": {
             "description": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -6902,6 +7318,7 @@ The default value is 'en_us'.
           "key": "matches",
           "schema": {
             "description": "The matches of the search",
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6918,9 +7335,11 @@ The default value is 'en_us'.
     },
     "WordSearchTimestamp": {
       "description": "An array of timestamps structured as [\`start_time\`, \`end_time\`] in milliseconds",
+      "groupName": undefined,
       "type": "array",
       "value": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "type": "int",
         },

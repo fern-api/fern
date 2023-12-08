@@ -22,9 +22,11 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,

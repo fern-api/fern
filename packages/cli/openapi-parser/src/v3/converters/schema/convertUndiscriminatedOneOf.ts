@@ -174,7 +174,8 @@ export function wrapUndiscriminantedOneOf({
                 schemas: subtypes,
                 groupName
             }),
-            description
+            description,
+            groupName
         });
     }
     return SchemaWithExample.oneOf({

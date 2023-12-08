@@ -28,6 +28,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "uid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -44,6 +45,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -55,6 +57,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -82,6 +85,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "kind",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "string": "block",
@@ -95,6 +99,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "uid",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -109,6 +114,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "sid",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -123,6 +129,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "version",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -147,6 +154,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "active",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -159,6 +167,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "entered",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -171,6 +180,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "exited",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -187,9 +197,11 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "containerUid",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -205,8 +217,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "transitioned",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -217,6 +231,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "type": "map",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -280,6 +295,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "fields",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "array",
                 "value": {
                   "oneOf": {
@@ -304,6 +320,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "sid",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -318,9 +335,11 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "value",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "type": "nullable",
                               "value": {
                                 "description": undefined,
+                                "groupName": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -345,6 +364,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "sid",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -359,9 +379,11 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "value",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "type": "nullable",
                               "value": {
                                 "description": undefined,
+                                "groupName": undefined,
                                 "schema": {
                                   "type": "double",
                                 },
@@ -386,6 +408,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "sid",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -400,9 +423,11 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "value",
                             "schema": {
                               "description": undefined,
+                              "groupName": undefined,
                               "type": "nullable",
                               "value": {
                                 "description": undefined,
+                                "groupName": undefined,
                                 "schema": {
                                   "maxLength": undefined,
                                   "minLength": undefined,
@@ -505,6 +530,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "uid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -521,9 +547,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "transitions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -538,6 +566,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -549,6 +578,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -562,9 +592,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -609,6 +641,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "sid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -625,6 +658,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -636,9 +670,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "include",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "literal",
               "value": {
                 "string": "block",
@@ -652,6 +688,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -665,9 +702,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -696,6 +735,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "kind",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "string": "flow",
@@ -709,6 +749,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "literal",
                 "value": {
                   "string": "flow",
@@ -722,6 +763,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "uid",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -736,6 +778,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "sid",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -750,6 +793,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "version",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -774,6 +818,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "stopped",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -786,6 +831,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "started",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -798,6 +844,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "finished",
                     "schema": {
                       "description": undefined,
+                      "groupName": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -814,9 +861,11 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "blocks",
               "schema": {
                 "description": undefined,
+                "groupName": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "groupName": undefined,
                   "type": "array",
                   "value": {
                     "allOf": [],
@@ -832,6 +881,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "kind",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "type": "literal",
                           "value": {
                             "string": "block",
@@ -845,6 +895,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "uid",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "schema": {
                             "maxLength": undefined,
                             "minLength": undefined,
@@ -859,6 +910,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "sid",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "schema": {
                             "maxLength": undefined,
                             "minLength": undefined,
@@ -873,6 +925,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "version",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "schema": {
                             "type": "double",
                           },
@@ -897,6 +950,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "key": "active",
                               "schema": {
                                 "description": undefined,
+                                "groupName": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -909,6 +963,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "key": "entered",
                               "schema": {
                                 "description": undefined,
+                                "groupName": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -921,6 +976,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "key": "exited",
                               "schema": {
                                 "description": undefined,
+                                "groupName": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -937,9 +993,11 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "containerUid",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "type": "optional",
                           "value": {
                             "description": undefined,
+                            "groupName": undefined,
                             "schema": {
                               "maxLength": undefined,
                               "minLength": undefined,
@@ -955,8 +1013,10 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "transitioned",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "key": {
                             "description": undefined,
+                            "groupName": undefined,
                             "schema": {
                               "maxLength": undefined,
                               "minLength": undefined,
@@ -967,6 +1027,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "type": "map",
                           "value": {
                             "description": undefined,
+                            "groupName": undefined,
                             "schema": {
                               "type": "boolean",
                             },
@@ -1030,6 +1091,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "fields",
                         "schema": {
                           "description": undefined,
+                          "groupName": undefined,
                           "type": "array",
                           "value": {
                             "oneOf": {
@@ -1054,6 +1116,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "sid",
                                       "schema": {
                                         "description": undefined,
+                                        "groupName": undefined,
                                         "schema": {
                                           "maxLength": undefined,
                                           "minLength": undefined,
@@ -1068,9 +1131,11 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "value",
                                       "schema": {
                                         "description": undefined,
+                                        "groupName": undefined,
                                         "type": "nullable",
                                         "value": {
                                           "description": undefined,
+                                          "groupName": undefined,
                                           "schema": {
                                             "type": "boolean",
                                           },
@@ -1095,6 +1160,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "sid",
                                       "schema": {
                                         "description": undefined,
+                                        "groupName": undefined,
                                         "schema": {
                                           "maxLength": undefined,
                                           "minLength": undefined,
@@ -1109,9 +1175,11 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "value",
                                       "schema": {
                                         "description": undefined,
+                                        "groupName": undefined,
                                         "type": "nullable",
                                         "value": {
                                           "description": undefined,
+                                          "groupName": undefined,
                                           "schema": {
                                             "type": "double",
                                           },
@@ -1136,6 +1204,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "sid",
                                       "schema": {
                                         "description": undefined,
+                                        "groupName": undefined,
                                         "schema": {
                                           "maxLength": undefined,
                                           "minLength": undefined,
@@ -1150,9 +1219,11 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "value",
                                       "schema": {
                                         "description": undefined,
+                                        "groupName": undefined,
                                         "type": "nullable",
                                         "value": {
                                           "description": undefined,
+                                          "groupName": undefined,
                                           "schema": {
                                             "maxLength": undefined,
                                             "minLength": undefined,
@@ -1261,6 +1332,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "uid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1315,6 +1387,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1326,6 +1399,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1339,9 +1413,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1440,6 +1516,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1465,9 +1542,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "transitions",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1483,6 +1562,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1495,6 +1575,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1509,9 +1590,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1538,6 +1621,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "uid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1563,6 +1647,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1575,6 +1660,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1589,9 +1675,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1618,6 +1706,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "uid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1681,6 +1770,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1693,6 +1783,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1718,6 +1809,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "uid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1743,6 +1835,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "double",
             },
@@ -1755,9 +1848,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "include",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "type": "literal",
               "value": {
                 "string": "block",
@@ -1772,6 +1867,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1786,9 +1882,11 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "groupName": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1815,6 +1913,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "sid",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1840,6 +1939,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "application",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1854,6 +1954,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "type": "int",
             },
@@ -1877,6 +1978,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "internal_server_error",
@@ -1890,6 +1992,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1915,6 +2018,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "not_found_error",
@@ -1928,6 +2032,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1953,6 +2058,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "internal_server_error",
@@ -1966,6 +2072,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1991,6 +2098,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "type": "literal",
             "value": {
               "string": "unauthorized_error",
@@ -2004,6 +2112,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "groupName": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,

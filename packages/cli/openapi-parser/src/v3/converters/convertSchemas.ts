@@ -54,7 +54,8 @@ export function convertReferenceObject(
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: referenceSchema,
-            description: undefined
+            description: undefined,
+            groupName: undefined
         });
     } else {
         return referenceSchema;
@@ -94,6 +95,7 @@ export function convertSchemaObject(
                     maxLength: undefined,
                     example: getExamplesString(schema)
                 }),
+                groupName,
                 wrapAsNullable,
                 description
             });
@@ -103,7 +105,8 @@ export function convertSchemaObject(
             return convertLiteral({
                 wrapAsNullable,
                 value: schema.enum[0],
-                description
+                description,
+                groupName
             });
         }
 
@@ -135,6 +138,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     propertiesToExclude
                 ),
+                groupName,
                 description: schema.description
             });
         } else if (secondElement === "null") {
@@ -149,6 +153,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     propertiesToExclude
                 ),
+                groupName,
                 description: schema.description
             });
         }
@@ -161,7 +166,8 @@ export function convertSchemaObject(
             return wrapLiteral({
                 literal: LiteralSchemaValue.boolean(literalValue),
                 wrapAsNullable,
-                description
+                description,
+                groupName
             });
         }
         return wrapPrimitive({
@@ -169,7 +175,8 @@ export function convertSchemaObject(
                 example: getExampleAsBoolean(schema)
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     }
     if (schema === "number" || schema.type === "number") {
@@ -177,7 +184,8 @@ export function convertSchemaObject(
             format: schema.format,
             description,
             wrapAsNullable,
-            example: getExampleAsNumber(schema)
+            example: getExampleAsNumber(schema),
+            groupName
         });
     }
     if (schema === "integer" || schema.type === "integer") {
@@ -186,7 +194,8 @@ export function convertSchemaObject(
                 example: getExampleAsNumber(schema)
             }),
             wrapAsNullable,
-            description
+            description,
+            groupName
         });
     }
     if (schema === "string" || schema.type === "string") {
@@ -196,7 +205,8 @@ export function convertSchemaObject(
                     example: getExamplesString(schema)
                 }),
                 wrapAsNullable,
-                description
+                description,
+                groupName
             });
         }
 
@@ -205,7 +215,8 @@ export function convertSchemaObject(
             return wrapLiteral({
                 literal: LiteralSchemaValue.string(maybeConstValue),
                 wrapAsNullable,
-                description
+                description,
+                groupName
             });
         }
 
@@ -215,6 +226,7 @@ export function convertSchemaObject(
                 minLength: schema.minLength,
                 example: getExamplesString(schema)
             }),
+            groupName,
             wrapAsNullable,
             description
         });
@@ -222,7 +234,7 @@ export function convertSchemaObject(
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsNullable, context });
+        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsNullable, context, groupName });
     }
 
     // maps
@@ -232,7 +244,8 @@ export function convertSchemaObject(
             additionalProperties: schema.additionalProperties,
             description,
             wrapAsNullable,
-            context
+            context,
+            groupName
         });
     }
 
@@ -274,7 +287,7 @@ export function convertSchemaObject(
             });
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
             const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
-            return maybeInjectDescription(convertedSchema, description);
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         } else if (schema.oneOf.length > 1) {
             if (schema.oneOf.length === 2 && schema.oneOf[0] != null && schema.oneOf[1] != null) {
                 const firstSchema = schema.oneOf[0];
@@ -333,7 +346,7 @@ export function convertSchemaObject(
     if (schema.anyOf != null && schema.anyOf.length > 0) {
         if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
             const convertedSchema = convertSchema(schema.anyOf[0], wrapAsNullable, context, breadcrumbs);
-            return maybeInjectDescription(convertedSchema, description);
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         }
 
         if (schema.anyOf.length === 2 && schema.anyOf[0] != null && schema.anyOf[1] != null) {
@@ -380,7 +393,7 @@ export function convertSchemaObject(
             const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
             if (maybeSingularAllOf != null) {
                 const convertedSchema = convertSchema(maybeSingularAllOf, wrapAsNullable, context, breadcrumbs);
-                return maybeInjectDescription(convertedSchema, description);
+                return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
             }
         }
 
@@ -411,15 +424,18 @@ export function convertSchemaObject(
                     minLength: undefined,
                     maxLength: undefined,
                     example: undefined
-                })
+                }),
+                groupName
             },
-            valueSchema: SchemaWithExample.unknown({ description: undefined, example: undefined })
+            valueSchema: SchemaWithExample.unknown({ description: undefined, example: undefined, groupName }),
+            groupName
         });
     }
 
     if (schema.type == null) {
         return SchemaWithExample.unknown({
             description,
+            groupName,
             example: undefined
         });
     }
@@ -467,25 +483,32 @@ function isListOfStrings(x: unknown): x is string[] {
     return Array.isArray(x) && x.every((item) => typeof item === "string");
 }
 
-function maybeInjectDescription(schema: SchemaWithExample, description: string | undefined): SchemaWithExample {
+function maybeInjectDescriptionOrGroupName(
+    schema: SchemaWithExample,
+    description: string | undefined,
+    groupName: string | undefined
+): SchemaWithExample {
     if (schema.type === "reference") {
         return Schema.reference({
             ...schema,
-            description
+            description,
+            groupName
         });
     } else if (schema.type === "optional" && schema.value.type === "reference") {
         return SchemaWithExample.optional({
             value: Schema.reference({
                 ...schema.value
             }),
-            description
+            description,
+            groupName
         });
     } else if (schema.type === "nullable" && schema.value.type === "reference") {
         return SchemaWithExample.nullable({
             value: Schema.reference({
                 ...schema.value
             }),
-            description
+            description,
+            groupName
         });
     }
     return schema;
@@ -525,23 +548,28 @@ function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.Schem
 export function wrapLiteral({
     literal,
     wrapAsNullable,
+    groupName,
     description
 }: {
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
+    groupName: string | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: SchemaWithExample.literal({
                 value: literal,
-                description
+                description,
+                groupName
             }),
+            groupName,
             description
         });
     }
     return SchemaWithExample.literal({
         value: literal,
+        groupName,
         description
     });
 }
@@ -549,24 +577,29 @@ export function wrapLiteral({
 export function wrapPrimitive({
     primitive,
     wrapAsNullable,
+    groupName,
     description
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
+    groupName: string | undefined;
     description: string | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             value: SchemaWithExample.primitive({
                 schema: primitive,
-                description
+                description,
+                groupName
             }),
+            groupName,
             description
         });
     }
     return SchemaWithExample.primitive({
         schema: primitive,
-        description
+        description,
+        groupName
     });
 }
 

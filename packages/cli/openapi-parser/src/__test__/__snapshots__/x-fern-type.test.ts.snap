@@ -10,8 +10,10 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "schemas": {
     "BaseUser": {
       "description": undefined,
+      "groupName": undefined,
       "key": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
@@ -22,6 +24,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
       "type": "map",
       "value": {
         "description": undefined,
+        "groupName": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
