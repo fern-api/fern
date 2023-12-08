@@ -21,7 +21,7 @@ import {
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export function buildTypeReference({
     schema,
@@ -46,7 +46,7 @@ export function buildTypeReference({
     } else if (schema.type === "optional") {
         return buildOptionalTypeReference({ schema, fileContainingReference, context });
     } else if (schema.type === "nullable") {
-        return buildNullableTypeReference({ schema, fileContainingReference, context });
+        return buildOptionalTypeReference({ schema, fileContainingReference, context });
     } else if (schema.type === "enum") {
         // return convertEnumToTypeReference({ schema, prefix });
     } else if (schema.type === "literal") {
@@ -165,33 +165,13 @@ export function buildOptionalTypeReference({
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const itemTypeReference = buildTypeReference({ schema: schema.value, fileContainingReference, context });
     const itemType = getTypeFromTypeReference(itemTypeReference);
+    const itemDocs = getDocsFromTypeReference(itemTypeReference);
     const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
-    if (schema.description == null) {
+    if (schema.description == null && itemDocs == null) {
         return type;
     }
     return {
-        docs: schema.description,
-        type
-    };
-}
-
-export function buildNullableTypeReference({
-    schema,
-    fileContainingReference,
-    context
-}: {
-    schema: OptionalSchema;
-    fileContainingReference: RelativeFilePath;
-    context: OpenApiIrConverterContext;
-}): RawSchemas.TypeReferenceWithDocsSchema {
-    const itemTypeReference = buildTypeReference({ schema: schema.value, fileContainingReference, context });
-    const itemType = getTypeFromTypeReference(itemTypeReference);
-    const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
-    if (schema.description == null) {
-        return type;
-    }
-    return {
-        docs: schema.description,
+        docs: schema.description ?? itemDocs,
         type
     };
 }
