@@ -17,10 +17,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": {
                   "id": "id",
                 },
@@ -40,18 +37,6 @@ exports[`open api parser axle simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": "Your client ID. This will be shared with you during onboarding.",
-                  "name": "clientId",
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-                  "name": "clientSecret",
-                  "type": "string",
-                },
-              },
               "name": "GetAccountRequest",
               "query-parameters": {
                 "expand": {
@@ -92,10 +77,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": {
                   "id": "id",
                 },
@@ -114,21 +96,6 @@ exports[`open api parser axle simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": "Your client ID. This will be shared with you during onboarding.",
-                  "name": "clientId",
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-                  "name": "clientSecret",
-                  "type": "string",
-                },
-              },
-              "name": "GetCarrierRequest",
-            },
             "response": {
               "docs": "",
               "type": "GetCarrierResponse",
@@ -140,10 +107,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Carriers method returns an array of Carrier objects.",
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": undefined,
@@ -154,21 +118,6 @@ exports[`open api parser axle simple 1`] = `
             ],
             "method": "GET",
             "path": "/carriers",
-            "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": "Your client ID. This will be shared with you during onboarding.",
-                  "name": "clientId",
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-                  "name": "clientSecret",
-                  "type": "string",
-                },
-              },
-              "name": "GetCarriersRequest",
-            },
             "response": {
               "docs": "",
               "type": "GetCarriersResponse",
@@ -225,18 +174,7 @@ exports[`open api parser axle simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "x-client-id": {
-                  "docs": "Your client ID. This will be shared with you during onboarding.",
-                  "name": "clientId",
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-                  "name": "clientSecret",
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "StartIgnitionRequest",
               "query-parameters": undefined,
             },
@@ -284,10 +222,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
             "examples": [
               {
-                "headers": {
-                  "x-client-id": "x-client-id",
-                  "x-client-secret": "x-client-secret",
-                },
+                "headers": {},
                 "path-parameters": {
                   "id": "id",
                 },
@@ -307,18 +242,6 @@ exports[`open api parser axle simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": "Your client ID. This will be shared with you during onboarding.",
-                  "name": "clientId",
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-                  "name": "clientSecret",
-                  "type": "string",
-                },
-              },
               "name": "GetPolicyRequest",
               "query-parameters": {
                 "expand": {
@@ -370,18 +293,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                   },
                 },
               },
-              "headers": {
-                "x-client-id": {
-                  "docs": "Your client ID. This will be shared with you during onboarding.",
-                  "name": "clientId",
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-                  "name": "clientSecret",
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "ExchangeTokenRequest",
               "query-parameters": undefined,
             },

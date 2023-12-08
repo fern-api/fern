@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
@@ -42,30 +43,31 @@ export function buildTypeDeclaration({
     /* The file the type declaration will be added to */
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
-    if (schema.type === "object") {
-        return buildObjectTypeDeclaration({ schema, context, declarationFile });
-    } else if (schema.type === "array") {
-        return buildArrayTypeDeclaration({ schema, context, declarationFile });
-    } else if (schema.type === "map") {
-        return buildMapTypeDeclaration({ schema, context, declarationFile });
-    } else if (schema.type === "primitive") {
-        return buildPrimitiveTypeDeclaration(schema);
-    } else if (schema.type === "enum") {
-        return buildEnumTypeDeclaration(schema);
-    } else if (schema.type === "reference") {
-        return buildReferenceTypeDeclaration({ schema, context, declarationFile });
-    } else if (schema.type === "optional") {
-        return buildOptionalTypeDeclaration({ schema, context, declarationFile });
-    } else if (schema.type === "nullable") {
-        return buildOptionalTypeDeclaration({ schema, context, declarationFile });
-    } else if (schema.type === "literal") {
-        return buildLiteralTypeDeclaration(schema.value);
-    } else if (schema.type === "unknown") {
-        return buildUnknownTypeDeclaration();
-    } else if (schema.type === "oneOf") {
-        return buildOneOfTypeDeclaration({ schema: schema.oneOf, context, declarationFile });
+    switch (schema.type) {
+        case "primitive":
+            return buildPrimitiveTypeDeclaration(schema);
+        case "array":
+            return buildArrayTypeDeclaration({ schema, context, declarationFile });
+        case "map":
+            return buildMapTypeDeclaration({ schema, context, declarationFile });
+        case "reference":
+            return buildReferenceTypeDeclaration({ schema, context, declarationFile });
+        case "unknown":
+            return buildUnknownTypeDeclaration();
+        case "optional":
+        case "nullable":
+            return buildOptionalTypeDeclaration({ schema, context, declarationFile });
+        case "enum":
+            return buildEnumTypeDeclaration(schema);
+        case "literal":
+            return buildLiteralTypeDeclaration(schema.value);
+        case "object":
+            return buildObjectTypeDeclaration({ schema, context, declarationFile });
+        case "oneOf":
+            return buildOneOfTypeDeclaration({ schema: schema.oneOf, context, declarationFile });
+        default:
+            assertNever(schema);
     }
-    throw new Error(`Failed to convert to type declaration: ${JSON.stringify(schema)}`);
 }
 
 export function buildObjectTypeDeclaration({

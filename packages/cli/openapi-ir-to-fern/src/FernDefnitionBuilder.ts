@@ -92,10 +92,6 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.auth = name;
     }
 
-    public getGlobalHeaderNames(): Set<string> {
-        return new Set(...Object.keys(this.rootApiFile.headers ?? {}));
-    }
-
     public addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void {
         if (this.rootApiFile["auth-schemes"] == null) {
             this.rootApiFile["auth-schemes"] = {};
@@ -112,6 +108,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile.environments = {};
         }
         this.rootApiFile.environments[name] = schema;
+    }
+
+    public getGlobalHeaderNames(): Set<string> {
+        return new Set(Object.keys(this.rootApiFile.headers ?? {}));
     }
 
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {

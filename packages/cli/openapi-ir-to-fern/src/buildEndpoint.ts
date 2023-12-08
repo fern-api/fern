@@ -85,8 +85,9 @@ export function buildEndpoint({
         return !globalHeaderNames.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
-        headers[header.name] = buildHeader({ header, context, fileContainingReference: declarationFile });
-        names.add(header.name);
+        const headerSchema = buildHeader({ header, context, fileContainingReference: declarationFile });
+        headers[header.name] = headerSchema;
+        names.add(typeof headerSchema === "string" ? header.name : headerSchema.name ?? header.name);
     }
 
     if (endpoint.request != null) {

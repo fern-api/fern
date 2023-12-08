@@ -33,31 +33,31 @@ export function buildTypeReference({
     fileContainingReference: RelativeFilePath;
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
-    if (schema.type === "primitive") {
-        return buildPrimitiveTypeReference(schema);
-    } else if (schema.type === "array") {
-        return buildArrayTypeReference({ schema, fileContainingReference, context });
-    } else if (schema.type === "map") {
-        return buildMapTypeReference({ schema, fileContainingReference, context });
-    } else if (schema.type === "reference") {
-        return buildReferenceTypeReference({ schema, fileContainingReference, context });
-    } else if (schema.type === "unknown") {
-        return buildUnknownTypeReference();
-    } else if (schema.type === "optional") {
-        return buildOptionalTypeReference({ schema, fileContainingReference, context });
-    } else if (schema.type === "nullable") {
-        return buildOptionalTypeReference({ schema, fileContainingReference, context });
-    } else if (schema.type === "enum") {
-        return buildEnumTypeReference({ schema, fileContainingReference, context });
-    } else if (schema.type === "literal") {
-        return buildLiteralTypeReference(schema.value);
-    } else if (schema.type === "object") {
-        return buildObjectTypeReference({ schema, fileContainingReference, context });
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    } else if (schema.type === "oneOf") {
-        return buildOneOfTypeReference({ schema: schema.oneOf, fileContainingReference, context });
+    switch (schema.type) {
+        case "primitive":
+            return buildPrimitiveTypeReference(schema);
+        case "array":
+            return buildArrayTypeReference({ schema, fileContainingReference, context });
+        case "map":
+            return buildMapTypeReference({ schema, fileContainingReference, context });
+        case "reference":
+            return buildReferenceTypeReference({ schema, fileContainingReference, context });
+        case "unknown":
+            return buildUnknownTypeReference();
+        case "optional":
+        case "nullable":
+            return buildOptionalTypeReference({ schema, fileContainingReference, context });
+        case "enum":
+            return buildEnumTypeReference({ schema, fileContainingReference, context });
+        case "literal":
+            return buildLiteralTypeReference(schema.value);
+        case "object":
+            return buildObjectTypeReference({ schema, fileContainingReference, context });
+        case "oneOf":
+            return buildOneOfTypeReference({ schema: schema.oneOf, fileContainingReference, context });
+        default:
+            assertNever(schema);
     }
-    throw new Error(`Failed to convert to type reference: ${JSON.stringify(schema)}`);
 }
 
 export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): RawSchemas.TypeReferenceWithDocsSchema {

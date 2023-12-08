@@ -5,23 +5,21 @@ const DEFAULT_ENVIRONMENT_NAME = "Default";
 
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const topLevelServerURLsWithName: Record<string, string> = {};
+    const topLevelSkippedServerURLs = [];
     for (const server of context.ir.servers) {
         if (server.name == null) {
-            context.logger.error(
-                `Skipping ${server.url} because it has no name. Use the extension x-fern-server-name.`
-            );
+            topLevelSkippedServerURLs.push(server.url);
             continue;
         }
         topLevelServerURLsWithName[server.name] = server.url;
     }
 
     const endpointLevelServerURLsWithName: Record<string, string> = {};
+    const endpointLevelSkippedServerURLs = [];
     for (const endpoint of context.ir.endpoints) {
         for (const server of endpoint.server) {
             if (server.name == null) {
-                context.logger.error(
-                    `Skipping ${server.url} because it has no name. Use the extension x-fern-server-name.`
-                );
+                endpointLevelSkippedServerURLs.push(server.url);
                 continue;
             }
             endpointLevelServerURLsWithName[server.name] = server.url;
@@ -42,6 +40,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         }
     } else if (numTopLevelURLs > 0 && numEndpointLevelURLs === 0) {
         let count = 0;
+        if (topLevelSkippedServerURLs.length > 0) {
+            context.logger.error(
+                `Skipping servers ${topLevelSkippedServerURLs.join(", ")} because x-fern-server-name was not provided.`
+            );
+        }
         for (const [name, url] of Object.entries(topLevelServerURLsWithName)) {
             if (count === 0) {
                 context.builder.setDefaultEnvironment(name);
@@ -53,6 +56,13 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
             count += 1;
         }
     } else if (numEndpointLevelURLs > 0) {
+        if (topLevelSkippedServerURLs.length > 0 || endpointLevelSkippedServerURLs.length > 0) {
+            context.logger.error(
+                `Skipping servers ${[...topLevelSkippedServerURLs, ...endpointLevelSkippedServerURLs].join(
+                    ", "
+                )} because x-fern-server-name was not provided.`
+            );
+        }
         context.builder.addEnvironment({
             name: PRODUCTION_ENVNIRONMENT_NAME,
             schema: {
