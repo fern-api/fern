@@ -71,3 +71,11 @@ types:
         type: optional<string>
         docs: Populated by `X-Server-Name`
       url: string
+  
+  SdkGroupName: 
+    type: string
+    docs: This is populated by `x-fern-sdk-method-name`
+
+  WithSdkGroupName:   
+    properties: 
+      groupName: optional<SdkGroupName>

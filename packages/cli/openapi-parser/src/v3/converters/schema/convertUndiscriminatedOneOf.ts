@@ -1,3 +1,4 @@
+import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
 import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -14,7 +15,8 @@ export function convertUndiscriminatedOneOf({
     description,
     wrapAsNullable,
     context,
-    subtypes
+    subtypes,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -23,6 +25,7 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
@@ -69,7 +72,8 @@ export function convertUndiscriminatedOneOf({
             description,
             fernEnum: enumDescriptions,
             enumVarNames: undefined,
-            enumValues
+            enumValues,
+            groupName
         });
     }
 
@@ -82,7 +86,8 @@ export function convertUndiscriminatedOneOf({
         generatedName,
         wrapAsNullable,
         description,
-        subtypes: uniqueSubtypes
+        subtypes: uniqueSubtypes,
+        groupName
     });
 }
 
@@ -149,13 +154,15 @@ export function wrapUndiscriminantedOneOf({
     generatedName,
     wrapAsNullable,
     description,
-    subtypes
+    subtypes,
+    groupName
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
     description: string | undefined;
     subtypes: SchemaWithExample[];
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -164,7 +171,8 @@ export function wrapUndiscriminantedOneOf({
                 description,
                 nameOverride,
                 generatedName,
-                schemas: subtypes
+                schemas: subtypes,
+                groupName
             }),
             description
         });
@@ -174,6 +182,7 @@ export function wrapUndiscriminantedOneOf({
         description,
         nameOverride,
         generatedName,
-        schemas: subtypes
+        schemas: subtypes,
+        groupName
     });
 }

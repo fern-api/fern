@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
+{
+  "definitionFiles": {
+    "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "types": {
+        "User": {
+          "docs": undefined,
+          "properties": {
+            "associatedPersons": "optional<list<root.Person>>",
+            "id": "optional<string>",
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Person": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-sdk-group-name\` for schemas",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

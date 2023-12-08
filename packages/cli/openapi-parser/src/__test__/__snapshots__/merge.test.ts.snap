@@ -130,6 +130,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "AccountDetailsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "AccountDetails",
           "type": "reference",
@@ -180,6 +181,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "AccountTokenRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "AccountToken",
           "type": "reference",
@@ -229,6 +231,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "AvailableActionsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "AvailableActions",
           "type": "reference",
@@ -431,6 +434,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "BankInfoListRequestAccountType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -616,6 +620,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "BankInfoListRequestOrderBy",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -707,6 +712,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "BankInfoListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedBankInfoList",
           "type": "reference",
@@ -956,6 +962,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "BankInfoRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "BankInfo",
           "type": "reference",
@@ -1299,6 +1306,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "BenefitsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedBenefitList",
           "type": "reference",
@@ -1503,6 +1511,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "BenefitsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Benefit",
           "type": "reference",
@@ -1774,6 +1783,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CompaniesListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedCompanyList",
           "type": "reference",
@@ -1923,6 +1933,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CompaniesRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Company",
           "type": "reference",
@@ -2407,6 +2418,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeePayrollRunsListRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -2579,6 +2591,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeePayrollRunsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedEmployeePayrollRunList",
           "type": "reference",
@@ -2913,6 +2926,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeePayrollRunsRetrieveRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -2961,6 +2975,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeePayrollRunsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "EmployeePayrollRun",
           "type": "reference",
@@ -3341,6 +3356,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesListRequestEmploymentStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -3375,6 +3391,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesListRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -5113,6 +5130,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesListRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -5236,6 +5254,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesListRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -5452,6 +5471,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedEmployeeList",
           "type": "reference",
@@ -5988,6 +6008,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesCreateRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "EmployeeEndpointRequest",
           "type": "reference",
@@ -6000,6 +6021,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "EmployeeResponse",
           "type": "reference",
@@ -6290,6 +6312,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesRetrieveRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -7866,6 +7889,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesRetrieveRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -7972,6 +7996,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmployeesRetrieveRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -8077,6 +8102,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Employee",
           "type": "reference",
@@ -8140,6 +8166,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesIgnoreCreateRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "IgnoreCommonModelRequest",
           "type": "reference",
@@ -8191,6 +8218,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmployeesMetaPostRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "MetaResponse",
           "type": "reference",
@@ -8431,6 +8459,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsListRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -8525,6 +8554,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsListRequestOrderBy",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -8568,6 +8598,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsListRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -8691,6 +8722,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsListRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -8796,6 +8828,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmploymentsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedEmploymentList",
           "type": "reference",
@@ -8967,6 +9000,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsRetrieveRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -9016,6 +9050,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsRetrieveRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -9122,6 +9157,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "EmploymentsRetrieveRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -9227,6 +9263,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "EmploymentsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Employment",
           "type": "reference",
@@ -9298,6 +9335,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GenerateKeyCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "GenerateRemoteKeyRequest",
           "type": "reference",
@@ -9310,6 +9348,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GenerateKeyCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RemoteKey",
           "type": "reference",
@@ -9651,6 +9690,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GroupsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedGroupList",
           "type": "reference",
@@ -9853,6 +9893,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GroupsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Group",
           "type": "reference",
@@ -10166,6 +10207,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "IssuesListRequestStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -10193,6 +10235,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "IssuesListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedIssueList",
           "type": "reference",
@@ -10301,6 +10344,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "IssuesRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Issue",
           "type": "reference",
@@ -10335,6 +10379,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LinkTokenCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "EndUserDetailsRequest",
           "type": "reference",
@@ -10347,6 +10392,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LinkTokenCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LinkToken",
           "type": "reference",
@@ -10486,6 +10532,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "LinkedAccountsListRequestCategory",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -10743,6 +10790,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LinkedAccountsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedAccountDetailsAndActionsList",
           "type": "reference",
@@ -11102,6 +11150,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LocationsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedLocationList",
           "type": "reference",
@@ -11339,6 +11388,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LocationsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Location",
           "type": "reference",
@@ -11387,6 +11437,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "PassthroughCreateRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DataPassthroughRequest",
           "type": "reference",
@@ -11399,6 +11450,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "PassthroughCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RemoteResponse",
           "type": "reference",
@@ -11663,6 +11715,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "PayGroupsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedPayGroupList",
           "type": "reference",
@@ -11805,6 +11858,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "PayGroupsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PayGroup",
           "type": "reference",
@@ -12119,6 +12173,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "PayrollRunsListRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -12176,6 +12231,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "PayrollRunsListRequestRunType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -12222,6 +12278,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "PayrollRunsListRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -12285,6 +12342,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "PayrollRunsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedPayrollRunList",
           "type": "reference",
@@ -12457,6 +12515,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "PayrollRunsRetrieveRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -12491,6 +12550,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "PayrollRunsRetrieveRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -12524,6 +12584,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "PayrollRunsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PayrollRun",
           "type": "reference",
@@ -12595,6 +12656,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "RegenerateKeyCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RemoteKeyForRegenerationRequest",
           "type": "reference",
@@ -12607,6 +12669,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "RegenerateKeyCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RemoteKey",
           "type": "reference",
@@ -12681,6 +12744,7 @@ exports[`open api parser merge parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "SelectiveSyncConfigurationsListResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "LinkedAccountSelectiveSyncConfiguration",
             "type": "reference",
@@ -12770,6 +12834,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "SelectiveSyncConfigurationsUpdateRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LinkedAccountSelectiveSyncConfigurationListRequest",
           "type": "reference",
@@ -12785,6 +12850,7 @@ exports[`open api parser merge parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "SelectiveSyncConfigurationsUpdateResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "LinkedAccountSelectiveSyncConfiguration",
             "type": "reference",
@@ -12922,6 +12988,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "SelectiveSyncMetaListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedConditionSchemaList",
           "type": "reference",
@@ -13094,6 +13161,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "SyncStatusListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedSyncStatusList",
           "type": "reference",
@@ -13217,6 +13285,7 @@ exports[`open api parser merge parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "SyncStatusResyncCreateResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SyncStatus",
             "type": "reference",
@@ -13533,6 +13602,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TeamsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedTeamList",
           "type": "reference",
@@ -13709,6 +13779,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TeamsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Team",
           "type": "reference",
@@ -13987,6 +14058,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffListRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14096,6 +14168,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffListRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14178,6 +14251,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffListRequestRequestType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14230,6 +14304,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffListRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14294,6 +14369,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffListRequestStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14339,6 +14415,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedTimeOffList",
           "type": "reference",
@@ -14672,6 +14749,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffCreateRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TimeOffEndpointRequest",
           "type": "reference",
@@ -14684,6 +14762,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TimeOffResponse",
           "type": "reference",
@@ -15010,6 +15089,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffBalancesListRequestPolicyType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15110,6 +15190,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffBalancesListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedTimeOffBalanceList",
           "type": "reference",
@@ -15331,6 +15412,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffBalancesRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TimeOffBalance",
           "type": "reference",
@@ -15516,6 +15598,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffRetrieveRequestExpand",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15565,6 +15648,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffRetrieveRequestRemoteFields",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15623,6 +15707,7 @@ exports[`open api parser merge parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "TimeOffRetrieveRequestShowEnumOrigins",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15680,6 +15765,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TimeOff",
           "type": "reference",
@@ -15729,6 +15815,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TimeOffMetaPostRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "MetaResponse",
           "type": "reference",
@@ -15803,6 +15890,7 @@ exports[`open api parser merge parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "WebhookReceiversListResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WebhookReceiver",
             "type": "reference",
@@ -15852,6 +15940,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "WebhookReceiversCreateRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "WebhookReceiverRequest",
           "type": "reference",
@@ -15864,6 +15953,7 @@ exports[`open api parser merge parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "WebhookReceiversCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "WebhookReceiver",
           "type": "reference",
@@ -15987,6 +16077,7 @@ exports[`open api parser merge parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AccountDetails",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16056,6 +16147,7 @@ exports[`open api parser merge parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AccountDetailsCategory",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "CategoryEnum",
                 "type": "reference",
@@ -16186,6 +16278,7 @@ The \`LinkedAccount\` object is used to represent an end user's link with a spec
 ### Usage Example
 View a list of your organization's \`LinkedAccount\` objects.",
       "generatedName": "AccountDetailsAndActions",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16212,6 +16305,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
             "value": {
               "description": undefined,
               "generatedName": "AccountDetailsAndActionsCategory",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "CategoryEnum",
               "type": "reference",
@@ -16225,6 +16319,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "schema": {
             "description": undefined,
             "generatedName": "AccountDetailsAndActionsStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AccountDetailsAndActionsStatusEnum",
             "type": "reference",
@@ -16338,6 +16433,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
             "value": {
               "description": undefined,
               "generatedName": "AccountDetailsAndActionsIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AccountDetailsAndActionsIntegration",
               "type": "reference",
@@ -16352,6 +16448,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AccountDetailsAndActionsIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16378,6 +16475,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
             "value": {
               "description": undefined,
               "generatedName": "AccountDetailsAndActionsIntegrationCategoriesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "CategoriesEnum",
               "type": "reference",
@@ -16473,6 +16571,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
               "value": {
                 "description": undefined,
                 "generatedName": "AccountDetailsAndActionsIntegrationAvailableModelOperationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ModelOperation",
                 "type": "reference",
@@ -16488,6 +16587,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
 * \`INCOMPLETE\` - INCOMPLETE
 * \`RELINK_NEEDED\` - RELINK_NEEDED",
       "generatedName": "AccountDetailsAndActionsStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -16516,6 +16616,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AccountIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16545,6 +16646,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
               "value": {
                 "description": undefined,
                 "generatedName": "AccountIntegrationCategoriesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "CategoriesEnum",
                 "type": "reference",
@@ -16681,6 +16783,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AccountToken",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16704,6 +16807,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "schema": {
             "description": undefined,
             "generatedName": "AccountTokenIntegration",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AccountIntegration",
             "type": "reference",
@@ -16716,6 +16820,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "description": "* \`SAVINGS\` - SAVINGS
 * \`CHECKING\` - CHECKING",
       "generatedName": "AccountTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -16743,6 +16848,7 @@ The \`Activity\` object is used to see all available model/operation combination
 ### Usage Example
 Fetch all the actions available for the \`Zenefits\` integration.",
       "generatedName": "AvailableActions",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16752,6 +16858,7 @@ Fetch all the actions available for the \`Zenefits\` integration.",
           "schema": {
             "description": undefined,
             "generatedName": "AvailableActionsIntegration",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AccountIntegration",
             "type": "reference",
@@ -16782,6 +16889,7 @@ Fetch all the actions available for the \`Zenefits\` integration.",
               "value": {
                 "description": undefined,
                 "generatedName": "AvailableActionsAvailableModelOperationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ModelOperation",
                 "type": "reference",
@@ -16802,6 +16910,7 @@ The \`BankInfo\` object is used to represent the Bank Account information for an
 ### Usage Example
 Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank information.",
       "generatedName": "BankInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16952,11 +17061,13 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
 * \`SAVINGS\` - SAVINGS
 * \`CHECKING\` - CHECKING",
                   "generatedName": "BankInfoAccountType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "BankInfoAccountTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "AccountTypeEnum",
                       "type": "reference",
@@ -17075,6 +17186,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
                 "value": {
                   "description": undefined,
                   "generatedName": "BankInfoRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -17096,6 +17208,7 @@ The \`Benefit\` object is used to represent a benefit that an employee has enrol
 ### Usage Example
 Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benefits.",
       "generatedName": "Benefit",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17361,6 +17474,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
                 "value": {
                   "description": undefined,
                   "generatedName": "BenefitRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -17381,6 +17495,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
 * \`mktg\` - mktg
 * \`filestorage\` - filestorage",
       "generatedName": "CategoriesEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -17437,6 +17552,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
 * \`mktg\` - mktg
 * \`filestorage\` - filestorage",
       "generatedName": "CategoryEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -17489,6 +17605,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "CommonModelScopesBodyRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17515,6 +17632,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
             "value": {
               "description": undefined,
               "generatedName": "CommonModelScopesBodyRequestEnabledActionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EnabledActionsEnum",
               "type": "reference",
@@ -17552,6 +17670,7 @@ The \`Company\` object is used to represent a company within the HRIS / Payroll 
 ### Usage Example
 Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all companies.",
       "generatedName": "Company",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17745,6 +17864,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
                 "value": {
                   "description": undefined,
                   "generatedName": "CompanyRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -17761,6 +17881,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ConditionSchema",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17863,11 +17984,13 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
 * \`STRING\` - STRING
 * \`LIST_OF_STRINGS\` - LIST_OF_STRINGS",
               "generatedName": "ConditionSchemaConditionType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schemas": [
                 {
                   "description": undefined,
                   "generatedName": "ConditionSchemaConditionTypeZero",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "ConditionTypeEnum",
                   "type": "reference",
@@ -17897,6 +18020,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
             "value": {
               "description": undefined,
               "generatedName": "ConditionSchemaOperatorsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "OperatorSchema",
               "type": "reference",
@@ -17915,6 +18039,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
 * \`STRING\` - STRING
 * \`LIST_OF_STRINGS\` - LIST_OF_STRINGS",
       "generatedName": "ConditionTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -18213,6 +18338,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
 * \`ZM\` - Zambia
 * \`ZW\` - Zimbabwe",
       "generatedName": "CountryEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -19722,6 +19848,7 @@ The \`DataPassthrough\` object is used to send information to an otherwise-unsup
 ### Usage Example
 Create a \`DataPassthrough\` to get team hierarchies from your Rippling integration.",
       "generatedName": "DataPassthroughRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19731,6 +19858,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "schema": {
             "description": undefined,
             "generatedName": "DataPassthroughRequestMethod",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "MethodEnum",
             "type": "reference",
@@ -19810,6 +19938,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
                 "value": {
                   "description": undefined,
                   "generatedName": "DataPassthroughRequestMultipartFormDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "MultipartFormFieldRequest",
                   "type": "reference",
@@ -19860,6 +19989,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
               "value": {
                 "description": undefined,
                 "generatedName": "DataPassthroughRequestRequestFormat",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "RequestFormatEnum",
                 "type": "reference",
@@ -19891,6 +20021,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DebugModeLog",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19928,6 +20059,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "schema": {
             "description": undefined,
             "generatedName": "DebugModeLogLogSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DebugModelLogSummary",
             "type": "reference",
@@ -19941,6 +20073,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DebugModelLogSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19996,6 +20129,7 @@ The \`Deduction\` object is used to represent an array of the wages withheld fro
 ### Usage Example
 Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all deductions.",
       "generatedName": "Deduction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -20199,6 +20333,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
                 "value": {
                   "description": undefined,
                   "generatedName": "DeductionRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -20220,6 +20355,7 @@ The \`Earning\` object is used to represent an array of different compensations 
 ### Usage Example
 Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earnings.",
       "generatedName": "Earning",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -20328,11 +20464,13 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
 * \`OVERTIME\` - OVERTIME
 * \`BONUS\` - BONUS",
                   "generatedName": "EarningType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EarningTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EarningTypeEnum",
                       "type": "reference",
@@ -20431,6 +20569,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
                 "value": {
                   "description": undefined,
                   "generatedName": "EarningRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -20448,6 +20587,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
 * \`OVERTIME\` - OVERTIME
 * \`BONUS\` - BONUS",
       "generatedName": "EarningTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -20487,6 +20627,7 @@ The \`Employee\` object is used to represent any person who has been employed by
 ### Usage Example
 Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all employees.",
       "generatedName": "Employee",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -20937,11 +21078,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`OTHER\` - OTHER
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeGender",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeGenderZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "GenderEnum",
                       "type": "reference",
@@ -20995,11 +21138,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`WHITE\` - WHITE
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeEthnicity",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeEthnicityZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EthnicityEnum",
                       "type": "reference",
@@ -21047,11 +21192,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
 * \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
                   "generatedName": "EmployeeMaritalStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeMaritalStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "MaritalStatusEnum",
                       "type": "reference",
@@ -21175,11 +21322,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
                   "generatedName": "EmployeeEmploymentStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeEmploymentStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EmploymentStatusEnum",
                       "type": "reference",
@@ -21349,6 +21498,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                 "value": {
                   "description": undefined,
                   "generatedName": "EmployeeRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -21365,6 +21515,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EmployeeEndpointRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21374,6 +21525,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "schema": {
             "description": undefined,
             "generatedName": "EmployeeEndpointRequestModel",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "EmployeeRequest",
             "type": "reference",
@@ -21392,6 +21544,7 @@ The \`EmployeePayrollRun\` object is used to represent an employee's pay stateme
 ### Usage Example
 Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show all employee payroll runs.",
       "generatedName": "EmployeePayrollRun",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21591,6 +21744,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
               "value": {
                 "description": undefined,
                 "generatedName": "EmployeePayrollRunEarningsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Earning",
                 "type": "reference",
@@ -21611,6 +21765,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
               "value": {
                 "description": undefined,
                 "generatedName": "EmployeePayrollRunDeductionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Deduction",
                 "type": "reference",
@@ -21631,6 +21786,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
               "value": {
                 "description": undefined,
                 "generatedName": "EmployeePayrollRunTaxesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Tax",
                 "type": "reference",
@@ -21715,6 +21871,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
                 "value": {
                   "description": undefined,
                   "generatedName": "EmployeePayrollRunRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -21736,6 +21893,7 @@ The \`Employee\` object is used to represent any person who has been employed by
 ### Usage Example
 Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all employees.",
       "generatedName": "EmployeeRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22146,11 +22304,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`OTHER\` - OTHER
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeRequestGender",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeRequestGenderZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "GenderEnum",
                       "type": "reference",
@@ -22204,11 +22364,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`WHITE\` - WHITE
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
                   "generatedName": "EmployeeRequestEthnicity",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeRequestEthnicityZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EthnicityEnum",
                       "type": "reference",
@@ -22256,11 +22418,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
 * \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
                   "generatedName": "EmployeeRequestMaritalStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeRequestMaritalStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "MaritalStatusEnum",
                       "type": "reference",
@@ -22364,11 +22528,13 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
                   "generatedName": "EmployeeRequestEmploymentStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmployeeRequestEmploymentStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EmploymentStatusEnum",
                       "type": "reference",
@@ -22498,6 +22664,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EmployeeResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22507,6 +22674,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "schema": {
             "description": undefined,
             "generatedName": "EmployeeResponseModel",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Employee",
             "type": "reference",
@@ -22522,6 +22690,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "value": {
               "description": undefined,
               "generatedName": "EmployeeResponseWarningsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WarningValidationProblem",
               "type": "reference",
@@ -22538,6 +22707,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
             "value": {
               "description": undefined,
               "generatedName": "EmployeeResponseErrorsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ErrorValidationProblem",
               "type": "reference",
@@ -22557,6 +22727,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
               "value": {
                 "description": undefined,
                 "generatedName": "EmployeeResponseLogsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "DebugModeLog",
                 "type": "reference",
@@ -22579,6 +22750,7 @@ Please note: When there is a change in pay or title, integrations with historica
 ### Usage Example
 Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all employees.",
       "generatedName": "Employment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22719,11 +22891,13 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`EVERY_SIX_MONTHS\` - EVERY_SIX_MONTHS
 * \`YEAR\` - YEAR",
                   "generatedName": "EmploymentPayPeriod",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmploymentPayPeriodZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "PayPeriodEnum",
                       "type": "reference",
@@ -22779,11 +22953,13 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`PRO_RATA\` - PRO_RATA
 * \`SEMIMONTHLY\` - SEMIMONTHLY",
                   "generatedName": "EmploymentPayFrequency",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmploymentPayFrequencyZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "PayFrequencyEnum",
                       "type": "reference",
@@ -23433,11 +23609,13 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`ZWR\` - Zimbabwean Dollar (2008)
 * \`ZWL\` - Zimbabwean Dollar (2009)",
                   "generatedName": "EmploymentPayCurrency",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmploymentPayCurrencyZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "PayCurrencyEnum",
                       "type": "reference",
@@ -23505,11 +23683,13 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`NONEXEMPT\` - NONEXEMPT
 * \`OWNER\` - OWNER",
                   "generatedName": "EmploymentFlsaStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmploymentFlsaStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "FlsaStatusEnum",
                       "type": "reference",
@@ -23577,11 +23757,13 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`CONTRACTOR\` - CONTRACTOR
 * \`FREELANCE\` - FREELANCE",
                   "generatedName": "EmploymentEmploymentType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "EmploymentEmploymentTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EmploymentTypeEnum",
                       "type": "reference",
@@ -23680,6 +23862,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                 "value": {
                   "description": undefined,
                   "generatedName": "EmploymentRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -23696,6 +23879,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
       "generatedName": "EmploymentStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -23726,6 +23910,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`CONTRACTOR\` - CONTRACTOR
 * \`FREELANCE\` - FREELANCE",
       "generatedName": "EmploymentTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -23765,6 +23950,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       "description": "* \`READ\` - READ
 * \`WRITE\` - WRITE",
       "generatedName": "EnabledActionsEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -23787,6 +23973,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`BASE64\` - BASE64
 * \`GZIP_BASE64\` - GZIP_BASE64",
       "generatedName": "EncodingEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -23815,6 +24002,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EndUserDetailsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23869,6 +24057,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "value": {
               "description": undefined,
               "generatedName": "EndUserDetailsRequestCategoriesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "CategoriesEnum",
               "type": "reference",
@@ -23949,6 +24138,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                 "value": {
                   "description": undefined,
                   "generatedName": "EndUserDetailsRequestCommonModelsItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "CommonModelScopesBodyRequest",
                   "type": "reference",
@@ -23965,6 +24155,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorValidationProblem",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23977,6 +24168,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
             "value": {
               "description": undefined,
               "generatedName": "ErrorValidationProblemSource",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ValidationProblemSource",
               "type": "reference",
@@ -24038,6 +24230,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`WHITE\` - WHITE
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
       "generatedName": "EthnicityEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24097,6 +24290,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`NONEXEMPT\` - NONEXEMPT
 * \`OWNER\` - OWNER",
       "generatedName": "FlsaStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24133,6 +24327,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`OTHER\` - OTHER
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
       "generatedName": "GenderEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24178,6 +24373,7 @@ The \`GenerateRemoteKey\` object is used to represent a request for a new remote
 ### Usage Example
 Post a \`GenerateRemoteKey\` to create a new remote key.",
       "generatedName": "GenerateRemoteKeyRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24207,6 +24403,7 @@ The \`Group\` object is used to represent any subset of employees, such as \`Pay
 ### Usage Example
 Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee's groups.",
       "generatedName": "Group",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24319,11 +24516,13 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
 * \`BUSINESS_UNIT\` - BUSINESS_UNIT
 * \`GROUP\` - GROUP",
                   "generatedName": "GroupType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "GroupTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "GroupTypeEnum",
                       "type": "reference",
@@ -24422,6 +24621,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                 "value": {
                   "description": undefined,
                   "generatedName": "GroupRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -24440,6 +24640,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
 * \`BUSINESS_UNIT\` - BUSINESS_UNIT
 * \`GROUP\` - GROUP",
       "generatedName": "GroupTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24480,6 +24681,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "IgnoreCommonModelRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24490,11 +24692,13 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "oneOf": {
               "description": undefined,
               "generatedName": "IgnoreCommonModelRequestReason",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schemas": [
                 {
                   "description": undefined,
                   "generatedName": "IgnoreCommonModelRequestReasonZero",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "ReasonEnum",
                   "type": "reference",
@@ -24540,6 +24744,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Issue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24574,11 +24779,13 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
 * \`ONGOING\` - ONGOING
 * \`RESOLVED\` - RESOLVED",
                 "generatedName": "IssueStatus",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "description": undefined,
                     "generatedName": "IssueStatusZero",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "IssueStatusEnum",
                     "type": "reference",
@@ -24723,6 +24930,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "description": "* \`ONGOING\` - ONGOING
 * \`RESOLVED\` - RESOLVED",
       "generatedName": "IssueStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24745,6 +24953,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkToken",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24805,6 +25014,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkedAccountCondition",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24909,6 +25119,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkedAccountConditionRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24955,6 +25166,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkedAccountSelectiveSyncConfiguration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24970,6 +25182,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
               "value": {
                 "description": undefined,
                 "generatedName": "LinkedAccountSelectiveSyncConfigurationLinkedAccountConditionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "LinkedAccountCondition",
                 "type": "reference",
@@ -24985,6 +25198,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkedAccountSelectiveSyncConfigurationListRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24997,6 +25211,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "value": {
               "description": undefined,
               "generatedName": "LinkedAccountSelectiveSyncConfigurationListRequestSyncConfigurationsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LinkedAccountSelectiveSyncConfigurationRequest",
               "type": "reference",
@@ -25011,6 +25226,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkedAccountSelectiveSyncConfigurationRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25023,6 +25239,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "value": {
               "description": undefined,
               "generatedName": "LinkedAccountSelectiveSyncConfigurationRequestLinkedAccountConditionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LinkedAccountConditionRequest",
               "type": "reference",
@@ -25037,6 +25254,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LinkedAccountStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25078,6 +25296,7 @@ The \`Location\` object is used to represent an address that can be associated w
 ### Usage Example
 Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all office locations.",
       "generatedName": "Location",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25788,11 +26007,13 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
 * \`ZM\` - Zambia
 * \`ZW\` - Zimbabwe",
                   "generatedName": "LocationCountry",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "LocationCountryZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "CountryEnum",
                       "type": "reference",
@@ -25834,11 +26055,13 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
 * \`HOME\` - HOME
 * \`WORK\` - WORK",
                   "generatedName": "LocationLocationType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "LocationLocationTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "LocationTypeEnum",
                       "type": "reference",
@@ -25937,6 +26160,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
                 "value": {
                   "description": undefined,
                   "generatedName": "LocationRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -25952,6 +26176,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
       "description": "* \`HOME\` - HOME
 * \`WORK\` - WORK",
       "generatedName": "LocationTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -25976,6 +26201,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
 * \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
 * \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
       "generatedName": "MaritalStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -26016,6 +26242,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "MetaResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26074,6 +26301,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "value": {
               "description": undefined,
               "generatedName": "MetaResponseStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LinkedAccountStatus",
               "type": "reference",
@@ -26116,6 +26344,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
 * \`PATCH\` - PATCH
 * \`DELETE\` - DELETE",
       "generatedName": "MethodEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -26173,6 +26402,7 @@ The \`ModelOperation\` object is used to represent the operations that are curre
 ### Usage Example
 View what operations are supported for the \`Candidate\` endpoint.",
       "generatedName": "ModelOperation",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26256,6 +26486,7 @@ The \`MultipartFormField\` object is used to represent fields in an HTTP request
 ### Usage Example
 Create a \`MultipartFormField\` to define a multipart form entry.",
       "generatedName": "MultipartFormFieldRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26308,11 +26539,13 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
 * \`BASE64\` - BASE64
 * \`GZIP_BASE64\` - GZIP_BASE64",
                   "generatedName": "MultipartFormFieldRequestEncoding",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "MultipartFormFieldRequestEncodingZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "EncodingEnum",
                       "type": "reference",
@@ -26386,6 +26619,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "OperatorSchema",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26430,6 +26664,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedAccountDetailsAndActionsList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26489,6 +26724,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedAccountDetailsAndActionsListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AccountDetailsAndActions",
                 "type": "reference",
@@ -26504,6 +26740,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedBankInfoList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26563,6 +26800,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedBankInfoListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "BankInfo",
                 "type": "reference",
@@ -26578,6 +26816,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedBenefitList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26637,6 +26876,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedBenefitListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Benefit",
                 "type": "reference",
@@ -26652,6 +26892,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedCompanyList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26711,6 +26952,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedCompanyListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Company",
                 "type": "reference",
@@ -26726,6 +26968,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedConditionSchemaList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26785,6 +27028,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedConditionSchemaListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ConditionSchema",
                 "type": "reference",
@@ -26800,6 +27044,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedEmployeeList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26859,6 +27104,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedEmployeeListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Employee",
                 "type": "reference",
@@ -26874,6 +27120,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedEmployeePayrollRunList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26933,6 +27180,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedEmployeePayrollRunListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "EmployeePayrollRun",
                 "type": "reference",
@@ -26948,6 +27196,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedEmploymentList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27007,6 +27256,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedEmploymentListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Employment",
                 "type": "reference",
@@ -27022,6 +27272,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedGroupList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27081,6 +27332,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedGroupListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Group",
                 "type": "reference",
@@ -27096,6 +27348,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedIssueList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27155,6 +27408,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedIssueListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Issue",
                 "type": "reference",
@@ -27170,6 +27424,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedLocationList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27229,6 +27484,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedLocationListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Location",
                 "type": "reference",
@@ -27244,6 +27500,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedPayGroupList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27303,6 +27560,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedPayGroupListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "PayGroup",
                 "type": "reference",
@@ -27318,6 +27576,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedPayrollRunList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27377,6 +27636,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedPayrollRunListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "PayrollRun",
                 "type": "reference",
@@ -27392,6 +27652,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedSyncStatusList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27451,6 +27712,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedSyncStatusListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SyncStatus",
                 "type": "reference",
@@ -27466,6 +27728,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedTeamList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27525,6 +27788,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedTeamListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Team",
                 "type": "reference",
@@ -27540,6 +27804,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedTimeOffBalanceList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27599,6 +27864,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedTimeOffBalanceListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "TimeOffBalance",
                 "type": "reference",
@@ -27614,6 +27880,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedTimeOffList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27673,6 +27940,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedTimeOffListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "TimeOff",
                 "type": "reference",
@@ -27991,6 +28259,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
 * \`ZWR\` - Zimbabwean Dollar (2008)
 * \`ZWL\` - Zimbabwean Dollar (2009)",
       "generatedName": "PayCurrencyEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -29843,6 +30112,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
 * \`PRO_RATA\` - PRO_RATA
 * \`SEMIMONTHLY\` - SEMIMONTHLY",
       "generatedName": "PayFrequencyEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -29912,6 +30182,7 @@ The \`PayGroup\` object is used to represent a subset of employees that are put 
 ### Usage Example
 Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay group information.",
       "generatedName": "PayGroup",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30053,6 +30324,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
                 "value": {
                   "description": undefined,
                   "generatedName": "PayGroupRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -30075,6 +30347,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
 * \`EVERY_SIX_MONTHS\` - EVERY_SIX_MONTHS
 * \`YEAR\` - YEAR",
       "generatedName": "PayPeriodEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30144,6 +30417,7 @@ The \`PayrollRun\` object is used to represent a group of pay statements for a s
 ### Usage Example
 Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all payroll runs.",
       "generatedName": "PayrollRun",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30212,11 +30486,13 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
 * \`FAILED\` - FAILED
 * \`CLOSED\` - CLOSED",
                   "generatedName": "PayrollRunRunState",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "PayrollRunRunStateZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "RunStateEnum",
                       "type": "reference",
@@ -30264,11 +30540,13 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
 * \`TERMINATION\` - TERMINATION
 * \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
                   "generatedName": "PayrollRunRunType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "PayrollRunRunTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "RunTypeEnum",
                       "type": "reference",
@@ -30427,6 +30705,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
                 "value": {
                   "description": undefined,
                   "generatedName": "PayrollRunRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -30446,6 +30725,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
       "generatedName": "PolicyTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30492,6 +30772,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
 * \`GDPR\` - GDPR
 * \`OTHER\` - OTHER",
       "generatedName": "ReasonEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30520,6 +30801,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RemoteData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30574,6 +30856,7 @@ The \`RemoteKey\` object is used to represent a request for a new remote key.
 ### Usage Example
 Post a \`GenerateRemoteKey\` to receive a new \`RemoteKey\`.",
       "generatedName": "RemoteKey",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30617,6 +30900,7 @@ The \`RemoteKeyForRegeneration\` object is used to exchange an old remote key fo
 ### Usage Example
 Post a \`RemoteKeyForRegeneration\` to swap out an old remote key for a new one",
       "generatedName": "RemoteKeyForRegenerationRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30646,6 +30930,7 @@ The \`RemoteResponse\` object is used to represent information returned from a t
 ### Usage Example
 View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
       "generatedName": "RemoteResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30732,11 +31017,13 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
               "oneOf": {
                 "description": undefined,
                 "generatedName": "RemoteResponseResponseType",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "description": undefined,
                     "generatedName": "RemoteResponseResponseTypeZero",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "ResponseTypeEnum",
                     "type": "reference",
@@ -30790,6 +31077,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
 * \`XML\` - XML
 * \`MULTIPART\` - MULTIPART",
       "generatedName": "RequestFormatEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30821,6 +31109,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
       "generatedName": "RequestTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30866,6 +31155,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
       "description": "* \`JSON\` - JSON
 * \`BASE64_GZIP\` - BASE64_GZIP",
       "generatedName": "ResponseTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30890,6 +31180,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
 * \`FAILED\` - FAILED
 * \`CLOSED\` - CLOSED",
       "generatedName": "RunStateEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30932,6 +31223,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
 * \`TERMINATION\` - TERMINATION
 * \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
       "generatedName": "RunTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30971,6 +31263,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
       "description": "* \`IN_NEXT_SYNC\` - IN_NEXT_SYNC
 * \`IN_LAST_SYNC\` - IN_LAST_SYNC",
       "generatedName": "SelectiveSyncConfigurationsUsageEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30998,6 +31291,7 @@ The \`SyncStatus\` object is used to represent the syncing state of an account
 ### Usage Example
 View the \`SyncStatus\` for an account to see how recently its models were synced.",
       "generatedName": "SyncStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31067,6 +31361,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
           "schema": {
             "description": undefined,
             "generatedName": "SyncStatusStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SyncStatusStatusEnum",
             "type": "reference",
@@ -31094,6 +31389,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
             "value": {
               "description": undefined,
               "generatedName": "SyncStatusSelectiveSyncConfigurationsUsage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SelectiveSyncConfigurationsUsageEnum",
               "type": "reference",
@@ -31111,6 +31407,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
 * \`PAUSED\` - PAUSED
 * \`PARTIALLY_SYNCED\` - PARTIALLY_SYNCED",
       "generatedName": "SyncStatusStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -31162,6 +31459,7 @@ The \`Tax\` object is used to represent an array of the tax deductions for a giv
 ### Usage Example
 Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
       "generatedName": "Tax",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31365,6 +31663,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
                 "value": {
                   "description": undefined,
                   "generatedName": "TaxRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -31386,6 +31685,7 @@ The \`Team\` object is used to represent a subdivision of the company, usually a
 ### Usage Example
 If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endpoint to fetch the \`Teams\`, and then use the \`ID\` of the team your user selects to filter the \`GET Employees\` endpoint.",
       "generatedName": "Team",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31549,6 +31849,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
                 "value": {
                   "description": undefined,
                   "generatedName": "TeamRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -31570,6 +31871,7 @@ The \`TimeOff\` object is used to represent all employees' Time Off entries.
 ### Usage Example
 Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time off requests.",
       "generatedName": "TimeOff",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31682,11 +31984,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
                   "generatedName": "TimeOffStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "TimeOffStatusEnum",
                       "type": "reference",
@@ -31750,11 +32054,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`HOURS\` - HOURS
 * \`DAYS\` - DAYS",
                   "generatedName": "TimeOffUnits",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffUnitsZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "UnitsEnum",
                       "type": "reference",
@@ -31824,11 +32130,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
                   "generatedName": "TimeOffRequestType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffRequestTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "RequestTypeEnum",
                       "type": "reference",
@@ -31967,6 +32275,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                 "value": {
                   "description": undefined,
                   "generatedName": "TimeOffRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -31988,6 +32297,7 @@ The \`TimeOffBalance\` object is used to represent current balances for an emplo
 ### Usage Example
 Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show all time off balances.",
       "generatedName": "TimeOffBalance",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32120,11 +32430,13 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
                   "generatedName": "TimeOffBalancePolicyType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffBalancePolicyTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "PolicyTypeEnum",
                       "type": "reference",
@@ -32223,6 +32535,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
                 "value": {
                   "description": undefined,
                   "generatedName": "TimeOffBalanceRemoteDataItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "RemoteData",
                   "type": "reference",
@@ -32239,6 +32552,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimeOffEndpointRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32248,6 +32562,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "schema": {
             "description": undefined,
             "generatedName": "TimeOffEndpointRequestModel",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TimeOffRequest",
             "type": "reference",
@@ -32266,6 +32581,7 @@ The \`TimeOff\` object is used to represent all employees' Time Off entries.
 ### Usage Example
 Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time off requests.",
       "generatedName": "TimeOffRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32338,11 +32654,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
                   "generatedName": "TimeOffRequestStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffRequestStatusZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "TimeOffStatusEnum",
                       "type": "reference",
@@ -32406,11 +32724,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`HOURS\` - HOURS
 * \`DAYS\` - DAYS",
                   "generatedName": "TimeOffRequestUnits",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffRequestUnitsZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "UnitsEnum",
                       "type": "reference",
@@ -32480,11 +32800,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
                   "generatedName": "TimeOffRequestRequestType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schemas": [
                     {
                       "description": undefined,
                       "generatedName": "TimeOffRequestRequestTypeZero",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "RequestTypeEnum",
                       "type": "reference",
@@ -32612,6 +32934,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimeOffResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32621,6 +32944,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "schema": {
             "description": undefined,
             "generatedName": "TimeOffResponseModel",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TimeOff",
             "type": "reference",
@@ -32636,6 +32960,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "value": {
               "description": undefined,
               "generatedName": "TimeOffResponseWarningsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WarningValidationProblem",
               "type": "reference",
@@ -32652,6 +32977,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "value": {
               "description": undefined,
               "generatedName": "TimeOffResponseErrorsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ErrorValidationProblem",
               "type": "reference",
@@ -32671,6 +32997,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
               "value": {
                 "description": undefined,
                 "generatedName": "TimeOffResponseLogsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "DebugModeLog",
                 "type": "reference",
@@ -32688,6 +33015,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
       "generatedName": "TimeOffStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -32727,6 +33055,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "description": "* \`HOURS\` - HOURS
 * \`DAYS\` - DAYS",
       "generatedName": "UnitsEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -32749,6 +33078,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ValidationProblemSource",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32773,6 +33103,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WarningValidationProblem",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32785,6 +33116,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
             "value": {
               "description": undefined,
               "generatedName": "WarningValidationProblemSource",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ValidationProblemSource",
               "type": "reference",
@@ -32841,6 +33173,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WebhookReceiver",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32895,6 +33228,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WebhookReceiverRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {

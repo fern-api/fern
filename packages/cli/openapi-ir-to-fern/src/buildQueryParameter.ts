@@ -1,40 +1,36 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import { QueryParameter, Schema } from "@fern-fern/openapi-ir-model/finalIr";
-import { ROOT_PREFIX } from "../convertPackage";
-import { convertToTypeReference, TypeReference } from "./convertToTypeReference";
+import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
-export interface ConvertedQueryParameter {
-    value: RawSchemas.HttpQueryParameterSchema;
-    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
-}
-
-export function convertQueryParameter({
+export function buildQueryParameter({
     queryParameter,
-    isPackageYml,
-    schemas
+    context,
+    fileContainingReference
 }: {
     queryParameter: QueryParameter;
-    isPackageYml: boolean;
-    schemas: Record<SchemaId, Schema>;
-}): ConvertedQueryParameter | undefined {
-    const typeReference = getQueryParameterTypeReference({ schema: queryParameter.schema, isPackageYml, schemas });
+    context: OpenApiIrConverterContext;
+    fileContainingReference: RelativeFilePath;
+}): RawSchemas.HttpQueryParameterSchema | undefined {
+    const typeReference = getQueryParameterTypeReference({
+        schema: queryParameter.schema,
+        context,
+        fileContainingReference
+    });
     if (typeReference == null) {
         return undefined;
     }
     return {
-        value: {
-            docs: queryParameter.description ?? undefined,
-            type: getTypeFromTypeReference(typeReference.value.typeReference),
-            "allow-multiple": typeReference.allowMultiple ? true : undefined
-        },
-        additionalTypeDeclarations: typeReference.value.additionalTypeDeclarations
+        docs: queryParameter.description ?? undefined,
+        type: getTypeFromTypeReference(typeReference.value),
+        "allow-multiple": typeReference.allowMultiple ? true : undefined
     };
 }
 
 interface QueryParameterTypeReference {
-    value: TypeReference;
+    value: RawSchemas.TypeReferenceWithDocsSchema;
     allowMultiple: boolean;
 }
 
@@ -42,31 +38,24 @@ interface QueryParameterTypeReference {
 // this may be the incorrect wire format
 function getQueryParameterTypeReference({
     schema,
-    isPackageYml,
-    schemas
+    context,
+    fileContainingReference
 }: {
     schema: Schema;
-    isPackageYml: boolean;
-    schemas: Record<SchemaId, Schema>;
+    context: OpenApiIrConverterContext;
+    fileContainingReference: RelativeFilePath;
 }): QueryParameterTypeReference | undefined {
-    const prefix = isPackageYml ? undefined : ROOT_PREFIX;
-
     if (schema.type === "reference") {
-        const resolvedSchema = schemas[schema.schema];
-
-        if (resolvedSchema == null) {
-            throw new Error(`Failed to resolve schema=${schema.schema}`);
-        }
-
+        const resolvedSchema = context.getSchema(schema.schema);
         if (resolvedSchema.type === "array") {
             return {
-                value: convertToTypeReference({
+                value: buildTypeReference({
                     schema: Schema.optional({
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description
                     }),
-                    prefix,
-                    schemas
+                    context,
+                    fileContainingReference
                 }),
                 allowMultiple: true
             };
@@ -75,8 +64,8 @@ function getQueryParameterTypeReference({
             for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
                     schema,
-                    isPackageYml,
-                    schemas
+                    context,
+                    fileContainingReference
                 });
             }
         } else if (resolvedSchema.type === "object") {
@@ -86,19 +75,16 @@ function getQueryParameterTypeReference({
 
     if (schema.type === "optional" || schema.type === "nullable") {
         if (schema.value.type === "reference") {
-            const resolvedSchema = schemas[schema.value.schema];
-            if (resolvedSchema == null) {
-                throw new Error(`Failed to resolve schema=${schema.value.schema}`);
-            }
+            const resolvedSchema = context.getSchema(schema.value.schema);
             if (resolvedSchema.type === "array") {
                 return {
-                    value: convertToTypeReference({
+                    value: buildTypeReference({
                         schema: Schema.optional({
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description
                         }),
-                        prefix,
-                        schemas
+                        context,
+                        fileContainingReference
                     }),
                     allowMultiple: true
                 };
@@ -106,10 +92,10 @@ function getQueryParameterTypeReference({
         }
         if (schema.value.type === "array") {
             return {
-                value: convertToTypeReference({
+                value: buildTypeReference({
                     schema: Schema.optional({ value: schema.value.value, description: schema.description }),
-                    prefix,
-                    schemas
+                    context,
+                    fileContainingReference
                 }),
                 allowMultiple: true
             };
@@ -118,18 +104,18 @@ function getQueryParameterTypeReference({
             for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
                     schema: Schema.optional({ value: oneOfSchema, description: undefined }),
-                    isPackageYml,
-                    schemas
+                    context,
+                    fileContainingReference
                 });
             }
         } else if (schema.value.type === "object") {
             return undefined;
         }
         return {
-            value: convertToTypeReference({
+            value: buildTypeReference({
                 schema,
-                prefix,
-                schemas
+                context,
+                fileContainingReference
             }),
             allowMultiple: false
         };
@@ -137,19 +123,19 @@ function getQueryParameterTypeReference({
 
     if (schema.type === "array") {
         return {
-            value: convertToTypeReference({
+            value: buildTypeReference({
                 schema: Schema.optional({ value: schema.value, description: schema.description }),
-                prefix,
-                schemas
+                context,
+                fileContainingReference
             }),
             allowMultiple: true
         };
     } else {
         return {
-            value: convertToTypeReference({
+            value: buildTypeReference({
                 schema,
-                prefix,
-                schemas
+                context,
+                fileContainingReference
             }),
             allowMultiple: false
         };

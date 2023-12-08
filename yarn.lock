@@ -2529,7 +2529,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.131
+    "@fern-fern/openapi-ir-model": 0.0.134
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2553,7 +2553,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.131
+    "@fern-fern/openapi-ir-model": 0.0.134
     "@redocly/openapi-core": ^1.4.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3233,10 +3233,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/openapi-ir-model@npm:0.0.131":
-  version: 0.0.131
-  resolution: "@fern-fern/openapi-ir-model@npm:0.0.131"
-  checksum: f42c18e37c036893d84bf961531d03962eaa54ca82f26bcf74c6bb2d1b7cfa9c2df1c286458e11042cbef83c9eb61e8591d716269b658090aa0f8bd6588d7d84
+"@fern-fern/openapi-ir-model@npm:0.0.134":
+  version: 0.0.134
+  resolution: "@fern-fern/openapi-ir-model@npm:0.0.134"
+  checksum: 8b2a9bdc85ae2c239fa4431e2a2c3751c3760fa471dc55e6adece5149e00bba367587c401e21f37e292b6c07c1b57efeecd50208c63cee437e716b52cd964330
   languageName: node
   linkType: hard
 

@@ -8,13 +8,14 @@ import {
     PrimitiveExample
 } from "@fern-fern/openapi-ir-model/example";
 import { EndpointExample } from "@fern-fern/openapi-ir-model/finalIr";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
-export function convertEndpointExample({
+export function buildEndpointExample({
     endpointExample,
-    globalHeaderNames
+    context
 }: {
     endpointExample: EndpointExample;
-    globalHeaderNames: Set<string>;
+    context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema {
     return {
         "path-parameters":
@@ -27,7 +28,7 @@ export function convertEndpointExample({
                 : undefined,
         headers:
             endpointExample.headers != null && endpointExample.headers.length > 0
-                ? convertHeaderExamples({ globalHeaderNames, namedFullExamples: endpointExample.headers })
+                ? convertHeaderExamples({ context, namedFullExamples: endpointExample.headers })
                 : undefined,
         request: endpointExample.request != null ? convertFullExample(endpointExample.request) : undefined,
         response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined
@@ -65,12 +66,13 @@ function convertQueryParameterExample(
 }
 
 function convertHeaderExamples({
-    globalHeaderNames,
+    context,
     namedFullExamples
 }: {
-    globalHeaderNames: Set<string>;
+    context: OpenApiIrConverterContext;
     namedFullExamples: NamedFullExample[];
 }): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
+    const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
         if (globalHeaderNames.has(namedFullExample.name)) {

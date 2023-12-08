@@ -10,32 +10,26 @@ types:
     properties:
       id: integer
       name: string
-      tag:
-        type: optional<string>
+      tag: optional<string>
 
-  Pets:
-    type: list<Pet>
+  Pets: list<Pet>
 
   Error:
     properties:
       code: integer
       message: string
-
-errors: {}
 ",
     "name": "__package__.yml",
     "type": "file",
   },
   {
-    "contents": "imports:
-  root: __package__.yml
-name: api
-display-name: Swagger Petstore
+    "contents": "name: api
 error-discrimination:
   strategy: status-code
-default-environment: default
+display-name: Swagger Petstore
 environments:
-  default: http://petstore.swagger.io/v1
+  Default: http://petstore.swagger.io/v1
+default-environment: Default
 ",
     "name": "api.yml",
     "type": "file",
@@ -64,7 +58,6 @@ service:
       response:
         docs: A paged array of pets
         type: root.Pets
-      errors: []
       examples:
         - response:
             body: []
@@ -74,7 +67,6 @@ service:
       method: POST
       auth: false
       display-name: Create a pet
-      errors: []
       examples:
         - {}
 
@@ -90,7 +82,6 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
-      errors: []
 ",
     "name": "pets.yml",
     "type": "file",

@@ -3,154 +3,6 @@
 exports[`open api parser hume simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "Get Job Predictions": {
-            "auth": true,
-            "display-name": "Get Job Predictions",
-            "docs": "Get the JSON predictions of a completed job.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/v0/batch/jobs/{id}/predictions",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "list<SourceResult>",
-            },
-          },
-          "List Jobs": {
-            "auth": true,
-            "display-name": "List Jobs",
-            "docs": "Sort and filter jobs.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "direction": "asc",
-                  "sort_by": "created",
-                  "status": "QUEUED",
-                  "when": "created_before",
-                },
-                "request": undefined,
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/v0/batch/jobs",
-            "request": {
-              "name": "ListJobsRequest",
-              "query-parameters": {
-                "direction": {
-                  "allow-multiple": undefined,
-                  "docs": "The sort direction.",
-                  "type": "optional<Direction>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": "The maximum number of jobs to include in the response.",
-                  "type": "optional<integer>",
-                },
-                "sort_by": {
-                  "allow-multiple": undefined,
-                  "docs": "The job timestamp to sort by.",
-                  "type": "optional<SortBy>",
-                },
-                "status": {
-                  "allow-multiple": true,
-                  "docs": "Include only jobs with these statuses.",
-                  "type": "optional<Status>",
-                },
-                "timestamp_ms": {
-                  "allow-multiple": undefined,
-                  "docs": "Defaults to the current date and time. See \`when\`.",
-                  "type": "optional<integer>",
-                },
-                "when": {
-                  "allow-multiple": undefined,
-                  "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
-                  "type": "optional<When>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "list<JobRequest>",
-            },
-          },
-          "Start Job": {
-            "auth": true,
-            "display-name": "Start Job",
-            "docs": "Start a new batch job.",
-            "errors": [],
-            "method": "POST",
-            "path": "/v0/batch/jobs",
-            "request": {
-              "body": {
-                "properties": {
-                  "callback_url": {
-                    "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
-                    "type": "optional<string>",
-                  },
-                  "models": {
-                    "docs": undefined,
-                    "type": "optional<Models>",
-                  },
-                  "notify": {
-                    "docs": "Whether to send an email notification to the user upon job failure.",
-                    "type": "optional<boolean>",
-                  },
-                  "transcription": {
-                    "docs": undefined,
-                    "type": "optional<Transcription>",
-                  },
-                  "urls": {
-                    "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
-
-If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-                    "type": "optional<list<string>>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "BaseRequest",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "",
-              "type": "JobId",
-            },
-          },
-        },
-      },
-    },
     "getJobPredictions.yml": {
       "imports": {
         "root": "__package__.yml",
@@ -164,7 +16,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "auth": true,
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
-            "errors": [],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}",
             "path-parameters": {
@@ -182,7 +33,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "auth": true,
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
-            "errors": [],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/artifacts",
             "path-parameters": {
@@ -201,10 +51,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
   },
   "packageMarkerFile": {
-    "errors": {},
-    "navigation": [
-      "getJobPredictions.yml",
-    ],
     "service": {
       "auth": false,
       "base-path": "",
@@ -213,7 +59,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "auth": true,
           "display-name": "Get Job Predictions",
           "docs": "Get the JSON predictions of a completed job.",
-          "errors": [],
           "examples": [
             {
               "headers": undefined,
@@ -244,7 +89,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "auth": true,
           "display-name": "List Jobs",
           "docs": "Sort and filter jobs.",
-          "errors": [],
           "examples": [
             {
               "headers": undefined,
@@ -307,7 +151,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "auth": true,
           "display-name": "Start Job",
           "docs": "Start a new batch job.",
-          "errors": [],
           "method": "POST",
           "path": "/v0/batch/jobs",
           "request": {
@@ -317,18 +160,12 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "type": "optional<string>",
                 },
-                "models": {
-                  "docs": undefined,
-                  "type": "optional<Models>",
-                },
+                "models": "optional<Models>",
                 "notify": {
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
                 },
-                "transcription": {
-                  "docs": undefined,
-                  "type": "optional<Transcription>",
-                },
+                "transcription": "optional<Transcription>",
                 "urls": {
                   "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -352,151 +189,80 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Bcp47Tag": {
         "docs": undefined,
         "enum": [
+          "zh",
+          "da",
+          "nl",
+          "en",
           {
-            "docs": undefined,
-            "name": "zh",
-            "value": "zh",
-          },
-          {
-            "docs": undefined,
-            "name": "da",
-            "value": "da",
-          },
-          {
-            "docs": undefined,
-            "name": "nl",
-            "value": "nl",
-          },
-          {
-            "docs": undefined,
-            "name": "en",
-            "value": "en",
-          },
-          {
-            "docs": undefined,
-            "name": "EnAu",
+            "description": undefined,
+            "generatedName": "EnAu",
+            "nameOverride": undefined,
             "value": "en-AU",
           },
           {
-            "docs": undefined,
-            "name": "EnIn",
+            "description": undefined,
+            "generatedName": "EnIn",
+            "nameOverride": undefined,
             "value": "en-IN",
           },
           {
-            "docs": undefined,
-            "name": "EnNz",
+            "description": undefined,
+            "generatedName": "EnNz",
+            "nameOverride": undefined,
             "value": "en-NZ",
           },
           {
-            "docs": undefined,
-            "name": "EnGb",
+            "description": undefined,
+            "generatedName": "EnGb",
+            "nameOverride": undefined,
             "value": "en-GB",
           },
+          "fr",
           {
-            "docs": undefined,
-            "name": "fr",
-            "value": "fr",
-          },
-          {
-            "docs": undefined,
-            "name": "FrCa",
+            "description": undefined,
+            "generatedName": "FrCa",
+            "nameOverride": undefined,
             "value": "fr-CA",
           },
+          "de",
+          "hi",
           {
-            "docs": undefined,
-            "name": "de",
-            "value": "de",
-          },
-          {
-            "docs": undefined,
-            "name": "hi",
-            "value": "hi",
-          },
-          {
-            "docs": undefined,
-            "name": "HiLatn",
+            "description": undefined,
+            "generatedName": "HiLatn",
+            "nameOverride": undefined,
             "value": "hi-Latn",
           },
+          "id",
+          "it",
+          "ja",
+          "ko",
+          "no",
+          "pl",
+          "pt",
           {
-            "docs": undefined,
-            "name": "id",
-            "value": "id",
-          },
-          {
-            "docs": undefined,
-            "name": "it",
-            "value": "it",
-          },
-          {
-            "docs": undefined,
-            "name": "ja",
-            "value": "ja",
-          },
-          {
-            "docs": undefined,
-            "name": "ko",
-            "value": "ko",
-          },
-          {
-            "docs": undefined,
-            "name": "no",
-            "value": "no",
-          },
-          {
-            "docs": undefined,
-            "name": "pl",
-            "value": "pl",
-          },
-          {
-            "docs": undefined,
-            "name": "pt",
-            "value": "pt",
-          },
-          {
-            "docs": undefined,
-            "name": "PtBr",
+            "description": undefined,
+            "generatedName": "PtBr",
+            "nameOverride": undefined,
             "value": "pt-BR",
           },
           {
-            "docs": undefined,
-            "name": "PtPt",
+            "description": undefined,
+            "generatedName": "PtPt",
+            "nameOverride": undefined,
             "value": "pt-PT",
           },
+          "ru",
+          "es",
           {
-            "docs": undefined,
-            "name": "ru",
-            "value": "ru",
-          },
-          {
-            "docs": undefined,
-            "name": "es",
-            "value": "es",
-          },
-          {
-            "docs": undefined,
-            "name": "Es419",
+            "description": undefined,
+            "generatedName": "Es419",
+            "nameOverride": undefined,
             "value": "es-419",
           },
-          {
-            "docs": undefined,
-            "name": "sv",
-            "value": "sv",
-          },
-          {
-            "docs": undefined,
-            "name": "ta",
-            "value": "ta",
-          },
-          {
-            "docs": undefined,
-            "name": "tr",
-            "value": "tr",
-          },
-          {
-            "docs": undefined,
-            "name": "uk",
-            "value": "uk",
-          },
+          "sv",
+          "ta",
+          "tr",
+          "uk",
         ],
       },
       "BoundingBox": {
@@ -531,10 +297,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
-          "time": {
-            "docs": undefined,
-            "type": "TimeInterval",
-          },
+          "time": "TimeInterval",
         },
       },
       "Completed": {
@@ -578,16 +341,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Direction": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "asc",
-            "value": "asc",
-          },
-          {
-            "docs": undefined,
-            "name": "desc",
-            "value": "desc",
-          },
+          "asc",
+          "desc",
         ],
       },
       "EmotionScore": {
@@ -623,14 +378,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Face": {
         "docs": undefined,
         "properties": {
-          "descriptions": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "facs": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
+          "descriptions": "optional<Empty>",
+          "facs": "optional<Empty>",
           "fps_pred": {
             "docs": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
             "type": "optional<double>",
@@ -656,10 +405,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "FacePrediction": {
         "docs": undefined,
         "properties": {
-          "box": {
-            "docs": undefined,
-            "type": "BoundingBox",
-          },
+          "box": "BoundingBox",
           "descriptions": {
             "docs": "Modality-specific descriptive features and their scores.",
             "type": "optional<list<DescriptionsScore>>",
@@ -749,26 +495,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Granularity": {
         "docs": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "word",
-            "value": "word",
-          },
-          {
-            "docs": undefined,
-            "name": "sentence",
-            "value": "sentence",
-          },
-          {
-            "docs": undefined,
-            "name": "utterance",
-            "value": "utterance",
-          },
-          {
-            "docs": undefined,
-            "name": "conversational_turn",
-            "value": "conversational_turn",
-          },
+          "word",
+          "sentence",
+          "utterance",
+          "conversational_turn",
         ],
       },
       "GroupedPredictionsBurstPrediction": {
@@ -778,10 +508,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<BurstPrediction>",
-          },
+          "predictions": "list<BurstPrediction>",
         },
       },
       "GroupedPredictionsFacePrediction": {
@@ -791,10 +518,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<FacePrediction>",
-          },
+          "predictions": "list<FacePrediction>",
         },
       },
       "GroupedPredictionsFacemeshPrediction": {
@@ -804,10 +528,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<FacemeshPrediction>",
-          },
+          "predictions": "list<FacemeshPrediction>",
         },
       },
       "GroupedPredictionsLanguagePrediction": {
@@ -817,10 +538,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<LanguagePrediction>",
-          },
+          "predictions": "list<LanguagePrediction>",
         },
       },
       "GroupedPredictionsNerPrediction": {
@@ -830,10 +548,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<NerPrediction>",
-          },
+          "predictions": "list<NerPrediction>",
         },
       },
       "GroupedPredictionsProsodyPrediction": {
@@ -843,10 +558,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<ProsodyPrediction>",
-          },
+          "predictions": "list<ProsodyPrediction>",
         },
       },
       "InProgress": {
@@ -878,14 +590,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "The ID associated with this job.",
             "type": "string",
           },
-          "request": {
-            "docs": undefined,
-            "type": "Request",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "State",
-          },
+          "request": "Request",
+          "state": "State",
           "user_id": {
             "docs": "Your user ID.",
             "type": "string",
@@ -895,22 +601,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Language": {
         "docs": undefined,
         "properties": {
-          "granularity": {
-            "docs": undefined,
-            "type": "optional<Granularity>",
-          },
+          "granularity": "optional<Granularity>",
           "identify_speakers": {
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
           },
-          "sentiment": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "toxicity": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
+          "sentiment": "optional<Empty>",
+          "toxicity": "optional<Empty>",
         },
       },
       "LanguagePrediction": {
@@ -924,10 +621,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
-          "position": {
-            "docs": undefined,
-            "type": "PositionInterval",
-          },
+          "position": "PositionInterval",
           "sentiment": {
             "docs": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
 
@@ -942,10 +636,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "A segment of text (like a word or a sentence).",
             "type": "string",
           },
-          "time": {
-            "docs": undefined,
-            "type": "optional<TimeInterval>",
-          },
+          "time": "optional<TimeInterval>",
           "toxicity": {
             "docs": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
             "type": "optional<list<ToxicityScore>>",
@@ -955,59 +646,23 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "Models": {
         "docs": undefined,
         "properties": {
-          "burst": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "face": {
-            "docs": undefined,
-            "type": "optional<Face>",
-          },
-          "facemesh": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "language": {
-            "docs": undefined,
-            "type": "optional<Language>",
-          },
-          "ner": {
-            "docs": undefined,
-            "type": "optional<Ner>",
-          },
-          "prosody": {
-            "docs": undefined,
-            "type": "optional<Prosody>",
-          },
+          "burst": "optional<Empty>",
+          "face": "optional<Face>",
+          "facemesh": "optional<Empty>",
+          "language": "optional<Language>",
+          "ner": "optional<Ner>",
+          "prosody": "optional<Prosody>",
         },
       },
       "ModelsPredictions": {
         "docs": undefined,
         "properties": {
-          "burst": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalNullBurstPrediction>",
-          },
-          "face": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalNullFacePrediction>",
-          },
-          "facemesh": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalNullFacemeshPrediction>",
-          },
-          "language": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalTranscriptionMetadataLanguagePrediction>",
-          },
-          "ner": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalTranscriptionMetadataNerPrediction>",
-          },
-          "prosody": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalTranscriptionMetadataProsodyPrediction>",
-          },
+          "burst": "optional<PredictionsOptionalNullBurstPrediction>",
+          "face": "optional<PredictionsOptionalNullFacePrediction>",
+          "facemesh": "optional<PredictionsOptionalNullFacemeshPrediction>",
+          "language": "optional<PredictionsOptionalTranscriptionMetadataLanguagePrediction>",
+          "ner": "optional<PredictionsOptionalTranscriptionMetadataNerPrediction>",
+          "prosody": "optional<PredictionsOptionalTranscriptionMetadataProsodyPrediction>",
         },
       },
       "Ner": {
@@ -1042,10 +697,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "The specific word to which the emotion predictions are linked.",
             "type": "string",
           },
-          "position": {
-            "docs": undefined,
-            "type": "PositionInterval",
-          },
+          "position": "PositionInterval",
           "speaker_confidence": {
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
@@ -1054,10 +706,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "A measure of how often the entity is linked to by other entities.",
             "type": "double",
           },
-          "time": {
-            "docs": undefined,
-            "type": "optional<TimeInterval>",
-          },
+          "time": "optional<TimeInterval>",
           "uri": {
             "docs": "A URL which provides more information about the recognized topic or entity.",
             "type": "string",
@@ -1088,105 +737,60 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "A file path relative to the top level source URL or file.",
             "type": "string",
           },
-          "models": {
-            "docs": undefined,
-            "type": "ModelsPredictions",
-          },
+          "models": "ModelsPredictions",
         },
       },
       "PredictionsOptionalNullBurstPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsBurstPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<Null>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsBurstPrediction>",
+          "metadata": "optional<Null>",
         },
       },
       "PredictionsOptionalNullFacePrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsFacePrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<Null>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsFacePrediction>",
+          "metadata": "optional<Null>",
         },
       },
       "PredictionsOptionalNullFacemeshPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsFacemeshPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<Null>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsFacemeshPrediction>",
+          "metadata": "optional<Null>",
         },
       },
       "PredictionsOptionalTranscriptionMetadataLanguagePrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsLanguagePrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<TranscriptionMetadata>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsLanguagePrediction>",
+          "metadata": "optional<TranscriptionMetadata>",
         },
       },
       "PredictionsOptionalTranscriptionMetadataNerPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsNerPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<TranscriptionMetadata>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsNerPrediction>",
+          "metadata": "optional<TranscriptionMetadata>",
         },
       },
       "PredictionsOptionalTranscriptionMetadataProsodyPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsProsodyPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<TranscriptionMetadata>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsProsodyPrediction>",
+          "metadata": "optional<TranscriptionMetadata>",
         },
       },
       "Prosody": {
         "docs": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
         "properties": {
-          "granularity": {
-            "docs": undefined,
-            "type": "optional<Granularity>",
-          },
+          "granularity": "optional<Granularity>",
           "identify_speakers": {
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
           },
-          "window": {
-            "docs": undefined,
-            "type": "optional<Window>",
-          },
+          "window": "optional<Window>",
         },
       },
       "ProsodyPrediction": {
@@ -1208,10 +812,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "A segment of text (like a word or a sentence).",
             "type": "optional<string>",
           },
-          "time": {
-            "docs": undefined,
-            "type": "TimeInterval",
-          },
+          "time": "TimeInterval",
         },
       },
       "Queued": {
@@ -1230,22 +831,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
             "type": "optional<string>",
           },
-          "files": {
-            "docs": undefined,
-            "type": "list<File>",
-          },
-          "models": {
-            "docs": undefined,
-            "type": "optional<Models>",
-          },
+          "files": "list<File>",
+          "models": "optional<Models>",
           "notify": {
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
           },
-          "transcription": {
-            "docs": undefined,
-            "type": "optional<Transcription>",
-          },
+          "transcription": "optional<Transcription>",
           "urls": {
             "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -1257,14 +849,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Results": {
         "docs": undefined,
         "properties": {
-          "errors": {
-            "docs": undefined,
-            "type": "list<Error>",
-          },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<Prediction>",
-          },
+          "errors": "list<Error>",
+          "predictions": "list<Prediction>",
         },
       },
       "SentimentScore": {
@@ -1283,21 +869,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "SortBy": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "created",
-            "value": "created",
-          },
-          {
-            "docs": undefined,
-            "name": "started",
-            "value": "started",
-          },
-          {
-            "docs": undefined,
-            "name": "ended",
-            "value": "ended",
-          },
+          "created",
+          "started",
+          "ended",
         ],
       },
       "Source": {
@@ -1305,14 +879,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "file": {
-            "docs": undefined,
-            "type": "SourceFile",
-          },
-          "url": {
-            "docs": undefined,
-            "type": "SourceUrl",
-          },
+          "file": "SourceFile",
+          "url": "SourceUrl",
         },
       },
       "SourceFile": {
@@ -1329,14 +897,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An error message.",
             "type": "optional<string>",
           },
-          "results": {
-            "docs": undefined,
-            "type": "optional<Results>",
-          },
-          "source": {
-            "docs": undefined,
-            "type": "Source",
-          },
+          "results": "optional<Results>",
+          "source": "Source",
         },
       },
       "SourceUrl": {
@@ -1351,22 +913,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "discriminant": "status",
         "docs": undefined,
         "union": {
-          "COMPLETED": {
-            "docs": undefined,
-            "type": "StateCompleted",
-          },
-          "FAILED": {
-            "docs": undefined,
-            "type": "StateFailed",
-          },
-          "IN_PROGRESS": {
-            "docs": undefined,
-            "type": "StateInProgress",
-          },
-          "QUEUED": {
-            "docs": undefined,
-            "type": "StateQueued",
-          },
+          "COMPLETED": "StateCompleted",
+          "FAILED": "StateFailed",
+          "IN_PROGRESS": "StateInProgress",
+          "QUEUED": "StateQueued",
         },
       },
       "StateCompleted": {
@@ -1400,26 +950,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Status": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "QUEUED",
-            "value": "QUEUED",
-          },
-          {
-            "docs": undefined,
-            "name": "IN_PROGRESS",
-            "value": "IN_PROGRESS",
-          },
-          {
-            "docs": undefined,
-            "name": "COMPLETED",
-            "value": "COMPLETED",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
+          "QUEUED",
+          "IN_PROGRESS",
+          "COMPLETED",
+          "FAILED",
         ],
       },
       "TimeInterval": {
@@ -1451,10 +985,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Transcription": {
         "docs": undefined,
         "properties": {
-          "language": {
-            "docs": undefined,
-            "type": "optional<Bcp47Tag>",
-          },
+          "language": "optional<Bcp47Tag>",
         },
       },
       "TranscriptionMetadata": {
@@ -1464,10 +995,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
             "type": "double",
           },
-          "detected_language": {
-            "docs": undefined,
-            "type": "optional<Bcp47Tag>",
-          },
+          "detected_language": "optional<Bcp47Tag>",
         },
       },
       "Url": {
@@ -1482,16 +1010,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "When": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "created_before",
-            "value": "created_before",
-          },
-          {
-            "docs": undefined,
-            "name": "created_after",
-            "value": "created_after",
-          },
+          "created_before",
+          "created_after",
         ],
       },
       "Window": {
@@ -1519,16 +1039,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "Hume AI Batch API",
     "environments": {
-      "default": "https://api.hume.ai",
+      "Default": "https://api.hume.ai",
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

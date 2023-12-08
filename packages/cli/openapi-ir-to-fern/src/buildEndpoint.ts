@@ -1,80 +1,71 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
+import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
     Endpoint,
     EndpointAvailability,
     EndpointExample,
-    HttpError,
     Request,
     Response,
     Schema
 } from "@fern-fern/openapi-ir-model/finalIr";
-import { ROOT_PREFIX } from "../convertPackage";
-import { Environments } from "../getEnvironments";
-import { convertEndpointExample } from "./convertEndpointExample";
-import { convertHeader } from "./convertHeader";
-import { convertPathParameter } from "./convertPathParameter";
-import { convertQueryParameter } from "./convertQueryParameter";
-import { convertToHttpMethod } from "./convertToHttpMethod";
-import { convertToTypeReference } from "./convertToTypeReference";
+import { buildEndpointExample } from "./buildEndpointExample";
+import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
+import { buildHeader } from "./buildHeader";
+import { buildPathParameter } from "./buildPathParameter";
+import { buildQueryParameter } from "./buildQueryParameter";
+import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
     schemaIdsToExclude: string[];
-    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
-export function convertEndpoint({
+export function buildEndpoint({
     endpoint,
-    isPackageYml,
-    schemas,
-    environments,
-    nonRequestReferencedSchemas,
-    globalHeaderNames,
-    errors
+    declarationFile,
+    context
 }: {
+    context: OpenApiIrConverterContext;
+    declarationFile: RelativeFilePath;
     endpoint: Endpoint;
-    isPackageYml: boolean;
-    schemas: Record<SchemaId, Schema>;
-    environments: Environments | undefined;
-    nonRequestReferencedSchemas: SchemaId[];
-    globalHeaderNames: Set<string>;
-    errors: Record<StatusCode, HttpError>;
 }): ConvertedEndpoint {
-    let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
+    const { errors, nonRequestReferencedSchemas } = context.ir;
+
     let schemaIdsToExclude: string[] = [];
 
     const names = new Set<string>();
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        const convertedPathParameter = convertPathParameter({ pathParameter, schemas, isPackageYml });
-        pathParameters[pathParameter.name] = convertedPathParameter.value;
-        additionalTypeDeclarations = {
-            ...additionalTypeDeclarations,
-            ...convertedPathParameter.additionalTypeDeclarations
-        };
+        pathParameters[pathParameter.name] = buildPathParameter({
+            pathParameter,
+            context,
+            fileContainingReference: declarationFile
+        });
         names.add(pathParameter.name);
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     for (const queryParameter of endpoint.queryParameters) {
-        const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml, schemas });
+        const convertedQueryParameter = buildQueryParameter({
+            queryParameter,
+            context,
+            fileContainingReference: declarationFile
+        });
         if (convertedQueryParameter == null) {
             // TODO(dsinghvi): HACKHACK we are just excluding certain query params from the SDK
             continue;
         }
-        queryParameters[queryParameter.name] = convertedQueryParameter.value;
-        additionalTypeDeclarations = {
-            ...additionalTypeDeclarations,
-            ...convertedQueryParameter.additionalTypeDeclarations
-        };
+        queryParameters[queryParameter.name] = convertedQueryParameter;
         names.add(queryParameter.name);
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
-        path: environments?.type === "single" ? `${environments.endpointPathPrefix}${endpoint.path}` : endpoint.path,
+        path: endpoint.path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined
@@ -89,24 +80,21 @@ export function convertEndpoint({
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
+    const globalHeaderNames = context.builder.getGlobalHeaderNames();
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
         return !globalHeaderNames.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
-        const convertedHeader = convertHeader({ header, isPackageYml, schemas });
-        headers[header.name] = convertedHeader.value;
-        additionalTypeDeclarations = {
-            ...additionalTypeDeclarations,
-            ...convertedHeader.additionalTypeDeclarations
-        };
-        names.add(header.name);
+        const headerSchema = buildHeader({ header, context, fileContainingReference: declarationFile });
+        headers[header.name] = headerSchema;
+        names.add(typeof headerSchema === "string" ? header.name : headerSchema.name ?? header.name);
     }
 
     if (endpoint.request != null) {
         const convertedRequest = getRequest({
-            isPackageYml,
+            context,
+            declarationFile,
             request: endpoint.request,
-            schemas,
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
@@ -116,10 +104,6 @@ export function convertEndpoint({
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
-        additionalTypeDeclarations = {
-            ...additionalTypeDeclarations,
-            ...convertedRequest.additionalTypeDeclarations
-        };
     } else {
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;
@@ -144,33 +128,25 @@ export function convertEndpoint({
     if (endpoint.response != null) {
         Response._visit(endpoint.response, {
             json: (jsonResponse) => {
-                const responseTypeReference = convertToTypeReference({
+                const responseTypeReference = buildTypeReference({
                     schema: jsonResponse.schema,
-                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                    schemas
+                    context,
+                    fileContainingReference: declarationFile
                 });
-                additionalTypeDeclarations = {
-                    ...additionalTypeDeclarations,
-                    ...responseTypeReference.additionalTypeDeclarations
-                };
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference.typeReference)
+                    type: getTypeFromTypeReference(responseTypeReference)
                 };
             },
             streamingJson: (jsonResponse) => {
-                const responseTypeReference = convertToTypeReference({
+                const responseTypeReference = buildTypeReference({
                     schema: jsonResponse.schema,
-                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                    schemas
+                    context,
+                    fileContainingReference: declarationFile
                 });
-                additionalTypeDeclarations = {
-                    ...additionalTypeDeclarations,
-                    ...responseTypeReference.additionalTypeDeclarations
-                };
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference.typeReference)
+                    type: getTypeFromTypeReference(responseTypeReference)
                 };
             },
             file: (fileResponse) => {
@@ -197,16 +173,12 @@ export function convertEndpoint({
         });
     }
 
-    if (environments?.type === "multi") {
+    if (context.builder.getEnvironmentType() === "multi") {
         const serverOverride = endpoint.server[0];
-        if (endpoint.server.length === 0) {
-            convertedEndpoint.url = environments.defaultUrl;
-        } else if (serverOverride != null) {
-            convertedEndpoint.url = serverOverride.name ?? undefined;
+        if (serverOverride == null) {
+            convertedEndpoint.url = context.getOrThrowDefaultServerName();
         } else {
-            throw new Error(
-                `${endpoint.method} ${endpoint.path} can only have a single server override, but has more.`
-            );
+            convertedEndpoint.url = serverOverride.name ?? undefined;
         }
     }
 
@@ -218,51 +190,61 @@ export function convertEndpoint({
         convertedEndpoint.availability = "deprecated";
     }
 
-    const errorsThrown: string[] = [];
     endpoint.errorStatusCode.forEach((statusCode) => {
         const errorName = errors[statusCode]?.generatedName;
         if (errorName != null) {
-            errorsThrown.push(errorName);
+            if (convertedEndpoint.errors == null) {
+                convertedEndpoint.errors = [];
+            }
+            const prefix = context.builder.addImport({
+                file: declarationFile,
+                fileToImport: ERROR_DECLARATIONS_FILENAME
+            });
+            convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
         }
     });
-    convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
 
     if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
             endpointExamples: endpoint.examples,
-            globalHeaderNames
+            context
         });
+    }
+
+    // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
+    if (context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
+        convertedEndpoint.audiences = [EXTERNAL_AUDIENCE, ...endpoint.audiences];
+    } else if (endpoint.audiences.length > 0) {
+        convertedEndpoint.audiences = endpoint.audiences;
     }
 
     return {
         value: convertedEndpoint,
-        schemaIdsToExclude,
-        additionalTypeDeclarations
+        schemaIdsToExclude
     };
 }
 
 function convertEndpointExamples({
     endpointExamples,
-    globalHeaderNames
+    context
 }: {
     endpointExamples: EndpointExample[];
-    globalHeaderNames: Set<string>;
+    context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
-        return convertEndpointExample({ endpointExample, globalHeaderNames });
+        return buildEndpointExample({ endpointExample, context });
     });
 }
 
 interface ConvertedRequest {
     value: RawSchemas.HttpRequestSchema;
     schemaIdsToExclude?: string[];
-    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 function getRequest({
-    isPackageYml,
+    declarationFile,
+    context,
     request,
-    schemas,
     requestNameOverride,
     generatedRequestName,
     queryParameters,
@@ -270,9 +252,9 @@ function getRequest({
     headers,
     usedNames
 }: {
-    isPackageYml: boolean;
+    declarationFile: RelativeFilePath;
+    context: OpenApiIrConverterContext;
     request: Request;
-    schemas: Record<SchemaId, Schema>;
     requestNameOverride?: string;
     generatedRequestName: string;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
@@ -280,36 +262,25 @@ function getRequest({
     headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     usedNames: Set<string>;
 }): ConvertedRequest {
-    let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     if (request.type === "json") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
-        const resolvedSchema = request.schema.type === "reference" ? schemas[request.schema.schema] : request.schema;
-        if (resolvedSchema == null) {
-            throw Error(`Failed to resolve schema ${JSON.stringify(request.schema)}`);
-        }
-
+        const resolvedSchema =
+            request.schema.type === "reference" ? context.getSchema(request.schema.schema) : request.schema;
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
             resolvedSchema.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
-            const requestTypeReference = convertToTypeReference({
+            const requestTypeReference = buildTypeReference({
                 schema: resolvedSchema,
-                prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                schemas
+                fileContainingReference: declarationFile,
+                context
             });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],
                 value: {
-                    body:
-                        typeof requestTypeReference === "string"
-                            ? requestTypeReference
-                            : requestTypeReference.typeReference
-                },
-                additionalTypeDeclarations: {
-                    ...additionalTypeDeclarations,
-                    ...requestTypeReference.additionalTypeDeclarations
+                    body: requestTypeReference
                 }
             };
 
@@ -334,38 +305,30 @@ function getRequest({
         }
         const properties = Object.fromEntries(
             resolvedSchema.properties.map((property) => {
-                const propertyTypeReference = convertToTypeReference({
+                const propertyTypeReference = buildTypeReference({
                     schema: property.schema,
-                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                    schemas
+                    fileContainingReference: declarationFile,
+                    context
                 });
-                additionalTypeDeclarations = {
-                    ...additionalTypeDeclarations,
-                    ...propertyTypeReference.additionalTypeDeclarations
-                };
                 return [
                     property.key,
                     usedNames.has(property.key)
                         ? {
-                              type: getTypeFromTypeReference(propertyTypeReference.typeReference),
-                              docs: getDocsFromTypeReference(propertyTypeReference.typeReference),
+                              type: getTypeFromTypeReference(propertyTypeReference),
+                              docs: getDocsFromTypeReference(propertyTypeReference),
                               name: property.generatedName
                           }
-                        : propertyTypeReference.typeReference
+                        : propertyTypeReference
                 ];
             })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = convertToTypeReference({
+            const allOfTypeReference = buildTypeReference({
                 schema: Schema.reference(referencedSchema),
-                prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                schemas
+                fileContainingReference: declarationFile,
+                context
             });
-            additionalTypeDeclarations = {
-                ...additionalTypeDeclarations,
-                ...allOfTypeReference.additionalTypeDeclarations
-            };
-            return getTypeFromTypeReference(allOfTypeReference.typeReference);
+            return getTypeFromTypeReference(allOfTypeReference);
         });
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
@@ -385,8 +348,7 @@ function getRequest({
         }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
-            value: convertedRequestValue,
-            additionalTypeDeclarations
+            value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {
         return {
@@ -394,8 +356,7 @@ function getRequest({
             value: {
                 body: "bytes",
                 "content-type": "application/octet-stream"
-            },
-            additionalTypeDeclarations: {}
+            }
         };
     } else {
         // multipart
@@ -404,16 +365,12 @@ function getRequest({
                 if (property.schema.type === "file") {
                     return [property.key, "file"];
                 } else {
-                    const propertyTypeReference = convertToTypeReference({
+                    const propertyTypeReference = buildTypeReference({
                         schema: property.schema.json,
-                        prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                        schemas
+                        fileContainingReference: declarationFile,
+                        context
                     });
-                    additionalTypeDeclarations = {
-                        ...additionalTypeDeclarations,
-                        ...propertyTypeReference.additionalTypeDeclarations
-                    };
-                    return [property.key, propertyTypeReference.typeReference];
+                    return [property.key, propertyTypeReference];
                 }
             })
         );
@@ -426,8 +383,7 @@ function getRequest({
                 body: {
                     properties
                 }
-            },
-            additionalTypeDeclarations
+            }
         };
     }
 }

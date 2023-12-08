@@ -1,0 +1,24 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-sdk-group-name` for schemas
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    User: 
+      x-fern-sdk-group-name: user
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        associatedPersons: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Person'
+    Person:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid

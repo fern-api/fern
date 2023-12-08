@@ -40,6 +40,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetAppsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ApplicationWithDeployment",
             "type": "reference",
@@ -80,6 +81,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateAppRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -91,6 +93,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateAppRequestAuthConfiguration",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -105,6 +108,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "CreateAppRequestAuthConfigurationGoogle",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "properties": [
                           {
@@ -136,6 +140,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "CreateAppRequestAuthConfigurationNickname",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "Record_string.never_",
                         "type": "reference",
@@ -152,6 +157,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "CreateAppRequestAuthConfigurationAnonymous",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "Record_string.never_",
                         "type": "reference",
@@ -187,6 +193,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateAppResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Application",
           "type": "reference",
@@ -224,6 +231,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "UpdateAppRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -240,6 +248,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateAppRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -251,6 +260,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateAppRequestAuthConfiguration",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -265,6 +275,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "UpdateAppRequestAuthConfigurationGoogle",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "properties": [
                           {
@@ -296,6 +307,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "UpdateAppRequestAuthConfigurationNickname",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "Record_string.never_",
                         "type": "reference",
@@ -312,6 +324,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "UpdateAppRequestAuthConfigurationAnonymous",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "Record_string.never_",
                         "type": "reference",
@@ -347,6 +360,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateAppResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Application",
           "type": "reference",
@@ -382,6 +396,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetAppInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -397,6 +412,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetAppInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Application",
           "type": "reference",
@@ -452,6 +468,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeleteAppRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -492,6 +509,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LoginAnonymousRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -509,6 +527,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LoginAnonymousResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -559,6 +578,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LoginNicknameRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -575,6 +595,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LoginNicknameRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -604,6 +625,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LoginNicknameResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -655,6 +677,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LoginGoogleRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -671,6 +694,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LoginGoogleRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -700,6 +724,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LoginGoogleResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -772,6 +797,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetBuildsRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -790,6 +816,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetBuildsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Build",
             "type": "reference",
@@ -826,6 +853,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetBuildInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -838,6 +866,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetBuildInfoRequestBuildId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BuildId",
             "type": "reference",
@@ -853,6 +882,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetBuildInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Build",
           "type": "reference",
@@ -890,6 +920,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreateBuildRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -905,6 +936,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateBuildResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Build",
           "type": "reference",
@@ -938,6 +970,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RunBuildRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -950,6 +983,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RunBuildRequestBuildId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BuildId",
             "type": "reference",
@@ -1037,6 +1071,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeleteBuildRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1049,6 +1084,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeleteBuildRequestBuildId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BuildId",
             "type": "reference",
@@ -1111,6 +1147,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetDeploymentsRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1129,6 +1166,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetDeploymentsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Deployment",
             "type": "reference",
@@ -1165,6 +1203,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetDeploymentInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1177,6 +1216,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetDeploymentInfoRequestDeploymentId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DeploymentId",
             "type": "reference",
@@ -1192,6 +1232,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetDeploymentInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Deployment",
           "type": "reference",
@@ -1229,6 +1270,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreateDeploymentRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1241,6 +1283,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreateDeploymentRequestBuildId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BuildId",
             "type": "reference",
@@ -1255,6 +1298,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateDeploymentRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DeploymentConfig",
           "type": "reference",
@@ -1267,6 +1311,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateDeploymentResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Deployment",
           "type": "reference",
@@ -1313,6 +1358,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetPingServiceEndpointsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DiscoveryResponse",
           "type": "reference",
@@ -1366,6 +1412,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreatePrivateLobbyDeprecatedRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1383,6 +1430,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "CreatePrivateLobbyDeprecatedRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -1412,6 +1460,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreatePrivateLobbyDeprecatedResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RoomId",
           "type": "reference",
@@ -1465,6 +1514,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreatePublicLobbyDeprecatedRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1482,6 +1532,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "CreatePublicLobbyDeprecatedRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -1511,6 +1562,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreatePublicLobbyDeprecatedResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RoomId",
           "type": "reference",
@@ -1602,6 +1654,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListActivePublicLobbiesDeprecatedRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1634,6 +1687,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "ListActivePublicLobbiesDeprecatedRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -1651,6 +1705,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListActivePublicLobbiesDeprecatedResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Lobby",
             "type": "reference",
@@ -1705,6 +1760,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreatePrivateLobbyRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1722,6 +1778,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "CreatePrivateLobbyRequestRoomId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomId",
               "type": "reference",
@@ -1737,6 +1794,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePrivateLobbyRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1767,6 +1825,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreatePrivateLobbyRequestRegion",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Region",
                 "type": "reference",
@@ -1783,6 +1842,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreatePrivateLobbyResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Lobby",
           "type": "reference",
@@ -1836,6 +1896,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreatePublicLobbyRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1853,6 +1914,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "CreatePublicLobbyRequestRoomId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomId",
               "type": "reference",
@@ -1868,6 +1930,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePublicLobbyRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1898,6 +1961,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreatePublicLobbyRequestRegion",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Region",
                 "type": "reference",
@@ -1914,6 +1978,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreatePublicLobbyResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Lobby",
           "type": "reference",
@@ -1967,6 +2032,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreateLocalLobbyRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -1984,6 +2050,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "CreateLocalLobbyRequestRoomId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomId",
               "type": "reference",
@@ -1999,6 +2066,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateLocalLobbyRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -2029,6 +2097,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreateLocalLobbyRequestRegion",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Region",
                 "type": "reference",
@@ -2045,6 +2114,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateLocalLobbyResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Lobby",
           "type": "reference",
@@ -2098,6 +2168,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreateLobbyRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2115,6 +2186,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "CreateLobbyRequestRoomId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomId",
               "type": "reference",
@@ -2130,6 +2202,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateLobbyRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -2139,6 +2212,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreateLobbyRequestVisibility",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -2191,6 +2265,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreateLobbyRequestRegion",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Region",
                 "type": "reference",
@@ -2207,6 +2282,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateLobbyResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Lobby",
           "type": "reference",
@@ -2270,6 +2346,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListActivePublicLobbiesRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2287,6 +2364,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "ListActivePublicLobbiesRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -2304,6 +2382,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListActivePublicLobbiesResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Lobby",
             "type": "reference",
@@ -2340,6 +2419,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLobbyInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2352,6 +2432,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLobbyInfoRequestRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -2367,6 +2448,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetLobbyInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Lobby",
           "type": "reference",
@@ -2403,6 +2485,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "SetLobbyStateRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2415,6 +2498,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "SetLobbyStateRequestRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -2431,6 +2515,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SetLobbyStateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -2465,6 +2550,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "SetLobbyStateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Lobby",
           "type": "reference",
@@ -2498,6 +2584,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLogsForAppRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2545,6 +2632,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "GetLogsForAppRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -2585,6 +2673,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLogsForProcessRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2597,6 +2686,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLogsForProcessRequestProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -2669,6 +2759,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLogsForDeploymentRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2681,6 +2772,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetLogsForDeploymentRequestDeploymentId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DeploymentId",
             "type": "reference",
@@ -2801,6 +2893,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetMetricsRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2813,6 +2906,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetMetricsRequestProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -2833,6 +2927,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "GetMetricsRequestMetricsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "MetricName",
                 "type": "reference",
@@ -2893,6 +2988,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetMetricsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "MetricsResponse",
           "type": "reference",
@@ -2958,6 +3054,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetRunningProcessesRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -2975,6 +3072,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "GetRunningProcessesRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -2992,6 +3090,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetRunningProcessesResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessWithRooms",
             "type": "reference",
@@ -3058,6 +3157,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetStoppedProcessesRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3075,6 +3175,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "GetStoppedProcessesRequestRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -3092,6 +3193,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetStoppedProcessesResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Process",
             "type": "reference",
@@ -3128,6 +3230,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetProcessInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3140,6 +3243,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetProcessInfoRequestProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -3155,6 +3259,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetProcessInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Process",
           "type": "reference",
@@ -3191,6 +3296,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "CreateRoomRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3207,6 +3313,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateRoomRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -3216,6 +3323,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreateRoomRequestRegion",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Region",
                 "type": "reference",
@@ -3232,6 +3340,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateRoomResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RoomId",
           "type": "reference",
@@ -3267,6 +3376,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetRoomInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3279,6 +3389,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetRoomInfoRequestRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -3294,6 +3405,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetRoomInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Room",
           "type": "reference",
@@ -3361,6 +3473,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetActiveRoomsForProcessRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3373,6 +3486,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetActiveRoomsForProcessRequestProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -3391,6 +3505,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetActiveRoomsForProcessResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomWithoutAllocations",
             "type": "reference",
@@ -3459,6 +3574,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetInactiveRoomsForProcessRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3471,6 +3587,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetInactiveRoomsForProcessRequestProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -3489,6 +3606,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "GetInactiveRoomsForProcessResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomWithoutAllocations",
             "type": "reference",
@@ -3555,6 +3673,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DestroyRoomRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3567,6 +3686,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DestroyRoomRequestRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -3637,6 +3757,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "SuspendRoomRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3649,6 +3770,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "SuspendRoomRequestRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -3691,6 +3813,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetConnectionInfoRequestAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -3703,6 +3826,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetConnectionInfoRequestRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -3718,6 +3842,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetConnectionInfoResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "ConnectionInfo",
           "type": "reference",
@@ -3849,6 +3974,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ActiveConnectionInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3858,6 +3984,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ActiveConnectionInfoTransportType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TransportType",
             "type": "reference",
@@ -3896,6 +4023,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ActiveConnectionInfoRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -3918,6 +4046,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Application",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3987,6 +4116,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ApplicationOrgId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "OrgId",
             "type": "reference",
@@ -4001,6 +4131,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "ApplicationAuthConfiguration",
+            "groupName": undefined,
             "nameOverride": undefined,
             "properties": [
               {
@@ -4015,6 +4146,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "ApplicationAuthConfigurationGoogle",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -4046,6 +4178,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "value": {
                     "description": undefined,
                     "generatedName": "ApplicationAuthConfigurationNickname",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "Record_string.never_",
                     "type": "reference",
@@ -4062,6 +4195,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "value": {
                     "description": undefined,
                     "generatedName": "ApplicationAuthConfigurationAnonymous",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "Record_string.never_",
                     "type": "reference",
@@ -4122,6 +4256,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "generatedName": "Application",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Application",
           "type": "reference",
@@ -4130,6 +4265,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ApplicationWithDeployment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4139,6 +4275,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ApplicationWithDeploymentDeployment",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Deployment",
             "type": "reference",
@@ -4152,6 +4289,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Build",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4166,6 +4304,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BuildRegionalContainerTagsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "properties": [
                 {
@@ -4189,6 +4328,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "generatedName": "BuildRegionalContainerTagsItemRegion",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "Region",
                     "type": "reference",
@@ -4218,6 +4358,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "BuildStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4329,6 +4470,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "BuildBuildId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BuildId",
             "type": "reference",
@@ -4341,6 +4483,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "BuildAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -4362,11 +4505,13 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": undefined,
         "discriminantProperty": "status",
         "generatedName": "ConnectionInfo",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "active": {
             "description": undefined,
             "generatedName": "ComponentsSchemasActiveConnectionInfo",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ActiveConnectionInfo",
             "type": "reference",
@@ -4374,6 +4519,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "starting": {
             "description": undefined,
             "generatedName": "ComponentsSchemasStartingConnectionInfo",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "StartingConnectionInfo",
             "type": "reference",
@@ -4388,6 +4534,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "generatedName": "DeploymentConfig",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DeploymentConfig",
           "type": "reference",
@@ -4396,6 +4543,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Deployment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4455,6 +4603,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeploymentDeploymentId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DeploymentId",
             "type": "reference",
@@ -4467,6 +4616,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeploymentBuildId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BuildId",
             "type": "reference",
@@ -4479,6 +4629,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeploymentAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -4492,6 +4643,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DeploymentConfig",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4506,6 +4658,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "DeploymentConfigEnvItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "properties": [
                 {
@@ -4560,6 +4713,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeploymentConfigPlanName",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PlanName",
             "type": "reference",
@@ -4572,6 +4726,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeploymentConfigTransportType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TransportType",
             "type": "reference",
@@ -4607,6 +4762,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "allOfPropertyConflicts": [],
         "description": undefined,
         "generatedName": "DiscoveryResponseItem",
+        "groupName": undefined,
         "nameOverride": undefined,
         "properties": [
           {
@@ -4642,6 +4798,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "schema": {
               "description": undefined,
               "generatedName": "DiscoveryResponseItemRegion",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Region",
               "type": "reference",
@@ -4656,6 +4813,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Lobby",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4749,6 +4907,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LobbyVisibility",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4780,6 +4939,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LobbyRegion",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Region",
             "type": "reference",
@@ -4792,6 +4952,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LobbyRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -4804,6 +4965,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "LobbyAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -4815,6 +4977,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "MetricName": {
       "description": undefined,
       "generatedName": "MetricName",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4849,6 +5012,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "MetricValue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4881,6 +5045,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "MetricsResponse": {
       "description": undefined,
       "generatedName": "MetricsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "Record_Partial_MetricName_.MetricValue-Array_",
       "type": "reference",
@@ -4888,6 +5053,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "Omit_Room.allocations_": {
       "description": "Construct a type with the properties of T except for those in type K.",
       "generatedName": "OmitRoomAllocations",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "Pick_Room.Exclude_keyofRoom.allocations__",
       "type": "reference",
@@ -4906,6 +5072,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": "From T, pick a set of properties whose keys are in the union K",
       "generatedName": "PickRoomExcludeKeyofRoomAllocations",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4915,6 +5082,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -4927,6 +5095,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -4939,6 +5108,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomStatus",
             "type": "reference",
@@ -4954,6 +5124,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomAllocation",
               "type": "reference",
@@ -4966,6 +5137,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "PlanName": {
       "description": undefined,
       "generatedName": "PlanName",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5000,6 +5172,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Process",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5171,6 +5344,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ProcessRegion",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Region",
             "type": "reference",
@@ -5183,6 +5357,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ProcessProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -5195,6 +5370,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ProcessDeploymentId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DeploymentId",
             "type": "reference",
@@ -5207,6 +5383,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ProcessAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -5229,6 +5406,7 @@ exports[`open api parser hathora parse open api 1`] = `
         {
           "description": undefined,
           "generatedName": "Process",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Process",
           "type": "reference",
@@ -5237,6 +5415,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ProcessWithRooms",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5249,6 +5428,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "ProcessWithRoomsRoomsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomWithoutAllocations",
               "type": "reference",
@@ -5275,6 +5455,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": "Construct a type with a set of properties K of type T",
       "generatedName": "RecordPartialMetricNameMetricValueArray",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5290,6 +5471,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayCpuItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "MetricValue",
                 "type": "reference",
@@ -5310,6 +5492,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayMemoryItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "MetricValue",
                 "type": "reference",
@@ -5330,6 +5513,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgressItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "MetricValue",
                 "type": "reference",
@@ -5350,6 +5534,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgressItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "MetricValue",
                 "type": "reference",
@@ -5365,6 +5550,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": "Construct a type with a set of properties K of type T",
       "generatedName": "RecordStringNever",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -5372,6 +5558,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "Region": {
       "description": undefined,
       "generatedName": "Region",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5442,6 +5629,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Room",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5454,6 +5642,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "RoomCurrentAllocation",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomAllocation",
               "type": "reference",
@@ -5467,6 +5656,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RoomStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomStatus",
             "type": "reference",
@@ -5482,6 +5672,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "RoomAllocationsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "RoomAllocation",
               "type": "reference",
@@ -5495,6 +5686,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RoomRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -5507,6 +5699,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RoomAppId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "AppId",
             "type": "reference",
@@ -5520,6 +5713,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RoomAllocation",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5557,6 +5751,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RoomAllocationProcessId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProcessId",
             "type": "reference",
@@ -5569,6 +5764,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "RoomAllocationRoomAllocationId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomAllocationId",
             "type": "reference",
@@ -5598,6 +5794,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "RoomStatus": {
       "description": undefined,
       "generatedName": "RoomStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5630,6 +5827,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "RoomWithoutAllocations": {
       "description": undefined,
       "generatedName": "RoomWithoutAllocations",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "Omit_Room.allocations_",
       "type": "reference",
@@ -5639,6 +5837,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StartingConnectionInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5648,6 +5847,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "StartingConnectionInfoRoomId",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RoomId",
             "type": "reference",
@@ -5659,6 +5859,7 @@ exports[`open api parser hathora parse open api 1`] = `
     "TransportType": {
       "description": undefined,
       "generatedName": "TransportType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [

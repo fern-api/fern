@@ -158,7 +158,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "location": {
                   "allow-multiple": undefined,
                   "docs": "Filter accounts to just a subset of \`internal\` or \`external\` accounts (per the \`location\` property on the [\`accountItem\`](#schema-accountItem) schema).",
-                  "type": "optional<root.AccountsListAccountsRequestLocation>",
+                  "type": "optional<AccountsListAccountsRequestLocation>",
                 },
                 "productType": {
                   "allow-multiple": true,
@@ -226,6 +226,15 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "type": "root.Accounts",
             },
           },
+        },
+      },
+      "types": {
+        "AccountsListAccountsRequestLocation": {
+          "docs": undefined,
+          "enum": [
+            "internal",
+            "external",
+          ],
         },
       },
     },
@@ -1045,17 +1054,6 @@ Note: This operation requires an identity challenge if the financial institution
         "type": "ProblemResponse",
       },
     },
-    "navigation": [
-      "accounts.yml",
-      "accountJointOwners.yml",
-      "overdraftProtection.yml",
-      "jointOwners.yml",
-      "institutions.yml",
-      "transactions.yml",
-      "transactionCategories.yml",
-      "transfers.yml",
-    ],
-    "service": undefined,
     "types": {
       "AbstractBody": {
         "docs": "An abstract schema used to define other request and response body model schemas.",
@@ -1147,41 +1145,13 @@ Note: This operation requires an identity challenge if the financial institution
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "billPay",
-            "value": "billPay",
-          },
-          {
-            "docs": undefined,
-            "name": "transferFrom",
-            "value": "transferFrom",
-          },
-          {
-            "docs": undefined,
-            "name": "transferTo",
-            "value": "transferTo",
-          },
-          {
-            "docs": undefined,
-            "name": "mobileCheckDeposit",
-            "value": "mobileCheckDeposit",
-          },
-          {
-            "docs": undefined,
-            "name": "view",
-            "value": "view",
-          },
-          {
-            "docs": undefined,
-            "name": "viewCards",
-            "value": "viewCards",
-          },
-          {
-            "docs": undefined,
-            "name": "manageCards",
-            "value": "manageCards",
-          },
+          "billPay",
+          "transferFrom",
+          "transferTo",
+          "mobileCheckDeposit",
+          "view",
+          "viewCards",
+          "manageCards",
         ],
       },
       "AccountBalance": {
@@ -1240,27 +1210,15 @@ Note: This operation requires an identity challenge if the financial institution
             "docs": "Indicates where an account is held.",
             "type": "AccountLocation",
           },
-          "maskedNumber": {
-            "docs": undefined,
-            "type": "maskedAccountNumber",
-          },
-          "nickname": {
-            "docs": undefined,
-            "type": "optional<accountNickname>",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "ProductReference",
-          },
+          "maskedNumber": "maskedAccountNumber",
+          "nickname": "optional<accountNickname>",
+          "product": "ProductReference",
         },
       },
       "AccountItem": {
         "docs": "An account item in a list items in the \`accounts\` schema.",
         "properties": {
-          "allows": {
-            "docs": undefined,
-            "type": "AccountPermissions",
-          },
+          "allows": "AccountPermissions",
           "id": {
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
@@ -1273,18 +1231,9 @@ Note: This operation requires an identity challenge if the financial institution
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
           },
-          "maskedNumber": {
-            "docs": undefined,
-            "type": "optional<maskedAccountNumber>",
-          },
-          "nickname": {
-            "docs": undefined,
-            "type": "optional<accountNickname>",
-          },
-          "product": {
-            "docs": undefined,
-            "type": "optional<ProductReference>",
-          },
+          "maskedNumber": "optional<maskedAccountNumber>",
+          "nickname": "optional<accountNickname>",
+          "product": "optional<ProductReference>",
         },
       },
       "AccountJointOwner": {
@@ -1293,10 +1242,7 @@ Note: This operation requires an identity challenge if the financial institution
           "AbstractBody",
         ],
         "properties": {
-          "id": {
-            "docs": undefined,
-            "type": "ReadOnlyResourceId",
-          },
+          "id": "ReadOnlyResourceId",
           "name": {
             "docs": "The full name of the joint owner.",
             "type": "string",
@@ -1319,21 +1265,9 @@ Note: This operation requires an identity challenge if the financial institution
   * \`outside\` accounts non-banking accounts such as brokerage and fund accounts.
 Account transfers are only allowed between \`internal\` and \`external\` accounts. All accounts are considered when calculating total cash balance.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "internal",
-            "value": "internal",
-          },
-          {
-            "docs": undefined,
-            "name": "external",
-            "value": "external",
-          },
-          {
-            "docs": undefined,
-            "name": "outside",
-            "value": "outside",
-          },
+          "internal",
+          "external",
+          "outside",
         ],
       },
       "AccountPermissions": {
@@ -1398,21 +1332,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
         },
       },
-      "AccountsListAccountsRequestLocation": {
-        "docs": undefined,
-        "enum": [
-          {
-            "docs": undefined,
-            "name": "internal",
-            "value": "internal",
-          },
-          {
-            "docs": undefined,
-            "name": "external",
-            "value": "external",
-          },
-        ],
-      },
       "AchAccountRisk": {
         "docs": "Describes the risk level of a payment batch's settlement account.
 
@@ -1444,26 +1363,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "early",
-            "value": "early",
-          },
-          {
-            "docs": undefined,
-            "name": "normal",
-            "value": "normal",
-          },
-          {
-            "docs": undefined,
-            "name": "float",
-            "value": "float",
-          },
-          {
-            "docs": undefined,
-            "name": "sameDay",
-            "value": "sameDay",
-          },
+          "early",
+          "normal",
+          "float",
+          "sameDay",
         ],
       },
       "AchSecCode": {
@@ -1511,56 +1414,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "arc",
-            "value": "arc",
-          },
-          {
-            "docs": undefined,
-            "name": "boc",
-            "value": "boc",
-          },
-          {
-            "docs": undefined,
-            "name": "ccd",
-            "value": "ccd",
-          },
-          {
-            "docs": undefined,
-            "name": "cie",
-            "value": "cie",
-          },
-          {
-            "docs": undefined,
-            "name": "ctx",
-            "value": "ctx",
-          },
-          {
-            "docs": undefined,
-            "name": "pop",
-            "value": "pop",
-          },
-          {
-            "docs": undefined,
-            "name": "ppd",
-            "value": "ppd",
-          },
-          {
-            "docs": undefined,
-            "name": "rck",
-            "value": "rck",
-          },
-          {
-            "docs": undefined,
-            "name": "tel",
-            "value": "tel",
-          },
-          {
-            "docs": undefined,
-            "name": "web",
-            "value": "web",
-          },
+          "arc",
+          "boc",
+          "ccd",
+          "cie",
+          "ctx",
+          "pop",
+          "ppd",
+          "rck",
+          "tel",
+          "web",
         ],
       },
       "Address": {
@@ -1657,14 +1520,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
             "type": "optional<list<string>>",
           },
-          "securityQuestions": {
-            "docs": undefined,
-            "type": "optional<ChallengeSecurityQuestions>",
-          },
-          "type": {
-            "docs": undefined,
-            "type": "ChallengeFactorType",
-          },
+          "securityQuestions": "optional<ChallengeSecurityQuestions>",
+          "type": "ChallengeFactorType",
         },
       },
       "ChallengeFactorType": {
@@ -1702,31 +1559,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "sms",
-            "value": "sms",
-          },
-          {
-            "docs": undefined,
-            "name": "email",
-            "value": "email",
-          },
-          {
-            "docs": undefined,
-            "name": "voice",
-            "value": "voice",
-          },
-          {
-            "docs": undefined,
-            "name": "securityQuestions",
-            "value": "securityQuestions",
-          },
-          {
-            "docs": undefined,
-            "name": "authenticatorToken",
-            "value": "authenticatorToken",
-          },
+          "sms",
+          "email",
+          "voice",
+          "securityQuestions",
+          "authenticatorToken",
         ],
       },
       "ChallengeSecurityQuestion": {
@@ -1762,10 +1599,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "type": "string",
           },
-          "type": {
-            "docs": undefined,
-            "type": "CutoffTimeType",
-          },
+          "type": "CutoffTimeType",
         },
       },
       "CutoffTimeType": {
@@ -1806,41 +1640,13 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ach",
-            "value": "ach",
-          },
-          {
-            "docs": undefined,
-            "name": "sameDayAch",
-            "value": "sameDayAch",
-          },
-          {
-            "docs": undefined,
-            "name": "domesticWireTransfer",
-            "value": "domesticWireTransfer",
-          },
-          {
-            "docs": undefined,
-            "name": "internationalWireTransfer",
-            "value": "internationalWireTransfer",
-          },
-          {
-            "docs": undefined,
-            "name": "internalTransfer",
-            "value": "internalTransfer",
-          },
-          {
-            "docs": undefined,
-            "name": "externalTransfer",
-            "value": "externalTransfer",
-          },
-          {
-            "docs": undefined,
-            "name": "billPay",
-            "value": "billPay",
-          },
+          "ach",
+          "sameDayAch",
+          "domesticWireTransfer",
+          "internationalWireTransfer",
+          "internalTransfer",
+          "externalTransfer",
+          "billPay",
         ],
       },
       "CutoffTimes": {
@@ -1913,21 +1719,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "instant",
-            "value": "instant",
-          },
-          {
-            "docs": undefined,
-            "name": "microDeposits",
-            "value": "microDeposits",
-          },
-          {
-            "docs": undefined,
-            "name": "manual",
-            "value": "manual",
-          },
+          "instant",
+          "microDeposits",
+          "manual",
         ],
       },
       "FullAccountPermissions": {
@@ -2005,21 +1799,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "abaRoutingNumber",
-            "value": "abaRoutingNumber",
-          },
-          {
-            "docs": undefined,
-            "name": "swiftBicCode",
-            "value": "swiftBicCode",
-          },
-          {
-            "docs": undefined,
-            "name": "ibanAccountNumber",
-            "value": "ibanAccountNumber",
-          },
+          "abaRoutingNumber",
+          "swiftBicCode",
+          "ibanAccountNumber",
         ],
       },
       "InstitutionLookupResult": {
@@ -2095,10 +1877,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
           },
-          "maskedNumber": {
-            "docs": undefined,
-            "type": "optional<maskedAccountNumber>",
-          },
+          "maskedNumber": "optional<maskedAccountNumber>",
         },
       },
       "OverdraftAccountItem": {
@@ -2121,10 +1900,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "OverdraftProtectionFields": {
         "docs": "Fields used to compose other overdraft protection schemas.",
         "properties": {
-          "accounts": {
-            "docs": undefined,
-            "type": "optional<unknown>",
-          },
+          "accounts": "optional<unknown>",
         },
       },
       "ProblemResponse": {
@@ -2195,36 +1971,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "savings",
-            "value": "savings",
-          },
-          {
-            "docs": undefined,
-            "name": "checking",
-            "value": "checking",
-          },
-          {
-            "docs": undefined,
-            "name": "cd",
-            "value": "cd",
-          },
-          {
-            "docs": undefined,
-            "name": "ira",
-            "value": "ira",
-          },
-          {
-            "docs": undefined,
-            "name": "loan",
-            "value": "loan",
-          },
-          {
-            "docs": undefined,
-            "name": "creditCard",
-            "value": "creditCard",
-          },
+          "savings",
+          "checking",
+          "cd",
+          "ira",
+          "loan",
+          "creditCard",
         ],
       },
       "ReadOnlyResourceId": {
@@ -2298,10 +2050,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The unique ID of this transaction's category.",
             "type": "string",
           },
-          "label": {
-            "docs": undefined,
-            "type": "transactionCategoryLabel",
-          },
+          "label": "transactionCategoryLabel",
         },
       },
       "TransactionCategory": {
@@ -2311,10 +2060,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransactionCategorization",
         ],
         "properties": {
-          "type": {
-            "docs": undefined,
-            "type": "TransactionCategoryType",
-          },
+          "type": "TransactionCategoryType",
         },
       },
       "TransactionCategoryType": {
@@ -2340,16 +2086,8 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "credit",
-            "value": "credit",
-          },
-          {
-            "docs": undefined,
-            "name": "debit",
-            "value": "debit",
-          },
+          "credit",
+          "debit",
         ],
       },
       "TransactionCheck": {
@@ -2384,10 +2122,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The transaction category, if assigned.",
             "type": "optional<TransactionCategorization>",
           },
-          "check": {
-            "docs": undefined,
-            "type": "optional<TransactionCheck>",
-          },
+          "check": "optional<TransactionCheck>",
           "createdOn": {
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
@@ -2404,10 +2139,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
           },
-          "merchant": {
-            "docs": undefined,
-            "type": "optional<TransactionMerchant>",
-          },
+          "merchant": "optional<TransactionMerchant>",
           "occurredOn": {
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
@@ -2478,16 +2210,8 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "check",
-            "value": "check",
-          },
-          {
-            "docs": undefined,
-            "name": "other",
-            "value": "other",
-          },
+          "check",
+          "other",
         ],
       },
       "TransactionType": {
@@ -2517,21 +2241,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "balance",
-            "value": "balance",
-          },
-          {
-            "docs": undefined,
-            "name": "debit",
-            "value": "debit",
-          },
-          {
-            "docs": undefined,
-            "name": "credit",
-            "value": "credit",
-          },
+          "balance",
+          "debit",
+          "credit",
         ],
       },
       "Transactions": {
@@ -2639,36 +2351,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "pastDate",
-            "value": "pastDate",
-          },
-          {
-            "docs": undefined,
-            "name": "pastCutoffTime",
-            "value": "pastCutoffTime",
-          },
-          {
-            "docs": undefined,
-            "name": "riskRestricted",
-            "value": "riskRestricted",
-          },
-          {
-            "docs": undefined,
-            "name": "holiday",
-            "value": "holiday",
-          },
-          {
-            "docs": undefined,
-            "name": "closure",
-            "value": "closure",
-          },
-          {
-            "docs": undefined,
-            "name": "other",
-            "value": "other",
-          },
+          "pastDate",
+          "pastCutoffTime",
+          "riskRestricted",
+          "holiday",
+          "closure",
+          "other",
         ],
       },
       "TransferDateRestrictions": {
@@ -2776,71 +2464,19 @@ The response may include dates prior to requested the start date, as that is use
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "once",
-            "value": "once",
-          },
-          {
-            "docs": undefined,
-            "name": "occasional",
-            "value": "occasional",
-          },
-          {
-            "docs": undefined,
-            "name": "daily",
-            "value": "daily",
-          },
-          {
-            "docs": undefined,
-            "name": "weekly",
-            "value": "weekly",
-          },
-          {
-            "docs": undefined,
-            "name": "biweekly",
-            "value": "biweekly",
-          },
-          {
-            "docs": undefined,
-            "name": "semimonthly",
-            "value": "semimonthly",
-          },
-          {
-            "docs": undefined,
-            "name": "monthly",
-            "value": "monthly",
-          },
-          {
-            "docs": undefined,
-            "name": "monthlyFirstDay",
-            "value": "monthlyFirstDay",
-          },
-          {
-            "docs": undefined,
-            "name": "monthlyLastDay",
-            "value": "monthlyLastDay",
-          },
-          {
-            "docs": undefined,
-            "name": "bimonthly",
-            "value": "bimonthly",
-          },
-          {
-            "docs": undefined,
-            "name": "quarterly",
-            "value": "quarterly",
-          },
-          {
-            "docs": undefined,
-            "name": "semiyearly",
-            "value": "semiyearly",
-          },
-          {
-            "docs": undefined,
-            "name": "yearly",
-            "value": "yearly",
-          },
+          "once",
+          "occasional",
+          "daily",
+          "weekly",
+          "biweekly",
+          "semimonthly",
+          "monthly",
+          "monthlyFirstDay",
+          "monthlyLastDay",
+          "bimonthly",
+          "quarterly",
+          "semiyearly",
+          "yearly",
         ],
       },
       "TransferItem": {
@@ -2911,16 +2547,8 @@ The response may include dates prior to requested the start date, as that is use
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "fixed",
-            "value": "fixed",
-          },
-          {
-            "docs": undefined,
-            "name": "variable",
-            "value": "variable",
-          },
+          "fixed",
+          "variable",
         ],
       },
       "TransferSchedule": {
@@ -2940,14 +2568,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<string>",
           },
-          "frequency": {
-            "docs": undefined,
-            "type": "TransferFrequency",
-          },
-          "recurrenceType": {
-            "docs": undefined,
-            "type": "optional<TransferRecurrenceType>",
-          },
+          "frequency": "TransferFrequency",
+          "recurrenceType": "optional<TransferRecurrenceType>",
           "scheduledOn": {
             "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
             "type": "optional<string>",
@@ -2981,21 +2603,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "debit",
-            "value": "debit",
-          },
-          {
-            "docs": undefined,
-            "name": "credit",
-            "value": "credit",
-          },
-          {
-            "docs": undefined,
-            "name": "both",
-            "value": "both",
-          },
+          "debit",
+          "credit",
+          "both",
         ],
       },
       "TransferScheduleItem": {
@@ -3066,41 +2676,13 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "unscheduled",
-            "value": "unscheduled",
-          },
-          {
-            "docs": undefined,
-            "name": "pendingApproval",
-            "value": "pendingApproval",
-          },
-          {
-            "docs": undefined,
-            "name": "scheduled",
-            "value": "scheduled",
-          },
-          {
-            "docs": undefined,
-            "name": "processing",
-            "value": "processing",
-          },
-          {
-            "docs": undefined,
-            "name": "processed",
-            "value": "processed",
-          },
-          {
-            "docs": undefined,
-            "name": "failed",
-            "value": "failed",
-          },
-          {
-            "docs": undefined,
-            "name": "other",
-            "value": "other",
-          },
+          "unscheduled",
+          "pendingApproval",
+          "scheduled",
+          "processing",
+          "processed",
+          "failed",
+          "other",
         ],
       },
       "TransferTypeForDateRestrictions": {
@@ -3140,36 +2722,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "internal",
-            "value": "internal",
-          },
-          {
-            "docs": undefined,
-            "name": "ach",
-            "value": "ach",
-          },
-          {
-            "docs": undefined,
-            "name": "achDebit",
-            "value": "achDebit",
-          },
-          {
-            "docs": undefined,
-            "name": "achCredit",
-            "value": "achCredit",
-          },
-          {
-            "docs": undefined,
-            "name": "domesticWireTransfer",
-            "value": "domesticWireTransfer",
-          },
-          {
-            "docs": undefined,
-            "name": "internationalWireTransfer",
-            "value": "internationalWireTransfer",
-          },
+          "internal",
+          "ach",
+          "achDebit",
+          "achCredit",
+          "domesticWireTransfer",
+          "internationalWireTransfer",
         ],
       },
       "Transfers": {
@@ -3273,6 +2831,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   "rootApiFile": {
     "auth": "apiKey",
     "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
       "apiKey": {
         "header": "API-Key",
         "name": "apiKey",
@@ -3280,16 +2841,13 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "Apiture Digital Banking",
     "environments": {
-      "default": "https://api.apiture.com/banking",
+      "Default": "https://api.apiture.com/banking",
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

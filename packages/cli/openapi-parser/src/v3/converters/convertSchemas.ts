@@ -69,6 +69,7 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set()
 ): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
@@ -113,7 +114,8 @@ export function convertSchemaObject(
             enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
             enumValues: schema.enum,
             description,
-            wrapAsNullable
+            wrapAsNullable,
+            groupName
         });
     }
 
@@ -245,7 +247,8 @@ export function convertSchemaObject(
             properties: schema.properties ?? {},
             required: schema.required,
             wrapAsNullable,
-            context
+            context,
+            groupName
         });
     }
 
@@ -266,7 +269,8 @@ export function convertSchemaObject(
                 properties: schema.properties ?? {},
                 required: schema.required,
                 wrapAsNullable,
-                context
+                context,
+                groupName
             });
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
             const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
@@ -291,7 +295,8 @@ export function convertSchemaObject(
                     enumVarNames: undefined,
                     enumValues: maybeAllEnumValues,
                     description,
-                    wrapAsNullable
+                    wrapAsNullable,
+                    groupName
                 });
             }
 
@@ -307,7 +312,8 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
-                    context
+                    context,
+                    groupName
                 });
             }
             return convertUndiscriminatedOneOf({
@@ -317,7 +323,8 @@ export function convertSchemaObject(
                 description,
                 wrapAsNullable,
                 context,
-                subtypes: schema.oneOf
+                subtypes: schema.oneOf,
+                groupName
             });
         }
     }
@@ -349,7 +356,8 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 discriminant: maybeDiscriminant.discriminant,
                 variants: maybeDiscriminant.schemas,
-                context
+                context,
+                groupName
             });
         }
 
@@ -360,7 +368,8 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             context,
-            subtypes: schema.anyOf
+            subtypes: schema.anyOf,
+            groupName
         });
     }
 
@@ -386,7 +395,8 @@ export function convertSchemaObject(
             wrapAsNullable,
             allOf: schema.allOf ?? [],
             context,
-            propertiesToExclude
+            propertiesToExclude,
+            groupName
         });
     }
 
@@ -436,7 +446,8 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
         generatedName,
         nameOverride,
         schema: getSchemaIdFromReference(schema),
-        description: description ?? undefined
+        description: description ?? undefined,
+        groupName: undefined
     });
 }
 

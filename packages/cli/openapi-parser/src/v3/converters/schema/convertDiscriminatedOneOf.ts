@@ -1,3 +1,4 @@
+import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
 import { CommonPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -13,7 +14,8 @@ export function convertDiscriminatedOneOf({
     required,
     wrapAsNullable,
     discriminator,
-    context
+    context,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -24,6 +26,7 @@ export function convertDiscriminatedOneOf({
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: AbstractOpenAPIV3ParserContext;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
@@ -65,7 +68,8 @@ export function convertDiscriminatedOneOf({
         properties: convertedProperties,
         description,
         discriminant,
-        subtypes: unionSubTypes
+        subtypes: unionSubTypes,
+        groupName
     });
 }
 
@@ -79,7 +83,8 @@ export function convertDiscriminatedOneOfWithVariants({
     wrapAsNullable,
     discriminant,
     variants,
-    context
+    context,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -91,6 +96,7 @@ export function convertDiscriminatedOneOfWithVariants({
     discriminant: string;
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
     context: AbstractOpenAPIV3ParserContext;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
@@ -129,7 +135,8 @@ export function convertDiscriminatedOneOfWithVariants({
         properties: convertedProperties,
         description,
         discriminant,
-        subtypes: unionSubTypes
+        subtypes: unionSubTypes,
+        groupName
     });
 }
 
@@ -140,7 +147,8 @@ export function wrapDiscriminantedOneOf({
     properties,
     description,
     discriminant,
-    subtypes
+    subtypes,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -149,6 +157,7 @@ export function wrapDiscriminantedOneOf({
     description: string | undefined;
     discriminant: string;
     subtypes: Record<string, SchemaWithExample>;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -159,7 +168,8 @@ export function wrapDiscriminantedOneOf({
                 nameOverride,
                 generatedName,
                 schemas: subtypes,
-                commonProperties: properties
+                commonProperties: properties,
+                groupName
             }),
             description
         });
@@ -171,6 +181,7 @@ export function wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
         schemas: subtypes,
-        commonProperties: properties
+        commonProperties: properties,
+        groupName
     });
 }

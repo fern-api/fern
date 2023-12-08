@@ -85,6 +85,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateTotpDeviceRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -94,6 +95,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "CreateTotpDeviceRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -151,6 +153,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "CreateTotpDeviceResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "DEVICE_ALREADY_EXISTS_ERROR": {
@@ -158,6 +161,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateTotpDeviceResponseDeviceAlreadyExistsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -167,6 +171,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateTotpDeviceResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -285,6 +290,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateTotpDeviceNameRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -294,6 +300,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "UpdateTotpDeviceNameRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -341,6 +348,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "UpdateTotpDeviceNameResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "DEVICE_ALREADY_EXISTS_ERROR": {
@@ -348,6 +356,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateTotpDeviceNameResponseDeviceAlreadyExistsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -357,6 +366,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateTotpDeviceNameResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -366,6 +376,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateTotpDeviceNameResponseTotpNotEnabledError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -375,6 +386,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateTotpDeviceNameResponseUnknownDeviceError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -490,6 +502,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetTotpDevicesResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -497,6 +510,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetTotpDevicesResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -514,6 +528,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                           "allOfPropertyConflicts": [],
                           "description": undefined,
                           "generatedName": "GetTotpDevicesResponseOkDevicesItem",
+                          "groupName": undefined,
                           "nameOverride": undefined,
                           "properties": [
                             {
@@ -596,6 +611,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetTotpDevicesResponseTotpNotEnabledError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -695,6 +711,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RemoveTotpDeviceRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -704,6 +721,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "RemoveTotpDeviceRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -737,6 +755,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "RemoveTotpDeviceResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -744,6 +763,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RemoveTotpDeviceResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -770,6 +790,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RemoveTotpDeviceResponseTotpNotEnabledError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -869,6 +890,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VerifyTotpCodeRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -878,6 +900,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "VerifyTotpCodeRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -923,6 +946,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "VerifyTotpCodeResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "INVALID_TOTP_ERROR": {
@@ -930,6 +954,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpCodeResponseInvalidTotpError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -939,6 +964,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpCodeResponseLimitReachedError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -965,6 +991,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpCodeResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -974,6 +1001,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpCodeResponseTotpNotEnabledError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1073,6 +1101,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VerifyTotpDeviceRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1082,6 +1111,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "VerifyTotpDeviceRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -1129,6 +1159,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "VerifyTotpDeviceResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "INVALID_TOTP_ERROR": {
@@ -1136,6 +1167,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpDeviceResponseInvalidTotpError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1145,6 +1177,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpDeviceResponseLimitReachedError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -1171,6 +1204,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpDeviceResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -1197,6 +1231,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpDeviceResponseTotpNotEnabledError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1206,6 +1241,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyTotpDeviceResponseUnknownDeviceError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1319,6 +1355,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "UserIdMappingGetMappingRequestUserIdType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -1355,6 +1392,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "UserIdMappingGetMappingResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -1362,6 +1400,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingGetMappingResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -1371,6 +1410,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "generatedName": "UserIdMappingGetMappingResponseOkSuperTokensUserId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "userId",
                       "type": "reference",
@@ -1416,6 +1456,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingGetMappingResponseUnknownMappingError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1515,6 +1556,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserIdMappingCreateMappingRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1524,6 +1566,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "UserIdMappingCreateMappingRequestSuperTokensUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -1591,6 +1634,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "UserIdMappingCreateMappingResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -1598,6 +1642,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingCreateMappingResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1607,6 +1652,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingCreateMappingResponseUnknownSupertokensUserIdError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -1616,6 +1662,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingCreateMappingResponseUserIdMappingAlreadyExistsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -1782,6 +1829,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserIdMappingRemoveMappingRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1791,6 +1839,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "UserIdMappingRemoveMappingRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -1806,6 +1855,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "generatedName": "UserIdMappingRemoveMappingRequestUserIdType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "type": "enum",
                   "values": [
@@ -1860,6 +1910,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserIdMappingRemoveMappingResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1872,6 +1923,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "generatedName": "UserIdMappingRemoveMappingResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -1987,6 +2039,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserIdMappingUpateExternalUserIdInfoRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -1996,6 +2049,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -2011,6 +2065,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserIdType",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "type": "enum",
                   "values": [
@@ -2068,6 +2123,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "UserIdMappingUpateExternalUserIdInfoResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -2075,6 +2131,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingUpateExternalUserIdInfoResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -2084,6 +2141,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UserIdMappingUpateExternalUserIdInfoResponseUnknownMappingError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -2182,6 +2240,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "oneOf": {
             "description": undefined,
             "generatedName": "PasswordlessTryUseCodeRequestBody",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -2189,6 +2248,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCode",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2198,6 +2258,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCodePreAuthSessionId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "preAuthSessionId",
                       "type": "reference",
@@ -2210,6 +2271,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCodeLinkCode",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "linkCode",
                       "type": "reference",
@@ -2223,6 +2285,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2232,6 +2295,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdPreAuthSessionId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "preAuthSessionId",
                       "type": "reference",
@@ -2244,6 +2308,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdDeviceId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "deviceId",
                       "type": "reference",
@@ -2256,6 +2321,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdUserInputCode",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "userInputCode",
                       "type": "reference",
@@ -2278,6 +2344,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "oneOf": {
             "description": undefined,
             "generatedName": "PasswordlessTryUseCodeResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -2285,6 +2352,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessTryUseCodeResponseCreatedNewUser",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2297,6 +2365,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessTryUseCodeResponseCreatedNewUserStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "statusOK",
                         "type": "reference",
@@ -2329,6 +2398,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessTryUseCodeResponseCreatedNewUserUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "passwordlessUser",
                         "type": "reference",
@@ -2343,6 +2413,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessTryUseCodeResponseFailedCodeInputAttemptCount",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2355,6 +2426,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessTryUseCodeResponseFailedCodeInputAttemptCountStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -2414,6 +2486,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessTryUseCodeResponseStatus",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2531,6 +2604,7 @@ Passing the optional deviceId signifies a resend code flow.
           "oneOf": {
             "description": undefined,
             "generatedName": "PasswordlessStartSignInRequestBody",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -2538,6 +2612,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessStartSignInRequestBodyEmail",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2547,6 +2622,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessStartSignInRequestBodyEmailEmail",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "email",
                       "type": "reference",
@@ -2562,6 +2638,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInRequestBodyEmailUserInputCode",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userInputCode",
                         "type": "reference",
@@ -2576,6 +2653,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumber",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2585,6 +2663,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumberPhoneNumber",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "phoneNumber",
                       "type": "reference",
@@ -2600,6 +2679,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumberUserInputCode",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userInputCode",
                         "type": "reference",
@@ -2614,6 +2694,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessStartSignInRequestBodyDeviceId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2623,6 +2704,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessStartSignInRequestBodyDeviceIdDeviceId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "deviceId",
                       "type": "reference",
@@ -2638,6 +2720,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInRequestBodyDeviceIdUserInputCode",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userInputCode",
                         "type": "reference",
@@ -2661,6 +2744,7 @@ Passing the optional deviceId signifies a resend code flow.
           "oneOf": {
             "description": undefined,
             "generatedName": "PasswordlessStartSignInResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -2668,6 +2752,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessStartSignInResponseCodeId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2680,6 +2765,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "statusOK",
                         "type": "reference",
@@ -2696,6 +2782,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdPreAuthSessionId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "preAuthSessionId",
                         "type": "reference",
@@ -2712,6 +2799,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdCodeId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "codeId",
                         "type": "reference",
@@ -2728,6 +2816,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdDeviceId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "deviceId",
                         "type": "reference",
@@ -2744,6 +2833,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdUserInputCode",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userInputCode",
                         "type": "reference",
@@ -2760,6 +2850,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdLinkCode",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "linkCode",
                         "type": "reference",
@@ -2776,6 +2867,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdTimeCreated",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "timeCreated",
                         "type": "reference",
@@ -2792,6 +2884,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseCodeIdCodeLifetime",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "codeLifetime",
                         "type": "reference",
@@ -2806,6 +2899,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessStartSignInResponseOne",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -2818,6 +2912,7 @@ Passing the optional deviceId signifies a resend code flow.
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessStartSignInResponseOneStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -2965,6 +3060,7 @@ Passing the optional deviceId signifies a resend code flow.
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PasswordlessRevokeCodeRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -2974,6 +3070,7 @@ Passing the optional deviceId signifies a resend code flow.
               "schema": {
                 "description": undefined,
                 "generatedName": "PasswordlessRevokeCodeRequestCodeId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "codeId",
                 "type": "reference",
@@ -2992,6 +3089,7 @@ Passing the optional deviceId signifies a resend code flow.
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PasswordlessRevokeCodeResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -3004,6 +3102,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "generatedName": "PasswordlessRevokeCodeResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -3240,6 +3339,7 @@ Passing the optional deviceId signifies a resend code flow.
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessListCodesRequestPhoneNumber",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "phoneNumber",
               "type": "reference",
@@ -3255,6 +3355,7 @@ Passing the optional deviceId signifies a resend code flow.
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessListCodesRequestDeviceId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "deviceId",
               "type": "reference",
@@ -3270,6 +3371,7 @@ Passing the optional deviceId signifies a resend code flow.
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessListCodesRequestPreAuthSessionId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "preAuthSessionId",
               "type": "reference",
@@ -3286,6 +3388,7 @@ Passing the optional deviceId signifies a resend code flow.
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PasswordlessListCodesResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -3298,6 +3401,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "generatedName": "PasswordlessListCodesResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -3319,6 +3423,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "PasswordlessListCodesResponseDevicesItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -3331,6 +3436,7 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "generatedName": "PasswordlessListCodesResponseDevicesItemPreAuthSessionId",
+                            "groupName": undefined,
                             "nameOverride": undefined,
                             "schema": "preAuthSessionId",
                             "type": "reference",
@@ -3363,6 +3469,7 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "generatedName": "PasswordlessListCodesResponseDevicesItemEmail",
+                            "groupName": undefined,
                             "nameOverride": undefined,
                             "schema": "email",
                             "type": "reference",
@@ -3379,6 +3486,7 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "generatedName": "PasswordlessListCodesResponseDevicesItemPhoneNumber",
+                            "groupName": undefined,
                             "nameOverride": undefined,
                             "schema": "phoneNumber",
                             "type": "reference",
@@ -3400,6 +3508,7 @@ Passing the optional deviceId signifies a resend code flow.
                               "allOfPropertyConflicts": [],
                               "description": undefined,
                               "generatedName": "PasswordlessListCodesResponseDevicesItemCodesItem",
+                              "groupName": undefined,
                               "nameOverride": undefined,
                               "properties": [
                                 {
@@ -3412,6 +3521,7 @@ Passing the optional deviceId signifies a resend code flow.
                                     "value": {
                                       "description": undefined,
                                       "generatedName": "PasswordlessListCodesResponseDevicesItemCodesItemCodeId",
+                                      "groupName": undefined,
                                       "nameOverride": undefined,
                                       "schema": "codeId",
                                       "type": "reference",
@@ -3428,6 +3538,7 @@ Passing the optional deviceId signifies a resend code flow.
                                     "value": {
                                       "description": undefined,
                                       "generatedName": "PasswordlessListCodesResponseDevicesItemCodesItemTimeCreated",
+                                      "groupName": undefined,
                                       "nameOverride": undefined,
                                       "schema": "timeCreated",
                                       "type": "reference",
@@ -3444,6 +3555,7 @@ Passing the optional deviceId signifies a resend code flow.
                                     "value": {
                                       "description": undefined,
                                       "generatedName": "PasswordlessListCodesResponseDevicesItemCodesItemCodeLifetime",
+                                      "groupName": undefined,
                                       "nameOverride": undefined,
                                       "schema": "codeLifetime",
                                       "type": "reference",
@@ -3554,6 +3666,7 @@ Passing the optional deviceId signifies a resend code flow.
           "oneOf": {
             "description": undefined,
             "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBody",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -3561,6 +3674,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyEmail",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -3570,6 +3684,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyEmailEmail",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "email",
                       "type": "reference",
@@ -3583,6 +3698,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumber",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -3592,6 +3708,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "schema": {
                       "description": undefined,
                       "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumberPhoneNumber",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "phoneNumber",
                       "type": "reference",
@@ -3615,6 +3732,7 @@ Passing the optional deviceId signifies a resend code flow.
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PasswordlessRevokeAllCodesOfUserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -3627,6 +3745,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "generatedName": "PasswordlessRevokeAllCodesOfUserResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -3745,6 +3864,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessGetUserRequestEmail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -3760,6 +3880,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessGetUserRequestPhoneNumber",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "phoneNumber",
               "type": "reference",
@@ -3775,6 +3896,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "oneOf": {
             "description": undefined,
             "generatedName": "PasswordlessGetUserResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -3782,6 +3904,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessGetUserResponseUser",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -3794,6 +3917,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessGetUserResponseUserStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "statusOK",
                         "type": "reference",
@@ -3810,6 +3934,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessGetUserResponseUserUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "passwordlessUser",
                         "type": "reference",
@@ -3824,6 +3949,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PasswordlessGetUserResponseOne",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -3836,6 +3962,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "PasswordlessGetUserResponseOneStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -3987,6 +4114,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PasswordlessPutUserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -3996,6 +4124,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "schema": {
                 "description": undefined,
                 "generatedName": "PasswordlessPutUserRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -4013,6 +4142,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     {
                       "description": undefined,
                       "generatedName": "Email",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "email",
                       "type": "reference",
@@ -4021,6 +4151,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "PasswordlessPutUserRequestEmail",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "properties": [],
                   "type": "object",
@@ -4039,6 +4170,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     {
                       "description": undefined,
                       "generatedName": "PhoneNumber",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "phoneNumber",
                       "type": "reference",
@@ -4047,6 +4179,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "PasswordlessPutUserRequestPhoneNumber",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "properties": [],
                   "type": "object",
@@ -4066,6 +4199,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PasswordlessPutUserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -4078,6 +4212,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "PasswordlessPutUserResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "type": "enum",
                   "values": [
@@ -4202,6 +4337,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordSigninRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -4214,6 +4350,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordSigninRequestEmail",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "email",
                   "type": "reference",
@@ -4230,6 +4367,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordSigninRequestPassword",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "password",
                   "type": "reference",
@@ -4250,6 +4388,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "EmailPasswordSigninResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -4257,6 +4396,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordSigninResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -4269,6 +4409,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordSigninResponseOkUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "user",
                         "type": "reference",
@@ -4281,6 +4422,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "WRONG_CREDENTIALS_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasWrongCredentialsResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "wrongCredentialsResponse",
                 "type": "reference",
@@ -4380,6 +4522,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordSignupRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -4392,6 +4535,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordSignupRequestEmail",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "email",
                   "type": "reference",
@@ -4408,6 +4552,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordSignupRequestPassword",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "password",
                   "type": "reference",
@@ -4428,6 +4573,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "EmailPasswordSignupResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "EMAIL_ALREADY_EXISTS_ERROR": {
@@ -4435,6 +4581,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordSignupResponseEmailAlreadyExistsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -4444,6 +4591,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordSignupResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -4456,6 +4604,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordSignupResponseOkUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "user",
                         "type": "reference",
@@ -4561,6 +4710,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "value": {
               "description": undefined,
               "generatedName": "EmailPasswordGetUserRequestEmail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -4576,6 +4726,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "value": {
               "description": undefined,
               "generatedName": "EmailPasswordGetUserRequestUserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userId",
               "type": "reference",
@@ -4591,6 +4742,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "oneOf": {
             "description": undefined,
             "generatedName": "EmailPasswordGetUserResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -4598,6 +4750,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordGetUserResponseUser",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -4610,6 +4763,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordGetUserResponseUserStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "statusOK",
                         "type": "reference",
@@ -4626,6 +4780,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordGetUserResponseUserUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "user",
                         "type": "reference",
@@ -4640,6 +4795,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordGetUserResponseOne",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -4652,6 +4808,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordGetUserResponseOneStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -4810,6 +4967,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordPutUserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -4822,6 +4980,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordPutUserRequestUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userId",
                   "type": "reference",
@@ -4838,6 +4997,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordPutUserRequestEmail",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "email",
                   "type": "reference",
@@ -4854,6 +5014,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordPutUserRequestPassword",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "password",
                   "type": "reference",
@@ -4873,6 +5034,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordPutUserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -4885,6 +5047,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordPutUserResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "type": "enum",
                   "values": [
@@ -5003,6 +5166,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordGetPasswordResetTokenRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -5015,6 +5179,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordGetPasswordResetTokenRequestUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userId",
                   "type": "reference",
@@ -5035,6 +5200,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "EmailPasswordGetPasswordResetTokenResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -5042,6 +5208,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordGetPasswordResetTokenResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -5054,6 +5221,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordGetPasswordResetTokenResponseOkToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "token",
                         "type": "reference",
@@ -5066,6 +5234,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "UNKNOWN_USER_ID_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnknownUserIdResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unknownUserIdResponse",
                 "type": "reference",
@@ -5263,6 +5432,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "value": {
               "description": undefined,
               "generatedName": "EmailPasswordGetUsersRequestTimeJoinedOrder",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -5292,6 +5462,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordGetUsersResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -5304,6 +5475,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordGetUsersResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -5323,6 +5495,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "value": {
                     "description": undefined,
                     "generatedName": "EmailPasswordGetUsersResponseUsersItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "user",
                     "type": "reference",
@@ -5340,6 +5513,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordGetUsersResponseNextPaginationToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "paginationToken",
                   "type": "reference",
@@ -5439,6 +5613,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordGetPasswordResetRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -5468,6 +5643,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordGetPasswordResetRequestToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -5506,6 +5682,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "EmailPasswordGetPasswordResetResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -5513,6 +5690,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordGetPasswordResetResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -5525,6 +5703,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailPasswordGetPasswordResetResponseOkUserId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userId",
                         "type": "reference",
@@ -5539,6 +5718,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailPasswordGetPasswordResetResponseResetPasswordInvalidTokenError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -5665,6 +5845,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailPasswordGetUserCountResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -5677,6 +5858,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailPasswordGetUserCountResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -5859,6 +6041,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserImportRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -5871,6 +6054,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "UserImportRequestEmail",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "email",
                   "type": "reference",
@@ -5905,6 +6089,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "UserImportRequestHashingAlgorithm",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "type": "enum",
                   "values": [
@@ -5943,6 +6128,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserImportResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -5955,6 +6141,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "UserImportResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -5971,6 +6158,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "UserImportResponseUser",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "user",
                   "type": "reference",
@@ -6173,6 +6361,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ThirdPartySigninupRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -6185,6 +6374,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartySigninupRequestThirdPartyId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "thirdPartyId",
                   "type": "reference",
@@ -6201,6 +6391,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartySigninupRequestThirdPartyUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "thirdPartyUserId",
                   "type": "reference",
@@ -6217,6 +6408,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartySigninupRequestEmail",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "thirdPartyEmail",
                   "type": "reference",
@@ -6236,6 +6428,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ThirdPartySigninupResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -6248,6 +6441,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartySigninupResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -6280,6 +6474,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartySigninupResponseUser",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "thirdPartyUser",
                   "type": "reference",
@@ -6398,6 +6593,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyGetUserRequestThirdPartyId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "thirdPartyId",
               "type": "reference",
@@ -6413,6 +6609,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyGetUserRequestThirdPartyUserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "thirdPartyUserId",
               "type": "reference",
@@ -6428,6 +6625,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "oneOf": {
             "description": undefined,
             "generatedName": "ThirdPartyGetUserResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -6435,6 +6633,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "ThirdPartyGetUserResponseUser",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -6447,6 +6646,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "ThirdPartyGetUserResponseUserStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "statusOK",
                         "type": "reference",
@@ -6463,6 +6663,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "ThirdPartyGetUserResponseUserUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "thirdPartyUser",
                         "type": "reference",
@@ -6477,6 +6678,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "ThirdPartyGetUserResponseOne",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -6489,6 +6691,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "ThirdPartyGetUserResponseOneStatus",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -6693,6 +6896,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ThirdPartyGetUsersByEmailResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -6705,6 +6909,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartyGetUsersByEmailResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -6724,6 +6929,7 @@ Note that there is an invisible character at the end of the path, this was to av
                   "value": {
                     "description": undefined,
                     "generatedName": "ThirdPartyGetUsersByEmailResponseUsersItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "thirdPartyUser",
                     "type": "reference",
@@ -6920,6 +7126,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyGetUsersRequestTimeJoinedOrder",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -6964,6 +7171,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ThirdPartyGetUsersResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -6976,6 +7184,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartyGetUsersResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -6995,6 +7204,7 @@ Note that there is an invisible character at the end of the path, this was to av
                   "value": {
                     "description": undefined,
                     "generatedName": "ThirdPartyGetUsersResponseUserItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "thirdPartyUser",
                     "type": "reference",
@@ -7012,6 +7222,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartyGetUsersResponseNextPaginationToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "paginationToken",
                   "type": "reference",
@@ -7139,6 +7350,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ThirdPartyGetUserCountResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -7151,6 +7363,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "ThirdPartyGetUserCountResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -7264,6 +7477,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "emailVerificationVerifyTokenRequest",
           "type": "reference",
@@ -7279,6 +7493,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "EmailVerificationVerifyTokenResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "EMAIL_ALREADY_VERIFIED_ERROR": {
@@ -7286,6 +7501,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailVerificationVerifyTokenResponseEmailAlreadyVerifiedError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -7295,6 +7511,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailVerificationVerifyTokenResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -7307,6 +7524,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailVerificationVerifyTokenResponseOkToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "token",
                         "type": "reference",
@@ -7446,6 +7664,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRemoveRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "emailVerificationVerifyTokenRequest",
           "type": "reference",
@@ -7460,6 +7679,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailVerificationVerifyTokenRemoveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -7655,6 +7875,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailVerificationVerifyGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -7667,6 +7888,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailVerificationVerifyGetResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -7683,6 +7905,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailVerificationVerifyGetResponseIsVerified",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "isVerified",
                   "type": "reference",
@@ -7782,6 +8005,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailVerificationVerifyRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -7811,6 +8035,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "EmailVerificationVerifyRequestToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -7831,6 +8056,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "EmailVerificationVerifyResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR": {
@@ -7838,6 +8064,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailVerificationVerifyResponseEmailVerificationInvalidTokenError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -7847,6 +8074,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EmailVerificationVerifyResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -7859,6 +8087,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailVerificationVerifyResponseOkUserId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userId",
                         "type": "reference",
@@ -7875,6 +8104,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       "value": {
                         "description": undefined,
                         "generatedName": "EmailVerificationVerifyResponseOkEmail",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "email",
                         "type": "reference",
@@ -8014,6 +8244,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "schema": {
           "description": undefined,
           "generatedName": "EmailVerificationVerifyRemoveRequestBody",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "emailVerificationVerifyTokenRequest",
           "type": "reference",
@@ -8028,6 +8259,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmailVerificationVerifyRemoveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8185,6 +8417,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserMetadataReadResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8197,6 +8430,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataReadResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -8213,6 +8447,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataReadResponseMetadata",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userMetadata",
                   "type": "reference",
@@ -8350,6 +8585,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserMetadataUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8362,6 +8598,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataUpdateRequestUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userId",
                   "type": "reference",
@@ -8378,6 +8615,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataUpdateRequestMetadataUpdate",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userMetadataUpdate",
                   "type": "reference",
@@ -8397,6 +8635,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserMetadataUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8409,6 +8648,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataUpdateResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -8425,6 +8665,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataUpdateResponseMetadata",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userMetadata",
                   "type": "reference",
@@ -8554,6 +8795,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserMetadataDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8566,6 +8808,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataDeleteRequestUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userId",
                   "type": "reference",
@@ -8585,6 +8828,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserMetadataDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8597,6 +8841,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "UserMetadataDeleteResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -8696,6 +8941,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AddUserRoleRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8705,6 +8951,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "AddUserRoleRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -8717,6 +8964,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "AddUserRoleRequestRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "role",
                 "type": "reference",
@@ -8736,6 +8984,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "AddUserRoleResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -8743,6 +8992,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "AddUserRoleResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -8767,6 +9017,7 @@ e.g.:
               "UNKNOWN_ROLE_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnknownRoleResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unknownRoleResponse",
                 "type": "reference",
@@ -8866,6 +9117,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RemoveUserRoleRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -8875,6 +9127,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "RemoveUserRoleRequestUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "userId",
                 "type": "reference",
@@ -8887,6 +9140,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "RemoveUserRoleRequestRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "role",
                 "type": "reference",
@@ -8906,6 +9160,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "RemoveUserRoleResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -8913,6 +9168,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RemoveUserRoleResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -8937,6 +9193,7 @@ e.g.:
               "UNKNOWN_ROLE_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnknownRoleResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unknownRoleResponse",
                 "type": "reference",
@@ -9093,6 +9350,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetUserRolesResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -9105,6 +9363,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetUserRolesResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -9124,6 +9383,7 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "generatedName": "GetUserRolesResponseRolesItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "role",
                     "type": "reference",
@@ -9240,6 +9500,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetRoleUsersResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -9247,6 +9508,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetRoleUsersResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -9262,6 +9524,7 @@ e.g.:
                         "value": {
                           "description": undefined,
                           "generatedName": "GetRoleUsersResponseOkUsersItem",
+                          "groupName": undefined,
                           "nameOverride": undefined,
                           "schema": "userId",
                           "type": "reference",
@@ -9275,6 +9538,7 @@ e.g.:
               "UNKNOWN_ROLE_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnknownRoleResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unknownRoleResponse",
                 "type": "reference",
@@ -9423,6 +9687,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PutRoleRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -9432,6 +9697,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "PutRoleRequestRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "role",
                 "type": "reference",
@@ -9472,6 +9738,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PutRoleResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -9484,6 +9751,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "PutRoleResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -9615,6 +9883,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetRolePermissionsResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -9622,6 +9891,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetRolePermissionsResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -9652,6 +9922,7 @@ e.g.:
               "UNKNOWN_ROLE_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnknownRoleResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unknownRoleResponse",
                 "type": "reference",
@@ -9751,6 +10022,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RemoveRolePermissionsRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -9760,6 +10032,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "RemoveRolePermissionsRequestRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "role",
                 "type": "reference",
@@ -9801,6 +10074,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "RemoveRolePermissionsResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -9808,6 +10082,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RemoveRolePermissionsResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -9815,6 +10090,7 @@ e.g.:
               "UNKNOWN_ROLE_ERROR": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnknownRoleResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unknownRoleResponse",
                 "type": "reference",
@@ -9971,6 +10247,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetPermissionRolesResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -9983,6 +10260,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetPermissionRolesResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -10141,6 +10419,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RemoveRoleRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -10150,6 +10429,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "RemoveRoleRequestRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "role",
                 "type": "reference",
@@ -10168,6 +10448,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RemoveRoleResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -10180,6 +10461,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "RemoveRoleResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -10327,6 +10609,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetRolesResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -10339,6 +10622,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetRolesResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -10461,6 +10745,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "GetSessionInfoRequestSessionHandle",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "handle",
               "type": "reference",
@@ -10478,6 +10763,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetSessionInfoResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -10485,6 +10771,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetSessionInfoResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -10497,6 +10784,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionInfoResponseOkUserDataInDatabase",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userDataInDatabase",
                         "type": "reference",
@@ -10513,6 +10801,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionInfoResponseOkUserDataInJwt",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userDataInJWT",
                         "type": "reference",
@@ -10529,6 +10818,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionInfoResponseOkUserId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userId",
                         "type": "reference",
@@ -10545,6 +10835,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionInfoResponseOkExpiry",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "expiry",
                         "type": "reference",
@@ -10561,6 +10852,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionInfoResponseOkTimeCreated",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "timeCreated",
                         "type": "reference",
@@ -10577,6 +10869,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionInfoResponseOkSessionHandle",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "handle",
                         "type": "reference",
@@ -10589,6 +10882,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -10810,6 +11104,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateNewSessionRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -10822,6 +11117,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionRequestUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userId",
                   "type": "reference",
@@ -10838,6 +11134,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionRequestUserDataInJwt",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userDataInJWT",
                   "type": "reference",
@@ -10854,6 +11151,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionRequestUserDataInDatabase",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userDataInDatabase",
                   "type": "reference",
@@ -10870,6 +11168,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionRequestEnableAntiCsrf",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "enableAntiCsrf",
                   "type": "reference",
@@ -10905,6 +11204,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateNewSessionResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -10917,6 +11217,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -10933,6 +11234,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionResponseSession",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "session",
                   "type": "reference",
@@ -10949,6 +11251,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionResponseAccessToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "cookieInfo",
                   "type": "reference",
@@ -10965,6 +11268,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionResponseRefreshToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "cookieInfo",
                   "type": "reference",
@@ -10981,6 +11285,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateNewSessionResponseAntiCsrfToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -11079,6 +11384,7 @@ e.g.:
           "oneOf": {
             "description": undefined,
             "generatedName": "DeleteSessionRequestBody",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -11086,6 +11392,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "DeleteSessionRequestBodySessionHandles",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -11098,6 +11405,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "DeleteSessionRequestBodySessionHandlesSessionHandles",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "sessionHandles",
                         "type": "reference",
@@ -11112,6 +11420,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "DeleteSessionRequestBodyUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -11124,6 +11433,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "DeleteSessionRequestBodyUserIdUserId",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userId",
                         "type": "reference",
@@ -11148,6 +11458,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeleteSessionResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -11160,6 +11471,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "DeleteSessionResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -11176,6 +11488,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "DeleteSessionResponseSessionHandlesRevoked",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "sessionHandles",
                   "type": "reference",
@@ -11275,6 +11588,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VerifySessionRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -11287,6 +11601,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "VerifySessionRequestAccessToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -11303,6 +11618,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "VerifySessionRequestEnableAntiCsrf",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "enableAntiCsrf",
                   "type": "reference",
@@ -11351,6 +11667,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "VerifySessionRequestAntiCsrfToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -11371,6 +11688,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "VerifySessionResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -11378,6 +11696,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifySessionResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -11390,6 +11709,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "VerifySessionResponseOkSession",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "session",
                         "type": "reference",
@@ -11406,6 +11726,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "VerifySessionResponseOkAccessToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "cookieInfo",
                         "type": "reference",
@@ -11420,6 +11741,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifySessionResponseTryRefreshToken",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -11432,6 +11754,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "VerifySessionResponseTryRefreshTokenMessage",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "message",
                         "type": "reference",
@@ -11444,6 +11767,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -11543,6 +11867,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RefreshSessionRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -11552,6 +11877,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "RefreshSessionRequestRefreshToken",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "token",
                 "type": "reference",
@@ -11564,6 +11890,7 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "generatedName": "RefreshSessionRequestEnableAntiCsrf",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "enableAntiCsrf",
                 "type": "reference",
@@ -11579,6 +11906,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "RefreshSessionRequestAntiCsrfToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -11599,6 +11927,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "RefreshSessionResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -11606,6 +11935,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RefreshSessionResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -11618,6 +11948,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "RefreshSessionResponseOkSession",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "session",
                         "type": "reference",
@@ -11634,6 +11965,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "RefreshSessionResponseOkAccessToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "cookieInfo",
                         "type": "reference",
@@ -11650,6 +11982,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "RefreshSessionResponseOkRefreshToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "cookieInfo",
                         "type": "reference",
@@ -11666,6 +11999,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "RefreshSessionResponseOkAntiCsrfToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "token",
                         "type": "reference",
@@ -11680,6 +12014,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RefreshSessionResponseTokenTheftDetected",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -11694,6 +12029,7 @@ e.g.:
                         "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "RefreshSessionResponseTokenTheftDetectedSession",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "properties": [
                           {
@@ -11706,6 +12042,7 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "generatedName": "RefreshSessionResponseTokenTheftDetectedSessionHandle",
+                                "groupName": undefined,
                                 "nameOverride": undefined,
                                 "schema": "handle",
                                 "type": "reference",
@@ -11722,6 +12059,7 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "generatedName": "RefreshSessionResponseTokenTheftDetectedSessionUserId",
+                                "groupName": undefined,
                                 "nameOverride": undefined,
                                 "schema": "userId",
                                 "type": "reference",
@@ -11739,6 +12077,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -11899,6 +12238,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetUserSessionHandlesResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -11911,6 +12251,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetUserSessionHandlesResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -11927,6 +12268,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetUserSessionHandlesResponseSessionHandles",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "sessionHandles",
                   "type": "reference",
@@ -12026,6 +12368,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RegenerateSessionRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -12038,6 +12381,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "RegenerateSessionRequestAccessToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "token",
                   "type": "reference",
@@ -12054,6 +12398,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "RegenerateSessionRequestUserDataInJwt",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userDataInJWT",
                   "type": "reference",
@@ -12074,6 +12419,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "RegenerateSessionResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -12081,6 +12427,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "RegenerateSessionResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -12093,6 +12440,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "RegenerateSessionResponseOkSession",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "session",
                         "type": "reference",
@@ -12109,6 +12457,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "RegenerateSessionResponseOkAccessToken",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "cookieInfo",
                         "type": "reference",
@@ -12121,6 +12470,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -12221,6 +12571,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "GetSessionDataRequestSessionHandle",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "handle",
               "type": "reference",
@@ -12238,6 +12589,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetSessionDataResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -12245,6 +12597,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetSessionDataResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -12257,6 +12610,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetSessionDataResponseOkUserDataInDatabase",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userDataInDatabase",
                         "type": "reference",
@@ -12269,6 +12623,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -12368,6 +12723,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PutSessionDataRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -12380,6 +12736,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "PutSessionDataRequestSessionHandle",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "handle",
                   "type": "reference",
@@ -12396,6 +12753,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "PutSessionDataRequestUserDataInDatabase",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userDataInDatabase",
                   "type": "reference",
@@ -12416,11 +12774,13 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "PutSessionDataResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasStatusOkResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "statusOKResponse",
                 "type": "reference",
@@ -12428,6 +12788,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -12526,6 +12887,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateSignedJwtRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -12538,6 +12900,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateSignedJwtRequestPayload",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "createJWTPayload",
                   "type": "reference",
@@ -12554,6 +12917,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateSignedJwtRequestAlgorithm",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "createJWTAlgorithm",
                   "type": "reference",
@@ -12570,6 +12934,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateSignedJwtRequestJwksDomain",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "jwksDomain",
                   "type": "reference",
@@ -12586,6 +12951,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "CreateSignedJwtRequestValidity",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "jwtValidity",
                   "type": "reference",
@@ -12622,6 +12988,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "CreateSignedJwtResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -12629,6 +12996,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateSignedJwtResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -12657,6 +13025,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateSignedJwtResponseUnsupportedAlgorithmError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -12747,6 +13116,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RetrieveJwksResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -12762,6 +13132,7 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "generatedName": "RetrieveJwksResponseKeysItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "schema": "jwk",
                     "type": "reference",
@@ -12863,6 +13234,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "GetJwtDataRequestSessionHandle",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "handle",
               "type": "reference",
@@ -12880,6 +13252,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetJwtDataResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
@@ -12887,6 +13260,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetJwtDataResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -12899,6 +13273,7 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "generatedName": "GetJwtDataResponseOkUserDataInJwt",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "userDataInJWT",
                         "type": "reference",
@@ -12911,6 +13286,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -13010,6 +13386,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PutJwtDataRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -13022,6 +13399,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "PutJwtDataRequestSessionHandle",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "handle",
                   "type": "reference",
@@ -13038,6 +13416,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "PutJwtDataRequestUserDataInJwt",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userDataInJWT",
                   "type": "reference",
@@ -13058,11 +13437,13 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "PutJwtDataResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "OK": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasStatusOkResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "statusOKResponse",
                 "type": "reference",
@@ -13070,6 +13451,7 @@ e.g.:
               "UNAUTHORISED": {
                 "description": undefined,
                 "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "unauthorisedMessageResponse",
                 "type": "reference",
@@ -13170,6 +13552,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateDashboardUserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -13222,6 +13605,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "CreateDashboardUserResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "EMAIL_ALREADY_EXISTS_ERROR": {
@@ -13229,6 +13613,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateDashboardUserResponseEmailAlreadyExistsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -13238,6 +13623,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateDashboardUserResponseInvalidEmailError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -13247,6 +13633,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateDashboardUserResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -13261,6 +13648,7 @@ e.g.:
                         "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "CreateDashboardUserResponseOkUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "properties": [
                           {
@@ -13328,6 +13716,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "CreateDashboardUserResponsePasswordWeakError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -13445,6 +13834,7 @@ e.g.:
           "oneOf": {
             "description": undefined,
             "generatedName": "UpdateDashboardUserRequestBody",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -13452,6 +13842,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserRequestBodyEmail",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -13516,6 +13907,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserRequestBodyUserId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -13591,6 +13983,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "UpdateDashboardUserResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "EMAIL_ALREADY_EXISTS_ERROR": {
@@ -13598,6 +13991,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserResponseEmailAlreadyExistsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -13607,6 +14001,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserResponseInvalidEmailError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -13616,6 +14011,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -13630,6 +14026,7 @@ e.g.:
                         "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "UpdateDashboardUserResponseOkUser",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "properties": [
                           {
@@ -13697,6 +14094,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserResponsePasswordWeakError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -13725,6 +14123,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "UpdateDashboardUserResponseUnknownUserError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -13900,6 +14299,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeleteDashboardUserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -13912,6 +14312,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "DeleteDashboardUserResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -14085,6 +14486,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetAllDashboardUsersResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -14119,6 +14521,7 @@ e.g.:
                     "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "GetAllDashboardUsersResponseUsersItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -14288,6 +14691,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VerifyDashboardUserSessionRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -14322,6 +14726,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "VerifyDashboardUserSessionResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "INVAlID_SESSION_ERROR": {
@@ -14329,6 +14734,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyDashboardUserSessionResponseInvAlIdSessionError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -14338,6 +14744,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyDashboardUserSessionResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -14347,6 +14754,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "VerifyDashboardUserSessionResponseUserSuspendedError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -14514,6 +14922,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevokeDashboardUsersSessionResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -14526,6 +14935,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "RevokeDashboardUsersSessionResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -14625,6 +15035,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignInDashboardUserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -14677,6 +15088,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "SignInDashboardUserResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "INVAlID_CREDENTIALS_ERROR": {
@@ -14684,6 +15096,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "SignInDashboardUserResponseInvAlIdCredentialsError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -14693,6 +15106,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "SignInDashboardUserResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -14721,6 +15135,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "SignInDashboardUserResponseUserSuspendedError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -14919,6 +15334,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetAllSessionsForDashboardUserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -14936,6 +15352,7 @@ e.g.:
                     "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "GetAllSessionsForDashboardUserResponseSessionsItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -14948,6 +15365,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "generatedName": "GetAllSessionsForDashboardUserResponseSessionsItemUserId",
+                            "groupName": undefined,
                             "nameOverride": undefined,
                             "schema": "userId",
                             "type": "reference",
@@ -15081,6 +15499,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetApiVersionResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -15201,6 +15620,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetConfigResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "NOT_ALLOWED": {
@@ -15208,6 +15628,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetConfigResponseNotAllowed",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -15217,6 +15638,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetConfigResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -15293,6 +15715,7 @@ e.g.:
         "schema": {
           "description": undefined,
           "generatedName": "GetHelloOnRootPathResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "helloResponse",
           "type": "reference",
@@ -15345,6 +15768,7 @@ e.g.:
         "schema": {
           "description": undefined,
           "generatedName": "GetHelloResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "helloResponse",
           "type": "reference",
@@ -15397,6 +15821,7 @@ e.g.:
         "schema": {
           "description": undefined,
           "generatedName": "PostHelloResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "helloResponse",
           "type": "reference",
@@ -15449,6 +15874,7 @@ e.g.:
         "schema": {
           "description": undefined,
           "generatedName": "PutHelloResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "helloResponse",
           "type": "reference",
@@ -15501,6 +15927,7 @@ e.g.:
         "schema": {
           "description": undefined,
           "generatedName": "DeleteHelloResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "helloResponse",
           "type": "reference",
@@ -15578,6 +16005,7 @@ e.g.:
           "oneOf": {
             "description": undefined,
             "generatedName": "GetTelemetryResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": [
               {
@@ -15585,6 +16013,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetTelemetryResponseTelemetryId",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -15631,6 +16060,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetTelemetryResponseOne",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -15786,6 +16216,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetUsersCountResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -15798,6 +16229,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetUsersCountResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -15946,6 +16378,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetActiveUsersCountResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -15958,6 +16391,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetActiveUsersCountResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -16190,6 +16624,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "GetUsersRequestTimeJoinedOrder",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -16285,6 +16720,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetUsersResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -16297,6 +16733,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetUsersResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -16318,6 +16755,7 @@ e.g.:
                     "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "GetUsersResponseUsersItem",
+                    "groupName": undefined,
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -16327,6 +16765,7 @@ e.g.:
                         "schema": {
                           "description": undefined,
                           "generatedName": "GetUsersResponseUsersItemRecipeId",
+                          "groupName": undefined,
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -16359,11 +16798,13 @@ e.g.:
                           "oneOf": {
                             "description": undefined,
                             "generatedName": "GetUsersResponseUsersItemUser",
+                            "groupName": undefined,
                             "nameOverride": undefined,
                             "schemas": [
                               {
                                 "description": undefined,
                                 "generatedName": "GetUsersResponseUsersItemUserZero",
+                                "groupName": undefined,
                                 "nameOverride": undefined,
                                 "schema": "user",
                                 "type": "reference",
@@ -16371,6 +16812,7 @@ e.g.:
                               {
                                 "description": undefined,
                                 "generatedName": "GetUsersResponseUsersItemUserOne",
+                                "groupName": undefined,
                                 "nameOverride": undefined,
                                 "schema": "thirdPartyUser",
                                 "type": "reference",
@@ -16378,6 +16820,7 @@ e.g.:
                               {
                                 "description": undefined,
                                 "generatedName": "GetUsersResponseUsersItemUserTwo",
+                                "groupName": undefined,
                                 "nameOverride": undefined,
                                 "schema": "passwordlessUser",
                                 "type": "reference",
@@ -16404,6 +16847,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetUsersResponseNextPaginationToken",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "paginationToken",
                   "type": "reference",
@@ -16515,6 +16959,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeleteUserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -16527,6 +16972,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "DeleteUserRequestUserId",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "userId",
                   "type": "reference",
@@ -16546,6 +16992,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeleteUserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -16558,6 +17005,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "DeleteUserResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -16660,6 +17108,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetSearchTagsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -16672,6 +17121,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetSearchTagsResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -16796,6 +17246,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetFeatureFlagResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -16808,6 +17259,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "GetFeatureFlagResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -16938,6 +17390,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "GetLicenseResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "NO_LICENSE_KEY_FOUND_ERROR": {
@@ -16945,6 +17398,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetLicenseResponseNoLicenseKeyFoundError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -16954,6 +17408,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GetLicenseResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -17054,6 +17509,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SetLicenseRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -17088,6 +17544,7 @@ e.g.:
             "description": undefined,
             "discriminantProperty": "status",
             "generatedName": "SetLicenseResponse",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schemas": {
               "INVALID_LICENSE_KEY_ERROR": {
@@ -17095,6 +17552,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "SetLicenseResponseInvalidLicenseKeyError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -17104,6 +17562,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "SetLicenseResponseMissingEeFolderError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -17113,6 +17572,7 @@ e.g.:
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "SetLicenseResponseOk",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
@@ -17214,6 +17674,7 @@ e.g.:
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeleteLicenseResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -17226,6 +17687,7 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "generatedName": "DeleteLicenseResponseStatus",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "statusOK",
                   "type": "reference",
@@ -17356,6 +17818,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "CookieInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17368,6 +17831,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "CookieInfoToken",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "token",
               "type": "reference",
@@ -17384,6 +17848,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "CookieInfoExpiry",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "expiry",
               "type": "reference",
@@ -17400,6 +17865,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "CookieInfoCreatedTime",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeCreated",
               "type": "reference",
@@ -17456,6 +17922,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EmailVerificationVerifyTokenRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17468,6 +17935,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "EmailVerificationVerifyTokenRequestUserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userId",
               "type": "reference",
@@ -17484,6 +17952,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "EmailVerificationVerifyTokenRequestEmail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -17553,6 +18022,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": "A JWK that can be used to verify a JWT",
       "generatedName": "Jwk",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17565,6 +18035,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "JwkAlg",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "createJWTAlgorithm",
               "type": "reference",
@@ -17723,6 +18194,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PasswordlessUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17735,6 +18207,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userId",
               "type": "reference",
@@ -17751,6 +18224,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserEmail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -17767,6 +18241,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserPhoneNumber",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "phoneNumber",
               "type": "reference",
@@ -17783,6 +18258,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserTimeJoined",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeJoined",
               "type": "reference",
@@ -17832,6 +18308,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Session",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17844,6 +18321,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "SessionHandle",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "handle",
               "type": "reference",
@@ -17860,6 +18338,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "SessionUserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userId",
               "type": "reference",
@@ -17876,6 +18355,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "SessionUserDataInJwt",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userDataInJWT",
               "type": "reference",
@@ -17891,6 +18371,7 @@ e.g.:
       "value": {
         "description": undefined,
         "generatedName": "SessionHandlesItem",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "handle",
         "type": "reference",
@@ -17909,6 +18390,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StatusOkResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -17918,6 +18400,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ThirdPartyEmail",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17930,6 +18413,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyEmailId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -17953,6 +18437,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ThirdPartyUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17965,6 +18450,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyUserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userId",
               "type": "reference",
@@ -17981,6 +18467,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyUserTimeJoined",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeJoined",
               "type": "reference",
@@ -17997,6 +18484,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyUserEmail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -18015,6 +18503,7 @@ e.g.:
               "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ThirdPartyUserThirdParty",
+              "groupName": undefined,
               "nameOverride": undefined,
               "properties": [
                 {
@@ -18027,6 +18516,7 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "generatedName": "ThirdPartyUserThirdPartyId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "thirdPartyId",
                       "type": "reference",
@@ -18043,6 +18533,7 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "generatedName": "ThirdPartyUserThirdPartyUserId",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "thirdPartyUserId",
                       "type": "reference",
@@ -18110,6 +18601,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UnauthorisedMessageResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18122,6 +18614,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "UnauthorisedMessageResponseMessage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "message",
               "type": "reference",
@@ -18144,6 +18637,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UnknownRoleResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -18153,6 +18647,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UnknownUserIdResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -18162,6 +18657,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "User",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18174,6 +18670,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "UserId",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "userId",
               "type": "reference",
@@ -18190,6 +18687,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "UserEmail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "email",
               "type": "reference",
@@ -18206,6 +18704,7 @@ e.g.:
             "value": {
               "description": undefined,
               "generatedName": "UserTimeJoined",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeJoined",
               "type": "reference",
@@ -18302,6 +18801,7 @@ e.g.:
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WrongCredentialsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",

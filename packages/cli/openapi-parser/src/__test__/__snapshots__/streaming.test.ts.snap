@@ -27,6 +27,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserStreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -71,6 +72,7 @@ exports[`open api parser streaming parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UserStreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "BaseStreamUser",
           "type": "reference",
@@ -127,6 +129,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -171,6 +174,7 @@ exports[`open api parser streaming parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "BaseUser",
           "type": "reference",
@@ -205,6 +209,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV2StreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -249,6 +254,7 @@ exports[`open api parser streaming parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UserV2StreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "StreamUser",
           "type": "reference",
@@ -313,6 +319,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV2Request",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -357,6 +364,7 @@ exports[`open api parser streaming parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UserV2Response",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "User",
           "type": "reference",
@@ -391,6 +399,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3StreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -437,6 +446,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3StreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -544,6 +554,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3Request",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -590,6 +601,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3Response",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
@@ -651,6 +663,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "BaseStreamUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -679,6 +692,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "BaseUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -707,6 +721,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StreamUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -770,6 +785,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "User",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {

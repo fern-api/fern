@@ -16,7 +16,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 allOfPropertyConflicts: schema.allOfPropertyConflicts,
                 description: schema.description,
                 generatedName: schema.generatedName,
-                nameOverride: schema.nameOverride
+                nameOverride: schema.nameOverride,
+                groupName: schema.groupName
             });
         case "array":
             return Schema.array({
@@ -28,7 +29,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                values: schema.values
+                values: schema.values,
+                groupName: schema.groupName
             });
         case "literal":
             return Schema.literal({
@@ -64,7 +66,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                schema: schema.schema
+                schema: schema.schema,
+                groupName: schema.groupName
             });
         case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.oneOf));
@@ -94,7 +97,8 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                     Object.entries(oneOfSchema.schemas).map(([discriminantValue, schemaWithExample]) => {
                         return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
                     })
-                )
+                ),
+                groupName: oneOfSchema.groupName
             };
         case "undisciminated":
             return {
@@ -102,7 +106,8 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 description: oneOfSchema.description,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
-                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema))
+                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
+                groupName: oneOfSchema.groupName
             };
         default:
             assertNever(oneOfSchema);

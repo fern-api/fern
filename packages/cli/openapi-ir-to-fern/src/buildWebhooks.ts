@@ -1,75 +1,43 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { OpenAPIIntermediateRepresentation, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { Webhook } from "@fern-fern/openapi-ir-model/finalIr";
 import { camelCase, isEqual } from "lodash-es";
-import { ROOT_PREFIX } from "../convertPackage";
-import { OpenApiIrConverterContext } from "../OpenApiIrConverterContext";
-import { convertHeader } from "./convertHeader";
-import { convertToTypeReference } from "./convertToTypeReference";
+import { buildHeader } from "./buildHeader";
+import { buildTypeReference } from "./buildTypeReference";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { tokenizeString } from "./utils/getEndpointLocation";
 
-export interface ConvertedWebhooks {
-    webhooks: Record<RelativeFilePath, Record<string, RawSchemas.WebhookSchema>>;
-    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
-}
-
-export function convertWebhooks({
-    openApiFile,
-    context
-}: {
-    openApiFile: OpenAPIIntermediateRepresentation;
-    context: OpenApiIrConverterContext;
-}): ConvertedWebhooks | undefined {
-    const webhooksByFile: Record<RelativeFilePath, Record<string, RawSchemas.WebhookSchema>> = {};
-    let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
-
-    const { schemas, webhooks } = openApiFile;
-    for (const webhook of webhooks) {
+export function buildWebhooks(context: OpenApiIrConverterContext): void {
+    for (const webhook of context.ir.webhooks) {
         const webhookLocation = getWebhookLocation({ webhook, context });
         if (webhookLocation == null) {
             continue;
         }
-        const isPackageYml = webhookLocation.file === FERN_PACKAGE_MARKER_FILENAME;
         const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
         for (const header of webhook.headers) {
-            const convertedHeader = convertHeader({ header, isPackageYml, schemas });
-            headers[header.name] = convertedHeader.value;
+            headers[header.name] = buildHeader({ header, context, fileContainingReference: webhookLocation.file });
         }
-
-        const payloadTypeReference = convertToTypeReference({
-            schema: webhook.payload,
-            prefix: isPackageYml ? undefined : ROOT_PREFIX,
-            schemas
-        });
-        additionalTypeDeclarations = {
-            ...additionalTypeDeclarations,
-            ...payloadTypeReference.additionalTypeDeclarations
-        };
 
         const webhookDefinition: RawSchemas.WebhookSchema = {
             method: webhook.method,
             "display-name": webhook.summary ?? undefined,
             headers,
-            payload: payloadTypeReference.typeReference
+            payload: buildTypeReference({
+                schema: webhook.payload,
+                context,
+                fileContainingReference: webhookLocation.file
+            })
         };
+        context.builder.addWebhook(webhookLocation.file, {
+            name: webhookLocation.endpointId,
+            schema: webhookDefinition
+        });
 
         if (webhook.description != null) {
             webhookDefinition.docs = webhook.description;
         }
-
-        const maybeWebhooksForFile = webhooksByFile[webhookLocation.file];
-        if (maybeWebhooksForFile != null) {
-            maybeWebhooksForFile[webhookLocation.endpointId] = webhookDefinition;
-        } else {
-            webhooksByFile[webhookLocation.file] = { [webhookLocation.endpointId]: webhookDefinition };
-        }
     }
-
-    return {
-        webhooks: webhooksByFile,
-        additionalTypeDeclarations
-    };
 }
 
 export interface WebhookLocation {

@@ -2,431 +2,7 @@
 
 exports[`open api parser flagright simple 1`] = `
 {
-  "definitionFiles": {
-    "__package__.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "get-business-user-userId": {
-            "auth": true,
-            "display-name": "Retrieve a Business User",
-            "docs": "### GET Business User
-
-\`/business/user\` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
-
-Calling \`GET /business/user/{userId}\` will return the entire User payload and rule execution results for the User with the corresponding \`userId\`",
-            "errors": [
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "GET",
-            "path": "/business/users/{userId}",
-            "path-parameters": {
-              "userId": {
-                "docs": "",
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "Business",
-            },
-          },
-          "get-consumer-transaction": {
-            "auth": true,
-            "display-name": "Retrieve a Transaction",
-            "docs": "### GET Transactions
-
-\`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
-
-Calling \`GET /transactions/{transactionId}\` will return the entire transaction payload and rule execution results for the transaction with the corresponding \`transactionId\`",
-            "errors": [
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "GET",
-            "path": "/transactions/{transactionId}",
-            "path-parameters": {
-              "transactionId": {
-                "docs": "Unique Transaction Identifier",
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "TransactionWithRulesResult",
-            },
-          },
-          "get-consumer-user": {
-            "auth": true,
-            "display-name": "Retrieve a Consumer User",
-            "docs": "### GET Consumer User
-
-\`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
-
-Calling \`GET /consumer/user/{userId}\` will return the entire user payload and rule execution results for the user with the corresponding \`userId\`",
-            "errors": [
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "GET",
-            "path": "/consumer/users/{userId}",
-            "path-parameters": {
-              "userId": {
-                "docs": "",
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "User",
-            },
-          },
-          "post-business-user": {
-            "auth": true,
-            "display-name": "Create a Business User",
-            "docs": "## POST Business User
-
-\`/business/user\` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
-
-In order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
-
-### Payload
-
-
-Each consumer Business entity needs three mandatory fields:
-
-* \`userId\` - Unique identifier for the user
-* \`legalEntity\` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only \`legalName\`in \`CompanyGeneralDetails\` is mandatory
-* \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system",
-            "errors": [
-              "BadRequestError",
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "POST",
-            "path": "/business/users",
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "Business",
-              },
-            },
-            "response": {
-              "docs": "Created",
-              "type": "PostBusinessUserResponse",
-            },
-          },
-          "post-business-user-event": {
-            "auth": true,
-            "display-name": "Create a Business User Event",
-            "docs": "## POST Business User Events
-
-\`/events/business/user\` endpoint allows you to operate on the Business User Events entity.
-
-User events are created after the initial \`POST /business/users\` call (which creates a user) and are used to:
-
-* Update the STATE and KYC Status of the user, using the \`userStateDetails\` or \`kycStatusDetails\` field
-* Update the user details, using the \`updatedBusinessUserAttributes\` field.
-
-> If you have neither of the above two use cases, you do not need to use user events. 
-
-### Payload
-
-Each user event needs three mandatory fields:
-
-* \`timestamp\`- the timestamp of when the event was created or occured in your system
-* \`userId\` - The ID of the transaction for which this event is generated. 
-
-In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
-",
-            "errors": [
-              "BadRequestError",
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "POST",
-            "path": "/events/business/user",
-            "request": {
-              "body": {
-                "properties": {
-                  "eventDescription": {
-                    "docs": "Event description",
-                    "type": "optional<string>",
-                  },
-                  "eventId": {
-                    "docs": "Unique event ID",
-                    "type": "optional<string>",
-                  },
-                  "reason": {
-                    "docs": "Reason for the event or a state change",
-                    "type": "optional<string>",
-                  },
-                  "timestamp": {
-                    "docs": "Timestamp of the event",
-                    "type": "double",
-                  },
-                  "updatedBusinessUserAttributes": {
-                    "docs": undefined,
-                    "type": "optional<BusinessOptional>",
-                  },
-                  "userId": {
-                    "docs": "Transaction ID the event pertains to",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "BusinessUserEvent",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Created",
-              "type": "BusinessWithRulesResult",
-            },
-          },
-          "post-consumer-transaction": {
-            "auth": true,
-            "display-name": "Verify a Transaction",
-            "docs": "## POST Transactions
-
-\`/transactions\` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)
-
-In order to pass the payload of a transaction to Flagright and verify the transaciton, you will need to call this endpoint with the transaction payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup. 
-
-
-### Payload
-
-Here are some of the most used payload fields explained (you can find the full payload [schema below](https://docs.flagright.com/docs/flagright-api/87742ed31b30e-verify-a-transaction#request-body) with 1 line descriptions):
-
-* \`type\`: Type of transaction (Ex: \`WITHDRAWAL\`, \`DEPOSIT\`, \`TRANSFER\` etc). 
-* \`transactionId\` - Unique Identifier for the transaction. Flagright API will generate a \`transactionId\` if this field is left empty
-* \`timestamp\` - UNIX timestamp in *milliseconds* of when the transaction took place
-* \`transactionState\` - The state of the transaction, set to \`CREATED\` by default. [More details here](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships-in-the-api#transaction-lifecycle-through-transaction-events)
-* \`originUserId\` - Unique identifier (if any) of the user who is sending the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
-* \`destinationUserId\` - Unique identifier (if any) of the user who is receiving the money. This user must be created within the Flagright system before using the [create a consumer user](https://docs.flagright.com/docs/flagright-api/18132cd454603-create-a-consumer-user) or [create a business user](https://docs.flagright.com/docs/flagright-api/f651463db29d8-create-a-business-user) endpoint
-* \`originAmountDetails\` - Details of the amount being sent from the origin
-* \`destinationAmountDetails\` - Details of the amount being received at the destination
-* \`originPaymentDetails\` - Payment details (if any) used at the origin (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
-* \`destinationPaymentDetails\` - Payment details (if any) used at the destination (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
-            "errors": [
-              "BadRequestError",
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "POST",
-            "path": "/transactions",
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "Transaction",
-              },
-              "name": "PostConsumerTransactionRequest",
-              "query-parameters": {
-                "validateDestinationUserId": {
-                  "allow-multiple": undefined,
-                  "docs": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
-                  "type": "optional<string>",
-                },
-                "validateOriginUserId": {
-                  "allow-multiple": undefined,
-                  "docs": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "Created",
-              "type": "PostConsumerTransactionResponse",
-            },
-          },
-          "post-consumer-user": {
-            "auth": true,
-            "display-name": "Create a Consumer User",
-            "docs": "## POST Consumer User
-
-\`/consumer/user\` endpoint allows you to operate on the [Consumer user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
-
-In order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
-
-### Payload
-
-Each consumer User entity needs three mandatory fields:
-
-* \`userId\` - Unique identifier for the user
-* \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system
-",
-            "errors": [
-              "BadRequestError",
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "POST",
-            "path": "/consumer/users",
-            "request": {
-              "body": {
-                "docs": "Model for User details",
-                "type": "User",
-              },
-            },
-            "response": {
-              "docs": "Created",
-              "type": "PostConsumerUserResponse",
-            },
-          },
-          "post-transaction-event": {
-            "auth": true,
-            "display-name": "Create a Transaction Event",
-            "docs": "## POST Transaction Events
-
-\`/events/transaction\` endpoint allows you to operate on the [Transaction Events entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-event)
-
-Transaction events are created after the initial \`POST /transactions\` call (which creates a transaction) and are used to:
-
-* Update the STATE of the transaction, using the \`transactionState\` field and manage the [Transaction Lifecycle](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-lifecycle-through-transaction-events)
-* Update the transaction details, using the \`updatedTransactionAttributes\` field.
-
-> If you have neither of the above two use cases, you do not need to use transaction events. 
-
-### Payload
-
-Each transaction event needs three mandatory fields:
-
-* \`transactionState\` - STATE of the transaction -> value is set to \`CREATED\` after \`POST /transactions\` call
-* \`timestamp\`- the timestamp of when the event was created or occured in your system
-* \`transactionId\` - The ID of the transaction for which this event is generated. 
-
-In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
-",
-            "errors": [
-              "BadRequestError",
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "POST",
-            "path": "/events/transaction",
-            "request": {
-              "body": {
-                "properties": {
-                  "eventDescription": {
-                    "docs": "Event description",
-                    "type": "optional<string>",
-                  },
-                  "eventId": {
-                    "docs": "Unique event ID",
-                    "type": "optional<string>",
-                  },
-                  "metaData": {
-                    "docs": undefined,
-                    "type": "optional<DeviceData>",
-                  },
-                  "reason": {
-                    "docs": "Reason for the event or a state change",
-                    "type": "optional<string>",
-                  },
-                  "timestamp": {
-                    "docs": "Timestamp of the event",
-                    "type": "double",
-                  },
-                  "transactionId": {
-                    "docs": "Transaction ID the event pertains to",
-                    "type": "string",
-                  },
-                  "transactionState": {
-                    "docs": undefined,
-                    "type": "TransactionState",
-                  },
-                  "updatedTransactionAttributes": {
-                    "docs": undefined,
-                    "type": "optional<TransactionUpdatable>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "TransactionEvent",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Created",
-              "type": "TransactionEventMonitoringResult",
-            },
-          },
-          "post-user-event": {
-            "auth": true,
-            "display-name": "Create a Consumer User Event",
-            "docs": "## POST Consumer User Events
-
-\`/events/consumer/user\` endpoint allows you to operate on the Consumer User Events entity.
-
-User events are created after the initial \`POST /consumer/users\` call (which creates a user) and are used to:
-
-* Update the STATE and KYC Status of the user, using the \`userStateDetails\` or \`kycStatusDetails\` field
-* Update the user details, using the \`updatedConsumerUserAttributes\` field.
-
-> If you have neither of the above two use cases, you do not need to use user events. 
-
-### Payload
-
-Each user event needs three mandatory fields:
-
-* \`timestamp\`- the timestamp of when the event was created or occured in your system
-* \`userId\` - The ID of the transaction for which this event is generated. 
-
-In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
-",
-            "errors": [
-              "BadRequestError",
-              "UnauthorizedError",
-              "TooManyRequestsError",
-            ],
-            "method": "POST",
-            "path": "/events/consumer/user",
-            "request": {
-              "body": {
-                "properties": {
-                  "eventDescription": {
-                    "docs": "Event description",
-                    "type": "optional<string>",
-                  },
-                  "eventId": {
-                    "docs": "Unique event ID",
-                    "type": "optional<string>",
-                  },
-                  "reason": {
-                    "docs": "Reason for the event or a state change",
-                    "type": "optional<string>",
-                  },
-                  "timestamp": {
-                    "docs": "Timestamp of the event",
-                    "type": "double",
-                  },
-                  "updatedConsumerUserAttributes": {
-                    "docs": undefined,
-                    "type": "optional<UserOptional>",
-                  },
-                  "userId": {
-                    "docs": "Transaction ID the event pertains to",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ConsumerUserEvent",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Created",
-              "type": "UserWithRulesResult",
-            },
-          },
-        },
-      },
-    },
-  },
+  "definitionFiles": {},
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
@@ -546,10 +122,7 @@ Each consumer Business entity needs three mandatory fields:
           "method": "POST",
           "path": "/business/users",
           "request": {
-            "body": {
-              "docs": undefined,
-              "type": "Business",
-            },
+            "body": "Business",
           },
           "response": {
             "docs": "Created",
@@ -605,10 +178,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Timestamp of the event",
                   "type": "double",
                 },
-                "updatedBusinessUserAttributes": {
-                  "docs": undefined,
-                  "type": "optional<BusinessOptional>",
-                },
+                "updatedBusinessUserAttributes": "optional<BusinessOptional>",
                 "userId": {
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
@@ -656,10 +226,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "method": "POST",
           "path": "/transactions",
           "request": {
-            "body": {
-              "docs": undefined,
-              "type": "Transaction",
-            },
+            "body": "Transaction",
             "name": "PostConsumerTransactionRequest",
             "query-parameters": {
               "validateDestinationUserId": {
@@ -755,10 +322,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Unique event ID",
                   "type": "optional<string>",
                 },
-                "metaData": {
-                  "docs": undefined,
-                  "type": "optional<DeviceData>",
-                },
+                "metaData": "optional<DeviceData>",
                 "reason": {
                   "docs": "Reason for the event or a state change",
                   "type": "optional<string>",
@@ -771,14 +335,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                 },
-                "transactionState": {
-                  "docs": undefined,
-                  "type": "TransactionState",
-                },
-                "updatedTransactionAttributes": {
-                  "docs": undefined,
-                  "type": "optional<TransactionUpdatable>",
-                },
+                "transactionState": "TransactionState",
+                "updatedTransactionAttributes": "optional<TransactionUpdatable>",
               },
             },
             "headers": undefined,
@@ -839,10 +397,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "docs": "Timestamp of the event",
                   "type": "double",
                 },
-                "updatedConsumerUserAttributes": {
-                  "docs": undefined,
-                  "type": "optional<UserOptional>",
-                },
+                "updatedConsumerUserAttributes": "optional<UserOptional>",
                 "userId": {
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
@@ -869,10 +424,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Bank account number of the individual",
             "type": "optional<string>",
           },
-          "bankAddress": {
-            "docs": undefined,
-            "type": "optional<Address>",
-          },
+          "bankAddress": "optional<Address>",
           "bankName": {
             "docs": "Name of the bank",
             "type": "optional<string>",
@@ -894,36 +446,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ORGANIC",
-            "value": "ORGANIC",
-          },
-          {
-            "docs": undefined,
-            "name": "PAID",
-            "value": "PAID",
-          },
-          {
-            "docs": undefined,
-            "name": "REFERRAL",
-            "value": "REFERRAL",
-          },
-          {
-            "docs": undefined,
-            "name": "OFFLINE",
-            "value": "OFFLINE",
-          },
-          {
-            "docs": undefined,
-            "name": "GATHERING",
-            "value": "GATHERING",
-          },
-          {
-            "docs": undefined,
-            "name": "UNKNOWN",
-            "value": "UNKNOWN",
-          },
+          "ORGANIC",
+          "PAID",
+          "REFERRAL",
+          "OFFLINE",
+          "GATHERING",
+          "UNKNOWN",
         ],
       },
       "Address": {
@@ -958,59 +486,23 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "AlertClosedDetails": {
         "docs": undefined,
         "properties": {
-          "alertId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "comment": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "reasonDescriptionForOther": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "reasons": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "ruleDescription": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "ruleId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "ruleInstanceId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "ruleName": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "status": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "transactionIds": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "userId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "alertId": "optional<string>",
+          "comment": "optional<string>",
+          "reasonDescriptionForOther": "optional<list<string>>",
+          "reasons": "optional<list<string>>",
+          "ruleDescription": "optional<string>",
+          "ruleId": "optional<string>",
+          "ruleInstanceId": "optional<string>",
+          "ruleName": "optional<string>",
+          "status": "optional<string>",
+          "transactionIds": "optional<list<string>>",
+          "userId": "optional<string>",
         },
       },
       "Amount": {
         "docs": "Model for amount",
         "properties": {
-          "amountCurrency": {
-            "docs": undefined,
-            "type": "CurrencyCode",
-          },
+          "amountCurrency": "CurrencyCode",
           "amountValue": {
             "docs": "Numerical value of the transaction",
             "type": "double",
@@ -1041,55 +533,25 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "BusinessEntityLink": {
         "docs": undefined,
         "properties": {
-          "childUserIds": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "parentUserId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "childUserIds": "optional<list<string>>",
+          "parentUserId": "optional<string>",
         },
       },
       "BusinessOptional": {
         "docs": "Model for a business user - optional fields",
         "properties": {
-          "acquisitionChannel": {
-            "docs": undefined,
-            "type": "optional<AcquisitionChannel>",
-          },
-          "allowedPaymentMethods": {
-            "docs": undefined,
-            "type": "optional<list<PaymentMethod>>",
-          },
+          "acquisitionChannel": "optional<AcquisitionChannel>",
+          "allowedPaymentMethods": "optional<list<PaymentMethod>>",
           "directors": {
             "docs": "Director(s) of the company. Must be at least one",
             "type": "optional<list<Person>>",
           },
-          "kycStatusDetails": {
-            "docs": undefined,
-            "type": "optional<KycStatusDetails>",
-          },
-          "legalEntity": {
-            "docs": undefined,
-            "type": "optional<LegalEntity>",
-          },
-          "linkedEntities": {
-            "docs": undefined,
-            "type": "optional<BusinessEntityLink>",
-          },
-          "mccDetails": {
-            "docs": undefined,
-            "type": "optional<MccDetails>",
-          },
-          "riskLevel": {
-            "docs": undefined,
-            "type": "optional<RiskLevel>",
-          },
-          "savedPaymentDetails": {
-            "docs": undefined,
-            "type": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
-          },
+          "kycStatusDetails": "optional<KycStatusDetails>",
+          "legalEntity": "optional<LegalEntity>",
+          "linkedEntities": "optional<BusinessEntityLink>",
+          "mccDetails": "optional<MccDetails>",
+          "riskLevel": "optional<RiskLevel>",
+          "savedPaymentDetails": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
           "shareHolders": {
             "docs": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
             "type": "optional<list<Person>>",
@@ -1098,14 +560,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
-          "transactionLimits": {
-            "docs": undefined,
-            "type": "optional<TransactionLimits>",
-          },
-          "userStateDetails": {
-            "docs": undefined,
-            "type": "optional<UserStateDetails>",
-          },
+          "transactionLimits": "optional<TransactionLimits>",
+          "userStateDetails": "optional<UserStateDetails>",
         },
       },
       "BusinessOptionalSavedPaymentDetailsItem": {
@@ -1113,42 +569,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "discriminant": "method",
         "docs": undefined,
         "union": {
-          "ACH": {
-            "docs": undefined,
-            "type": "AchDetails",
-          },
-          "CARD": {
-            "docs": undefined,
-            "type": "CardDetails",
-          },
-          "CHECK": {
-            "docs": undefined,
-            "type": "CheckDetails",
-          },
-          "GENERIC_BANK_ACCOUNT": {
-            "docs": undefined,
-            "type": "GenericBankAccountDetails",
-          },
-          "IBAN": {
-            "docs": undefined,
-            "type": "IbanDetails",
-          },
-          "MPESA": {
-            "docs": undefined,
-            "type": "MpesaDetails",
-          },
-          "SWIFT": {
-            "docs": undefined,
-            "type": "SwiftDetails",
-          },
-          "UPI": {
-            "docs": undefined,
-            "type": "UpiDetails",
-          },
-          "WALLET": {
-            "docs": undefined,
-            "type": "WalletDetails",
-          },
+          "ACH": "AchDetails",
+          "CARD": "CardDetails",
+          "CHECK": "CheckDetails",
+          "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
+          "IBAN": "IbanDetails",
+          "MPESA": "MpesaDetails",
+          "SWIFT": "SwiftDetails",
+          "UPI": "UpiDetails",
+          "WALLET": "WalletDetails",
         },
       },
       "BusinessUsersResponse": {
@@ -1166,14 +595,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "Business",
         ],
         "properties": {
-          "executedRules": {
-            "docs": undefined,
-            "type": "optional<list<ExecutedRulesResult>>",
-          },
-          "hitRules": {
-            "docs": undefined,
-            "type": "optional<list<HitRulesDetails>>",
-          },
+          "executedRules": "optional<list<ExecutedRulesResult>>",
+          "hitRules": "optional<list<HitRulesDetails>>",
         },
       },
       "CardDetails": {
@@ -1192,10 +615,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Brand of Card",
             "type": "optional<CardDetailsCardBrand>",
           },
-          "cardExpiry": {
-            "docs": undefined,
-            "type": "optional<CardExpiry>",
-          },
+          "cardExpiry": "optional<CardExpiry>",
           "cardFingerprint": {
             "docs": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
             "type": "optional<string>",
@@ -1204,30 +624,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Funding of Card",
             "type": "optional<CardDetailsCardFunding>",
           },
-          "cardIssuedCountry": {
-            "docs": undefined,
-            "type": "optional<CountryCode>",
-          },
+          "cardIssuedCountry": "optional<CountryCode>",
           "cardLast4Digits": {
             "docs": "Last 4 digits of Card",
             "type": "optional<string>",
           },
-          "cardType": {
-            "docs": undefined,
-            "type": "optional<CardDetailsCardType>",
-          },
-          "merchantDetails": {
-            "docs": undefined,
-            "type": "optional<CardMerchantDetails>",
-          },
-          "nameOnCard": {
-            "docs": undefined,
-            "type": "optional<ConsumerName>",
-          },
-          "paymentChannel": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "cardType": "optional<CardDetailsCardType>",
+          "merchantDetails": "optional<CardMerchantDetails>",
+          "nameOnCard": "optional<ConsumerName>",
+          "paymentChannel": "optional<string>",
           "transactionReferenceField": {
             "docs": "Reference for the transaction",
             "type": "optional<string>",
@@ -1237,156 +642,60 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CardDetailsCardBrand": {
         "docs": "Brand of Card",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "VISA",
-            "value": "VISA",
-          },
-          {
-            "docs": undefined,
-            "name": "MASTERCARD",
-            "value": "MASTERCARD",
-          },
-          {
-            "docs": undefined,
-            "name": "AMERICAN_EXPRESS",
-            "value": "AMERICAN_EXPRESS",
-          },
-          {
-            "docs": undefined,
-            "name": "DISCOVER",
-            "value": "DISCOVER",
-          },
-          {
-            "docs": undefined,
-            "name": "UNIONPAY",
-            "value": "UNIONPAY",
-          },
-          {
-            "docs": undefined,
-            "name": "RUPAY",
-            "value": "RUPAY",
-          },
-          {
-            "docs": undefined,
-            "name": "JCB",
-            "value": "JCB",
-          },
+          "VISA",
+          "MASTERCARD",
+          "AMERICAN_EXPRESS",
+          "DISCOVER",
+          "UNIONPAY",
+          "RUPAY",
+          "JCB",
         ],
       },
       "CardDetailsCardFunding": {
         "docs": "Funding of Card",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CREDIT",
-            "value": "CREDIT",
-          },
-          {
-            "docs": undefined,
-            "name": "DEBIT",
-            "value": "DEBIT",
-          },
-          {
-            "docs": undefined,
-            "name": "PREPAID",
-            "value": "PREPAID",
-          },
+          "CREDIT",
+          "DEBIT",
+          "PREPAID",
         ],
       },
       "CardDetailsCardType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "VIRTUAL",
-            "value": "VIRTUAL",
-          },
-          {
-            "docs": undefined,
-            "name": "PHYSICAL",
-            "value": "PHYSICAL",
-          },
+          "VIRTUAL",
+          "PHYSICAL",
         ],
       },
       "CardExpiry": {
         "docs": undefined,
         "properties": {
-          "month": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
-          "year": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
+          "month": "optional<double>",
+          "year": "optional<double>",
         },
       },
       "CardMerchantDetails": {
         "docs": undefined,
         "properties": {
-          "MCC": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "category": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "city": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "country": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "postCode": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "MCC": "optional<string>",
+          "category": "optional<string>",
+          "city": "optional<string>",
+          "country": "optional<string>",
+          "id": "optional<string>",
+          "postCode": "optional<string>",
+          "state": "optional<string>",
         },
       },
       "CardPaymentMethod": "literal<"CARD">",
       "CaseClosedDetails": {
         "docs": undefined,
         "properties": {
-          "caseId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "comment": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "reasonDescriptionForOther": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "reasons": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "status": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "transactionIds": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "userId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "caseId": "optional<string>",
+          "comment": "optional<string>",
+          "reasonDescriptionForOther": "optional<list<string>>",
+          "reasons": "optional<list<string>>",
+          "status": "optional<string>",
+          "transactionIds": "optional<list<string>>",
+          "userId": "optional<string>",
         },
       },
       "CaseManagementEvent": {
@@ -1425,119 +734,47 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CaseManagementEventCaseStatus": {
         "docs": "Status of a case. E.g. Open, Closed etc.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CLOSED",
-            "value": "CLOSED",
-          },
-          {
-            "docs": undefined,
-            "name": "HIT",
-            "value": "HIT",
-          },
+          "CLOSED",
+          "HIT",
         ],
       },
       "CaseManagementEventCaseStatusReason": {
         "docs": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "FALSE_POSITIVE",
-            "value": "FALSE_POSITIVE",
-          },
-          {
-            "docs": undefined,
-            "name": "INVESTIGATION_COMPLETED",
-            "value": "INVESTIGATION_COMPLETED",
-          },
-          {
-            "docs": undefined,
-            "name": "DOCUMENTS_COLLECTED",
-            "value": "DOCUMENTS_COLLECTED",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHER",
-            "value": "OTHER",
-          },
+          "FALSE_POSITIVE",
+          "INVESTIGATION_COMPLETED",
+          "DOCUMENTS_COLLECTED",
+          "OTHER",
         ],
       },
       "CheckDetails": {
         "docs": undefined,
         "properties": {
-          "checkIdentifier": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "checkNumber": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "deliveryStatus": {
-            "docs": undefined,
-            "type": "optional<CheckDetailsDeliveryStatus>",
-          },
-          "etaTimestamp": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
-          "name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "shippingAddress": {
-            "docs": undefined,
-            "type": "optional<Address>",
-          },
+          "checkIdentifier": "optional<string>",
+          "checkNumber": "optional<string>",
+          "deliveryStatus": "optional<CheckDetailsDeliveryStatus>",
+          "etaTimestamp": "optional<double>",
+          "name": "optional<string>",
+          "shippingAddress": "optional<Address>",
         },
       },
       "CheckDetailsDeliveryStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "COMPLETED",
-            "value": "COMPLETED",
-          },
-          {
-            "docs": undefined,
-            "name": "PENDING",
-            "value": "PENDING",
-          },
-          {
-            "docs": undefined,
-            "name": "SETTLED",
-            "value": "SETTLED",
-          },
-          {
-            "docs": undefined,
-            "name": "CANCELED",
-            "value": "CANCELED",
-          },
-          {
-            "docs": undefined,
-            "name": "REFUND",
-            "value": "REFUND",
-          },
-          {
-            "docs": undefined,
-            "name": "DECLINED",
-            "value": "DECLINED",
-          },
+          "COMPLETED",
+          "PENDING",
+          "SETTLED",
+          "CANCELED",
+          "REFUND",
+          "DECLINED",
         ],
       },
       "CheckPaymentMethod": "literal<"CHECK">",
       "CompanyFinancialDetails": {
         "docs": "Model for business user company financial details",
         "properties": {
-          "expectedTransactionAmountPerMonth": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "expectedTurnoverPerMonth": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
+          "expectedTransactionAmountPerMonth": "optional<Amount>",
+          "expectedTurnoverPerMonth": "optional<Amount>",
           "tags": {
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
@@ -1563,10 +800,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
-          "userRegistrationStatus": {
-            "docs": undefined,
-            "type": "optional<UserRegistrationStatus>",
-          },
+          "userRegistrationStatus": "optional<UserRegistrationStatus>",
           "userSegment": {
             "docs": "Segmentation of the business user",
             "type": "optional<CompanyGeneralDetailsUserSegment>",
@@ -1576,53 +810,23 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CompanyGeneralDetailsUserSegment": {
         "docs": "Segmentation of the business user",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "SOLE_PROPRIETORSHIP",
-            "value": "SOLE_PROPRIETORSHIP",
-          },
-          {
-            "docs": undefined,
-            "name": "SMB",
-            "value": "SMB",
-          },
-          {
-            "docs": undefined,
-            "name": "SMALL",
-            "value": "SMALL",
-          },
-          {
-            "docs": undefined,
-            "name": "MEDIUM",
-            "value": "MEDIUM",
-          },
-          {
-            "docs": undefined,
-            "name": "LARGE",
-            "value": "LARGE",
-          },
-          {
-            "docs": undefined,
-            "name": "UNKNOWN",
-            "value": "UNKNOWN",
-          },
+          "SOLE_PROPRIETORSHIP",
+          "SMB",
+          "SMALL",
+          "MEDIUM",
+          "LARGE",
+          "UNKNOWN",
         ],
       },
       "CompanyRegistrationDetails": {
         "docs": "Model for business user company registration details",
         "properties": {
-          "dateOfRegistration": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "dateOfRegistration": "optional<string>",
           "legalEntityType": {
             "docs": "Type of legal entity. Ex: Limited Liability",
             "type": "optional<string>",
           },
-          "registrationCountry": {
-            "docs": undefined,
-            "type": "CountryCode",
-          },
+          "registrationCountry": "CountryCode",
           "registrationIdentifier": {
             "docs": "Commercial registry registration number for the company in its registration country",
             "type": "string",
@@ -1691,1254 +895,259 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "CountryCode": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "AF",
-            "value": "AF",
-          },
-          {
-            "docs": undefined,
-            "name": "AL",
-            "value": "AL",
-          },
-          {
-            "docs": undefined,
-            "name": "DZ",
-            "value": "DZ",
-          },
-          {
-            "docs": undefined,
-            "name": "AS",
-            "value": "AS",
-          },
-          {
-            "docs": undefined,
-            "name": "AD",
-            "value": "AD",
-          },
-          {
-            "docs": undefined,
-            "name": "AO",
-            "value": "AO",
-          },
-          {
-            "docs": undefined,
-            "name": "AI",
-            "value": "AI",
-          },
-          {
-            "docs": undefined,
-            "name": "AQ",
-            "value": "AQ",
-          },
-          {
-            "docs": undefined,
-            "name": "AG",
-            "value": "AG",
-          },
-          {
-            "docs": undefined,
-            "name": "AR",
-            "value": "AR",
-          },
-          {
-            "docs": undefined,
-            "name": "AM",
-            "value": "AM",
-          },
-          {
-            "docs": undefined,
-            "name": "AW",
-            "value": "AW",
-          },
-          {
-            "docs": undefined,
-            "name": "AU",
-            "value": "AU",
-          },
-          {
-            "docs": undefined,
-            "name": "AT",
-            "value": "AT",
-          },
-          {
-            "docs": undefined,
-            "name": "AZ",
-            "value": "AZ",
-          },
-          {
-            "docs": undefined,
-            "name": "BS",
-            "value": "BS",
-          },
-          {
-            "docs": undefined,
-            "name": "BH",
-            "value": "BH",
-          },
-          {
-            "docs": undefined,
-            "name": "BD",
-            "value": "BD",
-          },
-          {
-            "docs": undefined,
-            "name": "BB",
-            "value": "BB",
-          },
-          {
-            "docs": undefined,
-            "name": "BY",
-            "value": "BY",
-          },
-          {
-            "docs": undefined,
-            "name": "BE",
-            "value": "BE",
-          },
-          {
-            "docs": undefined,
-            "name": "BZ",
-            "value": "BZ",
-          },
-          {
-            "docs": undefined,
-            "name": "BJ",
-            "value": "BJ",
-          },
-          {
-            "docs": undefined,
-            "name": "BM",
-            "value": "BM",
-          },
-          {
-            "docs": undefined,
-            "name": "BT",
-            "value": "BT",
-          },
-          {
-            "docs": undefined,
-            "name": "BO",
-            "value": "BO",
-          },
-          {
-            "docs": undefined,
-            "name": "BQ",
-            "value": "BQ",
-          },
-          {
-            "docs": undefined,
-            "name": "BA",
-            "value": "BA",
-          },
-          {
-            "docs": undefined,
-            "name": "BW",
-            "value": "BW",
-          },
-          {
-            "docs": undefined,
-            "name": "BV",
-            "value": "BV",
-          },
-          {
-            "docs": undefined,
-            "name": "BR",
-            "value": "BR",
-          },
-          {
-            "docs": undefined,
-            "name": "IO",
-            "value": "IO",
-          },
-          {
-            "docs": undefined,
-            "name": "BN",
-            "value": "BN",
-          },
-          {
-            "docs": undefined,
-            "name": "BG",
-            "value": "BG",
-          },
-          {
-            "docs": undefined,
-            "name": "BF",
-            "value": "BF",
-          },
-          {
-            "docs": undefined,
-            "name": "BI",
-            "value": "BI",
-          },
-          {
-            "docs": undefined,
-            "name": "CV",
-            "value": "CV",
-          },
-          {
-            "docs": undefined,
-            "name": "KH",
-            "value": "KH",
-          },
-          {
-            "docs": undefined,
-            "name": "CM",
-            "value": "CM",
-          },
-          {
-            "docs": undefined,
-            "name": "CA",
-            "value": "CA",
-          },
-          {
-            "docs": undefined,
-            "name": "KY",
-            "value": "KY",
-          },
-          {
-            "docs": undefined,
-            "name": "CF",
-            "value": "CF",
-          },
-          {
-            "docs": undefined,
-            "name": "TD",
-            "value": "TD",
-          },
-          {
-            "docs": undefined,
-            "name": "CL",
-            "value": "CL",
-          },
-          {
-            "docs": undefined,
-            "name": "CN",
-            "value": "CN",
-          },
-          {
-            "docs": undefined,
-            "name": "CX",
-            "value": "CX",
-          },
-          {
-            "docs": undefined,
-            "name": "CC",
-            "value": "CC",
-          },
-          {
-            "docs": undefined,
-            "name": "CO",
-            "value": "CO",
-          },
-          {
-            "docs": undefined,
-            "name": "KM",
-            "value": "KM",
-          },
-          {
-            "docs": undefined,
-            "name": "CD",
-            "value": "CD",
-          },
-          {
-            "docs": undefined,
-            "name": "CG",
-            "value": "CG",
-          },
-          {
-            "docs": undefined,
-            "name": "CK",
-            "value": "CK",
-          },
-          {
-            "docs": undefined,
-            "name": "CR",
-            "value": "CR",
-          },
-          {
-            "docs": undefined,
-            "name": "HR",
-            "value": "HR",
-          },
-          {
-            "docs": undefined,
-            "name": "CU",
-            "value": "CU",
-          },
-          {
-            "docs": undefined,
-            "name": "CW",
-            "value": "CW",
-          },
-          {
-            "docs": undefined,
-            "name": "CY",
-            "value": "CY",
-          },
-          {
-            "docs": undefined,
-            "name": "CZ",
-            "value": "CZ",
-          },
-          {
-            "docs": undefined,
-            "name": "CI",
-            "value": "CI",
-          },
-          {
-            "docs": undefined,
-            "name": "DK",
-            "value": "DK",
-          },
-          {
-            "docs": undefined,
-            "name": "DJ",
-            "value": "DJ",
-          },
-          {
-            "docs": undefined,
-            "name": "DM",
-            "value": "DM",
-          },
-          {
-            "docs": undefined,
-            "name": "DO",
-            "value": "DO",
-          },
-          {
-            "docs": undefined,
-            "name": "EC",
-            "value": "EC",
-          },
-          {
-            "docs": undefined,
-            "name": "EG",
-            "value": "EG",
-          },
-          {
-            "docs": undefined,
-            "name": "SV",
-            "value": "SV",
-          },
-          {
-            "docs": undefined,
-            "name": "GQ",
-            "value": "GQ",
-          },
-          {
-            "docs": undefined,
-            "name": "ER",
-            "value": "ER",
-          },
-          {
-            "docs": undefined,
-            "name": "EE",
-            "value": "EE",
-          },
-          {
-            "docs": undefined,
-            "name": "SZ",
-            "value": "SZ",
-          },
-          {
-            "docs": undefined,
-            "name": "ET",
-            "value": "ET",
-          },
-          {
-            "docs": undefined,
-            "name": "FK",
-            "value": "FK",
-          },
-          {
-            "docs": undefined,
-            "name": "FO",
-            "value": "FO",
-          },
-          {
-            "docs": undefined,
-            "name": "FJ",
-            "value": "FJ",
-          },
-          {
-            "docs": undefined,
-            "name": "FI",
-            "value": "FI",
-          },
-          {
-            "docs": undefined,
-            "name": "FR",
-            "value": "FR",
-          },
-          {
-            "docs": undefined,
-            "name": "GF",
-            "value": "GF",
-          },
-          {
-            "docs": undefined,
-            "name": "PF",
-            "value": "PF",
-          },
-          {
-            "docs": undefined,
-            "name": "TF",
-            "value": "TF",
-          },
-          {
-            "docs": undefined,
-            "name": "GA",
-            "value": "GA",
-          },
-          {
-            "docs": undefined,
-            "name": "GM",
-            "value": "GM",
-          },
-          {
-            "docs": undefined,
-            "name": "GE",
-            "value": "GE",
-          },
-          {
-            "docs": undefined,
-            "name": "DE",
-            "value": "DE",
-          },
-          {
-            "docs": undefined,
-            "name": "GH",
-            "value": "GH",
-          },
-          {
-            "docs": undefined,
-            "name": "GI",
-            "value": "GI",
-          },
-          {
-            "docs": undefined,
-            "name": "GR",
-            "value": "GR",
-          },
-          {
-            "docs": undefined,
-            "name": "GL",
-            "value": "GL",
-          },
-          {
-            "docs": undefined,
-            "name": "GD",
-            "value": "GD",
-          },
-          {
-            "docs": undefined,
-            "name": "GP",
-            "value": "GP",
-          },
-          {
-            "docs": undefined,
-            "name": "GU",
-            "value": "GU",
-          },
-          {
-            "docs": undefined,
-            "name": "GT",
-            "value": "GT",
-          },
-          {
-            "docs": undefined,
-            "name": "GG",
-            "value": "GG",
-          },
-          {
-            "docs": undefined,
-            "name": "GN",
-            "value": "GN",
-          },
-          {
-            "docs": undefined,
-            "name": "GW",
-            "value": "GW",
-          },
-          {
-            "docs": undefined,
-            "name": "GY",
-            "value": "GY",
-          },
-          {
-            "docs": undefined,
-            "name": "HT",
-            "value": "HT",
-          },
-          {
-            "docs": undefined,
-            "name": "HM",
-            "value": "HM",
-          },
-          {
-            "docs": undefined,
-            "name": "VA",
-            "value": "VA",
-          },
-          {
-            "docs": undefined,
-            "name": "HN",
-            "value": "HN",
-          },
-          {
-            "docs": undefined,
-            "name": "HK",
-            "value": "HK",
-          },
-          {
-            "docs": undefined,
-            "name": "HU",
-            "value": "HU",
-          },
-          {
-            "docs": undefined,
-            "name": "IS",
-            "value": "IS",
-          },
-          {
-            "docs": undefined,
-            "name": "IN",
-            "value": "IN",
-          },
-          {
-            "docs": undefined,
-            "name": "ID",
-            "value": "ID",
-          },
-          {
-            "docs": undefined,
-            "name": "IR",
-            "value": "IR",
-          },
-          {
-            "docs": undefined,
-            "name": "IQ",
-            "value": "IQ",
-          },
-          {
-            "docs": undefined,
-            "name": "IE",
-            "value": "IE",
-          },
-          {
-            "docs": undefined,
-            "name": "IM",
-            "value": "IM",
-          },
-          {
-            "docs": undefined,
-            "name": "IL",
-            "value": "IL",
-          },
-          {
-            "docs": undefined,
-            "name": "IT",
-            "value": "IT",
-          },
-          {
-            "docs": undefined,
-            "name": "JM",
-            "value": "JM",
-          },
-          {
-            "docs": undefined,
-            "name": "JP",
-            "value": "JP",
-          },
-          {
-            "docs": undefined,
-            "name": "JE",
-            "value": "JE",
-          },
-          {
-            "docs": undefined,
-            "name": "JO",
-            "value": "JO",
-          },
-          {
-            "docs": undefined,
-            "name": "KZ",
-            "value": "KZ",
-          },
-          {
-            "docs": undefined,
-            "name": "KE",
-            "value": "KE",
-          },
-          {
-            "docs": undefined,
-            "name": "KI",
-            "value": "KI",
-          },
-          {
-            "docs": undefined,
-            "name": "KP",
-            "value": "KP",
-          },
-          {
-            "docs": undefined,
-            "name": "KR",
-            "value": "KR",
-          },
-          {
-            "docs": undefined,
-            "name": "KW",
-            "value": "KW",
-          },
-          {
-            "docs": undefined,
-            "name": "KG",
-            "value": "KG",
-          },
-          {
-            "docs": undefined,
-            "name": "LA",
-            "value": "LA",
-          },
-          {
-            "docs": undefined,
-            "name": "LV",
-            "value": "LV",
-          },
-          {
-            "docs": undefined,
-            "name": "LB",
-            "value": "LB",
-          },
-          {
-            "docs": undefined,
-            "name": "LS",
-            "value": "LS",
-          },
-          {
-            "docs": undefined,
-            "name": "LR",
-            "value": "LR",
-          },
-          {
-            "docs": undefined,
-            "name": "LY",
-            "value": "LY",
-          },
-          {
-            "docs": undefined,
-            "name": "LI",
-            "value": "LI",
-          },
-          {
-            "docs": undefined,
-            "name": "LT",
-            "value": "LT",
-          },
-          {
-            "docs": undefined,
-            "name": "LU",
-            "value": "LU",
-          },
-          {
-            "docs": undefined,
-            "name": "MO",
-            "value": "MO",
-          },
-          {
-            "docs": undefined,
-            "name": "MG",
-            "value": "MG",
-          },
-          {
-            "docs": undefined,
-            "name": "MW",
-            "value": "MW",
-          },
-          {
-            "docs": undefined,
-            "name": "MY",
-            "value": "MY",
-          },
-          {
-            "docs": undefined,
-            "name": "MV",
-            "value": "MV",
-          },
-          {
-            "docs": undefined,
-            "name": "ML",
-            "value": "ML",
-          },
-          {
-            "docs": undefined,
-            "name": "MT",
-            "value": "MT",
-          },
-          {
-            "docs": undefined,
-            "name": "MH",
-            "value": "MH",
-          },
-          {
-            "docs": undefined,
-            "name": "MQ",
-            "value": "MQ",
-          },
-          {
-            "docs": undefined,
-            "name": "MR",
-            "value": "MR",
-          },
-          {
-            "docs": undefined,
-            "name": "MU",
-            "value": "MU",
-          },
-          {
-            "docs": undefined,
-            "name": "YT",
-            "value": "YT",
-          },
-          {
-            "docs": undefined,
-            "name": "MX",
-            "value": "MX",
-          },
-          {
-            "docs": undefined,
-            "name": "FM",
-            "value": "FM",
-          },
-          {
-            "docs": undefined,
-            "name": "MD",
-            "value": "MD",
-          },
-          {
-            "docs": undefined,
-            "name": "MC",
-            "value": "MC",
-          },
-          {
-            "docs": undefined,
-            "name": "MN",
-            "value": "MN",
-          },
-          {
-            "docs": undefined,
-            "name": "ME",
-            "value": "ME",
-          },
-          {
-            "docs": undefined,
-            "name": "MS",
-            "value": "MS",
-          },
-          {
-            "docs": undefined,
-            "name": "MA",
-            "value": "MA",
-          },
-          {
-            "docs": undefined,
-            "name": "MZ",
-            "value": "MZ",
-          },
-          {
-            "docs": undefined,
-            "name": "MM",
-            "value": "MM",
-          },
-          {
-            "docs": undefined,
-            "name": "NA",
-            "value": "NA",
-          },
-          {
-            "docs": undefined,
-            "name": "NR",
-            "value": "NR",
-          },
-          {
-            "docs": undefined,
-            "name": "NP",
-            "value": "NP",
-          },
-          {
-            "docs": undefined,
-            "name": "NL",
-            "value": "NL",
-          },
-          {
-            "docs": undefined,
-            "name": "NC",
-            "value": "NC",
-          },
-          {
-            "docs": undefined,
-            "name": "NZ",
-            "value": "NZ",
-          },
-          {
-            "docs": undefined,
-            "name": "NI",
-            "value": "NI",
-          },
-          {
-            "docs": undefined,
-            "name": "NE",
-            "value": "NE",
-          },
-          {
-            "docs": undefined,
-            "name": "NG",
-            "value": "NG",
-          },
-          {
-            "docs": undefined,
-            "name": "NU",
-            "value": "NU",
-          },
-          {
-            "docs": undefined,
-            "name": "NF",
-            "value": "NF",
-          },
-          {
-            "docs": undefined,
-            "name": "MK",
-            "value": "MK",
-          },
-          {
-            "docs": undefined,
-            "name": "MP",
-            "value": "MP",
-          },
-          {
-            "docs": undefined,
-            "name": "NO",
-            "value": "NO",
-          },
-          {
-            "docs": undefined,
-            "name": "OM",
-            "value": "OM",
-          },
-          {
-            "docs": undefined,
-            "name": "PK",
-            "value": "PK",
-          },
-          {
-            "docs": undefined,
-            "name": "PW",
-            "value": "PW",
-          },
-          {
-            "docs": undefined,
-            "name": "PS",
-            "value": "PS",
-          },
-          {
-            "docs": undefined,
-            "name": "PA",
-            "value": "PA",
-          },
-          {
-            "docs": undefined,
-            "name": "PG",
-            "value": "PG",
-          },
-          {
-            "docs": undefined,
-            "name": "PY",
-            "value": "PY",
-          },
-          {
-            "docs": undefined,
-            "name": "PE",
-            "value": "PE",
-          },
-          {
-            "docs": undefined,
-            "name": "PH",
-            "value": "PH",
-          },
-          {
-            "docs": undefined,
-            "name": "PN",
-            "value": "PN",
-          },
-          {
-            "docs": undefined,
-            "name": "PL",
-            "value": "PL",
-          },
-          {
-            "docs": undefined,
-            "name": "PT",
-            "value": "PT",
-          },
-          {
-            "docs": undefined,
-            "name": "PR",
-            "value": "PR",
-          },
-          {
-            "docs": undefined,
-            "name": "QA",
-            "value": "QA",
-          },
-          {
-            "docs": undefined,
-            "name": "RO",
-            "value": "RO",
-          },
-          {
-            "docs": undefined,
-            "name": "RU",
-            "value": "RU",
-          },
-          {
-            "docs": undefined,
-            "name": "RW",
-            "value": "RW",
-          },
-          {
-            "docs": undefined,
-            "name": "RE",
-            "value": "RE",
-          },
-          {
-            "docs": undefined,
-            "name": "BL",
-            "value": "BL",
-          },
-          {
-            "docs": undefined,
-            "name": "SH",
-            "value": "SH",
-          },
-          {
-            "docs": undefined,
-            "name": "KN",
-            "value": "KN",
-          },
-          {
-            "docs": undefined,
-            "name": "LC",
-            "value": "LC",
-          },
-          {
-            "docs": undefined,
-            "name": "MF",
-            "value": "MF",
-          },
-          {
-            "docs": undefined,
-            "name": "PM",
-            "value": "PM",
-          },
-          {
-            "docs": undefined,
-            "name": "VC",
-            "value": "VC",
-          },
-          {
-            "docs": undefined,
-            "name": "WS",
-            "value": "WS",
-          },
-          {
-            "docs": undefined,
-            "name": "SM",
-            "value": "SM",
-          },
-          {
-            "docs": undefined,
-            "name": "ST",
-            "value": "ST",
-          },
-          {
-            "docs": undefined,
-            "name": "SA",
-            "value": "SA",
-          },
-          {
-            "docs": undefined,
-            "name": "SN",
-            "value": "SN",
-          },
-          {
-            "docs": undefined,
-            "name": "RS",
-            "value": "RS",
-          },
-          {
-            "docs": undefined,
-            "name": "SC",
-            "value": "SC",
-          },
-          {
-            "docs": undefined,
-            "name": "SL",
-            "value": "SL",
-          },
-          {
-            "docs": undefined,
-            "name": "SG",
-            "value": "SG",
-          },
-          {
-            "docs": undefined,
-            "name": "SX",
-            "value": "SX",
-          },
-          {
-            "docs": undefined,
-            "name": "SK",
-            "value": "SK",
-          },
-          {
-            "docs": undefined,
-            "name": "SI",
-            "value": "SI",
-          },
-          {
-            "docs": undefined,
-            "name": "SB",
-            "value": "SB",
-          },
-          {
-            "docs": undefined,
-            "name": "SO",
-            "value": "SO",
-          },
-          {
-            "docs": undefined,
-            "name": "ZA",
-            "value": "ZA",
-          },
-          {
-            "docs": undefined,
-            "name": "GS",
-            "value": "GS",
-          },
-          {
-            "docs": undefined,
-            "name": "SS",
-            "value": "SS",
-          },
-          {
-            "docs": undefined,
-            "name": "ES",
-            "value": "ES",
-          },
-          {
-            "docs": undefined,
-            "name": "LK",
-            "value": "LK",
-          },
-          {
-            "docs": undefined,
-            "name": "SD",
-            "value": "SD",
-          },
-          {
-            "docs": undefined,
-            "name": "SR",
-            "value": "SR",
-          },
-          {
-            "docs": undefined,
-            "name": "SJ",
-            "value": "SJ",
-          },
-          {
-            "docs": undefined,
-            "name": "SE",
-            "value": "SE",
-          },
-          {
-            "docs": undefined,
-            "name": "CH",
-            "value": "CH",
-          },
-          {
-            "docs": undefined,
-            "name": "SY",
-            "value": "SY",
-          },
-          {
-            "docs": undefined,
-            "name": "TW",
-            "value": "TW",
-          },
-          {
-            "docs": undefined,
-            "name": "TJ",
-            "value": "TJ",
-          },
-          {
-            "docs": undefined,
-            "name": "TZ",
-            "value": "TZ",
-          },
-          {
-            "docs": undefined,
-            "name": "TH",
-            "value": "TH",
-          },
-          {
-            "docs": undefined,
-            "name": "TL",
-            "value": "TL",
-          },
-          {
-            "docs": undefined,
-            "name": "TG",
-            "value": "TG",
-          },
-          {
-            "docs": undefined,
-            "name": "TK",
-            "value": "TK",
-          },
-          {
-            "docs": undefined,
-            "name": "TO",
-            "value": "TO",
-          },
-          {
-            "docs": undefined,
-            "name": "TT",
-            "value": "TT",
-          },
-          {
-            "docs": undefined,
-            "name": "TN",
-            "value": "TN",
-          },
-          {
-            "docs": undefined,
-            "name": "TM",
-            "value": "TM",
-          },
-          {
-            "docs": undefined,
-            "name": "TC",
-            "value": "TC",
-          },
-          {
-            "docs": undefined,
-            "name": "TV",
-            "value": "TV",
-          },
-          {
-            "docs": undefined,
-            "name": "TR",
-            "value": "TR",
-          },
-          {
-            "docs": undefined,
-            "name": "UG",
-            "value": "UG",
-          },
-          {
-            "docs": undefined,
-            "name": "UA",
-            "value": "UA",
-          },
-          {
-            "docs": undefined,
-            "name": "AE",
-            "value": "AE",
-          },
-          {
-            "docs": undefined,
-            "name": "GB",
-            "value": "GB",
-          },
-          {
-            "docs": undefined,
-            "name": "UM",
-            "value": "UM",
-          },
-          {
-            "docs": undefined,
-            "name": "US",
-            "value": "US",
-          },
-          {
-            "docs": undefined,
-            "name": "UY",
-            "value": "UY",
-          },
-          {
-            "docs": undefined,
-            "name": "UZ",
-            "value": "UZ",
-          },
-          {
-            "docs": undefined,
-            "name": "VU",
-            "value": "VU",
-          },
-          {
-            "docs": undefined,
-            "name": "VE",
-            "value": "VE",
-          },
-          {
-            "docs": undefined,
-            "name": "VN",
-            "value": "VN",
-          },
-          {
-            "docs": undefined,
-            "name": "VG",
-            "value": "VG",
-          },
-          {
-            "docs": undefined,
-            "name": "VI",
-            "value": "VI",
-          },
-          {
-            "docs": undefined,
-            "name": "WF",
-            "value": "WF",
-          },
-          {
-            "docs": undefined,
-            "name": "EH",
-            "value": "EH",
-          },
-          {
-            "docs": undefined,
-            "name": "YE",
-            "value": "YE",
-          },
-          {
-            "docs": undefined,
-            "name": "ZM",
-            "value": "ZM",
-          },
-          {
-            "docs": undefined,
-            "name": "ZW",
-            "value": "ZW",
-          },
-          {
-            "docs": undefined,
-            "name": "AX",
-            "value": "AX",
-          },
-          {
-            "docs": undefined,
-            "name": "NOT_APPLICABLE",
+          "AF",
+          "AL",
+          "DZ",
+          "AS",
+          "AD",
+          "AO",
+          "AI",
+          "AQ",
+          "AG",
+          "AR",
+          "AM",
+          "AW",
+          "AU",
+          "AT",
+          "AZ",
+          "BS",
+          "BH",
+          "BD",
+          "BB",
+          "BY",
+          "BE",
+          "BZ",
+          "BJ",
+          "BM",
+          "BT",
+          "BO",
+          "BQ",
+          "BA",
+          "BW",
+          "BV",
+          "BR",
+          "IO",
+          "BN",
+          "BG",
+          "BF",
+          "BI",
+          "CV",
+          "KH",
+          "CM",
+          "CA",
+          "KY",
+          "CF",
+          "TD",
+          "CL",
+          "CN",
+          "CX",
+          "CC",
+          "CO",
+          "KM",
+          "CD",
+          "CG",
+          "CK",
+          "CR",
+          "HR",
+          "CU",
+          "CW",
+          "CY",
+          "CZ",
+          "CI",
+          "DK",
+          "DJ",
+          "DM",
+          "DO",
+          "EC",
+          "EG",
+          "SV",
+          "GQ",
+          "ER",
+          "EE",
+          "SZ",
+          "ET",
+          "FK",
+          "FO",
+          "FJ",
+          "FI",
+          "FR",
+          "GF",
+          "PF",
+          "TF",
+          "GA",
+          "GM",
+          "GE",
+          "DE",
+          "GH",
+          "GI",
+          "GR",
+          "GL",
+          "GD",
+          "GP",
+          "GU",
+          "GT",
+          "GG",
+          "GN",
+          "GW",
+          "GY",
+          "HT",
+          "HM",
+          "VA",
+          "HN",
+          "HK",
+          "HU",
+          "IS",
+          "IN",
+          "ID",
+          "IR",
+          "IQ",
+          "IE",
+          "IM",
+          "IL",
+          "IT",
+          "JM",
+          "JP",
+          "JE",
+          "JO",
+          "KZ",
+          "KE",
+          "KI",
+          "KP",
+          "KR",
+          "KW",
+          "KG",
+          "LA",
+          "LV",
+          "LB",
+          "LS",
+          "LR",
+          "LY",
+          "LI",
+          "LT",
+          "LU",
+          "MO",
+          "MG",
+          "MW",
+          "MY",
+          "MV",
+          "ML",
+          "MT",
+          "MH",
+          "MQ",
+          "MR",
+          "MU",
+          "YT",
+          "MX",
+          "FM",
+          "MD",
+          "MC",
+          "MN",
+          "ME",
+          "MS",
+          "MA",
+          "MZ",
+          "MM",
+          "NA",
+          "NR",
+          "NP",
+          "NL",
+          "NC",
+          "NZ",
+          "NI",
+          "NE",
+          "NG",
+          "NU",
+          "NF",
+          "MK",
+          "MP",
+          "NO",
+          "OM",
+          "PK",
+          "PW",
+          "PS",
+          "PA",
+          "PG",
+          "PY",
+          "PE",
+          "PH",
+          "PN",
+          "PL",
+          "PT",
+          "PR",
+          "QA",
+          "RO",
+          "RU",
+          "RW",
+          "RE",
+          "BL",
+          "SH",
+          "KN",
+          "LC",
+          "MF",
+          "PM",
+          "VC",
+          "WS",
+          "SM",
+          "ST",
+          "SA",
+          "SN",
+          "RS",
+          "SC",
+          "SL",
+          "SG",
+          "SX",
+          "SK",
+          "SI",
+          "SB",
+          "SO",
+          "ZA",
+          "GS",
+          "SS",
+          "ES",
+          "LK",
+          "SD",
+          "SR",
+          "SJ",
+          "SE",
+          "CH",
+          "SY",
+          "TW",
+          "TJ",
+          "TZ",
+          "TH",
+          "TL",
+          "TG",
+          "TK",
+          "TO",
+          "TT",
+          "TN",
+          "TM",
+          "TC",
+          "TV",
+          "TR",
+          "UG",
+          "UA",
+          "AE",
+          "GB",
+          "UM",
+          "US",
+          "UY",
+          "UZ",
+          "VU",
+          "VE",
+          "VN",
+          "VG",
+          "VI",
+          "WF",
+          "EH",
+          "YE",
+          "ZM",
+          "ZW",
+          "AX",
+          {
+            "description": undefined,
+            "generatedName": "NOT_APPLICABLE",
+            "nameOverride": undefined,
             "value": "N/A",
           },
         ],
@@ -2947,1355 +1156,280 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "enum": [
           {
-            "docs": undefined,
-            "name": "OneInch",
+            "description": undefined,
+            "generatedName": "OneInch",
+            "nameOverride": undefined,
             "value": "1INCH",
           },
-          {
-            "docs": undefined,
-            "name": "AAVE",
-            "value": "AAVE",
-          },
-          {
-            "docs": undefined,
-            "name": "ADA",
-            "value": "ADA",
-          },
-          {
-            "docs": undefined,
-            "name": "AED",
-            "value": "AED",
-          },
-          {
-            "docs": undefined,
-            "name": "AFN",
-            "value": "AFN",
-          },
-          {
-            "docs": undefined,
-            "name": "ALGO",
-            "value": "ALGO",
-          },
-          {
-            "docs": undefined,
-            "name": "ALL",
-            "value": "ALL",
-          },
-          {
-            "docs": undefined,
-            "name": "AMD",
-            "value": "AMD",
-          },
-          {
-            "docs": undefined,
-            "name": "AMP",
-            "value": "AMP",
-          },
-          {
-            "docs": undefined,
-            "name": "ANG",
-            "value": "ANG",
-          },
-          {
-            "docs": undefined,
-            "name": "AOA",
-            "value": "AOA",
-          },
-          {
-            "docs": undefined,
-            "name": "AR",
-            "value": "AR",
-          },
-          {
-            "docs": undefined,
-            "name": "ARS",
-            "value": "ARS",
-          },
-          {
-            "docs": undefined,
-            "name": "ATOM",
-            "value": "ATOM",
-          },
-          {
-            "docs": undefined,
-            "name": "AUD",
-            "value": "AUD",
-          },
-          {
-            "docs": undefined,
-            "name": "AVAX",
-            "value": "AVAX",
-          },
-          {
-            "docs": undefined,
-            "name": "AWG",
-            "value": "AWG",
-          },
-          {
-            "docs": undefined,
-            "name": "AXS",
-            "value": "AXS",
-          },
-          {
-            "docs": undefined,
-            "name": "AZN",
-            "value": "AZN",
-          },
-          {
-            "docs": undefined,
-            "name": "BAM",
-            "value": "BAM",
-          },
-          {
-            "docs": undefined,
-            "name": "BAT",
-            "value": "BAT",
-          },
-          {
-            "docs": undefined,
-            "name": "BBD",
-            "value": "BBD",
-          },
-          {
-            "docs": undefined,
-            "name": "BCH",
-            "value": "BCH",
-          },
-          {
-            "docs": undefined,
-            "name": "BDT",
-            "value": "BDT",
-          },
-          {
-            "docs": undefined,
-            "name": "BGN",
-            "value": "BGN",
-          },
-          {
-            "docs": undefined,
-            "name": "BHD",
-            "value": "BHD",
-          },
-          {
-            "docs": undefined,
-            "name": "BIF",
-            "value": "BIF",
-          },
-          {
-            "docs": undefined,
-            "name": "BMD",
-            "value": "BMD",
-          },
-          {
-            "docs": undefined,
-            "name": "BNB",
-            "value": "BNB",
-          },
-          {
-            "docs": undefined,
-            "name": "BND",
-            "value": "BND",
-          },
-          {
-            "docs": undefined,
-            "name": "BOB",
-            "value": "BOB",
-          },
-          {
-            "docs": undefined,
-            "name": "BRL",
-            "value": "BRL",
-          },
-          {
-            "docs": undefined,
-            "name": "BSD",
-            "value": "BSD",
-          },
-          {
-            "docs": undefined,
-            "name": "BSV",
-            "value": "BSV",
-          },
-          {
-            "docs": undefined,
-            "name": "BTC",
-            "value": "BTC",
-          },
-          {
-            "docs": undefined,
-            "name": "BTCB",
-            "value": "BTCB",
-          },
-          {
-            "docs": undefined,
-            "name": "BTG",
-            "value": "BTG",
-          },
-          {
-            "docs": undefined,
-            "name": "BTN",
-            "value": "BTN",
-          },
-          {
-            "docs": undefined,
-            "name": "BUSD",
-            "value": "BUSD",
-          },
-          {
-            "docs": undefined,
-            "name": "BWP",
-            "value": "BWP",
-          },
-          {
-            "docs": undefined,
-            "name": "BYN",
-            "value": "BYN",
-          },
-          {
-            "docs": undefined,
-            "name": "BYR",
-            "value": "BYR",
-          },
-          {
-            "docs": undefined,
-            "name": "BZD",
-            "value": "BZD",
-          },
-          {
-            "docs": undefined,
-            "name": "CAD",
-            "value": "CAD",
-          },
-          {
-            "docs": undefined,
-            "name": "CAKE",
-            "value": "CAKE",
-          },
-          {
-            "docs": undefined,
-            "name": "CDF",
-            "value": "CDF",
-          },
-          {
-            "docs": undefined,
-            "name": "CELO",
-            "value": "CELO",
-          },
-          {
-            "docs": undefined,
-            "name": "CHF",
-            "value": "CHF",
-          },
-          {
-            "docs": undefined,
-            "name": "CHZ",
-            "value": "CHZ",
-          },
-          {
-            "docs": undefined,
-            "name": "CLF",
-            "value": "CLF",
-          },
-          {
-            "docs": undefined,
-            "name": "CLP",
-            "value": "CLP",
-          },
-          {
-            "docs": undefined,
-            "name": "CNY",
-            "value": "CNY",
-          },
-          {
-            "docs": undefined,
-            "name": "COMP",
-            "value": "COMP",
-          },
-          {
-            "docs": undefined,
-            "name": "COP",
-            "value": "COP",
-          },
-          {
-            "docs": undefined,
-            "name": "CRC",
-            "value": "CRC",
-          },
-          {
-            "docs": undefined,
-            "name": "CRO",
-            "value": "CRO",
-          },
-          {
-            "docs": undefined,
-            "name": "CRV",
-            "value": "CRV",
-          },
-          {
-            "docs": undefined,
-            "name": "CUC",
-            "value": "CUC",
-          },
-          {
-            "docs": undefined,
-            "name": "CUP",
-            "value": "CUP",
-          },
-          {
-            "docs": undefined,
-            "name": "CVE",
-            "value": "CVE",
-          },
-          {
-            "docs": undefined,
-            "name": "CVX",
-            "value": "CVX",
-          },
-          {
-            "docs": undefined,
-            "name": "CZK",
-            "value": "CZK",
-          },
-          {
-            "docs": undefined,
-            "name": "DAI",
-            "value": "DAI",
-          },
-          {
-            "docs": undefined,
-            "name": "DASH",
-            "value": "DASH",
-          },
-          {
-            "docs": undefined,
-            "name": "DCR",
-            "value": "DCR",
-          },
-          {
-            "docs": undefined,
-            "name": "DFI",
-            "value": "DFI",
-          },
-          {
-            "docs": undefined,
-            "name": "DJF",
-            "value": "DJF",
-          },
-          {
-            "docs": undefined,
-            "name": "DKK",
-            "value": "DKK",
-          },
-          {
-            "docs": undefined,
-            "name": "DOGE",
-            "value": "DOGE",
-          },
-          {
-            "docs": undefined,
-            "name": "DOP",
-            "value": "DOP",
-          },
-          {
-            "docs": undefined,
-            "name": "DOT",
-            "value": "DOT",
-          },
-          {
-            "docs": undefined,
-            "name": "DZD",
-            "value": "DZD",
-          },
-          {
-            "docs": undefined,
-            "name": "EGLD",
-            "value": "EGLD",
-          },
-          {
-            "docs": undefined,
-            "name": "EGP",
-            "value": "EGP",
-          },
-          {
-            "docs": undefined,
-            "name": "ENJ",
-            "value": "ENJ",
-          },
-          {
-            "docs": undefined,
-            "name": "EOS",
-            "value": "EOS",
-          },
-          {
-            "docs": undefined,
-            "name": "ERN",
-            "value": "ERN",
-          },
-          {
-            "docs": undefined,
-            "name": "ETB",
-            "value": "ETB",
-          },
-          {
-            "docs": undefined,
-            "name": "ETC",
-            "value": "ETC",
-          },
-          {
-            "docs": undefined,
-            "name": "ETH",
-            "value": "ETH",
-          },
-          {
-            "docs": undefined,
-            "name": "EUR",
-            "value": "EUR",
-          },
-          {
-            "docs": undefined,
-            "name": "FEI",
-            "value": "FEI",
-          },
-          {
-            "docs": undefined,
-            "name": "FIL",
-            "value": "FIL",
-          },
-          {
-            "docs": undefined,
-            "name": "FJD",
-            "value": "FJD",
-          },
-          {
-            "docs": undefined,
-            "name": "FKP",
-            "value": "FKP",
-          },
-          {
-            "docs": undefined,
-            "name": "FLOW",
-            "value": "FLOW",
-          },
-          {
-            "docs": undefined,
-            "name": "FRAX",
-            "value": "FRAX",
-          },
-          {
-            "docs": undefined,
-            "name": "FTM",
-            "value": "FTM",
-          },
-          {
-            "docs": undefined,
-            "name": "FTT",
-            "value": "FTT",
-          },
-          {
-            "docs": undefined,
-            "name": "GALA",
-            "value": "GALA",
-          },
-          {
-            "docs": undefined,
-            "name": "GBP",
-            "value": "GBP",
-          },
-          {
-            "docs": undefined,
-            "name": "GEL",
-            "value": "GEL",
-          },
-          {
-            "docs": undefined,
-            "name": "GGP",
-            "value": "GGP",
-          },
-          {
-            "docs": undefined,
-            "name": "GHS",
-            "value": "GHS",
-          },
-          {
-            "docs": undefined,
-            "name": "GIP",
-            "value": "GIP",
-          },
-          {
-            "docs": undefined,
-            "name": "GMD",
-            "value": "GMD",
-          },
-          {
-            "docs": undefined,
-            "name": "GNF",
-            "value": "GNF",
-          },
-          {
-            "docs": undefined,
-            "name": "GNO",
-            "value": "GNO",
-          },
-          {
-            "docs": undefined,
-            "name": "GRT",
-            "value": "GRT",
-          },
-          {
-            "docs": undefined,
-            "name": "GT",
-            "value": "GT",
-          },
-          {
-            "docs": undefined,
-            "name": "GTQ",
-            "value": "GTQ",
-          },
-          {
-            "docs": undefined,
-            "name": "GYD",
-            "value": "GYD",
-          },
-          {
-            "docs": undefined,
-            "name": "HBAR",
-            "value": "HBAR",
-          },
-          {
-            "docs": undefined,
-            "name": "HKD",
-            "value": "HKD",
-          },
-          {
-            "docs": undefined,
-            "name": "HNL",
-            "value": "HNL",
-          },
-          {
-            "docs": undefined,
-            "name": "HNT",
-            "value": "HNT",
-          },
-          {
-            "docs": undefined,
-            "name": "HOT",
-            "value": "HOT",
-          },
-          {
-            "docs": undefined,
-            "name": "HRK",
-            "value": "HRK",
-          },
-          {
-            "docs": undefined,
-            "name": "HT",
-            "value": "HT",
-          },
-          {
-            "docs": undefined,
-            "name": "HTG",
-            "value": "HTG",
-          },
-          {
-            "docs": undefined,
-            "name": "HUF",
-            "value": "HUF",
-          },
-          {
-            "docs": undefined,
-            "name": "ICP",
-            "value": "ICP",
-          },
-          {
-            "docs": undefined,
-            "name": "IDR",
-            "value": "IDR",
-          },
-          {
-            "docs": undefined,
-            "name": "ILS",
-            "value": "ILS",
-          },
-          {
-            "docs": undefined,
-            "name": "IMP",
-            "value": "IMP",
-          },
-          {
-            "docs": undefined,
-            "name": "INJ",
-            "value": "INJ",
-          },
-          {
-            "docs": undefined,
-            "name": "INR",
-            "value": "INR",
-          },
-          {
-            "docs": undefined,
-            "name": "IQD",
-            "value": "IQD",
-          },
-          {
-            "docs": undefined,
-            "name": "IRR",
-            "value": "IRR",
-          },
-          {
-            "docs": undefined,
-            "name": "ISK",
-            "value": "ISK",
-          },
-          {
-            "docs": undefined,
-            "name": "JEP",
-            "value": "JEP",
-          },
-          {
-            "docs": undefined,
-            "name": "JMD",
-            "value": "JMD",
-          },
-          {
-            "docs": undefined,
-            "name": "JOD",
-            "value": "JOD",
-          },
-          {
-            "docs": undefined,
-            "name": "JPY",
-            "value": "JPY",
-          },
-          {
-            "docs": undefined,
-            "name": "KAVA",
-            "value": "KAVA",
-          },
-          {
-            "docs": undefined,
-            "name": "KCS",
-            "value": "KCS",
-          },
-          {
-            "docs": undefined,
-            "name": "KDA",
-            "value": "KDA",
-          },
-          {
-            "docs": undefined,
-            "name": "KES",
-            "value": "KES",
-          },
-          {
-            "docs": undefined,
-            "name": "KGS",
-            "value": "KGS",
-          },
-          {
-            "docs": undefined,
-            "name": "KHR",
-            "value": "KHR",
-          },
-          {
-            "docs": undefined,
-            "name": "KLAY",
-            "value": "KLAY",
-          },
-          {
-            "docs": undefined,
-            "name": "KMF",
-            "value": "KMF",
-          },
-          {
-            "docs": undefined,
-            "name": "KNC",
-            "value": "KNC",
-          },
-          {
-            "docs": undefined,
-            "name": "KPW",
-            "value": "KPW",
-          },
-          {
-            "docs": undefined,
-            "name": "KRW",
-            "value": "KRW",
-          },
-          {
-            "docs": undefined,
-            "name": "KSM",
-            "value": "KSM",
-          },
-          {
-            "docs": undefined,
-            "name": "KWD",
-            "value": "KWD",
-          },
-          {
-            "docs": undefined,
-            "name": "KYD",
-            "value": "KYD",
-          },
-          {
-            "docs": undefined,
-            "name": "KZT",
-            "value": "KZT",
-          },
-          {
-            "docs": undefined,
-            "name": "LAK",
-            "value": "LAK",
-          },
-          {
-            "docs": undefined,
-            "name": "LBP",
-            "value": "LBP",
-          },
-          {
-            "docs": undefined,
-            "name": "LEO",
-            "value": "LEO",
-          },
-          {
-            "docs": undefined,
-            "name": "LINK",
-            "value": "LINK",
-          },
-          {
-            "docs": undefined,
-            "name": "LKR",
-            "value": "LKR",
-          },
-          {
-            "docs": undefined,
-            "name": "LRC",
-            "value": "LRC",
-          },
-          {
-            "docs": undefined,
-            "name": "LRD",
-            "value": "LRD",
-          },
-          {
-            "docs": undefined,
-            "name": "LSL",
-            "value": "LSL",
-          },
-          {
-            "docs": undefined,
-            "name": "LTC",
-            "value": "LTC",
-          },
-          {
-            "docs": undefined,
-            "name": "LTL",
-            "value": "LTL",
-          },
-          {
-            "docs": undefined,
-            "name": "LUNA",
-            "value": "LUNA",
-          },
-          {
-            "docs": undefined,
-            "name": "LVL",
-            "value": "LVL",
-          },
-          {
-            "docs": undefined,
-            "name": "LYD",
-            "value": "LYD",
-          },
-          {
-            "docs": undefined,
-            "name": "MAD",
-            "value": "MAD",
-          },
-          {
-            "docs": undefined,
-            "name": "MANA",
-            "value": "MANA",
-          },
-          {
-            "docs": undefined,
-            "name": "MATIC",
-            "value": "MATIC",
-          },
-          {
-            "docs": undefined,
-            "name": "MDL",
-            "value": "MDL",
-          },
-          {
-            "docs": undefined,
-            "name": "MGA",
-            "value": "MGA",
-          },
-          {
-            "docs": undefined,
-            "name": "MINA",
-            "value": "MINA",
-          },
-          {
-            "docs": undefined,
-            "name": "MIOTA",
-            "value": "MIOTA",
-          },
-          {
-            "docs": undefined,
-            "name": "MKD",
-            "value": "MKD",
-          },
-          {
-            "docs": undefined,
-            "name": "MKR",
-            "value": "MKR",
-          },
-          {
-            "docs": undefined,
-            "name": "MMK",
-            "value": "MMK",
-          },
-          {
-            "docs": undefined,
-            "name": "MNT",
-            "value": "MNT",
-          },
-          {
-            "docs": undefined,
-            "name": "MOP",
-            "value": "MOP",
-          },
-          {
-            "docs": undefined,
-            "name": "MRO",
-            "value": "MRO",
-          },
-          {
-            "docs": undefined,
-            "name": "MUR",
-            "value": "MUR",
-          },
-          {
-            "docs": undefined,
-            "name": "MVR",
-            "value": "MVR",
-          },
-          {
-            "docs": undefined,
-            "name": "MWK",
-            "value": "MWK",
-          },
-          {
-            "docs": undefined,
-            "name": "MXN",
-            "value": "MXN",
-          },
-          {
-            "docs": undefined,
-            "name": "MYR",
-            "value": "MYR",
-          },
-          {
-            "docs": undefined,
-            "name": "MZN",
-            "value": "MZN",
-          },
-          {
-            "docs": undefined,
-            "name": "NAD",
-            "value": "NAD",
-          },
-          {
-            "docs": undefined,
-            "name": "NEAR",
-            "value": "NEAR",
-          },
-          {
-            "docs": undefined,
-            "name": "NEO",
-            "value": "NEO",
-          },
-          {
-            "docs": undefined,
-            "name": "NEXO",
-            "value": "NEXO",
-          },
-          {
-            "docs": undefined,
-            "name": "NGN",
-            "value": "NGN",
-          },
-          {
-            "docs": undefined,
-            "name": "NIO",
-            "value": "NIO",
-          },
-          {
-            "docs": undefined,
-            "name": "NOK",
-            "value": "NOK",
-          },
-          {
-            "docs": undefined,
-            "name": "NPR",
-            "value": "NPR",
-          },
-          {
-            "docs": undefined,
-            "name": "NZD",
-            "value": "NZD",
-          },
-          {
-            "docs": undefined,
-            "name": "OKB",
-            "value": "OKB",
-          },
-          {
-            "docs": undefined,
-            "name": "OMR",
-            "value": "OMR",
-          },
-          {
-            "docs": undefined,
-            "name": "ONE",
-            "value": "ONE",
-          },
-          {
-            "docs": undefined,
-            "name": "PAB",
-            "value": "PAB",
-          },
-          {
-            "docs": undefined,
-            "name": "PAXG",
-            "value": "PAXG",
-          },
-          {
-            "docs": undefined,
-            "name": "PEN",
-            "value": "PEN",
-          },
-          {
-            "docs": undefined,
-            "name": "PGK",
-            "value": "PGK",
-          },
-          {
-            "docs": undefined,
-            "name": "PHP",
-            "value": "PHP",
-          },
-          {
-            "docs": undefined,
-            "name": "PKR",
-            "value": "PKR",
-          },
-          {
-            "docs": undefined,
-            "name": "PLN",
-            "value": "PLN",
-          },
-          {
-            "docs": undefined,
-            "name": "PYG",
-            "value": "PYG",
-          },
-          {
-            "docs": undefined,
-            "name": "QAR",
-            "value": "QAR",
-          },
-          {
-            "docs": undefined,
-            "name": "QNT",
-            "value": "QNT",
-          },
-          {
-            "docs": undefined,
-            "name": "QTUM",
-            "value": "QTUM",
-          },
-          {
-            "docs": undefined,
-            "name": "RON",
-            "value": "RON",
-          },
-          {
-            "docs": undefined,
-            "name": "RSD",
-            "value": "RSD",
-          },
-          {
-            "docs": undefined,
-            "name": "RUB",
-            "value": "RUB",
-          },
-          {
-            "docs": undefined,
-            "name": "RUNE",
-            "value": "RUNE",
-          },
-          {
-            "docs": undefined,
-            "name": "RWF",
-            "value": "RWF",
-          },
-          {
-            "docs": undefined,
-            "name": "SAND",
-            "value": "SAND",
-          },
-          {
-            "docs": undefined,
-            "name": "SAR",
-            "value": "SAR",
-          },
-          {
-            "docs": undefined,
-            "name": "SBD",
-            "value": "SBD",
-          },
-          {
-            "docs": undefined,
-            "name": "SCR",
-            "value": "SCR",
-          },
-          {
-            "docs": undefined,
-            "name": "SDG",
-            "value": "SDG",
-          },
-          {
-            "docs": undefined,
-            "name": "SEK",
-            "value": "SEK",
-          },
-          {
-            "docs": undefined,
-            "name": "SGD",
-            "value": "SGD",
-          },
-          {
-            "docs": undefined,
-            "name": "SHIB",
-            "value": "SHIB",
-          },
-          {
-            "docs": undefined,
-            "name": "SHP",
-            "value": "SHP",
-          },
-          {
-            "docs": undefined,
-            "name": "SLE",
-            "value": "SLE",
-          },
-          {
-            "docs": undefined,
-            "name": "SLL",
-            "value": "SLL",
-          },
-          {
-            "docs": undefined,
-            "name": "SOL",
-            "value": "SOL",
-          },
-          {
-            "docs": undefined,
-            "name": "SOS",
-            "value": "SOS",
-          },
-          {
-            "docs": undefined,
-            "name": "SRD",
-            "value": "SRD",
-          },
-          {
-            "docs": undefined,
-            "name": "STD",
-            "value": "STD",
-          },
-          {
-            "docs": undefined,
-            "name": "STX",
-            "value": "STX",
-          },
-          {
-            "docs": undefined,
-            "name": "SVC",
-            "value": "SVC",
-          },
-          {
-            "docs": undefined,
-            "name": "SYP",
-            "value": "SYP",
-          },
-          {
-            "docs": undefined,
-            "name": "SZL",
-            "value": "SZL",
-          },
-          {
-            "docs": undefined,
-            "name": "THB",
-            "value": "THB",
-          },
-          {
-            "docs": undefined,
-            "name": "THETA",
-            "value": "THETA",
-          },
-          {
-            "docs": undefined,
-            "name": "TJS",
-            "value": "TJS",
-          },
-          {
-            "docs": undefined,
-            "name": "TMT",
-            "value": "TMT",
-          },
-          {
-            "docs": undefined,
-            "name": "TND",
-            "value": "TND",
-          },
-          {
-            "docs": undefined,
-            "name": "TOP",
-            "value": "TOP",
-          },
-          {
-            "docs": undefined,
-            "name": "TRX",
-            "value": "TRX",
-          },
-          {
-            "docs": undefined,
-            "name": "TRY",
-            "value": "TRY",
-          },
-          {
-            "docs": undefined,
-            "name": "TTD",
-            "value": "TTD",
-          },
-          {
-            "docs": undefined,
-            "name": "TTT",
-            "value": "TTT",
-          },
-          {
-            "docs": undefined,
-            "name": "TUSD",
-            "value": "TUSD",
-          },
-          {
-            "docs": undefined,
-            "name": "TWD",
-            "value": "TWD",
-          },
-          {
-            "docs": undefined,
-            "name": "TZS",
-            "value": "TZS",
-          },
-          {
-            "docs": undefined,
-            "name": "UAH",
-            "value": "UAH",
-          },
-          {
-            "docs": undefined,
-            "name": "UGX",
-            "value": "UGX",
-          },
-          {
-            "docs": undefined,
-            "name": "UNI",
-            "value": "UNI",
-          },
-          {
-            "docs": undefined,
-            "name": "USD",
-            "value": "USD",
-          },
-          {
-            "docs": undefined,
-            "name": "USDC",
-            "value": "USDC",
-          },
-          {
-            "docs": undefined,
-            "name": "USDP",
-            "value": "USDP",
-          },
-          {
-            "docs": undefined,
-            "name": "USDT",
-            "value": "USDT",
-          },
-          {
-            "docs": undefined,
-            "name": "UYU",
-            "value": "UYU",
-          },
-          {
-            "docs": undefined,
-            "name": "UZS",
-            "value": "UZS",
-          },
-          {
-            "docs": undefined,
-            "name": "VEF",
-            "value": "VEF",
-          },
-          {
-            "docs": undefined,
-            "name": "VET",
-            "value": "VET",
-          },
-          {
-            "docs": undefined,
-            "name": "VND",
-            "value": "VND",
-          },
-          {
-            "docs": undefined,
-            "name": "VUV",
-            "value": "VUV",
-          },
-          {
-            "docs": undefined,
-            "name": "WAVES",
-            "value": "WAVES",
-          },
-          {
-            "docs": undefined,
-            "name": "WBTC",
-            "value": "WBTC",
-          },
-          {
-            "docs": undefined,
-            "name": "WEMIX",
-            "value": "WEMIX",
-          },
-          {
-            "docs": undefined,
-            "name": "WST",
-            "value": "WST",
-          },
-          {
-            "docs": undefined,
-            "name": "XAF",
-            "value": "XAF",
-          },
-          {
-            "docs": undefined,
-            "name": "XAG",
-            "value": "XAG",
-          },
-          {
-            "docs": undefined,
-            "name": "XAU",
-            "value": "XAU",
-          },
-          {
-            "docs": undefined,
-            "name": "XCD",
-            "value": "XCD",
-          },
-          {
-            "docs": undefined,
-            "name": "XCH",
-            "value": "XCH",
-          },
-          {
-            "docs": undefined,
-            "name": "XDC",
-            "value": "XDC",
-          },
-          {
-            "docs": undefined,
-            "name": "XDR",
-            "value": "XDR",
-          },
-          {
-            "docs": undefined,
-            "name": "XEC",
-            "value": "XEC",
-          },
-          {
-            "docs": undefined,
-            "name": "XEM",
-            "value": "XEM",
-          },
-          {
-            "docs": undefined,
-            "name": "XLM",
-            "value": "XLM",
-          },
-          {
-            "docs": undefined,
-            "name": "XMR",
-            "value": "XMR",
-          },
-          {
-            "docs": undefined,
-            "name": "XOF",
-            "value": "XOF",
-          },
-          {
-            "docs": undefined,
-            "name": "XPF",
-            "value": "XPF",
-          },
-          {
-            "docs": undefined,
-            "name": "XRP",
-            "value": "XRP",
-          },
-          {
-            "docs": undefined,
-            "name": "XTZ",
-            "value": "XTZ",
-          },
-          {
-            "docs": undefined,
-            "name": "YER",
-            "value": "YER",
-          },
-          {
-            "docs": undefined,
-            "name": "ZAR",
-            "value": "ZAR",
-          },
-          {
-            "docs": undefined,
-            "name": "ZEC",
-            "value": "ZEC",
-          },
-          {
-            "docs": undefined,
-            "name": "ZIL",
-            "value": "ZIL",
-          },
-          {
-            "docs": undefined,
-            "name": "ZMK",
-            "value": "ZMK",
-          },
-          {
-            "docs": undefined,
-            "name": "ZMW",
-            "value": "ZMW",
-          },
-          {
-            "docs": undefined,
-            "name": "ZWL",
-            "value": "ZWL",
-          },
+          "AAVE",
+          "ADA",
+          "AED",
+          "AFN",
+          "ALGO",
+          "ALL",
+          "AMD",
+          "AMP",
+          "ANG",
+          "AOA",
+          "AR",
+          "ARS",
+          "ATOM",
+          "AUD",
+          "AVAX",
+          "AWG",
+          "AXS",
+          "AZN",
+          "BAM",
+          "BAT",
+          "BBD",
+          "BCH",
+          "BDT",
+          "BGN",
+          "BHD",
+          "BIF",
+          "BMD",
+          "BNB",
+          "BND",
+          "BOB",
+          "BRL",
+          "BSD",
+          "BSV",
+          "BTC",
+          "BTCB",
+          "BTG",
+          "BTN",
+          "BUSD",
+          "BWP",
+          "BYN",
+          "BYR",
+          "BZD",
+          "CAD",
+          "CAKE",
+          "CDF",
+          "CELO",
+          "CHF",
+          "CHZ",
+          "CLF",
+          "CLP",
+          "CNY",
+          "COMP",
+          "COP",
+          "CRC",
+          "CRO",
+          "CRV",
+          "CUC",
+          "CUP",
+          "CVE",
+          "CVX",
+          "CZK",
+          "DAI",
+          "DASH",
+          "DCR",
+          "DFI",
+          "DJF",
+          "DKK",
+          "DOGE",
+          "DOP",
+          "DOT",
+          "DZD",
+          "EGLD",
+          "EGP",
+          "ENJ",
+          "EOS",
+          "ERN",
+          "ETB",
+          "ETC",
+          "ETH",
+          "EUR",
+          "FEI",
+          "FIL",
+          "FJD",
+          "FKP",
+          "FLOW",
+          "FRAX",
+          "FTM",
+          "FTT",
+          "GALA",
+          "GBP",
+          "GEL",
+          "GGP",
+          "GHS",
+          "GIP",
+          "GMD",
+          "GNF",
+          "GNO",
+          "GRT",
+          "GT",
+          "GTQ",
+          "GYD",
+          "HBAR",
+          "HKD",
+          "HNL",
+          "HNT",
+          "HOT",
+          "HRK",
+          "HT",
+          "HTG",
+          "HUF",
+          "ICP",
+          "IDR",
+          "ILS",
+          "IMP",
+          "INJ",
+          "INR",
+          "IQD",
+          "IRR",
+          "ISK",
+          "JEP",
+          "JMD",
+          "JOD",
+          "JPY",
+          "KAVA",
+          "KCS",
+          "KDA",
+          "KES",
+          "KGS",
+          "KHR",
+          "KLAY",
+          "KMF",
+          "KNC",
+          "KPW",
+          "KRW",
+          "KSM",
+          "KWD",
+          "KYD",
+          "KZT",
+          "LAK",
+          "LBP",
+          "LEO",
+          "LINK",
+          "LKR",
+          "LRC",
+          "LRD",
+          "LSL",
+          "LTC",
+          "LTL",
+          "LUNA",
+          "LVL",
+          "LYD",
+          "MAD",
+          "MANA",
+          "MATIC",
+          "MDL",
+          "MGA",
+          "MINA",
+          "MIOTA",
+          "MKD",
+          "MKR",
+          "MMK",
+          "MNT",
+          "MOP",
+          "MRO",
+          "MUR",
+          "MVR",
+          "MWK",
+          "MXN",
+          "MYR",
+          "MZN",
+          "NAD",
+          "NEAR",
+          "NEO",
+          "NEXO",
+          "NGN",
+          "NIO",
+          "NOK",
+          "NPR",
+          "NZD",
+          "OKB",
+          "OMR",
+          "ONE",
+          "PAB",
+          "PAXG",
+          "PEN",
+          "PGK",
+          "PHP",
+          "PKR",
+          "PLN",
+          "PYG",
+          "QAR",
+          "QNT",
+          "QTUM",
+          "RON",
+          "RSD",
+          "RUB",
+          "RUNE",
+          "RWF",
+          "SAND",
+          "SAR",
+          "SBD",
+          "SCR",
+          "SDG",
+          "SEK",
+          "SGD",
+          "SHIB",
+          "SHP",
+          "SLE",
+          "SLL",
+          "SOL",
+          "SOS",
+          "SRD",
+          "STD",
+          "STX",
+          "SVC",
+          "SYP",
+          "SZL",
+          "THB",
+          "THETA",
+          "TJS",
+          "TMT",
+          "TND",
+          "TOP",
+          "TRX",
+          "TRY",
+          "TTD",
+          "TTT",
+          "TUSD",
+          "TWD",
+          "TZS",
+          "UAH",
+          "UGX",
+          "UNI",
+          "USD",
+          "USDC",
+          "USDP",
+          "USDT",
+          "UYU",
+          "UZS",
+          "VEF",
+          "VET",
+          "VND",
+          "VUV",
+          "WAVES",
+          "WBTC",
+          "WEMIX",
+          "WST",
+          "XAF",
+          "XAG",
+          "XAU",
+          "XCD",
+          "XCH",
+          "XDC",
+          "XDR",
+          "XEC",
+          "XEM",
+          "XLM",
+          "XMR",
+          "XOF",
+          "XPF",
+          "XRP",
+          "XTZ",
+          "YER",
+          "ZAR",
+          "ZEC",
+          "ZIL",
+          "ZMK",
+          "ZMW",
+          "ZWL",
         ],
       },
       "Date": {
@@ -4367,27 +1501,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "ExecutedRulesResult": {
         "docs": "Model for list of executed rules",
         "properties": {
-          "labels": {
-            "docs": undefined,
-            "type": "optional<list<RuleLabels>>",
-          },
-          "nature": {
-            "docs": undefined,
-            "type": "optional<RuleNature>",
-          },
-          "ruleAction": {
-            "docs": undefined,
-            "type": "RuleAction",
-          },
+          "labels": "optional<list<RuleLabels>>",
+          "nature": "optional<RuleNature>",
+          "ruleAction": "RuleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
             "type": "string",
           },
           "ruleHit": "boolean",
-          "ruleHitMeta": {
-            "docs": undefined,
-            "type": "optional<RuleHitMeta>",
-          },
+          "ruleHitMeta": "optional<RuleHitMeta>",
           "ruleId": {
             "docs": "Unique rule identifier",
             "type": "string",
@@ -4402,10 +1524,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "FailedRulesResult": {
         "docs": "Model for list of rules failed execution. It means rules could not be run",
         "properties": {
-          "failureException": {
-            "docs": undefined,
-            "type": "RuleFailureException",
-          },
+          "failureException": "RuleFailureException",
           "ruleDescription": {
             "docs": "Description of the rule",
             "type": "string",
@@ -4439,10 +1558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Bank account type. E.g. Checking, Savings etc.",
             "type": "optional<string>",
           },
-          "bankAddress": {
-            "docs": undefined,
-            "type": "optional<Address>",
-          },
+          "bankAddress": "optional<Address>",
           "bankCode": {
             "docs": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
             "type": "optional<string>",
@@ -4455,10 +1571,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Name of the account holder",
             "type": "optional<string>",
           },
-          "paymentChannel": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "paymentChannel": "optional<string>",
           "specialInstructions": {
             "docs": "Special instructions to be specified if any",
             "type": "optional<string>",
@@ -4468,26 +1581,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "HitRulesDetails": {
         "docs": "Model for list of hit rules",
         "properties": {
-          "labels": {
-            "docs": undefined,
-            "type": "optional<list<RuleLabels>>",
-          },
-          "nature": {
-            "docs": undefined,
-            "type": "optional<RuleNature>",
-          },
-          "ruleAction": {
-            "docs": undefined,
-            "type": "RuleAction",
-          },
+          "labels": "optional<list<RuleLabels>>",
+          "nature": "optional<RuleNature>",
+          "ruleAction": "RuleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
             "type": "string",
           },
-          "ruleHitMeta": {
-            "docs": undefined,
-            "type": "optional<RuleHitMeta>",
-          },
+          "ruleHitMeta": "optional<RuleHitMeta>",
           "ruleId": {
             "docs": "Unique rule identifier",
             "type": "string",
@@ -4511,10 +1612,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Account number of the user. Can be account number, IBAN number etc.",
             "type": "optional<string>",
           },
-          "bankAddress": {
-            "docs": undefined,
-            "type": "optional<Address>",
-          },
+          "bankAddress": "optional<Address>",
           "bankBranchCode": {
             "docs": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
             "type": "optional<string>",
@@ -4523,65 +1621,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Name of the bank",
             "type": "optional<string>",
           },
-          "country": {
-            "docs": undefined,
-            "type": "optional<CountryCode>",
-          },
+          "country": "optional<CountryCode>",
           "name": {
             "docs": "Name of the bank account holder",
             "type": "optional<string>",
           },
-          "paymentChannel": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "tags": {
-            "docs": undefined,
-            "type": "optional<Tag>",
-          },
+          "paymentChannel": "optional<string>",
+          "tags": "optional<Tag>",
         },
       },
       "KycStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "SUCCESSFUL",
-            "value": "SUCCESSFUL",
-          },
-          {
-            "docs": undefined,
-            "name": "FAILED",
-            "value": "FAILED",
-          },
-          {
-            "docs": undefined,
-            "name": "NOT_STARTED",
-            "value": "NOT_STARTED",
-          },
-          {
-            "docs": undefined,
-            "name": "IN_PROGRESS",
-            "value": "IN_PROGRESS",
-          },
-          {
-            "docs": undefined,
-            "name": "MANUAL_REVIEW",
-            "value": "MANUAL_REVIEW",
-          },
+          "SUCCESSFUL",
+          "FAILED",
+          "NOT_STARTED",
+          "IN_PROGRESS",
+          "MANUAL_REVIEW",
         ],
       },
       "KycStatusDetails": {
         "docs": undefined,
         "properties": {
-          "reason": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "status": {
-            "docs": undefined,
-            "type": "optional<KycStatus>",
-          },
+          "reason": "optional<string>",
+          "status": "optional<KycStatus>",
         },
       },
       "LegalDocument": {
@@ -4591,10 +1654,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "User's identity document expiration date (UNIX timestamp in milliseconds)",
             "type": "optional<double>",
           },
-          "documentIssuedCountry": {
-            "docs": undefined,
-            "type": "CountryCode",
-          },
+          "documentIssuedCountry": "CountryCode",
           "documentIssuedDate": {
             "docs": "User's identity document issuance date (UNIX timestamp in milliseconds)",
             "type": "optional<double>",
@@ -4607,10 +1667,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "User's identity document type such as passport, national ID etc.",
             "type": "string",
           },
-          "nameOnDocument": {
-            "docs": undefined,
-            "type": "optional<ConsumerName>",
-          },
+          "nameOnDocument": "optional<ConsumerName>",
           "tags": {
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
@@ -4620,22 +1677,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "LegalEntity": {
         "docs": "Model for business user legal entity details",
         "properties": {
-          "companyFinancialDetails": {
-            "docs": undefined,
-            "type": "optional<CompanyFinancialDetails>",
-          },
-          "companyGeneralDetails": {
-            "docs": undefined,
-            "type": "CompanyGeneralDetails",
-          },
-          "companyRegistrationDetails": {
-            "docs": undefined,
-            "type": "optional<CompanyRegistrationDetails>",
-          },
-          "contactDetails": {
-            "docs": undefined,
-            "type": "optional<ContactDetails>",
-          },
+          "companyFinancialDetails": "optional<CompanyFinancialDetails>",
+          "companyGeneralDetails": "CompanyGeneralDetails",
+          "companyRegistrationDetails": "optional<CompanyRegistrationDetails>",
+          "contactDetails": "optional<ContactDetails>",
           "reasonForAccountOpening": {
             "docs": "Reason for opening the account at financial institution",
             "type": "optional<list<string>>",
@@ -4649,19 +1694,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "List items",
             "type": "optional<list<ListItem>>",
           },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<ListMetadata>",
-          },
+          "metadata": "optional<ListMetadata>",
         },
       },
       "ListExisted": {
         "docs": "List with ID and header",
         "properties": {
-          "header": {
-            "docs": undefined,
-            "type": "ListHeader",
-          },
+          "header": "ListHeader",
           "items": {
             "docs": "List items",
             "type": "list<ListItem>",
@@ -4674,42 +1713,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "createdTimestamp": "double",
           "listId": "string",
-          "listType": {
-            "docs": undefined,
-            "type": "ListType",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<ListMetadata>",
-          },
+          "listType": "ListType",
+          "metadata": "optional<ListMetadata>",
           "size": "double",
-          "subtype": {
-            "docs": undefined,
-            "type": "ListSubtype",
-          },
+          "subtype": "ListSubtype",
         },
       },
       "ListItem": {
         "docs": undefined,
         "properties": {
           "key": "string",
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<ListKeyMetadata>",
-          },
+          "metadata": "optional<ListKeyMetadata>",
         },
       },
-      "ListKeyMetadata": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "ListKeyMetadata": "map<string, unknown>",
       "ListMetadata": {
         "docs": undefined,
         "properties": {
-          "checksum": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "checksum": "optional<string>",
           "description": {
             "docs": "List description",
             "type": "optional<string>",
@@ -4718,90 +1739,31 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "List name",
             "type": "optional<string>",
           },
-          "status": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
+          "status": "optional<boolean>",
         },
       },
       "ListSubtype": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "USER_ID",
-            "value": "USER_ID",
-          },
-          {
-            "docs": undefined,
-            "name": "CARD_FINGERPRINT_NUMBER",
-            "value": "CARD_FINGERPRINT_NUMBER",
-          },
-          {
-            "docs": undefined,
-            "name": "IBAN_NUMBER",
-            "value": "IBAN_NUMBER",
-          },
-          {
-            "docs": undefined,
-            "name": "BANK_ACCOUNT_NUMBER",
-            "value": "BANK_ACCOUNT_NUMBER",
-          },
-          {
-            "docs": undefined,
-            "name": "ACH_ACCOUNT_NUMBER",
-            "value": "ACH_ACCOUNT_NUMBER",
-          },
-          {
-            "docs": undefined,
-            "name": "SWIFT_ACCOUNT_NUMBER",
-            "value": "SWIFT_ACCOUNT_NUMBER",
-          },
-          {
-            "docs": undefined,
-            "name": "BIC",
-            "value": "BIC",
-          },
-          {
-            "docs": undefined,
-            "name": "BANK_SWIFT_CODE",
-            "value": "BANK_SWIFT_CODE",
-          },
-          {
-            "docs": undefined,
-            "name": "UPI_IDENTIFYING_NUMBER",
-            "value": "UPI_IDENTIFYING_NUMBER",
-          },
-          {
-            "docs": undefined,
-            "name": "IP_ADDRESS",
-            "value": "IP_ADDRESS",
-          },
-          {
-            "docs": undefined,
-            "name": "STRING",
-            "value": "STRING",
-          },
+          "USER_ID",
+          "CARD_FINGERPRINT_NUMBER",
+          "IBAN_NUMBER",
+          "BANK_ACCOUNT_NUMBER",
+          "ACH_ACCOUNT_NUMBER",
+          "SWIFT_ACCOUNT_NUMBER",
+          "BIC",
+          "BANK_SWIFT_CODE",
+          "UPI_IDENTIFYING_NUMBER",
+          "IP_ADDRESS",
+          "STRING",
         ],
       },
       "ListType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "WHITELIST",
-            "value": "WHITELIST",
-          },
-          {
-            "docs": undefined,
-            "name": "BLACKLIST",
-            "value": "BLACKLIST",
-          },
-          {
-            "docs": undefined,
-            "name": "FLAGRIGHT_LIBRARY",
-            "value": "FLAGRIGHT_LIBRARY",
-          },
+          "WHITELIST",
+          "BLACKLIST",
+          "FLAGRIGHT_LIBRARY",
         ],
       },
       "MccDetails": {
@@ -4837,113 +1799,45 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "MpesaDetailsTransactionType": {
         "docs": "Type of transaction",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CustomerPayBillOnline",
-            "value": "CustomerPayBillOnline",
-          },
-          {
-            "docs": undefined,
-            "name": "CustomerBuyGoodsOnline",
-            "value": "CustomerBuyGoodsOnline",
-          },
-          {
-            "docs": undefined,
-            "name": "SalaryPayment",
-            "value": "SalaryPayment",
-          },
-          {
-            "docs": undefined,
-            "name": "BusinessPayment",
-            "value": "BusinessPayment",
-          },
-          {
-            "docs": undefined,
-            "name": "PromotionPayment",
-            "value": "PromotionPayment",
-          },
+          "CustomerPayBillOnline",
+          "CustomerBuyGoodsOnline",
+          "SalaryPayment",
+          "BusinessPayment",
+          "PromotionPayment",
         ],
       },
       "MpesaPaymentMethod": "literal<"MPESA">",
       "PaymentMethod": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ACH",
-            "value": "ACH",
-          },
-          {
-            "docs": undefined,
-            "name": "CARD",
-            "value": "CARD",
-          },
-          {
-            "docs": undefined,
-            "name": "IBAN",
-            "value": "IBAN",
-          },
-          {
-            "docs": undefined,
-            "name": "UPI",
-            "value": "UPI",
-          },
-          {
-            "docs": undefined,
-            "name": "GENERIC_BANK_ACCOUNT",
-            "value": "GENERIC_BANK_ACCOUNT",
-          },
-          {
-            "docs": undefined,
-            "name": "MPESA",
-            "value": "MPESA",
-          },
-          {
-            "docs": undefined,
-            "name": "SWIFT",
-            "value": "SWIFT",
-          },
-          {
-            "docs": undefined,
-            "name": "WALLET",
-            "value": "WALLET",
-          },
-          {
-            "docs": undefined,
-            "name": "CHECK",
-            "value": "CHECK",
-          },
+          "ACH",
+          "CARD",
+          "IBAN",
+          "UPI",
+          "GENERIC_BANK_ACCOUNT",
+          "MPESA",
+          "SWIFT",
+          "WALLET",
+          "CHECK",
         ],
       },
       "PepStatus": {
         "docs": undefined,
         "properties": {
           "isPepHit": "boolean",
-          "pepCountry": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "pepCountry": "optional<string>",
         },
       },
       "Person": {
         "docs": "Model for a generic individual - different from User model by not having userId field",
         "properties": {
-          "contactDetails": {
-            "docs": undefined,
-            "type": "optional<ContactDetails>",
-          },
-          "generalDetails": {
-            "docs": undefined,
-            "type": "UserDetails",
-          },
+          "contactDetails": "optional<ContactDetails>",
+          "generalDetails": "UserDetails",
           "legalDocuments": {
             "docs": "User's legal identity documents - See Document Model for details",
             "type": "optional<list<LegalDocument>>",
           },
-          "pepStatus": {
-            "docs": undefined,
-            "type": "optional<list<PepStatus>>",
-          },
+          "pepStatus": "optional<list<PepStatus>>",
           "tags": {
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
@@ -4956,10 +1850,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "RulesResults",
         ],
         "properties": {
-          "message": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "message": "optional<string>",
           "userId": {
             "docs": "user ID the risk score pertains to",
             "type": "string",
@@ -4972,10 +1863,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "TransactionMonitoringResult",
         ],
         "properties": {
-          "message": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "message": "optional<string>",
         },
       },
       "PostConsumerUserResponse": {
@@ -4984,10 +1872,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "RulesResults",
         ],
         "properties": {
-          "message": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "message": "optional<string>",
           "userId": {
             "docs": "user ID the risk score pertains to",
             "type": "string",
@@ -4997,31 +1882,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "RiskLevel": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "VERY_HIGH",
-            "value": "VERY_HIGH",
-          },
-          {
-            "docs": undefined,
-            "name": "HIGH",
-            "value": "HIGH",
-          },
-          {
-            "docs": undefined,
-            "name": "MEDIUM",
-            "value": "MEDIUM",
-          },
-          {
-            "docs": undefined,
-            "name": "LOW",
-            "value": "LOW",
-          },
-          {
-            "docs": undefined,
-            "name": "VERY_LOW",
-            "value": "VERY_LOW",
-          },
+          "VERY_HIGH",
+          "HIGH",
+          "MEDIUM",
+          "LOW",
+          "VERY_LOW",
         ],
       },
       "RiskScoringResult": {
@@ -5044,26 +1909,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "RuleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ALLOW",
-            "value": "ALLOW",
-          },
-          {
-            "docs": undefined,
-            "name": "FLAG",
-            "value": "FLAG",
-          },
-          {
-            "docs": undefined,
-            "name": "BLOCK",
-            "value": "BLOCK",
-          },
-          {
-            "docs": undefined,
-            "name": "SUSPEND",
-            "value": "SUSPEND",
-          },
+          "ALLOW",
+          "FLAG",
+          "BLOCK",
+          "SUSPEND",
         ],
       },
       "RuleFailureException": {
@@ -5082,123 +1931,42 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "RuleHitDirection": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ORIGIN",
-            "value": "ORIGIN",
-          },
-          {
-            "docs": undefined,
-            "name": "DESTINATION",
-            "value": "DESTINATION",
-          },
+          "ORIGIN",
+          "DESTINATION",
         ],
       },
       "RuleHitMeta": {
         "docs": "Details of rule execution, for internal purposes only",
         "properties": {
-          "falsePositiveDetails": {
-            "docs": undefined,
-            "type": "optional<FalsePositiveDetails>",
-          },
-          "hitDirections": {
-            "docs": undefined,
-            "type": "optional<list<RuleHitDirection>>",
-          },
-          "sanctionsDetails": {
-            "docs": undefined,
-            "type": "optional<list<SanctionsDetails>>",
-          },
+          "falsePositiveDetails": "optional<FalsePositiveDetails>",
+          "hitDirections": "optional<list<RuleHitDirection>>",
+          "sanctionsDetails": "optional<list<SanctionsDetails>>",
         },
       },
       "RuleLabels": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "UNEXPECTED_BEHAVIOR",
-            "value": "UNEXPECTED_BEHAVIOR",
-          },
-          {
-            "docs": undefined,
-            "name": "ILLICIT_GAINS_CHECK",
-            "value": "ILLICIT_GAINS_CHECK",
-          },
-          {
-            "docs": undefined,
-            "name": "RFI_TRIGGER",
-            "value": "RFI_TRIGGER",
-          },
-          {
-            "docs": undefined,
-            "name": "EDD_TRIGGER",
-            "value": "EDD_TRIGGER",
-          },
-          {
-            "docs": undefined,
-            "name": "KYC_TRIGGER",
-            "value": "KYC_TRIGGER",
-          },
-          {
-            "docs": undefined,
-            "name": "SCAM",
-            "value": "SCAM",
-          },
-          {
-            "docs": undefined,
-            "name": "ABUSE",
-            "value": "ABUSE",
-          },
-          {
-            "docs": undefined,
-            "name": "ACCOUNT_TAKEOVER",
-            "value": "ACCOUNT_TAKEOVER",
-          },
-          {
-            "docs": undefined,
-            "name": "DISPUTE",
-            "value": "DISPUTE",
-          },
-          {
-            "docs": undefined,
-            "name": "SANCTIONS",
-            "value": "SANCTIONS",
-          },
-          {
-            "docs": undefined,
-            "name": "SANCTIONS_PEP",
-            "value": "SANCTIONS_PEP",
-          },
-          {
-            "docs": undefined,
-            "name": "SANCTIONS_PEP_ADVERSE_MEDIA",
-            "value": "SANCTIONS_PEP_ADVERSE_MEDIA",
-          },
+          "UNEXPECTED_BEHAVIOR",
+          "ILLICIT_GAINS_CHECK",
+          "RFI_TRIGGER",
+          "EDD_TRIGGER",
+          "KYC_TRIGGER",
+          "SCAM",
+          "ABUSE",
+          "ACCOUNT_TAKEOVER",
+          "DISPUTE",
+          "SANCTIONS",
+          "SANCTIONS_PEP",
+          "SANCTIONS_PEP_ADVERSE_MEDIA",
         ],
       },
       "RuleNature": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "AML",
-            "value": "AML",
-          },
-          {
-            "docs": undefined,
-            "name": "FRAUD",
-            "value": "FRAUD",
-          },
-          {
-            "docs": undefined,
-            "name": "CTF",
-            "value": "CTF",
-          },
-          {
-            "docs": undefined,
-            "name": "SCREENING",
-            "value": "SCREENING",
-          },
+          "AML",
+          "FRAUD",
+          "CTF",
+          "SCREENING",
         ],
       },
       "RulesResults": {
@@ -5218,10 +1986,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "SanctionsDetails": {
         "docs": undefined,
         "properties": {
-          "entityType": {
-            "docs": undefined,
-            "type": "optional<SanctionsDetailsEntityType>",
-          },
+          "entityType": "optional<SanctionsDetailsEntityType>",
           "name": "string",
           "searchId": "string",
         },
@@ -5229,46 +1994,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "SanctionsDetailsEntityType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CONSUMER_NAME",
-            "value": "CONSUMER_NAME",
-          },
-          {
-            "docs": undefined,
-            "name": "LEGAL_NAME",
-            "value": "LEGAL_NAME",
-          },
-          {
-            "docs": undefined,
-            "name": "SHAREHOLDER",
-            "value": "SHAREHOLDER",
-          },
-          {
-            "docs": undefined,
-            "name": "DIRECTOR",
-            "value": "DIRECTOR",
-          },
-          {
-            "docs": undefined,
-            "name": "NAME_ON_CARD",
-            "value": "NAME_ON_CARD",
-          },
-          {
-            "docs": undefined,
-            "name": "PAYMENT_NAME",
-            "value": "PAYMENT_NAME",
-          },
-          {
-            "docs": undefined,
-            "name": "PAYMENT_BENEFICIARY_NAME",
-            "value": "PAYMENT_BENEFICIARY_NAME",
-          },
-          {
-            "docs": undefined,
-            "name": "BANK_NAME",
-            "value": "BANK_NAME",
-          },
+          "CONSUMER_NAME",
+          "LEGAL_NAME",
+          "SHAREHOLDER",
+          "DIRECTOR",
+          "NAME_ON_CARD",
+          "PAYMENT_NAME",
+          "PAYMENT_BENEFICIARY_NAME",
+          "BANK_NAME",
         ],
       },
       "SwiftDetails": {
@@ -5282,10 +2015,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Account type. E.g. Checking, Savings etc.",
             "type": "optional<string>",
           },
-          "bankAddress": {
-            "docs": undefined,
-            "type": "optional<Address>",
-          },
+          "bankAddress": "optional<Address>",
           "bankName": {
             "docs": "Name of the bank",
             "type": "optional<string>",
@@ -5320,10 +2050,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "Thing": {
         "docs": undefined,
         "properties": {
-          "publishedAt": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "publishedAt": "optional<string>",
         },
       },
       "Transaction": {
@@ -5337,39 +2064,21 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "TransactionAmountDetails": {
         "docs": "Model for transaction amount details",
         "properties": {
-          "country": {
-            "docs": undefined,
-            "type": "optional<CountryCode>",
-          },
+          "country": "optional<CountryCode>",
           "transactionAmount": {
             "docs": "Amount of the transaction",
             "type": "double",
           },
-          "transactionCurrency": {
-            "docs": undefined,
-            "type": "CurrencyCode",
-          },
+          "transactionCurrency": "CurrencyCode",
         },
       },
       "TransactionAmountLimit": {
         "docs": undefined,
         "properties": {
-          "day": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "month": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "week": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "year": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
+          "day": "optional<Amount>",
+          "month": "optional<Amount>",
+          "week": "optional<Amount>",
+          "year": "optional<Amount>",
         },
       },
       "TransactionBase": {
@@ -5391,31 +2100,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Unique transaction identifier",
             "type": "string",
           },
-          "type": {
-            "docs": undefined,
-            "type": "optional<TransactionType>",
-          },
+          "type": "optional<TransactionType>",
         },
       },
       "TransactionCountLimit": {
         "docs": undefined,
         "properties": {
-          "day": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
-          "month": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
-          "week": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
-          "year": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
+          "day": "optional<double>",
+          "month": "optional<double>",
+          "week": "optional<double>",
+          "year": "optional<double>",
         },
       },
       "TransactionEventMonitoringResult": {
@@ -5425,101 +2119,41 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "eventId": "string",
-          "transaction": {
-            "docs": undefined,
-            "type": "Transaction",
-          },
+          "transaction": "Transaction",
         },
       },
       "TransactionLimit": {
         "docs": undefined,
         "properties": {
-          "averageTransactionAmountLimit": {
-            "docs": undefined,
-            "type": "optional<TransactionAmountLimit>",
-          },
-          "transactionAmountLimit": {
-            "docs": undefined,
-            "type": "optional<TransactionAmountLimit>",
-          },
-          "transactionCountLimit": {
-            "docs": undefined,
-            "type": "optional<TransactionCountLimit>",
-          },
+          "averageTransactionAmountLimit": "optional<TransactionAmountLimit>",
+          "transactionAmountLimit": "optional<TransactionAmountLimit>",
+          "transactionCountLimit": "optional<TransactionCountLimit>",
         },
       },
       "TransactionLimits": {
         "docs": "Model for transaction limits for a given user",
         "properties": {
-          "maximumDailyTransactionLimit": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "maximumMonthlyTransactionLimit": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "maximumQuarterlyTransactionLimit": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "maximumTransactionLimit": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "maximumWeeklyTransactionLimit": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "maximumYearlyTransactionLimit": {
-            "docs": undefined,
-            "type": "optional<Amount>",
-          },
-          "paymentMethodLimits": {
-            "docs": undefined,
-            "type": "optional<TransactionLimitsPaymentMethodLimits>",
-          },
+          "maximumDailyTransactionLimit": "optional<Amount>",
+          "maximumMonthlyTransactionLimit": "optional<Amount>",
+          "maximumQuarterlyTransactionLimit": "optional<Amount>",
+          "maximumTransactionLimit": "optional<Amount>",
+          "maximumWeeklyTransactionLimit": "optional<Amount>",
+          "maximumYearlyTransactionLimit": "optional<Amount>",
+          "paymentMethodLimits": "optional<TransactionLimitsPaymentMethodLimits>",
         },
       },
       "TransactionLimitsPaymentMethodLimits": {
         "docs": undefined,
         "properties": {
-          "ACH": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "CARD": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "CHECK": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "GENERIC_BANK_ACCOUNT": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "IBAN": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "MPESA": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "SWIFT": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "UPI": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
-          "WALLET": {
-            "docs": undefined,
-            "type": "optional<TransactionLimit>",
-          },
+          "ACH": "optional<TransactionLimit>",
+          "CARD": "optional<TransactionLimit>",
+          "CHECK": "optional<TransactionLimit>",
+          "GENERIC_BANK_ACCOUNT": "optional<TransactionLimit>",
+          "IBAN": "optional<TransactionLimit>",
+          "MPESA": "optional<TransactionLimit>",
+          "SWIFT": "optional<TransactionLimit>",
+          "UPI": "optional<TransactionLimit>",
+          "WALLET": "optional<TransactionLimit>",
         },
       },
       "TransactionMonitoringResult": {
@@ -5537,102 +2171,37 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "TransactionState": {
         "docs": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CREATED",
-            "value": "CREATED",
-          },
-          {
-            "docs": undefined,
-            "name": "PROCESSING",
-            "value": "PROCESSING",
-          },
-          {
-            "docs": undefined,
-            "name": "SENT",
-            "value": "SENT",
-          },
-          {
-            "docs": undefined,
-            "name": "EXPIRED",
-            "value": "EXPIRED",
-          },
-          {
-            "docs": undefined,
-            "name": "DECLINED",
-            "value": "DECLINED",
-          },
-          {
-            "docs": undefined,
-            "name": "SUSPENDED",
-            "value": "SUSPENDED",
-          },
-          {
-            "docs": undefined,
-            "name": "REFUNDED",
-            "value": "REFUNDED",
-          },
-          {
-            "docs": undefined,
-            "name": "SUCCESSFUL",
-            "value": "SUCCESSFUL",
-          },
+          "CREATED",
+          "PROCESSING",
+          "SENT",
+          "EXPIRED",
+          "DECLINED",
+          "SUSPENDED",
+          "REFUNDED",
+          "SUCCESSFUL",
         ],
       },
       "TransactionType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "DEPOSIT",
-            "value": "DEPOSIT",
-          },
-          {
-            "docs": undefined,
-            "name": "TRANSFER",
-            "value": "TRANSFER",
-          },
-          {
-            "docs": undefined,
-            "name": "EXTERNAL_PAYMENT",
-            "value": "EXTERNAL_PAYMENT",
-          },
-          {
-            "docs": undefined,
-            "name": "WITHDRAWAL",
-            "value": "WITHDRAWAL",
-          },
-          {
-            "docs": undefined,
-            "name": "REFUND",
-            "value": "REFUND",
-          },
-          {
-            "docs": undefined,
-            "name": "OTHER",
-            "value": "OTHER",
-          },
+          "DEPOSIT",
+          "TRANSFER",
+          "EXTERNAL_PAYMENT",
+          "WITHDRAWAL",
+          "REFUND",
+          "OTHER",
         ],
       },
       "TransactionUpdatable": {
         "docs": "Model for transaction additional payload",
         "properties": {
-          "destinationAmountDetails": {
-            "docs": undefined,
-            "type": "optional<TransactionAmountDetails>",
-          },
+          "destinationAmountDetails": "optional<TransactionAmountDetails>",
           "destinationPaymentDetails": {
             "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
             "type": "optional<TransactionUpdatableDestinationPaymentDetails>",
           },
-          "deviceData": {
-            "docs": undefined,
-            "type": "optional<DeviceData>",
-          },
-          "originAmountDetails": {
-            "docs": undefined,
-            "type": "optional<TransactionAmountDetails>",
-          },
+          "deviceData": "optional<DeviceData>",
+          "originAmountDetails": "optional<TransactionAmountDetails>",
           "originPaymentDetails": {
             "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
             "type": "optional<TransactionUpdatableOriginPaymentDetails>",
@@ -5657,10 +2226,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
-          "transactionState": {
-            "docs": undefined,
-            "type": "optional<TransactionState>",
-          },
+          "transactionState": "optional<TransactionState>",
         },
       },
       "TransactionUpdatableDestinationPaymentDetails": {
@@ -5668,42 +2234,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "discriminant": "method",
         "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
         "union": {
-          "ACH": {
-            "docs": undefined,
-            "type": "AchDetails",
-          },
-          "CARD": {
-            "docs": undefined,
-            "type": "CardDetails",
-          },
-          "CHECK": {
-            "docs": undefined,
-            "type": "CheckDetails",
-          },
-          "GENERIC_BANK_ACCOUNT": {
-            "docs": undefined,
-            "type": "GenericBankAccountDetails",
-          },
-          "IBAN": {
-            "docs": undefined,
-            "type": "IbanDetails",
-          },
-          "MPESA": {
-            "docs": undefined,
-            "type": "MpesaDetails",
-          },
-          "SWIFT": {
-            "docs": undefined,
-            "type": "SwiftDetails",
-          },
-          "UPI": {
-            "docs": undefined,
-            "type": "UpiDetails",
-          },
-          "WALLET": {
-            "docs": undefined,
-            "type": "WalletDetails",
-          },
+          "ACH": "AchDetails",
+          "CARD": "CardDetails",
+          "CHECK": "CheckDetails",
+          "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
+          "IBAN": "IbanDetails",
+          "MPESA": "MpesaDetails",
+          "SWIFT": "SwiftDetails",
+          "UPI": "UpiDetails",
+          "WALLET": "WalletDetails",
         },
       },
       "TransactionUpdatableOriginPaymentDetails": {
@@ -5711,42 +2250,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "discriminant": "method",
         "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
         "union": {
-          "ACH": {
-            "docs": undefined,
-            "type": "AchDetails",
-          },
-          "CARD": {
-            "docs": undefined,
-            "type": "CardDetails",
-          },
-          "CHECK": {
-            "docs": undefined,
-            "type": "CheckDetails",
-          },
-          "GENERIC_BANK_ACCOUNT": {
-            "docs": undefined,
-            "type": "GenericBankAccountDetails",
-          },
-          "IBAN": {
-            "docs": undefined,
-            "type": "IbanDetails",
-          },
-          "MPESA": {
-            "docs": undefined,
-            "type": "MpesaDetails",
-          },
-          "SWIFT": {
-            "docs": undefined,
-            "type": "SwiftDetails",
-          },
-          "UPI": {
-            "docs": undefined,
-            "type": "UpiDetails",
-          },
-          "WALLET": {
-            "docs": undefined,
-            "type": "WalletDetails",
-          },
+          "ACH": "AchDetails",
+          "CARD": "CardDetails",
+          "CHECK": "CheckDetails",
+          "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
+          "IBAN": "IbanDetails",
+          "MPESA": "MpesaDetails",
+          "SWIFT": "SwiftDetails",
+          "UPI": "UpiDetails",
+          "WALLET": "WalletDetails",
         },
       },
       "TransactionWithRulesResult": {
@@ -5755,14 +2267,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "Transaction",
         ],
         "properties": {
-          "executedRules": {
-            "docs": undefined,
-            "type": "list<ExecutedRulesResult>",
-          },
-          "hitRules": {
-            "docs": undefined,
-            "type": "list<HitRulesDetails>",
-          },
+          "executedRules": "list<ExecutedRulesResult>",
+          "hitRules": "list<HitRulesDetails>",
         },
       },
       "UPIPaymentMethod": "literal<"UPI">",
@@ -5802,10 +2308,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Timestamp when userId is created",
             "type": "double",
           },
-          "userDetails": {
-            "docs": undefined,
-            "type": "optional<UserDetails>",
-          },
+          "userDetails": "optional<UserDetails>",
           "userId": {
             "docs": "Unique user ID",
             "type": "string",
@@ -5815,14 +2318,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "UserDetails": {
         "docs": "Model for consumer user personal details",
         "properties": {
-          "countryOfNationality": {
-            "docs": undefined,
-            "type": "optional<CountryCode>",
-          },
-          "countryOfResidence": {
-            "docs": undefined,
-            "type": "optional<CountryCode>",
-          },
+          "countryOfNationality": "optional<CountryCode>",
+          "countryOfResidence": "optional<CountryCode>",
           "dateOfBirth": {
             "docs": "Date of birth of the user (YYYY-MM-DD)",
             "type": "optional<string>",
@@ -5831,30 +2328,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Gender of the individual - Male, Female or Non-Binary",
             "type": "optional<UserDetailsGender>",
           },
-          "name": {
-            "docs": undefined,
-            "type": "ConsumerName",
-          },
+          "name": "ConsumerName",
         },
       },
       "UserDetailsGender": {
         "docs": "Gender of the individual - Male, Female or Non-Binary",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "M",
-            "value": "M",
-          },
-          {
-            "docs": undefined,
-            "name": "F",
-            "value": "F",
-          },
-          {
-            "docs": undefined,
-            "name": "NB",
-            "value": "NB",
-          },
+          "M",
+          "F",
+          "NB",
         ],
       },
       "UserMonitoringResult": {
@@ -5872,152 +2354,60 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "UserOptional": {
         "docs": "Model for User details",
         "properties": {
-          "acquisitionChannel": {
-            "docs": undefined,
-            "type": "optional<AcquisitionChannel>",
-          },
-          "contactDetails": {
-            "docs": undefined,
-            "type": "optional<ContactDetails>",
-          },
-          "kycStatusDetails": {
-            "docs": undefined,
-            "type": "optional<KycStatusDetails>",
-          },
+          "acquisitionChannel": "optional<AcquisitionChannel>",
+          "contactDetails": "optional<ContactDetails>",
+          "kycStatusDetails": "optional<KycStatusDetails>",
           "legalDocuments": {
             "docs": "User's legal identity documents - See Document Model for details",
             "type": "optional<list<LegalDocument>>",
           },
-          "pepStatus": {
-            "docs": undefined,
-            "type": "optional<list<PepStatus>>",
-          },
-          "reasonForAccountOpening": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
-          "riskLevel": {
-            "docs": undefined,
-            "type": "optional<RiskLevel>",
-          },
+          "pepStatus": "optional<list<PepStatus>>",
+          "reasonForAccountOpening": "optional<list<string>>",
+          "riskLevel": "optional<RiskLevel>",
           "tags": {
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
           },
-          "transactionLimits": {
-            "docs": undefined,
-            "type": "optional<TransactionLimits>",
-          },
-          "userSegment": {
-            "docs": undefined,
-            "type": "optional<UserOptionalUserSegment>",
-          },
-          "userStateDetails": {
-            "docs": undefined,
-            "type": "optional<UserStateDetails>",
-          },
+          "transactionLimits": "optional<TransactionLimits>",
+          "userSegment": "optional<UserOptionalUserSegment>",
+          "userStateDetails": "optional<UserStateDetails>",
         },
       },
       "UserOptionalUserSegment": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "RETAIL",
-            "value": "RETAIL",
-          },
-          {
-            "docs": undefined,
-            "name": "PROFESSIONAL",
-            "value": "PROFESSIONAL",
-          },
+          "RETAIL",
+          "PROFESSIONAL",
         ],
       },
       "UserRegistrationStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "REGISTERED",
-            "value": "REGISTERED",
-          },
-          {
-            "docs": undefined,
-            "name": "UNREGISTERED",
-            "value": "UNREGISTERED",
-          },
+          "REGISTERED",
+          "UNREGISTERED",
         ],
       },
       "UserState": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "UNACCEPTABLE",
-            "value": "UNACCEPTABLE",
-          },
-          {
-            "docs": undefined,
-            "name": "UNDECIDED",
-            "value": "UNDECIDED",
-          },
-          {
-            "docs": undefined,
-            "name": "TERMINATED",
-            "value": "TERMINATED",
-          },
-          {
-            "docs": undefined,
-            "name": "ACTIVE",
-            "value": "ACTIVE",
-          },
-          {
-            "docs": undefined,
-            "name": "INACTIVE",
-            "value": "INACTIVE",
-          },
-          {
-            "docs": undefined,
-            "name": "DORMANT",
-            "value": "DORMANT",
-          },
-          {
-            "docs": undefined,
-            "name": "CREATED",
-            "value": "CREATED",
-          },
-          {
-            "docs": undefined,
-            "name": "DELETED",
-            "value": "DELETED",
-          },
-          {
-            "docs": undefined,
-            "name": "SUSPENDED",
-            "value": "SUSPENDED",
-          },
-          {
-            "docs": undefined,
-            "name": "BLOCKED",
-            "value": "BLOCKED",
-          },
+          "UNACCEPTABLE",
+          "UNDECIDED",
+          "TERMINATED",
+          "ACTIVE",
+          "INACTIVE",
+          "DORMANT",
+          "CREATED",
+          "DELETED",
+          "SUSPENDED",
+          "BLOCKED",
         ],
       },
       "UserStateDetails": {
         "docs": undefined,
         "properties": {
-          "reason": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "UserState",
-          },
-          "userId": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "reason": "optional<string>",
+          "state": "UserState",
+          "userId": "optional<string>",
         },
       },
       "UserWithRulesResult": {
@@ -6026,14 +2416,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "User",
         ],
         "properties": {
-          "executedRules": {
-            "docs": undefined,
-            "type": "optional<list<ExecutedRulesResult>>",
-          },
-          "hitRules": {
-            "docs": undefined,
-            "type": "optional<list<HitRulesDetails>>",
-          },
+          "executedRules": "optional<list<ExecutedRulesResult>>",
+          "hitRules": "optional<list<HitRulesDetails>>",
         },
       },
       "WalletDetails": {
@@ -6047,10 +2431,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Payment Channel used through wallet",
             "type": "optional<string>",
           },
-          "tags": {
-            "docs": undefined,
-            "type": "optional<Tag>",
-          },
+          "tags": "optional<Tag>",
           "walletId": {
             "docs": "Unique ID of the wallet",
             "type": "optional<string>",
@@ -6070,35 +2451,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "createdTimestamp": "double",
-          "data": {
-            "docs": undefined,
-            "type": "UserStateDetails",
-          },
+          "data": "UserStateDetails",
           "id": "string",
-          "type": {
-            "docs": undefined,
-            "type": "WebhookEventType",
-          },
+          "type": "WebhookEventType",
         },
       },
       "WebhookEventType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "CASE_CLOSED",
-            "value": "CASE_CLOSED",
-          },
-          {
-            "docs": undefined,
-            "name": "USER_STATE_UPDATED",
-            "value": "USER_STATE_UPDATED",
-          },
-          {
-            "docs": undefined,
-            "name": "ALERT_CLOSED",
-            "value": "ALERT_CLOSED",
-          },
+          "CASE_CLOSED",
+          "USER_STATE_UPDATED",
+          "ALERT_CLOSED",
         ],
       },
     },
@@ -6113,16 +2476,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "Flagright API",
     "environments": {
-      "default": "https://sandbox.api.flagright.com",
+      "Default": "https://sandbox.api.flagright.com",
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

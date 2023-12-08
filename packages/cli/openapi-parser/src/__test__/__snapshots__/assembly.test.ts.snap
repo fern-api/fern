@@ -37,6 +37,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "FilesUploadResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "UploadedFile",
           "type": "reference",
@@ -109,6 +110,7 @@ exports[`open api parser assembly parse open api 1`] = `
               "value": {
                 "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
                 "generatedName": "TranscriptListRequestStatus",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -231,6 +233,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TranscriptList",
           "type": "reference",
@@ -278,6 +281,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "CreateTranscriptParameters",
           "type": "reference",
@@ -290,6 +294,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Transcript",
           "type": "reference",
@@ -353,6 +358,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Transcript",
           "type": "reference",
@@ -416,6 +422,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Transcript",
           "type": "reference",
@@ -468,6 +475,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "TranscriptGetSubtitlesRequestSubtitleFormat",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SubtitleFormat",
             "type": "reference",
@@ -555,6 +563,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetSentencesResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "SentencesResponse",
           "type": "reference",
@@ -618,6 +627,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetParagraphsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "ParagraphsResponse",
           "type": "reference",
@@ -699,6 +709,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptWordSearchResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "WordSearchResponse",
           "type": "reference",
@@ -762,6 +773,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "TranscriptGetRedactedAudioResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RedactedAudioResponse",
           "type": "reference",
@@ -809,6 +821,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "RealtimeCreateTemporaryTokenRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "CreateRealtimeTemporaryTokenParameters",
           "type": "reference",
@@ -821,6 +834,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "RealtimeCreateTemporaryTokenResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RealtimeTemporaryTokenResponse",
           "type": "reference",
@@ -868,6 +882,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurSummaryRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurSummaryParameters",
           "type": "reference",
@@ -880,6 +895,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurSummaryResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurSummaryResponse",
           "type": "reference",
@@ -927,6 +943,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurQuestionAnswerRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurQuestionAnswerParameters",
           "type": "reference",
@@ -939,6 +956,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurQuestionAnswerResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurQuestionAnswerResponse",
           "type": "reference",
@@ -986,6 +1004,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurActionItemsRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurActionItemsParameters",
           "type": "reference",
@@ -998,6 +1017,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurActionItemsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurActionItemsResponse",
           "type": "reference",
@@ -1045,6 +1065,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurTaskRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurTaskParameters",
           "type": "reference",
@@ -1057,6 +1078,7 @@ exports[`open api parser assembly parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "LemurTaskResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurTaskResponse",
           "type": "reference",
@@ -1122,6 +1144,7 @@ The LLM response data, as well as any context provided in the original request w
         "schema": {
           "description": undefined,
           "generatedName": "LemurPurgeRequestDataResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PurgeLemurRequestDataResponse",
           "type": "reference",
@@ -1149,6 +1172,7 @@ The LLM response data, as well as any context provided in the original request w
       "schema": {
         "description": undefined,
         "generatedName": "BadRequestErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "Error",
         "type": "reference",
@@ -1161,6 +1185,7 @@ The LLM response data, as well as any context provided in the original request w
       "schema": {
         "description": undefined,
         "generatedName": "UnauthorizedErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "Error",
         "type": "reference",
@@ -1173,6 +1198,7 @@ The LLM response data, as well as any context provided in the original request w
       "schema": {
         "description": undefined,
         "generatedName": "NotFoundErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "Error",
         "type": "reference",
@@ -1185,6 +1211,7 @@ The LLM response data, as well as any context provided in the original request w
       "schema": {
         "description": undefined,
         "generatedName": "TooManyRequestsErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "Error",
         "type": "reference",
@@ -1197,6 +1224,7 @@ The LLM response data, as well as any context provided in the original request w
       "schema": {
         "description": undefined,
         "generatedName": "InternalServerErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "Error",
         "type": "reference",
@@ -1279,6 +1307,7 @@ The LLM response data, as well as any context provided in the original request w
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AudioData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1301,6 +1330,7 @@ The LLM response data, as well as any context provided in the original request w
     "AudioIntelligenceModelStatus": {
       "description": "Will be either success, or unavailable in the rare case that the model failed.",
       "generatedName": "AudioIntelligenceModelStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -1323,6 +1353,7 @@ The LLM response data, as well as any context provided in the original request w
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AutoHighlightResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1373,6 +1404,7 @@ The LLM response data, as well as any context provided in the original request w
             "value": {
               "description": undefined,
               "generatedName": "AutoHighlightResultTimestampsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Timestamp",
               "type": "reference",
@@ -1394,6 +1426,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
         "generatedName": "AutoHighlightsResult",
+        "groupName": undefined,
         "nameOverride": undefined,
         "properties": [
           {
@@ -1406,6 +1439,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "value": {
                 "description": undefined,
                 "generatedName": "AutoHighlightsResultResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AutoHighlightResult",
                 "type": "reference",
@@ -1421,6 +1455,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "allOfPropertyConflicts": [],
       "description": "Chapter of the audio file",
       "generatedName": "Chapter",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1497,6 +1532,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ContentSafetyLabel",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1545,6 +1581,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ContentSafetyLabelResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1571,6 +1608,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "value": {
               "description": undefined,
               "generatedName": "ContentSafetyLabelResultLabelsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ContentSafetyLabel",
               "type": "reference",
@@ -1608,6 +1646,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "schema": {
             "description": "Timestamp information for the section",
             "generatedName": "ContentSafetyLabelResultTimestamp",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Timestamp",
             "type": "reference",
@@ -1657,6 +1696,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "value": {
               "description": undefined,
               "generatedName": "ContentSafetyLabelResultSeverityScoreSummaryValue",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SeverityScoreSummary",
               "type": "reference",
@@ -1671,6 +1711,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "CreateRealtimeTemporaryTokenParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1693,6 +1734,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "allOfPropertyConflicts": [],
       "description": "The parameters for creating a transcript",
       "generatedName": "CreateTranscriptOptionalParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1707,6 +1749,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
 The default value is 'en_us'.
 ",
               "generatedName": "CreateTranscriptOptionalParametersLanguageCode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptLanguageCode",
               "type": "reference",
@@ -1903,6 +1946,7 @@ The default value is 'en_us'.
             "value": {
               "description": "The word boost parameter value, if provided in the transcription request.",
               "generatedName": "CreateTranscriptOptionalParametersBoostParam",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptBoostParam",
               "type": "reference",
@@ -1988,6 +2032,7 @@ The default value is 'en_us'.
               "value": {
                 "description": undefined,
                 "generatedName": "CreateTranscriptOptionalParametersRedactPiiPoliciesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "PiiPolicy",
                 "type": "reference",
@@ -2005,6 +2050,7 @@ The default value is 'en_us'.
             "value": {
               "description": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
               "generatedName": "CreateTranscriptOptionalParametersRedactPiiSub",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SubstitutionPolicy",
               "type": "reference",
@@ -2108,6 +2154,7 @@ The default value is 'en_us'.
               "value": {
                 "description": undefined,
                 "generatedName": "CreateTranscriptOptionalParametersCustomSpellingItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "TranscriptCustomSpelling",
                 "type": "reference",
@@ -2229,6 +2276,7 @@ Valid values are in the range [0, 1] inclusive.
             "value": {
               "description": "The model to summarize the transcript",
               "generatedName": "CreateTranscriptOptionalParametersSummaryModel",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SummaryModel",
               "type": "reference",
@@ -2245,6 +2293,7 @@ Valid values are in the range [0, 1] inclusive.
             "value": {
               "description": "The type of summary",
               "generatedName": "CreateTranscriptOptionalParametersSummaryType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SummaryType",
               "type": "reference",
@@ -2297,6 +2346,7 @@ Valid values are in the range [0, 1] inclusive.
         {
           "description": undefined,
           "generatedName": "CreateTranscriptOptionalParameters",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "CreateTranscriptOptionalParameters",
           "type": "reference",
@@ -2305,6 +2355,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": "The parameters for creating a transcript",
       "generatedName": "CreateTranscriptParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2329,6 +2380,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": "A detected entity",
       "generatedName": "Entity",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2338,6 +2390,7 @@ Valid values are in the range [0, 1] inclusive.
           "schema": {
             "description": "The type of entity for the detected entity",
             "generatedName": "EntityEntityType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "EntityType",
             "type": "reference",
@@ -2387,6 +2440,7 @@ Valid values are in the range [0, 1] inclusive.
     "EntityType": {
       "description": "The type of entity for the detected entity",
       "generatedName": "EntityType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -2574,6 +2628,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Error",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2615,6 +2670,7 @@ Valid values are in the range [0, 1] inclusive.
         {
           "description": undefined,
           "generatedName": "RealtimeBaseTranscript",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RealtimeBaseTranscript",
           "type": "reference",
@@ -2623,6 +2679,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "FinalTranscript",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2668,6 +2725,7 @@ Valid values are in the range [0, 1] inclusive.
     "LemurActionItemsParameters": {
       "description": undefined,
       "generatedName": "LemurActionItemsParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "LemurBaseParameters",
       "type": "reference",
@@ -2677,6 +2735,7 @@ Valid values are in the range [0, 1] inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseResponse",
           "type": "reference",
@@ -2685,6 +2744,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurActionItemsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2709,6 +2769,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurBaseParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2740,6 +2801,7 @@ Valid values are in the range [0, 1] inclusive.
               "oneOf": {
                 "description": "Context to provide the model. This can be a string or a free-form JSON value.",
                 "generatedName": "LemurBaseParametersContext",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schemas": [
                   {
@@ -2784,6 +2846,7 @@ Valid values are in the range [0, 1] inclusive.
             "value": {
               "description": undefined,
               "generatedName": "LemurBaseParametersFinalModel",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LemurModel",
               "type": "reference",
@@ -2833,6 +2896,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurBaseResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2856,6 +2920,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "description": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
 ",
       "generatedName": "LemurModel",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -2878,6 +2943,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurQuestion",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2905,6 +2971,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "oneOf": {
                 "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
                 "generatedName": "LemurQuestionContext",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schemas": [
                   {
@@ -2989,6 +3056,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": "An answer generated by LeMUR and its question.",
       "generatedName": "LemurQuestionAnswer",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3027,6 +3095,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseParameters",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseParameters",
           "type": "reference",
@@ -3035,6 +3104,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurQuestionAnswerParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3047,6 +3117,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "value": {
               "description": undefined,
               "generatedName": "LemurQuestionAnswerParametersQuestionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LemurQuestion",
               "type": "reference",
@@ -3061,6 +3132,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseResponse",
           "type": "reference",
@@ -3069,6 +3141,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurQuestionAnswerResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3081,6 +3154,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "value": {
               "description": undefined,
               "generatedName": "LemurQuestionAnswerResponseResponseItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LemurQuestionAnswer",
               "type": "reference",
@@ -3095,6 +3169,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseParameters",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseParameters",
           "type": "reference",
@@ -3103,6 +3178,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurSummaryParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3132,6 +3208,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseResponse",
           "type": "reference",
@@ -3140,6 +3217,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurSummaryResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3164,6 +3242,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseParameters",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseParameters",
           "type": "reference",
@@ -3172,6 +3251,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurTaskParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3196,6 +3276,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "LemurBaseResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "LemurBaseResponse",
           "type": "reference",
@@ -3204,6 +3285,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LemurTaskResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3226,6 +3308,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "MessageType": {
       "description": undefined,
       "generatedName": "MessageType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3260,6 +3343,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PageDetails",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3344,6 +3428,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ParagraphsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3394,6 +3479,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "value": {
               "description": undefined,
               "generatedName": "ParagraphsResponseParagraphsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptParagraph",
               "type": "reference",
@@ -3408,6 +3494,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "RealtimeBaseTranscript",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RealtimeBaseTranscript",
           "type": "reference",
@@ -3416,6 +3503,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartialTranscript",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3437,6 +3525,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "PiiPolicy": {
       "description": undefined,
       "generatedName": "PiiPolicy",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3609,6 +3698,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PurgeLemurRequestDataResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3659,6 +3749,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RealtimeBaseMessage",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3668,6 +3759,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "Describes the type of the message.",
             "generatedName": "RealtimeBaseMessageMessageType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "MessageType",
             "type": "reference",
@@ -3681,6 +3773,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RealtimeBaseTranscript",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3743,6 +3836,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "value": {
               "description": undefined,
               "generatedName": "RealtimeBaseTranscriptWordsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Word",
               "type": "reference",
@@ -3769,6 +3863,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RealtimeError",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3792,11 +3887,13 @@ Can be any value between 0.0 and 1.0 inclusive.
       "oneOf": {
         "description": undefined,
         "generatedName": "RealtimeMessage",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": [
           {
             "description": undefined,
             "generatedName": "RealtimeMessageZero",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SessionBegins",
             "type": "reference",
@@ -3804,6 +3901,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           {
             "description": undefined,
             "generatedName": "RealtimeMessageOne",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PartialTranscript",
             "type": "reference",
@@ -3811,6 +3909,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           {
             "description": undefined,
             "generatedName": "RealtimeMessageTwo",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "FinalTranscript",
             "type": "reference",
@@ -3818,6 +3917,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           {
             "description": undefined,
             "generatedName": "RealtimeMessageThree",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SessionTerminated",
             "type": "reference",
@@ -3825,6 +3925,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           {
             "description": undefined,
             "generatedName": "RealtimeMessageFour",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RealtimeError",
             "type": "reference",
@@ -3839,6 +3940,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RealtimeTemporaryTokenResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3862,11 +3964,13 @@ Can be any value between 0.0 and 1.0 inclusive.
       "oneOf": {
         "description": undefined,
         "generatedName": "RealtimeTranscript",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": [
           {
             "description": undefined,
             "generatedName": "RealtimeTranscriptZero",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PartialTranscript",
             "type": "reference",
@@ -3874,6 +3978,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           {
             "description": undefined,
             "generatedName": "RealtimeTranscriptOne",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "FinalTranscript",
             "type": "reference",
@@ -3886,6 +3991,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "RealtimeTranscriptType": {
       "description": undefined,
       "generatedName": "RealtimeTranscriptType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3908,6 +4014,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RedactedAudioResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3917,6 +4024,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "The status of the redacted audio",
             "generatedName": "RedactedAudioResponseStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RedactedAudioStatus",
             "type": "reference",
@@ -3952,6 +4060,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SentencesResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4002,6 +4111,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "value": {
               "description": undefined,
               "generatedName": "SentencesResponseSentencesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptSentence",
               "type": "reference",
@@ -4014,6 +4124,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "Sentiment": {
       "description": undefined,
       "generatedName": "Sentiment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4042,6 +4153,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": "The result of the sentiment analysis model.",
       "generatedName": "SentimentAnalysisResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4089,6 +4201,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE",
             "generatedName": "SentimentAnalysisResultSentiment",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Sentiment",
             "type": "reference",
@@ -4136,6 +4249,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "RealtimeBaseMessage",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RealtimeBaseMessage",
           "type": "reference",
@@ -4144,6 +4258,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SessionBegins",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4197,6 +4312,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "RealtimeBaseMessage",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RealtimeBaseMessage",
           "type": "reference",
@@ -4205,6 +4321,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SessionTerminated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4232,6 +4349,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SeverityScoreSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4276,6 +4394,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "SubstitutionPolicy": {
       "description": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
       "generatedName": "SubstitutionPolicy",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4296,6 +4415,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "SubtitleFormat": {
       "description": "Format of the subtitles",
       "generatedName": "SubtitleFormat",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4316,6 +4436,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "SummaryModel": {
       "description": "The model to summarize the transcript",
       "generatedName": "SummaryModel",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4342,6 +4463,7 @@ Can be any value between 0.0 and 1.0 inclusive.
     "SummaryType": {
       "description": "The type of summary",
       "generatedName": "SummaryType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4382,6 +4504,7 @@ Can be any value between 0.0 and 1.0 inclusive.
         {
           "description": undefined,
           "generatedName": "RealtimeBaseMessage",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RealtimeBaseMessage",
           "type": "reference",
@@ -4390,6 +4513,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TerminateSession",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4412,6 +4536,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": "Timestamp containing a start and end property in milliseconds.",
       "generatedName": "Timestamp",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4446,6 +4571,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": "THe result of the topic detection model.",
       "generatedName": "TopicDetectionResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4477,6 +4603,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                 "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "TopicDetectionResultLabelsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -4521,6 +4648,7 @@ Can be any value between 0.0 and 1.0 inclusive.
             "value": {
               "description": undefined,
               "generatedName": "TopicDetectionResultTimestamp",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Timestamp",
               "type": "reference",
@@ -4535,6 +4663,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "allOfPropertyConflicts": [],
       "description": "A transcript object",
       "generatedName": "Transcript",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4586,6 +4715,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "schema": {
             "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
             "generatedName": "TranscriptStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TranscriptStatus",
             "type": "reference",
@@ -4604,6 +4734,7 @@ Possible values are found in [Supported Languages](https://www.assemblyai.com/do
 The default value is 'en_us'.
 ",
               "generatedName": "TranscriptLanguageCode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptLanguageCode",
               "type": "reference",
@@ -4666,6 +4797,7 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptWordsItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "TranscriptWord",
                   "type": "reference",
@@ -4694,6 +4826,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptUtterancesItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "TranscriptUtterance",
                   "type": "reference",
@@ -4922,6 +5055,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
               "generatedName": "TranscriptAutoHighlightsResult",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AutoHighlightsResult",
               "type": "reference",
@@ -5114,6 +5248,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptRedactPiiPoliciesItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "PiiPolicy",
                   "type": "reference",
@@ -5132,6 +5267,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
             "value": {
               "description": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
               "generatedName": "TranscriptRedactPiiSub",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SubstitutionPolicy",
               "type": "reference",
@@ -5217,6 +5353,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
                 "generatedName": "TranscriptContentSafetyLabels",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -5226,6 +5363,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                     "schema": {
                       "description": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
                       "generatedName": "TranscriptContentSafetyLabelsStatus",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "AudioIntelligenceModelStatus",
                       "type": "reference",
@@ -5241,6 +5379,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                       "value": {
                         "description": undefined,
                         "generatedName": "TranscriptContentSafetyLabelsResultsItem",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "ContentSafetyLabelResult",
                         "type": "reference",
@@ -5292,6 +5431,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
                 "generatedName": "TranscriptIabCategoriesResult",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "properties": [
                   {
@@ -5301,6 +5441,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "schema": {
                       "description": "Will be either success, or unavailable in the rare case that the Content Moderation model failed.",
                       "generatedName": "TranscriptIabCategoriesResultStatus",
+                      "groupName": undefined,
                       "nameOverride": undefined,
                       "schema": "AudioIntelligenceModelStatus",
                       "type": "reference",
@@ -5316,6 +5457,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                       "value": {
                         "description": undefined,
                         "generatedName": "TranscriptIabCategoriesResultResultsItem",
+                        "groupName": undefined,
                         "nameOverride": undefined,
                         "schema": "TopicDetectionResult",
                         "type": "reference",
@@ -5389,6 +5531,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptCustomSpellingItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "TranscriptCustomSpelling",
                   "type": "reference",
@@ -5433,6 +5576,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptChaptersItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "Chapter",
                   "type": "reference",
@@ -5625,6 +5769,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptSentimentAnalysisResultsItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "SentimentAnalysisResult",
                   "type": "reference",
@@ -5673,6 +5818,7 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
                 "value": {
                   "description": undefined,
                   "generatedName": "TranscriptEntitiesItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "Entity",
                   "type": "reference",
@@ -5749,6 +5895,7 @@ Valid values are in the range [0, 1] inclusive.
     "TranscriptBoostParam": {
       "description": "The word boost parameter value, if provided in the transcription request.",
       "generatedName": "TranscriptBoostParam",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5777,6 +5924,7 @@ Valid values are in the range [0, 1] inclusive.
       "allOfPropertyConflicts": [],
       "description": "Object containing words or phrases to replace, and the word or phrase to replace with",
       "generatedName": "TranscriptCustomSpelling",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5819,6 +5967,7 @@ Valid values are in the range [0, 1] inclusive.
 The default value is 'en_us'.
 ",
       "generatedName": "TranscriptLanguageCode",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5949,6 +6098,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5958,6 +6108,7 @@ The default value is 'en_us'.
           "schema": {
             "description": undefined,
             "generatedName": "TranscriptListPageDetails",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PageDetails",
             "type": "reference",
@@ -5973,6 +6124,7 @@ The default value is 'en_us'.
             "value": {
               "description": undefined,
               "generatedName": "TranscriptListTranscriptsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptListItem",
               "type": "reference",
@@ -5987,6 +6139,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptListItem",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6024,6 +6177,7 @@ The default value is 'en_us'.
           "schema": {
             "description": undefined,
             "generatedName": "TranscriptListItemStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TranscriptStatus",
             "type": "reference",
@@ -6079,6 +6233,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptListParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6107,6 +6262,7 @@ The default value is 'en_us'.
             "value": {
               "description": "Filter by transcript status",
               "generatedName": "TranscriptListParametersStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptStatus",
               "type": "reference",
@@ -6191,6 +6347,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptParagraph",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6253,6 +6410,7 @@ The default value is 'en_us'.
             "value": {
               "description": undefined,
               "generatedName": "TranscriptParagraphWordsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptWord",
               "type": "reference",
@@ -6267,6 +6425,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptSentence",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6329,6 +6488,7 @@ The default value is 'en_us'.
             "value": {
               "description": undefined,
               "generatedName": "TranscriptSentenceWordsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptWord",
               "type": "reference",
@@ -6341,6 +6501,7 @@ The default value is 'en_us'.
     "TranscriptStatus": {
       "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
       "generatedName": "TranscriptStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -6375,6 +6536,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptUtterance",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6451,6 +6613,7 @@ The default value is 'en_us'.
             "value": {
               "description": undefined,
               "generatedName": "TranscriptUtteranceWordsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptWord",
               "type": "reference",
@@ -6465,6 +6628,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TranscriptWord",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6547,6 +6711,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UploadedFile",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6571,6 +6736,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Word",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6631,6 +6797,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WordSearchMatch",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6669,6 +6836,7 @@ The default value is 'en_us'.
             "value": {
               "description": undefined,
               "generatedName": "WordSearchMatchTimestampsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WordSearchTimestamp",
               "type": "reference",
@@ -6699,6 +6867,7 @@ The default value is 'en_us'.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WordSearchResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6737,6 +6906,7 @@ The default value is 'en_us'.
             "value": {
               "description": undefined,
               "generatedName": "WordSearchResponseMatchesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WordSearchMatch",
               "type": "reference",

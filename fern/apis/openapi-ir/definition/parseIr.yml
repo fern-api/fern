@@ -121,6 +121,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       values: list<finalIr.EnumValue>
       example: optional<string>
@@ -134,6 +135,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -160,6 +162,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -174,6 +177,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schemas: list<SchemaWithExample>
 

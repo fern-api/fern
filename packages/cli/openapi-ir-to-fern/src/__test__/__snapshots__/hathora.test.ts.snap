@@ -21,10 +21,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/apps/v1/create",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AppConfig",
-              },
+              "body": "AppConfig",
             },
             "response": {
               "docs": "",
@@ -80,7 +77,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetApps": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -115,15 +111,35 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AppConfig",
-              },
+              "body": "AppConfig",
             },
             "response": {
               "docs": "Ok",
               "type": "root.Application",
             },
+          },
+        },
+      },
+      "types": {
+        "AppConfig": {
+          "docs": undefined,
+          "properties": {
+            "appName": "string",
+            "authConfiguration": "AppConfigAuthConfiguration",
+          },
+        },
+        "AppConfigAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": "optional<root.RecordStringNever>",
+            "google": "optional<AppConfigAuthConfigurationGoogle>",
+            "nickname": "optional<root.RecordStringNever>",
+          },
+        },
+        "AppConfigAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": "string",
           },
         },
       },
@@ -152,7 +168,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "root.LoginAnonymousResponse",
+              "type": "LoginAnonymousResponse",
             },
           },
           "LoginGoogle": {
@@ -182,7 +198,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "root.LoginGoogleResponse",
+              "type": "LoginGoogleResponse",
             },
           },
           "LoginNickname": {
@@ -211,8 +227,28 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "root.LoginNicknameResponse",
+              "type": "LoginNicknameResponse",
             },
+          },
+        },
+      },
+      "types": {
+        "LoginAnonymousResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+        "LoginGoogleResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+        "LoginNicknameResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
           },
         },
       },
@@ -337,7 +373,6 @@ exports[`open api parser hathora simple 1`] = `
           "RunBuild": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
@@ -397,10 +432,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.DeploymentConfig",
-              },
+              "body": "DeploymentConfig",
             },
             "response": {
               "docs": "",
@@ -464,6 +496,25 @@ exports[`open api parser hathora simple 1`] = `
           },
         },
       },
+      "types": {
+        "DeploymentConfig": {
+          "docs": undefined,
+          "properties": {
+            "containerPort": "integer",
+            "env": "list<DeploymentConfigEnvItem>",
+            "planName": "root.PlanName",
+            "roomsPerProcess": "integer",
+            "transportType": "root.TransportType",
+          },
+        },
+        "DeploymentConfigEnvItem": {
+          "docs": undefined,
+          "properties": {
+            "name": "string",
+            "value": "string",
+          },
+        },
+      },
     },
     "discoveryV1.yml": {
       "imports": {
@@ -476,7 +527,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetPingServiceEndpoints": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -687,18 +737,9 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
-                  "visibility": {
-                    "docs": undefined,
-                    "type": "root.CreateLobbyRequestVisibility",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
+                  "visibility": "CreateLobbyRequestVisibility",
                 },
               },
               "headers": {
@@ -743,14 +784,8 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
                 },
               },
               "headers": {
@@ -795,14 +830,8 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
                 },
               },
               "headers": {
@@ -847,14 +876,8 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
                 },
               },
               "headers": {
@@ -904,7 +927,6 @@ exports[`open api parser hathora simple 1`] = `
           "ListActivePublicLobbies": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -965,10 +987,7 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "state": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
+                  "state": "map<string, unknown>",
                 },
               },
               "headers": undefined,
@@ -980,6 +999,16 @@ exports[`open api parser hathora simple 1`] = `
               "type": "root.Lobby",
             },
           },
+        },
+      },
+      "types": {
+        "CreateLobbyRequestVisibility": {
+          "docs": undefined,
+          "enum": [
+            "public",
+            "private",
+            "local",
+          ],
         },
       },
     },
@@ -994,7 +1023,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForApp": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
@@ -1031,7 +1059,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForDeployment": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
@@ -1067,7 +1094,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForProcess": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
@@ -1327,10 +1353,7 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "region": "root.Region",
                 },
               },
               "headers": undefined,
@@ -1559,48 +1582,29 @@ exports[`open api parser hathora simple 1`] = `
         "type": "string",
       },
     },
-    "service": undefined,
     "types": {
       "ActiveConnectionInfo": {
         "docs": undefined,
         "properties": {
           "host": "string",
           "port": "double",
-          "roomId": {
-            "docs": undefined,
-            "type": "RoomId",
-          },
-          "transportType": {
-            "docs": undefined,
-            "type": "TransportType",
-          },
+          "roomId": "RoomId",
+          "transportType": "TransportType",
         },
       },
       "AppConfig": {
         "docs": undefined,
         "properties": {
           "appName": "string",
-          "authConfiguration": {
-            "docs": undefined,
-            "type": "AppConfigAuthConfiguration",
-          },
+          "authConfiguration": "AppConfigAuthConfiguration",
         },
       },
       "AppConfigAuthConfiguration": {
         "docs": undefined,
         "properties": {
-          "anonymous": {
-            "docs": undefined,
-            "type": "optional<RecordStringNever>",
-          },
-          "google": {
-            "docs": undefined,
-            "type": "optional<AppConfigAuthConfigurationGoogle>",
-          },
-          "nickname": {
-            "docs": undefined,
-            "type": "optional<RecordStringNever>",
-          },
+          "anonymous": "optional<RecordStringNever>",
+          "google": "optional<AppConfigAuthConfigurationGoogle>",
+          "nickname": "optional<RecordStringNever>",
         },
       },
       "AppConfigAuthConfigurationGoogle": {
@@ -1616,41 +1620,20 @@ exports[`open api parser hathora simple 1`] = `
           "appId": "string",
           "appName": "string",
           "appSecret": "string",
-          "authConfiguration": {
-            "docs": undefined,
-            "type": "ApplicationAuthConfiguration",
-          },
+          "authConfiguration": "ApplicationAuthConfiguration",
           "createdAt": "datetime",
           "createdBy": "string",
-          "deletedAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "deletedBy": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "orgId": {
-            "docs": undefined,
-            "type": "OrgId",
-          },
+          "deletedAt": "optional<datetime>",
+          "deletedBy": "optional<string>",
+          "orgId": "OrgId",
         },
       },
       "ApplicationAuthConfiguration": {
         "docs": undefined,
         "properties": {
-          "anonymous": {
-            "docs": undefined,
-            "type": "optional<RecordStringNever>",
-          },
-          "google": {
-            "docs": undefined,
-            "type": "optional<ApplicationAuthConfigurationGoogle>",
-          },
-          "nickname": {
-            "docs": undefined,
-            "type": "optional<RecordStringNever>",
-          },
+          "anonymous": "optional<RecordStringNever>",
+          "google": "optional<ApplicationAuthConfigurationGoogle>",
+          "nickname": "optional<RecordStringNever>",
         },
       },
       "ApplicationAuthConfigurationGoogle": {
@@ -1665,46 +1648,22 @@ exports[`open api parser hathora simple 1`] = `
           "Application",
         ],
         "properties": {
-          "deployment": {
-            "docs": undefined,
-            "type": "Deployment",
-          },
+          "deployment": "Deployment",
         },
       },
       "Build": {
         "docs": undefined,
         "properties": {
-          "appId": {
-            "docs": undefined,
-            "type": "AppId",
-          },
-          "buildId": {
-            "docs": undefined,
-            "type": "BuildId",
-          },
+          "appId": "AppId",
+          "buildId": "BuildId",
           "createdAt": "datetime",
           "createdBy": "string",
-          "deletedAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "finishedAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "deletedAt": "optional<datetime>",
+          "finishedAt": "optional<datetime>",
           "imageSize": "double",
-          "regionalContainerTags": {
-            "docs": undefined,
-            "type": "list<BuildRegionalContainerTagsItem>",
-          },
-          "startedAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "status": {
-            "docs": undefined,
-            "type": "BuildStatus",
-          },
+          "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
+          "startedAt": "optional<datetime>",
+          "status": "BuildStatus",
         },
       },
       "BuildId": "double",
@@ -1712,35 +1671,16 @@ exports[`open api parser hathora simple 1`] = `
         "docs": undefined,
         "properties": {
           "containerTag": "string",
-          "region": {
-            "docs": undefined,
-            "type": "Region",
-          },
+          "region": "Region",
         },
       },
       "BuildStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "created",
-            "value": "created",
-          },
-          {
-            "docs": undefined,
-            "name": "running",
-            "value": "running",
-          },
-          {
-            "docs": undefined,
-            "name": "succeeded",
-            "value": "succeeded",
-          },
-          {
-            "docs": undefined,
-            "name": "failed",
-            "value": "failed",
-          },
+          "created",
+          "running",
+          "succeeded",
+          "failed",
         ],
       },
       "ConnectionInfo": {
@@ -1748,35 +1688,9 @@ exports[`open api parser hathora simple 1`] = `
         "discriminant": "status",
         "docs": undefined,
         "union": {
-          "active": {
-            "docs": undefined,
-            "type": "ActiveConnectionInfo",
-          },
-          "starting": {
-            "docs": undefined,
-            "type": "StartingConnectionInfo",
-          },
+          "active": "ActiveConnectionInfo",
+          "starting": "StartingConnectionInfo",
         },
-      },
-      "CreateLobbyRequestVisibility": {
-        "docs": undefined,
-        "enum": [
-          {
-            "docs": undefined,
-            "name": "public",
-            "value": "public",
-          },
-          {
-            "docs": undefined,
-            "name": "private",
-            "value": "private",
-          },
-          {
-            "docs": undefined,
-            "name": "local",
-            "value": "local",
-          },
-        ],
       },
       "Deployment": {
         "docs": undefined,
@@ -1784,20 +1698,11 @@ exports[`open api parser hathora simple 1`] = `
           "DeploymentConfig",
         ],
         "properties": {
-          "appId": {
-            "docs": undefined,
-            "type": "AppId",
-          },
-          "buildId": {
-            "docs": undefined,
-            "type": "BuildId",
-          },
+          "appId": "AppId",
+          "buildId": "BuildId",
           "createdAt": "datetime",
           "createdBy": "string",
-          "deploymentId": {
-            "docs": undefined,
-            "type": "DeploymentId",
-          },
+          "deploymentId": "DeploymentId",
           "requestedCPU": "double",
           "requestedMemoryMB": "double",
         },
@@ -1806,19 +1711,10 @@ exports[`open api parser hathora simple 1`] = `
         "docs": undefined,
         "properties": {
           "containerPort": "integer",
-          "env": {
-            "docs": undefined,
-            "type": "list<DeploymentConfigEnvItem>",
-          },
-          "planName": {
-            "docs": undefined,
-            "type": "PlanName",
-          },
+          "env": "list<DeploymentConfigEnvItem>",
+          "planName": "PlanName",
           "roomsPerProcess": "integer",
-          "transportType": {
-            "docs": undefined,
-            "type": "TransportType",
-          },
+          "transportType": "TransportType",
         },
       },
       "DeploymentConfigEnvItem": {
@@ -1829,114 +1725,44 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "DeploymentId": "double",
-      "DiscoveryResponse": {
-        "docs": undefined,
-        "type": "list<DiscoveryResponseItem>",
-      },
+      "DiscoveryResponse": "list<DiscoveryResponseItem>",
       "DiscoveryResponseItem": {
         "docs": undefined,
         "properties": {
           "host": "string",
           "port": "double",
-          "region": {
-            "docs": undefined,
-            "type": "Region",
-          },
+          "region": "Region",
         },
       },
       "Lobby": {
         "docs": undefined,
         "properties": {
-          "appId": {
-            "docs": undefined,
-            "type": "AppId",
-          },
+          "appId": "AppId",
           "createdAt": "datetime",
           "createdBy": "string",
-          "initialConfig": {
-            "docs": undefined,
-            "type": "map<string, unknown>",
-          },
+          "initialConfig": "map<string, unknown>",
           "local": "boolean",
-          "region": {
-            "docs": undefined,
-            "type": "Region",
-          },
-          "roomId": {
-            "docs": undefined,
-            "type": "RoomId",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
-          "visibility": {
-            "docs": undefined,
-            "type": "LobbyVisibility",
-          },
+          "region": "Region",
+          "roomId": "RoomId",
+          "state": "optional<map<string, unknown>>",
+          "visibility": "LobbyVisibility",
         },
       },
       "LobbyVisibility": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "private",
-            "value": "private",
-          },
-          {
-            "docs": undefined,
-            "name": "public",
-            "value": "public",
-          },
-          {
-            "docs": undefined,
-            "name": "local",
-            "value": "local",
-          },
+          "private",
+          "public",
+          "local",
         ],
-      },
-      "LoginAnonymousResponse": {
-        "docs": undefined,
-        "properties": {
-          "token": "string",
-        },
-      },
-      "LoginGoogleResponse": {
-        "docs": undefined,
-        "properties": {
-          "token": "string",
-        },
-      },
-      "LoginNicknameResponse": {
-        "docs": undefined,
-        "properties": {
-          "token": "string",
-        },
       },
       "MetricName": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "cpu",
-            "value": "cpu",
-          },
-          {
-            "docs": undefined,
-            "name": "memory",
-            "value": "memory",
-          },
-          {
-            "docs": undefined,
-            "name": "rate_egress",
-            "value": "rate_egress",
-          },
-          {
-            "docs": undefined,
-            "name": "total_egress",
-            "value": "total_egress",
-          },
+          "cpu",
+          "memory",
+          "rate_egress",
+          "total_egress",
         ],
       },
       "MetricValue": {
@@ -1946,10 +1772,7 @@ exports[`open api parser hathora simple 1`] = `
           "value": "double",
         },
       },
-      "MetricsResponse": {
-        "docs": undefined,
-        "type": "RecordPartialMetricNameMetricValueArray",
-      },
+      "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
       "OmitRoomAllocations": {
         "docs": "Construct a type with the properties of T except for those in type K.",
         "type": "PickRoomExcludeKeyofRoomAllocations",
@@ -1958,92 +1781,40 @@ exports[`open api parser hathora simple 1`] = `
       "PickRoomExcludeKeyofRoomAllocations": {
         "docs": "From T, pick a set of properties whose keys are in the union K",
         "properties": {
-          "appId": {
-            "docs": undefined,
-            "type": "AppId",
-          },
-          "currentAllocation": {
-            "docs": undefined,
-            "type": "optional<RoomAllocation>",
-          },
-          "roomId": {
-            "docs": undefined,
-            "type": "RoomId",
-          },
-          "status": {
-            "docs": undefined,
-            "type": "RoomStatus",
-          },
+          "appId": "AppId",
+          "currentAllocation": "optional<RoomAllocation>",
+          "roomId": "RoomId",
+          "status": "RoomStatus",
         },
       },
       "PlanName": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "tiny",
-            "value": "tiny",
-          },
-          {
-            "docs": undefined,
-            "name": "small",
-            "value": "small",
-          },
-          {
-            "docs": undefined,
-            "name": "medium",
-            "value": "medium",
-          },
-          {
-            "docs": undefined,
-            "name": "large",
-            "value": "large",
-          },
+          "tiny",
+          "small",
+          "medium",
+          "large",
         ],
       },
       "Process": {
         "docs": undefined,
         "properties": {
           "activeConnections": "double",
-          "appId": {
-            "docs": undefined,
-            "type": "AppId",
-          },
-          "deploymentId": {
-            "docs": undefined,
-            "type": "DeploymentId",
-          },
+          "appId": "AppId",
+          "deploymentId": "DeploymentId",
           "draining": "boolean",
           "egressedBytes": "double",
           "host": "string",
-          "idleSince": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "idleSince": "optional<datetime>",
           "port": "double",
-          "processId": {
-            "docs": undefined,
-            "type": "ProcessId",
-          },
-          "region": {
-            "docs": undefined,
-            "type": "Region",
-          },
+          "processId": "ProcessId",
+          "region": "Region",
           "roomSlotsAvailable": "double",
           "roomsPerProcess": "double",
-          "startedAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "startedAt": "optional<datetime>",
           "startingAt": "datetime",
-          "stoppingAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
-          "terminatedAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "stoppingAt": "optional<datetime>",
+          "terminatedAt": "optional<datetime>",
         },
       },
       "ProcessId": "string",
@@ -2053,32 +1824,17 @@ exports[`open api parser hathora simple 1`] = `
           "Process",
         ],
         "properties": {
-          "rooms": {
-            "docs": undefined,
-            "type": "list<RoomWithoutAllocations>",
-          },
+          "rooms": "list<RoomWithoutAllocations>",
           "totalRooms": "double",
         },
       },
       "RecordPartialMetricNameMetricValueArray": {
         "docs": "Construct a type with a set of properties K of type T",
         "properties": {
-          "cpu": {
-            "docs": undefined,
-            "type": "optional<list<MetricValue>>",
-          },
-          "memory": {
-            "docs": undefined,
-            "type": "optional<list<MetricValue>>",
-          },
-          "rate_egress": {
-            "docs": undefined,
-            "type": "optional<list<MetricValue>>",
-          },
-          "total_egress": {
-            "docs": undefined,
-            "type": "optional<list<MetricValue>>",
-          },
+          "cpu": "optional<list<MetricValue>>",
+          "memory": "optional<list<MetricValue>>",
+          "rate_egress": "optional<list<MetricValue>>",
+          "total_egress": "optional<list<MetricValue>>",
         },
       },
       "RecordStringNever": {
@@ -2088,99 +1844,35 @@ exports[`open api parser hathora simple 1`] = `
       "Region": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Seattle",
-            "value": "Seattle",
-          },
-          {
-            "docs": undefined,
-            "name": "Washington_DC",
-            "value": "Washington_DC",
-          },
-          {
-            "docs": undefined,
-            "name": "Chicago",
-            "value": "Chicago",
-          },
-          {
-            "docs": undefined,
-            "name": "London",
-            "value": "London",
-          },
-          {
-            "docs": undefined,
-            "name": "Frankfurt",
-            "value": "Frankfurt",
-          },
-          {
-            "docs": undefined,
-            "name": "Mumbai",
-            "value": "Mumbai",
-          },
-          {
-            "docs": undefined,
-            "name": "Singapore",
-            "value": "Singapore",
-          },
-          {
-            "docs": undefined,
-            "name": "Tokyo",
-            "value": "Tokyo",
-          },
-          {
-            "docs": undefined,
-            "name": "Sydney",
-            "value": "Sydney",
-          },
-          {
-            "docs": undefined,
-            "name": "Sao_Paulo",
-            "value": "Sao_Paulo",
-          },
+          "Seattle",
+          "Washington_DC",
+          "Chicago",
+          "London",
+          "Frankfurt",
+          "Mumbai",
+          "Singapore",
+          "Tokyo",
+          "Sydney",
+          "Sao_Paulo",
         ],
       },
       "Room": {
         "docs": undefined,
         "properties": {
-          "allocations": {
-            "docs": undefined,
-            "type": "list<RoomAllocation>",
-          },
-          "appId": {
-            "docs": undefined,
-            "type": "AppId",
-          },
-          "currentAllocation": {
-            "docs": undefined,
-            "type": "optional<RoomAllocation>",
-          },
-          "roomId": {
-            "docs": undefined,
-            "type": "RoomId",
-          },
-          "status": {
-            "docs": undefined,
-            "type": "RoomStatus",
-          },
+          "allocations": "list<RoomAllocation>",
+          "appId": "AppId",
+          "currentAllocation": "optional<RoomAllocation>",
+          "roomId": "RoomId",
+          "status": "RoomStatus",
         },
       },
       "RoomAllocation": {
         "docs": undefined,
         "properties": {
-          "processId": {
-            "docs": undefined,
-            "type": "ProcessId",
-          },
-          "roomAllocationId": {
-            "docs": undefined,
-            "type": "RoomAllocationId",
-          },
+          "processId": "ProcessId",
+          "roomAllocationId": "RoomAllocationId",
           "scheduledAt": "datetime",
-          "unscheduledAt": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "unscheduledAt": "optional<datetime>",
         },
       },
       "RoomAllocationId": "string",
@@ -2188,72 +1880,44 @@ exports[`open api parser hathora simple 1`] = `
       "RoomStatus": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "scheduling",
-            "value": "scheduling",
-          },
-          {
-            "docs": undefined,
-            "name": "active",
-            "value": "active",
-          },
-          {
-            "docs": undefined,
-            "name": "suspended",
-            "value": "suspended",
-          },
-          {
-            "docs": undefined,
-            "name": "destroyed",
-            "value": "destroyed",
-          },
+          "scheduling",
+          "active",
+          "suspended",
+          "destroyed",
         ],
       },
-      "RoomWithoutAllocations": {
-        "docs": undefined,
-        "type": "OmitRoomAllocations",
-      },
+      "RoomWithoutAllocations": "OmitRoomAllocations",
       "StartingConnectionInfo": {
         "docs": undefined,
         "properties": {
-          "roomId": {
-            "docs": undefined,
-            "type": "RoomId",
-          },
+          "roomId": "RoomId",
         },
       },
       "TailLines": "integer",
       "TransportType": {
         "docs": undefined,
         "enum": [
-          {
-            "docs": undefined,
-            "name": "tcp",
-            "value": "tcp",
-          },
-          {
-            "docs": undefined,
-            "name": "udp",
-            "value": "udp",
-          },
-          {
-            "docs": undefined,
-            "name": "tls",
-            "value": "tls",
-          },
+          "tcp",
+          "udp",
+          "tls",
         ],
       },
     },
   },
   "rootApiFile": {
-    "auth": "bearer",
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "default-environment": "Default",
     "display-name": "Hathora Cloud API",
+    "environments": {
+      "Default": "https://api.hathora.dev",
+    },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

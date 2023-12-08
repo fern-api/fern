@@ -417,7 +417,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "auth": true,
             "display-name": "Get the app image.",
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
@@ -724,10 +723,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AssignContributorDto",
-              },
+              "body": "AssignContributorDto",
             },
             "response": {
               "docs": "Contributor assigned to app.",
@@ -1302,6 +1298,25 @@ The client secret is auto generated on the server and returned. The client does 
           },
         },
       },
+      "types": {
+        "AssignContributorDto": {
+          "docs": undefined,
+          "properties": {
+            "contributorId": {
+              "docs": "The id or email of the user to add to the app.",
+              "type": "string",
+            },
+            "invite": {
+              "docs": "Set to true to invite the user if he does not exist.",
+              "type": "optional<boolean>",
+            },
+            "role": {
+              "docs": "The role of the contributor.",
+              "type": "optional<string>",
+            },
+          },
+        },
+      },
     },
     "assets.yml": {
       "imports": {
@@ -1489,7 +1504,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the asset content.",
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/api/assets/{id}",
             "path-parameters": {
@@ -1582,7 +1596,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the asset content.",
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
@@ -1794,10 +1807,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.QueryDto",
-              },
+              "body": "QueryDto",
             },
             "response": {
               "docs": "Assets returned.",
@@ -2224,6 +2234,26 @@ The client secret is auto generated on the server and returned. The client does 
           },
         },
       },
+      "types": {
+        "QueryDto": {
+          "docs": undefined,
+          "properties": {
+            "ids": {
+              "docs": "The optional list of ids to query.",
+              "type": "optional<list<string>>",
+            },
+            "oData": {
+              "docs": "The optional odata query.",
+              "type": "optional<string>",
+            },
+            "parentId": {
+              "docs": "The parent id (for assets).",
+              "type": "optional<string>",
+            },
+            "q": "optional<unknown>",
+          },
+        },
+      },
     },
     "backups.yml": {
       "imports": {
@@ -2271,7 +2301,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the backup content.",
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
@@ -2293,7 +2322,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the backup content.",
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
@@ -2575,10 +2603,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.UpsertCommentDto",
-              },
+              "body": "UpsertCommentDto",
             },
             "response": {
               "docs": "Comment created.",
@@ -2611,10 +2636,22 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.UpsertCommentDto",
-              },
+              "body": "UpsertCommentDto",
+            },
+          },
+        },
+      },
+      "types": {
+        "UpsertCommentDto": {
+          "docs": undefined,
+          "properties": {
+            "text": {
+              "docs": "The comment text.",
+              "type": "string",
+            },
+            "url": {
+              "docs": "The url where the comment is created.",
+              "type": "optional<string>",
             },
           },
         },
@@ -2937,7 +2974,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get a content by version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-            "errors": [],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/{version}",
             "path-parameters": {
@@ -3025,10 +3061,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.QueryDto",
-              },
+              "body": "QueryDto",
             },
             "response": {
               "docs": "Contents returned.",
@@ -3139,10 +3172,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "map<string, root.ContentFieldData>",
-              },
+              "body": "map<string, root.ContentFieldData>",
             },
             "response": {
               "docs": "Content patched.",
@@ -3171,10 +3201,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "map<string, root.ContentFieldData>",
-              },
+              "body": "map<string, root.ContentFieldData>",
               "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "id": {
@@ -3292,10 +3319,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "map<string, root.ContentFieldData>",
-              },
+              "body": "map<string, root.ContentFieldData>",
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "patch": {
@@ -3346,10 +3370,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "map<string, root.ContentFieldData>",
-              },
+              "body": "map<string, root.ContentFieldData>",
             },
             "response": {
               "docs": "Content updated.",
@@ -3406,6 +3427,26 @@ The client secret is auto generated on the server and returned. The client does 
               "docs": "Content status changed.",
               "type": "root.ContentsDto",
             },
+          },
+        },
+      },
+      "types": {
+        "QueryDto": {
+          "docs": undefined,
+          "properties": {
+            "ids": {
+              "docs": "The optional list of ids to query.",
+              "type": "optional<list<string>>",
+            },
+            "oData": {
+              "docs": "The optional odata query.",
+              "type": "optional<string>",
+            },
+            "parentId": {
+              "docs": "The parent id (for assets).",
+              "type": "optional<string>",
+            },
+            "q": "optional<unknown>",
           },
         },
       },
@@ -3993,10 +4034,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.ChangePlanDto",
-              },
+              "body": "ChangePlanDto",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -4021,14 +4059,22 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.ChangePlanDto",
-              },
+              "body": "ChangePlanDto",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
               "type": "root.PlanChangedDto",
+            },
+          },
+        },
+      },
+      "types": {
+        "ChangePlanDto": {
+          "docs": undefined,
+          "properties": {
+            "planId": {
+              "docs": "The new plan id.",
+              "type": "string",
             },
           },
         },
@@ -4418,10 +4464,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.CreateRuleDto",
-              },
+              "body": "CreateRuleDto",
             },
             "response": {
               "docs": "Rule created.",
@@ -4599,10 +4642,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.CreateRuleDto",
-              },
+              "body": "CreateRuleDto",
             },
             "response": {
               "docs": "Rule simulated.",
@@ -4641,6 +4681,21 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the rule to disable.",
                 "type": "string",
               },
+            },
+          },
+        },
+      },
+      "types": {
+        "CreateRuleDto": {
+          "docs": undefined,
+          "properties": {
+            "action": {
+              "docs": "The action properties.",
+              "type": "root.RuleActionDto",
+            },
+            "trigger": {
+              "docs": "The trigger properties.",
+              "type": "root.RuleTriggerDto",
             },
           },
         },
@@ -5093,10 +5148,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AddFieldDto",
-              },
+              "body": "AddFieldDto",
             },
             "response": {
               "docs": "Schema field created.",
@@ -5130,10 +5182,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AddFieldDto",
-              },
+              "body": "AddFieldDto",
             },
             "response": {
               "docs": "Schema field created.",
@@ -5277,10 +5326,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.UpdateFieldDto",
-              },
+              "body": "UpdateFieldDto",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -5317,10 +5363,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.UpdateFieldDto",
-              },
+              "body": "UpdateFieldDto",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -5353,10 +5396,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.ReorderFieldsDto",
-              },
+              "body": "ReorderFieldsDto",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -5385,10 +5425,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "map<string, string>",
-              },
+              "body": "map<string, string>",
             },
             "response": {
               "docs": "Schema updated.",
@@ -5519,10 +5556,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.ReorderFieldsDto",
-              },
+              "body": "ReorderFieldsDto",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -5640,10 +5674,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.SchemaScriptsDto",
-              },
+              "body": "SchemaScriptsDto",
             },
             "response": {
               "docs": "Schema updated.",
@@ -5738,6 +5769,72 @@ The client secret is auto generated on the server and returned. The client does 
             "response": {
               "docs": "Schema unpublished.",
               "type": "root.SchemaDto",
+            },
+          },
+        },
+      },
+      "types": {
+        "AddFieldDto": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": "The name of the field. Must be unique within the schema.",
+              "type": "string",
+            },
+            "partitioning": {
+              "docs": "Determines the optional partitioning of the field.",
+              "type": "optional<string>",
+            },
+            "properties": {
+              "docs": "The field properties.",
+              "type": "root.FieldPropertiesDto",
+            },
+          },
+        },
+        "ReorderFieldsDto": {
+          "docs": undefined,
+          "properties": {
+            "fieldIds": {
+              "docs": "The field ids in the target order.",
+              "type": "list<integer>",
+            },
+          },
+        },
+        "SchemaScriptsDto": {
+          "docs": undefined,
+          "properties": {
+            "change": {
+              "docs": "The script that is executed when change a content status.",
+              "type": "optional<string>",
+            },
+            "create": {
+              "docs": "The script that is executed when creating a content.",
+              "type": "optional<string>",
+            },
+            "delete": {
+              "docs": "The script that is executed when deleting a content.",
+              "type": "optional<string>",
+            },
+            "query": {
+              "docs": "The script that is executed for each content when querying contents.",
+              "type": "optional<string>",
+            },
+            "queryPre": {
+              "docs": "The script that is executed for all contents when querying contents.",
+              "type": "optional<string>",
+            },
+            "update": {
+              "docs": "The script that is executed when updating a content.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "UpdateFieldDto": {
+          "docs": undefined,
+          "properties": {
+            "properties": {
+              "docs": "The field properties.",
+              "type": "root.FieldPropertiesDto",
             },
           },
         },
@@ -6173,10 +6270,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AssignContributorDto",
-              },
+              "body": "AssignContributorDto",
             },
             "response": {
               "docs": "Contributor assigned to team.",
@@ -6246,6 +6340,25 @@ You will be assigned as owner of the new team automatically.",
             "response": {
               "docs": "Team updated.",
               "type": "root.TeamDto",
+            },
+          },
+        },
+      },
+      "types": {
+        "AssignContributorDto": {
+          "docs": undefined,
+          "properties": {
+            "contributorId": {
+              "docs": "The id or email of the user to add to the app.",
+              "type": "string",
+            },
+            "invite": {
+              "docs": "Set to true to invite the user if he does not exist.",
+              "type": "optional<boolean>",
+            },
+            "role": {
+              "docs": "The role of the contributor.",
+              "type": "optional<string>",
             },
           },
         },
@@ -6626,7 +6739,6 @@ You will be assigned as owner of the new team automatically.",
             "auth": true,
             "display-name": "Get user picture by id.",
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/api/users/{id}/picture",
             "path-parameters": {
@@ -6737,26 +6849,13 @@ You will be assigned as owner of the new team automatically.",
         "type": "ErrorDto",
       },
     },
-    "service": undefined,
     "types": {
       "ActionTypeEnum": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Broadcast",
-            "value": "Broadcast",
-          },
-          {
-            "docs": undefined,
-            "name": "User",
-            "value": "User",
-          },
-          {
-            "docs": undefined,
-            "name": "Group",
-            "value": "Group",
-          },
+          "Broadcast",
+          "User",
+          "Group",
         ],
       },
       "AddFieldDto": {
@@ -6812,10 +6911,7 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The optional odata query.",
             "type": "optional<string>",
           },
-          "q": {
-            "docs": undefined,
-            "type": "optional<unknown>",
-          },
+          "q": "optional<unknown>",
           "references": {
             "docs": "The ID of the reference content item.",
             "type": "optional<string>",
@@ -7119,21 +7215,9 @@ You will be assigned as owner of the new team automatically.",
       "AssetFolderScope": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "PathAndItems",
-            "value": "PathAndItems",
-          },
-          {
-            "docs": undefined,
-            "name": "Path",
-            "value": "Path",
-          },
-          {
-            "docs": undefined,
-            "name": "Items",
-            "value": "Items",
-          },
+          "PathAndItems",
+          "Path",
+          "Items",
         ],
       },
       "AssetFoldersDto": {
@@ -7168,21 +7252,9 @@ You will be assigned as owner of the new team automatically.",
       "AssetPreviewMode": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "ImageAndFileName",
-            "value": "ImageAndFileName",
-          },
-          {
-            "docs": undefined,
-            "name": "Image",
-            "value": "Image",
-          },
-          {
-            "docs": undefined,
-            "name": "FileName",
-            "value": "FileName",
-          },
+          "ImageAndFileName",
+          "Image",
+          "FileName",
         ],
       },
       "AssetScriptsDto": {
@@ -7228,26 +7300,10 @@ You will be assigned as owner of the new team automatically.",
       "AssetType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Unknown",
-            "value": "Unknown",
-          },
-          {
-            "docs": undefined,
-            "name": "Image",
-            "value": "Image",
-          },
-          {
-            "docs": undefined,
-            "name": "Audio",
-            "value": "Audio",
-          },
-          {
-            "docs": undefined,
-            "name": "Video",
-            "value": "Video",
-          },
+          "Unknown",
+          "Image",
+          "Audio",
+          "Video",
         ],
       },
       "AssetsDto": {
@@ -7436,16 +7492,8 @@ You will be assigned as owner of the new team automatically.",
       "BooleanFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Checkbox",
-            "value": "Checkbox",
-          },
-          {
-            "docs": undefined,
-            "name": "Toggle",
-            "value": "Toggle",
-          },
+          "Checkbox",
+          "Toggle",
         ],
       },
       "BooleanFieldPropertiesDto": {
@@ -7493,21 +7541,9 @@ You will be assigned as owner of the new team automatically.",
       "BulkUpdateAssetType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Annotate",
-            "value": "Annotate",
-          },
-          {
-            "docs": undefined,
-            "name": "Move",
-            "value": "Move",
-          },
-          {
-            "docs": undefined,
-            "name": "Delete",
-            "value": "Delete",
-          },
+          "Annotate",
+          "Move",
+          "Delete",
         ],
       },
       "BulkUpdateAssetsJobDto": {
@@ -7558,41 +7594,13 @@ You will be assigned as owner of the new team automatically.",
       "BulkUpdateContentType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Upsert",
-            "value": "Upsert",
-          },
-          {
-            "docs": undefined,
-            "name": "ChangeStatus",
-            "value": "ChangeStatus",
-          },
-          {
-            "docs": undefined,
-            "name": "Create",
-            "value": "Create",
-          },
-          {
-            "docs": undefined,
-            "name": "Delete",
-            "value": "Delete",
-          },
-          {
-            "docs": undefined,
-            "name": "Patch",
-            "value": "Patch",
-          },
-          {
-            "docs": undefined,
-            "name": "Update",
-            "value": "Update",
-          },
-          {
-            "docs": undefined,
-            "name": "Validate",
-            "value": "Validate",
-          },
+          "Upsert",
+          "ChangeStatus",
+          "Create",
+          "Delete",
+          "Patch",
+          "Update",
+          "Validate",
         ],
       },
       "BulkUpdateContentsJobDto": {
@@ -7861,10 +7869,7 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "ConfigurePreviewUrlsDto": {
-        "docs": undefined,
-        "type": "map<string, string>",
-      },
+      "ConfigurePreviewUrlsDto": "map<string, string>",
       "ContentChangedRuleTriggerDto": {
         "docs": undefined,
         "properties": {
@@ -7882,10 +7887,7 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "ContentData": {
-        "docs": undefined,
-        "type": "map<string, ContentFieldData>",
-      },
+      "ContentData": "map<string, ContentFieldData>",
       "ContentDto": {
         "docs": undefined,
         "extends": [
@@ -7967,10 +7969,7 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "ContentFieldData": {
-        "docs": undefined,
-        "type": "map<string, unknown>",
-      },
+      "ContentFieldData": "map<string, unknown>",
       "ContentsDto": {
         "docs": undefined,
         "extends": [
@@ -8094,31 +8093,15 @@ You will be assigned as owner of the new team automatically.",
       "DateTimeCalculatedDefaultValue": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Now",
-            "value": "Now",
-          },
-          {
-            "docs": undefined,
-            "name": "Today",
-            "value": "Today",
-          },
+          "Now",
+          "Today",
         ],
       },
       "DateTimeFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Date",
-            "value": "Date",
-          },
-          {
-            "docs": undefined,
-            "name": "DateTime",
-            "value": "DateTime",
-          },
+          "Date",
+          "DateTime",
         ],
       },
       "DateTimeFieldPropertiesDto": {
@@ -8339,10 +8322,7 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "ExposedValues": {
-        "docs": undefined,
-        "type": "map<string, string>",
-      },
+      "ExposedValues": "map<string, string>",
       "FastlyRuleActionDto": {
         "docs": undefined,
         "properties": {
@@ -8460,78 +8440,27 @@ You will be assigned as owner of the new team automatically.",
         "discriminant": "fieldType",
         "docs": undefined,
         "union": {
-          "Array": {
-            "docs": undefined,
-            "type": "ArrayFieldPropertiesDto",
-          },
-          "Assets": {
-            "docs": undefined,
-            "type": "AssetsFieldPropertiesDto",
-          },
-          "Boolean": {
-            "docs": undefined,
-            "type": "BooleanFieldPropertiesDto",
-          },
-          "Component": {
-            "docs": undefined,
-            "type": "ComponentFieldPropertiesDto",
-          },
-          "Components": {
-            "docs": undefined,
-            "type": "ComponentsFieldPropertiesDto",
-          },
-          "DateTime": {
-            "docs": undefined,
-            "type": "DateTimeFieldPropertiesDto",
-          },
-          "Geolocation": {
-            "docs": undefined,
-            "type": "GeolocationFieldPropertiesDto",
-          },
-          "Json": {
-            "docs": undefined,
-            "type": "JsonFieldPropertiesDto",
-          },
-          "Number": {
-            "docs": undefined,
-            "type": "NumberFieldPropertiesDto",
-          },
-          "References": {
-            "docs": undefined,
-            "type": "ReferencesFieldPropertiesDto",
-          },
-          "String": {
-            "docs": undefined,
-            "type": "StringFieldPropertiesDto",
-          },
-          "Tags": {
-            "docs": undefined,
-            "type": "TagsFieldPropertiesDto",
-          },
-          "UI": {
-            "docs": undefined,
-            "type": "UiFieldPropertiesDto",
-          },
+          "Array": "ArrayFieldPropertiesDto",
+          "Assets": "AssetsFieldPropertiesDto",
+          "Boolean": "BooleanFieldPropertiesDto",
+          "Component": "ComponentFieldPropertiesDto",
+          "Components": "ComponentsFieldPropertiesDto",
+          "DateTime": "DateTimeFieldPropertiesDto",
+          "Geolocation": "GeolocationFieldPropertiesDto",
+          "Json": "JsonFieldPropertiesDto",
+          "Number": "NumberFieldPropertiesDto",
+          "References": "ReferencesFieldPropertiesDto",
+          "String": "StringFieldPropertiesDto",
+          "Tags": "TagsFieldPropertiesDto",
+          "UI": "UiFieldPropertiesDto",
         },
       },
       "FieldRuleAction": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Disable",
-            "value": "Disable",
-          },
-          {
-            "docs": undefined,
-            "name": "Hide",
-            "value": "Hide",
-          },
-          {
-            "docs": undefined,
-            "name": "Require",
-            "value": "Require",
-          },
+          "Disable",
+          "Hide",
+          "Require",
         ],
       },
       "FieldRuleDto": {
@@ -8593,71 +8522,23 @@ You will be assigned as owner of the new team automatically.",
       "ImageFormat": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "AVIF",
-            "value": "AVIF",
-          },
-          {
-            "docs": undefined,
-            "name": "BMP",
-            "value": "BMP",
-          },
-          {
-            "docs": undefined,
-            "name": "GIF",
-            "value": "GIF",
-          },
-          {
-            "docs": undefined,
-            "name": "JPEG",
-            "value": "JPEG",
-          },
-          {
-            "docs": undefined,
-            "name": "PNG",
-            "value": "PNG",
-          },
-          {
-            "docs": undefined,
-            "name": "TGA",
-            "value": "TGA",
-          },
-          {
-            "docs": undefined,
-            "name": "TIFF",
-            "value": "TIFF",
-          },
-          {
-            "docs": undefined,
-            "name": "WEBP",
-            "value": "WEBP",
-          },
+          "AVIF",
+          "BMP",
+          "GIF",
+          "JPEG",
+          "PNG",
+          "TGA",
+          "TIFF",
+          "WEBP",
         ],
       },
       "JobStatus": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Created",
-            "value": "Created",
-          },
-          {
-            "docs": undefined,
-            "name": "Started",
-            "value": "Started",
-          },
-          {
-            "docs": undefined,
-            "name": "Completed",
-            "value": "Completed",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
+          "Created",
+          "Started",
+          "Completed",
+          "Failed",
         ],
       },
       "JsonFieldPropertiesDto": {
@@ -8686,26 +8567,11 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "LocalizedValueOfNullableBoolean": {
-        "docs": undefined,
-        "type": "map<string, optional<boolean>>",
-      },
-      "LocalizedValueOfNullableDouble": {
-        "docs": undefined,
-        "type": "map<string, optional<double>>",
-      },
-      "LocalizedValueOfNullableInstant": {
-        "docs": undefined,
-        "type": "map<string, optional<datetime>>",
-      },
-      "LocalizedValueOfReadonlyListOfString": {
-        "docs": undefined,
-        "type": "map<string, list<string>>",
-      },
-      "LocalizedValueOfString": {
-        "docs": undefined,
-        "type": "map<string, string>",
-      },
+      "LocalizedValueOfNullableBoolean": "map<string, optional<boolean>>",
+      "LocalizedValueOfNullableDouble": "map<string, optional<double>>",
+      "LocalizedValueOfNullableInstant": "map<string, optional<datetime>>",
+      "LocalizedValueOfReadonlyListOfString": "map<string, list<string>>",
+      "LocalizedValueOfString": "map<string, string>",
       "LogDownloadDto": {
         "docs": undefined,
         "properties": {
@@ -8808,26 +8674,10 @@ You will be assigned as owner of the new team automatically.",
       "NumberFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Input",
-            "value": "Input",
-          },
-          {
-            "docs": undefined,
-            "name": "Radio",
-            "value": "Radio",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Stars",
-            "value": "Stars",
-          },
+          "Input",
+          "Radio",
+          "Dropdown",
+          "Stars",
         ],
       },
       "NumberFieldPropertiesDto": {
@@ -9003,26 +8853,10 @@ You will be assigned as owner of the new team automatically.",
       "PlansLockedReason": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "None",
-            "value": "None",
-          },
-          {
-            "docs": undefined,
-            "name": "NotOwner",
-            "value": "NotOwner",
-          },
-          {
-            "docs": undefined,
-            "name": "NoPermission",
-            "value": "NoPermission",
-          },
-          {
-            "docs": undefined,
-            "name": "ManagedByTeam",
-            "value": "ManagedByTeam",
-          },
+          "None",
+          "NotOwner",
+          "NoPermission",
+          "ManagedByTeam",
         ],
       },
       "PrerenderRuleActionDto": {
@@ -9038,10 +8872,7 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "PropertyPath": {
-        "docs": undefined,
-        "type": "list<string>",
-      },
+      "PropertyPath": "list<string>",
       "QueryDto": {
         "docs": undefined,
         "properties": {
@@ -9057,29 +8888,17 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The parent id (for assets).",
             "type": "optional<string>",
           },
-          "q": {
-            "docs": undefined,
-            "type": "optional<unknown>",
-          },
+          "q": "optional<unknown>",
         },
       },
       "QueryJsonDto": {
         "docs": undefined,
         "properties": {
-          "filter": {
-            "docs": undefined,
-            "type": "optional<unknown>",
-          },
-          "fullText": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "filter": "optional<unknown>",
+          "fullText": "optional<string>",
           "random": "integer",
           "skip": "integer",
-          "sort": {
-            "docs": undefined,
-            "type": "optional<list<SortNode>>",
-          },
+          "sort": "optional<list<SortNode>>",
           "take": "integer",
           "top": "integer",
         },
@@ -9087,31 +8906,11 @@ You will be assigned as owner of the new team automatically.",
       "ReferencesFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "List",
-            "value": "List",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Tags",
-            "value": "Tags",
-          },
-          {
-            "docs": undefined,
-            "name": "Checkboxes",
-            "value": "Checkboxes",
-          },
-          {
-            "docs": undefined,
-            "name": "Input",
-            "value": "Input",
-          },
+          "List",
+          "Dropdown",
+          "Tags",
+          "Checkboxes",
+          "Input",
         ],
       },
       "ReferencesFieldPropertiesDto": {
@@ -9175,41 +8974,13 @@ You will be assigned as owner of the new team automatically.",
       "ResizeMode": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Crop",
-            "value": "Crop",
-          },
-          {
-            "docs": undefined,
-            "name": "CropUpsize",
-            "value": "CropUpsize",
-          },
-          {
-            "docs": undefined,
-            "name": "Pad",
-            "value": "Pad",
-          },
-          {
-            "docs": undefined,
-            "name": "BoxPad",
-            "value": "BoxPad",
-          },
-          {
-            "docs": undefined,
-            "name": "Max",
-            "value": "Max",
-          },
-          {
-            "docs": undefined,
-            "name": "Min",
-            "value": "Min",
-          },
-          {
-            "docs": undefined,
-            "name": "Stretch",
-            "value": "Stretch",
-          },
+          "Crop",
+          "CropUpsize",
+          "Pad",
+          "BoxPad",
+          "Max",
+          "Min",
+          "Stretch",
         ],
       },
       "Resource": {
@@ -9319,78 +9090,24 @@ You will be assigned as owner of the new team automatically.",
         "discriminant": "actionType",
         "docs": undefined,
         "union": {
-          "Algolia": {
-            "docs": undefined,
-            "type": "AlgoliaRuleActionDto",
-          },
-          "AzureQueue": {
-            "docs": undefined,
-            "type": "AzureQueueRuleActionDto",
-          },
-          "Comment": {
-            "docs": undefined,
-            "type": "CommentRuleActionDto",
-          },
-          "CreateContent": {
-            "docs": undefined,
-            "type": "CreateContentRuleActionDto",
-          },
-          "Discourse": {
-            "docs": undefined,
-            "type": "DiscourseRuleActionDto",
-          },
-          "ElasticSearch": {
-            "docs": undefined,
-            "type": "ElasticSearchRuleActionDto",
-          },
-          "Email": {
-            "docs": undefined,
-            "type": "EmailRuleActionDto",
-          },
-          "Fastly": {
-            "docs": undefined,
-            "type": "FastlyRuleActionDto",
-          },
-          "Medium": {
-            "docs": undefined,
-            "type": "MediumRuleActionDto",
-          },
-          "Notification": {
-            "docs": undefined,
-            "type": "NotificationRuleActionDto",
-          },
-          "OpenSearch": {
-            "docs": undefined,
-            "type": "OpenSearchRuleActionDto",
-          },
-          "Prerender": {
-            "docs": undefined,
-            "type": "PrerenderRuleActionDto",
-          },
-          "Script": {
-            "docs": undefined,
-            "type": "ScriptRuleActionDto",
-          },
-          "SignalR": {
-            "docs": undefined,
-            "type": "SignalRRuleActionDto",
-          },
-          "Slack": {
-            "docs": undefined,
-            "type": "SlackRuleActionDto",
-          },
-          "Tweet": {
-            "docs": undefined,
-            "type": "TweetRuleActionDto",
-          },
-          "Typesense": {
-            "docs": undefined,
-            "type": "TypesenseRuleActionDto",
-          },
-          "Webhook": {
-            "docs": undefined,
-            "type": "WebhookRuleActionDto",
-          },
+          "Algolia": "AlgoliaRuleActionDto",
+          "AzureQueue": "AzureQueueRuleActionDto",
+          "Comment": "CommentRuleActionDto",
+          "CreateContent": "CreateContentRuleActionDto",
+          "Discourse": "DiscourseRuleActionDto",
+          "ElasticSearch": "ElasticSearchRuleActionDto",
+          "Email": "EmailRuleActionDto",
+          "Fastly": "FastlyRuleActionDto",
+          "Medium": "MediumRuleActionDto",
+          "Notification": "NotificationRuleActionDto",
+          "OpenSearch": "OpenSearchRuleActionDto",
+          "Prerender": "PrerenderRuleActionDto",
+          "Script": "ScriptRuleActionDto",
+          "SignalR": "SignalRRuleActionDto",
+          "Slack": "SlackRuleActionDto",
+          "Tweet": "TweetRuleActionDto",
+          "Typesense": "TypesenseRuleActionDto",
+          "Webhook": "WebhookRuleActionDto",
         },
       },
       "RuleDto": {
@@ -9582,106 +9299,34 @@ You will be assigned as owner of the new team automatically.",
       "RuleFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Checkbox",
-            "value": "Checkbox",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Email",
-            "value": "Email",
-          },
-          {
-            "docs": undefined,
-            "name": "Javascript",
-            "value": "Javascript",
-          },
-          {
-            "docs": undefined,
-            "name": "Number",
-            "value": "Number",
-          },
-          {
-            "docs": undefined,
-            "name": "Password",
-            "value": "Password",
-          },
-          {
-            "docs": undefined,
-            "name": "Text",
-            "value": "Text",
-          },
-          {
-            "docs": undefined,
-            "name": "TextArea",
-            "value": "TextArea",
-          },
-          {
-            "docs": undefined,
-            "name": "Url",
-            "value": "Url",
-          },
+          "Checkbox",
+          "Dropdown",
+          "Email",
+          "Javascript",
+          "Number",
+          "Password",
+          "Text",
+          "TextArea",
+          "Url",
         ],
       },
       "RuleJobResult": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Pending",
-            "value": "Pending",
-          },
-          {
-            "docs": undefined,
-            "name": "Success",
-            "value": "Success",
-          },
-          {
-            "docs": undefined,
-            "name": "Retry",
-            "value": "Retry",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
-          {
-            "docs": undefined,
-            "name": "Cancelled",
-            "value": "Cancelled",
-          },
+          "Pending",
+          "Success",
+          "Retry",
+          "Failed",
+          "Cancelled",
         ],
       },
       "RuleResult": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Pending",
-            "value": "Pending",
-          },
-          {
-            "docs": undefined,
-            "name": "Success",
-            "value": "Success",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
-          {
-            "docs": undefined,
-            "name": "Timeout",
-            "value": "Timeout",
-          },
+          "Pending",
+          "Success",
+          "Failed",
+          "Timeout",
         ],
       },
       "RuleTriggerDto": {
@@ -9689,30 +9334,12 @@ You will be assigned as owner of the new team automatically.",
         "discriminant": "triggerType",
         "docs": undefined,
         "union": {
-          "AssetChanged": {
-            "docs": undefined,
-            "type": "AssetChangedRuleTriggerDto",
-          },
-          "Comment": {
-            "docs": undefined,
-            "type": "CommentRuleTriggerDto",
-          },
-          "ContentChanged": {
-            "docs": undefined,
-            "type": "ContentChangedRuleTriggerDto",
-          },
-          "Manual": {
-            "docs": undefined,
-            "type": "ManualRuleTriggerDto",
-          },
-          "SchemaChanged": {
-            "docs": undefined,
-            "type": "SchemaChangedRuleTriggerDto",
-          },
-          "Usage": {
-            "docs": undefined,
-            "type": "UsageRuleTriggerDto",
-          },
+          "AssetChanged": "AssetChangedRuleTriggerDto",
+          "Comment": "CommentRuleTriggerDto",
+          "ContentChanged": "ContentChangedRuleTriggerDto",
+          "Manual": "ManualRuleTriggerDto",
+          "SchemaChanged": "SchemaChangedRuleTriggerDto",
+          "Usage": "UsageRuleTriggerDto",
         },
       },
       "RulesDto": {
@@ -9768,10 +9395,7 @@ You will be assigned as owner of the new team automatically.",
       "SchemaCondition": {
         "docs": undefined,
         "properties": {
-          "condition": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "condition": "optional<string>",
           "schemaId": "string",
         },
       },
@@ -9920,21 +9544,9 @@ You will be assigned as owner of the new team automatically.",
       "SchemaType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Default",
-            "value": "Default",
-          },
-          {
-            "docs": undefined,
-            "name": "Singleton",
-            "value": "Singleton",
-          },
-          {
-            "docs": undefined,
-            "name": "Component",
-            "value": "Component",
-          },
+          "Default",
+          "Singleton",
+          "Component",
         ],
       },
       "SchemasDto": {
@@ -9981,36 +9593,12 @@ You will be assigned as owner of the new team automatically.",
       "SearchResultType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Asset",
-            "value": "Asset",
-          },
-          {
-            "docs": undefined,
-            "name": "Content",
-            "value": "Content",
-          },
-          {
-            "docs": undefined,
-            "name": "Dashboard",
-            "value": "Dashboard",
-          },
-          {
-            "docs": undefined,
-            "name": "Setting",
-            "value": "Setting",
-          },
-          {
-            "docs": undefined,
-            "name": "Rule",
-            "value": "Rule",
-          },
-          {
-            "docs": undefined,
-            "name": "Schema",
-            "value": "Schema",
-          },
+          "Asset",
+          "Content",
+          "Dashboard",
+          "Setting",
+          "Rule",
+          "Schema",
         ],
       },
       "SignalRRuleActionDto": {
@@ -10055,10 +9643,7 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The data for the action.",
             "type": "optional<string>",
           },
-          "enrichedEvent": {
-            "docs": undefined,
-            "type": "optional<unknown>",
-          },
+          "enrichedEvent": "optional<unknown>",
           "error": {
             "docs": "The name of the event.",
             "type": "optional<string>",
@@ -10101,61 +9686,17 @@ You will be assigned as owner of the new team automatically.",
       "SkipReason": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "None",
-            "value": "None",
-          },
-          {
-            "docs": undefined,
-            "name": "ConditionDoesNotMatch",
-            "value": "ConditionDoesNotMatch",
-          },
-          {
-            "docs": undefined,
-            "name": "ConditionPrecheckDoesNotMatch",
-            "value": "ConditionPrecheckDoesNotMatch",
-          },
-          {
-            "docs": undefined,
-            "name": "Disabled",
-            "value": "Disabled",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
-          {
-            "docs": undefined,
-            "name": "FromRule",
-            "value": "FromRule",
-          },
-          {
-            "docs": undefined,
-            "name": "NoAction",
-            "value": "NoAction",
-          },
-          {
-            "docs": undefined,
-            "name": "NoTrigger",
-            "value": "NoTrigger",
-          },
-          {
-            "docs": undefined,
-            "name": "TooOld",
-            "value": "TooOld",
-          },
-          {
-            "docs": undefined,
-            "name": "WrongEvent",
-            "value": "WrongEvent",
-          },
-          {
-            "docs": undefined,
-            "name": "WrongEventForTrigger",
-            "value": "WrongEventForTrigger",
-          },
+          "None",
+          "ConditionDoesNotMatch",
+          "ConditionPrecheckDoesNotMatch",
+          "Disabled",
+          "Failed",
+          "FromRule",
+          "NoAction",
+          "NoTrigger",
+          "TooOld",
+          "WrongEvent",
+          "WrongEventForTrigger",
         ],
       },
       "SlackRuleActionDto": {
@@ -10174,29 +9715,15 @@ You will be assigned as owner of the new team automatically.",
       "SortNode": {
         "docs": undefined,
         "properties": {
-          "order": {
-            "docs": undefined,
-            "type": "SortOrder",
-          },
-          "path": {
-            "docs": undefined,
-            "type": "PropertyPath",
-          },
+          "order": "SortOrder",
+          "path": "PropertyPath",
         },
       },
       "SortOrder": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Ascending",
-            "value": "Ascending",
-          },
-          {
-            "docs": undefined,
-            "name": "Descending",
-            "value": "Descending",
-          },
+          "Ascending",
+          "Descending",
         ],
       },
       "StatusInfoDto": {
@@ -10232,76 +9759,24 @@ You will be assigned as owner of the new team automatically.",
       "StringContentType": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Unspecified",
-            "value": "Unspecified",
-          },
-          {
-            "docs": undefined,
-            "name": "Html",
-            "value": "Html",
-          },
-          {
-            "docs": undefined,
-            "name": "Markdown",
-            "value": "Markdown",
-          },
+          "Unspecified",
+          "Html",
+          "Markdown",
         ],
       },
       "StringFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Input",
-            "value": "Input",
-          },
-          {
-            "docs": undefined,
-            "name": "Color",
-            "value": "Color",
-          },
-          {
-            "docs": undefined,
-            "name": "Markdown",
-            "value": "Markdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
-          {
-            "docs": undefined,
-            "name": "Html",
-            "value": "Html",
-          },
-          {
-            "docs": undefined,
-            "name": "Radio",
-            "value": "Radio",
-          },
-          {
-            "docs": undefined,
-            "name": "RichText",
-            "value": "RichText",
-          },
-          {
-            "docs": undefined,
-            "name": "Slug",
-            "value": "Slug",
-          },
-          {
-            "docs": undefined,
-            "name": "StockPhoto",
-            "value": "StockPhoto",
-          },
-          {
-            "docs": undefined,
-            "name": "TextArea",
-            "value": "TextArea",
-          },
+          "Input",
+          "Color",
+          "Markdown",
+          "Dropdown",
+          "Html",
+          "Radio",
+          "RichText",
+          "Slug",
+          "StockPhoto",
+          "TextArea",
         ],
       },
       "StringFieldPropertiesDto": {
@@ -10388,21 +9863,9 @@ You will be assigned as owner of the new team automatically.",
       "TagsFieldEditor": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Tags",
-            "value": "Tags",
-          },
-          {
-            "docs": undefined,
-            "name": "Checkboxes",
-            "value": "Checkboxes",
-          },
-          {
-            "docs": undefined,
-            "name": "Dropdown",
-            "value": "Dropdown",
-          },
+          "Tags",
+          "Checkboxes",
+          "Dropdown",
         ],
       },
       "TagsFieldPropertiesDto": {
@@ -10534,36 +9997,12 @@ You will be assigned as owner of the new team automatically.",
       "TranslationResultCode": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "Translated",
-            "value": "Translated",
-          },
-          {
-            "docs": undefined,
-            "name": "LanguageNotSupported",
-            "value": "LanguageNotSupported",
-          },
-          {
-            "docs": undefined,
-            "name": "NotTranslated",
-            "value": "NotTranslated",
-          },
-          {
-            "docs": undefined,
-            "name": "NotConfigured",
-            "value": "NotConfigured",
-          },
-          {
-            "docs": undefined,
-            "name": "Unauthorized",
-            "value": "Unauthorized",
-          },
-          {
-            "docs": undefined,
-            "name": "Failed",
-            "value": "Failed",
-          },
+          "Translated",
+          "LanguageNotSupported",
+          "NotTranslated",
+          "NotConfigured",
+          "Unauthorized",
+          "Failed",
         ],
       },
       "TweetRuleActionDto": {
@@ -10825,31 +10264,11 @@ You will be assigned as owner of the new team automatically.",
       "WebhookMethod": {
         "docs": "",
         "enum": [
-          {
-            "docs": undefined,
-            "name": "POST",
-            "value": "POST",
-          },
-          {
-            "docs": undefined,
-            "name": "PUT",
-            "value": "PUT",
-          },
-          {
-            "docs": undefined,
-            "name": "GET",
-            "value": "GET",
-          },
-          {
-            "docs": undefined,
-            "name": "DELETE",
-            "value": "DELETE",
-          },
-          {
-            "docs": undefined,
-            "name": "PATCH",
-            "value": "PATCH",
-          },
+          "POST",
+          "PUT",
+          "GET",
+          "DELETE",
+          "PATCH",
         ],
       },
       "WebhookRuleActionDto": {
@@ -10970,25 +10389,21 @@ You will be assigned as owner of the new team automatically.",
     },
   },
   "rootApiFile": {
-    "auth": "bearer",
-    "default-environment": "default",
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "default-environment": "Default",
     "display-name": "Squidex API",
     "environments": {
-      "default": "https://localhost:5001",
+      "Default": "https://localhost:5001",
     },
     "error-discrimination": {
       "strategy": "status-code",
     },
-    "imports": {
-      "root": "__package__.yml",
-    },
     "name": "api",
-    "variables": {
-      "appName": {
-        "docs": undefined,
-        "type": "string",
-      },
-    },
   },
 }
 `;

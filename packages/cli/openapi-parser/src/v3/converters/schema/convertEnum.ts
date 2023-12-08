@@ -1,3 +1,4 @@
+import { SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
 import { EnumValue } from "@fern-fern/openapi-ir-model/finalIr";
 import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { camelCase, upperFirst } from "lodash-es";
@@ -12,7 +13,8 @@ export function convertEnum({
     enumVarNames,
     enumValues,
     description,
-    wrapAsNullable
+    wrapAsNullable,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -21,6 +23,7 @@ export function convertEnum({
     enumValues: string[];
     description: string | undefined;
     wrapAsNullable: boolean;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
@@ -40,7 +43,8 @@ export function convertEnum({
         nameOverride,
         generatedName,
         values,
-        description
+        description,
+        groupName
     });
 }
 
@@ -49,13 +53,15 @@ export function wrapEnum({
     nameOverride,
     generatedName,
     values,
-    description
+    description,
+    groupName
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
     values: EnumValue[];
     description: string | undefined;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -64,7 +70,8 @@ export function wrapEnum({
                 generatedName,
                 values,
                 description,
-                example: undefined
+                example: undefined,
+                groupName
             }),
             description
         });
@@ -74,7 +81,8 @@ export function wrapEnum({
         generatedName,
         values,
         description,
-        example: undefined
+        example: undefined,
+        groupName
     });
 }
 

@@ -1,4 +1,4 @@
-import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
+import { SchemaId, SdkGroupName } from "@fern-fern/openapi-ir-model/commons";
 import {
     AllOfPropertyConflict,
     ObjectPropertyConflictInfo,
@@ -28,7 +28,8 @@ export function convertObject({
     wrapAsNullable,
     allOf,
     context,
-    propertiesToExclude
+    propertiesToExclude,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -40,6 +41,7 @@ export function convertObject({
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: AbstractOpenAPIV3ParserContext;
     propertiesToExclude: Set<string>;
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     let allRequired = [...(required ?? [])];
     let propertiesToConvert = { ...properties };
@@ -131,7 +133,8 @@ export function convertObject({
         }),
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
-        allOfPropertyConflicts
+        allOfPropertyConflicts,
+        groupName
     });
 }
 
@@ -142,7 +145,8 @@ export function wrapObject({
     properties,
     description,
     allOf,
-    allOfPropertyConflicts
+    allOfPropertyConflicts,
+    groupName
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -151,6 +155,7 @@ export function wrapObject({
     description: string | undefined;
     allOf: ReferencedSchema[];
     allOfPropertyConflicts: AllOfPropertyConflict[];
+    groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -160,7 +165,8 @@ export function wrapObject({
                 nameOverride,
                 generatedName,
                 allOf,
-                allOfPropertyConflicts
+                allOfPropertyConflicts,
+                groupName
             }),
             description
         });
@@ -171,7 +177,8 @@ export function wrapObject({
         nameOverride,
         generatedName,
         allOf,
-        allOfPropertyConflicts
+        allOfPropertyConflicts,
+        groupName
     });
 }
 
