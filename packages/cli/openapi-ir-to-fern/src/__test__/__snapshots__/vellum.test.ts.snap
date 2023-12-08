@@ -18,7 +18,6 @@ exports[`open api parser vellum simple 1`] = `
 
 Used to retrieve a deployment given its ID or name.
 ",
-            "errors": [],
             "method": "GET",
             "path": "/v1/deployments/{id}",
             "path-parameters": {
@@ -48,7 +47,6 @@ Used to retrieve a deployment given its ID or name.
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
-            "errors": [],
             "method": "POST",
             "path": "/v1/document-indexes",
             "request": {
@@ -114,7 +112,6 @@ Creates a new document index.",
 
 Used to list documents. Optionally filter on supported fields.
 ",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -170,9 +167,9 @@ Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
             "errors": [
-              "package.root.BadRequestError",
-              "package.root.NotFoundError",
-              "package.root.InternalServerError",
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
             ],
             "method": "POST",
             "path": "/v1/upload-document",
@@ -223,7 +220,6 @@ Upload a document to be indexed and used for search.
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
-            "errors": [],
             "method": "POST",
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
@@ -257,7 +253,6 @@ Compiles the prompt backing the model version using the provided input values.",
 
 Used to retrieve a model version given its ID.
 ",
-            "errors": [],
             "method": "GET",
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
@@ -291,7 +286,7 @@ partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
             "errors": [
-              "package.root.ConflictError",
+              "root.ConflictError",
             ],
             "method": "POST",
             "path": "/v1/registered-prompts/register",
@@ -362,7 +357,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -399,7 +393,6 @@ is found, a new scenario will be appended to the end.
 
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
-            "errors": [],
             "method": "POST",
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
@@ -448,7 +441,6 @@ or overwritten with default values.",
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -485,7 +477,6 @@ is found, a new test case will be appended to the end.
 
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -579,7 +570,6 @@ or overwritten with default values.",
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
-          "errors": [],
           "method": "POST",
           "path": "/v1/execute-workflow-stream",
           "request": {

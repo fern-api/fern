@@ -1,5 +1,4 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
@@ -194,21 +193,19 @@ export function buildEndpoint({
         convertedEndpoint.availability = "deprecated";
     }
 
-    const errorsThrown: string[] = [];
     endpoint.errorStatusCode.forEach((statusCode) => {
         const errorName = errors[statusCode]?.generatedName;
         if (errorName != null) {
+            if (convertedEndpoint.errors == null) {
+                convertedEndpoint.errors = [];
+            }
             const prefix = context.builder.addImport({
                 file: declarationFile,
                 fileToImport: ERROR_DECLARATIONS_FILENAME
             });
-            errorsThrown.push(prefix != null ? `${prefix}.${errorName}` : errorName);
+            convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
         }
     });
-    convertedEndpoint.errors =
-        declarationFile === FERN_PACKAGE_MARKER_FILENAME
-            ? errorsThrown
-            : errorsThrown.map((error) => `package.${error}`);
 
     if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
