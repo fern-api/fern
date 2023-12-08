@@ -10,7 +10,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Booking",
+        "display-name": "Endpoints relating to Booking objects",
         "endpoints": {
           "bookings_index": {
             "auth": false,
@@ -1367,7 +1367,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "BookingAmendment",
+        "display-name": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
         "endpoints": {
           "booking_amendment_create": {
             "auth": false,
@@ -1680,7 +1680,8 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "BookingLineItem",
+        "display-name": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
+  your Flexport Sales representative if you are interested in using these endpoints.**",
         "endpoints": {
           "booking_line_item_create": {
             "auth": false,
@@ -1962,7 +1963,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Carbon Calculation",
+        "display-name": "Endpoints relating to Carbon Calculations",
         "endpoints": {
           "create": {
             "auth": false,
@@ -2215,7 +2216,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Commercial Invoices",
+        "display-name": "Endpoints relating to Commercial Invoice objects",
         "endpoints": {
           "create": {
             "auth": false,
@@ -3110,7 +3111,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Company",
+        "display-name": "Endpoints relating to Company objects",
         "endpoints": {
           "network_company_create": {
             "auth": false,
@@ -3566,7 +3567,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "CompanyEntity",
+        "display-name": "Endpoints relating to CompanyEntity objects",
         "endpoints": {
           "company_entity_index": {
             "auth": false,
@@ -3996,7 +3997,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Contact",
+        "display-name": "Endpoints relating to Contact objects",
         "endpoints": {
           "network_contact_create": {
             "auth": false,
@@ -4319,7 +4320,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Container",
+        "display-name": "Endpoints relating to Container objects",
         "endpoints": {
           "list": {
             "auth": false,
@@ -4612,7 +4613,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "ContainerLeg",
+        "display-name": "Endpoints relating to ContainerLeg objects",
         "endpoints": {
           "ocean_container_legs_index": {
             "auth": false,
@@ -4789,7 +4790,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Customs Entries",
+        "display-name": "Endpoints relating to Customs Entry objects",
         "endpoints": {
           "customs_entry_index": {
             "auth": false,
@@ -4946,7 +4947,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Document",
+        "display-name": "Endpoints relating to Document objects",
         "endpoints": {
           "documents_create": {
             "auth": false,
@@ -5246,7 +5247,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Event",
+        "display-name": "Endpoints relating to Event objects",
         "endpoints": {
           "events_index": {
             "auth": false,
@@ -6271,7 +6272,7 @@ exports[`open api parser flexport simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Invoices",
+        "display-name": "Endpoints relating to Invoice objects",
         "endpoints": {
           "invoice_index": {
             "auth": false,
@@ -6756,7 +6757,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Location",
+        "display-name": "Endpoints relating to Location objects",
         "endpoints": {
           "index": {
             "auth": false,
@@ -7144,7 +7145,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Ports",
+        "display-name": "Endpoints relating to Ports objects",
         "endpoints": {
           "index": {
             "auth": false,
@@ -7285,7 +7286,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Product",
+        "display-name": "Endpoints relating to Product objects",
         "endpoints": {
           "create": {
             "auth": false,
@@ -7783,7 +7784,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "PurchaseOrder",
+        "display-name": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
         "endpoints": {
           "purchase_order_create": {
             "auth": false,
@@ -9142,7 +9143,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "PurchaseOrderLineItem",
+        "display-name": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
         "endpoints": {
           "purchase_order_line_item_index": {
             "auth": false,
@@ -9583,7 +9584,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Shipment",
+        "display-name": "Endpoints relating to Shipment objects",
         "endpoints": {
           "index": {
             "auth": false,
@@ -10925,7 +10926,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "ShipmentLeg",
+        "display-name": "Endpoints relating to ShipmentLeg objects",
         "endpoints": {
           "shipment_leg_index": {
             "auth": false,

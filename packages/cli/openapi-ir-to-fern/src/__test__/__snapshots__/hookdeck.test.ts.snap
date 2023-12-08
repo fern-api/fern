@@ -10,7 +10,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Attempts",
+        "display-name": "An attempt is any request that Hookdeck makes on behalf of an event.",
         "endpoints": {
           "getAttempt": {
             "auth": true,
@@ -120,7 +120,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Bookmarks",
+        "display-name": "A bookmark lets you conveniently store and replay a specific request.",
         "endpoints": {
           "createBookmark": {
             "auth": true,
@@ -427,7 +427,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Bulk retry events",
+        "display-name": "",
         "endpoints": {
           "cancelEventBulkRetry": {
             "auth": true,
@@ -946,7 +946,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Bulk retry ignored events",
+        "display-name": "",
         "endpoints": {
           "cancelIgnoredEventBulkRetry": {
             "auth": true,
@@ -1188,7 +1188,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Bulk retry requests",
+        "display-name": "",
         "endpoints": {
           "cancelRequestBulkRetry": {
             "auth": true,
@@ -1626,7 +1626,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Connections",
+        "display-name": "A connection lets you route webhooks from a source to a destination, using a ruleset.",
         "endpoints": {
           "archiveConnection": {
             "auth": true,
@@ -2162,7 +2162,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Destinations",
+        "display-name": "A destination is any endpoint to which your webhooks can be routed.",
         "endpoints": {
           "archiveDestination": {
             "auth": true,
@@ -2543,7 +2543,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Events",
+        "display-name": "An event is any request that Hookdeck receives from a source.",
         "endpoints": {
           "getEvent": {
             "auth": true,
@@ -2835,7 +2835,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Integrations",
+        "display-name": "An integration configures platform-specific behaviors, such as signature verification.",
         "endpoints": {
           "attachIntegrationToSource": {
             "auth": true,
@@ -3099,7 +3099,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Issue Triggers",
+        "display-name": "Issue Triggers lets you setup rules that trigger issues when certain conditions are met.",
         "endpoints": {
           "createIssueTrigger": {
             "auth": true,
@@ -3434,7 +3434,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Issues",
+        "display-name": "Issues lets you track problems in your workspace and communicate resolution steps with your team.",
         "endpoints": {
           "dismissIssue": {
             "auth": true,
@@ -3930,7 +3930,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Notifications",
+        "display-name": "Notifications let your team receive alerts anytime an issue changes.",
         "endpoints": {
           "toggleWebhookNotifications": {
             "auth": true,
@@ -3974,7 +3974,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Requests",
+        "display-name": "A request represent a webhook received by Hookdeck.",
         "endpoints": {
           "getRequest": {
             "auth": true,
@@ -4534,7 +4534,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Rulesets",
+        "display-name": "A ruleset defines a group of rules that can be used across many connections.",
         "endpoints": {
           "archiveRuleset": {
             "auth": true,
@@ -4809,7 +4809,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Sources",
+        "display-name": "A source represents any third party that sends webhooks to Hookdeck.",
         "endpoints": {
           "archiveSource": {
             "auth": true,
@@ -5074,7 +5074,7 @@ exports[`open api parser hookdeck simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Transformations",
+        "display-name": "A transformation represents JavaScript code that will be executed on a connection's requests. Transformations are applied to connections using Rules.",
         "endpoints": {
           "createTransformation": {
             "auth": true,

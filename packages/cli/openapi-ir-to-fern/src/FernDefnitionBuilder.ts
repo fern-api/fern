@@ -43,7 +43,7 @@ export interface FernDefinitionBuilder {
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
-    setServiceDisplayName(file: RelativeFilePath, name: string): void;
+    setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
     build(): FernDefinition;
 }
@@ -68,6 +68,25 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         };
         if (ir.title != null) {
             this.rootApiFile["display-name"] = ir.title;
+        }
+    }
+    setServiceInfo(
+        file: RelativeFilePath,
+        { displayName, docs }: { displayName?: string | undefined; docs?: string | undefined }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.service == null) {
+            fernFile.service = {
+                auth: false,
+                "base-path": "",
+                endpoints: {}
+            };
+        }
+        if (displayName != null) {
+            fernFile.service["display-name"] = displayName;
+        }
+        if (docs != null) {
+            fernFile.service["display-name"] = docs;
         }
     }
 

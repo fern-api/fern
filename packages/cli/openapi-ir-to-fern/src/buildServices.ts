@@ -18,9 +18,10 @@ export function buildServices(context: OpenApiIrConverterContext): { schemaIdsTo
             name: endpointId,
             schema: convertedEndpoint.value
         });
-        if (irTag != null) {
-            context.builder.setServiceDisplayName(file, irTag.id);
-        }
+        context.builder.setServiceInfo(file, {
+            displayName: irTag?.id,
+            docs: irTag?.description ?? undefined
+        });
     }
     return { schemaIdsToExclude };
 }

@@ -10,7 +10,7 @@ exports[`open api parser devrev simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "artifacts",
+        "display-name": "Artifact (file) management APIs.",
         "endpoints": {
           "locate": {
             "auth": true,
@@ -83,7 +83,7 @@ exports[`open api parser devrev simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "auth-connection",
+        "display-name": "Auth Connections of DevOrg.",
         "endpoints": {
           "dev-org-auth-connections-create": {
             "auth": true,
@@ -333,7 +333,7 @@ organization.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "auth-tokens",
+        "display-name": "Security token interactions.",
         "endpoints": {
           "create": {
             "auth": true,
@@ -626,7 +626,7 @@ organization.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "dev-users",
+        "display-name": "Dev user interactions.",
         "endpoints": {
           "list": {
             "auth": true,
@@ -731,7 +731,7 @@ used.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "parts",
+        "display-name": "DevRev part interactions.",
         "endpoints": {
           "create": {
             "auth": true,
@@ -994,7 +994,7 @@ used.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "rev-orgs",
+        "display-name": "Rev organization interactions.",
         "endpoints": {
           "create": {
             "auth": true,
@@ -1294,7 +1294,7 @@ records.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "tags",
+        "display-name": "DevRev tag interactions.",
         "endpoints": {
           "create": {
             "auth": true,
@@ -1524,7 +1524,7 @@ tags.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "timeline-entries",
+        "display-name": "APIs to manage timeline entries for objects.",
         "endpoints": {
           "create": {
             "auth": true,
@@ -1708,7 +1708,7 @@ used.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "webhooks",
+        "display-name": "Webhook event APIs.",
         "endpoints": {
           "create": {
             "auth": true,
@@ -1918,7 +1918,7 @@ won't receive any object events until successfully verified.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "works",
+        "display-name": "DevRev work interactions.",
         "endpoints": {
           "create": {
             "auth": true,
