@@ -19,7 +19,11 @@ export function buildServices(context: OpenApiIrConverterContext): { schemaIdsTo
             name: endpointId,
             schema: {
                 ...convertedEndpoint.value,
-                audiences: endpoint.audiences.length > 0 ? endpoint.audiences : [EXTERNAL_AUDIENCE]
+                audiences:
+                    // if any internal endpoints exist, then set the audience to external if this endpoint is not internal
+                    context.ir.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)
+                        ? [EXTERNAL_AUDIENCE, ...endpoint.audiences]
+                        : endpoint.audiences
             }
         });
         if (irTag != null) {

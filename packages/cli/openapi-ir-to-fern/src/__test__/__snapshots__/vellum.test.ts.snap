@@ -5,16 +5,14 @@ exports[`open api parser vellum simple 1`] = `
   "definitionFiles": {
     "deployments.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "retrieve": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -32,7 +30,7 @@ Used to retrieve a deployment given its ID or name.
             },
             "response": {
               "docs": "",
-              "type": "package.DeploymentRead",
+              "type": "root.DeploymentRead",
             },
           },
         },
@@ -40,16 +38,14 @@ Used to retrieve a deployment given its ID or name.
     },
     "documentIndexes.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -70,7 +66,7 @@ Creates a new document index.",
 * \`DEVELOPMENT\` - Development
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
-                    "type": "optional<package.EnvironmentEnum>",
+                    "type": "optional<root.EnvironmentEnum>",
                   },
                   "indexing_config": {
                     "docs": "Configuration representing how documents should be indexed",
@@ -89,7 +85,7 @@ Creates a new document index.",
 
 * \`ACTIVE\` - Active
 * \`ARCHIVED\` - Archived",
-                    "type": "optional<package.DocumentIndexStatus>",
+                    "type": "optional<root.DocumentIndexStatus>",
                   },
                 },
               },
@@ -99,7 +95,7 @@ Creates a new document index.",
             },
             "response": {
               "docs": "",
-              "type": "package.DocumentIndexRead",
+              "type": "root.DocumentIndexRead",
             },
           },
         },
@@ -107,16 +103,14 @@ Creates a new document index.",
     },
     "documents.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "list": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
@@ -168,13 +162,11 @@ Used to list documents. Optionally filter on supported fields.
             },
             "response": {
               "docs": "",
-              "type": "package.PaginatedSlimDocumentList",
+              "type": "root.PaginatedSlimDocumentList",
             },
           },
           "upload": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -216,7 +208,7 @@ Upload a document to be indexed and used for search.
             },
             "response": {
               "docs": "",
-              "type": "package.UploadDocumentResponse",
+              "type": "root.UploadDocumentResponse",
             },
           },
         },
@@ -224,16 +216,14 @@ Upload a document to be indexed and used for search.
     },
     "modelVersions.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "model_version_compile_prompt": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -262,13 +252,11 @@ Compiles the prompt backing the model version using the provided input values.",
             },
             "response": {
               "docs": "",
-              "type": "package.ModelVersionCompilePromptResponse",
+              "type": "root.ModelVersionCompilePromptResponse",
             },
           },
           "retrieve": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -286,7 +274,7 @@ Used to retrieve a model version given its ID.
             },
             "response": {
               "docs": "",
-              "type": "package.ModelVersionRead",
+              "type": "root.ModelVersionRead",
             },
           },
         },
@@ -294,16 +282,14 @@ Used to retrieve a model version given its ID.
     },
     "registeredPrompts.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "register_prompt": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -337,11 +323,11 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                   },
                   "parameters": {
                     "docs": "The initial model parameters to use for  this prompt",
-                    "type": "package.RegisterPromptModelParametersRequest",
+                    "type": "root.RegisterPromptModelParametersRequest",
                   },
                   "prompt": {
                     "docs": "Information about how to execute the prompt template.",
-                    "type": "package.RegisterPromptPromptInfoRequest",
+                    "type": "root.RegisterPromptPromptInfoRequest",
                   },
                   "provider": {
                     "docs": "The initial LLM provider to use for this prompt
@@ -354,7 +340,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 * \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
-                    "type": "package.ProviderEnum",
+                    "type": "root.ProviderEnum",
                   },
                 },
               },
@@ -364,7 +350,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             "response": {
               "docs": "",
-              "type": "package.RegisterPromptResponse",
+              "type": "root.RegisterPromptResponse",
             },
           },
         },
@@ -372,16 +358,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
     },
     "sandboxes.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "delete_sandbox_scenario": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -413,9 +397,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             },
           },
           "upsert_sandbox_scenario": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -440,10 +422,10 @@ or overwritten with default values.",
                 "properties": {
                   "inputs": {
                     "docs": "The inputs for the scenario",
-                    "type": "list<package.ScenarioInputRequest>",
+                    "type": "list<root.ScenarioInputRequest>",
                   },
                   "label": "optional<string>",
-                  "metric_input_params": "optional<package.SandboxMetricInputParamsRequest>",
+                  "metric_input_params": "optional<root.SandboxMetricInputParamsRequest>",
                   "scenario_id": {
                     "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
                     "type": "optional<string>",
@@ -456,7 +438,7 @@ or overwritten with default values.",
             },
             "response": {
               "docs": "",
-              "type": "package.SandboxScenario",
+              "type": "root.SandboxScenario",
             },
           },
         },
@@ -464,16 +446,14 @@ or overwritten with default values.",
     },
     "testSuites.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "delete_test_suite_test_case": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -505,9 +485,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             },
           },
           "upsert_test_suite_test_case": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -551,7 +529,7 @@ or overwritten with default values.",
                 "properties": {
                   "evaluation_params": {
                     "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-                    "type": "package.EvaluationParamsRequest",
+                    "type": "root.EvaluationParamsRequest",
                   },
                   "input_values": {
                     "docs": "Key/value pairs for each input variable that the Test Suite expects.",
@@ -573,7 +551,7 @@ or overwritten with default values.",
             },
             "response": {
               "docs": "",
-              "type": "package.TestSuiteTestCase",
+              "type": "root.TestSuiteTestCase",
             },
           },
         },
@@ -608,9 +586,7 @@ or overwritten with default values.",
       "base-path": "",
       "endpoints": {
         "execute-workflow-stream": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -650,9 +626,7 @@ Executes a deployed Workflow and streams back its results.",
           },
         },
         "generate": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -726,9 +700,7 @@ Generate a completion using a previously defined deployment.
           },
         },
         "generate-stream": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -774,9 +746,7 @@ Generate a stream of completions using a previously defined deployment.
           },
         },
         "search": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -821,9 +791,7 @@ Perform a search against a document index.
           },
         },
         "submit-completion-actuals": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 

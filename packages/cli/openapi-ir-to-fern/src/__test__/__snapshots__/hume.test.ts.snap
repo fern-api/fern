@@ -5,7 +5,7 @@ exports[`open api parser hume simple 1`] = `
   "definitionFiles": {
     "getJobPredictions.yml": {
       "imports": {
-        "package": "__package__.yml",
+        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13,9 +13,7 @@ exports[`open api parser hume simple 1`] = `
         "display-name": "Get Job Predictions",
         "endpoints": {
           "get_job": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
@@ -30,13 +28,11 @@ exports[`open api parser hume simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "package.JobRequest",
+              "type": "root.JobRequest",
             },
           },
           "get_job_artifacts": {
-            "audiences": [
-              "external",
-            ],
+            "audiences": [],
             "auth": true,
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
@@ -64,9 +60,7 @@ exports[`open api parser hume simple 1`] = `
       "base-path": "",
       "endpoints": {
         "Get Job Predictions": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "display-name": "Get Job Predictions",
           "docs": "Get the JSON predictions of a completed job.",
@@ -98,9 +92,7 @@ exports[`open api parser hume simple 1`] = `
           },
         },
         "List Jobs": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "display-name": "List Jobs",
           "docs": "Sort and filter jobs.",
@@ -164,9 +156,7 @@ exports[`open api parser hume simple 1`] = `
           },
         },
         "Start Job": {
-          "audiences": [
-            "external",
-          ],
+          "audiences": [],
           "auth": true,
           "display-name": "Start Job",
           "docs": "Start a new batch job.",
