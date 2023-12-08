@@ -106,6 +106,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListBuyersByOrganizationResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.IdentityBuyer",
             "type": "reference",
@@ -238,6 +239,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetBuyerResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.IdentityBuyer",
           "type": "reference",
@@ -371,6 +373,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateBuyerNameDescriptionRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "github_com_sugerio_marketplace-service_rds-db_lib.UpdateBuyerNameDescriptionParams",
           "type": "reference",
@@ -383,6 +386,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateBuyerNameDescriptionResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.IdentityBuyer",
           "type": "reference",
@@ -672,6 +676,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListEntitlementsByBuyerResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadEntitlement",
             "type": "reference",
@@ -1972,6 +1977,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateOrUpdateDraftOfferRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadOffer",
           "type": "reference",
@@ -1984,6 +1990,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateOrUpdateDraftOfferResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadOffer",
           "type": "reference",
@@ -2249,6 +2256,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListEntitlementsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadEntitlement",
             "type": "reference",
@@ -2531,6 +2539,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetEntitlementResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadEntitlement",
           "type": "reference",
@@ -2597,6 +2606,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "AddEntitlementCreditRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.AddEntitlementCreditParams",
           "type": "reference",
@@ -2609,6 +2619,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "AddEntitlementCreditResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.AddEntitlementCreditResponse",
           "type": "reference",
@@ -2892,6 +2903,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateEntitlementNameRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "github_com_sugerio_marketplace-service_rds-db_lib.UpdateEntitlementNameParams",
           "type": "reference",
@@ -2904,6 +2916,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateEntitlementNameResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadEntitlement",
           "type": "reference",
@@ -3198,6 +3211,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListEntitlementTermsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadEntitlementTerm",
             "type": "reference",
@@ -3509,6 +3523,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetEntitlementTermResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadEntitlementTerm",
           "type": "reference",
@@ -3673,6 +3688,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordGroupsByEntitlementResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListUsageRecordGroupsResponse",
           "type": "reference",
@@ -3740,6 +3756,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ReportUsageRecordGroupRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.CreateUsageRecordGroupParams",
           "type": "reference",
@@ -3752,6 +3769,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ReportUsageRecordGroupResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.MeteringUsageRecordGroup",
           "type": "reference",
@@ -4006,6 +4024,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordReportsByEntitlementResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListUsageRecordReportsResponse",
           "type": "reference",
@@ -4104,6 +4123,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListIntegrationsByOrganizationResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.IdentityIntegration",
             "type": "reference",
@@ -4157,6 +4177,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateIntegrationRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.CreateIntegrationParams",
           "type": "reference",
@@ -4169,6 +4190,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateIntegrationResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.IdentityIntegration",
           "type": "reference",
@@ -4271,6 +4293,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetIntegrationRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4302,6 +4325,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "GetIntegrationRequestService",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4330,6 +4354,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetIntegrationResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.IdentityIntegration",
           "type": "reference",
@@ -4379,6 +4404,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeleteIntegrationRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4410,6 +4436,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "DeleteIntegrationRequestService",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4490,6 +4517,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "UpdateIntegrationRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4521,6 +4549,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "UpdateIntegrationRequestService",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4548,6 +4577,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIntegrationRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.UpdateIntegrationParams",
           "type": "reference",
@@ -4560,6 +4590,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateIntegrationResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.IdentityIntegration",
           "type": "reference",
@@ -4609,6 +4640,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "VerifyIntegrationRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -4640,6 +4672,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "VerifyIntegrationRequestService",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -5361,6 +5394,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListOffersByOrganizationResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadOffer",
             "type": "reference",
@@ -6661,6 +6695,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateOfferRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadOffer",
           "type": "reference",
@@ -6673,6 +6708,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "CreateOfferResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadOffer",
           "type": "reference",
@@ -7382,6 +7418,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetOfferResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadOffer",
           "type": "reference",
@@ -7808,6 +7845,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListEntitlementsByOfferResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadEntitlement",
             "type": "reference",
@@ -7968,6 +8006,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListOperationsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.Operation",
             "type": "reference",
@@ -8235,6 +8274,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListEntitlementsByPartnerRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -8272,6 +8312,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListEntitlementsByPartnerResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadEntitlement",
             "type": "reference",
@@ -8992,6 +9033,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListOffersByPartnerRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -9029,6 +9071,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListOffersByPartnerResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadOffer",
             "type": "reference",
@@ -9569,6 +9612,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListProductsByPartnerRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -9606,6 +9650,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListProductsByPartnerResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadProduct",
             "type": "reference",
@@ -9686,6 +9731,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListRevenueRecordsRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -9836,6 +9882,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListRevenueRecordsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListRevenueRecordsResponse",
           "type": "reference",
@@ -9915,6 +9962,7 @@ exports[`open api parser suger parse open api 1`] = `
           "schema": {
             "description": undefined,
             "generatedName": "ListRevenueRecordDetailsRequestPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -10065,6 +10113,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListRevenueRecordDetailsResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListRevenueRecordDetailsResponse",
           "type": "reference",
@@ -10603,6 +10652,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListProductsByOrganizationResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadProduct",
             "type": "reference",
@@ -11158,6 +11208,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetProductResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadProduct",
           "type": "reference",
@@ -11291,6 +11342,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateProductRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.UpdateProductParams",
           "type": "reference",
@@ -11303,6 +11355,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "UpdateProductResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.WorkloadProduct",
           "type": "reference",
@@ -11404,6 +11457,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListProductMeteringDimensionsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.AwsSaasProductDimension",
             "type": "reference",
@@ -11694,6 +11748,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListEntitlementsByProductResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadEntitlement",
             "type": "reference",
@@ -12412,6 +12467,7 @@ exports[`open api parser suger parse open api 1`] = `
           "value": {
             "description": undefined,
             "generatedName": "ListOffersByProductResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.WorkloadOffer",
             "type": "reference",
@@ -12577,6 +12633,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordGroupsByProductResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListUsageRecordGroupsResponse",
           "type": "reference",
@@ -12814,6 +12871,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordReportsByProductResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListUsageRecordReportsResponse",
           "type": "reference",
@@ -12866,6 +12924,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetRevenueReportRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.GetRevenueReportParams",
           "type": "reference",
@@ -12878,6 +12937,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetRevenueReportResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.RevenueReport",
           "type": "reference",
@@ -13018,6 +13078,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordGroupsByOrganizationResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListUsageRecordGroupsResponse",
           "type": "reference",
@@ -13116,6 +13177,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageRecordGroupResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.MeteringUsageRecordGroup",
           "type": "reference",
@@ -13329,6 +13391,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ListUsageRecordReportsByOrganizationResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ListUsageRecordReportsResponse",
           "type": "reference",
@@ -13490,6 +13553,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageRecordReportResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.MeteringUsageRecordReport",
           "type": "reference",
@@ -13542,6 +13606,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageReportRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.GetUsageReportParams",
           "type": "reference",
@@ -13554,6 +13619,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetUsageReportResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.UsageReport",
           "type": "reference",
@@ -13590,6 +13656,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetApiClientAccessTokenRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.GetApiClientAccessTokenParams",
           "type": "reference",
@@ -13602,6 +13669,7 @@ exports[`open api parser suger parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "GetApiClientAccessTokenResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "shared.ApiClientAccessToken",
           "type": "reference",
@@ -13842,6 +13910,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureAudience",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -13888,6 +13957,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureGovernmentCertification",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -13939,6 +14009,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureGovernmentCertificationValidationResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureValidationResult",
                 "type": "reference",
@@ -13954,6 +14025,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureIncludedBaseQuantity",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -13998,6 +14070,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureIncludedBaseQuantityRecurringUnit",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14025,6 +14098,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureListingContact",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14091,6 +14165,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureListingContactType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14142,6 +14217,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureListingUri",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14224,6 +14300,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureLocalizedDateTime",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14268,6 +14345,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureLocalizedTimeRange",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14280,6 +14358,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureLocalizedTimeRangeEndAt",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureLocalizedDateTime",
               "type": "reference",
@@ -14296,6 +14375,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureLocalizedTimeRangeStartAt",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureLocalizedDateTime",
               "type": "reference",
@@ -14310,6 +14390,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarket",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14356,6 +14437,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketState",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14386,6 +14468,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketStateState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14425,6 +14508,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrice",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14503,6 +14587,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrivateOffer",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14552,6 +14637,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureMarketplacePrivateOfferAcceptanceLinksItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplacePrivateOfferAcceptanceLink",
                 "type": "reference",
@@ -14572,6 +14658,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureMarketplacePrivateOfferBeneficiariesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplacePrivateOfferBeneficiary",
                 "type": "reference",
@@ -14718,6 +14805,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureMarketplacePrivateOfferPricingItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplacePrivateOfferPricing",
                 "type": "reference",
@@ -14735,6 +14823,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplacePrivateOfferPrivateOfferType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14798,6 +14887,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplacePrivateOfferState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14839,6 +14929,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplacePrivateOfferSubState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -14886,6 +14977,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplacePrivateOfferUpgradedFrom",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureMarketplacePrivateOfferPromotionReference",
               "type": "reference",
@@ -14905,6 +14997,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureMarketplacePrivateOfferValidationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplaceValidation",
                 "type": "reference",
@@ -14936,6 +15029,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrivateOfferAcceptanceLink",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14982,6 +15076,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrivateOfferBeneficiary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -14997,6 +15092,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureMarketplacePrivateOfferBeneficiaryBeneficiaryRecipientsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplacePrivateOfferBeneficiaryRecipient",
                 "type": "reference",
@@ -15048,6 +15144,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrivateOfferBeneficiaryRecipient",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15078,6 +15175,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15105,6 +15203,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrivateOfferPricing",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15133,6 +15232,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplacePrivateOfferPricingDiscountType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15162,6 +15262,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": "the pricing plan of the original plan.",
               "generatedName": "AzureMarketplacePrivateOfferPricingOriginalPlan",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceAndAvailabilityPrivateOfferPlan",
               "type": "reference",
@@ -15214,6 +15315,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": "The type of the plan, FLAT_RATE or PER_USER.",
               "generatedName": "AzureMarketplacePrivateOfferPricingPlanType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15261,6 +15363,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": "the pricing plan of the private offer",
               "generatedName": "AzureMarketplacePrivateOfferPricingPrivateOfferPlan",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceAndAvailabilityPrivateOfferPlan",
               "type": "reference",
@@ -15311,6 +15414,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplacePrivateOfferPromotionReference",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15357,6 +15461,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplaceTerm",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15369,6 +15474,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplaceTermType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15424,6 +15530,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureMarketplaceValidation",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15454,6 +15561,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplaceValidationCode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15549,6 +15657,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureMarketplaceValidationLevel",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15612,6 +15721,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePendingUpdateInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15658,6 +15768,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePrice",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15720,6 +15831,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceAndAvailabilityPrivateOfferCustomMeters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15744,6 +15856,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": "default "usd"",
               "generatedName": "AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15771,6 +15884,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceAndAvailabilityPrivateOfferPlan",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15837,6 +15951,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceAndAvailabilityPrivateOfferPlanPricing",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceAndAvailabilityPrivateOfferPrice",
               "type": "reference",
@@ -15892,6 +16007,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzurePriceAndAvailabilityPrivateOfferPlanValidationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplaceValidation",
                 "type": "reference",
@@ -15907,6 +16023,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceAndAvailabilityPrivateOfferPrice",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15919,6 +16036,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceAndAvailabilityPrivateOfferPriceCustomMeters",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceAndAvailabilityPrivateOfferCustomMeters",
               "type": "reference",
@@ -15935,6 +16053,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceAndAvailabilityPrivateOfferPriceRecurrentPrice",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceAndAvailabilityRecurrentPrice",
               "type": "reference",
@@ -15949,6 +16068,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceAndAvailabilityRecurrentPrice",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -15961,6 +16081,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": "default "usd"",
               "generatedName": "AzurePriceAndAvailabilityRecurrentPricePriceInputOption",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -15993,6 +16114,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzurePriceAndAvailabilityRecurrentPricePricesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzurePriceAndAvailabilityRecurrentPriceItem",
                 "type": "reference",
@@ -16008,6 +16130,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceAndAvailabilityRecurrentPriceItem",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16020,6 +16143,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceAndAvailabilityRecurrentPriceItemBillingTerm",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureMarketplaceTerm",
               "type": "reference",
@@ -16036,6 +16160,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceAndAvailabilityRecurrentPriceItemPaymentOption",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureMarketplaceTerm",
               "type": "reference",
@@ -16071,6 +16196,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzurePriceAndAvailabilityRecurrentPriceItemPricesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketplacePrice",
                 "type": "reference",
@@ -16086,6 +16212,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceCadence",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16098,6 +16225,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceCadenceType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -16141,6 +16269,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePriceSchedule",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16153,6 +16282,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceSchedulePriceCadence",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceCadence",
               "type": "reference",
@@ -16169,6 +16299,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceSchedulePricingModel",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -16207,6 +16338,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzurePriceSchedulePricingUnitsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzurePricingUnit",
                 "type": "reference",
@@ -16224,6 +16356,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePriceScheduleRetailPrice",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePrice",
               "type": "reference",
@@ -16238,6 +16371,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzurePricingUnit",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16282,6 +16416,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzurePricingUnitName",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -16343,6 +16478,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProduct",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16358,6 +16494,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductAvailabilitiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductAvailability",
                 "type": "reference",
@@ -16378,6 +16515,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductBranchesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductBranch",
                 "type": "reference",
@@ -16398,6 +16536,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductExternalIDsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -16452,6 +16591,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductListingsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductListing",
                 "type": "reference",
@@ -16490,6 +16630,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductPackageConfigurationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductPackageConfiguration",
                 "type": "reference",
@@ -16510,6 +16651,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductPropertiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductProperty",
                 "type": "reference",
@@ -16545,6 +16687,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": "Not original fields. They are populated by other API calls",
               "generatedName": "AzureProductSetup",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureProductSetup",
               "type": "reference",
@@ -16564,6 +16707,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductSubmissionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductSubmission",
                 "type": "reference",
@@ -16584,6 +16728,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductVariantsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductVariant",
                 "type": "reference",
@@ -16599,6 +16744,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductAvailability",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16614,6 +16760,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductAvailabilityEmailAudiencesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureAudience",
                 "type": "reference",
@@ -16688,6 +16835,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductAvailabilitySubscriptionAudiencesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureAudience",
                 "type": "reference",
@@ -16721,6 +16869,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductBranch",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16857,6 +17006,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductFeatureAvailability",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -16872,6 +17022,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilityCustomMetersItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductVariantCustomMeter",
                 "type": "reference",
@@ -16926,6 +17077,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilityMarketStatesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarketState",
                 "type": "reference",
@@ -16946,6 +17098,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilityMarketsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureMarket",
                 "type": "reference",
@@ -16966,6 +17119,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilityPriceSchedulesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductVariantPriceSchedule",
                 "type": "reference",
@@ -16986,6 +17140,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilityPropertiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -17024,6 +17179,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilitySubscriptionAudiencesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureAudience",
                 "type": "reference",
@@ -17044,6 +17200,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductFeatureAvailabilityTenantAudiencesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureAudience",
                 "type": "reference",
@@ -17061,6 +17218,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductFeatureAvailabilityTrial",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureProductVariantTrial",
               "type": "reference",
@@ -17077,6 +17235,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductFeatureAvailabilityVisibility",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -17104,6 +17263,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductListing",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17137,6 +17297,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductListingAssetsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductListingAsset",
                 "type": "reference",
@@ -17273,6 +17434,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductListingListingContactsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureListingContact",
                 "type": "reference",
@@ -17293,6 +17455,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductListingListingUrisItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureListingUri",
                 "type": "reference",
@@ -17415,6 +17578,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductListingAsset",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17551,6 +17715,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductListingAssetResourceType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -17586,6 +17751,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductListingAssetState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -17649,6 +17815,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductPackageConfiguration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -17766,6 +17933,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductProperty",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18142,6 +18310,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductSetup",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18154,6 +18323,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductSetupCallToAction",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -18192,6 +18362,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductSetupChannelStatesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -18242,6 +18413,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductSetupSellingOption",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -18305,6 +18477,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductSubmission",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18369,6 +18542,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductSubmissionPendingUpdateInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePendingUpdateInfo",
               "type": "reference",
@@ -18437,6 +18611,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductSubmissionResourcesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -18454,6 +18629,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductSubmissionState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -18483,6 +18659,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductSubmissionSubState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -18551,6 +18728,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductSubmissionTargetsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -18571,6 +18749,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductSubmissionVariantResourcesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureVariantResource",
                 "type": "reference",
@@ -18586,6 +18765,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductVariant",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18601,6 +18781,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductVariantAzureGovernmentCertificationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureGovernmentCertification",
                 "type": "reference",
@@ -18661,6 +18842,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductVariantExtendedPropertiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -18699,6 +18881,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductVariantFeatureAvailabilitiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureProductFeatureAvailability",
                 "type": "reference",
@@ -18788,6 +18971,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductVariantResourceType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -18817,6 +19001,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductVariantState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -18844,6 +19029,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductVariantCustomMeter",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18895,6 +19081,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductVariantCustomMeterIncludedBaseQuantitiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureIncludedBaseQuantity",
                 "type": "reference",
@@ -18978,6 +19165,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductVariantPriceSchedule",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -18990,6 +19178,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductVariantPriceScheduleDateTimeRange",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureLocalizedTimeRange",
               "type": "reference",
@@ -19065,6 +19254,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureProductVariantPriceScheduleSchedulesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzurePriceSchedule",
                 "type": "reference",
@@ -19080,6 +19270,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureProductVariantTrial",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19092,6 +19283,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductVariantTrialDateTimeRange",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureLocalizedTimeRange",
               "type": "reference",
@@ -19124,6 +19316,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductVariantTrialDurationType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -19159,6 +19352,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "description": undefined,
               "generatedName": "AzureProductVariantTrialType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -19198,6 +19392,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureTypeValue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19244,6 +19439,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureValidationResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19294,6 +19490,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AzureVariantResource",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19309,6 +19506,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": {
                 "description": undefined,
                 "generatedName": "AzureVariantResourceResourcesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureTypeValue",
                 "type": "reference",
@@ -19342,6 +19540,7 @@ exports[`open api parser suger parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19394,6 +19593,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19425,6 +19625,7 @@ This member is required.",
               "value": {
                 "description": undefined,
                 "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponseResultItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageBatchEventOkMessage",
                 "type": "reference",
@@ -19440,6 +19641,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessage",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19488,6 +19690,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessageError",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageEventConflictResponse",
               "type": "reference",
@@ -19592,6 +19795,7 @@ This member is required.",
             "value": {
               "description": "Status of the operation.",
               "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessageStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageEventStatusEnum",
               "type": "reference",
@@ -19624,6 +19828,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19636,6 +19841,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageEventConflictResponseAdditionalInfo",
               "type": "reference",
@@ -19686,6 +19892,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19698,6 +19905,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfoAcceptedMessage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageEventOkResponse",
               "type": "reference",
@@ -19712,6 +19920,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -19848,6 +20057,7 @@ This member is required.",
             "value": {
               "description": "Status of the operation.",
               "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponseStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageEventStatusEnum",
               "type": "reference",
@@ -19878,6 +20088,7 @@ This member is required.",
     "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.UsageEventStatusEnum": {
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -19942,6 +20153,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEvent",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -20220,6 +20432,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEventInsertDate",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "sql.NullTime",
               "type": "reference",
@@ -20236,6 +20449,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEventInvoiceDate",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "sql.NullTime",
               "type": "reference",
@@ -20324,6 +20538,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEventPaymentDueDate",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "sql.NullTime",
               "type": "reference",
@@ -20412,6 +20627,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEventUsagePeriodEndDate",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "sql.NullTime",
               "type": "reference",
@@ -20428,6 +20644,7 @@ This member is required.",
             "value": {
               "description": undefined,
               "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEventUsagePeriodStartDate",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "sql.NullTime",
               "type": "reference",
@@ -20442,6 +20659,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingAzureCmaRevenue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -20754,6 +20972,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21230,6 +21449,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21312,6 +21532,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21376,6 +21597,7 @@ This member is required.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "MarketplacemeteringBatchMeterUsageOutput",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21388,6 +21610,7 @@ This member is required.",
             "value": {
               "description": "Metadata pertaining to the operation's result.",
               "generatedName": "MarketplacemeteringBatchMeterUsageOutputResultMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "middleware.Metadata",
               "type": "reference",
@@ -21409,6 +21632,7 @@ records should be fixed before being resubmitted.",
               "value": {
                 "description": undefined,
                 "generatedName": "MarketplacemeteringBatchMeterUsageOutputResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "types.UsageRecordResult",
                 "type": "reference",
@@ -21431,6 +21655,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
               "value": {
                 "description": undefined,
                 "generatedName": "MarketplacemeteringBatchMeterUsageOutputUnprocessedRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "types.UsageRecord",
                 "type": "reference",
@@ -21462,6 +21687,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ServicecontrolReportError",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21492,6 +21718,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             "value": {
               "description": "Status: Details of the error when processing the Operation.",
               "generatedName": "ServicecontrolReportErrorStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "servicecontrol.Status",
               "type": "reference",
@@ -21506,6 +21733,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ServicecontrolReportResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21532,6 +21760,7 @@ request succeeded or failed.",
               "value": {
                 "description": undefined,
                 "generatedName": "ServicecontrolReportResponseReportErrorsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "servicecontrol.ReportError",
                 "type": "reference",
@@ -21584,6 +21813,7 @@ request.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ServicecontrolStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21656,6 +21886,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAddEntitlementCreditParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21706,6 +21937,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAddEntitlementCreditResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21802,6 +22034,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedApiClientAccessToken",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21864,6 +22097,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsAccountIdentifier",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21912,6 +22146,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAwsAccountIdentifierCompanyInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.CompanyInfo",
               "type": "reference",
@@ -21944,6 +22179,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsAceIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -21956,6 +22192,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAwsAceIntegrationCredential",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsIntegrationCredential",
               "type": "reference",
@@ -22042,6 +22279,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsIntegrationCredential",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22106,6 +22344,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": "The data struct to store integration info for Suger service to access the client's AWS services.",
       "generatedName": "SharedAwsMarketplaceIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22328,6 +22567,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProduct",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22340,6 +22580,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAwsSaasProductDescription",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsSaasProductDescription",
               "type": "reference",
@@ -22359,6 +22600,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedAwsSaasProductDimensionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.AwsSaasProductDimension",
                 "type": "reference",
@@ -22376,6 +22618,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAwsSaasProductPromotionalResources",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsSaasProductPromotionalResources",
               "type": "reference",
@@ -22392,6 +22635,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAwsSaasProductSupportInformation",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsSaasProductSupportInformation",
               "type": "reference",
@@ -22411,6 +22655,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedAwsSaasProductVersionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.AwsSaasProductVersion",
                 "type": "reference",
@@ -22462,6 +22707,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductAdditionalResource",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22526,6 +22772,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductDeliveryOption",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22590,6 +22837,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductDescription",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22858,6 +23106,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductDimension",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22962,6 +23211,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductPromotionalResources",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -22977,6 +23227,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedAwsSaasProductPromotionalResourcesAdditionalResourcesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.AwsSaasProductAdditionalResource",
                 "type": "reference",
@@ -23010,6 +23261,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductSupportInformation",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23038,6 +23290,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSaasProductVersion",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23053,6 +23306,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedAwsSaasProductVersionDeliveryOptionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.AwsSaasProductDeliveryOption",
                 "type": "reference",
@@ -23086,6 +23340,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAwsSnsSubscription",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23134,6 +23389,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAwsSnsSubscriptionStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsSnsSubscriptionStatus",
               "type": "reference",
@@ -23182,6 +23438,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.AwsSnsSubscriptionStatus": {
       "description": undefined,
       "generatedName": "SharedAwsSnsSubscriptionStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -23210,6 +23467,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAzureAdIdentifier",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23222,6 +23480,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureAdIdentifierBuyerInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureBuyerInfo",
               "type": "reference",
@@ -23238,6 +23497,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureAdIdentifierCompanyInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.CompanyInfo",
               "type": "reference",
@@ -23324,6 +23584,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAzureBuyerInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23406,6 +23667,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAzureIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23434,6 +23696,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureIntegrationCredential",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureIntegrationCredential",
               "type": "reference",
@@ -23466,6 +23729,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAzureIntegrationCredential",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23620,6 +23884,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAzureMarketplaceSubscription",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -23635,6 +23900,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedAzureMarketplaceSubscriptionAllowedCustomerOperationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -23687,6 +23953,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureMarketplaceSubscriptionBeneficiary",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureADIdentifier",
               "type": "reference",
@@ -23877,6 +24144,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureMarketplaceSubscriptionPurchaser",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureADIdentifier",
               "type": "reference",
@@ -23909,6 +24177,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureMarketplaceSubscriptionSaasSubscriptionStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureMarketplaceSubscriptionStatus",
               "type": "reference",
@@ -23925,6 +24194,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureMarketplaceSubscriptionSandboxType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -23972,6 +24242,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureMarketplaceSubscriptionSessionMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -24019,6 +24290,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedAzureMarketplaceSubscriptionTerm",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureTerm",
               "type": "reference",
@@ -24031,6 +24303,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.AzureMarketplaceSubscriptionStatus": {
       "description": undefined,
       "generatedName": "SharedAzureMarketplaceSubscriptionStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24071,6 +24344,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedAzureTerm",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24149,6 +24423,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedBuyerInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24161,6 +24436,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "Buyer from AWS Marketplace",
               "generatedName": "SharedBuyerInfoAwsBuyer",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsAccountIdentifier",
               "type": "reference",
@@ -24177,6 +24453,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "Buyer from Azure Marketplace",
               "generatedName": "SharedBuyerInfoAzureBuyer",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureADIdentifier",
               "type": "reference",
@@ -24225,6 +24502,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "Buyer from GCP Marketplace",
               "generatedName": "SharedBuyerInfoGcpBuyer",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpMarketplaceUserAccount",
               "type": "reference",
@@ -24255,6 +24533,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": "The commit dimension. There may be one or more commit dimensions defined in single product, offer or entitlement.",
       "generatedName": "SharedCommitDimension",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24435,6 +24714,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "The term unit for the commit amount.",
               "generatedName": "SharedCommitDimensionTimeUnit",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.CommitDimensionTimeUnit",
               "type": "reference",
@@ -24451,6 +24731,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedCommitDimensionType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.CommitDimensionType",
               "type": "reference",
@@ -24485,6 +24766,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.CommitDimensionTimeUnit": {
       "description": undefined,
       "generatedName": "SharedCommitDimensionTimeUnit",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24511,6 +24793,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.CommitDimensionType": {
       "description": undefined,
       "generatedName": "SharedCommitDimensionType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -24533,6 +24816,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedCompanyInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24687,6 +24971,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedContact",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24751,6 +25036,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedCreateIntegrationParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24778,6 +25064,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "schema": {
             "description": undefined,
             "generatedName": "SharedCreateIntegrationParamsInfo",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.IntegrationInfo",
             "type": "reference",
@@ -24804,6 +25091,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "schema": {
             "description": undefined,
             "generatedName": "SharedCreateIntegrationParamsPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -24849,6 +25137,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedCreateUsageRecordGroupParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24893,6 +25182,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "read-only, don't set it when reporting the usage record group.",
               "generatedName": "SharedCreateUsageRecordGroupParamsMetaInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.MeteringUsageRecordGroupMetaInfo",
               "type": "reference",
@@ -24946,6 +25236,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedEntitlementInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -24977,6 +25268,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoAwsEntitlementsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "types.Entitlement",
                 "type": "reference",
@@ -24997,6 +25289,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoAzureSubscriptionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.AzureMarketplaceSubscription",
                 "type": "reference",
@@ -25049,6 +25342,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoCommitsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.CommitDimension",
                 "type": "reference",
@@ -25087,6 +25381,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoDimensionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.MeteringDimension",
                 "type": "reference",
@@ -25136,6 +25431,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedEntitlementInfoEulaType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EulaType",
               "type": "reference",
@@ -25173,6 +25469,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoGcpEntitlementsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpMarketplaceEntitlement",
                 "type": "reference",
@@ -25193,6 +25490,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoGcpPlansItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpPurchasePlan",
                 "type": "reference",
@@ -25229,6 +25527,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedEntitlementInfoPaymentInstallmentsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.PaymentInstallment",
                 "type": "reference",
@@ -25280,6 +25579,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedEntitlementTermInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25292,6 +25592,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedEntitlementTermInfoType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EntitlementTermType",
               "type": "reference",
@@ -25304,6 +25605,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.EntitlementTermType": {
       "description": undefined,
       "generatedName": "SharedEntitlementTermType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -25350,6 +25652,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedEntitlementUsageRecord",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25436,6 +25739,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.EntityType": {
       "description": undefined,
       "generatedName": "SharedEntityType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -25480,6 +25784,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.EulaType": {
       "description": undefined,
       "generatedName": "SharedEulaType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -25526,6 +25831,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerExternalAccountSpec",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25590,6 +25896,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerListingSpec",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25602,6 +25909,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerListingSpecExternalAccountSpec",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerExternalAccountSpec",
               "type": "reference",
@@ -25635,6 +25943,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerListingSpecMarketingSpec",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerMarketingSpec",
               "type": "reference",
@@ -25651,6 +25960,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerListingSpecPurchaseSpec",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerPurchaseSpec",
               "type": "reference",
@@ -25665,6 +25975,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerMarketingSpec",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25851,6 +26162,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerMarketingSpecSupportSpec",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerSupportSpec",
               "type": "reference",
@@ -25883,6 +26195,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPrice",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25943,6 +26256,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPriceInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -25973,6 +26287,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerPriceInfoPriceModel",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerPriceModel",
               "type": "reference",
@@ -25992,6 +26307,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpCommerceProducerPriceInfoSubscriptionPlansItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpCommerceProducerPriceSubscription",
                 "type": "reference",
@@ -26012,6 +26328,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpCommerceProducerPriceInfoUsageFeesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpCommerceProducerPriceUsage",
                 "type": "reference",
@@ -26025,6 +26342,7 @@ in the google.rpc.Status.details field, or localized by the client.",
     "shared.GcpCommerceProducerPriceModel": {
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPriceModel",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -26059,6 +26377,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPriceSubscription",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26088,6 +26407,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "the Monthly subscription fee as commit.",
               "generatedName": "SharedGcpCommerceProducerPriceSubscriptionPrice",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerPrice",
               "type": "reference",
@@ -26119,6 +26439,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPriceTier",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26147,6 +26468,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": "The price of this tier",
               "generatedName": "SharedGcpCommerceProducerPriceTierPrice",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerPrice",
               "type": "reference",
@@ -26177,6 +26499,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPriceUsage",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26226,6 +26549,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpCommerceProducerPriceUsagePriceTiersItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpCommerceProducerPriceTier",
                 "type": "reference",
@@ -26258,6 +26582,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPurchaseMetric",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26432,6 +26757,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerPurchaseMetricValueType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.ValueType",
               "type": "reference",
@@ -26446,6 +26772,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerPurchaseSpec",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26461,6 +26788,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpCommerceProducerPurchaseSpecMetricsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpCommerceProducerPurchaseMetric",
                 "type": "reference",
@@ -26481,6 +26809,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpCommerceProducerPurchaseSpecPurchaseOptionSpecsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpPurchasePlan",
                 "type": "reference",
@@ -26496,6 +26825,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerServiceBilling",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26528,6 +26858,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerServiceConfig",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26540,6 +26871,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpCommerceProducerServiceConfigBilling",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerServiceBilling",
               "type": "reference",
@@ -26559,6 +26891,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpCommerceProducerServiceConfigMetricsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpCommerceProducerPurchaseMetric",
                 "type": "reference",
@@ -26628,6 +26961,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpCommerceProducerSupportSpec",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26692,6 +27026,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26900,6 +27235,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceConsumer",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26928,6 +27264,7 @@ in the google.rpc.Status.details field, or localized by the client.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceEntitlement",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -26961,6 +27298,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpMarketplaceEntitlementConsumersItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpMarketplaceConsumer",
                 "type": "reference",
@@ -27351,6 +27689,7 @@ For Private offer, "projects/project-id/services/product-id.endpoints.partner-id
             "value": {
               "description": "Enums of the Entitlement State. https://cloud.google.com/marketplace/docs/partners/commerce-procurement-api/reference/rest/v1/providers.entitlements#EntitlementState",
               "generatedName": "SharedGcpMarketplaceEntitlementState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpMarketplaceEntitlementState",
               "type": "reference",
@@ -27417,6 +27756,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.GcpMarketplaceEntitlementState": {
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceEntitlementState",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -27475,6 +27815,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceUserAccount",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27490,6 +27831,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedGcpMarketplaceUserAccountApprovalsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpMarketplaceUserAccountApproval",
                 "type": "reference",
@@ -27597,6 +27939,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The state of the account. An account might not be able to make a purchase if the billing account is suspended, for example.",
               "generatedName": "SharedGcpMarketplaceUserAccountState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpMarketplaceUserAccountState",
               "type": "reference",
@@ -27629,6 +27972,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpMarketplaceUserAccountUserInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpUserInfo",
               "type": "reference",
@@ -27643,6 +27987,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceUserAccountApproval",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27691,6 +28036,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpMarketplaceUserAccountApprovalState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpMarketplaceUserAccountApprovalState",
               "type": "reference",
@@ -27721,6 +28067,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.GcpMarketplaceUserAccountApprovalState": {
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceUserAccountApprovalState",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -27753,6 +28100,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.GcpMarketplaceUserAccountState": {
       "description": undefined,
       "generatedName": "SharedGcpMarketplaceUserAccountState",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -27775,6 +28123,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpProduct",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27821,6 +28170,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpProductListingSpec",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerListingSpec",
               "type": "reference",
@@ -27890,6 +28240,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpProductServiceConfig",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerServiceConfig",
               "type": "reference",
@@ -27904,6 +28255,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpPurchasePlan",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -27934,6 +28286,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedGcpPurchasePlanPriceInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpCommerceProducerPriceInfo",
               "type": "reference",
@@ -27983,6 +28336,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGcpUserInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28033,6 +28387,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGetApiClientAccessTokenParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28085,6 +28440,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGetRevenueReportParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28144,6 +28500,7 @@ This field is present only if the product has usage-based billing configured.",
           "schema": {
             "description": "Required.",
             "generatedName": "SharedGetRevenueReportParamsPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -28193,6 +28550,7 @@ This field is present only if the product has usage-based billing configured.",
           "schema": {
             "description": undefined,
             "generatedName": "SharedGetRevenueReportParamsReportType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.RevenueReportType",
             "type": "reference",
@@ -28219,6 +28577,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedGetUsageReportParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28257,6 +28616,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedHubspotCrmCredential",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28335,6 +28695,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedHubspotCrmIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28347,6 +28708,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedHubspotCrmIntegrationCredential",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.HubspotCrmCredential",
               "type": "reference",
@@ -28395,6 +28757,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedIdentityBuyer",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28477,6 +28840,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedIdentityBuyerInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.BuyerInfo",
               "type": "reference",
@@ -28545,6 +28909,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedIdentityBuyerPartner",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -28578,6 +28943,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedIdentityIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28624,6 +28990,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedIdentityIntegrationInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.IntegrationInfo",
               "type": "reference",
@@ -28692,6 +29059,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedIdentityIntegrationPartner",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -28744,6 +29112,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedIdentityIntegrationStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -28777,6 +29146,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedIntegrationInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28789,6 +29159,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "AWS ACE Integration",
               "generatedName": "SharedIntegrationInfoAwsAceIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsAceIntegration",
               "type": "reference",
@@ -28805,6 +29176,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "AWS Marketplace Integration",
               "generatedName": "SharedIntegrationInfoAwsIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsMarketplaceIntegration",
               "type": "reference",
@@ -28821,6 +29193,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "Azure Marketplace Integration",
               "generatedName": "SharedIntegrationInfoAzureIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AzureIntegration",
               "type": "reference",
@@ -28837,6 +29210,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "GCP Marketplace Integration",
               "generatedName": "SharedIntegrationInfoGcpIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpIntegration",
               "type": "reference",
@@ -28853,6 +29227,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "Integration for HubSpot CRM",
               "generatedName": "SharedIntegrationInfoHubspotCrmIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.HubspotCrmIntegration",
               "type": "reference",
@@ -28869,6 +29244,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "Integration for Salesforce CRM",
               "generatedName": "SharedIntegrationInfoSalesforceCrmIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.SalesforceCrmIntegration",
               "type": "reference",
@@ -28885,6 +29261,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedIntegrationInfoSlackIntegration",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.SlackIntegration",
               "type": "reference",
@@ -28899,6 +29276,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedListRevenueRecordDetailsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28930,6 +29308,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedListRevenueRecordDetailsResponseRevenueRecordDetailsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.RevenueRecordDetail",
                 "type": "reference",
@@ -28945,6 +29324,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedListRevenueRecordsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -28976,6 +29356,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedListRevenueRecordsResponseRevenueRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.RevenueRecord",
                 "type": "reference",
@@ -28991,6 +29372,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedListUsageRecordGroupsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29022,6 +29404,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedListUsageRecordGroupsResponseUsageRecordGroupsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.MeteringUsageRecordGroup",
                 "type": "reference",
@@ -29037,6 +29420,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedListUsageRecordReportsResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29068,6 +29452,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedListUsageRecordReportsResponseUsageRecordReportsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.MeteringUsageRecordReport",
                 "type": "reference",
@@ -29083,6 +29468,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": "The dimension to meter usage in entitlement.",
       "generatedName": "SharedMeteringDimension",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29134,6 +29520,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedMeteringDimensionIncludedBaseQuantitiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureIncludedBaseQuantity",
                 "type": "reference",
@@ -29225,6 +29612,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The current Dimension Usage Count. Available when call GetEntitlement API.",
               "generatedName": "SharedMeteringDimensionUsageCount",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.UsageCount",
               "type": "reference",
@@ -29241,6 +29629,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedMeteringDimensionValueType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.ValueType",
               "type": "reference",
@@ -29255,6 +29644,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedMeteringUsageRecordGroup",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29335,6 +29725,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedMeteringUsageRecordGroupMetaInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.MeteringUsageRecordGroupMetaInfo",
               "type": "reference",
@@ -29448,6 +29839,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedMeteringUsageRecordGroupMetaInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29487,6 +29879,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedMeteringUsageRecordReport",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29569,6 +29962,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedMeteringUsageRecordReportInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.MeteringUsageRecordReportInfo",
               "type": "reference",
@@ -29619,6 +30013,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedMeteringUsageRecordReportInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29631,6 +30026,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The raw response from AWS metering service.",
               "generatedName": "SharedMeteringUsageRecordReportInfoAwsMeteringResponse",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "marketplacemetering.BatchMeterUsageOutput",
               "type": "reference",
@@ -29647,6 +30043,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The raw response from Azure metering service.",
               "generatedName": "SharedMeteringUsageRecordReportInfoAzureMeteringResponse",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_azure_sdk_marketplacemeteringv1.BatchUsageEventOkResponse",
               "type": "reference",
@@ -29769,6 +30166,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The raw response from GCP metering service.",
               "generatedName": "SharedMeteringUsageRecordReportInfoGcpMeteringResponse",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "servicecontrol.ReportResponse",
               "type": "reference",
@@ -29943,6 +30341,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedNotificationEvent",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -29955,6 +30354,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedNotificationEventAction",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.NotificationEventAction",
               "type": "reference",
@@ -30007,6 +30407,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedNotificationEventEntityType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EntityType",
               "type": "reference",
@@ -30041,6 +30442,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "notification event status.",
               "generatedName": "SharedNotificationEventEventStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.NotificationEventStatus",
               "type": "reference",
@@ -30121,6 +30523,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.NotificationEventAction": {
       "description": undefined,
       "generatedName": "SharedNotificationEventAction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30195,6 +30598,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.NotificationEventStatus": {
       "description": undefined,
       "generatedName": "SharedNotificationEventStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -30235,6 +30639,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedOfferInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30247,6 +30652,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The origin pricing of Azure plan. Only applicable for Azure Marketplace plans.",
               "generatedName": "SharedOfferInfoAzureOriginalPlan",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzurePriceAndAvailabilityPrivateOfferPlan",
               "type": "reference",
@@ -30263,6 +30669,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The private offer for Azure Marketplace. Only applicable for Azure Marketplace private offers.",
               "generatedName": "SharedOfferInfoAzurePrivateOffer",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureMarketplacePrivateOffer",
               "type": "reference",
@@ -30279,6 +30686,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedOfferInfoAzureProductVariant",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureProductVariant",
               "type": "reference",
@@ -30320,6 +30728,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferInfoBuyerAzureTenantsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "AzureAudience",
                 "type": "reference",
@@ -30340,6 +30749,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferInfoCommitsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.CommitDimension",
                 "type": "reference",
@@ -30378,6 +30788,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferInfoDimensionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.MeteringDimension",
                 "type": "reference",
@@ -30411,6 +30822,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedOfferInfoEulaType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EulaType",
               "type": "reference",
@@ -30448,6 +30860,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferInfoGcpMetricsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpCommerceProducerPurchaseMetric",
                 "type": "reference",
@@ -30468,6 +30881,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferInfoGcpPlansItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.GcpPurchasePlan",
                 "type": "reference",
@@ -30488,6 +30902,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferInfoPaymentInstallmentsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.PaymentInstallment",
                 "type": "reference",
@@ -30559,6 +30974,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "The default visibility of offer is PRIVATE.",
               "generatedName": "SharedOfferInfoVisibility",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -30586,6 +31002,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedOfferMetaInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30619,6 +31036,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferMetaInfoContactsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.Contact",
                 "type": "reference",
@@ -30671,6 +31089,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedOfferMetaInfoNotificationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.NotificationEvent",
                 "type": "reference",
@@ -30686,6 +31105,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedOperation",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30802,6 +31222,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedOperationType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.OperationType",
               "type": "reference",
@@ -30824,6 +31245,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedPaymentInstallment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30866,6 +31288,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedProductInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -30909,6 +31332,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedProductInfoAwsSaasProduct",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.AwsSaasProduct",
               "type": "reference",
@@ -30928,6 +31352,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedProductInfoAwsSnsSubscriptionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.AwsSnsSubscription",
                 "type": "reference",
@@ -30945,6 +31370,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedProductInfoAzureProduct",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "AzureProduct",
               "type": "reference",
@@ -30964,6 +31390,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedProductInfoCommitsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.CommitDimension",
                 "type": "reference",
@@ -31002,6 +31429,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedProductInfoDimensionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.MeteringDimension",
                 "type": "reference",
@@ -31037,6 +31465,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedProductInfoGcpProduct",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.GcpProduct",
               "type": "reference",
@@ -31087,6 +31516,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedRevenueRecord",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31251,6 +31681,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedRevenueRecordInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.RevenueRecordInfo",
               "type": "reference",
@@ -31447,6 +31878,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedRevenueRecordDetail",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31459,6 +31891,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "For AWS Marketplace",
               "generatedName": "SharedRevenueRecordDetailAwsRevenueRecordDetail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_rds-db_lib.BillingAwsBillingEvent",
               "type": "reference",
@@ -31475,6 +31908,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "For Azure Marketplace",
               "generatedName": "SharedRevenueRecordDetailAzureRevenueRecordDetail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_rds-db_lib.BillingAzureCmaRevenue",
               "type": "reference",
@@ -31491,6 +31925,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "For GCP Marketplace",
               "generatedName": "SharedRevenueRecordDetailGcpRevenueRecordDetail",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "github_com_sugerio_marketplace-service_rds-db_lib.BillingGcpChargeUsage",
               "type": "reference",
@@ -31505,6 +31940,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedRevenueRecordInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31520,6 +31956,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedRevenueRecordInfoAwsRevenueRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "github_com_sugerio_marketplace-service_rds-db_lib.BillingAwsBillingEvent",
                 "type": "reference",
@@ -31540,6 +31977,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedRevenueRecordInfoAzureRevenueRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "github_com_sugerio_marketplace-service_rds-db_lib.BillingAzureCmaRevenue",
                 "type": "reference",
@@ -31560,6 +31998,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedRevenueRecordInfoGcpRevenueRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "github_com_sugerio_marketplace-service_rds-db_lib.BillingGcpChargeUsage",
                 "type": "reference",
@@ -31575,6 +32014,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedRevenueReport",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31693,6 +32133,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedRevenueReportReportType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.RevenueReportType",
               "type": "reference",
@@ -31712,6 +32153,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedRevenueReportRevenueRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.RevenueRecord",
                 "type": "reference",
@@ -31743,6 +32185,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.RevenueReportType": {
       "description": undefined,
       "generatedName": "SharedRevenueReportType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -31771,6 +32214,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedSalesforceCrmCredential",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31851,6 +32295,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedSalesforceCrmIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -31863,6 +32308,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": "System created",
               "generatedName": "SharedSalesforceCrmIntegrationCredential",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.SalesforceCrmCredential",
               "type": "reference",
@@ -31882,6 +32328,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedSalesforceCrmIntegrationFiltersItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.SalesforceSyncFilter",
                 "type": "reference",
@@ -31967,6 +32414,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedSalesforceSyncFilter",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32025,6 +32473,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedSlackIntegration",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32073,6 +32522,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedSlackIntegrationAuthedUser",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "slack.OAuthV2ResponseAuthedUser",
               "type": "reference",
@@ -32107,6 +32557,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedSlackIntegrationEnterprise",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "slack.OAuthV2ResponseEnterprise",
               "type": "reference",
@@ -32139,6 +32590,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedSlackIntegrationIncomingWebhook",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "slack.OAuthResponseIncomingWebhook",
               "type": "reference",
@@ -32209,6 +32661,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedSlackIntegrationTeam",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "slack.OAuthV2ResponseTeam",
               "type": "reference",
@@ -32241,6 +32694,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedUpdateIntegrationParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32250,6 +32704,7 @@ This field is present only if the product has usage-based billing configured.",
           "schema": {
             "description": undefined,
             "generatedName": "SharedUpdateIntegrationParamsInfo",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "shared.IntegrationInfo",
             "type": "reference",
@@ -32276,6 +32731,7 @@ This field is present only if the product has usage-based billing configured.",
           "schema": {
             "description": undefined,
             "generatedName": "SharedUpdateIntegrationParamsPartner",
+            "groupName": undefined,
             "nameOverride": undefined,
             "type": "enum",
             "values": [
@@ -32321,6 +32777,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedUpdateProductParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32373,6 +32830,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedUsageCount",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32431,6 +32889,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedUsageReport",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32498,6 +32957,7 @@ This field is present only if the product has usage-based billing configured.",
               "value": {
                 "description": undefined,
                 "generatedName": "SharedUsageReportUsageRecordsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "shared.EntitlementUsageRecord",
                 "type": "reference",
@@ -32511,6 +32971,7 @@ This field is present only if the product has usage-based billing configured.",
     "shared.ValueType": {
       "description": undefined,
       "generatedName": "SharedValueType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -32563,6 +33024,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedWorkloadEntitlement",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -32715,6 +33177,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadEntitlementInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EntitlementInfo",
               "type": "reference",
@@ -32801,6 +33264,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadEntitlementPartner",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -32887,6 +33351,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadEntitlementStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -32950,6 +33415,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedWorkloadEntitlementTerm",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -33046,6 +33512,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadEntitlementTermEntitlementInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EntitlementInfo",
               "type": "reference",
@@ -33098,6 +33565,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadEntitlementTermInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.EntitlementTermInfo",
               "type": "reference",
@@ -33150,6 +33618,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadEntitlementTermPartner",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -33266,6 +33735,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedWorkloadOffer",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -33380,6 +33850,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadOfferInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.OfferInfo",
               "type": "reference",
@@ -33430,6 +33901,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadOfferMetaInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.OfferMetaInfo",
               "type": "reference",
@@ -33464,6 +33936,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadOfferOfferType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -33547,6 +34020,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadOfferPartner",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -33617,6 +34091,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadOfferStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -33692,6 +34167,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SharedWorkloadProduct",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -33792,6 +34268,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadProductInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "shared.ProductInfo",
               "type": "reference",
@@ -33878,6 +34355,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadProductPartner",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -33913,6 +34391,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "description": undefined,
               "generatedName": "SharedWorkloadProductProductType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "type": "enum",
               "values": [
@@ -33999,6 +34478,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SlackOAuthResponseIncomingWebhook",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34081,6 +34561,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SlackOAuthV2ResponseAuthedUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34197,6 +34678,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SlackOAuthV2ResponseEnterprise",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34243,6 +34725,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SlackOAuthV2ResponseTeam",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34289,6 +34772,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SqlNullTime",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34333,6 +34817,7 @@ This field is present only if the product has usage-based billing configured.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TypesEntitlement",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34436,6 +34921,7 @@ provided by AWS Marketplace when the product listing is created.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TypesUsageAllocation",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34470,6 +34956,7 @@ tags, this parameter can be left out.",
               "value": {
                 "description": undefined,
                 "generatedName": "TypesUsageAllocationTagsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "github_com_aws_aws-sdk-go-v2_service_marketplacemetering_types.Tag",
                 "type": "reference",
@@ -34485,6 +34972,7 @@ tags, this parameter can be left out.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TypesUsageRecord",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34582,6 +35070,7 @@ must equal the Quantity of the UsageRecord.",
               "value": {
                 "description": undefined,
                 "generatedName": "TypesUsageRecordUsageAllocationsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "types.UsageAllocation",
                 "type": "reference",
@@ -34597,6 +35086,7 @@ must equal the Quantity of the UsageRecord.",
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TypesUsageRecordResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -34649,6 +35139,7 @@ The customer's AWS account was suspended.
 UsageRecord was invalid and not honored. A previously metered UsageRecord had
 the same customer, dimension, and time, but a different quantity.",
               "generatedName": "TypesUsageRecordResultStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "types.UsageRecordResultStatus",
               "type": "reference",
@@ -34665,6 +35156,7 @@ the same customer, dimension, and time, but a different quantity.",
             "value": {
               "description": "The UsageRecord that was part of the BatchMeterUsage request.",
               "generatedName": "TypesUsageRecordResultUsageRecord",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "types.UsageRecord",
               "type": "reference",
@@ -34677,6 +35169,7 @@ the same customer, dimension, and time, but a different quantity.",
     "types.UsageRecordResultStatus": {
       "description": undefined,
       "generatedName": "TypesUsageRecordResultStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [

@@ -3,282 +3,18 @@
 exports[`open api parser vellum simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "execute-workflow-stream": {
-            "auth": true,
-            "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
-
-Executes a deployed Workflow and streams back its results.",
-            "errors": [],
-            "method": "POST",
-            "path": "/v1/execute-workflow-stream",
-            "request": {
-              "body": {
-                "properties": {
-                  "external_id": {
-                    "docs": "Optionally include a unique identifier for tracking purposes.",
-                    "type": "optional<string>",
-                  },
-                  "inputs": {
-                    "docs": undefined,
-                    "type": "list<WorkflowRequestInputRequest>",
-                  },
-                  "release_tag": {
-                    "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
-                    "type": "optional<string>",
-                  },
-                  "workflow_deployment_id": {
-                    "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "workflow_deployment_name": {
-                    "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ExecuteWorkflowStreamRequest",
-              "query-parameters": undefined,
-            },
-            "response-stream": {
-              "docs": "",
-              "type": "WorkflowStreamEvent",
-            },
-            "url": "Predict",
-          },
-          "generate": {
-            "auth": true,
-            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
-
-Generate a completion using a previously defined deployment.
-
-**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-            "errors": [
-              "BadRequestError",
-              "ForbiddenError",
-              "NotFoundError",
-              "InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "options": {
-                    "logprobs": "ALL",
-                  },
-                  "requests": [
-                    {
-                      "input_values": {},
-                    },
-                  ],
-                },
-                "response": {
-                  "body": {
-                    "results": [
-                      {
-                        "data": {
-                          "completions": [],
-                        },
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
-            "method": "POST",
-            "path": "/v1/generate",
-            "request": {
-              "body": {
-                "properties": {
-                  "deployment_id": {
-                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "deployment_name": {
-                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                    "type": "optional<string>",
-                  },
-                  "options": {
-                    "docs": "Additional configuration that can be used to control what's included in the response.",
-                    "type": "optional<GenerateOptionsRequest>",
-                  },
-                  "requests": {
-                    "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-                    "type": "list<GenerateRequest>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "GenerateBodyRequest",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "",
-              "type": "GenerateResponse",
-            },
-            "url": "Predict",
-          },
-          "generate-stream": {
-            "auth": true,
-            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
-
-Generate a stream of completions using a previously defined deployment.
-
-**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-            "errors": [
-              "BadRequestError",
-              "ForbiddenError",
-              "NotFoundError",
-              "InternalServerError",
-            ],
-            "method": "POST",
-            "path": "/v1/generate-stream",
-            "request": {
-              "body": {
-                "properties": {
-                  "deployment_id": {
-                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "deployment_name": {
-                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                    "type": "optional<string>",
-                  },
-                  "options": {
-                    "docs": "Additional configuration that can be used to control what's included in the response.",
-                    "type": "optional<GenerateOptionsRequest>",
-                  },
-                  "requests": {
-                    "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
-                    "type": "list<GenerateRequest>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "GenerateStreamBodyRequest",
-              "query-parameters": undefined,
-            },
-            "response-stream": {
-              "docs": "",
-              "type": "GenerateStreamResponse",
-            },
-            "url": "Predict",
-          },
-          "search": {
-            "auth": true,
-            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
-
-Perform a search against a document index.
-
-**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-            "errors": [
-              "BadRequestError",
-              "NotFoundError",
-              "InternalServerError",
-            ],
-            "method": "POST",
-            "path": "/v1/search",
-            "request": {
-              "body": {
-                "properties": {
-                  "index_id": {
-                    "docs": "The ID of the index to search against. Must provide either this or index_name.",
-                    "type": "optional<string>",
-                  },
-                  "index_name": {
-                    "docs": "The name of the index to search against. Must provide either this or index_id.",
-                    "type": "optional<string>",
-                  },
-                  "options": {
-                    "docs": "Configuration options for the search.",
-                    "type": "optional<SearchRequestOptionsRequest>",
-                  },
-                  "query": {
-                    "docs": "The query to search for.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "SearchRequestBodyRequest",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "",
-              "type": "SearchResponse",
-            },
-            "url": "Predict",
-          },
-          "submit-completion-actuals": {
-            "auth": true,
-            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
-
-Used to submit feedback regarding the quality of previously generated completions.
-
-**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-            "errors": [
-              "BadRequestError",
-              "NotFoundError",
-              "InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "actuals": [],
-                },
-                "response": undefined,
-              },
-            ],
-            "method": "POST",
-            "path": "/v1/submit-completion-actuals",
-            "request": {
-              "body": {
-                "properties": {
-                  "actuals": {
-                    "docs": "Feedback regarding the quality of previously generated completions",
-                    "type": "list<SubmitCompletionActualRequest>",
-                  },
-                  "deployment_id": {
-                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "deployment_name": {
-                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "SubmitCompletionActualsRequest",
-              "query-parameters": undefined,
-            },
-            "url": "Predict",
-          },
-        },
-      },
-    },
     "deployments.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "retrieve": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -296,22 +32,24 @@ Used to retrieve a deployment given its ID or name.
             },
             "response": {
               "docs": "",
-              "type": "root.DeploymentRead",
+              "type": "package.DeploymentRead",
             },
-            "url": "Default",
           },
         },
       },
     },
     "documentIndexes.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -322,18 +60,8 @@ Creates a new document index.",
             "request": {
               "body": {
                 "properties": {
-                  "copy_documents_from_index_id": {
-                    "docs": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index",
-                    "type": "optional<string>",
-                  },
-                  "environment": {
-                    "docs": "The environment this document index is used in
-
-* \`DEVELOPMENT\` - Development
-* \`STAGING\` - Staging
-* \`PRODUCTION\` - Production",
-                    "type": "optional<root.EnvironmentEnum>",
-                  },
+                  "copy_documents_from_index_id": "optional<string>",
+                  "environment": "optional<package.EnvironmentEnum>",
                   "indexing_config": {
                     "docs": "Configuration representing how documents should be indexed",
                     "type": "map<string, unknown>",
@@ -346,13 +74,7 @@ Creates a new document index.",
                     "docs": "A name that uniquely identifies this index within its workspace",
                     "type": "string",
                   },
-                  "status": {
-                    "docs": "The current status of the document index
-
-* \`ACTIVE\` - Active
-* \`ARCHIVED\` - Archived",
-                    "type": "optional<root.DocumentIndexStatus>",
-                  },
+                  "status": "optional<package.DocumentIndexStatus>",
                 },
               },
               "headers": undefined,
@@ -361,22 +83,24 @@ Creates a new document index.",
             },
             "response": {
               "docs": "",
-              "type": "root.DocumentIndexRead",
+              "type": "package.DocumentIndexRead",
             },
-            "url": "Default",
           },
         },
       },
     },
     "documents.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "list": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
@@ -428,11 +152,13 @@ Used to list documents. Optionally filter on supported fields.
             },
             "response": {
               "docs": "",
-              "type": "root.PaginatedSlimDocumentList",
+              "type": "package.PaginatedSlimDocumentList",
             },
-            "url": "Default",
           },
           "upload": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -440,9 +166,9 @@ Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
             "errors": [
-              "root.BadRequestError",
-              "root.NotFoundError",
-              "root.InternalServerError",
+              "package.BadRequestError",
+              "package.NotFoundError",
+              "package.InternalServerError",
             ],
             "method": "POST",
             "path": "/v1/upload-document",
@@ -474,22 +200,24 @@ Upload a document to be indexed and used for search.
             },
             "response": {
               "docs": "",
-              "type": "root.UploadDocumentResponse",
+              "type": "package.UploadDocumentResponse",
             },
-            "url": "Documents",
           },
         },
       },
     },
     "modelVersions.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "model_version_compile_prompt": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -518,11 +246,13 @@ Compiles the prompt backing the model version using the provided input values.",
             },
             "response": {
               "docs": "",
-              "type": "root.ModelVersionCompilePromptResponse",
+              "type": "package.ModelVersionCompilePromptResponse",
             },
-            "url": "Default",
           },
           "retrieve": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -540,22 +270,24 @@ Used to retrieve a model version given its ID.
             },
             "response": {
               "docs": "",
-              "type": "root.ModelVersionRead",
+              "type": "package.ModelVersionRead",
             },
-            "url": "Default",
           },
         },
       },
     },
     "registeredPrompts.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "register_prompt": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -564,7 +296,7 @@ partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
             "errors": [
-              "root.ConflictError",
+              "package.ConflictError",
             ],
             "method": "POST",
             "path": "/v1/registered-prompts/register",
@@ -575,10 +307,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "docs": "A human-friendly label for corresponding entities created in Vellum.",
                     "type": "string",
                   },
-                  "meta": {
-                    "docs": "Optionally include additional metadata to store along with the prompt.",
-                    "type": "optional<map<string, unknown>>",
-                  },
+                  "meta": "optional<map<string, unknown>>",
                   "model": {
                     "docs": "The initial model to use for this prompt",
                     "type": "string",
@@ -589,11 +318,11 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                   },
                   "parameters": {
                     "docs": "The initial model parameters to use for  this prompt",
-                    "type": "root.RegisterPromptModelParametersRequest",
+                    "type": "package.RegisterPromptModelParametersRequest",
                   },
                   "prompt": {
                     "docs": "Information about how to execute the prompt template.",
-                    "type": "root.RegisterPromptPromptInfoRequest",
+                    "type": "package.RegisterPromptPromptInfoRequest",
                   },
                   "provider": {
                     "docs": "The initial LLM provider to use for this prompt
@@ -606,7 +335,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 * \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
-                    "type": "root.ProviderEnum",
+                    "type": "package.ProviderEnum",
                   },
                 },
               },
@@ -616,22 +345,24 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             "response": {
               "docs": "",
-              "type": "root.RegisterPromptResponse",
+              "type": "package.RegisterPromptResponse",
             },
-            "url": "Default",
           },
         },
       },
     },
     "sandboxes.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "delete_sandbox_scenario": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -661,9 +392,11 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
                 "type": "string",
               },
             },
-            "url": "Default",
           },
           "upsert_sandbox_scenario": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -688,20 +421,11 @@ or overwritten with default values.",
                 "properties": {
                   "inputs": {
                     "docs": "The inputs for the scenario",
-                    "type": "list<root.ScenarioInputRequest>",
+                    "type": "list<package.ScenarioInputRequest>",
                   },
-                  "label": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "metric_input_params": {
-                    "docs": undefined,
-                    "type": "optional<root.SandboxMetricInputParamsRequest>",
-                  },
-                  "scenario_id": {
-                    "docs": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended.",
-                    "type": "optional<string>",
-                  },
+                  "label": "optional<string>",
+                  "metric_input_params": "optional<package.SandboxMetricInputParamsRequest>",
+                  "scenario_id": "optional<string>",
                 },
               },
               "headers": undefined,
@@ -710,22 +434,24 @@ or overwritten with default values.",
             },
             "response": {
               "docs": "",
-              "type": "root.SandboxScenario",
+              "type": "package.SandboxScenario",
             },
-            "url": "Default",
           },
         },
       },
     },
     "testSuites.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "delete_test_suite_test_case": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -755,9 +481,11 @@ Deletes an existing test case for a test suite, keying off of the test case id."
                 "type": "string",
               },
             },
-            "url": "Default",
           },
           "upsert_test_suite_test_case": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -801,20 +529,14 @@ or overwritten with default values.",
                 "properties": {
                   "evaluation_params": {
                     "docs": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-                    "type": "root.EvaluationParamsRequest",
+                    "type": "package.EvaluationParamsRequest",
                   },
                   "input_values": {
                     "docs": "Key/value pairs for each input variable that the Test Suite expects.",
                     "type": "map<string, unknown>",
                   },
-                  "label": {
-                    "docs": "A human-friendly label for the test case.",
-                    "type": "optional<string>",
-                  },
-                  "test_case_id": {
-                    "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
-                    "type": "optional<string>",
-                  },
+                  "label": "optional<string>",
+                  "test_case_id": "optional<string>",
                 },
               },
               "headers": undefined,
@@ -823,9 +545,8 @@ or overwritten with default values.",
             },
             "response": {
               "docs": "",
-              "type": "root.TestSuiteTestCase",
+              "type": "package.TestSuiteTestCase",
             },
-            "url": "Default",
           },
         },
       },
@@ -859,6 +580,9 @@ or overwritten with default values.",
       "base-path": "",
       "endpoints": {
         "execute-workflow-stream": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -869,26 +593,11 @@ Executes a deployed Workflow and streams back its results.",
           "request": {
             "body": {
               "properties": {
-                "external_id": {
-                  "docs": "Optionally include a unique identifier for tracking purposes.",
-                  "type": "optional<string>",
-                },
-                "inputs": {
-                  "docs": undefined,
-                  "type": "list<WorkflowRequestInputRequest>",
-                },
-                "release_tag": {
-                  "docs": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment",
-                  "type": "optional<string>",
-                },
-                "workflow_deployment_id": {
-                  "docs": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name.",
-                  "type": "optional<string>",
-                },
-                "workflow_deployment_name": {
-                  "docs": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id.",
-                  "type": "optional<string>",
-                },
+                "external_id": "optional<string>",
+                "inputs": "list<WorkflowRequestInputRequest>",
+                "release_tag": "optional<string>",
+                "workflow_deployment_id": "optional<string>",
+                "workflow_deployment_name": "optional<string>",
               },
             },
             "headers": undefined,
@@ -899,9 +608,11 @@ Executes a deployed Workflow and streams back its results.",
             "docs": "",
             "type": "WorkflowStreamEvent",
           },
-          "url": "Predict",
         },
         "generate": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -947,18 +658,9 @@ Generate a completion using a previously defined deployment.
           "request": {
             "body": {
               "properties": {
-                "deployment_id": {
-                  "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                  "type": "optional<string>",
-                },
-                "deployment_name": {
-                  "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                  "type": "optional<string>",
-                },
-                "options": {
-                  "docs": "Additional configuration that can be used to control what's included in the response.",
-                  "type": "optional<GenerateOptionsRequest>",
-                },
+                "deployment_id": "optional<string>",
+                "deployment_name": "optional<string>",
+                "options": "optional<GenerateOptionsRequest>",
                 "requests": {
                   "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
                   "type": "list<GenerateRequest>",
@@ -973,9 +675,11 @@ Generate a completion using a previously defined deployment.
             "docs": "",
             "type": "GenerateResponse",
           },
-          "url": "Predict",
         },
         "generate-stream": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -993,18 +697,9 @@ Generate a stream of completions using a previously defined deployment.
           "request": {
             "body": {
               "properties": {
-                "deployment_id": {
-                  "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                  "type": "optional<string>",
-                },
-                "deployment_name": {
-                  "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                  "type": "optional<string>",
-                },
-                "options": {
-                  "docs": "Additional configuration that can be used to control what's included in the response.",
-                  "type": "optional<GenerateOptionsRequest>",
-                },
+                "deployment_id": "optional<string>",
+                "deployment_name": "optional<string>",
+                "options": "optional<GenerateOptionsRequest>",
                 "requests": {
                   "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
                   "type": "list<GenerateRequest>",
@@ -1019,9 +714,11 @@ Generate a stream of completions using a previously defined deployment.
             "docs": "",
             "type": "GenerateStreamResponse",
           },
-          "url": "Predict",
         },
         "search": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -1038,18 +735,9 @@ Perform a search against a document index.
           "request": {
             "body": {
               "properties": {
-                "index_id": {
-                  "docs": "The ID of the index to search against. Must provide either this or index_name.",
-                  "type": "optional<string>",
-                },
-                "index_name": {
-                  "docs": "The name of the index to search against. Must provide either this or index_id.",
-                  "type": "optional<string>",
-                },
-                "options": {
-                  "docs": "Configuration options for the search.",
-                  "type": "optional<SearchRequestOptionsRequest>",
-                },
+                "index_id": "optional<string>",
+                "index_name": "optional<string>",
+                "options": "optional<SearchRequestOptionsRequest>",
                 "query": {
                   "docs": "The query to search for.",
                   "type": "string",
@@ -1064,9 +752,11 @@ Perform a search against a document index.
             "docs": "",
             "type": "SearchResponse",
           },
-          "url": "Predict",
         },
         "submit-completion-actuals": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -1098,21 +788,14 @@ Used to submit feedback regarding the quality of previously generated completion
                   "docs": "Feedback regarding the quality of previously generated completions",
                   "type": "list<SubmitCompletionActualRequest>",
                 },
-                "deployment_id": {
-                  "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                  "type": "optional<string>",
-                },
-                "deployment_name": {
-                  "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                  "type": "optional<string>",
-                },
+                "deployment_id": "optional<string>",
+                "deployment_name": "optional<string>",
               },
             },
             "headers": undefined,
             "name": "SubmitCompletionActualsRequest",
             "query-parameters": undefined,
           },
-          "url": "Predict",
         },
       },
     },
@@ -1148,20 +831,14 @@ Used to submit feedback regarding the quality of previously generated completion
       "ChatMessage": {
         "docs": undefined,
         "properties": {
-          "role": {
-            "docs": undefined,
-            "type": "ChatMessageRole",
-          },
+          "role": "ChatMessageRole",
           "text": "string",
         },
       },
       "ChatMessageRequest": {
         "docs": undefined,
         "properties": {
-          "role": {
-            "docs": undefined,
-            "type": "ChatMessageRole",
-          },
+          "role": "ChatMessageRole",
           "text": "string",
         },
       },
@@ -1196,19 +873,13 @@ Used to submit feedback regarding the quality of previously generated completion
       "ConditionalNodeResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "ConditionalNodeResultData",
-          },
+          "data": "ConditionalNodeResultData",
         },
       },
       "ConditionalNodeResultData": {
         "docs": undefined,
         "properties": {
-          "source_handle_id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "source_handle_id": "optional<string>",
         },
       },
       "ContentType": {
@@ -1230,42 +901,23 @@ Used to submit feedback regarding the quality of previously generated completion
       "DeploymentNodeResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "DeploymentNodeResultData",
-          },
+          "data": "DeploymentNodeResultData",
         },
       },
       "DeploymentNodeResultData": {
         "docs": undefined,
         "properties": {
-          "delta": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "delta": "optional<string>",
           "output_id": "string",
-          "text": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "text": "optional<string>",
         },
       },
       "DeploymentRead": {
         "docs": undefined,
         "properties": {
-          "active_model_version_ids": {
-            "docs": undefined,
-            "type": "list<string>",
-          },
+          "active_model_version_ids": "list<string>",
           "created": "datetime",
-          "environment": {
-            "docs": "The environment this deployment is used in
-
-* \`DEVELOPMENT\` - Development
-* \`STAGING\` - Staging
-* \`PRODUCTION\` - Production",
-            "type": "optional<EnvironmentEnum>",
-          },
+          "environment": "optional<EnvironmentEnum>",
           "id": "string",
           "label": {
             "docs": "A human-readable label for the deployment",
@@ -1283,14 +935,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A name that uniquely identifies this deployment within its workspace",
             "type": "string",
           },
-          "status": {
-            "docs": "The current status of the deployment
-
-* \`ACTIVE\` - Active
-* \`INACTIVE\` - Inactive
-* \`ARCHIVED\` - Archived",
-            "type": "optional<DeploymentReadStatusEnum>",
-          },
+          "status": "optional<DeploymentReadStatusEnum>",
         },
       },
       "DeploymentReadStatusEnum": {
@@ -1318,10 +963,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "Document": {
         "docs": undefined,
         "properties": {
-          "external_id": {
-            "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
-            "type": "optional<string>",
-          },
+          "external_id": "optional<string>",
           "id": {
             "docs": "The ID of the document.",
             "type": "string",
@@ -1343,30 +985,14 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Vellum-generated ID that uniquely identifies this link.",
             "type": "string",
           },
-          "indexing_state": {
-            "docs": "An enum value representing where this document is along its indexing lifecycle for this index.
-
-* \`AWAITING_PROCESSING\` - Awaiting Processing
-* \`QUEUED\` - Queued
-* \`INDEXING\` - Indexing
-* \`INDEXED\` - Indexed
-* \`FAILED\` - Failed",
-            "type": "optional<IndexingStateEnum>",
-          },
+          "indexing_state": "optional<IndexingStateEnum>",
         },
       },
       "DocumentIndexRead": {
         "docs": undefined,
         "properties": {
           "created": "datetime",
-          "environment": {
-            "docs": "The environment this document index is used in
-
-* \`DEVELOPMENT\` - Development
-* \`STAGING\` - Staging
-* \`PRODUCTION\` - Production",
-            "type": "optional<EnvironmentEnum>",
-          },
+          "environment": "optional<EnvironmentEnum>",
           "id": "string",
           "indexing_config": {
             "docs": "Configuration representing how documents should be indexed",
@@ -1380,13 +1006,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A name that uniquely identifies this index within its workspace",
             "type": "string",
           },
-          "status": {
-            "docs": "The current status of the document index
-
-* \`ACTIVE\` - Active
-* \`ARCHIVED\` - Archived",
-            "type": "optional<DocumentIndexStatus>",
-          },
+          "status": "optional<DocumentIndexStatus>",
         },
       },
       "DocumentIndexStatus": {
@@ -1408,10 +1028,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "EnrichedNormalizedCompletion": {
         "docs": undefined,
         "properties": {
-          "external_id": {
-            "docs": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
-            "type": "optional<string>",
-          },
+          "external_id": "optional<string>",
           "finish_reason": {
             "docs": "The reason the generation finished.
 
@@ -1424,10 +1041,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The Vellum-generated ID of the completion.",
             "type": "string",
           },
-          "logprobs": {
-            "docs": "The logprobs of the completion. Only present if specified in the original request options.",
-            "type": "optional<NormalizedLogProbs>",
-          },
+          "logprobs": "optional<NormalizedLogProbs>",
           "model_version_id": {
             "docs": "The ID of the model version used to generate this completion.",
             "type": "string",
@@ -1436,10 +1050,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The text generated by the LLM.",
             "type": "string",
           },
-          "type": {
-            "docs": undefined,
-            "type": "optional<ContentType>",
-          },
+          "type": "optional<ContentType>",
         },
       },
       "EnvironmentEnum": {
@@ -1467,19 +1078,13 @@ Used to submit feedback regarding the quality of previously generated completion
       "EvaluationParams": {
         "docs": undefined,
         "properties": {
-          "target": {
-            "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
-            "type": "optional<string>",
-          },
+          "target": "optional<string>",
         },
       },
       "EvaluationParamsRequest": {
         "docs": undefined,
         "properties": {
-          "target": {
-            "docs": "The target value to compare the LLM output against. Typically what you expect or desire the LLM output to be.",
-            "type": "optional<string>",
-          },
+          "target": "optional<string>",
         },
       },
       "FinishReasonEnum": {
@@ -1516,26 +1121,14 @@ Used to submit feedback regarding the quality of previously generated completion
       "GenerateOptionsRequest": {
         "docs": undefined,
         "properties": {
-          "logprobs": {
-            "docs": "Which logprobs to include, if any. Defaults to NONE.
-
-* \`ALL\` - ALL
-* \`NONE\` - NONE",
-            "type": "optional<LogprobsEnum>",
-          },
+          "logprobs": "optional<LogprobsEnum>",
         },
       },
       "GenerateRequest": {
         "docs": undefined,
         "properties": {
-          "chat_history": {
-            "docs": "Optionally provide a list of chat messages that'll be used in place of the special {$chat_history} variable, if included in the prompt.",
-            "type": "optional<list<ChatMessageRequest>>",
-          },
-          "external_ids": {
-            "docs": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
-            "type": "optional<list<string>>",
-          },
+          "chat_history": "optional<list<ChatMessageRequest>>",
+          "external_ids": "optional<list<string>>",
           "input_values": {
             "docs": "Key/value pairs for each template variable defined in the deployment's prompt.",
             "type": "map<string, unknown>",
@@ -1554,14 +1147,8 @@ Used to submit feedback regarding the quality of previously generated completion
       "GenerateResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
-            "type": "optional<GenerateResultData>",
-          },
-          "error": {
-            "docs": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
-            "type": "optional<GenerateResultError>",
-          },
+          "data": "optional<GenerateResultData>",
+          "error": "optional<GenerateResultError>",
         },
       },
       "GenerateResultData": {
@@ -1585,33 +1172,21 @@ Used to submit feedback regarding the quality of previously generated completion
       "GenerateStreamResponse": {
         "docs": undefined,
         "properties": {
-          "delta": {
-            "docs": undefined,
-            "type": "GenerateStreamResult",
-          },
+          "delta": "GenerateStreamResult",
         },
       },
       "GenerateStreamResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "optional<GenerateStreamResultData>",
-          },
-          "error": {
-            "docs": undefined,
-            "type": "optional<GenerateResultError>",
-          },
+          "data": "optional<GenerateStreamResultData>",
+          "error": "optional<GenerateResultError>",
           "request_index": "integer",
         },
       },
       "GenerateStreamResultData": {
         "docs": undefined,
         "properties": {
-          "completion": {
-            "docs": undefined,
-            "type": "EnrichedNormalizedCompletion",
-          },
+          "completion": "EnrichedNormalizedCompletion",
           "completion_index": "integer",
         },
       },
@@ -1688,10 +1263,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The name of the base model used to create this model version, as identified by the LLM provider.",
             "type": "string",
           },
-          "sandbox_snapshot": {
-            "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
-            "type": "optional<ModelVersionSandboxSnapshot>",
-          },
+          "sandbox_snapshot": "optional<ModelVersionSandboxSnapshot>",
         },
       },
       "ModelVersionCompilePromptResponse": {
@@ -1727,39 +1299,21 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The generation parameters that are passed to the LLM provider at runtime.",
             "type": "ModelVersionExecConfigParameters",
           },
-          "prompt_block_data": {
-            "docs": undefined,
-            "type": "optional<PromptTemplateBlockData>",
-          },
-          "prompt_syntax_version": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "prompt_template": {
-            "docs": "The template used to generate prompts for this model version.",
-            "type": "optional<string>",
-          },
+          "prompt_block_data": "optional<PromptTemplateBlockData>",
+          "prompt_syntax_version": "optional<integer>",
+          "prompt_template": "optional<string>",
         },
       },
       "ModelVersionExecConfigParameters": {
         "docs": undefined,
         "properties": {
           "frequency_penalty": "double",
-          "logit_bias": {
-            "docs": undefined,
-            "type": "optional<map<string, optional<double>>>",
-          },
+          "logit_bias": "optional<map<string, optional<double>>>",
           "max_tokens": "integer",
           "presence_penalty": "double",
-          "stop": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
+          "stop": "optional<list<string>>",
           "temperature": "double",
-          "top_k": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
+          "top_k": "optional<double>",
           "top_p": "double",
         },
       },
@@ -1810,10 +1364,7 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`PYQ\` - Pyq",
             "type": "ProviderEnum",
           },
-          "status": {
-            "docs": undefined,
-            "type": "optional<ModelVersionReadStatusEnum>",
-          },
+          "status": "optional<ModelVersionReadStatusEnum>",
         },
       },
       "ModelVersionReadStatusEnum": {
@@ -1851,67 +1402,34 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The ID of the sandbox snapshot.",
             "type": "string",
           },
-          "prompt_id": {
-            "docs": "The id of the prompt in the sandbox snapshot.",
-            "type": "optional<string>",
-          },
-          "prompt_index": {
-            "docs": "The index of the prompt in the sandbox snapshot.",
-            "type": "optional<integer>",
-          },
-          "sandbox_id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "prompt_id": "optional<string>",
+          "prompt_index": "optional<integer>",
+          "sandbox_id": "optional<string>",
         },
       },
       "NormalizedLogProbs": {
         "docs": undefined,
         "properties": {
-          "likelihood": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
-          "tokens": {
-            "docs": undefined,
-            "type": "list<NormalizedTokenLogProbs>",
-          },
+          "likelihood": "optional<double>",
+          "tokens": "list<NormalizedTokenLogProbs>",
         },
       },
       "NormalizedTokenLogProbs": {
         "docs": undefined,
         "properties": {
-          "logprob": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
+          "logprob": "optional<double>",
           "text_offset": "integer",
           "token": "string",
-          "top_logprobs": {
-            "docs": undefined,
-            "type": "optional<map<string, optional<double>>>",
-          },
+          "top_logprobs": "optional<map<string, optional<double>>>",
         },
       },
       "PaginatedSlimDocumentList": {
         "docs": undefined,
         "properties": {
-          "count": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
-          "next": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "previous": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<list<SlimDocument>>",
-          },
+          "count": "optional<integer>",
+          "next": "optional<string>",
+          "previous": "optional<string>",
+          "results": "optional<list<SlimDocument>>",
         },
       },
       "ProcessingFailureReasonEnum": "literal<"EXCEEDED_CHARACTER_LIMIT">",
@@ -1946,146 +1464,71 @@ Used to submit feedback regarding the quality of previously generated completion
       "PromptNodeResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "PromptNodeResultData",
-          },
+          "data": "PromptNodeResultData",
         },
       },
       "PromptNodeResultData": {
         "docs": undefined,
         "properties": {
-          "delta": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "delta": "optional<string>",
           "output_id": "string",
-          "text": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "text": "optional<string>",
         },
       },
       "PromptTemplateBlock": {
         "docs": undefined,
         "properties": {
-          "block_type": {
-            "docs": undefined,
-            "type": "BlockTypeEnum",
-          },
+          "block_type": "BlockTypeEnum",
           "id": "string",
-          "properties": {
-            "docs": undefined,
-            "type": "PromptTemplateBlockProperties",
-          },
+          "properties": "PromptTemplateBlockProperties",
         },
       },
       "PromptTemplateBlockData": {
         "docs": undefined,
         "properties": {
-          "blocks": {
-            "docs": undefined,
-            "type": "list<PromptTemplateBlock>",
-          },
+          "blocks": "list<PromptTemplateBlock>",
           "version": "integer",
         },
       },
       "PromptTemplateBlockDataRequest": {
         "docs": undefined,
         "properties": {
-          "blocks": {
-            "docs": undefined,
-            "type": "list<PromptTemplateBlockRequest>",
-          },
+          "blocks": "list<PromptTemplateBlockRequest>",
           "version": "integer",
         },
       },
       "PromptTemplateBlockProperties": {
         "docs": undefined,
         "properties": {
-          "blocks": {
-            "docs": undefined,
-            "type": "optional<list<PromptTemplateBlock>>",
-          },
-          "chat_message_unterminated": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
-          "chat_role": {
-            "docs": undefined,
-            "type": "optional<ChatMessageRole>",
-          },
-          "function_description": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "function_name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "function_parameters": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
-          "template": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "template_type": {
-            "docs": undefined,
-            "type": "optional<ContentType>",
-          },
+          "blocks": "optional<list<PromptTemplateBlock>>",
+          "chat_message_unterminated": "optional<boolean>",
+          "chat_role": "optional<ChatMessageRole>",
+          "function_description": "optional<string>",
+          "function_name": "optional<string>",
+          "function_parameters": "optional<map<string, unknown>>",
+          "template": "optional<string>",
+          "template_type": "optional<ContentType>",
         },
       },
       "PromptTemplateBlockPropertiesRequest": {
         "docs": undefined,
         "properties": {
-          "blocks": {
-            "docs": undefined,
-            "type": "optional<list<PromptTemplateBlockRequest>>",
-          },
-          "chat_message_unterminated": {
-            "docs": undefined,
-            "type": "optional<boolean>",
-          },
-          "chat_role": {
-            "docs": undefined,
-            "type": "optional<ChatMessageRole>",
-          },
-          "function_description": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "function_name": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "function_parameters": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
-          "template": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "template_type": {
-            "docs": undefined,
-            "type": "optional<ContentType>",
-          },
+          "blocks": "optional<list<PromptTemplateBlockRequest>>",
+          "chat_message_unterminated": "optional<boolean>",
+          "chat_role": "optional<ChatMessageRole>",
+          "function_description": "optional<string>",
+          "function_name": "optional<string>",
+          "function_parameters": "optional<map<string, unknown>>",
+          "template": "optional<string>",
+          "template_type": "optional<ContentType>",
         },
       },
       "PromptTemplateBlockRequest": {
         "docs": undefined,
         "properties": {
-          "block_type": {
-            "docs": undefined,
-            "type": "BlockTypeEnum",
-          },
+          "block_type": "BlockTypeEnum",
           "id": "string",
-          "properties": {
-            "docs": undefined,
-            "type": "PromptTemplateBlockPropertiesRequest",
-          },
+          "properties": "PromptTemplateBlockPropertiesRequest",
         },
       },
       "PromptTemplateInputVariable": {
@@ -2171,21 +1614,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "frequency_penalty": "double",
-          "logit_bias": {
-            "docs": undefined,
-            "type": "optional<map<string, optional<double>>>",
-          },
+          "logit_bias": "optional<map<string, optional<double>>>",
           "max_tokens": "integer",
           "presence_penalty": "double",
-          "stop": {
-            "docs": undefined,
-            "type": "optional<list<string>>",
-          },
+          "stop": "optional<list<string>>",
           "temperature": "double",
-          "top_k": {
-            "docs": undefined,
-            "type": "optional<double>",
-          },
+          "top_k": "optional<double>",
           "top_p": "double",
         },
       },
@@ -2209,14 +1643,8 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Names of the input variables specified in the prompt template.",
             "type": "list<PromptTemplateInputVariableRequest>",
           },
-          "prompt_block_data": {
-            "docs": undefined,
-            "type": "PromptTemplateBlockDataRequest",
-          },
-          "prompt_syntax_version": {
-            "docs": undefined,
-            "type": "optional<integer>",
-          },
+          "prompt_block_data": "PromptTemplateBlockDataRequest",
+          "prompt_syntax_version": "optional<integer>",
         },
       },
       "RegisterPromptResponse": {
@@ -2299,42 +1727,27 @@ Used to submit feedback regarding the quality of previously generated completion
       "SandboxMetricInputParams": {
         "docs": undefined,
         "properties": {
-          "params": {
-            "docs": undefined,
-            "type": "optional<EvaluationParams>",
-          },
+          "params": "optional<EvaluationParams>",
         },
       },
       "SandboxMetricInputParamsRequest": {
         "docs": undefined,
         "properties": {
-          "params": {
-            "docs": undefined,
-            "type": "optional<EvaluationParamsRequest>",
-          },
+          "params": "optional<EvaluationParamsRequest>",
         },
       },
       "SandboxNodeResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "SandboxNodeResultData",
-          },
+          "data": "SandboxNodeResultData",
         },
       },
       "SandboxNodeResultData": {
         "docs": undefined,
         "properties": {
-          "delta": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "delta": "optional<string>",
           "output_id": "string",
-          "text": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "text": "optional<string>",
         },
       },
       "SandboxScenario": {
@@ -2348,50 +1761,26 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The inputs for the scenario",
             "type": "list<ScenarioInput>",
           },
-          "label": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "metric_input_params": {
-            "docs": undefined,
-            "type": "SandboxMetricInputParams",
-          },
+          "label": "optional<string>",
+          "metric_input_params": "SandboxMetricInputParams",
         },
       },
       "ScenarioInput": {
         "docs": undefined,
         "properties": {
-          "chat_history": {
-            "docs": undefined,
-            "type": "optional<list<ChatMessage>>",
-          },
+          "chat_history": "optional<list<ChatMessage>>",
           "key": "string",
-          "type": {
-            "docs": undefined,
-            "type": "optional<ScenarioInputTypeEnum>",
-          },
-          "value": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "type": "optional<ScenarioInputTypeEnum>",
+          "value": "optional<string>",
         },
       },
       "ScenarioInputRequest": {
         "docs": undefined,
         "properties": {
-          "chat_history": {
-            "docs": undefined,
-            "type": "optional<list<ChatMessageRequest>>",
-          },
+          "chat_history": "optional<list<ChatMessageRequest>>",
           "key": "string",
-          "type": {
-            "docs": undefined,
-            "type": "optional<ScenarioInputTypeEnum>",
-          },
-          "value": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "type": "optional<ScenarioInputTypeEnum>",
+          "value": "optional<string>",
         },
       },
       "ScenarioInputTypeEnum": {
@@ -2422,58 +1811,31 @@ Used to submit feedback regarding the quality of previously generated completion
       "SearchFiltersRequest": {
         "docs": undefined,
         "properties": {
-          "external_ids": {
-            "docs": "The document external IDs to filter by",
-            "type": "optional<list<string>>",
-          },
+          "external_ids": "optional<list<string>>",
         },
       },
       "SearchNodeResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "SearchNodeResultData",
-          },
+          "data": "SearchNodeResultData",
         },
       },
       "SearchNodeResultData": {
         "docs": undefined,
         "properties": {
-          "results": {
-            "docs": undefined,
-            "type": "list<map<string, unknown>>",
-          },
+          "results": "list<map<string, unknown>>",
           "results_output_id": "string",
-          "text": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
-          "text_output_id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "text": "optional<string>",
+          "text_output_id": "optional<string>",
         },
       },
       "SearchRequestOptionsRequest": {
         "docs": undefined,
         "properties": {
-          "filters": {
-            "docs": "The filters to apply to the search.",
-            "type": "optional<SearchFiltersRequest>",
-          },
-          "limit": {
-            "docs": "The maximum number of results to return.",
-            "type": "optional<integer>",
-          },
-          "result_merging": {
-            "docs": "The configuration for merging results.",
-            "type": "optional<SearchResultMergingRequest>",
-          },
-          "weights": {
-            "docs": "The weights to use for the search. Must add up to 1.0.",
-            "type": "optional<SearchWeightsRequest>",
-          },
+          "filters": "optional<SearchFiltersRequest>",
+          "limit": "optional<integer>",
+          "result_merging": "optional<SearchResultMergingRequest>",
+          "weights": "optional<SearchWeightsRequest>",
         },
       },
       "SearchResponse": {
@@ -2492,10 +1854,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The document that contains the chunk that matched the search query.",
             "type": "Document",
           },
-          "keywords": {
-            "docs": undefined,
-            "type": "list<string>",
-          },
+          "keywords": "list<string>",
           "score": {
             "docs": "A score representing how well the chunk matches the search query.",
             "type": "double",
@@ -2531,22 +1890,13 @@ Used to submit feedback regarding the quality of previously generated completion
       "SlimDocument": {
         "docs": undefined,
         "properties": {
-          "document_to_document_indexes": {
-            "docs": undefined,
-            "type": "list<DocumentDocumentToDocumentIndex>",
-          },
-          "external_id": {
-            "docs": "The external ID that was originally provided when uploading the document.",
-            "type": "optional<string>",
-          },
+          "document_to_document_indexes": "list<DocumentDocumentToDocumentIndex>",
+          "external_id": "optional<string>",
           "id": {
             "docs": "Vellum-generated ID that uniquely identifies this document.",
             "type": "string",
           },
-          "keywords": {
-            "docs": "A list of keywords associated with this document. Originally provided when uploading the document.",
-            "type": "optional<list<string>>",
-          },
+          "keywords": "optional<list<string>>",
           "label": {
             "docs": "Human-friendly name for this document.",
             "type": "string",
@@ -2555,53 +1905,20 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "A timestamp representing when this document was most recently uploaded.",
             "type": "datetime",
           },
-          "processing_failure_reason": {
-            "docs": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
-
-* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
-            "type": "optional<ProcessingFailureReasonEnum>",
-          },
-          "processing_state": {
-            "docs": "An enum value representing where this document is along its processing lifecycle. Note that this is different than its indexing lifecycle.
-
-* \`QUEUED\` - Queued
-* \`PROCESSING\` - Processing
-* \`PROCESSED\` - Processed
-* \`FAILED\` - Failed",
-            "type": "optional<ProcessingStateEnum>",
-          },
-          "status": {
-            "docs": "The document's current status.
-
-* \`ACTIVE\` - Active",
-            "type": "optional<SlimDocumentStatusEnum>",
-          },
+          "processing_failure_reason": "optional<ProcessingFailureReasonEnum>",
+          "processing_state": "optional<ProcessingStateEnum>",
+          "status": "optional<SlimDocumentStatusEnum>",
         },
       },
       "SlimDocumentStatusEnum": "literal<"ACTIVE">",
       "SubmitCompletionActualRequest": {
         "docs": undefined,
         "properties": {
-          "external_id": {
-            "docs": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
-            "type": "optional<string>",
-          },
-          "id": {
-            "docs": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
-            "type": "optional<string>",
-          },
-          "quality": {
-            "docs": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
-            "type": "optional<double>",
-          },
-          "text": {
-            "docs": "Text representing what the completion _should_ have been.",
-            "type": "optional<string>",
-          },
-          "timestamp": {
-            "docs": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
-            "type": "optional<datetime>",
-          },
+          "external_id": "optional<string>",
+          "id": "optional<string>",
+          "quality": "optional<double>",
+          "text": "optional<string>",
+          "timestamp": "optional<datetime>",
         },
       },
       "SubmitCompletionActualsErrorResponse": {
@@ -2617,10 +1934,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
           },
-          "value": {
-            "docs": undefined,
-            "type": "list<ChatMessage>",
-          },
+          "value": "list<ChatMessage>",
         },
       },
       "TerminalNodeJsonResult": {
@@ -2630,28 +1944,19 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
           },
-          "value": {
-            "docs": undefined,
-            "type": "map<string, unknown>",
-          },
+          "value": "map<string, unknown>",
         },
       },
       "TerminalNodeResult": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "TerminalNodeResultData",
-          },
+          "data": "TerminalNodeResultData",
         },
       },
       "TerminalNodeResultData": {
         "docs": undefined,
         "properties": {
-          "output": {
-            "docs": undefined,
-            "type": "TerminalNodeResultOutput",
-          },
+          "output": "TerminalNodeResultOutput",
         },
       },
       "TerminalNodeResultOutput": {
@@ -2659,18 +1964,9 @@ Used to submit feedback regarding the quality of previously generated completion
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "CHAT_HISTORY": {
-            "docs": undefined,
-            "type": "TerminalNodeChatHistoryResult",
-          },
-          "JSON": {
-            "docs": undefined,
-            "type": "TerminalNodeJsonResult",
-          },
-          "STRING": {
-            "docs": undefined,
-            "type": "TerminalNodeStringResult",
-          },
+          "CHAT_HISTORY": "TerminalNodeChatHistoryResult",
+          "JSON": "TerminalNodeJsonResult",
+          "STRING": "TerminalNodeStringResult",
         },
       },
       "TerminalNodeStringResult": {
@@ -2694,14 +1990,8 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "Key/value pairs for each input variable that the Test Suite expects.",
             "type": "map<string, unknown>",
           },
-          "label": {
-            "docs": "A human-friendly label for the test case.",
-            "type": "optional<string>",
-          },
-          "test_case_id": {
-            "docs": "The id of the test case to update. If none is provided, an id will be generated and a new test case will be appended.",
-            "type": "optional<string>",
-          },
+          "label": "optional<string>",
+          "test_case_id": "optional<string>",
         },
       },
       "UploadDocumentErrorResponse": {
@@ -2722,10 +2012,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "WorkflowEventError": {
         "docs": undefined,
         "properties": {
-          "code": {
-            "docs": undefined,
-            "type": "WorkflowExecutionEventErrorCode",
-          },
+          "code": "WorkflowExecutionEventErrorCode",
           "message": "string",
         },
       },
@@ -2748,28 +2035,16 @@ Used to submit feedback regarding the quality of previously generated completion
       "WorkflowExecutionNodeResultEvent": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "WorkflowNodeResultEvent",
-          },
-          "external_id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "data": "WorkflowNodeResultEvent",
+          "external_id": "optional<string>",
           "run_id": "string",
         },
       },
       "WorkflowExecutionWorkflowResultEvent": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "WorkflowResultEvent",
-          },
-          "external_id": {
-            "docs": undefined,
-            "type": "optional<string>",
-          },
+          "data": "WorkflowResultEvent",
+          "external_id": "optional<string>",
           "run_id": "string",
         },
       },
@@ -2778,54 +2053,24 @@ Used to submit feedback regarding the quality of previously generated completion
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "CONDITIONAL": {
-            "docs": undefined,
-            "type": "ConditionalNodeResult",
-          },
-          "DEPLOYMENT": {
-            "docs": undefined,
-            "type": "DeploymentNodeResult",
-          },
-          "PROMPT": {
-            "docs": undefined,
-            "type": "PromptNodeResult",
-          },
-          "SANDBOX": {
-            "docs": undefined,
-            "type": "SandboxNodeResult",
-          },
-          "SEARCH": {
-            "docs": undefined,
-            "type": "SearchNodeResult",
-          },
-          "TERMINAL": {
-            "docs": undefined,
-            "type": "TerminalNodeResult",
-          },
+          "CONDITIONAL": "ConditionalNodeResult",
+          "DEPLOYMENT": "DeploymentNodeResult",
+          "PROMPT": "PromptNodeResult",
+          "SANDBOX": "SandboxNodeResult",
+          "SEARCH": "SearchNodeResult",
+          "TERMINAL": "TerminalNodeResult",
         },
       },
       "WorkflowNodeResultEvent": {
         "docs": undefined,
         "properties": {
-          "data": {
-            "docs": undefined,
-            "type": "optional<WorkflowNodeResultData>",
-          },
-          "error": {
-            "docs": undefined,
-            "type": "optional<WorkflowEventError>",
-          },
+          "data": "optional<WorkflowNodeResultData>",
+          "error": "optional<WorkflowEventError>",
           "id": "string",
           "node_id": "string",
           "node_result_id": "string",
-          "state": {
-            "docs": undefined,
-            "type": "WorkflowNodeResultEventState",
-          },
-          "ts": {
-            "docs": undefined,
-            "type": "optional<datetime>",
-          },
+          "state": "WorkflowNodeResultEventState",
+          "ts": "optional<datetime>",
         },
       },
       "WorkflowNodeResultEventState": {
@@ -2863,10 +2108,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
           },
-          "value": {
-            "docs": undefined,
-            "type": "list<ChatMessageRequest>",
-          },
+          "value": "list<ChatMessageRequest>",
         },
       },
       "WorkflowRequestInputRequest": {
@@ -2874,18 +2116,9 @@ Used to submit feedback regarding the quality of previously generated completion
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "CHAT_HISTORY": {
-            "docs": undefined,
-            "type": "WorkflowRequestChatHistoryInputRequest",
-          },
-          "JSON": {
-            "docs": undefined,
-            "type": "WorkflowRequestJsonInputRequest",
-          },
-          "STRING": {
-            "docs": undefined,
-            "type": "WorkflowRequestStringInputRequest",
-          },
+          "CHAT_HISTORY": "WorkflowRequestChatHistoryInputRequest",
+          "JSON": "WorkflowRequestJsonInputRequest",
+          "STRING": "WorkflowRequestStringInputRequest",
         },
       },
       "WorkflowRequestJsonInputRequest": {
@@ -2895,10 +2128,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
           },
-          "value": {
-            "docs": undefined,
-            "type": "map<string, unknown>",
-          },
+          "value": "map<string, unknown>",
         },
       },
       "WorkflowRequestStringInputRequest": {
@@ -2914,19 +2144,10 @@ Used to submit feedback regarding the quality of previously generated completion
       "WorkflowResultEvent": {
         "docs": undefined,
         "properties": {
-          "error": {
-            "docs": undefined,
-            "type": "optional<WorkflowEventError>",
-          },
+          "error": "optional<WorkflowEventError>",
           "id": "string",
-          "output": {
-            "docs": undefined,
-            "type": "optional<WorkflowResultEventOutputData>",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "WorkflowNodeResultEventState",
-          },
+          "output": "optional<WorkflowResultEventOutputData>",
+          "state": "WorkflowNodeResultEventState",
           "ts": "datetime",
         },
       },
@@ -2935,18 +2156,9 @@ Used to submit feedback regarding the quality of previously generated completion
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "CHAT_HISTORY": {
-            "docs": undefined,
-            "type": "WorkflowResultEventOutputDataChatHistory",
-          },
-          "JSON": {
-            "docs": undefined,
-            "type": "WorkflowResultEventOutputDataJson",
-          },
-          "STRING": {
-            "docs": undefined,
-            "type": "WorkflowResultEventOutputDataString",
-          },
+          "CHAT_HISTORY": "WorkflowResultEventOutputDataChatHistory",
+          "JSON": "WorkflowResultEventOutputDataJson",
+          "STRING": "WorkflowResultEventOutputDataString",
         },
       },
       "WorkflowResultEventOutputDataChatHistory": {
@@ -2958,14 +2170,8 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "name": "string",
           "node_id": "string",
-          "state": {
-            "docs": undefined,
-            "type": "WorkflowNodeResultEventState",
-          },
-          "value": {
-            "docs": undefined,
-            "type": "optional<list<ChatMessage>>",
-          },
+          "state": "WorkflowNodeResultEventState",
+          "value": "optional<list<ChatMessage>>",
         },
       },
       "WorkflowResultEventOutputDataJson": {
@@ -2977,14 +2183,8 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "name": "string",
           "node_id": "string",
-          "state": {
-            "docs": undefined,
-            "type": "WorkflowNodeResultEventState",
-          },
-          "value": {
-            "docs": undefined,
-            "type": "optional<map<string, unknown>>",
-          },
+          "state": "WorkflowNodeResultEventState",
+          "value": "optional<map<string, unknown>>",
         },
       },
       "WorkflowResultEventOutputDataString": {
@@ -2996,10 +2196,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "name": "string",
           "node_id": "string",
-          "state": {
-            "docs": undefined,
-            "type": "WorkflowNodeResultEventState",
-          },
+          "state": "WorkflowNodeResultEventState",
           "value": {
             "docs": "The entire string value. Will be non-null for events of state FULFILLED.",
             "type": "optional<string>",
@@ -3011,14 +2208,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "NODE": {
-            "docs": undefined,
-            "type": "WorkflowExecutionNodeResultEvent",
-          },
-          "WORKFLOW": {
-            "docs": undefined,
-            "type": "WorkflowExecutionWorkflowResultEvent",
-          },
+          "NODE": "WorkflowExecutionNodeResultEvent",
+          "WORKFLOW": "WorkflowExecutionWorkflowResultEvent",
         },
       },
     },
@@ -3033,10 +2224,10 @@ Used to submit feedback regarding the quality of previously generated completion
         "type": "string",
       },
     },
-    "default-environment": "Production",
+    "default-environment": "production",
     "display-name": "Vellum Client API",
     "environments": {
-      "Production": {
+      "production": {
         "urls": {
           "Default": "https://api.vellum.ai",
           "Documents": "https://documents.vellum.ai",
@@ -3046,9 +2237,6 @@ Used to submit feedback regarding the quality of previously generated completion
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

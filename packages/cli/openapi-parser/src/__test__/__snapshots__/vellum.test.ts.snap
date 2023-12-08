@@ -73,6 +73,7 @@ Used to retrieve a deployment given its ID or name.
         "schema": {
           "description": undefined,
           "generatedName": "DeploymentsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DeploymentRead",
           "type": "reference",
@@ -109,6 +110,7 @@ Creates a new document index.",
         "schema": {
           "description": undefined,
           "generatedName": "DocumentIndexesCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DocumentIndexCreateRequest",
           "type": "reference",
@@ -121,6 +123,7 @@ Creates a new document index.",
         "schema": {
           "description": undefined,
           "generatedName": "DocumentIndexesCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "DocumentIndexRead",
           "type": "reference",
@@ -258,6 +261,7 @@ Used to list documents. Optionally filter on supported fields.
         "schema": {
           "description": undefined,
           "generatedName": "DocumentsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "PaginatedSlimDocumentList",
           "type": "reference",
@@ -294,6 +298,7 @@ Executes a deployed Workflow and streams back its results.",
         "schema": {
           "description": undefined,
           "generatedName": "ExecuteWorkflowStreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "ExecuteWorkflowStreamRequest",
           "type": "reference",
@@ -306,6 +311,7 @@ Executes a deployed Workflow and streams back its results.",
         "schema": {
           "description": undefined,
           "generatedName": "ExecuteWorkflowStreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "WorkflowStreamEvent",
           "type": "reference",
@@ -413,6 +419,7 @@ Generate a completion using a previously defined deployment.
         "schema": {
           "description": undefined,
           "generatedName": "GenerateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "GenerateBodyRequest",
           "type": "reference",
@@ -425,6 +432,7 @@ Generate a completion using a previously defined deployment.
         "schema": {
           "description": undefined,
           "generatedName": "GenerateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "GenerateResponse",
           "type": "reference",
@@ -474,6 +482,7 @@ Generate a stream of completions using a previously defined deployment.
         "schema": {
           "description": undefined,
           "generatedName": "GenerateStreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "GenerateStreamBodyRequest",
           "type": "reference",
@@ -486,6 +495,7 @@ Generate a stream of completions using a previously defined deployment.
         "schema": {
           "description": undefined,
           "generatedName": "GenerateStreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "GenerateStreamResponse",
           "type": "reference",
@@ -546,6 +556,7 @@ Used to retrieve a model version given its ID.
         "schema": {
           "description": undefined,
           "generatedName": "ModelVersionsRetrieveResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "ModelVersionRead",
           "type": "reference",
@@ -597,6 +608,7 @@ Compiles the prompt backing the model version using the provided input values.",
         "schema": {
           "description": undefined,
           "generatedName": "ModelVersionCompilePromptRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "ModelVersionCompilePromptRequestRequest",
           "type": "reference",
@@ -609,6 +621,7 @@ Compiles the prompt backing the model version using the provided input values.",
         "schema": {
           "description": undefined,
           "generatedName": "ModelVersionCompilePromptResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "ModelVersionCompilePromptResponse",
           "type": "reference",
@@ -650,6 +663,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
         "schema": {
           "description": undefined,
           "generatedName": "RegisterPromptRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RegisterPromptRequestRequest",
           "type": "reference",
@@ -662,6 +676,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
         "schema": {
           "description": undefined,
           "generatedName": "RegisterPromptResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "RegisterPromptResponse",
           "type": "reference",
@@ -719,6 +734,7 @@ or overwritten with default values.",
         "schema": {
           "description": undefined,
           "generatedName": "UpsertSandboxScenarioRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "UpsertSandboxScenarioRequestRequest",
           "type": "reference",
@@ -731,6 +747,7 @@ or overwritten with default values.",
         "schema": {
           "description": undefined,
           "generatedName": "UpsertSandboxScenarioResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "SandboxScenario",
           "type": "reference",
@@ -858,6 +875,7 @@ Perform a search against a document index.
         "schema": {
           "description": undefined,
           "generatedName": "SearchRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "SearchRequestBodyRequest",
           "type": "reference",
@@ -870,6 +888,7 @@ Perform a search against a document index.
         "schema": {
           "description": undefined,
           "generatedName": "SearchResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "SearchResponse",
           "type": "reference",
@@ -934,6 +953,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "schema": {
           "description": undefined,
           "generatedName": "SubmitCompletionActualsRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "SubmitCompletionActualsRequest",
           "type": "reference",
@@ -1042,6 +1062,7 @@ or overwritten with default values.",
         "schema": {
           "description": undefined,
           "generatedName": "UpsertTestSuiteTestCaseRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TestSuiteTestCaseRequest",
           "type": "reference",
@@ -1054,6 +1075,7 @@ or overwritten with default values.",
         "schema": {
           "description": undefined,
           "generatedName": "UpsertTestSuiteTestCaseResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "TestSuiteTestCase",
           "type": "reference",
@@ -1279,6 +1301,7 @@ Upload a document to be indexed and used for search.
         "schema": {
           "description": undefined,
           "generatedName": "DocumentsUploadResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "UploadDocumentResponse",
           "type": "reference",
@@ -1315,6 +1338,7 @@ Upload a document to be indexed and used for search.
       "schema": {
         "description": undefined,
         "generatedName": "ForbiddenErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "GenerateErrorResponse",
         "type": "reference",
@@ -1335,6 +1359,7 @@ Upload a document to be indexed and used for search.
       "schema": {
         "description": undefined,
         "generatedName": "ConflictErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "RegisterPromptErrorResponse",
         "type": "reference",
@@ -1452,6 +1477,7 @@ Upload a document to be indexed and used for search.
 * \`JINJA\` - JINJA
 * \`FUNCTION_DEFINITION\` - FUNCTION_DEFINITION",
       "generatedName": "BlockTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -1486,6 +1512,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ChatMessage",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1509,6 +1536,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "ChatMessageRole",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ChatMessageRole",
             "type": "reference",
@@ -1522,6 +1550,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ChatMessageRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1545,6 +1574,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "ChatMessageRequestRole",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ChatMessageRole",
             "type": "reference",
@@ -1559,6 +1589,7 @@ Upload a document to be indexed and used for search.
 * \`USER\` - User
 * \`FUNCTION\` - Function",
       "generatedName": "ChatMessageRole",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -1593,6 +1624,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ConditionalNodeResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1602,6 +1634,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "ConditionalNodeResultData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ConditionalNodeResultData",
             "type": "reference",
@@ -1615,6 +1648,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ConditionalNodeResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1646,6 +1680,7 @@ Upload a document to be indexed and used for search.
       "description": "* \`STRING\` - STRING
 * \`JSON\` - JSON",
       "generatedName": "ContentType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -1668,6 +1703,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DeploymentNodeResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1677,6 +1713,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "DeploymentNodeResultData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DeploymentNodeResultData",
             "type": "reference",
@@ -1690,6 +1727,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DeploymentNodeResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1758,6 +1796,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DeploymentRead",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1828,6 +1867,7 @@ Upload a document to be indexed and used for search.
 * \`INACTIVE\` - Inactive
 * \`ARCHIVED\` - Archived",
               "generatedName": "DeploymentReadStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "DeploymentReadStatusEnum",
               "type": "reference",
@@ -1848,6 +1888,7 @@ Upload a document to be indexed and used for search.
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
               "generatedName": "DeploymentReadEnvironment",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EnvironmentEnum",
               "type": "reference",
@@ -1864,6 +1905,7 @@ Upload a document to be indexed and used for search.
 * \`GENERATE\` - Generate
 * \`CLASSIFY\` - Classify",
             "generatedName": "DeploymentReadModelType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelTypeEnum",
             "type": "reference",
@@ -1907,6 +1949,7 @@ Upload a document to be indexed and used for search.
 * \`INACTIVE\` - Inactive
 * \`ARCHIVED\` - Archived",
       "generatedName": "DeploymentReadStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -1935,6 +1978,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Document",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -1995,6 +2039,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DocumentDocumentToDocumentIndex",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2041,6 +2086,7 @@ Upload a document to be indexed and used for search.
 * \`INDEXED\` - Indexed
 * \`FAILED\` - Failed",
               "generatedName": "DocumentDocumentToDocumentIndexIndexingState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "IndexingStateEnum",
               "type": "reference",
@@ -2055,6 +2101,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DocumentIndexCreateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2098,6 +2145,7 @@ Upload a document to be indexed and used for search.
 * \`ACTIVE\` - Active
 * \`ARCHIVED\` - Archived",
               "generatedName": "DocumentIndexCreateRequestStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "DocumentIndexStatus",
               "type": "reference",
@@ -2118,6 +2166,7 @@ Upload a document to be indexed and used for search.
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
               "generatedName": "DocumentIndexCreateRequestEnvironment",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EnvironmentEnum",
               "type": "reference",
@@ -2171,6 +2220,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DocumentIndexRead",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2240,6 +2290,7 @@ Upload a document to be indexed and used for search.
 * \`ACTIVE\` - Active
 * \`ARCHIVED\` - Archived",
               "generatedName": "DocumentIndexReadStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "DocumentIndexStatus",
               "type": "reference",
@@ -2260,6 +2311,7 @@ Upload a document to be indexed and used for search.
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
               "generatedName": "DocumentIndexReadEnvironment",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EnvironmentEnum",
               "type": "reference",
@@ -2294,6 +2346,7 @@ Upload a document to be indexed and used for search.
       "description": "* \`ACTIVE\` - Active
 * \`ARCHIVED\` - Archived",
       "generatedName": "DocumentIndexStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -2316,6 +2369,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EnrichedNormalizedCompletion",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2382,6 +2436,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "EnrichedNormalizedCompletionFinishReason",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "FinishReasonEnum",
               "type": "reference",
@@ -2401,6 +2456,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "EnrichedNormalizedCompletionLogprobs",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "NormalizedLogProbs",
                 "type": "reference",
@@ -2432,6 +2488,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "EnrichedNormalizedCompletionType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ContentType",
               "type": "reference",
@@ -2446,6 +2503,7 @@ Upload a document to be indexed and used for search.
 * \`STAGING\` - Staging
 * \`PRODUCTION\` - Production",
       "generatedName": "EnvironmentEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -2474,6 +2532,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EvaluationParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2502,6 +2561,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EvaluationParamsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2530,6 +2590,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ExecuteWorkflowStreamRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2608,6 +2669,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "ExecuteWorkflowStreamRequestInputsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WorkflowRequestInputRequest",
               "type": "reference",
@@ -2644,6 +2706,7 @@ Upload a document to be indexed and used for search.
 * \`STOP\` - STOP
 * \`UNKNOWN\` - UNKNOWN",
       "generatedName": "FinishReasonEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -2672,6 +2735,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateBodyRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2728,6 +2792,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "GenerateBodyRequestRequestsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateRequest",
               "type": "reference",
@@ -2747,6 +2812,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "GenerateBodyRequestOptions",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "GenerateOptionsRequest",
                 "type": "reference",
@@ -2762,6 +2828,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateErrorResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2786,6 +2853,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateOptionsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2801,6 +2869,7 @@ Upload a document to be indexed and used for search.
 * \`ALL\` - ALL
 * \`NONE\` - NONE",
               "generatedName": "GenerateOptionsRequestLogprobs",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LogprobsEnum",
               "type": "reference",
@@ -2815,6 +2884,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2851,6 +2921,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "GenerateRequestChatHistoryItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ChatMessageRequest",
                 "type": "reference",
@@ -2892,6 +2963,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2904,6 +2976,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "GenerateResponseResultsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateResult",
               "type": "reference",
@@ -2918,6 +2991,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2930,6 +3004,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
               "generatedName": "GenerateResultData",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateResultData",
               "type": "reference",
@@ -2946,6 +3021,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
               "generatedName": "GenerateResultError",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateResultError",
               "type": "reference",
@@ -2960,6 +3036,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -2972,6 +3049,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "GenerateResultDataCompletionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EnrichedNormalizedCompletion",
               "type": "reference",
@@ -2986,6 +3064,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateResultError",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3010,6 +3089,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateStreamBodyRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3066,6 +3146,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "GenerateStreamBodyRequestRequestsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateRequest",
               "type": "reference",
@@ -3085,6 +3166,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "GenerateStreamBodyRequestOptions",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "GenerateOptionsRequest",
                 "type": "reference",
@@ -3100,6 +3182,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateStreamResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3109,6 +3192,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "GenerateStreamResponseDelta",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "GenerateStreamResult",
             "type": "reference",
@@ -3122,6 +3206,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateStreamResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3146,6 +3231,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "GenerateStreamResultData",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateStreamResultData",
               "type": "reference",
@@ -3162,6 +3248,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "GenerateStreamResultError",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GenerateResultError",
               "type": "reference",
@@ -3176,6 +3263,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GenerateStreamResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3197,6 +3285,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "GenerateStreamResultDataCompletion",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "EnrichedNormalizedCompletion",
             "type": "reference",
@@ -3212,6 +3301,7 @@ Upload a document to be indexed and used for search.
 * \`INDEXED\` - Indexed
 * \`FAILED\` - Failed",
       "generatedName": "IndexingStateEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3251,6 +3341,7 @@ Upload a document to be indexed and used for search.
       "description": "* \`ALL\` - ALL
 * \`NONE\` - NONE",
       "generatedName": "LogprobsEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3272,6 +3363,7 @@ Upload a document to be indexed and used for search.
       "description": "* \`GENERATE\` - Generate
 * \`CLASSIFY\` - Classify",
       "generatedName": "ModelTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3294,6 +3386,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionBuildConfig",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3323,6 +3416,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ModelVersionSandboxSnapshot",
                 "type": "reference",
@@ -3338,6 +3432,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionCompilePromptRequestRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3369,6 +3464,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionCompilePromptResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3378,6 +3474,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about the compiled prompt.",
             "generatedName": "ModelVersionCompilePromptResponsePrompt",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelVersionCompiledPrompt",
             "type": "reference",
@@ -3391,6 +3488,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionCompiledPrompt",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3427,6 +3525,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionExecConfig",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3436,6 +3535,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "The generation parameters that are passed to the LLM provider at runtime.",
             "generatedName": "ModelVersionExecConfigParameters",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelVersionExecConfigParameters",
             "type": "reference",
@@ -3451,6 +3551,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "ModelVersionExecConfigInputVariablesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "PromptTemplateInputVariable",
               "type": "reference",
@@ -3485,6 +3586,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "ModelVersionExecConfigPromptBlockData",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "PromptTemplateBlockData",
               "type": "reference",
@@ -3515,6 +3617,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionExecConfigParameters",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3664,6 +3767,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionRead",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3716,6 +3820,7 @@ Upload a document to be indexed and used for search.
 * \`GENERATE\` - Generate
 * \`CLASSIFY\` - Classify",
             "generatedName": "ModelVersionReadModelType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelTypeEnum",
             "type": "reference",
@@ -3737,6 +3842,7 @@ Upload a document to be indexed and used for search.
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
             "generatedName": "ModelVersionReadProvider",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProviderEnum",
             "type": "reference",
@@ -3763,6 +3869,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Configuration used to build this model version.",
             "generatedName": "ModelVersionReadBuildConfig",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelVersionBuildConfig",
             "type": "reference",
@@ -3775,6 +3882,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Configuration used to execute this model version.",
             "generatedName": "ModelVersionReadExecConfig",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelVersionExecConfig",
             "type": "reference",
@@ -3790,6 +3898,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "ModelVersionReadStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ModelVersionReadStatusEnum",
               "type": "reference",
@@ -3805,6 +3914,7 @@ Upload a document to be indexed and used for search.
 * \`CREATION_FAILED\` - Creation Failed
 * \`DISABLED\` - Disabled",
       "generatedName": "ModelVersionReadStatusEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3839,6 +3949,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelVersionSandboxSnapshot",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3915,6 +4026,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "NormalizedLogProbs",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -3927,6 +4039,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "NormalizedLogProbsTokensItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "NormalizedTokenLogProbs",
               "type": "reference",
@@ -3957,6 +4070,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "NormalizedTokenLogProbs",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4042,6 +4156,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PaginatedSlimDocumentList",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4117,6 +4232,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "PaginatedSlimDocumentListResultsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SlimDocument",
                 "type": "reference",
@@ -4141,6 +4257,7 @@ Upload a document to be indexed and used for search.
 * \`PROCESSED\` - Processed
 * \`FAILED\` - Failed",
       "generatedName": "ProcessingStateEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4175,6 +4292,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptNodeResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4184,6 +4302,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "PromptNodeResultData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PromptNodeResultData",
             "type": "reference",
@@ -4197,6 +4316,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptNodeResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4265,6 +4385,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateBlock",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4288,6 +4409,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "PromptTemplateBlockBlockType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BlockTypeEnum",
             "type": "reference",
@@ -4300,6 +4422,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "PromptTemplateBlockProperties",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PromptTemplateBlockProperties",
             "type": "reference",
@@ -4313,6 +4436,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateBlockData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4337,6 +4461,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "PromptTemplateBlockDataBlocksItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "PromptTemplateBlock",
               "type": "reference",
@@ -4351,6 +4476,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateBlockDataRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4375,6 +4501,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "PromptTemplateBlockDataRequestBlocksItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "PromptTemplateBlockRequest",
               "type": "reference",
@@ -4389,6 +4516,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateBlockProperties",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4404,6 +4532,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "PromptTemplateBlockPropertiesChatRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ChatMessageRole",
                 "type": "reference",
@@ -4462,6 +4591,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "PromptTemplateBlockPropertiesTemplateType",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ContentType",
                 "type": "reference",
@@ -4558,6 +4688,7 @@ Upload a document to be indexed and used for search.
                 "value": {
                   "description": undefined,
                   "generatedName": "PromptTemplateBlockPropertiesBlocksItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "PromptTemplateBlock",
                   "type": "reference",
@@ -4574,6 +4705,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateBlockPropertiesRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4589,6 +4721,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "PromptTemplateBlockPropertiesRequestChatRole",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ChatMessageRole",
                 "type": "reference",
@@ -4647,6 +4780,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "PromptTemplateBlockPropertiesRequestTemplateType",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ContentType",
                 "type": "reference",
@@ -4743,6 +4877,7 @@ Upload a document to be indexed and used for search.
                 "value": {
                   "description": undefined,
                   "generatedName": "PromptTemplateBlockPropertiesRequestBlocksItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "PromptTemplateBlockRequest",
                   "type": "reference",
@@ -4759,6 +4894,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateBlockRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4782,6 +4918,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "PromptTemplateBlockRequestBlockType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BlockTypeEnum",
             "type": "reference",
@@ -4794,6 +4931,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "PromptTemplateBlockRequestProperties",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PromptTemplateBlockPropertiesRequest",
             "type": "reference",
@@ -4807,6 +4945,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateInputVariable",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4831,6 +4970,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PromptTemplateInputVariableRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4860,6 +5000,7 @@ Upload a document to be indexed and used for search.
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
       "generatedName": "ProviderEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4918,6 +5059,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisterPromptErrorResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4942,6 +5084,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisterPromptModelParametersRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5087,6 +5230,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisterPromptPrompt",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5125,6 +5269,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisterPromptPromptInfoRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5150,6 +5295,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "RegisterPromptPromptInfoRequestPromptBlockData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PromptTemplateBlockDataRequest",
             "type": "reference",
@@ -5165,6 +5311,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "RegisterPromptPromptInfoRequestInputVariablesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "PromptTemplateInputVariableRequest",
               "type": "reference",
@@ -5179,6 +5326,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisterPromptRequestRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5216,6 +5364,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about how to execute the prompt template.",
             "generatedName": "RegisterPromptRequestRequestPrompt",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisterPromptPromptInfoRequest",
             "type": "reference",
@@ -5237,6 +5386,7 @@ Upload a document to be indexed and used for search.
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
             "generatedName": "RegisterPromptRequestRequestProvider",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ProviderEnum",
             "type": "reference",
@@ -5263,6 +5413,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "The initial model parameters to use for  this prompt",
             "generatedName": "RegisterPromptRequestRequestParameters",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisterPromptModelParametersRequest",
             "type": "reference",
@@ -5301,6 +5452,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisterPromptResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5310,6 +5462,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about the generated prompt",
             "generatedName": "RegisterPromptResponsePrompt",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisterPromptPrompt",
             "type": "reference",
@@ -5322,6 +5475,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about the generated sandbox snapshot",
             "generatedName": "RegisterPromptResponseSandboxSnapshot",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisteredPromptSandboxSnapshot",
             "type": "reference",
@@ -5334,6 +5488,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about the generated sandbox",
             "generatedName": "RegisterPromptResponseSandbox",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisteredPromptSandbox",
             "type": "reference",
@@ -5346,6 +5501,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about the generated model version",
             "generatedName": "RegisterPromptResponseModelVersion",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisteredPromptModelVersion",
             "type": "reference",
@@ -5358,6 +5514,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Information about the generated deployment",
             "generatedName": "RegisterPromptResponseDeployment",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "RegisteredPromptDeployment",
             "type": "reference",
@@ -5371,6 +5528,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisteredPromptDeployment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5423,6 +5581,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisteredPromptModelVersion",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5461,6 +5620,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisteredPromptSandbox",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5499,6 +5659,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RegisteredPromptSandboxSnapshot",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5523,6 +5684,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SandboxMetricInputParams",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5538,6 +5700,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SandboxMetricInputParamsParams",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "EvaluationParams",
                 "type": "reference",
@@ -5553,6 +5716,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SandboxMetricInputParamsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5568,6 +5732,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SandboxMetricInputParamsRequestParams",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "EvaluationParamsRequest",
                 "type": "reference",
@@ -5583,6 +5748,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SandboxNodeResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5592,6 +5758,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "SandboxNodeResultData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SandboxNodeResultData",
             "type": "reference",
@@ -5605,6 +5772,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SandboxNodeResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5673,6 +5841,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SandboxScenario",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5703,6 +5872,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "SandboxScenarioInputsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ScenarioInput",
               "type": "reference",
@@ -5730,6 +5900,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "SandboxScenarioMetricInputParams",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SandboxMetricInputParams",
             "type": "reference",
@@ -5743,6 +5914,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ScenarioInput",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5772,6 +5944,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "ScenarioInputType",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ScenarioInputTypeEnum",
                 "type": "reference",
@@ -5810,6 +5983,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "ScenarioInputChatHistoryItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ChatMessage",
                 "type": "reference",
@@ -5825,6 +5999,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ScenarioInputRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5854,6 +6029,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "ScenarioInputRequestType",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ScenarioInputTypeEnum",
                 "type": "reference",
@@ -5892,6 +6068,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "ScenarioInputRequestChatHistoryItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ChatMessageRequest",
                 "type": "reference",
@@ -5906,6 +6083,7 @@ Upload a document to be indexed and used for search.
       "description": "* \`TEXT\` - Text
 * \`CHAT_HISTORY\` - Chat History",
       "generatedName": "ScenarioInputTypeEnum",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5928,6 +6106,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchErrorResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5952,6 +6131,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchFiltersRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5988,6 +6168,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchNodeResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5997,6 +6178,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "SearchNodeResultData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SearchNodeResultData",
             "type": "reference",
@@ -6010,6 +6192,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchNodeResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6103,6 +6286,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchRequestBodyRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6176,6 +6360,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SearchRequestBodyRequestOptions",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SearchRequestOptionsRequest",
                 "type": "reference",
@@ -6191,6 +6376,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchRequestOptionsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6226,6 +6412,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SearchRequestOptionsRequestWeights",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SearchWeightsRequest",
                 "type": "reference",
@@ -6246,6 +6433,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SearchRequestOptionsRequestResultMerging",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SearchResultMergingRequest",
                 "type": "reference",
@@ -6266,6 +6454,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SearchRequestOptionsRequestFilters",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SearchFiltersRequest",
                 "type": "reference",
@@ -6281,6 +6470,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6293,6 +6483,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "SearchResponseResultsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SearchResult",
               "type": "reference",
@@ -6307,6 +6498,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6316,6 +6508,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "The document that contains the chunk that matched the search query.",
             "generatedName": "SearchResultDocument",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Document",
             "type": "reference",
@@ -6373,6 +6566,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchResultMergingRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6395,6 +6589,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SearchWeightsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6429,6 +6624,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SlimDocument",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6508,6 +6704,7 @@ Upload a document to be indexed and used for search.
 * \`PROCESSED\` - Processed
 * \`FAILED\` - Failed",
               "generatedName": "SlimDocumentProcessingState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ProcessingStateEnum",
               "type": "reference",
@@ -6529,6 +6726,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "SlimDocumentProcessingFailureReason",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ProcessingFailureReasonEnum",
                 "type": "reference",
@@ -6548,6 +6746,7 @@ Upload a document to be indexed and used for search.
 
 * \`ACTIVE\` - Active",
               "generatedName": "SlimDocumentStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SlimDocumentStatusEnum",
               "type": "reference",
@@ -6586,6 +6785,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "SlimDocumentDocumentToDocumentIndexesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "DocumentDocumentToDocumentIndex",
               "type": "reference",
@@ -6608,6 +6808,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SubmitCompletionActualRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6724,6 +6925,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SubmitCompletionActualsErrorResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6748,6 +6950,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SubmitCompletionActualsRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6804,6 +7007,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "SubmitCompletionActualsRequestActualsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SubmitCompletionActualRequest",
               "type": "reference",
@@ -6818,6 +7022,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TerminalNodeChatHistoryResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6844,6 +7049,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "TerminalNodeChatHistoryResultValueItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ChatMessage",
               "type": "reference",
@@ -6858,6 +7064,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TerminalNodeJsonResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6903,6 +7110,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TerminalNodeResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6912,6 +7120,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "TerminalNodeResultData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TerminalNodeResultData",
             "type": "reference",
@@ -6925,6 +7134,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TerminalNodeResultData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6934,6 +7144,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "TerminalNodeResultDataOutput",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TerminalNodeResultOutput",
             "type": "reference",
@@ -6948,11 +7159,13 @@ Upload a document to be indexed and used for search.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "TerminalNodeResultOutput",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "CHAT_HISTORY": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTerminalNodeChatHistoryResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TerminalNodeChatHistoryResult",
             "type": "reference",
@@ -6960,6 +7173,7 @@ Upload a document to be indexed and used for search.
           "JSON": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTerminalNodeJsonResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TerminalNodeJsonResult",
             "type": "reference",
@@ -6967,6 +7181,7 @@ Upload a document to be indexed and used for search.
           "STRING": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTerminalNodeStringResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TerminalNodeStringResult",
             "type": "reference",
@@ -6981,6 +7196,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TerminalNodeStringResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7019,6 +7235,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TestSuiteTestCase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7089,6 +7306,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
             "generatedName": "TestSuiteTestCaseEvaluationParams",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "EvaluationParams",
             "type": "reference",
@@ -7102,6 +7320,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TestSuiteTestCaseRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7172,6 +7391,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
             "generatedName": "TestSuiteTestCaseRequestEvaluationParams",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "EvaluationParamsRequest",
             "type": "reference",
@@ -7185,6 +7405,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UploadDocumentBodyRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7297,6 +7518,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UploadDocumentErrorResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7321,6 +7543,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UploadDocumentResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7345,6 +7568,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UpsertSandboxScenarioRequestRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7375,6 +7599,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "UpsertSandboxScenarioRequestRequestInputsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ScenarioInputRequest",
               "type": "reference",
@@ -7409,6 +7634,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "UpsertSandboxScenarioRequestRequestMetricInputParams",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SandboxMetricInputParamsRequest",
               "type": "reference",
@@ -7423,6 +7649,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowEventError",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7446,6 +7673,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowEventErrorCode",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowExecutionEventErrorCode",
             "type": "reference",
@@ -7458,6 +7686,7 @@ Upload a document to be indexed and used for search.
       "description": "* \`WORKFLOW_INITIALIZATION\` - WORKFLOW_INITIALIZATION
 * \`NODE_EXECUTION\` - NODE_EXECUTION",
       "generatedName": "WorkflowExecutionEventErrorCode",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -7480,6 +7709,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowExecutionNodeResultEvent",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7525,6 +7755,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowExecutionNodeResultEventData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowNodeResultEvent",
             "type": "reference",
@@ -7538,6 +7769,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowExecutionWorkflowResultEvent",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7583,6 +7815,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowExecutionWorkflowResultEventData",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowResultEvent",
             "type": "reference",
@@ -7597,11 +7830,13 @@ Upload a document to be indexed and used for search.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "WorkflowNodeResultData",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "CONDITIONAL": {
             "description": undefined,
             "generatedName": "ComponentsSchemasConditionalNodeResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ConditionalNodeResult",
             "type": "reference",
@@ -7609,6 +7844,7 @@ Upload a document to be indexed and used for search.
           "DEPLOYMENT": {
             "description": undefined,
             "generatedName": "ComponentsSchemasDeploymentNodeResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "DeploymentNodeResult",
             "type": "reference",
@@ -7616,6 +7852,7 @@ Upload a document to be indexed and used for search.
           "PROMPT": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPromptNodeResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PromptNodeResult",
             "type": "reference",
@@ -7623,6 +7860,7 @@ Upload a document to be indexed and used for search.
           "SANDBOX": {
             "description": undefined,
             "generatedName": "ComponentsSchemasSandboxNodeResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SandboxNodeResult",
             "type": "reference",
@@ -7630,6 +7868,7 @@ Upload a document to be indexed and used for search.
           "SEARCH": {
             "description": undefined,
             "generatedName": "ComponentsSchemasSearchNodeResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SearchNodeResult",
             "type": "reference",
@@ -7637,6 +7876,7 @@ Upload a document to be indexed and used for search.
           "TERMINAL": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTerminalNodeResult",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TerminalNodeResult",
             "type": "reference",
@@ -7651,6 +7891,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowNodeResultEvent",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7702,6 +7943,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowNodeResultEventState",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowNodeResultEventState",
             "type": "reference",
@@ -7737,6 +7979,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "WorkflowNodeResultEventData",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WorkflowNodeResultData",
               "type": "reference",
@@ -7756,6 +7999,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "WorkflowNodeResultEventError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "WorkflowEventError",
                 "type": "reference",
@@ -7772,6 +8016,7 @@ Upload a document to be indexed and used for search.
 * \`FULFILLED\` - FULFILLED
 * \`REJECTED\` - REJECTED",
       "generatedName": "WorkflowNodeResultEventState",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -7806,6 +8051,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowRequestChatHistoryInputRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7832,6 +8078,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "WorkflowRequestChatHistoryInputRequestValueItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ChatMessageRequest",
               "type": "reference",
@@ -7847,11 +8094,13 @@ Upload a document to be indexed and used for search.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "WorkflowRequestInputRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "CHAT_HISTORY": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowRequestChatHistoryInputRequest",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowRequestChatHistoryInputRequest",
             "type": "reference",
@@ -7859,6 +8108,7 @@ Upload a document to be indexed and used for search.
           "JSON": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowRequestJsonInputRequest",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowRequestJSONInputRequest",
             "type": "reference",
@@ -7866,6 +8116,7 @@ Upload a document to be indexed and used for search.
           "STRING": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowRequestStringInputRequest",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowRequestStringInputRequest",
             "type": "reference",
@@ -7880,6 +8131,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowRequestJsonInputRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7925,6 +8177,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowRequestStringInputRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7963,6 +8216,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowResultEvent",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7986,6 +8240,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowResultEventState",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowNodeResultEventState",
             "type": "reference",
@@ -8013,6 +8268,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "description": undefined,
               "generatedName": "WorkflowResultEventOutput",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "WorkflowResultEventOutputData",
               "type": "reference",
@@ -8032,6 +8288,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "description": undefined,
                 "generatedName": "WorkflowResultEventError",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "WorkflowEventError",
                 "type": "reference",
@@ -8048,11 +8305,13 @@ Upload a document to be indexed and used for search.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "WorkflowResultEventOutputData",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "CHAT_HISTORY": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowResultEventOutputDataChatHistory",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowResultEventOutputDataChatHistory",
             "type": "reference",
@@ -8060,6 +8319,7 @@ Upload a document to be indexed and used for search.
           "JSON": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowResultEventOutputDataJson",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowResultEventOutputDataJSON",
             "type": "reference",
@@ -8067,6 +8327,7 @@ Upload a document to be indexed and used for search.
           "STRING": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowResultEventOutputDataString",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowResultEventOutputDataString",
             "type": "reference",
@@ -8081,6 +8342,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowResultEventOutputDataChatHistory",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8104,6 +8366,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowResultEventOutputDataChatHistoryState",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowNodeResultEventState",
             "type": "reference",
@@ -8157,6 +8420,7 @@ Upload a document to be indexed and used for search.
                 "value": {
                   "description": undefined,
                   "generatedName": "WorkflowResultEventOutputDataChatHistoryValueItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "ChatMessage",
                   "type": "reference",
@@ -8173,6 +8437,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowResultEventOutputDataJson",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8196,6 +8461,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowResultEventOutputDataJsonState",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowNodeResultEventState",
             "type": "reference",
@@ -8266,6 +8532,7 @@ Upload a document to be indexed and used for search.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkflowResultEventOutputDataString",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8289,6 +8556,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "description": undefined,
             "generatedName": "WorkflowResultEventOutputDataStringState",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowNodeResultEventState",
             "type": "reference",
@@ -8353,11 +8621,13 @@ Upload a document to be indexed and used for search.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "WorkflowStreamEvent",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "NODE": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowExecutionNodeResultEvent",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowExecutionNodeResultEvent",
             "type": "reference",
@@ -8365,6 +8635,7 @@ Upload a document to be indexed and used for search.
           "WORKFLOW": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorkflowExecutionWorkflowResultEvent",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "WorkflowExecutionWorkflowResultEvent",
             "type": "reference",

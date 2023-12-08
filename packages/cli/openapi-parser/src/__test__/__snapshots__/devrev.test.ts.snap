@@ -48,6 +48,7 @@ exports[`open api parser devrev parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ArtifactsLocateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "artifacts-locate-response",
           "type": "reference",
@@ -90,6 +91,7 @@ exports[`open api parser devrev parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ArtifactsPrepareRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "artifacts-prepare-request",
           "type": "reference",
@@ -102,6 +104,7 @@ exports[`open api parser devrev parse open api 1`] = `
         "schema": {
           "description": undefined,
           "generatedName": "ArtifactsPrepareResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "artifacts-prepare-response",
           "type": "reference",
@@ -145,6 +148,7 @@ authenticated user.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-create-request",
           "type": "reference",
@@ -157,6 +161,7 @@ authenticated user.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-create-response",
           "type": "reference",
@@ -212,6 +217,7 @@ given Dev organization.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-delete-request",
           "type": "reference",
@@ -274,6 +280,7 @@ given Dev organization.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-get-response",
           "type": "reference",
@@ -366,6 +373,7 @@ response will include tokens of all the types.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensListRequestRequestedTokenType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-requested-token-type",
               "type": "reference",
@@ -400,6 +408,7 @@ subject.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-list-response",
           "type": "reference",
@@ -460,6 +469,7 @@ authenticated user.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensSelfDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-self-delete-request",
           "type": "reference",
@@ -506,6 +516,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-update-request",
           "type": "reference",
@@ -518,6 +529,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "AuthTokensUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "auth-tokens-update-response",
           "type": "reference",
@@ -565,6 +577,7 @@ enterprise connections can be created by an organization.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-create-request",
           "type": "reference",
@@ -577,6 +590,7 @@ enterprise connections can be created by an organization.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-create-response",
           "type": "reference",
@@ -623,6 +637,7 @@ connections can not be deleted using this method.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-delete-request",
           "type": "reference",
@@ -683,6 +698,7 @@ connections can not be deleted using this method.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-get-response",
           "type": "reference",
@@ -746,6 +762,7 @@ created by the user.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-list-response",
           "type": "reference",
@@ -794,6 +811,7 @@ disabled.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsToggleRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-toggle-request",
           "type": "reference",
@@ -839,6 +857,7 @@ disabled.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-update-request",
           "type": "reference",
@@ -851,6 +870,7 @@ disabled.
         "schema": {
           "description": undefined,
           "generatedName": "DevOrgAuthConnectionsUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-org-auth-connections-update-response",
           "type": "reference",
@@ -990,6 +1010,7 @@ used.
             "value": {
               "description": undefined,
               "generatedName": "DevUsersListRequestMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "list-mode",
               "type": "reference",
@@ -1030,6 +1051,7 @@ used.
               "value": {
                 "description": undefined,
                 "generatedName": "DevUsersListRequestStateItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "user-state",
                 "type": "reference",
@@ -1045,6 +1067,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "DevUsersListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-users-list-response",
           "type": "reference",
@@ -1087,6 +1110,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "DevUsersSelfResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "dev-users-self-response",
           "type": "reference",
@@ -1128,6 +1152,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-create-request",
           "type": "reference",
@@ -1140,6 +1165,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-create-response",
           "type": "reference",
@@ -1204,6 +1230,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-delete-request",
           "type": "reference",
@@ -1216,6 +1243,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-delete-response",
           "type": "reference",
@@ -1274,6 +1302,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-get-response",
           "type": "reference",
@@ -1413,6 +1442,7 @@ used.
             "value": {
               "description": undefined,
               "generatedName": "PartsListRequestMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "list-mode",
               "type": "reference",
@@ -1473,6 +1503,7 @@ used.
               "value": {
                 "description": undefined,
                 "generatedName": "PartsListRequestTypeItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "part-type",
                 "type": "reference",
@@ -1488,6 +1519,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-list-response",
           "type": "reference",
@@ -1531,6 +1563,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-update-request",
           "type": "reference",
@@ -1543,6 +1576,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "PartsUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "parts-update-response",
           "type": "reference",
@@ -1586,6 +1620,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-create-request",
           "type": "reference",
@@ -1598,6 +1633,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-create-response",
           "type": "reference",
@@ -1662,6 +1698,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-delete-request",
           "type": "reference",
@@ -1674,6 +1711,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-delete-response",
           "type": "reference",
@@ -1731,6 +1769,7 @@ organization.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-get-response",
           "type": "reference",
@@ -1915,6 +1954,7 @@ used.
             "value": {
               "description": undefined,
               "generatedName": "RevOrgsListRequestMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "list-mode",
               "type": "reference",
@@ -1985,6 +2025,7 @@ them.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-list-response",
           "type": "reference",
@@ -2027,6 +2068,7 @@ them.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-update-request",
           "type": "reference",
@@ -2039,6 +2081,7 @@ them.
         "schema": {
           "description": undefined,
           "generatedName": "RevOrgsUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "rev-orgs-update-response",
           "type": "reference",
@@ -2082,6 +2125,7 @@ and a logical concept denoted by the tag's name.
         "schema": {
           "description": undefined,
           "generatedName": "TagsCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-create-request",
           "type": "reference",
@@ -2094,6 +2138,7 @@ and a logical concept denoted by the tag's name.
         "schema": {
           "description": undefined,
           "generatedName": "TagsCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-create-response",
           "type": "reference",
@@ -2158,6 +2203,7 @@ and a logical concept denoted by the tag's name.
         "schema": {
           "description": undefined,
           "generatedName": "TagsDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-delete-request",
           "type": "reference",
@@ -2170,6 +2216,7 @@ and a logical concept denoted by the tag's name.
         "schema": {
           "description": undefined,
           "generatedName": "TagsDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-delete-response",
           "type": "reference",
@@ -2227,6 +2274,7 @@ and a logical concept denoted by the tag's name.
         "schema": {
           "description": undefined,
           "generatedName": "TagsGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-get-response",
           "type": "reference",
@@ -2331,6 +2379,7 @@ used.
             "value": {
               "description": undefined,
               "generatedName": "TagsListRequestMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "list-mode",
               "type": "reference",
@@ -2345,6 +2394,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TagsListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-list-response",
           "type": "reference",
@@ -2387,6 +2437,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TagsUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-update-request",
           "type": "reference",
@@ -2399,6 +2450,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TagsUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "tags-update-response",
           "type": "reference",
@@ -2440,6 +2492,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entries-create-request",
           "type": "reference",
@@ -2452,6 +2505,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entries-create-response",
           "type": "reference",
@@ -2509,6 +2563,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entries-get-response",
           "type": "reference",
@@ -2639,6 +2694,7 @@ used.
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesListRequestMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "list-mode",
               "type": "reference",
@@ -2653,6 +2709,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entries-list-response",
           "type": "reference",
@@ -2694,6 +2751,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entries-update-request",
           "type": "reference",
@@ -2706,6 +2764,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "TimelineEntriesUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entries-update-response",
           "type": "reference",
@@ -2747,6 +2806,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-create-request",
           "type": "reference",
@@ -2759,6 +2819,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-create-response",
           "type": "reference",
@@ -2823,6 +2884,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-delete-request",
           "type": "reference",
@@ -2835,6 +2897,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-delete-response",
           "type": "reference",
@@ -2892,6 +2955,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-get-response",
           "type": "reference",
@@ -2950,6 +3014,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-list-response",
           "type": "reference",
@@ -2992,6 +3057,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-update-request",
           "type": "reference",
@@ -3004,6 +3070,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WebhooksUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "webhooks-update-response",
           "type": "reference",
@@ -3047,6 +3114,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WorksCreateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-create-request",
           "type": "reference",
@@ -3059,6 +3127,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WorksCreateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-create-response",
           "type": "reference",
@@ -3123,6 +3192,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WorksDeleteRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-delete-request",
           "type": "reference",
@@ -3135,6 +3205,7 @@ used.
         "schema": {
           "description": undefined,
           "generatedName": "WorksDeleteResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-delete-response",
           "type": "reference",
@@ -3294,6 +3365,7 @@ is '5000'.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksExportRequestIssuePriorityItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "issue-priority",
                 "type": "reference",
@@ -3400,6 +3472,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksExportRequestTicketSeverityItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ticket-severity",
                 "type": "reference",
@@ -3419,6 +3492,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksExportRequestTypeItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "work-type",
                 "type": "reference",
@@ -3434,6 +3508,7 @@ organizations.
         "schema": {
           "description": undefined,
           "generatedName": "WorksExportResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-export-response",
           "type": "reference",
@@ -3491,6 +3566,7 @@ organizations.
         "schema": {
           "description": undefined,
           "generatedName": "WorksGetResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-get-response",
           "type": "reference",
@@ -3659,6 +3735,7 @@ starts from the beginning.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksListRequestIssuePriorityItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "issue-priority",
                 "type": "reference",
@@ -3715,6 +3792,7 @@ used.
             "value": {
               "description": undefined,
               "generatedName": "WorksListRequestMode",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "list-mode",
               "type": "reference",
@@ -3798,6 +3876,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksListRequestTicketSeverityItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ticket-severity",
                 "type": "reference",
@@ -3817,6 +3896,7 @@ organizations.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksListRequestTypeItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "work-type",
                 "type": "reference",
@@ -3832,6 +3912,7 @@ organizations.
         "schema": {
           "description": undefined,
           "generatedName": "WorksListResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-list-response",
           "type": "reference",
@@ -3874,6 +3955,7 @@ organizations.
         "schema": {
           "description": undefined,
           "generatedName": "WorksUpdateRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-update-request",
           "type": "reference",
@@ -3886,6 +3968,7 @@ organizations.
         "schema": {
           "description": undefined,
           "generatedName": "WorksUpdateResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "works-update-response",
           "type": "reference",
@@ -3908,6 +3991,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "BadRequestErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-bad-request",
         "type": "reference",
@@ -3920,6 +4004,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "UnauthorizedErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-unauthorized",
         "type": "reference",
@@ -3932,6 +4017,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "ForbiddenErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-forbidden",
         "type": "reference",
@@ -3944,6 +4030,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "NotFoundErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-not-found",
         "type": "reference",
@@ -3956,6 +4043,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "TooManyRequestsErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-too-many-requests",
         "type": "reference",
@@ -3968,6 +4056,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "InternalServerErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-internal-server-error",
         "type": "reference",
@@ -3980,6 +4069,7 @@ organizations.
       "schema": {
         "description": undefined,
         "generatedName": "ServiceUnavailableErrorBody",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schema": "error-service-unavailable",
         "type": "reference",
@@ -4130,6 +4220,7 @@ organizations.
     "artifact-summary": {
       "description": undefined,
       "generatedName": "ArtifactSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "atom-base-summary",
       "type": "reference",
@@ -4139,6 +4230,7 @@ organizations.
       "allOfPropertyConflicts": [],
       "description": "The response to getting an artifact's download URL.",
       "generatedName": "ArtifactsLocateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4179,6 +4271,7 @@ organizations.
       "allOfPropertyConflicts": [],
       "description": "The request to prepare a URL to upload a file.",
       "generatedName": "ArtifactsPrepareRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4203,6 +4296,7 @@ organizations.
       "allOfPropertyConflicts": [],
       "description": "The response to preparing a URL to upload a file.",
       "generatedName": "ArtifactsPrepareResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4215,6 +4309,7 @@ organizations.
             "value": {
               "description": undefined,
               "generatedName": "ArtifactsPrepareResponseFormDataItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "artifacts-prepare-response-form-data",
               "type": "reference",
@@ -4257,6 +4352,7 @@ organizations.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ArtifactsPrepareResponseFormData",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4295,6 +4391,7 @@ organizations.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AtomBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4307,6 +4404,7 @@ organizations.
             "value": {
               "description": undefined,
               "generatedName": "AtomBaseCreatedBy",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "user-summary",
               "type": "reference",
@@ -4371,6 +4469,7 @@ organizations.
             "value": {
               "description": undefined,
               "generatedName": "AtomBaseModifiedBy",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "user-summary",
               "type": "reference",
@@ -4401,6 +4500,7 @@ organizations.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AtomBaseSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4503,11 +4603,13 @@ authentication connection that is set up for a Dev organization.
 ",
         "discriminantProperty": "type",
         "generatedName": "AuthConnection",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "google_apps": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsGoogleApps",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-google-apps",
             "type": "reference",
@@ -4515,6 +4617,7 @@ authentication connection that is set up for a Dev organization.
           "oidc": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsOidc",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-oidc",
             "type": "reference",
@@ -4522,6 +4625,7 @@ authentication connection that is set up for a Dev organization.
           "samlp": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsSaml",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-saml",
             "type": "reference",
@@ -4529,6 +4633,7 @@ authentication connection that is set up for a Dev organization.
           "social": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsSocial",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-social",
             "type": "reference",
@@ -4536,6 +4641,7 @@ authentication connection that is set up for a Dev organization.
           "waad": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsAzureAd",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-azure-ad",
             "type": "reference",
@@ -4552,6 +4658,7 @@ authentication connection that is set up for a Dev organization.
 authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsAzureAd",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4618,6 +4725,7 @@ authentication connection.
 authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsGoogleApps",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4686,6 +4794,7 @@ authentication connection.
 authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsOidc",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4752,6 +4861,7 @@ authentication connection.
 authentication connection.
 ",
       "generatedName": "AuthConnectionOptionsSaml",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4813,6 +4923,7 @@ authentication connection.
     "auth-connection-toggle": {
       "description": undefined,
       "generatedName": "AuthConnectionToggle",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4835,6 +4946,7 @@ authentication connection.
 for each authentication connection will depend on the type value.
 ",
       "generatedName": "AuthConnectionType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -4875,6 +4987,7 @@ for each authentication connection will depend on the type value.
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -4883,6 +4996,7 @@ for each authentication connection will depend on the type value.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "AuthToken",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -4947,6 +5061,7 @@ token. Only applicable for application access tokens.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokenRequestedTokenType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-requested-token-type",
               "type": "reference",
@@ -4985,6 +5100,7 @@ token. Only applicable for application access tokens.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokenStatus",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-status",
               "type": "reference",
@@ -5033,6 +5149,7 @@ token. Only applicable for application access tokens.
     "auth-token-grant-type": {
       "description": "Specifies the process of obtaining a token.",
       "generatedName": "AuthTokenGrantType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5053,6 +5170,7 @@ token. Only applicable for application access tokens.
     "auth-token-requested-token-type": {
       "description": "The type of the requested token.",
       "generatedName": "AuthTokenRequestedTokenType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5115,6 +5233,7 @@ token. Only applicable for application access tokens.
     "auth-token-status": {
       "description": "The status of the token.",
       "generatedName": "AuthTokenStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5141,6 +5260,7 @@ token. Only applicable for application access tokens.
     "auth-token-subject-token-type": {
       "description": "The type of the subject token.",
       "generatedName": "AuthTokenSubjectTokenType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -5204,6 +5324,7 @@ token. Only applicable for application access tokens.
 type.
 ",
       "generatedName": "AuthTokensCreateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5277,6 +5398,7 @@ This client_id is only associated with an AAT.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestGrantType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-grant-type",
               "type": "reference",
@@ -5293,6 +5415,7 @@ This client_id is only associated with an AAT.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestRequestedTokenType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-requested-token-type",
               "type": "reference",
@@ -5309,6 +5432,7 @@ This client_id is only associated with an AAT.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestRevInfo",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-tokens-rev-info",
               "type": "reference",
@@ -5366,6 +5490,7 @@ requesting an application access token (AAT).
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensCreateRequestSubjectTokenType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-subject-token-type",
               "type": "reference",
@@ -5400,6 +5525,7 @@ requesting an application access token (AAT).
 requested token type.
 ",
       "generatedName": "AuthTokensCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5498,6 +5624,7 @@ of values in which the order of values does not matter.
           "schema": {
             "description": undefined,
             "generatedName": "AuthTokensCreateResponseTokenType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-token-token-type",
             "type": "reference",
@@ -5511,6 +5638,7 @@ of values in which the order of values does not matter.
       "allOfPropertyConflicts": [],
       "description": "The request to revoke the token.",
       "generatedName": "AuthTokensDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5542,6 +5670,7 @@ JTI claim of the token in the authorization header.
       "allOfPropertyConflicts": [],
       "description": "The response to get the token metadata.",
       "generatedName": "AuthTokensGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5551,6 +5680,7 @@ JTI claim of the token in the authorization header.
           "schema": {
             "description": undefined,
             "generatedName": "AuthTokensGetResponseToken",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-token",
             "type": "reference",
@@ -5564,6 +5694,7 @@ JTI claim of the token in the authorization header.
       "allOfPropertyConflicts": [],
       "description": "The response to list the token metadata.",
       "generatedName": "AuthTokensListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5576,6 +5707,7 @@ JTI claim of the token in the authorization header.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensListResponseTokensItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token",
               "type": "reference",
@@ -5590,6 +5722,7 @@ JTI claim of the token in the authorization header.
       "allOfPropertyConflicts": [],
       "description": "Carries Rev org info.",
       "generatedName": "AuthTokensOrgTraits",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5638,6 +5771,7 @@ JTI claim of the token in the authorization header.
 issue a Rev session token.
 ",
       "generatedName": "AuthTokensRevInfo",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5668,6 +5802,7 @@ issue a Rev session token.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensRevInfoOrgTraits",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-tokens-org-traits",
               "type": "reference",
@@ -5716,6 +5851,7 @@ issue a Rev session token.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensRevInfoUserTraits",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-tokens-user-traits",
               "type": "reference",
@@ -5732,6 +5868,7 @@ issue a Rev session token.
 that match with the provided token type.
 ",
       "generatedName": "AuthTokensSelfDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5744,6 +5881,7 @@ that match with the provided token type.
             "value": {
               "description": undefined,
               "generatedName": "AuthTokensSelfDeleteRequestRequestedTokenType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-token-requested-token-type",
               "type": "reference",
@@ -5758,6 +5896,7 @@ that match with the provided token type.
       "allOfPropertyConflicts": [],
       "description": "A request to update the token metadata.",
       "generatedName": "AuthTokensUpdateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5797,6 +5936,7 @@ that match with the provided token type.
       "allOfPropertyConflicts": [],
       "description": "Response for the request to update the token metadata.",
       "generatedName": "AuthTokensUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5806,6 +5946,7 @@ that match with the provided token type.
           "schema": {
             "description": undefined,
             "generatedName": "AuthTokensUpdateResponseToken",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-token",
             "type": "reference",
@@ -5819,6 +5960,7 @@ that match with the provided token type.
       "allOfPropertyConflicts": [],
       "description": "Carries Rev user info.",
       "generatedName": "AuthTokensUserTraits",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -5881,6 +6023,7 @@ that match with the provided token type.
     "capability": {
       "description": undefined,
       "generatedName": "Capability",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base",
       "type": "reference",
@@ -5888,6 +6031,7 @@ that match with the provided token type.
     "capability-summary": {
       "description": undefined,
       "generatedName": "CapabilitySummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base-summary",
       "type": "reference",
@@ -5924,11 +6068,13 @@ it would appear on the login button as 'Log in to abclogin'.
 ",
         "discriminantProperty": "type",
         "generatedName": "DevOrgAuthConnectionsCreateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "google_apps": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsGoogleApps",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-google-apps",
             "type": "reference",
@@ -5936,6 +6082,7 @@ it would appear on the login button as 'Log in to abclogin'.
           "oidc": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsOidc",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-oidc",
             "type": "reference",
@@ -5943,6 +6090,7 @@ it would appear on the login button as 'Log in to abclogin'.
           "samlp": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsSaml",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-saml",
             "type": "reference",
@@ -5950,6 +6098,7 @@ it would appear on the login button as 'Log in to abclogin'.
           "waad": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsAzureAd",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-azure-ad",
             "type": "reference",
@@ -5964,6 +6113,7 @@ it would appear on the login button as 'Log in to abclogin'.
 authentication connections have different configuration parameters.
 ",
       "generatedName": "DevOrgAuthConnectionsCreateRequestType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -6000,6 +6150,7 @@ authentication connections have different configuration parameters.
 connection.
 ",
       "generatedName": "DevOrgAuthConnectionsCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6009,6 +6160,7 @@ connection.
           "schema": {
             "description": undefined,
             "generatedName": "DevOrgAuthConnectionsCreateResponseAuthConnection",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection",
             "type": "reference",
@@ -6025,6 +6177,7 @@ organization. A default connection and a connection which is currently
 enabled cannot be deleted.
 ",
       "generatedName": "DevOrgAuthConnectionsDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6051,6 +6204,7 @@ enabled cannot be deleted.
 authentication connection.
 ",
       "generatedName": "DevOrgAuthConnectionsGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6060,6 +6214,7 @@ authentication connection.
           "schema": {
             "description": undefined,
             "generatedName": "DevOrgAuthConnectionsGetResponseAuthConnection",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection",
             "type": "reference",
@@ -6075,6 +6230,7 @@ authentication connection.
 authentication connections configured for a Dev organization.
 ",
       "generatedName": "DevOrgAuthConnectionsListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6089,6 +6245,7 @@ a Dev organization.
             "value": {
               "description": undefined,
               "generatedName": "DevOrgAuthConnectionsListResponseAuthConnectionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-connection",
               "type": "reference",
@@ -6105,6 +6262,7 @@ a Dev organization.
 organization.
 ",
       "generatedName": "DevOrgAuthConnectionsToggleRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6131,6 +6289,7 @@ organization.
             "value": {
               "description": undefined,
               "generatedName": "DevOrgAuthConnectionsToggleRequestToggle",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "auth-connection-toggle",
               "type": "reference",
@@ -6186,11 +6345,13 @@ organization.
 ",
         "discriminantProperty": "type",
         "generatedName": "DevOrgAuthConnectionsUpdateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "google_apps": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsGoogleApps",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-google-apps",
             "type": "reference",
@@ -6198,6 +6359,7 @@ organization.
           "none": {
             "description": undefined,
             "generatedName": "ComponentsSchemasEmpty",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "empty",
             "type": "reference",
@@ -6205,6 +6367,7 @@ organization.
           "oidc": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsOidc",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-oidc",
             "type": "reference",
@@ -6212,6 +6375,7 @@ organization.
           "samlp": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsSaml",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-saml",
             "type": "reference",
@@ -6219,6 +6383,7 @@ organization.
           "waad": {
             "description": undefined,
             "generatedName": "ComponentsSchemasAuthConnectionOptionsAzureAd",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection-options-azure-ad",
             "type": "reference",
@@ -6234,6 +6399,7 @@ of authentication connections have different configuration parameters
 that can be updated.
 ",
       "generatedName": "DevOrgAuthConnectionsUpdateRequestType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -6276,6 +6442,7 @@ that can be updated.
 connection.
 ",
       "generatedName": "DevOrgAuthConnectionsUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6285,6 +6452,7 @@ connection.
           "schema": {
             "description": undefined,
             "generatedName": "DevOrgAuthConnectionsUpdateResponseAuthConnection",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "auth-connection",
             "type": "reference",
@@ -6298,6 +6466,7 @@ connection.
         {
           "description": undefined,
           "generatedName": "UserBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "user-base",
           "type": "reference",
@@ -6306,6 +6475,7 @@ connection.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DevUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6321,6 +6491,7 @@ connection.
               "value": {
                 "description": undefined,
                 "generatedName": "DevUserExternalIdentitiesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "external-identity",
                 "type": "reference",
@@ -6334,6 +6505,7 @@ connection.
     "dev-user-summary": {
       "description": undefined,
       "generatedName": "DevUserSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "user-base-summary",
       "type": "reference",
@@ -6343,6 +6515,7 @@ connection.
       "allOfPropertyConflicts": [],
       "description": "The response to listing the Dev users.",
       "generatedName": "DevUsersListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6355,6 +6528,7 @@ connection.
             "value": {
               "description": undefined,
               "generatedName": "DevUsersListResponseDevUsersItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "dev-user",
               "type": "reference",
@@ -6410,6 +6584,7 @@ sort order. If not set, then no prior elements exist.
       "description": "The response to getting the information for the authenticated user.
 ",
       "generatedName": "DevUsersSelfResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6419,6 +6594,7 @@ sort order. If not set, then no prior elements exist.
           "schema": {
             "description": undefined,
             "generatedName": "DevUsersSelfResponseDevUser",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "dev-user",
             "type": "reference",
@@ -6448,6 +6624,7 @@ sort order. If not set, then no prior elements exist.
         {
           "description": undefined,
           "generatedName": "PartBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "part-base",
           "type": "reference",
@@ -6456,6 +6633,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Enhancement",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6480,6 +6658,7 @@ sort order. If not set, then no prior elements exist.
     "enhancement-summary": {
       "description": undefined,
       "generatedName": "EnhancementSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base-summary",
       "type": "reference",
@@ -6489,6 +6668,7 @@ sort order. If not set, then no prior elements exist.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -6497,6 +6677,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorBadRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6506,6 +6687,7 @@ sort order. If not set, then no prior elements exist.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorBadRequestType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-bad-request-type",
             "type": "reference",
@@ -6535,6 +6717,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorBadRequestInvalidEnumValue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6591,6 +6774,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorBadRequestMissingRequiredField",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6629,6 +6813,7 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-type": {
       "description": undefined,
       "generatedName": "ErrorBadRequestType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -6669,6 +6854,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorBadRequestValueNotPermitted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6711,6 +6897,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6739,6 +6926,7 @@ sort order. If not set, then no prior elements exist.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -6747,6 +6935,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorForbidden",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6756,6 +6945,7 @@ sort order. If not set, then no prior elements exist.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorForbiddenType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-forbidden-type",
             "type": "reference",
@@ -6793,6 +6983,7 @@ sort order. If not set, then no prior elements exist.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -6801,6 +6992,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorInternalServerError",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6830,6 +7022,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorInternalServerErrorType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-internal-server-error-type",
             "type": "reference",
@@ -6867,6 +7060,7 @@ inquiry.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -6875,6 +7069,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorNotFound",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6884,6 +7079,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorNotFoundType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-not-found-type",
             "type": "reference",
@@ -6921,6 +7117,7 @@ inquiry.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -6929,6 +7126,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorServiceUnavailable",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -6938,6 +7136,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorServiceUnavailableType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-service-unavailable-type",
             "type": "reference",
@@ -6975,6 +7174,7 @@ inquiry.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -6983,6 +7183,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorTooManyRequests",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7009,6 +7210,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorTooManyRequestsType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-too-many-requests-type",
             "type": "reference",
@@ -7046,6 +7248,7 @@ inquiry.
         {
           "description": undefined,
           "generatedName": "ErrorBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "error-base",
           "type": "reference",
@@ -7054,6 +7257,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ErrorUnauthorized",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7063,6 +7267,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "ErrorUnauthorizedType",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "error-unauthorized-type",
             "type": "reference",
@@ -7100,6 +7305,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventPartCreated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7109,6 +7315,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventPartCreatedPart",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "part",
             "type": "reference",
@@ -7122,6 +7329,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventPartDeleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7146,6 +7354,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventPartUpdated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7155,6 +7364,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventPartUpdatedPart",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "part",
             "type": "reference",
@@ -7168,6 +7378,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventRevOrgCreated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7177,6 +7388,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventRevOrgCreatedRevOrg",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-org",
             "type": "reference",
@@ -7190,6 +7402,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventRevOrgDeleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7214,6 +7427,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventRevOrgUpdated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7223,6 +7437,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventRevOrgUpdatedRevOrg",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-org",
             "type": "reference",
@@ -7236,6 +7451,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventTagCreated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7245,6 +7461,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventTagCreatedTag",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "tag",
             "type": "reference",
@@ -7258,6 +7475,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventTagDeleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7282,6 +7500,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventTagUpdated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7291,6 +7510,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventTagUpdatedTag",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "tag",
             "type": "reference",
@@ -7304,6 +7524,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventTimelineEntryCreated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7313,6 +7534,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventTimelineEntryCreatedEntry",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entry",
             "type": "reference",
@@ -7326,6 +7548,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventTimelineEntryDeleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7350,6 +7573,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventTimelineEntryUpdated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7359,6 +7583,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventTimelineEntryUpdatedEntry",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entry",
             "type": "reference",
@@ -7372,6 +7597,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventWebhookCreated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7381,6 +7607,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventWebhookCreatedWebhook",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "webhook",
             "type": "reference",
@@ -7394,6 +7621,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventWebhookDeleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7418,6 +7646,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventWebhookUpdated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7427,6 +7656,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventWebhookUpdatedWebhook",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "webhook",
             "type": "reference",
@@ -7440,6 +7670,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventWorkCreated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7449,6 +7680,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventWorkCreatedWork",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "work",
             "type": "reference",
@@ -7462,6 +7694,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventWorkDeleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7486,6 +7719,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EventWorkUpdated",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7495,6 +7729,7 @@ inquiry.
           "schema": {
             "description": undefined,
             "generatedName": "EventWorkUpdatedWork",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "work",
             "type": "reference",
@@ -7522,6 +7757,7 @@ inquiry.
     "feature": {
       "description": undefined,
       "generatedName": "Feature",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base",
       "type": "reference",
@@ -7529,6 +7765,7 @@ inquiry.
     "feature-summary": {
       "description": undefined,
       "generatedName": "FeatureSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base-summary",
       "type": "reference",
@@ -7536,6 +7773,7 @@ inquiry.
     "group-summary": {
       "description": undefined,
       "generatedName": "GroupSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "atom-base-summary",
       "type": "reference",
@@ -7545,6 +7783,7 @@ inquiry.
         {
           "description": undefined,
           "generatedName": "WorkBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "work-base",
           "type": "reference",
@@ -7553,6 +7792,7 @@ inquiry.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Issue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7565,6 +7805,7 @@ inquiry.
             "value": {
               "description": undefined,
               "generatedName": "IssuePriority",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "issue-priority",
               "type": "reference",
@@ -7577,6 +7818,7 @@ inquiry.
     "issue-priority": {
       "description": "Priority of the work based upon impact and criticality.",
       "generatedName": "IssuePriority",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -7614,6 +7856,7 @@ returned, or if no cursor is provided, then from the end. Entries will
 always be returned in the specified sort-by order.
 ",
       "generatedName": "ListMode",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -7636,6 +7879,7 @@ always be returned in the specified sort-by order.
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -7644,6 +7888,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "OrgBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7672,6 +7917,7 @@ always be returned in the specified sort-by order.
         {
           "description": undefined,
           "generatedName": "AtomBaseSummary",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base-summary",
           "type": "reference",
@@ -7680,6 +7926,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "OrgBaseSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7707,6 +7954,7 @@ always be returned in the specified sort-by order.
       "description": "The environment of the Org. Defaults to 'production' if not specified.
 ",
       "generatedName": "OrgEnvironment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -7736,11 +7984,13 @@ always be returned in the specified sort-by order.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "OrgSummary",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "rev_org": {
             "description": undefined,
             "generatedName": "ComponentsSchemasRevOrgSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-org-summary",
             "type": "reference",
@@ -7764,11 +8014,13 @@ always be returned in the specified sort-by order.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "Part",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "capability": {
             "description": undefined,
             "generatedName": "ComponentsSchemasCapability",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "capability",
             "type": "reference",
@@ -7776,6 +8028,7 @@ always be returned in the specified sort-by order.
           "enhancement": {
             "description": undefined,
             "generatedName": "ComponentsSchemasEnhancement",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "enhancement",
             "type": "reference",
@@ -7783,6 +8036,7 @@ always be returned in the specified sort-by order.
           "feature": {
             "description": undefined,
             "generatedName": "ComponentsSchemasFeature",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "feature",
             "type": "reference",
@@ -7790,6 +8044,7 @@ always be returned in the specified sort-by order.
           "product": {
             "description": undefined,
             "generatedName": "ComponentsSchemasProduct",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "product",
             "type": "reference",
@@ -7804,6 +8059,7 @@ always be returned in the specified sort-by order.
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -7812,6 +8068,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7827,6 +8084,7 @@ always be returned in the specified sort-by order.
               "value": {
                 "description": undefined,
                 "generatedName": "PartBaseArtifactsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "artifact-summary",
                 "type": "reference",
@@ -7876,6 +8134,7 @@ always be returned in the specified sort-by order.
             "value": {
               "description": undefined,
               "generatedName": "PartBaseOwnedByItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "user-summary",
               "type": "reference",
@@ -7895,6 +8154,7 @@ always be returned in the specified sort-by order.
               "value": {
                 "description": undefined,
                 "generatedName": "PartBaseTagsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "tag-with-value",
                 "type": "reference",
@@ -7910,6 +8170,7 @@ always be returned in the specified sort-by order.
         {
           "description": undefined,
           "generatedName": "AtomBaseSummary",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base-summary",
           "type": "reference",
@@ -7918,6 +8179,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartBaseSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -7943,11 +8205,13 @@ always be returned in the specified sort-by order.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "PartSummary",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "capability": {
             "description": undefined,
             "generatedName": "ComponentsSchemasCapabilitySummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "capability-summary",
             "type": "reference",
@@ -7955,6 +8219,7 @@ always be returned in the specified sort-by order.
           "enhancement": {
             "description": undefined,
             "generatedName": "ComponentsSchemasEnhancementSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "enhancement-summary",
             "type": "reference",
@@ -7962,6 +8227,7 @@ always be returned in the specified sort-by order.
           "feature": {
             "description": undefined,
             "generatedName": "ComponentsSchemasFeatureSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "feature-summary",
             "type": "reference",
@@ -7969,6 +8235,7 @@ always be returned in the specified sort-by order.
           "product": {
             "description": undefined,
             "generatedName": "ComponentsSchemasProductSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "product-summary",
             "type": "reference",
@@ -7981,6 +8248,7 @@ always be returned in the specified sort-by order.
     "part-type": {
       "description": undefined,
       "generatedName": "PartType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -8061,11 +8329,13 @@ always be returned in the specified sort-by order.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "PartsCreateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "capability": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsCreateRequestCapability",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-create-request-capability",
             "type": "reference",
@@ -8073,6 +8343,7 @@ always be returned in the specified sort-by order.
           "enhancement": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsCreateRequestEnhancement",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-create-request-enhancement",
             "type": "reference",
@@ -8080,6 +8351,7 @@ always be returned in the specified sort-by order.
           "feature": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsCreateRequestFeature",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-create-request-feature",
             "type": "reference",
@@ -8087,6 +8359,7 @@ always be returned in the specified sort-by order.
           "product": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsCreateRequestProduct",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-create-request-product",
             "type": "reference",
@@ -8101,6 +8374,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsCreateRequestCapability",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8129,6 +8403,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsCreateRequestEnhancement",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8175,6 +8450,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsCreateRequestFeature",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8219,6 +8495,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8228,6 +8505,7 @@ always be returned in the specified sort-by order.
           "schema": {
             "description": undefined,
             "generatedName": "PartsCreateResponsePart",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "part",
             "type": "reference",
@@ -8241,6 +8519,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8281,6 +8560,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8290,6 +8570,7 @@ always be returned in the specified sort-by order.
           "schema": {
             "description": undefined,
             "generatedName": "PartsGetResponsePart",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "part",
             "type": "reference",
@@ -8303,6 +8584,7 @@ always be returned in the specified sort-by order.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8335,6 +8617,7 @@ sort order. If not set, then no later elements exist.
             "value": {
               "description": undefined,
               "generatedName": "PartsListResponsePartsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "part",
               "type": "reference",
@@ -8419,6 +8702,7 @@ sort order. If not set, then no prior elements exist.
               "value": {
                 "description": undefined,
                 "generatedName": "PartsUpdateRequestOwnedBy",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "parts-update-request-owned-by",
                 "type": "reference",
@@ -8429,11 +8713,13 @@ sort order. If not set, then no prior elements exist.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "PartsUpdateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "capability": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsUpdateRequestCapability",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-update-request-capability",
             "type": "reference",
@@ -8441,6 +8727,7 @@ sort order. If not set, then no prior elements exist.
           "enhancement": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsUpdateRequestEnhancement",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-update-request-enhancement",
             "type": "reference",
@@ -8448,6 +8735,7 @@ sort order. If not set, then no prior elements exist.
           "feature": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsUpdateRequestFeature",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-update-request-feature",
             "type": "reference",
@@ -8455,6 +8743,7 @@ sort order. If not set, then no prior elements exist.
           "none": {
             "description": undefined,
             "generatedName": "ComponentsSchemasEmpty",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "empty",
             "type": "reference",
@@ -8462,6 +8751,7 @@ sort order. If not set, then no prior elements exist.
           "product": {
             "description": undefined,
             "generatedName": "ComponentsSchemasPartsUpdateRequestProduct",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "parts-update-request-product",
             "type": "reference",
@@ -8492,6 +8782,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsUpdateRequestEnhancement",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8534,6 +8825,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsUpdateRequestOwnedBy",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8584,6 +8876,7 @@ empty.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PartsUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8593,6 +8886,7 @@ empty.
           "schema": {
             "description": undefined,
             "generatedName": "PartsUpdateResponsePart",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "part",
             "type": "reference",
@@ -8604,6 +8898,7 @@ empty.
     "product": {
       "description": undefined,
       "generatedName": "Product",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base",
       "type": "reference",
@@ -8611,6 +8906,7 @@ empty.
     "product-summary": {
       "description": undefined,
       "generatedName": "ProductSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "part-base-summary",
       "type": "reference",
@@ -8620,6 +8916,7 @@ empty.
         {
           "description": undefined,
           "generatedName": "OrgBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "org-base",
           "type": "reference",
@@ -8628,6 +8925,7 @@ empty.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RevOrg",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8694,6 +8992,7 @@ organization.
     "rev-org-summary": {
       "description": undefined,
       "generatedName": "RevOrgSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "org-base-summary",
       "type": "reference",
@@ -8705,6 +9004,7 @@ organization.
 organization.
 ",
       "generatedName": "RevOrgsCreateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8767,6 +9067,7 @@ organization.
             "value": {
               "description": undefined,
               "generatedName": "RevOrgsCreateRequestEnvironment",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "org-environment",
               "type": "reference",
@@ -8821,6 +9122,7 @@ records.
       "description": "Response object for request to create a new Rev organization.
 ",
       "generatedName": "RevOrgsCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8830,6 +9132,7 @@ records.
           "schema": {
             "description": undefined,
             "generatedName": "RevOrgsCreateResponseRevOrg",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-org",
             "type": "reference",
@@ -8843,6 +9146,7 @@ records.
       "allOfPropertyConflicts": [],
       "description": "Request object to delete a Rev organization.",
       "generatedName": "RevOrgsDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8883,6 +9187,7 @@ records.
       "allOfPropertyConflicts": [],
       "description": "The response to getting a Rev organization's information.",
       "generatedName": "RevOrgsGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8892,6 +9197,7 @@ records.
           "schema": {
             "description": undefined,
             "generatedName": "RevOrgsGetResponseRevOrg",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-org",
             "type": "reference",
@@ -8906,6 +9212,7 @@ records.
       "description": "The response to getting a list of Rev organizations' information.
 ",
       "generatedName": "RevOrgsListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -8958,6 +9265,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "RevOrgsListResponseRevOrgsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "rev-org",
               "type": "reference",
@@ -8973,6 +9281,7 @@ sort order. If not set, then no prior elements exist.
       "description": "Request object to update information of the Rev organization.
 ",
       "generatedName": "RevOrgsUpdateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9039,6 +9348,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "RevOrgsUpdateRequestEnvironment",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "org-environment",
               "type": "reference",
@@ -9106,6 +9416,7 @@ records.
       "allOfPropertyConflicts": [],
       "description": "Response object to updating Rev organization's information.",
       "generatedName": "RevOrgsUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9115,6 +9426,7 @@ records.
           "schema": {
             "description": undefined,
             "generatedName": "RevOrgsUpdateResponseRevOrg",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-org",
             "type": "reference",
@@ -9128,6 +9440,7 @@ records.
         {
           "description": undefined,
           "generatedName": "UserBaseSummary",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "user-base-summary",
           "type": "reference",
@@ -9136,6 +9449,7 @@ records.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "RevUserSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9171,6 +9485,7 @@ system-generated identifier will be assigned to the user.
             "value": {
               "description": undefined,
               "generatedName": "RevUserSummaryRevOrg",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "org-summary",
               "type": "reference",
@@ -9185,6 +9500,7 @@ system-generated identifier will be assigned to the user.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SetTagWithValue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9229,6 +9545,7 @@ the value must be one that's specified in the tag's allowed values.
       "allOfPropertyConflicts": [],
       "description": "Describes the current stage of a work item.",
       "generatedName": "Stage",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9253,6 +9570,7 @@ the value must be one that's specified in the tag's allowed values.
       "allOfPropertyConflicts": [],
       "description": "Sets an object's initial stage.",
       "generatedName": "StageInit",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9281,6 +9599,7 @@ the value must be one that's specified in the tag's allowed values.
       "allOfPropertyConflicts": [],
       "description": "Updates an object's stage.",
       "generatedName": "StageUpdate",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9308,6 +9627,7 @@ the value must be one that's specified in the tag's allowed values.
     "sys-user-summary": {
       "description": undefined,
       "generatedName": "SysUserSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "user-base-summary",
       "type": "reference",
@@ -9317,6 +9637,7 @@ the value must be one that's specified in the tag's allowed values.
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -9325,6 +9646,7 @@ the value must be one that's specified in the tag's allowed values.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Tag",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9397,6 +9719,7 @@ unique.
         {
           "description": undefined,
           "generatedName": "AtomBaseSummary",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base-summary",
           "type": "reference",
@@ -9405,6 +9728,7 @@ unique.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TagSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9432,6 +9756,7 @@ unique.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TagWithValue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9441,6 +9766,7 @@ unique.
           "schema": {
             "description": undefined,
             "generatedName": "TagWithValueTag",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "tag-summary",
             "type": "reference",
@@ -9472,6 +9798,7 @@ unique.
       "allOfPropertyConflicts": [],
       "description": "The request to create a new tag.",
       "generatedName": "TagsCreateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9539,6 +9866,7 @@ permitted.
       "allOfPropertyConflicts": [],
       "description": "The response to creating a new tag.",
       "generatedName": "TagsCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9548,6 +9876,7 @@ permitted.
           "schema": {
             "description": undefined,
             "generatedName": "TagsCreateResponseTag",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "tag",
             "type": "reference",
@@ -9561,6 +9890,7 @@ permitted.
       "allOfPropertyConflicts": [],
       "description": "The request to delete a tag.",
       "generatedName": "TagsDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9601,6 +9931,7 @@ permitted.
       "allOfPropertyConflicts": [],
       "description": "The response to getting a tag's information.",
       "generatedName": "TagsGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9610,6 +9941,7 @@ permitted.
           "schema": {
             "description": undefined,
             "generatedName": "TagsGetResponseTag",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "tag",
             "type": "reference",
@@ -9623,6 +9955,7 @@ permitted.
       "allOfPropertyConflicts": [],
       "description": "The response to listing the tags.",
       "generatedName": "TagsListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9675,6 +10008,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "TagsListResponseTagsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "tag",
               "type": "reference",
@@ -9689,6 +10023,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": "Specifies an update to a tag's allowed values.",
       "generatedName": "TagsUpdateAllowedValues",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9721,6 +10056,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": "The request to update a tag.",
       "generatedName": "TagsUpdateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9733,6 +10069,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "TagsUpdateRequestAllowedValues",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "tags-update-allowed-values",
               "type": "reference",
@@ -9799,6 +10136,7 @@ tags.
       "allOfPropertyConflicts": [],
       "description": "The response for updating a tag.",
       "generatedName": "TagsUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9808,6 +10146,7 @@ tags.
           "schema": {
             "description": undefined,
             "generatedName": "TagsUpdateResponseTag",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "tag",
             "type": "reference",
@@ -9821,6 +10160,7 @@ tags.
         {
           "description": undefined,
           "generatedName": "WorkBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "work-base",
           "type": "reference",
@@ -9829,6 +10169,7 @@ tags.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Ticket",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9841,6 +10182,7 @@ tags.
             "value": {
               "description": undefined,
               "generatedName": "TicketGroup",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "group-summary",
               "type": "reference",
@@ -9857,6 +10199,7 @@ tags.
             "value": {
               "description": undefined,
               "generatedName": "TicketRevOrg",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "org-summary",
               "type": "reference",
@@ -9873,6 +10216,7 @@ tags.
             "value": {
               "description": undefined,
               "generatedName": "TicketSeverity",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ticket-severity",
               "type": "reference",
@@ -9885,6 +10229,7 @@ tags.
     "ticket-severity": {
       "description": "Severity of the ticket.",
       "generatedName": "TicketSeverity",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -9919,6 +10264,7 @@ tags.
         {
           "description": undefined,
           "generatedName": "TimelineEntryBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "timeline-entry-base",
           "type": "reference",
@@ -9927,6 +10273,7 @@ tags.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimelineComment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -9942,6 +10289,7 @@ tags.
               "value": {
                 "description": undefined,
                 "generatedName": "TimelineCommentArtifactsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "artifact-summary",
                 "type": "reference",
@@ -9979,6 +10327,7 @@ will appear in the response.
             "value": {
               "description": undefined,
               "generatedName": "TimelineCommentBodyType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeline-comment-body-type",
               "type": "reference",
@@ -10016,6 +10365,7 @@ will appear in the response.
     "timeline-comment-body-type": {
       "description": "The type of the body to use for the comment.",
       "generatedName": "TimelineCommentBodyType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -10056,6 +10406,7 @@ will appear in the response.
               "value": {
                 "description": undefined,
                 "generatedName": "TimelineEntriesCreateRequestVisibility",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "timeline-entry-visibility",
                 "type": "reference",
@@ -10066,11 +10417,13 @@ will appear in the response.
         "description": "The request to create a timeline entry for an object.",
         "discriminantProperty": "type",
         "generatedName": "TimelineEntriesCreateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "timeline_comment": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTimelineEntriesCreateRequestTimelineComment",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entries-create-request-timeline-comment",
             "type": "reference",
@@ -10085,6 +10438,7 @@ will appear in the response.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimelineEntriesCreateRequestTimelineComment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10137,6 +10491,7 @@ will appear in the response.
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesCreateRequestTimelineCommentBodyType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeline-comment-body-type",
               "type": "reference",
@@ -10184,6 +10539,7 @@ will appear in the response.
       "allOfPropertyConflicts": [],
       "description": "The response to creating a timeline entry for an object.",
       "generatedName": "TimelineEntriesCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10193,6 +10549,7 @@ will appear in the response.
           "schema": {
             "description": undefined,
             "generatedName": "TimelineEntriesCreateResponseTimelineEntry",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entry",
             "type": "reference",
@@ -10206,6 +10563,7 @@ will appear in the response.
       "allOfPropertyConflicts": [],
       "description": "The request to getting a timeline entry.",
       "generatedName": "TimelineEntriesGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10215,6 +10573,7 @@ will appear in the response.
           "schema": {
             "description": undefined,
             "generatedName": "TimelineEntriesGetResponseTimelineEntry",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entry",
             "type": "reference",
@@ -10228,6 +10587,7 @@ will appear in the response.
       "allOfPropertyConflicts": [],
       "description": "The response to listing timeline entries for an object.",
       "generatedName": "TimelineEntriesListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10280,6 +10640,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesListResponseTimelineEntriesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeline-entry",
               "type": "reference",
@@ -10308,11 +10669,13 @@ sort order. If not set, then no prior elements exist.
         "description": "The request to update a timeline entry.",
         "discriminantProperty": "type",
         "generatedName": "TimelineEntriesUpdateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "timeline_comment": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTimelineEntriesUpdateRequestTimelineComment",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entries-update-request-timeline-comment",
             "type": "reference",
@@ -10327,6 +10690,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimelineEntriesUpdateRequestTimelineComment",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10339,6 +10703,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeline-entries-update-request-timeline-comment-artifacts",
               "type": "reference",
@@ -10373,6 +10738,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "TimelineEntriesUpdateRequestTimelineCommentBodyType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "timeline-comment-body-type",
               "type": "reference",
@@ -10412,6 +10778,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10501,6 +10868,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       "allOfPropertyConflicts": [],
       "description": "The response to updating a timeline entry.",
       "generatedName": "TimelineEntriesUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10510,6 +10878,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "schema": {
             "description": undefined,
             "generatedName": "TimelineEntriesUpdateResponseTimelineEntry",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-entry",
             "type": "reference",
@@ -10524,11 +10893,13 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "TimelineEntry",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "timeline_comment": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTimelineComment",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "timeline-comment",
             "type": "reference",
@@ -10541,6 +10912,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
     "timeline-entry-base": {
       "description": undefined,
       "generatedName": "TimelineEntryBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "schema": "atom-base",
       "type": "reference",
@@ -10569,6 +10941,7 @@ default visibility.
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -10577,6 +10950,7 @@ default visibility.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UserBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10608,6 +10982,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "UserBaseDisplayPicture",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "artifact-summary",
               "type": "reference",
@@ -10682,6 +11057,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "UserBaseState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "user-state",
               "type": "reference",
@@ -10696,6 +11072,7 @@ default visibility.
         {
           "description": undefined,
           "generatedName": "AtomBaseSummary",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base-summary",
           "type": "reference",
@@ -10704,6 +11081,7 @@ default visibility.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "UserBaseSummary",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10735,6 +11113,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "UserBaseSummaryDisplayPicture",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "artifact-summary",
               "type": "reference",
@@ -10787,6 +11166,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "UserBaseSummaryState",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "user-state",
               "type": "reference",
@@ -10799,6 +11179,7 @@ default visibility.
     "user-state": {
       "description": "State of the user.",
       "generatedName": "UserState",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -10840,11 +11221,13 @@ default visibility.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "UserSummary",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "dev_user": {
             "description": undefined,
             "generatedName": "ComponentsSchemasDevUserSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "dev-user-summary",
             "type": "reference",
@@ -10852,6 +11235,7 @@ default visibility.
           "rev_user": {
             "description": undefined,
             "generatedName": "ComponentsSchemasRevUserSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "rev-user-summary",
             "type": "reference",
@@ -10859,6 +11243,7 @@ default visibility.
           "sys_user": {
             "description": undefined,
             "generatedName": "ComponentsSchemasSysUserSummary",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "sys-user-summary",
             "type": "reference",
@@ -10871,6 +11256,7 @@ default visibility.
     "user-type": {
       "description": undefined,
       "generatedName": "UserType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -10899,6 +11285,7 @@ default visibility.
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -10907,6 +11294,7 @@ default visibility.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Webhook",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -10922,6 +11310,7 @@ default visibility.
               "value": {
                 "description": undefined,
                 "generatedName": "WebhookEventTypesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "webhook-event-type",
                 "type": "reference",
@@ -10950,6 +11339,7 @@ default visibility.
           "schema": {
             "description": undefined,
             "generatedName": "WebhookStatus",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "webhook-status",
             "type": "reference",
@@ -10977,6 +11367,7 @@ default visibility.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WebhookEventRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11003,6 +11394,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestPartCreated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-part-created",
               "type": "reference",
@@ -11019,6 +11411,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestPartDeleted",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-part-deleted",
               "type": "reference",
@@ -11035,6 +11428,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestPartUpdated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-part-updated",
               "type": "reference",
@@ -11051,6 +11445,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestRevOrgCreated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-rev-org-created",
               "type": "reference",
@@ -11067,6 +11462,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestRevOrgDeleted",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-rev-org-deleted",
               "type": "reference",
@@ -11083,6 +11479,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestRevOrgUpdated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-rev-org-updated",
               "type": "reference",
@@ -11099,6 +11496,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTagCreated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-tag-created",
               "type": "reference",
@@ -11115,6 +11513,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTagDeleted",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-tag-deleted",
               "type": "reference",
@@ -11131,6 +11530,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTagUpdated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-tag-updated",
               "type": "reference",
@@ -11147,6 +11547,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTimelineEntryCreated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-timeline-entry-created",
               "type": "reference",
@@ -11163,6 +11564,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTimelineEntryDeleted",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-timeline-entry-deleted",
               "type": "reference",
@@ -11179,6 +11581,7 @@ default visibility.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestTimelineEntryUpdated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-timeline-entry-updated",
               "type": "reference",
@@ -11215,6 +11618,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestType",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "webhook-event-type",
               "type": "reference",
@@ -11231,6 +11635,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestVerify",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "webhook-event-verify",
               "type": "reference",
@@ -11247,6 +11652,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWebhookCreated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-webhook-created",
               "type": "reference",
@@ -11263,6 +11669,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWebhookDeleted",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-webhook-deleted",
               "type": "reference",
@@ -11293,6 +11700,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWebhookUpdated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-webhook-updated",
               "type": "reference",
@@ -11309,6 +11717,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWorkCreated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-work-created",
               "type": "reference",
@@ -11325,6 +11734,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWorkDeleted",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-work-deleted",
               "type": "reference",
@@ -11341,6 +11751,7 @@ seconds.
             "value": {
               "description": undefined,
               "generatedName": "WebhookEventRequestWorkUpdated",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "event-work-updated",
               "type": "reference",
@@ -11355,6 +11766,7 @@ seconds.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WebhookEventResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11383,6 +11795,7 @@ be set for other request types.
     "webhook-event-type": {
       "description": "The event types that the webhook will receive.",
       "generatedName": "WebhookEventType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -11507,6 +11920,7 @@ be set for other request types.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WebhookEventVerify",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11529,6 +11943,7 @@ be set for other request types.
     "webhook-status": {
       "description": "The status of the webhook.",
       "generatedName": "WebhookStatus",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -11557,6 +11972,7 @@ be set for other request types.
       "allOfPropertyConflicts": [],
       "description": "The request to create a new webhook.",
       "generatedName": "WebhooksCreateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11572,6 +11988,7 @@ be set for other request types.
               "value": {
                 "description": undefined,
                 "generatedName": "WebhooksCreateRequestEventTypesItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "webhook-event-type",
                 "type": "reference",
@@ -11623,6 +12040,7 @@ response.
       "allOfPropertyConflicts": [],
       "description": "The response to creating a new webhook.",
       "generatedName": "WebhooksCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11632,6 +12050,7 @@ response.
           "schema": {
             "description": undefined,
             "generatedName": "WebhooksCreateResponseWebhook",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "webhook",
             "type": "reference",
@@ -11645,6 +12064,7 @@ response.
       "allOfPropertyConflicts": [],
       "description": "The request to delete a webhook.",
       "generatedName": "WebhooksDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11685,6 +12105,7 @@ response.
       "allOfPropertyConflicts": [],
       "description": "The response to getting the information for the webhook.",
       "generatedName": "WebhooksGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11694,6 +12115,7 @@ response.
           "schema": {
             "description": undefined,
             "generatedName": "WebhooksGetResponseWebhook",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "webhook",
             "type": "reference",
@@ -11707,6 +12129,7 @@ response.
       "allOfPropertyConflicts": [],
       "description": "The response to listing the webhooks.",
       "generatedName": "WebhooksListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11719,6 +12142,7 @@ response.
             "value": {
               "description": undefined,
               "generatedName": "WebhooksListResponseWebhooksItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "webhook",
               "type": "reference",
@@ -11731,6 +12155,7 @@ response.
     "webhooks-update-action": {
       "description": "The action to update the webhook's status.",
       "generatedName": "WebhooksUpdateAction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -11753,6 +12178,7 @@ response.
       "allOfPropertyConflicts": [],
       "description": "The request to update a webhook.",
       "generatedName": "WebhooksUpdateRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11765,6 +12191,7 @@ response.
             "value": {
               "description": undefined,
               "generatedName": "WebhooksUpdateRequestAction",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "webhooks-update-action",
               "type": "reference",
@@ -11781,6 +12208,7 @@ response.
             "value": {
               "description": undefined,
               "generatedName": "WebhooksUpdateRequestEventTypes",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "webhooks-update-request-event-types",
               "type": "reference",
@@ -11853,6 +12281,7 @@ won't receive any object events until successfully verified.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WebhooksUpdateRequestEventTypes",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11871,6 +12300,7 @@ with 'set'.
               "value": {
                 "description": undefined,
                 "generatedName": "WebhooksUpdateRequestEventTypesAddItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "webhook-event-type",
                 "type": "reference",
@@ -11894,6 +12324,7 @@ with 'set'.
               "value": {
                 "description": undefined,
                 "generatedName": "WebhooksUpdateRequestEventTypesRemoveItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "webhook-event-type",
                 "type": "reference",
@@ -11917,6 +12348,7 @@ event types. Note this is mutually exclusive with 'add' and
               "value": {
                 "description": undefined,
                 "generatedName": "WebhooksUpdateRequestEventTypesSetItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "webhook-event-type",
                 "type": "reference",
@@ -11932,6 +12364,7 @@ event types. Note this is mutually exclusive with 'add' and
       "allOfPropertyConflicts": [],
       "description": "The response to updating the webhook.",
       "generatedName": "WebhooksUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -11941,6 +12374,7 @@ event types. Note this is mutually exclusive with 'add' and
           "schema": {
             "description": undefined,
             "generatedName": "WebhooksUpdateResponseWebhook",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "webhook",
             "type": "reference",
@@ -11955,11 +12389,13 @@ event types. Note this is mutually exclusive with 'add' and
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "Work",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "issue": {
             "description": undefined,
             "generatedName": "ComponentsSchemasIssue",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "issue",
             "type": "reference",
@@ -11967,6 +12403,7 @@ event types. Note this is mutually exclusive with 'add' and
           "ticket": {
             "description": undefined,
             "generatedName": "ComponentsSchemasTicket",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ticket",
             "type": "reference",
@@ -11981,6 +12418,7 @@ event types. Note this is mutually exclusive with 'add' and
         {
           "description": undefined,
           "generatedName": "AtomBase",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "atom-base",
           "type": "reference",
@@ -11989,6 +12427,7 @@ event types. Note this is mutually exclusive with 'add' and
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorkBase",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12001,6 +12440,7 @@ event types. Note this is mutually exclusive with 'add' and
             "value": {
               "description": undefined,
               "generatedName": "WorkBaseAppliesToPart",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "part-summary",
               "type": "reference",
@@ -12020,6 +12460,7 @@ event types. Note this is mutually exclusive with 'add' and
               "value": {
                 "description": undefined,
                 "generatedName": "WorkBaseArtifactsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "artifact-summary",
                 "type": "reference",
@@ -12055,6 +12496,7 @@ event types. Note this is mutually exclusive with 'add' and
             "value": {
               "description": undefined,
               "generatedName": "WorkBaseOwnedByItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "user-summary",
               "type": "reference",
@@ -12074,6 +12516,7 @@ event types. Note this is mutually exclusive with 'add' and
               "value": {
                 "description": undefined,
                 "generatedName": "WorkBaseReportedByItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "user-summary",
                 "type": "reference",
@@ -12091,6 +12534,7 @@ event types. Note this is mutually exclusive with 'add' and
             "value": {
               "description": undefined,
               "generatedName": "WorkBaseStage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "stage",
               "type": "reference",
@@ -12110,6 +12554,7 @@ event types. Note this is mutually exclusive with 'add' and
               "value": {
                 "description": undefined,
                 "generatedName": "WorkBaseTagsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "tag-with-value",
                 "type": "reference",
@@ -12153,6 +12598,7 @@ event types. Note this is mutually exclusive with 'add' and
     "work-type": {
       "description": undefined,
       "generatedName": "WorkType",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -12270,6 +12716,7 @@ issues.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksCreateRequestStage",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "stage-init",
                 "type": "reference",
@@ -12287,6 +12734,7 @@ issues.
                 "value": {
                   "description": undefined,
                   "generatedName": "WorksCreateRequestTagsItem",
+                  "groupName": undefined,
                   "nameOverride": undefined,
                   "schema": "set-tag-with-value",
                   "type": "reference",
@@ -12324,11 +12772,13 @@ issues.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "WorksCreateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "issue": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorksCreateRequestIssue",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "works-create-request-issue",
             "type": "reference",
@@ -12336,6 +12786,7 @@ issues.
           "ticket": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorksCreateRequestTicket",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "works-create-request-ticket",
             "type": "reference",
@@ -12350,6 +12801,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksCreateRequestIssue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12362,6 +12814,7 @@ issues.
             "value": {
               "description": undefined,
               "generatedName": "WorksCreateRequestIssuePriority",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "issue-priority",
               "type": "reference",
@@ -12394,6 +12847,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksCreateRequestTicket",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12442,6 +12896,7 @@ issues.
             "value": {
               "description": undefined,
               "generatedName": "WorksCreateRequestTicketSeverity",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ticket-severity",
               "type": "reference",
@@ -12456,6 +12911,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksCreateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12465,6 +12921,7 @@ issues.
           "schema": {
             "description": undefined,
             "generatedName": "WorksCreateResponseWork",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "work",
             "type": "reference",
@@ -12478,6 +12935,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksDeleteRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12518,6 +12976,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksExportResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12530,6 +12989,7 @@ issues.
             "value": {
               "description": undefined,
               "generatedName": "WorksExportResponseWorksItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "work",
               "type": "reference",
@@ -12544,6 +13004,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksGetResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12553,6 +13014,7 @@ issues.
           "schema": {
             "description": undefined,
             "generatedName": "WorksGetResponseWork",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "work",
             "type": "reference",
@@ -12566,6 +13028,7 @@ issues.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksListResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12618,6 +13081,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "WorksListResponseWorksItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "work",
               "type": "reference",
@@ -12654,6 +13118,7 @@ sort order. If not set, then no prior elements exist.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksUpdateRequestArtifacts",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "works-update-request-artifact-ids",
                 "type": "reference",
@@ -12698,6 +13163,7 @@ sort order. If not set, then no prior elements exist.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksUpdateRequestOwnedBy",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "works-update-request-owned-by",
                 "type": "reference",
@@ -12712,6 +13178,7 @@ sort order. If not set, then no prior elements exist.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksUpdateRequestReportedBy",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "works-update-request-reported-by",
                 "type": "reference",
@@ -12726,6 +13193,7 @@ sort order. If not set, then no prior elements exist.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksUpdateRequestStage",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "stage-update",
                 "type": "reference",
@@ -12740,6 +13208,7 @@ sort order. If not set, then no prior elements exist.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksUpdateRequestTags",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "works-update-request-tags",
                 "type": "reference",
@@ -12784,11 +13253,13 @@ sort order. If not set, then no prior elements exist.
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "WorksUpdateRequest",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "issue": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorksUpdateRequestIssue",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "works-update-request-issue",
             "type": "reference",
@@ -12796,6 +13267,7 @@ sort order. If not set, then no prior elements exist.
           "none": {
             "description": undefined,
             "generatedName": "ComponentsSchemasEmpty",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "empty",
             "type": "reference",
@@ -12803,6 +13275,7 @@ sort order. If not set, then no prior elements exist.
           "ticket": {
             "description": undefined,
             "generatedName": "ComponentsSchemasWorksUpdateRequestTicket",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "works-update-request-ticket",
             "type": "reference",
@@ -12817,6 +13290,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateRequestArtifactIds",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12849,6 +13323,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateRequestIssue",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12861,6 +13336,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "description": undefined,
               "generatedName": "WorksUpdateRequestIssuePriority",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "issue-priority",
               "type": "reference",
@@ -12897,6 +13373,7 @@ sort order. If not set, then no prior elements exist.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateRequestOwnedBy",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12931,6 +13408,7 @@ empty.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateRequestReportedBy",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12964,6 +13442,7 @@ empty.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateRequestTags",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -12979,6 +13458,7 @@ empty.
               "value": {
                 "description": undefined,
                 "generatedName": "WorksUpdateRequestTagsSetItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "set-tag-with-value",
                 "type": "reference",
@@ -12994,6 +13474,7 @@ empty.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateRequestTicket",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -13048,6 +13529,7 @@ empty.
             "value": {
               "description": undefined,
               "generatedName": "WorksUpdateRequestTicketSeverity",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ticket-severity",
               "type": "reference",
@@ -13062,6 +13544,7 @@ empty.
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "WorksUpdateResponse",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
@@ -13071,6 +13554,7 @@ empty.
           "schema": {
             "description": undefined,
             "generatedName": "WorksUpdateResponseWork",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "work",
             "type": "reference",

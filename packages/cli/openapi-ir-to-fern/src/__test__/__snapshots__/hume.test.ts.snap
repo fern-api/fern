@@ -3,157 +3,9 @@
 exports[`open api parser hume simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "Get Job Predictions": {
-            "auth": true,
-            "display-name": "Get Job Predictions",
-            "docs": "Get the JSON predictions of a completed job.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/v0/batch/jobs/{id}/predictions",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "list<SourceResult>",
-            },
-          },
-          "List Jobs": {
-            "auth": true,
-            "display-name": "List Jobs",
-            "docs": "Sort and filter jobs.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "direction": "asc",
-                  "sort_by": "created",
-                  "status": "QUEUED",
-                  "when": "created_before",
-                },
-                "request": undefined,
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/v0/batch/jobs",
-            "request": {
-              "name": "ListJobsRequest",
-              "query-parameters": {
-                "direction": {
-                  "allow-multiple": undefined,
-                  "docs": "The sort direction.",
-                  "type": "optional<Direction>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": "The maximum number of jobs to include in the response.",
-                  "type": "optional<integer>",
-                },
-                "sort_by": {
-                  "allow-multiple": undefined,
-                  "docs": "The job timestamp to sort by.",
-                  "type": "optional<SortBy>",
-                },
-                "status": {
-                  "allow-multiple": true,
-                  "docs": "Include only jobs with these statuses.",
-                  "type": "optional<Status>",
-                },
-                "timestamp_ms": {
-                  "allow-multiple": undefined,
-                  "docs": "Defaults to the current date and time. See \`when\`.",
-                  "type": "optional<integer>",
-                },
-                "when": {
-                  "allow-multiple": undefined,
-                  "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
-                  "type": "optional<When>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "list<JobRequest>",
-            },
-          },
-          "Start Job": {
-            "auth": true,
-            "display-name": "Start Job",
-            "docs": "Start a new batch job.",
-            "errors": [],
-            "method": "POST",
-            "path": "/v0/batch/jobs",
-            "request": {
-              "body": {
-                "properties": {
-                  "callback_url": {
-                    "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
-                    "type": "optional<string>",
-                  },
-                  "models": {
-                    "docs": undefined,
-                    "type": "optional<Models>",
-                  },
-                  "notify": {
-                    "docs": "Whether to send an email notification to the user upon job failure.",
-                    "type": "optional<boolean>",
-                  },
-                  "transcription": {
-                    "docs": undefined,
-                    "type": "optional<Transcription>",
-                  },
-                  "urls": {
-                    "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
-
-If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-                    "type": "optional<list<string>>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "BaseRequest",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "",
-              "type": "JobId",
-            },
-          },
-        },
-      },
-    },
     "getJobPredictions.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "package": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -161,6 +13,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "display-name": "Get Job Predictions",
         "endpoints": {
           "get_job": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
@@ -175,10 +30,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             "response": {
               "docs": "",
-              "type": "root.JobRequest",
+              "type": "package.JobRequest",
             },
           },
           "get_job_artifacts": {
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
@@ -201,15 +59,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
   },
   "packageMarkerFile": {
-    "errors": {},
-    "navigation": [
-      "getJobPredictions.yml",
-    ],
     "service": {
       "auth": false,
       "base-path": "",
       "endpoints": {
         "Get Job Predictions": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "display-name": "Get Job Predictions",
           "docs": "Get the JSON predictions of a completed job.",
@@ -241,6 +98,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         "List Jobs": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "display-name": "List Jobs",
           "docs": "Sort and filter jobs.",
@@ -304,6 +164,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         "Start Job": {
+          "audiences": [
+            "external",
+          ],
           "auth": true,
           "display-name": "Start Job",
           "docs": "Start a new batch job.",
@@ -313,28 +176,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "request": {
             "body": {
               "properties": {
-                "callback_url": {
-                  "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
-                  "type": "optional<string>",
-                },
-                "models": {
-                  "docs": undefined,
-                  "type": "optional<Models>",
-                },
-                "notify": {
-                  "docs": "Whether to send an email notification to the user upon job failure.",
-                  "type": "optional<boolean>",
-                },
-                "transcription": {
-                  "docs": undefined,
-                  "type": "optional<Transcription>",
-                },
-                "urls": {
-                  "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
-
-If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-                  "type": "optional<list<string>>",
-                },
+                "callback_url": "optional<string>",
+                "models": "optional<Models>",
+                "notify": "optional<boolean>",
+                "transcription": "optional<Transcription>",
+                "urls": "optional<list<string>>",
               },
             },
             "headers": undefined,
@@ -531,10 +377,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
-          "time": {
-            "docs": undefined,
-            "type": "TimeInterval",
-          },
+          "time": "TimeInterval",
         },
       },
       "Completed": {
@@ -623,55 +466,25 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Face": {
         "docs": undefined,
         "properties": {
-          "descriptions": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "facs": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "fps_pred": {
-            "docs": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
-            "type": "optional<double>",
-          },
-          "identify_faces": {
-            "docs": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
-            "type": "optional<boolean>",
-          },
-          "min_face_size": {
-            "docs": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
-            "type": "optional<integer>",
-          },
-          "prob_threshold": {
-            "docs": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
-            "type": "optional<double>",
-          },
-          "save_faces": {
-            "docs": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
-            "type": "optional<boolean>",
-          },
+          "descriptions": "optional<Empty>",
+          "facs": "optional<Empty>",
+          "fps_pred": "optional<double>",
+          "identify_faces": "optional<boolean>",
+          "min_face_size": "optional<integer>",
+          "prob_threshold": "optional<double>",
+          "save_faces": "optional<boolean>",
         },
       },
       "FacePrediction": {
         "docs": undefined,
         "properties": {
-          "box": {
-            "docs": undefined,
-            "type": "BoundingBox",
-          },
-          "descriptions": {
-            "docs": "Modality-specific descriptive features and their scores.",
-            "type": "optional<list<DescriptionsScore>>",
-          },
+          "box": "BoundingBox",
+          "descriptions": "optional<list<DescriptionsScore>>",
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
-          "facs": {
-            "docs": "FACS 2.0 features and their scores.",
-            "type": "optional<list<FacsScore>>",
-          },
+          "facs": "optional<list<FacsScore>>",
           "frame": {
             "docs": "Frame number",
             "type": "integer",
@@ -732,14 +545,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "File": {
         "docs": undefined,
         "properties": {
-          "content_type": {
-            "docs": "The content type of the file.",
-            "type": "optional<string>",
-          },
-          "filename": {
-            "docs": "The name of the file.",
-            "type": "optional<string>",
-          },
+          "content_type": "optional<string>",
+          "filename": "optional<string>",
           "md5sum": {
             "docs": "The MD5 checksum of the file.",
             "type": "string",
@@ -778,10 +585,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<BurstPrediction>",
-          },
+          "predictions": "list<BurstPrediction>",
         },
       },
       "GroupedPredictionsFacePrediction": {
@@ -791,10 +595,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<FacePrediction>",
-          },
+          "predictions": "list<FacePrediction>",
         },
       },
       "GroupedPredictionsFacemeshPrediction": {
@@ -804,10 +605,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<FacemeshPrediction>",
-          },
+          "predictions": "list<FacemeshPrediction>",
         },
       },
       "GroupedPredictionsLanguagePrediction": {
@@ -817,10 +615,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<LanguagePrediction>",
-          },
+          "predictions": "list<LanguagePrediction>",
         },
       },
       "GroupedPredictionsNerPrediction": {
@@ -830,10 +625,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<NerPrediction>",
-          },
+          "predictions": "list<NerPrediction>",
         },
       },
       "GroupedPredictionsProsodyPrediction": {
@@ -843,10 +635,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "type": "string",
           },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<ProsodyPrediction>",
-          },
+          "predictions": "list<ProsodyPrediction>",
         },
       },
       "InProgress": {
@@ -878,14 +667,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "The ID associated with this job.",
             "type": "string",
           },
-          "request": {
-            "docs": undefined,
-            "type": "Request",
-          },
-          "state": {
-            "docs": undefined,
-            "type": "State",
-          },
+          "request": "Request",
+          "state": "State",
           "user_id": {
             "docs": "Your user ID.",
             "type": "string",
@@ -895,137 +678,63 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Language": {
         "docs": undefined,
         "properties": {
-          "granularity": {
-            "docs": undefined,
-            "type": "optional<Granularity>",
-          },
-          "identify_speakers": {
-            "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
-            "type": "optional<boolean>",
-          },
-          "sentiment": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "toxicity": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
+          "granularity": "optional<Granularity>",
+          "identify_speakers": "optional<boolean>",
+          "sentiment": "optional<Empty>",
+          "toxicity": "optional<Empty>",
         },
       },
       "LanguagePrediction": {
         "docs": undefined,
         "properties": {
-          "confidence": {
-            "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
-            "type": "optional<double>",
-          },
+          "confidence": "optional<double>",
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
-          "position": {
-            "docs": undefined,
-            "type": "PositionInterval",
-          },
-          "sentiment": {
-            "docs": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
-
-Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
-            "type": "optional<list<SentimentScore>>",
-          },
-          "speaker_confidence": {
-            "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
-            "type": "optional<double>",
-          },
+          "position": "PositionInterval",
+          "sentiment": "optional<list<SentimentScore>>",
+          "speaker_confidence": "optional<double>",
           "text": {
             "docs": "A segment of text (like a word or a sentence).",
             "type": "string",
           },
-          "time": {
-            "docs": undefined,
-            "type": "optional<TimeInterval>",
-          },
-          "toxicity": {
-            "docs": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
-            "type": "optional<list<ToxicityScore>>",
-          },
+          "time": "optional<TimeInterval>",
+          "toxicity": "optional<list<ToxicityScore>>",
         },
       },
       "Models": {
         "docs": undefined,
         "properties": {
-          "burst": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "face": {
-            "docs": undefined,
-            "type": "optional<Face>",
-          },
-          "facemesh": {
-            "docs": undefined,
-            "type": "optional<Empty>",
-          },
-          "language": {
-            "docs": undefined,
-            "type": "optional<Language>",
-          },
-          "ner": {
-            "docs": undefined,
-            "type": "optional<Ner>",
-          },
-          "prosody": {
-            "docs": undefined,
-            "type": "optional<Prosody>",
-          },
+          "burst": "optional<Empty>",
+          "face": "optional<Face>",
+          "facemesh": "optional<Empty>",
+          "language": "optional<Language>",
+          "ner": "optional<Ner>",
+          "prosody": "optional<Prosody>",
         },
       },
       "ModelsPredictions": {
         "docs": undefined,
         "properties": {
-          "burst": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalNullBurstPrediction>",
-          },
-          "face": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalNullFacePrediction>",
-          },
-          "facemesh": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalNullFacemeshPrediction>",
-          },
-          "language": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalTranscriptionMetadataLanguagePrediction>",
-          },
-          "ner": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalTranscriptionMetadataNerPrediction>",
-          },
-          "prosody": {
-            "docs": undefined,
-            "type": "optional<PredictionsOptionalTranscriptionMetadataProsodyPrediction>",
-          },
+          "burst": "optional<PredictionsOptionalNullBurstPrediction>",
+          "face": "optional<PredictionsOptionalNullFacePrediction>",
+          "facemesh": "optional<PredictionsOptionalNullFacemeshPrediction>",
+          "language": "optional<PredictionsOptionalTranscriptionMetadataLanguagePrediction>",
+          "ner": "optional<PredictionsOptionalTranscriptionMetadataNerPrediction>",
+          "prosody": "optional<PredictionsOptionalTranscriptionMetadataProsodyPrediction>",
         },
       },
       "Ner": {
         "docs": undefined,
         "properties": {
-          "identify_speakers": {
-            "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
-            "type": "optional<boolean>",
-          },
+          "identify_speakers": "optional<boolean>",
         },
       },
       "NerPrediction": {
         "docs": undefined,
         "properties": {
-          "confidence": {
-            "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
-            "type": "optional<double>",
-          },
+          "confidence": "optional<double>",
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
@@ -1042,22 +751,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "The specific word to which the emotion predictions are linked.",
             "type": "string",
           },
-          "position": {
-            "docs": undefined,
-            "type": "PositionInterval",
-          },
-          "speaker_confidence": {
-            "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
-            "type": "optional<double>",
-          },
+          "position": "PositionInterval",
+          "speaker_confidence": "optional<double>",
           "support": {
             "docs": "A measure of how often the entity is linked to by other entities.",
             "type": "double",
           },
-          "time": {
-            "docs": undefined,
-            "type": "optional<TimeInterval>",
-          },
+          "time": "optional<TimeInterval>",
           "uri": {
             "docs": "A URL which provides more information about the recognized topic or entity.",
             "type": "string",
@@ -1088,130 +788,70 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "docs": "A file path relative to the top level source URL or file.",
             "type": "string",
           },
-          "models": {
-            "docs": undefined,
-            "type": "ModelsPredictions",
-          },
+          "models": "ModelsPredictions",
         },
       },
       "PredictionsOptionalNullBurstPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsBurstPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<Null>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsBurstPrediction>",
+          "metadata": "optional<Null>",
         },
       },
       "PredictionsOptionalNullFacePrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsFacePrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<Null>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsFacePrediction>",
+          "metadata": "optional<Null>",
         },
       },
       "PredictionsOptionalNullFacemeshPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsFacemeshPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<Null>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsFacemeshPrediction>",
+          "metadata": "optional<Null>",
         },
       },
       "PredictionsOptionalTranscriptionMetadataLanguagePrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsLanguagePrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<TranscriptionMetadata>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsLanguagePrediction>",
+          "metadata": "optional<TranscriptionMetadata>",
         },
       },
       "PredictionsOptionalTranscriptionMetadataNerPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsNerPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<TranscriptionMetadata>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsNerPrediction>",
+          "metadata": "optional<TranscriptionMetadata>",
         },
       },
       "PredictionsOptionalTranscriptionMetadataProsodyPrediction": {
         "docs": undefined,
         "properties": {
-          "grouped_predictions": {
-            "docs": undefined,
-            "type": "list<GroupedPredictionsProsodyPrediction>",
-          },
-          "metadata": {
-            "docs": undefined,
-            "type": "optional<TranscriptionMetadata>",
-          },
+          "grouped_predictions": "list<GroupedPredictionsProsodyPrediction>",
+          "metadata": "optional<TranscriptionMetadata>",
         },
       },
       "Prosody": {
         "docs": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
         "properties": {
-          "granularity": {
-            "docs": undefined,
-            "type": "optional<Granularity>",
-          },
-          "identify_speakers": {
-            "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
-            "type": "optional<boolean>",
-          },
-          "window": {
-            "docs": undefined,
-            "type": "optional<Window>",
-          },
+          "granularity": "optional<Granularity>",
+          "identify_speakers": "optional<boolean>",
+          "window": "optional<Window>",
         },
       },
       "ProsodyPrediction": {
         "docs": undefined,
         "properties": {
-          "confidence": {
-            "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
-            "type": "optional<double>",
-          },
+          "confidence": "optional<double>",
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
-          "speaker_confidence": {
-            "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
-            "type": "optional<double>",
-          },
-          "text": {
-            "docs": "A segment of text (like a word or a sentence).",
-            "type": "optional<string>",
-          },
-          "time": {
-            "docs": undefined,
-            "type": "TimeInterval",
-          },
+          "speaker_confidence": "optional<double>",
+          "text": "optional<string>",
+          "time": "TimeInterval",
         },
       },
       "Queued": {
@@ -1226,45 +866,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "Request": {
         "docs": undefined,
         "properties": {
-          "callback_url": {
-            "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
-            "type": "optional<string>",
-          },
-          "files": {
-            "docs": undefined,
-            "type": "list<File>",
-          },
-          "models": {
-            "docs": undefined,
-            "type": "optional<Models>",
-          },
-          "notify": {
-            "docs": "Whether to send an email notification to the user upon job completion/failure.",
-            "type": "optional<boolean>",
-          },
-          "transcription": {
-            "docs": undefined,
-            "type": "optional<Transcription>",
-          },
-          "urls": {
-            "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
-
-If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-            "type": "optional<list<string>>",
-          },
+          "callback_url": "optional<string>",
+          "files": "list<File>",
+          "models": "optional<Models>",
+          "notify": "optional<boolean>",
+          "transcription": "optional<Transcription>",
+          "urls": "optional<list<string>>",
         },
       },
       "Results": {
         "docs": undefined,
         "properties": {
-          "errors": {
-            "docs": undefined,
-            "type": "list<Error>",
-          },
-          "predictions": {
-            "docs": undefined,
-            "type": "list<Prediction>",
-          },
+          "errors": "list<Error>",
+          "predictions": "list<Prediction>",
         },
       },
       "SentimentScore": {
@@ -1305,14 +919,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "discriminant": "type",
         "docs": undefined,
         "union": {
-          "file": {
-            "docs": undefined,
-            "type": "SourceFile",
-          },
-          "url": {
-            "docs": undefined,
-            "type": "SourceUrl",
-          },
+          "file": "SourceFile",
+          "url": "SourceUrl",
         },
       },
       "SourceFile": {
@@ -1325,18 +933,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "SourceResult": {
         "docs": undefined,
         "properties": {
-          "error": {
-            "docs": "An error message.",
-            "type": "optional<string>",
-          },
-          "results": {
-            "docs": undefined,
-            "type": "optional<Results>",
-          },
-          "source": {
-            "docs": undefined,
-            "type": "Source",
-          },
+          "error": "optional<string>",
+          "results": "optional<Results>",
+          "source": "Source",
         },
       },
       "SourceUrl": {
@@ -1351,22 +950,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "discriminant": "status",
         "docs": undefined,
         "union": {
-          "COMPLETED": {
-            "docs": undefined,
-            "type": "StateCompleted",
-          },
-          "FAILED": {
-            "docs": undefined,
-            "type": "StateFailed",
-          },
-          "IN_PROGRESS": {
-            "docs": undefined,
-            "type": "StateInProgress",
-          },
-          "QUEUED": {
-            "docs": undefined,
-            "type": "StateQueued",
-          },
+          "COMPLETED": "StateCompleted",
+          "FAILED": "StateFailed",
+          "IN_PROGRESS": "StateInProgress",
+          "QUEUED": "StateQueued",
         },
       },
       "StateCompleted": {
@@ -1451,10 +1038,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Transcription": {
         "docs": undefined,
         "properties": {
-          "language": {
-            "docs": undefined,
-            "type": "optional<Bcp47Tag>",
-          },
+          "language": "optional<Bcp47Tag>",
         },
       },
       "TranscriptionMetadata": {
@@ -1464,10 +1048,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
             "type": "double",
           },
-          "detected_language": {
-            "docs": undefined,
-            "type": "optional<Bcp47Tag>",
-          },
+          "detected_language": "optional<Bcp47Tag>",
         },
       },
       "Url": {
@@ -1497,14 +1078,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Window": {
         "docs": undefined,
         "properties": {
-          "length": {
-            "docs": "The length of the sliding window.",
-            "type": "optional<double>",
-          },
-          "step": {
-            "docs": "The step size of the sliding window.",
-            "type": "optional<double>",
-          },
+          "length": "optional<double>",
+          "step": "optional<double>",
         },
       },
     },
@@ -1526,9 +1101,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

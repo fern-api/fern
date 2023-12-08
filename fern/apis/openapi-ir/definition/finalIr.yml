@@ -121,7 +121,7 @@ types:
   EndpointSdkName:
     properties:
       groupName:
-        type: list<string>
+        type: list<commons.SdkGroupName>
         docs: This is populated by `x-fern-sdk-method-name`
       methodName:
         type: string
@@ -263,6 +263,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -322,6 +323,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       values: list<EnumValue>
 
@@ -343,6 +345,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schema: commons.SchemaId
 
@@ -355,6 +358,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -369,5 +373,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schemas: list<Schema>
