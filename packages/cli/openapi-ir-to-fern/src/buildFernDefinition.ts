@@ -15,6 +15,8 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export const ROOT_PREFIX = "root";
 export const EXTERNAL_AUDIENCE = "external";
+/** All errrors are currently declared in __package__.yml */
+export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 export function buildFernDefinition(context: OpenApiIrConverterContext): FernDefinition {
     buildEnvironments(context);
@@ -62,7 +64,7 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
         }
-        context.builder.addError(RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME), {
+        context.builder.addError(ERROR_DECLARATIONS_FILENAME, {
             name: httpError.generatedName,
             schema: errorDeclaration
         });

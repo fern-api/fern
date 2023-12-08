@@ -1,7 +1,7 @@
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
-const PRODUCTION_ENVNIRONMENT_NAME = "production";
-const DEFAULT_ENVIRONMENT_NAME = "default";
+const PRODUCTION_ENVNIRONMENT_NAME = "Production";
+const DEFAULT_ENVIRONMENT_NAME = "Default";
 
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const topLevelServerURLsWithName: Record<string, string> = {};

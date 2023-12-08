@@ -292,7 +292,7 @@ function getPrefixedType({
                 ? RelativeFilePath.of(`${groupName}.yml`)
                 : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
     });
-    return `${prefix}.${type}`;
+    return prefix != null ? `${prefix}.${type}` : type;
 }
 
 function getSchemaName(schema: Schema): string | undefined {

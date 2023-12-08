@@ -1175,10 +1175,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "type": "string",
       },
     },
-    "default-environment": "default",
+    "default-environment": "Default",
     "display-name": "Hume AI Batch API",
     "environments": {
-      "default": "https://api.hume.ai",
+      "Default": "https://api.hume.ai",
     },
     "error-discrimination": {
       "strategy": "status-code",

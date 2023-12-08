@@ -11,7 +11,7 @@ import {
     Schema
 } from "@fern-fern/openapi-ir-model/finalIr";
 import { buildEndpointExample } from "./buildEndpointExample";
-import { EXTERNAL_AUDIENCE } from "./buildFernDefinition";
+import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
@@ -198,7 +198,11 @@ export function buildEndpoint({
     endpoint.errorStatusCode.forEach((statusCode) => {
         const errorName = errors[statusCode]?.generatedName;
         if (errorName != null) {
-            errorsThrown.push(errorName);
+            const prefix = context.builder.addImport({
+                file: declarationFile,
+                fileToImport: ERROR_DECLARATIONS_FILENAME
+            });
+            errorsThrown.push(prefix != null ? `${prefix}.${errorName}` : errorName);
         }
     });
     convertedEndpoint.errors =

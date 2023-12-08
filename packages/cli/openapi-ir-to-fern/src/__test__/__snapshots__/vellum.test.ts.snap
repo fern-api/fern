@@ -170,9 +170,9 @@ Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
             "errors": [
-              "package.BadRequestError",
-              "package.NotFoundError",
-              "package.InternalServerError",
+              "package.root.BadRequestError",
+              "package.root.NotFoundError",
+              "package.root.InternalServerError",
             ],
             "method": "POST",
             "path": "/v1/upload-document",
@@ -291,7 +291,7 @@ partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
             "errors": [
-              "package.ConflictError",
+              "package.root.ConflictError",
             ],
             "method": "POST",
             "path": "/v1/registered-prompts/register",
@@ -2390,10 +2390,10 @@ Used to submit feedback regarding the quality of previously generated completion
         "type": "string",
       },
     },
-    "default-environment": "production",
+    "default-environment": "Production",
     "display-name": "Vellum Client API",
     "environments": {
-      "production": {
+      "Production": {
         "urls": {
           "Default": "https://api.vellum.ai",
           "Documents": "https://documents.vellum.ai",

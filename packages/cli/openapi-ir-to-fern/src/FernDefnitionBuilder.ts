@@ -21,11 +21,11 @@ export interface FernDefinitionBuilder {
     addAudience(name: string): void;
 
     /**
-     * Adds an import and returns the prefix for the import
+     * Adds an import and returns the prefix for the import. Returns undefined if no prefix.
      * @param file the file to add the import to
      * @param fileToImport the file to import
      */
-    addImport({ file, fileToImport }: { file: RelativeFilePath; fileToImport: RelativeFilePath }): string;
+    addImport({ file, fileToImport }: { file: RelativeFilePath; fileToImport: RelativeFilePath }): string | undefined;
 
     addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
 
@@ -121,7 +121,16 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.headers[name] = schema;
     }
 
-    public addImport({ file, fileToImport }: { file: RelativeFilePath; fileToImport: RelativeFilePath }): string {
+    public addImport({
+        file,
+        fileToImport
+    }: {
+        file: RelativeFilePath;
+        fileToImport: RelativeFilePath;
+    }): string | undefined {
+        if (file === fileToImport) {
+            return undefined;
+        }
         const importPrefix = camelCase(basename(fileToImport, extname(fileToImport)).replaceAll("__package__", "root"));
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.imports == null) {
