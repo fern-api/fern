@@ -5,6 +5,7 @@ package com.seed.idempotencyHeaders.resources.payment;
 
 import com.seed.idempotencyHeaders.core.ApiError;
 import com.seed.idempotencyHeaders.core.ClientOptions;
+import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
 import com.seed.idempotencyHeaders.core.RequestOptions;
 import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -32,7 +32,7 @@ public class PaymentClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

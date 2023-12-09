@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.primitive;
 
 import com.fern.sdk.core.ApiError;
 import com.fern.sdk.core.ClientOptions;
+import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
 import java.io.IOException;
@@ -17,7 +18,6 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,7 +36,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -70,7 +70,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -104,7 +104,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -138,7 +138,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -172,7 +172,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -207,7 +207,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -241,7 +241,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -275,7 +275,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);
@@ -309,7 +309,7 @@ public class PrimitiveClient {
       .build();
     RequestBody body;
     try {
-      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
     }
     catch(Exception e) {
       throw new RuntimeException(e);

@@ -27,6 +27,7 @@ import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
+import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
@@ -42,6 +43,7 @@ import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.output.GeneratedResourcesJavaFile;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
@@ -188,6 +190,10 @@ public final class ClientGeneratorCli
         ApiErrorGenerator apiErrorGenerator = new ApiErrorGenerator(context);
         GeneratedJavaFile generatedErrorFile = apiErrorGenerator.generateFile();
         this.addGeneratedFile(generatedErrorFile);
+
+        CoreMediaTypesGenerator mediaTypesGenerator = new CoreMediaTypesGenerator(context);
+        GeneratedResourcesJavaFile generatedMediaTypesFile = mediaTypesGenerator.generateFile();
+        this.addGeneratedFile(generatedMediaTypesFile);
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context, false);

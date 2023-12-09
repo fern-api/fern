@@ -5,12 +5,12 @@ package com.seed.basicAuth.resources.basicauth;
 
 import com.seed.basicAuth.core.ApiError;
 import com.seed.basicAuth.core.ClientOptions;
+import com.seed.basicAuth.core.MediaTypes;
 import com.seed.basicAuth.core.ObjectMappers;
 import com.seed.basicAuth.core.RequestOptions;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -68,7 +68,7 @@ public class BasicAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

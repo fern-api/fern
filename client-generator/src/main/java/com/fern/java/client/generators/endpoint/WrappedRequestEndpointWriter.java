@@ -31,6 +31,7 @@ import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.JsonFileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
+import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -266,14 +267,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
                 .beginControlFlow("try")
                 .addStatement(
-                        "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
+                        "$L = $T.create($T.$L.writeValueAsBytes($L), $T.$L)",
                         getOkhttpRequestBodyName(),
                         RequestBody.class,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
                         variableToJsonify,
-                        okhttp3.MediaType.class,
-                        "application/json")
+                        clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(),
+                        CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
                 .endControlFlow()
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)

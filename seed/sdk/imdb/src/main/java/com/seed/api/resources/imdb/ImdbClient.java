@@ -5,6 +5,7 @@ package com.seed.api.resources.imdb;
 
 import com.seed.api.core.ApiError;
 import com.seed.api.core.ClientOptions;
+import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.resources.imdb.types.CreateMovieRequest;
@@ -12,7 +13,6 @@ import com.seed.api.resources.imdb.types.Movie;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,7 +36,7 @@ public class ImdbClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -5,12 +5,12 @@ package com.seed.customAuth.resources.customauth;
 
 import com.seed.customAuth.core.ApiError;
 import com.seed.customAuth.core.ClientOptions;
+import com.seed.customAuth.core.MediaTypes;
 import com.seed.customAuth.core.ObjectMappers;
 import com.seed.customAuth.core.RequestOptions;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -68,7 +68,7 @@ public class CustomAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
