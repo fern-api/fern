@@ -116,6 +116,20 @@ type ShipTo = {
 ```
 </CodeBlock>
 
+### Lists
+
+```yml
+ Shipments:
+    type: list<ShipmentStatus>
+    examples:
+      - name: Default
+        value:
+          - status: "InTransit"
+            estimatedDeliveryDate: "2024-01-11"
+          - status: "Delivered"
+            estimatedDeliveryDate: "2024-01-13"
+```
+
 ### Unions
 
 #### Discriminated Union
