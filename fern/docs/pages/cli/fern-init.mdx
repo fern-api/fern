@@ -1,9 +1,9 @@
-`fern init` initialize a new Fern workspace in the current folder. By default, you'll see the `IMDb Movie API` example.
+`fern init` initialize a new Fern workspace in the current folder. By default, you'll see the `IMDb API` (International Movie Database)  example.
 
 ## Usage
 
 ```bash
-fern init
+fern init [--docs]
 ```
 
 This will create the following folder structure in your project:
@@ -16,3 +16,27 @@ fern/
     ├─ api.yml  # API-level configuration
     └─ imdb.yml # endpoints, types, and errors
 ```
+
+## Options
+
+By adding `--docs`, you'll also get a sample documentation website for your API with an API Reference section.
+
+```bash
+$ fern init --docs
+```
+
+The file added will look like:
+
+<CodeBlock title = "docs.yml">
+```yml
+instances:
+  - url: https://your-organization.docs.buildwithfern.com
+title: Your Organization | Documentation
+navigation:
+  - api: API Reference
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
+```
+
+To see what the API docs looks like, run `fern generate --docs`. More details on this command are available [here](/fern-generate).
