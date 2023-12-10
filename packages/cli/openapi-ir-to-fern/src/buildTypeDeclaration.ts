@@ -230,31 +230,34 @@ export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): Converte
 }
 
 export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDeclaration {
+    const enumSchema: RawSchemas.EnumSchema = {
+        enum: schema.values.map((enumValue) => {
+            const name = enumValue.nameOverride ?? enumValue.generatedName;
+            const value = enumValue.value;
+            if (name === value && enumValue.description == null) {
+                return name;
+            } else if (name === value && enumValue.description != null) {
+                return {
+                    value,
+                    docs: enumValue.description
+                };
+            }
+            const enumValueDeclaration: RawSchemas.EnumValueSchema = {
+                name: enumValue.nameOverride ?? enumValue.generatedName,
+                value: enumValue.value
+            };
+            if (enumValue.description != null) {
+                enumValueDeclaration.docs = enumValue.description;
+            }
+            return enumValueDeclaration;
+        })
+    };
+    if (schema.description != null) {
+        enumSchema.docs = schema.description;
+    }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: {
-            docs: schema.description ?? undefined,
-            enum: schema.values.map((enumValue) => {
-                const name = enumValue.nameOverride ?? enumValue.generatedName;
-                const value = enumValue.value;
-                if (name === value && enumValue.description == null) {
-                    return name;
-                } else if (name === value && enumValue.description != null) {
-                    return {
-                        value,
-                        docs: enumValue.description
-                    };
-                }
-                const enumValueDeclaration: RawSchemas.EnumValueSchema = {
-                    name: enumValue.nameOverride ?? enumValue.generatedName,
-                    value: enumValue.value
-                };
-                if (enumValue.description != null) {
-                    enumValueDeclaration.docs = enumValue.description;
-                }
-                return enumValue;
-            })
-        }
+        schema: enumSchema
     };
 }
 

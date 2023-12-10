@@ -3,19 +3,27 @@ import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/finalIr";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { FernWorkspace, OpenAPIWorkspace } from "../types/Workspace";
+
+export async function getOpenAPIIRFromOpenAPIWorkspace(
+    openapiWorkspace: OpenAPIWorkspace,
+    context: TaskContext
+): Promise<OpenAPIIntermediateRepresentation> {
+    return await parse({
+        absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
+        absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,
+        taskContext: context
+    });
+}
 
 export async function convertOpenApiWorkspaceToFernWorkspace(
     openapiWorkspace: OpenAPIWorkspace,
     context: TaskContext
 ): Promise<FernWorkspace> {
-    const openApiIr = await parse({
-        absolutePathToAsyncAPI: openapiWorkspace.absolutePathToAsyncAPI,
-        absolutePathToOpenAPI: openapiWorkspace.absolutePathToOpenAPI,
-        taskContext: context
-    });
+    const openApiIr = await getOpenAPIIRFromOpenAPIWorkspace(openapiWorkspace, context);
     const definition = convert({
         taskContext: context,
         openApiIr
