@@ -270,10 +270,7 @@ Each consumer User entity needs three mandatory fields:
           "method": "POST",
           "path": "/consumer/users",
           "request": {
-            "body": {
-              "docs": "Model for User details",
-              "type": "User",
-            },
+            "body": "User",
           },
           "response": {
             "docs": "Created",
@@ -660,7 +657,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
       },
       "CardDetailsCardType": {
-        "docs": undefined,
         "enum": [
           "VIRTUAL",
           "PHYSICAL",
@@ -759,7 +755,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "CheckDetailsDeliveryStatus": {
-        "docs": undefined,
         "enum": [
           "COMPLETED",
           "PENDING",
@@ -893,7 +888,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "CountryCode": {
-        "docs": undefined,
         "enum": [
           "AF",
           "AL",
@@ -1145,20 +1139,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ZW",
           "AX",
           {
-            "description": undefined,
-            "generatedName": "NOT_APPLICABLE",
-            "nameOverride": undefined,
+            "name": "NOT_APPLICABLE",
             "value": "N/A",
           },
         ],
       },
       "CurrencyCode": {
-        "docs": undefined,
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "OneInch",
-            "nameOverride": undefined,
+            "name": "OneInch",
             "value": "1INCH",
           },
           "AAVE",
@@ -1631,7 +1620,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "KycStatus": {
-        "docs": undefined,
         "enum": [
           "SUCCESSFUL",
           "FAILED",
@@ -1743,7 +1731,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "ListSubtype": {
-        "docs": undefined,
         "enum": [
           "USER_ID",
           "CARD_FINGERPRINT_NUMBER",
@@ -1759,7 +1746,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
       },
       "ListType": {
-        "docs": undefined,
         "enum": [
           "WHITELIST",
           "BLACKLIST",
@@ -1808,7 +1794,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
       "MpesaPaymentMethod": "literal<"MPESA">",
       "PaymentMethod": {
-        "docs": undefined,
         "enum": [
           "ACH",
           "CARD",
@@ -1880,7 +1865,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "RiskLevel": {
-        "docs": undefined,
         "enum": [
           "VERY_HIGH",
           "HIGH",
@@ -1929,7 +1913,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "RuleHitDirection": {
-        "docs": undefined,
         "enum": [
           "ORIGIN",
           "DESTINATION",
@@ -1944,7 +1927,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "RuleLabels": {
-        "docs": undefined,
         "enum": [
           "UNEXPECTED_BEHAVIOR",
           "ILLICIT_GAINS_CHECK",
@@ -1961,7 +1943,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
       },
       "RuleNature": {
-        "docs": undefined,
         "enum": [
           "AML",
           "FRAUD",
@@ -1992,7 +1973,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "SanctionsDetailsEntityType": {
-        "docs": undefined,
         "enum": [
           "CONSUMER_NAME",
           "LEGAL_NAME",
@@ -2182,7 +2162,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
       },
       "TransactionType": {
-        "docs": undefined,
         "enum": [
           "DEPOSIT",
           "TRANSFER",
@@ -2374,21 +2353,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "UserOptionalUserSegment": {
-        "docs": undefined,
         "enum": [
           "RETAIL",
           "PROFESSIONAL",
         ],
       },
       "UserRegistrationStatus": {
-        "docs": undefined,
         "enum": [
           "REGISTERED",
           "UNREGISTERED",
         ],
       },
       "UserState": {
-        "docs": undefined,
         "enum": [
           "UNACCEPTABLE",
           "UNDECIDED",
@@ -2457,7 +2433,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "WebhookEventType": {
-        "docs": undefined,
         "enum": [
           "CASE_CLOSED",
           "USER_STATE_UPDATED",

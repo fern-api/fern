@@ -107,11 +107,7 @@ enterprise connections can be created by an organization.
             "method": "POST",
             "path": "/dev-orgs.auth-connections.create",
             "request": {
-              "body": {
-                "docs": "Request to create a new enterprise authentication connection.
-",
-                "type": "DevOrgAuthConnectionsCreateRequest",
-              },
+              "body": "root.DevOrgAuthConnectionsCreateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -262,68 +258,12 @@ disabled.
             "method": "POST",
             "path": "/dev-orgs.auth-connections.update",
             "request": {
-              "body": {
-                "docs": "Request to update an enterprise authentication connection for a Dev
-organization.
-",
-                "type": "DevOrgAuthConnectionsUpdateRequest",
-              },
+              "body": "root.DevOrgAuthConnectionsUpdateRequest",
             },
             "response": {
               "docs": "Success.",
               "type": "root.DevOrgAuthConnectionsUpdateResponse",
             },
-          },
-        },
-      },
-      "types": {
-        "DevOrgAuthConnectionsCreateRequest": {
-          "base-properties": {
-            "display_name": {
-              "docs": "Display name of the authentication connection. This name will be
-visible to all the users when they sign in to this Dev
-organization. For example, if the display_name is 'abclogin', then
-it would appear on the login button as 'Log in to abclogin'.
-",
-              "type": "optional<string>",
-            },
-          },
-          "discriminant": "type",
-          "docs": "Request to create a new enterprise authentication connection.
-",
-          "union": {
-            "google_apps": "root.AuthConnectionOptionsGoogleApps",
-            "oidc": "root.AuthConnectionOptionsOidc",
-            "samlp": "root.AuthConnectionOptionsSaml",
-            "waad": "root.AuthConnectionOptionsAzureAd",
-          },
-        },
-        "DevOrgAuthConnectionsUpdateRequest": {
-          "base-properties": {
-            "display_name": {
-              "docs": "New display name of the authentication connection. This name will
-be visible to all the users when they sign in to this Dev
-organization. For example, if the display_name is 'abclogin', then
-it would appear on the login button as 'Log in to abclogin'.
-",
-              "type": "optional<string>",
-            },
-            "id": {
-              "docs": "ID of the authentication connection which is to be updated.
-",
-              "type": "string",
-            },
-          },
-          "discriminant": "type",
-          "docs": "Request to update an enterprise authentication connection for a Dev
-organization.
-",
-          "union": {
-            "google_apps": "root.AuthConnectionOptionsGoogleApps",
-            "none": "root.empty",
-            "oidc": "root.AuthConnectionOptionsOidc",
-            "samlp": "root.AuthConnectionOptionsSaml",
-            "waad": "root.AuthConnectionOptionsAzureAd",
           },
         },
       },
@@ -752,7 +692,7 @@ used.
             "method": "POST",
             "path": "/parts.create",
             "request": {
-              "body": "PartsCreateRequest",
+              "body": "root.PartsCreateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -930,64 +870,12 @@ used.
             "method": "POST",
             "path": "/parts.update",
             "request": {
-              "body": "PartsUpdateRequest",
+              "body": "root.PartsUpdateRequest",
             },
             "response": {
               "docs": "Success.",
               "type": "root.PartsUpdateResponse",
             },
-          },
-        },
-      },
-      "types": {
-        "PartsCreateRequest": {
-          "base-properties": {
-            "description": {
-              "docs": "Description of the part.",
-              "type": "optional<string>",
-            },
-            "name": {
-              "docs": "Name of the part.",
-              "type": "string",
-            },
-            "owned_by": {
-              "docs": "The users that own the part.",
-              "type": "list<string>",
-            },
-          },
-          "discriminant": "type",
-          "docs": undefined,
-          "union": {
-            "capability": "root.PartsCreateRequestCapability",
-            "enhancement": "root.PartsCreateRequestEnhancement",
-            "feature": "root.PartsCreateRequestFeature",
-            "product": "root.parts-create-request-product",
-          },
-        },
-        "PartsUpdateRequest": {
-          "base-properties": {
-            "description": {
-              "docs": "The updated description of the part.",
-              "type": "optional<string>",
-            },
-            "id": {
-              "docs": "The ID of the part to update.",
-              "type": "string",
-            },
-            "name": {
-              "docs": "The updated name of the part.",
-              "type": "optional<string>",
-            },
-            "owned_by": "optional<root.PartsUpdateRequestOwnedBy>",
-          },
-          "discriminant": "type",
-          "docs": undefined,
-          "union": {
-            "capability": "root.parts-update-request-capability",
-            "enhancement": "root.PartsUpdateRequestEnhancement",
-            "feature": "root.parts-update-request-feature",
-            "none": "root.empty",
-            "product": "root.parts-update-request-product",
           },
         },
       },
@@ -1548,10 +1436,7 @@ tags.
             "method": "POST",
             "path": "/timeline-entries.create",
             "request": {
-              "body": {
-                "docs": "The request to create a timeline entry for an object.",
-                "type": "TimelineEntriesCreateRequest",
-              },
+              "body": "root.TimelineEntriesCreateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -1667,44 +1552,12 @@ used.
             "method": "POST",
             "path": "/timeline-entries.update",
             "request": {
-              "body": {
-                "docs": "The request to update a timeline entry.",
-                "type": "TimelineEntriesUpdateRequest",
-              },
+              "body": "root.TimelineEntriesUpdateRequest",
             },
             "response": {
               "docs": "Success.",
               "type": "root.TimelineEntriesUpdateResponse",
             },
-          },
-        },
-      },
-      "types": {
-        "TimelineEntriesCreateRequest": {
-          "base-properties": {
-            "object": {
-              "docs": "The ID of the object to create the timeline entry for.",
-              "type": "string",
-            },
-            "visibility": "optional<root.timeline-entry-visibility>",
-          },
-          "discriminant": "type",
-          "docs": "The request to create a timeline entry for an object.",
-          "union": {
-            "timeline_comment": "root.TimelineEntriesCreateRequestTimelineComment",
-          },
-        },
-        "TimelineEntriesUpdateRequest": {
-          "base-properties": {
-            "id": {
-              "docs": "The ID of the timeline entry to update.",
-              "type": "string",
-            },
-          },
-          "discriminant": "type",
-          "docs": "The request to update a timeline entry.",
-          "union": {
-            "timeline_comment": "root.TimelineEntriesUpdateRequestTimelineComment",
           },
         },
       },
@@ -1946,7 +1799,7 @@ won't receive any object events until successfully verified.
             "method": "POST",
             "path": "/works.create",
             "request": {
-              "body": "WorksCreateRequest",
+              "body": "root.WorksCreateRequest",
             },
             "response": {
               "docs": "Success.",
@@ -2246,100 +2099,12 @@ organizations.
             "method": "POST",
             "path": "/works.update",
             "request": {
-              "body": "WorksUpdateRequest",
+              "body": "root.WorksUpdateRequest",
             },
             "response": {
               "docs": "Success.",
               "type": "root.WorksUpdateResponse",
             },
-          },
-        },
-      },
-      "types": {
-        "WorksCreateRequest": {
-          "base-properties": {
-            "applies_to_part": {
-              "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
-applies to. Specifying a part is required when creating tickets and
-issues.
-",
-              "type": "string",
-            },
-            "artifacts": {
-              "docs": "The IDs of the artifacts to associate with the work item.
-",
-              "type": "optional<list<string>>",
-            },
-            "body": {
-              "docs": "Body of the work object.",
-              "type": "optional<string>",
-            },
-            "owned_by": {
-              "docs": "The users that own the work.",
-              "type": "list<string>",
-            },
-            "reported_by": {
-              "docs": "The users that reported the work.",
-              "type": "optional<list<string>>",
-            },
-            "stage": "optional<root.StageInit>",
-            "tags": {
-              "docs": "Tags associated with the work item.",
-              "type": "optional<list<root.SetTagWithValue>>",
-            },
-            "target_close_date": {
-              "docs": "Timestamp for when the work is expected to be complete.",
-              "type": "optional<datetime>",
-            },
-            "title": {
-              "docs": "Title of the work object.",
-              "type": "string",
-            },
-          },
-          "discriminant": "type",
-          "docs": undefined,
-          "union": {
-            "issue": "root.WorksCreateRequestIssue",
-            "ticket": "root.WorksCreateRequestTicket",
-          },
-        },
-        "WorksUpdateRequest": {
-          "base-properties": {
-            "applies_to_part": {
-              "docs": "Updates the part that the work applies to.",
-              "type": "optional<string>",
-            },
-            "artifacts": "optional<root.WorksUpdateRequestArtifactIds>",
-            "body": {
-              "docs": "Updated body of the work object, or unchanged if not provided.
-",
-              "type": "optional<string>",
-            },
-            "id": {
-              "docs": "The work's ID.",
-              "type": "string",
-            },
-            "owned_by": "optional<root.WorksUpdateRequestOwnedBy>",
-            "reported_by": "optional<root.WorksUpdateRequestReportedBy>",
-            "stage": "optional<root.StageUpdate>",
-            "tags": "optional<root.WorksUpdateRequestTags>",
-            "target_close_date": {
-              "docs": "Updates the timestamp for when the work is expected to be complete.
-",
-              "type": "optional<datetime>",
-            },
-            "title": {
-              "docs": "Updated title of the work object, or unchanged if not provided.
-",
-              "type": "optional<string>",
-            },
-          },
-          "discriminant": "type",
-          "docs": undefined,
-          "union": {
-            "issue": "root.WorksUpdateRequestIssue",
-            "none": "root.empty",
-            "ticket": "root.WorksUpdateRequestTicket",
           },
         },
       },
@@ -2567,7 +2332,6 @@ authentication connection.
         },
       },
       "AuthConnectionToggle": {
-        "docs": undefined,
         "enum": [
           "disable",
           "enable",
@@ -2625,15 +2389,11 @@ token. Only applicable for application access tokens.
         "docs": "Specifies the process of obtaining a token.",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
             "value": "urn:devrev:params:oauth:grant-type:token-issue",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnIetfParamsOauthGrantTypeTokenExchange",
-            "nameOverride": undefined,
+            "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
         ],
@@ -2642,57 +2402,39 @@ token. Only applicable for application access tokens.
         "docs": "The type of the requested token.",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeAat",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeAat",
             "value": "urn:devrev:params:oauth:token-type:aat",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeAatPublic",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
             "value": "urn:devrev:params:oauth:token-type:aat:public",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeDev",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeDev",
             "value": "urn:devrev:params:oauth:token-type:dev",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypePat",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypePat",
             "value": "urn:devrev:params:oauth:token-type:pat",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeRev",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeRev",
             "value": "urn:devrev:params:oauth:token-type:rev",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeSession",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeSession",
             "value": "urn:devrev:params:oauth:token-type:session",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeSessionDev0",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
             "value": "urn:devrev:params:oauth:token-type:session:dev0",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeSys",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeSys",
             "value": "urn:devrev:params:oauth:token-type:sys",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
-            "nameOverride": undefined,
+            "name": "UrnIetfParamsOauthTokenTypeJwt",
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
         ],
@@ -2709,45 +2451,31 @@ token. Only applicable for application access tokens.
         "docs": "The type of the subject token.",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
             "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeJwtDev",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
             "value": "urn:devrev:params:oauth:token-type:jwt:dev",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeRevinfo",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
             "value": "urn:devrev:params:oauth:token-type:revinfo",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeSysu",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeSysu",
             "value": "urn:devrev:params:oauth:token-type:sysu",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfo",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
             "value": "urn:devrev:params:oauth:token-type:userinfo",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
-            "nameOverride": undefined,
+            "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
             "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
           },
           {
-            "description": undefined,
-            "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
-            "nameOverride": undefined,
+            "name": "UrnIetfParamsOauthTokenTypeJwt",
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
         ],
@@ -3063,7 +2791,6 @@ sort order. If not set, then no prior elements exist.
         },
       },
       "ErrorBadRequestType": {
-        "docs": undefined,
         "enum": [
           "bad_request",
           "invalid_enum_value",
@@ -3422,7 +3149,6 @@ always be returned in the specified sort-by order.
         },
       },
       "PartType": {
-        "docs": undefined,
         "enum": [
           "capability",
           "enhancement",
@@ -4054,7 +3780,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
       },
       "UserType": {
-        "docs": undefined,
         "enum": [
           "dev_user",
           "rev_user",
@@ -4283,7 +4008,6 @@ event types. Note this is mutually exclusive with 'add' and
         },
       },
       "WorkType": {
-        "docs": undefined,
         "enum": [
           "issue",
           "ticket",

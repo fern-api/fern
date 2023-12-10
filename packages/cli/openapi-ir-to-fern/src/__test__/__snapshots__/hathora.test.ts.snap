@@ -21,7 +21,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/apps/v1/create",
             "request": {
-              "body": "AppConfig",
+              "body": "root.AppConfig",
             },
             "response": {
               "docs": "",
@@ -111,35 +111,12 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": "AppConfig",
+              "body": "root.AppConfig",
             },
             "response": {
               "docs": "Ok",
               "type": "root.Application",
             },
-          },
-        },
-      },
-      "types": {
-        "AppConfig": {
-          "docs": undefined,
-          "properties": {
-            "appName": "string",
-            "authConfiguration": "AppConfigAuthConfiguration",
-          },
-        },
-        "AppConfigAuthConfiguration": {
-          "docs": undefined,
-          "properties": {
-            "anonymous": "optional<root.RecordStringNever>",
-            "google": "optional<AppConfigAuthConfigurationGoogle>",
-            "nickname": "optional<root.RecordStringNever>",
-          },
-        },
-        "AppConfigAuthConfigurationGoogle": {
-          "docs": undefined,
-          "properties": {
-            "clientId": "string",
           },
         },
       },
@@ -432,7 +409,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": "DeploymentConfig",
+              "body": "root.DeploymentConfig",
             },
             "response": {
               "docs": "",
@@ -493,25 +470,6 @@ exports[`open api parser hathora simple 1`] = `
               "docs": "Ok",
               "type": "list<root.Deployment>",
             },
-          },
-        },
-      },
-      "types": {
-        "DeploymentConfig": {
-          "docs": undefined,
-          "properties": {
-            "containerPort": "integer",
-            "env": "list<DeploymentConfigEnvItem>",
-            "planName": "root.PlanName",
-            "roomsPerProcess": "integer",
-            "transportType": "root.TransportType",
-          },
-        },
-        "DeploymentConfigEnvItem": {
-          "docs": undefined,
-          "properties": {
-            "name": "string",
-            "value": "string",
           },
         },
       },
@@ -1003,7 +961,6 @@ exports[`open api parser hathora simple 1`] = `
       },
       "types": {
         "CreateLobbyRequestVisibility": {
-          "docs": undefined,
           "enum": [
             "public",
             "private",
@@ -1675,7 +1632,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "BuildStatus": {
-        "docs": undefined,
         "enum": [
           "created",
           "running",
@@ -1749,7 +1705,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "LobbyVisibility": {
-        "docs": undefined,
         "enum": [
           "private",
           "public",
@@ -1757,7 +1712,6 @@ exports[`open api parser hathora simple 1`] = `
         ],
       },
       "MetricName": {
-        "docs": undefined,
         "enum": [
           "cpu",
           "memory",
@@ -1788,7 +1742,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "PlanName": {
-        "docs": undefined,
         "enum": [
           "tiny",
           "small",
@@ -1842,7 +1795,6 @@ exports[`open api parser hathora simple 1`] = `
         "properties": {},
       },
       "Region": {
-        "docs": undefined,
         "enum": [
           "Seattle",
           "Washington_DC",
@@ -1878,7 +1830,6 @@ exports[`open api parser hathora simple 1`] = `
       "RoomAllocationId": "string",
       "RoomId": "string",
       "RoomStatus": {
-        "docs": undefined,
         "enum": [
           "scheduling",
           "active",
@@ -1895,7 +1846,6 @@ exports[`open api parser hathora simple 1`] = `
       },
       "TailLines": "integer",
       "TransportType": {
-        "docs": undefined,
         "enum": [
           "tcp",
           "udp",

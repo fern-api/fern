@@ -98,7 +98,6 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetAttemptsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -383,7 +382,6 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetBookmarksRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -902,7 +900,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetEventBulkRetriesRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -1137,7 +1134,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIgnoredEventBulkRetriesRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -1553,14 +1549,12 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "CreateRequestBulkRetryRequestQueryStatus": {
-          "docs": undefined,
           "enum": [
             "accepted",
             "rejected",
           ],
         },
         "GetRequestBulkRetriesRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -1994,7 +1988,6 @@ exports[`open api parser hookdeck simple 1`] = `
           },
         },
         "GetConnectionsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -2387,7 +2380,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetDestinationsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -2668,14 +2660,12 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetEventsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetEventsRequestOrderBy": {
-          "docs": undefined,
           "enum": [
             "last_attempt_at",
             "next_attempt_at",
@@ -3236,14 +3226,12 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIssueTriggersRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetIssueTriggersRequestOrderBy": {
-          "docs": undefined,
           "enum": [
             "created_at",
             "type",
@@ -3560,14 +3548,12 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetIssueCountRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetIssueCountRequestOrderBy": {
-          "docs": undefined,
           "enum": [
             "created_at",
             "first_seen_at",
@@ -3594,14 +3580,12 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetIssuesRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetIssuesRequestOrderBy": {
-          "docs": undefined,
           "enum": [
             "created_at",
             "first_seen_at",
@@ -4148,14 +4132,12 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetRequestEventsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetRequestEventsRequestOrderBy": {
-          "docs": undefined,
           "enum": [
             "last_attempt_at",
             "next_attempt_at",
@@ -4163,28 +4145,24 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetRequestIgnoredEventsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetRequestsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetRequestsRequestOrderBy": {
-          "docs": undefined,
           "enum": [
             "ingested_at",
             "created_at",
           ],
         },
         "GetRequestsRequestStatus": {
-          "docs": undefined,
           "enum": [
             "accepted",
             "rejected",
@@ -4452,7 +4430,6 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetRulesetsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -4710,7 +4687,6 @@ exports[`open api parser hookdeck simple 1`] = `
       },
       "types": {
         "GetSourcesRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -5111,14 +5087,12 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetTransformationExecutionsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "GetTransformationExecutionsRequestLogLevel": {
-          "docs": undefined,
           "enum": [
             "debug",
             "info",
@@ -5128,7 +5102,6 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "GetTransformationsRequestDir": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -5521,7 +5494,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "ConsoleLineType": {
-        "docs": undefined,
         "enum": [
           "error",
           "log",
@@ -5868,7 +5840,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "EventStatus": {
-        "docs": undefined,
         "enum": [
           "SCHEDULED",
           "QUEUED",
@@ -5888,7 +5859,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "FilteredMeta": {
-        "docs": undefined,
         "enum": [
           "body",
           "headers",
@@ -5903,7 +5873,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "HmacAlgorithms": {
-        "docs": undefined,
         "enum": [
           "md5",
           "sha1",
@@ -5921,7 +5890,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "HmacIntegrationConfigsEncoding": {
-        "docs": undefined,
         "enum": [
           "base64",
           "hex",
@@ -5941,7 +5909,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "IgnoredEventCause": {
-        "docs": undefined,
         "enum": [
           "ARCHIVED",
           "FILTERED",
@@ -6015,7 +5982,6 @@ exports[`open api parser hookdeck simple 1`] = `
         ],
       },
       "IntegrationFeature": {
-        "docs": undefined,
         "enum": [
           "VERIFICATION",
           "HANDSHAKE",
@@ -6050,9 +6016,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "adyen",
           "gitlab",
           {
-            "description": undefined,
-            "generatedName": "PropertyFinder",
-            "nameOverride": undefined,
+            "name": "PropertyFinder",
             "value": "property-finder",
           },
           "woocommerce",
@@ -6255,7 +6219,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "OrderByDirection": {
-        "docs": undefined,
         "enum": [
           "asc",
           "desc",
@@ -6390,7 +6353,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "RequestRejectionCause": {
-        "docs": undefined,
         "enum": [
           "SOURCE_ARCHIVED",
           "NO_WEBHOOK",
@@ -6500,7 +6462,6 @@ exports[`open api parser hookdeck simple 1`] = `
         },
       },
       "ShopifyIntegrationConfigsRateLimitPeriod": {
-        "docs": undefined,
         "enum": [
           "minute",
           "second",
@@ -6619,27 +6580,19 @@ exports[`open api parser hookdeck simple 1`] = `
         "docs": "Supported topics",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "IssueOpened",
-            "nameOverride": undefined,
+            "name": "IssueOpened",
             "value": "issue.opened",
           },
           {
-            "description": undefined,
-            "generatedName": "IssueUpdated",
-            "nameOverride": undefined,
+            "name": "IssueUpdated",
             "value": "issue.updated",
           },
           {
-            "description": undefined,
-            "generatedName": "DeprecatedAttemptFailed",
-            "nameOverride": undefined,
+            "name": "DeprecatedAttemptFailed",
             "value": "deprecated.attempt-failed",
           },
           {
-            "description": undefined,
-            "generatedName": "EventSuccessful",
-            "nameOverride": undefined,
+            "name": "EventSuccessful",
             "value": "event.successful",
           },
         ],

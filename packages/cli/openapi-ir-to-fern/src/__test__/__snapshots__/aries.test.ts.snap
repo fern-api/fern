@@ -1113,24 +1113,18 @@ exports[`open api parser aries simple 1`] = `
           "properties": {},
         },
         "GetMatchingConnectionsRequestConnectionProtocol": {
-          "docs": undefined,
           "enum": [
             {
-              "description": undefined,
-              "generatedName": "Connections10",
-              "nameOverride": undefined,
+              "name": "Connections10",
               "value": "connections/1.0",
             },
             {
-              "description": undefined,
-              "generatedName": "Didexchange10",
-              "nameOverride": undefined,
+              "name": "Didexchange10",
               "value": "didexchange/1.0",
             },
           ],
         },
         "GetMatchingConnectionsRequestState": {
-          "docs": undefined,
           "enum": [
             "start",
             "error",
@@ -1144,7 +1138,6 @@ exports[`open api parser aries simple 1`] = `
           ],
         },
         "GetMatchingConnectionsRequestTheirRole": {
-          "docs": undefined,
           "enum": [
             "invitee",
             "requester",
@@ -2772,7 +2765,6 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "SetEndorserRoleForConnIdRequestTransactionMyJob": {
-          "docs": undefined,
           "enum": [
             "TRANSACTION_AUTHOR",
             "TRANSACTION_ENDORSER",
@@ -4832,14 +4824,12 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetMatchingCredExRecordsRequestRole": {
-          "docs": undefined,
           "enum": [
             "issuer",
             "holder",
           ],
         },
         "GetMatchingCredExRecordsRequestState": {
-          "docs": undefined,
           "enum": [
             "proposal_sent",
             "proposal_received",
@@ -7265,7 +7255,7 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/issue-credential-2.0/send",
             "request": {
-              "body": "V20CredExFree",
+              "body": "root.V20CredExFree",
             },
             "response": {
               "docs": "",
@@ -7887,7 +7877,7 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/issue-credential-2.0/send-proposal",
             "request": {
-              "body": "V20CredExFree",
+              "body": "root.V20CredExFree",
             },
             "response": {
               "docs": "",
@@ -8484,99 +8474,52 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetMatchingCredExRecordsV2RequestRole": {
-          "docs": undefined,
           "enum": [
             "issuer",
             "holder",
           ],
         },
         "GetMatchingCredExRecordsV2RequestState": {
-          "docs": undefined,
           "enum": [
             {
-              "description": undefined,
-              "generatedName": "ProposalSent",
-              "nameOverride": undefined,
+              "name": "ProposalSent",
               "value": "proposal-sent",
             },
             {
-              "description": undefined,
-              "generatedName": "ProposalReceived",
-              "nameOverride": undefined,
+              "name": "ProposalReceived",
               "value": "proposal-received",
             },
             {
-              "description": undefined,
-              "generatedName": "OfferSent",
-              "nameOverride": undefined,
+              "name": "OfferSent",
               "value": "offer-sent",
             },
             {
-              "description": undefined,
-              "generatedName": "OfferReceived",
-              "nameOverride": undefined,
+              "name": "OfferReceived",
               "value": "offer-received",
             },
             {
-              "description": undefined,
-              "generatedName": "RequestSent",
-              "nameOverride": undefined,
+              "name": "RequestSent",
               "value": "request-sent",
             },
             {
-              "description": undefined,
-              "generatedName": "RequestReceived",
-              "nameOverride": undefined,
+              "name": "RequestReceived",
               "value": "request-received",
             },
             {
-              "description": undefined,
-              "generatedName": "CredentialIssued",
-              "nameOverride": undefined,
+              "name": "CredentialIssued",
               "value": "credential-issued",
             },
             {
-              "description": undefined,
-              "generatedName": "CredentialReceived",
-              "nameOverride": undefined,
+              "name": "CredentialReceived",
               "value": "credential-received",
             },
             "done",
             {
-              "description": undefined,
-              "generatedName": "CredentialRevoked",
-              "nameOverride": undefined,
+              "name": "CredentialRevoked",
               "value": "credential-revoked",
             },
             "abandoned",
           ],
-        },
-        "V20CredExFree": {
-          "docs": undefined,
-          "properties": {
-            "auto_remove": {
-              "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
-              "type": "optional<boolean>",
-            },
-            "comment": {
-              "docs": "Human-readable comment",
-              "type": "optional<string>",
-            },
-            "connection_id": {
-              "docs": "Connection identifier",
-              "type": "string",
-            },
-            "credential_preview": "optional<root.V20CredPreview>",
-            "filter": "root.V20CredBoundOfferRequestFilter",
-            "trace": {
-              "docs": "Record trace information, based on agent configuration",
-              "type": "optional<boolean>",
-            },
-            "verification_method": {
-              "docs": "For ld-proofs. Verification method for signing.",
-              "type": "optional<string>",
-            },
-          },
         },
       },
     },
@@ -8974,7 +8917,6 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetPublishedDidEndpointRequestEndpointType": {
-          "docs": undefined,
           "enum": [
             "Endpoint",
             "Profile",
@@ -8982,7 +8924,6 @@ exports[`open api parser aries simple 1`] = `
           ],
         },
         "RegisterNymRequestRole": {
-          "docs": undefined,
           "enum": [
             "STEWARD",
             "TRUSTEE",
@@ -9457,14 +9398,12 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetKeylistsRequestRole": {
-          "docs": undefined,
           "enum": [
             "client",
             "server",
           ],
         },
         "GetMatchingMediationRecordsRequestState": {
-          "docs": undefined,
           "enum": [
             "request",
             "granted",
@@ -10115,7 +10054,7 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/out-of-band/receive-invitation",
             "request": {
-              "body": "InvitationMessage",
+              "body": "root.InvitationMessage",
               "name": "ReceiveOobInvitationRequest",
               "query-parameters": {
                 "alias": {
@@ -10151,37 +10090,6 @@ exports[`open api parser aries simple 1`] = `
         "InvitationCreateRequestMetadata": {
           "docs": "Optional metadata to attach to the connection created with the invitation",
           "properties": {},
-        },
-        "InvitationMessage": {
-          "docs": undefined,
-          "properties": {
-            "@id": {
-              "docs": "Message identifier",
-              "type": "optional<string>",
-            },
-            "@type": {
-              "docs": "Message type",
-              "type": "optional<string>",
-            },
-            "accept": {
-              "docs": "List of mime type in order of preference",
-              "type": "optional<list<string>>",
-            },
-            "handshake_protocols": "optional<list<string>>",
-            "imageUrl": {
-              "docs": "Optional image URL for out-of-band invitation",
-              "type": "optional<string>",
-            },
-            "label": {
-              "docs": "Optional label",
-              "type": "optional<string>",
-            },
-            "requests~attach": {
-              "docs": "Optional request attachment",
-              "type": "optional<list<root.AttachDecorator>>",
-            },
-            "services": "optional<list<map<string, unknown>>>",
-          },
         },
       },
     },
@@ -11278,7 +11186,7 @@ exports[`open api parser aries simple 1`] = `
               },
             },
             "request": {
-              "body": "IndyPresSpec",
+              "body": "root.IndyPresSpec",
             },
             "response": {
               "docs": "",
@@ -11589,14 +11497,12 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetMatchingPresExRecordsRequestRole": {
-          "docs": undefined,
           "enum": [
             "prover",
             "verifier",
           ],
         },
         "GetMatchingPresExRecordsRequestState": {
-          "docs": undefined,
           "enum": [
             "proposal_sent",
             "proposal_received",
@@ -11608,27 +11514,6 @@ exports[`open api parser aries simple 1`] = `
             "presentation_acked",
             "abandoned",
           ],
-        },
-        "IndyPresSpec": {
-          "docs": undefined,
-          "properties": {
-            "requested_attributes": {
-              "docs": "Nested object mapping proof request attribute referents to requested-attribute specifiers",
-              "type": "map<string, root.IndyRequestedCredsRequestedAttr>",
-            },
-            "requested_predicates": {
-              "docs": "Nested object mapping proof request predicate referents to requested-predicate specifiers",
-              "type": "map<string, root.IndyRequestedCredsRequestedPred>",
-            },
-            "self_attested_attributes": {
-              "docs": "Self-attested attributes to build into proof",
-              "type": "map<string, string>",
-            },
-            "trace": {
-              "docs": "Whether to trace event (default false)",
-              "type": "optional<boolean>",
-            },
-          },
         },
       },
     },
@@ -13467,49 +13352,35 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetMatchingPresExRecordsV2RequestRole": {
-          "docs": undefined,
           "enum": [
             "prover",
             "verifier",
           ],
         },
         "GetMatchingPresExRecordsV2RequestState": {
-          "docs": undefined,
           "enum": [
             {
-              "description": undefined,
-              "generatedName": "ProposalSent",
-              "nameOverride": undefined,
+              "name": "ProposalSent",
               "value": "proposal-sent",
             },
             {
-              "description": undefined,
-              "generatedName": "ProposalReceived",
-              "nameOverride": undefined,
+              "name": "ProposalReceived",
               "value": "proposal-received",
             },
             {
-              "description": undefined,
-              "generatedName": "RequestSent",
-              "nameOverride": undefined,
+              "name": "RequestSent",
               "value": "request-sent",
             },
             {
-              "description": undefined,
-              "generatedName": "RequestReceived",
-              "nameOverride": undefined,
+              "name": "RequestReceived",
               "value": "request-received",
             },
             {
-              "description": undefined,
-              "generatedName": "PresentationSent",
-              "nameOverride": undefined,
+              "name": "PresentationSent",
               "value": "presentation-sent",
             },
             {
-              "description": undefined,
-              "generatedName": "PresentationReceived",
-              "nameOverride": undefined,
+              "name": "PresentationReceived",
               "value": "presentation-received",
             },
             "done",
@@ -14297,7 +14168,7 @@ exports[`open api parser aries simple 1`] = `
             "method": "POST",
             "path": "/revocation/publish-revocations",
             "request": {
-              "body": "PublishRevocations",
+              "body": "root.PublishRevocations",
             },
             "response": {
               "docs": "",
@@ -14620,7 +14491,6 @@ exports[`open api parser aries simple 1`] = `
       },
       "types": {
         "GetCreatedRegistriesRequestState": {
-          "docs": undefined,
           "enum": [
             "init",
             "generated",
@@ -14628,15 +14498,6 @@ exports[`open api parser aries simple 1`] = `
             "active",
             "full",
           ],
-        },
-        "PublishRevocations": {
-          "docs": undefined,
-          "properties": {
-            "rrid2crid": {
-              "docs": "Credential revocation ids by revocation registry id",
-              "type": "optional<map<string, list<string>>>",
-            },
-          },
         },
         "RevokeRequestNotifyVersion": {
           "docs": "Specify which version of the revocation notification should be sent",
@@ -14646,7 +14507,6 @@ exports[`open api parser aries simple 1`] = `
           ],
         },
         "SetRevocationRegistryStateRequestState": {
-          "docs": undefined,
           "enum": [
             "init",
             "generated",
@@ -15471,21 +15331,18 @@ exports[`open api parser aries simple 1`] = `
           ],
         },
         "GetDidsRequestKeyType": {
-          "docs": undefined,
           "enum": [
             "ed25519",
             "bls12381g2",
           ],
         },
         "GetDidsRequestMethod": {
-          "docs": undefined,
           "enum": [
             "key",
             "sov",
           ],
         },
         "GetDidsRequestPosture": {
-          "docs": undefined,
           "enum": [
             "public",
             "posted",
@@ -15756,15 +15613,11 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Attachment type",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "CredentialOffer",
-            "nameOverride": undefined,
+            "name": "CredentialOffer",
             "value": "credential-offer",
           },
           {
-            "description": undefined,
-            "generatedName": "PresentProof",
-            "nameOverride": undefined,
+            "name": "PresentProof",
             "value": "present-proof",
           },
         ],
@@ -15907,15 +15760,11 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Connection protocol used",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "Connections10",
-            "nameOverride": undefined,
+            "name": "Connections10",
             "value": "connections/1.0",
           },
           {
-            "description": undefined,
-            "generatedName": "Didexchange10",
-            "nameOverride": undefined,
+            "name": "Didexchange10",
             "value": "didexchange/1.0",
           },
         ],
@@ -16051,7 +15900,6 @@ exports[`open api parser aries simple 1`] = `
         },
       },
       "ConstraintsStatusActive": {
-        "docs": undefined,
         "enum": [
           "required",
           "allowed",
@@ -16059,7 +15907,6 @@ exports[`open api parser aries simple 1`] = `
         ],
       },
       "ConstraintsStatusRevoked": {
-        "docs": undefined,
         "enum": [
           "required",
           "allowed",
@@ -16067,7 +15914,6 @@ exports[`open api parser aries simple 1`] = `
         ],
       },
       "ConstraintsStatusSuspended": {
-        "docs": undefined,
         "enum": [
           "required",
           "allowed",
@@ -17034,27 +16880,19 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "LessThan",
+            "name": "LessThan",
             "value": "<",
           },
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "LessThanOrEqualTo",
+            "name": "LessThanOrEqualTo",
             "value": "<=",
           },
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "GreaterThanOrEqualTo",
+            "name": "GreaterThanOrEqualTo",
             "value": ">=",
           },
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "GreaterThan",
+            "name": "GreaterThan",
             "value": ">",
           },
         ],
@@ -17246,27 +17084,19 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Predicate type ('<', '<=', '>=', or '>')",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "LessThan",
+            "name": "LessThan",
             "value": "<",
           },
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "LessThanOrEqualTo",
+            "name": "LessThanOrEqualTo",
             "value": "<=",
           },
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "GreaterThanOrEqualTo",
+            "name": "GreaterThanOrEqualTo",
             "value": ">=",
           },
           {
-            "description": undefined,
-            "generatedName": "",
-            "nameOverride": "GreaterThan",
+            "name": "GreaterThan",
             "value": ">",
           },
         ],
@@ -18181,27 +18011,19 @@ exports[`open api parser aries simple 1`] = `
         "enum": [
           "initial",
           {
-            "description": undefined,
-            "generatedName": "PrepareResponse",
-            "nameOverride": undefined,
+            "name": "PrepareResponse",
             "value": "prepare-response",
           },
           {
-            "description": undefined,
-            "generatedName": "AwaitResponse",
-            "nameOverride": undefined,
+            "name": "AwaitResponse",
             "value": "await-response",
           },
           {
-            "description": undefined,
-            "generatedName": "ReuseNotAccepted",
-            "nameOverride": undefined,
+            "name": "ReuseNotAccepted",
             "value": "reuse-not-accepted",
           },
           {
-            "description": undefined,
-            "generatedName": "ReuseAccepted",
-            "nameOverride": undefined,
+            "name": "ReuseAccepted",
             "value": "reuse-accepted",
           },
           "done",
@@ -18339,9 +18161,7 @@ exports[`open api parser aries simple 1`] = `
         "enum": [
           "protocol",
           {
-            "description": undefined,
-            "generatedName": "GoalCode",
-            "nameOverride": undefined,
+            "name": "GoalCode",
             "value": "goal-code",
           },
         ],
@@ -19418,58 +19238,40 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Issue-credential exchange state",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "ProposalSent",
-            "nameOverride": undefined,
+            "name": "ProposalSent",
             "value": "proposal-sent",
           },
           {
-            "description": undefined,
-            "generatedName": "ProposalReceived",
-            "nameOverride": undefined,
+            "name": "ProposalReceived",
             "value": "proposal-received",
           },
           {
-            "description": undefined,
-            "generatedName": "OfferSent",
-            "nameOverride": undefined,
+            "name": "OfferSent",
             "value": "offer-sent",
           },
           {
-            "description": undefined,
-            "generatedName": "OfferReceived",
-            "nameOverride": undefined,
+            "name": "OfferReceived",
             "value": "offer-received",
           },
           {
-            "description": undefined,
-            "generatedName": "RequestSent",
-            "nameOverride": undefined,
+            "name": "RequestSent",
             "value": "request-sent",
           },
           {
-            "description": undefined,
-            "generatedName": "RequestReceived",
-            "nameOverride": undefined,
+            "name": "RequestReceived",
             "value": "request-received",
           },
           {
-            "description": undefined,
-            "generatedName": "CredentialIssued",
-            "nameOverride": undefined,
+            "name": "CredentialIssued",
             "value": "credential-issued",
           },
           {
-            "description": undefined,
-            "generatedName": "CredentialReceived",
-            "nameOverride": undefined,
+            "name": "CredentialReceived",
             "value": "credential-received",
           },
           "done",
           {
-            "description": undefined,
-            "generatedName": "CredentialRevoked",
-            "nameOverride": undefined,
+            "name": "CredentialRevoked",
             "value": "credential-revoked",
           },
           "abandoned",
@@ -19860,39 +19662,27 @@ exports[`open api parser aries simple 1`] = `
         "docs": "Present-proof exchange state",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "ProposalSent",
-            "nameOverride": undefined,
+            "name": "ProposalSent",
             "value": "proposal-sent",
           },
           {
-            "description": undefined,
-            "generatedName": "ProposalReceived",
-            "nameOverride": undefined,
+            "name": "ProposalReceived",
             "value": "proposal-received",
           },
           {
-            "description": undefined,
-            "generatedName": "RequestSent",
-            "nameOverride": undefined,
+            "name": "RequestSent",
             "value": "request-sent",
           },
           {
-            "description": undefined,
-            "generatedName": "RequestReceived",
-            "nameOverride": undefined,
+            "name": "RequestReceived",
             "value": "request-received",
           },
           {
-            "description": undefined,
-            "generatedName": "PresentationSent",
-            "nameOverride": undefined,
+            "name": "PresentationSent",
             "value": "presentation-sent",
           },
           {
-            "description": undefined,
-            "generatedName": "PresentationReceived",
-            "nameOverride": undefined,
+            "name": "PresentationReceived",
             "value": "presentation-received",
           },
           "done",

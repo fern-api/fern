@@ -230,7 +230,6 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       },
       "types": {
         "AccountsListAccountsRequestLocation": {
-          "docs": undefined,
           "enum": [
             "internal",
             "external",

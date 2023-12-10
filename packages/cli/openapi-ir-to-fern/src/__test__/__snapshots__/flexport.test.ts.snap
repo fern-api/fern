@@ -1277,21 +1277,18 @@ exports[`open api parser flexport simple 1`] = `
           },
         },
         "BookingsIndexRequestDirection": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "BookingsIndexRequestFStatus": {
-          "docs": undefined,
           "enum": [
             "booked",
             "submitted",
           ],
         },
         "BookingsIndexRequestSort": {
-          "docs": undefined,
           "enum": [
             "cargo_ready_date",
             "created_at",
@@ -1880,7 +1877,6 @@ exports[`open api parser flexport simple 1`] = `
           },
         },
         "BookingLineItemIndexRequestDirection": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -4901,7 +4897,7 @@ exports[`open api parser flexport simple 1`] = `
             "method": "POST",
             "path": "/documents",
             "request": {
-              "body": "CreateDocument",
+              "body": "root.CreateDocument",
             },
             "response": {
               "docs": "Created",
@@ -5080,39 +5076,6 @@ exports[`open api parser flexport simple 1`] = `
         },
       },
       "types": {
-        "CreateDocument": {
-          "docs": undefined,
-          "properties": {
-            "document": {
-              "docs": "Document represented in a strict Base64-encoded string.",
-              "type": "string",
-            },
-            "document_type": {
-              "docs": "Type of document.",
-              "type": "string",
-            },
-            "file_name": {
-              "docs": "Name of the document.",
-              "type": "string",
-            },
-            "memo": {
-              "docs": "Document memo or message.",
-              "type": "optional<string>",
-            },
-            "mime_type": {
-              "docs": "A two type descriptor describing the media type associated with the document.",
-              "type": "string",
-            },
-            "shipment_id": {
-              "docs": "Corresponding shipment for the document.",
-              "type": "integer",
-            },
-            "user_email": {
-              "docs": "Email of the user that will be listed as the document's uploader. If omitted, it will default to the company's admin.",
-              "type": "optional<string>",
-            },
-          },
-        },
         "DocumentsCreateResponse": {
           "docs": undefined,
           "properties": {
@@ -6115,42 +6078,29 @@ exports[`open api parser flexport simple 1`] = `
       },
       "types": {
         "EventsIndexRequestFDataResourceObject": {
-          "docs": undefined,
           "enum": [
             {
-              "description": undefined,
-              "generatedName": "Document",
-              "nameOverride": undefined,
+              "name": "Document",
               "value": "/document",
             },
             {
-              "description": undefined,
-              "generatedName": "Invoice",
-              "nameOverride": undefined,
+              "name": "Invoice",
               "value": "/invoice",
             },
             {
-              "description": undefined,
-              "generatedName": "OceanShipmentContainer",
-              "nameOverride": undefined,
+              "name": "OceanShipmentContainer",
               "value": "/ocean/shipment_container",
             },
             {
-              "description": undefined,
-              "generatedName": "OceanShipmentContainerLeg",
-              "nameOverride": undefined,
+              "name": "OceanShipmentContainerLeg",
               "value": "/ocean/shipment_container_leg",
             },
             {
-              "description": undefined,
-              "generatedName": "Shipment",
-              "nameOverride": undefined,
+              "name": "Shipment",
               "value": "/shipment",
             },
             {
-              "description": undefined,
-              "generatedName": "ShipmentLeg",
-              "nameOverride": undefined,
+              "name": "ShipmentLeg",
               "value": "/shipment_leg",
             },
           ],
@@ -6602,14 +6552,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "types": {
         "InvoiceIndexRequestDirection": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "InvoiceIndexRequestFStatus": {
-          "docs": undefined,
           "enum": [
             "outstanding",
             "past_due",
@@ -7132,7 +7080,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "types": {
         "PortsIndexRequestFPortType": {
-          "docs": undefined,
           "enum": [
             "airport",
             "railport",
@@ -7922,7 +7869,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "method": "POST",
             "path": "/purchase_orders",
             "request": {
-              "body": "CreateOrUpdatePurchaseOrder",
+              "body": "root.CreateOrUpdatePurchaseOrder",
             },
             "response": {
               "docs": "The created purchase order",
@@ -8634,7 +8581,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               },
             },
             "request": {
-              "body": "CreateOrUpdatePurchaseOrder",
+              "body": "root.CreateOrUpdatePurchaseOrder",
             },
             "response": {
               "docs": "The update purchase order",
@@ -8644,154 +8591,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "types": {
-        "CreateOrUpdatePurchaseOrder": {
-          "docs": undefined,
-          "properties": {
-            "cargo_ready_date": {
-              "docs": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
-              "type": "optional<string>",
-            },
-            "currency_code": {
-              "docs": "Required if there is no currency_code in each line item. The currency code being used in this purchase order.",
-              "type": "optional<string>",
-            },
-            "destination_location_refs": {
-              "docs": "Reference ID of the network locations that are the destination locations. Multiple values are allowed, which would signify that this order is going to be shipped to multiple locations.",
-              "type": "optional<list<string>>",
-            },
-            "destination_port": {
-              "docs": "The destination port",
-              "type": "optional<root.CreatePurchaseOrderPort>",
-            },
-            "freight_payment_terms": {
-              "docs": "The freight payment term for the purchase order",
-              "type": "optional<CreateOrUpdatePurchaseOrderFreightPaymentTerms>",
-            },
-            "incoterm": {
-              "docs": "Required if there is no incoterm in each line item. The incoterm of your purchase order.",
-              "type": "optional<CreateOrUpdatePurchaseOrderIncoterm>",
-            },
-            "issue_date": {
-              "docs": "The issue date for this purchase order.",
-              "type": "optional<string>",
-            },
-            "line_items": {
-              "docs": "A list of the line items in this purchase order",
-              "type": "list<root.CreateLineItem>",
-            },
-            "memo": {
-              "docs": "Your notes or instructions on this purchase order.",
-              "type": "optional<string>",
-            },
-            "metadata": "optional<root.MetadataCreate>",
-            "must_arrive_date": {
-              "docs": "Required if there is no must_arrive_date in each line item. The must arrive date for this purchase order.",
-              "type": "optional<string>",
-            },
-            "name": {
-              "docs": "Always required. Name of the purchase order.",
-              "type": "string",
-            },
-            "order_class": {
-              "docs": "Class of the purchase order.",
-              "type": "optional<CreateOrUpdatePurchaseOrderOrderClass>",
-            },
-            "order_type": {
-              "docs": "Type of purchase order, which is used for rules, searching, and reporting",
-              "type": "optional<string>",
-            },
-            "origin_location_ref": {
-              "docs": "Customizable reference ID of the network location that is the origin location.",
-              "type": "optional<string>",
-            },
-            "origin_port": {
-              "docs": "The origin port",
-              "type": "optional<root.CreatePurchaseOrderPort>",
-            },
-            "parties": {
-              "docs": "A list of the parties in this purchase order. Buyer and seller are required parties. Owner is the owner of this order and will default to the buyer if not specified.",
-              "type": "list<root.CreateParty>",
-            },
-            "priority": {
-              "docs": "priority of the purchase order.",
-              "type": "optional<CreateOrUpdatePurchaseOrderPriority>",
-            },
-            "status": {
-              "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used",
-              "type": "optional<CreateOrUpdatePurchaseOrderStatus>",
-            },
-            "transportation_mode": {
-              "docs": "Required if there is no transportation_mode in purchase order",
-              "type": "optional<CreateOrUpdatePurchaseOrderTransportationMode>",
-            },
-          },
-        },
-        "CreateOrUpdatePurchaseOrderFreightPaymentTerms": {
-          "docs": "The freight payment term for the purchase order",
-          "enum": [
-            "freight_collect",
-            "freight_prepaid",
-          ],
-        },
-        "CreateOrUpdatePurchaseOrderIncoterm": {
-          "docs": "Required if there is no incoterm in each line item. The incoterm of your purchase order.",
-          "enum": [
-            "EXW",
-            "FOB",
-            "FAS",
-            "FCA",
-            "CPT",
-            "CFR",
-            "CIF",
-            "CIP",
-            "DAT",
-            "DAP",
-            "DDP",
-          ],
-        },
-        "CreateOrUpdatePurchaseOrderOrderClass": {
-          "docs": "Class of the purchase order.",
-          "enum": [
-            "purchase_order",
-            "sales_order",
-            "transfer_order",
-            "delivery_order",
-            "work_order",
-          ],
-        },
-        "CreateOrUpdatePurchaseOrderPriority": {
-          "docs": "priority of the purchase order.",
-          "enum": [
-            "high",
-            "standard",
-          ],
-        },
-        "CreateOrUpdatePurchaseOrderStatus": {
-          "docs": "The status of the purchase order. Open POs denote POs that are ready to be booked. Closed POs are ones that you'd like to mark as done (typically because they've finished shipping), while Cancelled POs denote POs that were mistakenly uploaded or that should not be used",
-          "enum": [
-            "open",
-            "cancelled",
-            "closed",
-          ],
-        },
-        "CreateOrUpdatePurchaseOrderTransportationMode": {
-          "docs": "Required if there is no transportation_mode in purchase order",
-          "enum": [
-            "air",
-            "ocean",
-            "truck",
-            "rail",
-          ],
-        },
         "PurchaseOrderIndexRequestDirection": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "PurchaseOrderIndexRequestFRolesItem": {
-          "docs": undefined,
           "enum": [
             "buyer",
             "seller",
@@ -8808,7 +8614,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         "PurchaseOrderIndexRequestFStatus": {
-          "docs": undefined,
           "enum": [
             "open",
             "closed",
@@ -9243,7 +9048,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "types": {
         "PurchaseOrderLineItemIndexRequestDirection": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
@@ -10515,14 +10319,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "types": {
         "ShipmentIndexRequestDirection": {
-          "docs": undefined,
           "enum": [
             "asc",
             "desc",
           ],
         },
         "ShipmentIndexRequestSort": {
-          "docs": undefined,
           "enum": [
             "id",
             "transportation_mode",
@@ -11090,7 +10892,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "AirBookingDetail": "optional<AirBookingDetail>",
       "AirBookingDetailIncoterm": {
-        "docs": undefined,
         "enum": [
           "EXW",
           "FOB",
@@ -11315,7 +11116,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "BookingQuoteStatus": {
-        "docs": undefined,
         "enum": [
           "pending_quote",
           "sent_quote",
@@ -11339,7 +11139,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "BookingStatus": {
-        "docs": undefined,
         "enum": [
           "archived",
           "draft",
@@ -11399,7 +11198,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "CargoLithiumBatteriesPackingTypesItem": {
-        "docs": undefined,
         "enum": [
           "packed_loose",
           "packed_with_equipment",
@@ -11715,7 +11513,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "CreateAirBookingIncoterm": {
-        "docs": undefined,
         "enum": [
           "EXW",
           "FOB",
@@ -11806,7 +11603,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "CreateCargoLithiumBatteriesPackingTypesItem": {
-        "docs": undefined,
         "enum": [
           "packed_loose",
           "packed_with_equipment",
@@ -12118,27 +11914,19 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "W",
           "X",
           {
-            "description": undefined,
-            "generatedName": "Twenty",
-            "nameOverride": undefined,
+            "name": "Twenty",
             "value": "20",
           },
           {
-            "description": undefined,
-            "generatedName": "TwentyOne",
-            "nameOverride": undefined,
+            "name": "TwentyOne",
             "value": "21",
           },
           {
-            "description": undefined,
-            "generatedName": "TwoW",
-            "nameOverride": undefined,
+            "name": "TwoW",
             "value": "2W",
           },
           {
-            "description": undefined,
-            "generatedName": "FortyThree",
-            "nameOverride": undefined,
+            "name": "FortyThree",
             "value": "43",
           },
           "AS",
@@ -12816,7 +12604,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "FreightType": {
-        "docs": undefined,
         "enum": [
           "port_to_door",
           "port_to_port",
@@ -13204,7 +12991,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "OceanBookingDetail": "optional<OceanBookingDetail>",
       "OceanBookingDetailIncoterm": {
-        "docs": undefined,
         "enum": [
           "EXW",
           "FOB",
@@ -13313,21 +13099,15 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "docs": "Type of the object",
         "enum": [
           {
-            "description": undefined,
-            "generatedName": "OceanRailport",
-            "nameOverride": undefined,
+            "name": "OceanRailport",
             "value": "/ocean/railport",
           },
           {
-            "description": undefined,
-            "generatedName": "TruckingPort",
-            "nameOverride": undefined,
+            "name": "TruckingPort",
             "value": "/trucking/port",
           },
           {
-            "description": undefined,
-            "generatedName": "OceanPort",
-            "nameOverride": undefined,
+            "name": "OceanPort",
             "value": "/ocean/port",
           },
         ],
@@ -13479,14 +13259,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "PurchaseOrderFreightPaymnetTerms": {
-        "docs": undefined,
         "enum": [
           "freight_collect",
           "freight_prepaid",
         ],
       },
       "PurchaseOrderIncoterm": {
-        "docs": undefined,
         "enum": [
           "EXW",
           "FOB",
@@ -13579,7 +13357,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "PurchaseOrderLineItemIncoterm": {
-        "docs": undefined,
         "enum": [
           "EXW",
           "FOB",
@@ -13596,7 +13373,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         ],
       },
       "PurchaseOrderLineItemLineType": {
-        "docs": undefined,
         "enum": [
           "main_line",
           "sub_line",
@@ -13613,7 +13389,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "PurchaseOrderLineItemUnitOfMeasure": {
-        "docs": undefined,
         "enum": [
           "BBL",
           "CAR",
@@ -13673,7 +13448,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         ],
       },
       "PurchaseOrderPriority": {
-        "docs": undefined,
         "enum": [
           "standard",
           "high",
@@ -13947,7 +13721,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "ShipmentContainerContainerSize": {
-        "docs": undefined,
         "enum": [
           "twenty_ft",
           "fourty_ft",
@@ -13958,7 +13731,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         ],
       },
       "ShipmentContainerContainerType": {
-        "docs": undefined,
         "enum": [
           "dry",
           "flat_rack",
@@ -13987,7 +13759,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "ShipmentDangerousGoodsReviewStatus": {
-        "docs": undefined,
         "enum": [
           "pending",
           "in_progress",
@@ -14027,7 +13798,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         ],
       },
       "ShipmentIncoterm": {
-        "docs": undefined,
         "enum": [
           "EXW",
           "FOB",
@@ -14131,7 +13901,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
       },
       "ShipmentStatus": {
-        "docs": undefined,
         "enum": [
           "seller_location",
           "origin_stop_off",
@@ -14209,7 +13978,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "type": "optional<Terminal>",
       },
       "TransportationMode": {
-        "docs": undefined,
         "enum": [
           "ocean",
           "air",
@@ -14223,7 +13991,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "TruckingBookingDetail": "optional<TruckingBookingDetail>",
       "TruckingBookingDetailPaymentTerms": {
-        "docs": undefined,
         "enum": [
           "collect",
           "prepaid",
@@ -14231,7 +13998,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
       "TruckingShipmentLeg": "optional<TruckingShipmentLeg>",
       "TruckingShipmentLegServiceType": {
-        "docs": undefined,
         "enum": [
           "ltl",
           "ftl",
