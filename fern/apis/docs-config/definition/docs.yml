@@ -82,11 +82,39 @@ types:
 
   DocsTypographyConfig:
     properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
+      headingsFont: optional<FontFamilyConfig>
+      bodyFont: optional<FontFamilyConfig>
+      codeFont: optional<FontFamilyConfig>
 
-  FontConfig:
+  FontFamilyConfig:
+    discriminated: false
+    union:
+     - DeprecatedFontConfig
+     - FontFamily
+  
+  FontFamily:
+    properties:
+      font-faces: list<FontFace>
+      name: optional<string>
+
+  FontFace:
+    properties:
+      style:
+        type: optional<FontStyle>
+        docs: Defaults to "normal"
+      weight:
+        type: string
+        docs: Defaults to 400. Can either be 100, 200, 300, 400, 500, 600, 700, 800, 900, or a range i.e. "100 900"
+      path:
+        type: string
+        docs: The relative path of the font file. woff/woff2 highly recommended.
+
+  FontStyle:
+    enum:
+      - normal
+      - italic
+
+  DeprecatedFontConfig:
     properties:
       path:
         type: string
