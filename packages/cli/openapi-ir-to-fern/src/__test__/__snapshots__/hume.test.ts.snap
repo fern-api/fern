@@ -187,49 +187,36 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "types": {
       "Bcp47Tag": {
-        "docs": undefined,
         "enum": [
           "zh",
           "da",
           "nl",
           "en",
           {
-            "description": undefined,
-            "generatedName": "EnAu",
-            "nameOverride": undefined,
+            "name": "EnAu",
             "value": "en-AU",
           },
           {
-            "description": undefined,
-            "generatedName": "EnIn",
-            "nameOverride": undefined,
+            "name": "EnIn",
             "value": "en-IN",
           },
           {
-            "description": undefined,
-            "generatedName": "EnNz",
-            "nameOverride": undefined,
+            "name": "EnNz",
             "value": "en-NZ",
           },
           {
-            "description": undefined,
-            "generatedName": "EnGb",
-            "nameOverride": undefined,
+            "name": "EnGb",
             "value": "en-GB",
           },
           "fr",
           {
-            "description": undefined,
-            "generatedName": "FrCa",
-            "nameOverride": undefined,
+            "name": "FrCa",
             "value": "fr-CA",
           },
           "de",
           "hi",
           {
-            "description": undefined,
-            "generatedName": "HiLatn",
-            "nameOverride": undefined,
+            "name": "HiLatn",
             "value": "hi-Latn",
           },
           "id",
@@ -240,23 +227,17 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "pl",
           "pt",
           {
-            "description": undefined,
-            "generatedName": "PtBr",
-            "nameOverride": undefined,
+            "name": "PtBr",
             "value": "pt-BR",
           },
           {
-            "description": undefined,
-            "generatedName": "PtPt",
-            "nameOverride": undefined,
+            "name": "PtPt",
             "value": "pt-PT",
           },
           "ru",
           "es",
           {
-            "description": undefined,
-            "generatedName": "Es419",
-            "nameOverride": undefined,
+            "name": "Es419",
             "value": "es-419",
           },
           "sv",
@@ -339,7 +320,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "Direction": {
-        "docs": undefined,
         "enum": [
           "asc",
           "desc",
@@ -867,7 +847,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "SortBy": {
-        "docs": undefined,
         "enum": [
           "created",
           "started",
@@ -948,7 +927,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {},
       },
       "Status": {
-        "docs": undefined,
         "enum": [
           "QUEUED",
           "IN_PROGRESS",
@@ -1008,7 +986,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
       "When": {
-        "docs": undefined,
         "enum": [
           "created_before",
           "created_after",

@@ -273,7 +273,7 @@ function getRequest({
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
             const requestTypeReference = buildTypeReference({
-                schema: resolvedSchema,
+                schema: request.schema,
                 fileContainingReference: declarationFile,
                 context
             });

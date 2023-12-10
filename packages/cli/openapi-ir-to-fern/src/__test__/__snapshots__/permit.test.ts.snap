@@ -949,7 +949,7 @@ allowed.",
               },
             },
             "request": {
-              "body": "EnvironmentCreate",
+              "body": "root.EnvironmentCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -1146,35 +1146,6 @@ allowed.",
             "fail",
             "overwrite",
           ],
-        },
-        "EnvironmentCreate": {
-          "docs": undefined,
-          "properties": {
-            "custom_branch_name": {
-              "docs": "when using gitops feature, an optional branch name for the environment",
-              "type": "optional<string>",
-            },
-            "description": {
-              "docs": "an optional longer description of the environment",
-              "type": "optional<string>",
-            },
-            "jwks": {
-              "docs": "jwks for element frontend only login",
-              "type": "optional<root.JwksObj>",
-            },
-            "key": {
-              "docs": "A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.",
-              "type": "string",
-            },
-            "name": {
-              "docs": "The name of the environment",
-              "type": "string",
-            },
-            "settings": {
-              "docs": "the settings for this environment",
-              "type": "optional<map<string, unknown>>",
-            },
-          },
         },
       },
     },
@@ -2128,7 +2099,7 @@ define a boolean \`private\` attributes that we can now use in our policies.
               },
             },
             "request": {
-              "body": "ResourceAttributeCreate",
+              "body": "root.ResourceAttributeCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -2314,43 +2285,11 @@ Fields that will be provided will be completely overwritten.",
               },
             },
             "request": {
-              "body": "ResourceAttributeUpdate",
+              "body": "root.ResourceAttributeUpdate",
             },
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceAttributeRead",
-            },
-          },
-        },
-      },
-      "types": {
-        "ResourceAttributeCreate": {
-          "docs": undefined,
-          "properties": {
-            "description": {
-              "docs": "An optional longer description of what this attribute respresents in your system",
-              "type": "optional<string>",
-            },
-            "key": {
-              "docs": "A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.",
-              "type": "string",
-            },
-            "type": {
-              "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-              "type": "root.AttributeType",
-            },
-          },
-        },
-        "ResourceAttributeUpdate": {
-          "docs": undefined,
-          "properties": {
-            "description": {
-              "docs": "An optional longer description of what this attribute respresents in your system",
-              "type": "optional<string>",
-            },
-            "type": {
-              "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-              "type": "optional<root.AttributeType>",
             },
           },
         },
@@ -2635,7 +2574,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "request": {
-              "body": "AddRolePermissions",
+              "body": "root.AddRolePermissions",
             },
             "response": {
               "docs": "Successful Response",
@@ -2930,7 +2869,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
             },
             "request": {
-              "body": "RemoveRolePermissions",
+              "body": "root.RemoveRolePermissions",
             },
             "response": {
               "docs": "Successful Response",
@@ -2997,26 +2936,6 @@ Fields that will be provided will be completely overwritten.",
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceRoleRead",
-            },
-          },
-        },
-      },
-      "types": {
-        "AddRolePermissions": {
-          "docs": undefined,
-          "properties": {
-            "permissions": {
-              "docs": "List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
-              "type": "list<string>",
-            },
-          },
-        },
-        "RemoveRolePermissions": {
-          "docs": undefined,
-          "properties": {
-            "permissions": {
-              "docs": "List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`,i.e: the "permission name".",
-              "type": "list<string>",
             },
           },
         },
@@ -3400,7 +3319,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "request": {
-              "body": "RoleAssignmentCreate",
+              "body": "root.RoleAssignmentCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -3585,43 +3504,7 @@ If the role is not actually assigned, will return 404.",
               },
             },
             "request": {
-              "body": "RoleAssignmentRemove",
-            },
-          },
-        },
-      },
-      "types": {
-        "RoleAssignmentCreate": {
-          "docs": undefined,
-          "properties": {
-            "role": {
-              "docs": "the role that will be assigned (accepts either the role id or the role key)",
-              "type": "string",
-            },
-            "tenant": {
-              "docs": "the tenant the role is associated with (accepts either the tenant id or the tenant key)",
-              "type": "string",
-            },
-            "user": {
-              "docs": "the user the role will be assigned to (accepts either the user id or the user key)",
-              "type": "string",
-            },
-          },
-        },
-        "RoleAssignmentRemove": {
-          "docs": undefined,
-          "properties": {
-            "role": {
-              "docs": "the role that will be unassigned (accepts either the role id or the role key)",
-              "type": "string",
-            },
-            "tenant": {
-              "docs": "the tenant the role is associated with (accepts either the tenant id or the tenant key)",
-              "type": "string",
-            },
-            "user": {
-              "docs": "the user the role will be unassigned from (accepts either the user id or the user key)",
-              "type": "string",
+              "body": "root.RoleAssignmentRemove",
             },
           },
         },
@@ -3671,7 +3554,7 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "request": {
-              "body": "AddRolePermissions",
+              "body": "root.AddRolePermissions",
             },
             "response": {
               "docs": "Successful Response",
@@ -3932,7 +3815,7 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
             },
             "request": {
-              "body": "RemoveRolePermissions",
+              "body": "root.RemoveRolePermissions",
             },
             "response": {
               "docs": "Successful Response",
@@ -4000,15 +3883,6 @@ Fields that will be provided will be completely overwritten.",
         },
       },
       "types": {
-        "AddRolePermissions": {
-          "docs": undefined,
-          "properties": {
-            "permissions": {
-              "docs": "List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
-              "type": "list<string>",
-            },
-          },
-        },
         "ListRolesResponse": {
           "discriminated": false,
           "docs": undefined,
@@ -4016,15 +3890,6 @@ Fields that will be provided will be completely overwritten.",
             "root.PaginatedResultRoleRead",
             "list<root.RoleRead>",
           ],
-        },
-        "RemoveRolePermissions": {
-          "docs": undefined,
-          "properties": {
-            "permissions": {
-              "docs": "List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`,i.e: the "permission name".",
-              "type": "list<string>",
-            },
-          },
         },
       },
     },
@@ -4071,7 +3936,7 @@ and will return the existing tenant object in the response body.",
               },
             },
             "request": {
-              "body": "TenantCreate",
+              "body": "root.TenantCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -4348,27 +4213,6 @@ Fields that will be provided will be completely overwritten.",
             "list<root.TenantRead>",
           ],
         },
-        "TenantCreate": {
-          "docs": undefined,
-          "properties": {
-            "attributes": {
-              "docs": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
-              "type": "optional<map<string, unknown>>",
-            },
-            "description": {
-              "docs": "an optional longer description of the tenant",
-              "type": "optional<string>",
-            },
-            "key": {
-              "docs": "A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).",
-              "type": "string",
-            },
-            "name": {
-              "docs": "A descriptive name for the tenant",
-              "type": "string",
-            },
-          },
-        },
       },
     },
     "userAttributes.yml": {
@@ -4412,7 +4256,7 @@ define a string \`owner\` attribute that we can now use in our policies.
               },
             },
             "request": {
-              "body": "ResourceAttributeCreate",
+              "body": "root.ResourceAttributeCreate",
               "name": "CreateUserAttributeRequest",
               "query-parameters": {
                 "resource_id": {
@@ -4608,7 +4452,7 @@ Fields that will be provided will be completely overwritten.",
               },
             },
             "request": {
-              "body": "ResourceAttributeUpdate",
+              "body": "root.ResourceAttributeUpdate",
               "name": "UpdateUserAttributeRequest",
               "query-parameters": {
                 "resource_id": {
@@ -4621,38 +4465,6 @@ Fields that will be provided will be completely overwritten.",
             "response": {
               "docs": "Successful Response",
               "type": "root.ResourceAttributeRead",
-            },
-          },
-        },
-      },
-      "types": {
-        "ResourceAttributeCreate": {
-          "docs": undefined,
-          "properties": {
-            "description": {
-              "docs": "An optional longer description of what this attribute respresents in your system",
-              "type": "optional<string>",
-            },
-            "key": {
-              "docs": "A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.",
-              "type": "string",
-            },
-            "type": {
-              "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-              "type": "root.AttributeType",
-            },
-          },
-        },
-        "ResourceAttributeUpdate": {
-          "docs": undefined,
-          "properties": {
-            "description": {
-              "docs": "An optional longer description of what this attribute respresents in your system",
-              "type": "optional<string>",
-            },
-            "type": {
-              "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
-              "type": "optional<root.AttributeType>",
             },
           },
         },
@@ -4747,7 +4559,7 @@ and will return the existing user object in the response body.",
               },
             },
             "request": {
-              "body": "UserCreate",
+              "body": "root.UserCreate",
             },
             "response": {
               "docs": "Successful Response",
@@ -4892,7 +4704,7 @@ and will return the existing user object in the response body.",
               },
             },
             "request": {
-              "body": "UserCreate",
+              "body": "root.UserCreate",
             },
             "response": {
               "docs": "An existing user was replaced",
@@ -4996,33 +4808,6 @@ Fields that will be provided will be completely overwritten.",
             "response": {
               "docs": "Successful Response",
               "type": "root.UserRead",
-            },
-          },
-        },
-      },
-      "types": {
-        "UserCreate": {
-          "docs": undefined,
-          "properties": {
-            "attributes": {
-              "docs": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
-              "type": "optional<map<string, unknown>>",
-            },
-            "email": {
-              "docs": "The email of the user. If synced, will be unique inside the environment.",
-              "type": "optional<string>",
-            },
-            "first_name": {
-              "docs": "First name of the user.",
-              "type": "optional<string>",
-            },
-            "key": {
-              "docs": "A unique id by which Permit will identify the user for permission checks.",
-              "type": "string",
-            },
-            "last_name": {
-              "docs": "Last name of the user.",
-              "type": "optional<string>",
             },
           },
         },

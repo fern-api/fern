@@ -723,7 +723,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "AssignContributorDto",
+              "body": "root.AssignContributorDto",
             },
             "response": {
               "docs": "Contributor assigned to app.",
@@ -1298,25 +1298,6 @@ The client secret is auto generated on the server and returned. The client does 
           },
         },
       },
-      "types": {
-        "AssignContributorDto": {
-          "docs": undefined,
-          "properties": {
-            "contributorId": {
-              "docs": "The id or email of the user to add to the app.",
-              "type": "string",
-            },
-            "invite": {
-              "docs": "Set to true to invite the user if he does not exist.",
-              "type": "optional<boolean>",
-            },
-            "role": {
-              "docs": "The role of the contributor.",
-              "type": "optional<string>",
-            },
-          },
-        },
-      },
     },
     "assets.yml": {
       "imports": {
@@ -1807,7 +1788,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "QueryDto",
+              "body": "root.QueryDto",
             },
             "response": {
               "docs": "Assets returned.",
@@ -2234,26 +2215,6 @@ The client secret is auto generated on the server and returned. The client does 
           },
         },
       },
-      "types": {
-        "QueryDto": {
-          "docs": undefined,
-          "properties": {
-            "ids": {
-              "docs": "The optional list of ids to query.",
-              "type": "optional<list<string>>",
-            },
-            "oData": {
-              "docs": "The optional odata query.",
-              "type": "optional<string>",
-            },
-            "parentId": {
-              "docs": "The parent id (for assets).",
-              "type": "optional<string>",
-            },
-            "q": "optional<unknown>",
-          },
-        },
-      },
     },
     "backups.yml": {
       "imports": {
@@ -2603,7 +2564,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "UpsertCommentDto",
+              "body": "root.UpsertCommentDto",
             },
             "response": {
               "docs": "Comment created.",
@@ -2636,22 +2597,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "UpsertCommentDto",
-            },
-          },
-        },
-      },
-      "types": {
-        "UpsertCommentDto": {
-          "docs": undefined,
-          "properties": {
-            "text": {
-              "docs": "The comment text.",
-              "type": "string",
-            },
-            "url": {
-              "docs": "The url where the comment is created.",
-              "type": "optional<string>",
+              "body": "root.UpsertCommentDto",
             },
           },
         },
@@ -3061,7 +3007,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "QueryDto",
+              "body": "root.QueryDto",
             },
             "response": {
               "docs": "Contents returned.",
@@ -3172,7 +3118,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "map<string, root.ContentFieldData>",
+              "body": "root.ContentData",
             },
             "response": {
               "docs": "Content patched.",
@@ -3201,7 +3147,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "map<string, root.ContentFieldData>",
+              "body": "root.ContentData",
               "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "id": {
@@ -3319,7 +3265,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "map<string, root.ContentFieldData>",
+              "body": "root.ContentData",
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "patch": {
@@ -3370,7 +3316,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "map<string, root.ContentFieldData>",
+              "body": "root.ContentData",
             },
             "response": {
               "docs": "Content updated.",
@@ -3427,26 +3373,6 @@ The client secret is auto generated on the server and returned. The client does 
               "docs": "Content status changed.",
               "type": "root.ContentsDto",
             },
-          },
-        },
-      },
-      "types": {
-        "QueryDto": {
-          "docs": undefined,
-          "properties": {
-            "ids": {
-              "docs": "The optional list of ids to query.",
-              "type": "optional<list<string>>",
-            },
-            "oData": {
-              "docs": "The optional odata query.",
-              "type": "optional<string>",
-            },
-            "parentId": {
-              "docs": "The parent id (for assets).",
-              "type": "optional<string>",
-            },
-            "q": "optional<unknown>",
           },
         },
       },
@@ -4034,7 +3960,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "ChangePlanDto",
+              "body": "root.ChangePlanDto",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -4059,22 +3985,11 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "ChangePlanDto",
+              "body": "root.ChangePlanDto",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
               "type": "root.PlanChangedDto",
-            },
-          },
-        },
-      },
-      "types": {
-        "ChangePlanDto": {
-          "docs": undefined,
-          "properties": {
-            "planId": {
-              "docs": "The new plan id.",
-              "type": "string",
             },
           },
         },
@@ -4464,7 +4379,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "CreateRuleDto",
+              "body": "root.CreateRuleDto",
             },
             "response": {
               "docs": "Rule created.",
@@ -4642,7 +4557,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "CreateRuleDto",
+              "body": "root.CreateRuleDto",
             },
             "response": {
               "docs": "Rule simulated.",
@@ -4681,21 +4596,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the rule to disable.",
                 "type": "string",
               },
-            },
-          },
-        },
-      },
-      "types": {
-        "CreateRuleDto": {
-          "docs": undefined,
-          "properties": {
-            "action": {
-              "docs": "The action properties.",
-              "type": "root.RuleActionDto",
-            },
-            "trigger": {
-              "docs": "The trigger properties.",
-              "type": "root.RuleTriggerDto",
             },
           },
         },
@@ -5148,7 +5048,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "AddFieldDto",
+              "body": "root.AddFieldDto",
             },
             "response": {
               "docs": "Schema field created.",
@@ -5182,7 +5082,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "AddFieldDto",
+              "body": "root.AddFieldDto",
             },
             "response": {
               "docs": "Schema field created.",
@@ -5326,7 +5226,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "UpdateFieldDto",
+              "body": "root.UpdateFieldDto",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -5363,7 +5263,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "UpdateFieldDto",
+              "body": "root.UpdateFieldDto",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -5396,7 +5296,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "ReorderFieldsDto",
+              "body": "root.ReorderFieldsDto",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -5425,7 +5325,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "map<string, string>",
+              "body": "root.ConfigurePreviewUrlsDto",
             },
             "response": {
               "docs": "Schema updated.",
@@ -5556,7 +5456,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "ReorderFieldsDto",
+              "body": "root.ReorderFieldsDto",
             },
             "response": {
               "docs": "Schema fields reordered.",
@@ -5674,7 +5574,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "SchemaScriptsDto",
+              "body": "root.SchemaScriptsDto",
             },
             "response": {
               "docs": "Schema updated.",
@@ -5769,72 +5669,6 @@ The client secret is auto generated on the server and returned. The client does 
             "response": {
               "docs": "Schema unpublished.",
               "type": "root.SchemaDto",
-            },
-          },
-        },
-      },
-      "types": {
-        "AddFieldDto": {
-          "docs": undefined,
-          "properties": {
-            "name": {
-              "docs": "The name of the field. Must be unique within the schema.",
-              "type": "string",
-            },
-            "partitioning": {
-              "docs": "Determines the optional partitioning of the field.",
-              "type": "optional<string>",
-            },
-            "properties": {
-              "docs": "The field properties.",
-              "type": "root.FieldPropertiesDto",
-            },
-          },
-        },
-        "ReorderFieldsDto": {
-          "docs": undefined,
-          "properties": {
-            "fieldIds": {
-              "docs": "The field ids in the target order.",
-              "type": "list<integer>",
-            },
-          },
-        },
-        "SchemaScriptsDto": {
-          "docs": undefined,
-          "properties": {
-            "change": {
-              "docs": "The script that is executed when change a content status.",
-              "type": "optional<string>",
-            },
-            "create": {
-              "docs": "The script that is executed when creating a content.",
-              "type": "optional<string>",
-            },
-            "delete": {
-              "docs": "The script that is executed when deleting a content.",
-              "type": "optional<string>",
-            },
-            "query": {
-              "docs": "The script that is executed for each content when querying contents.",
-              "type": "optional<string>",
-            },
-            "queryPre": {
-              "docs": "The script that is executed for all contents when querying contents.",
-              "type": "optional<string>",
-            },
-            "update": {
-              "docs": "The script that is executed when updating a content.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "UpdateFieldDto": {
-          "docs": undefined,
-          "properties": {
-            "properties": {
-              "docs": "The field properties.",
-              "type": "root.FieldPropertiesDto",
             },
           },
         },
@@ -6270,7 +6104,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             },
             "request": {
-              "body": "AssignContributorDto",
+              "body": "root.AssignContributorDto",
             },
             "response": {
               "docs": "Contributor assigned to team.",
@@ -6340,25 +6174,6 @@ You will be assigned as owner of the new team automatically.",
             "response": {
               "docs": "Team updated.",
               "type": "root.TeamDto",
-            },
-          },
-        },
-      },
-      "types": {
-        "AssignContributorDto": {
-          "docs": undefined,
-          "properties": {
-            "contributorId": {
-              "docs": "The id or email of the user to add to the app.",
-              "type": "string",
-            },
-            "invite": {
-              "docs": "Set to true to invite the user if he does not exist.",
-              "type": "optional<boolean>",
-            },
-            "role": {
-              "docs": "The role of the contributor.",
-              "type": "optional<string>",
             },
           },
         },
