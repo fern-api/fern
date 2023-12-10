@@ -39,7 +39,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         factory = self._source_file.add_class_declaration(factory_declaration)
 
         with FernAwarePydanticModel(
-            class_name=self._context.get_class_name_for_type_name(self._name),
+            class_name=self._context.get_class_name_for_type_id(self._name.type_id),
             type_name=self._name,
             context=self._context,
             custom_config=self._custom_config,
@@ -66,7 +66,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
-                            self._context.get_class_reference_for_type_name(type_name)
+                            self._context.get_class_reference_for_type_id(type_name.type_id)
                         ],
                         single_property=lambda property_: None,
                         no_properties=lambda: None,
@@ -136,9 +136,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     # we assume that the forward-refed types are the ones
                     # that circularly reference this union type
-                    referenced_types: List[ir_types.DeclaredTypeName] = single_union_type.shape.visit(
+                    referenced_type_ids: List[ir_types.TypeId] = single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: self._context.get_referenced_types_of_type_declaration(
-                            self._context.get_declaration_for_type_name(type_name),
+                            self._context.get_declaration_for_type_id(type_name.type_id),
                         ),
                         single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
                             single_property.type
@@ -146,9 +146,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         no_properties=lambda: [],
                     )
                     forward_refed_types = [
-                        referenced_type
-                        for referenced_type in referenced_types
-                        if self._context.does_type_reference_other_type(referenced_type, self._name)
+                        referenced_type_id
+                        for referenced_type_id in referenced_type_ids
+                        if self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
                     ]
 
                     if len(forward_refed_types) > 0:
@@ -158,18 +158,15 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # as a workaround, we explicitly pass references to update_forward_refs
                         # so they are in scope
                         internal_pydantic_model_for_single_union_type.update_forward_refs(
-                            {
-                                self._context.get_class_reference_for_type_name(type_name)
-                                for type_name in forward_refed_types
-                            }
+                            {self._context.get_class_reference_for_type_id(type_id) for type_id in forward_refed_types}
                         )
 
                         # to avoid issues with circular dependencies, make sure all imports
                         # that reference this type appear after the main (exported) model for the union.
                         # FernAwarePydanticModel will automatically add the import constraint if the
                         # referenced type_name circularly references this type.
-                        for type_name in forward_refed_types:
-                            external_pydantic_model.add_ghost_reference(type_name)
+                        for type_id in forward_refed_types:
+                            external_pydantic_model.add_ghost_reference(type_id)
 
             root_type = AST.TypeHint.union(
                 *(
@@ -198,8 +195,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                 same_properties_as_object=lambda type_name: VisitorArgument(
                                     expression=AST.Expression(
                                         AST.FunctionInvocation(
-                                            function_definition=self._context.get_class_reference_for_type_name(
-                                                type_name
+                                            function_definition=self._context.get_class_reference_for_type_id(
+                                                type_name.type_id
                                             ),
                                             args=[
                                                 AST.Expression(

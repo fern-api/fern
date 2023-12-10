@@ -56,7 +56,7 @@ class FernAwarePydanticModel:
             name=class_name,
             source_file=source_file,
             should_export=should_export,
-            base_models=[context.get_class_reference_for_type_name(extended) for extended in extends]
+            base_models=[context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
             if extends is not None
             else None,
             docstring=docstring,
@@ -119,9 +119,9 @@ class FernAwarePydanticModel:
             must_import_after_current_declaration=self._must_import_after_current_declaration,
         )
 
-    def get_class_reference_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> AST.ClassReference:
-        return self._context.get_class_reference_for_type_name(
-            type_name=type_name,
+    def get_class_reference_for_type_id(self, type_id: ir_types.TypeId) -> AST.ClassReference:
+        return self._context.get_class_reference_for_type_id(
+            type_id=type_id,
             # if the given type references this pydantic model's type, then
             # we have to import it after the current declaration to avoid
             # circular import errors
@@ -131,7 +131,7 @@ class FernAwarePydanticModel:
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
         if self._type_name is None:
             return False
-        is_circular_reference = self._context.do_types_reference_each_other(self._type_name, type_name)
+        is_circular_reference = self._context.do_types_reference_each_other(self._type_name.type_id, type_name.type_id)
         if is_circular_reference:
             self._model_contains_forward_refs = True
         return is_circular_reference
@@ -187,9 +187,9 @@ class FernAwarePydanticModel:
         if is_forward_ref:
             self._model_contains_forward_refs = True
 
-    def add_ghost_reference(self, type_name: ir_types.DeclaredTypeName) -> None:
+    def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
         self._pydantic_model.add_ghost_reference(
-            self.get_class_reference_for_type_name(type_name),
+            self.get_class_reference_for_type_id(type_id),
         )
 
     def finish(self) -> None:
@@ -224,7 +224,7 @@ class FernAwarePydanticModel:
     def _get_extended_pydantic_fields(self, extends: Sequence[ir_types.DeclaredTypeName]) -> List[PydanticField]:
         extended_fields: List[PydanticField] = []
         for extended in extends:
-            extended_declaration = self._context.get_declaration_for_type_name(extended)
+            extended_declaration = self._context.get_declaration_for_type_id(extended.type_id)
             shape_union = extended_declaration.shape.get_as_union()
             if shape_union.type == "object":
                 for property in shape_union.properties:

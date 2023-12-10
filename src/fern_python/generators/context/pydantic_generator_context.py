@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Callable, List, Optional, Set, Tuple
+from typing import Callable, List, Optional
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -36,76 +35,55 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_class_reference_for_type_name(
+    def get_class_reference_for_type_id(
         self,
-        type_name: ir_types.DeclaredTypeName,
+        type_id: ir_types.TypeId,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
     ) -> AST.ClassReference:
         ...
 
     @abstractmethod
-    def does_circularly_reference_itself(self, type_name: ir_types.DeclaredTypeName) -> bool:
+    def does_circularly_reference_itself(self, type_id: ir_types.TypeId) -> bool:
         ...
 
     @abstractmethod
-    def do_types_reference_each_other(self, a: ir_types.DeclaredTypeName, b: ir_types.DeclaredTypeName) -> bool:
+    def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         ...
 
     @abstractmethod
-    def does_type_reference_other_type(
-        self, type: ir_types.DeclaredTypeName, other_type: ir_types.DeclaredTypeName
-    ) -> bool:
+    def does_type_reference_other_type(self, type_id: ir_types.TypeId, other_type_id: ir_types.TypeId) -> bool:
         ...
 
     @abstractmethod
-    def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
+    def get_referenced_types(self, type_id: ir_types.TypeId) -> List[ir_types.TypeId]:
         ...
 
     @abstractmethod
-    def get_class_name_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> str:
+    def get_class_name_for_type_id(self, type_id: ir_types.TypeId) -> str:
         ...
 
     @abstractmethod
-    def get_declaration_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> ir_types.TypeDeclaration:
+    def get_declaration_for_type_id(self, type_id: ir_types.TypeId) -> ir_types.TypeDeclaration:
         ...
 
     @abstractmethod
     def get_referenced_types_of_type_declaration(
-        self, declared_type_name: ir_types.TypeDeclaration
-    ) -> List[ir_types.DeclaredTypeName]:
+        self, type_declaration: ir_types.TypeDeclaration
+    ) -> List[ir_types.TypeId]:
         ...
 
     @abstractmethod
-    def get_referenced_types_of_type_reference(
-        self, type_reference: ir_types.TypeReference
-    ) -> List[ir_types.DeclaredTypeName]:
+    def get_referenced_types_of_type_reference(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
         ...
 
     @abstractmethod
-    def get_type_names_in_type_reference(
-        self, type_reference: ir_types.TypeReference
-    ) -> List[ir_types.DeclaredTypeName]:
+    def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
         ...
 
     @abstractmethod
-    def get_filepath_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> Filepath:
+    def get_filepath_for_type_id(self, type_id: ir_types.TypeId) -> Filepath:
         ...
 
     @abstractmethod
-    def get_all_properties_including_extensions(
-        self, type_name: ir_types.DeclaredTypeName
-    ) -> List[ir_types.ObjectProperty]:
+    def get_all_properties_including_extensions(self, type_id: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
         ...
-
-
-@dataclass(frozen=True)
-class HashableDeclaredTypeName:
-    fern_filepath: Tuple[str, ...]
-    name: str
-
-    @staticmethod
-    def of(type_name: ir_types.DeclaredTypeName) -> HashableDeclaredTypeName:
-        return HashableDeclaredTypeName(
-            fern_filepath=tuple(part.original_name for part in type_name.fern_filepath.all_parts),
-            name=type_name.name.original_name,
-        )

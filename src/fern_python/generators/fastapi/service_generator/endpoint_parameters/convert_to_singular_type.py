@@ -15,7 +15,7 @@ def convert_to_singular_type(context: FastApiGeneratorContext, type: ir_types.Ty
         if container_union.type == "optional":
             return AST.TypeHint.optional(wrapped_type=convert_to_singular_type(context, container_union.optional))
     elif union.type == "named":
-        declaration = context.pydantic_generator_context.get_declaration_for_type_name(union)
+        declaration = context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
         shape_union = declaration.shape.get_as_union()
         if shape_union.type == "enum":
             return context.pydantic_generator_context.get_type_hint_for_type_reference(type)

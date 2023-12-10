@@ -63,7 +63,7 @@ class TypeDeclarationHandler:
             ),
             object=lambda object_: ObjectGenerator(
                 name=self._declaration.name,
-                class_name=self._context.get_class_name_for_type_name(self._declaration.name),
+                class_name=self._context.get_class_name_for_type_id(self._declaration.name.type_id),
                 extends=object_.extends,
                 properties=[
                     ObjectProperty(

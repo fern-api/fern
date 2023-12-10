@@ -34,7 +34,7 @@ class AliasGenerator(AbstractTypeGenerator):
         if not self._custom_config.wrapped_aliases:
             self._source_file.add_declaration(
                 declaration=AST.TypeAliasDeclaration(
-                    name=self._context.get_class_name_for_type_name(self._name),
+                    name=self._context.get_class_name_for_type_id(self._name.type_id),
                     type_hint=self._context.get_type_hint_for_type_reference(self._alias.alias_of),
                     snippet=self._snippet,
                 ),
@@ -43,7 +43,7 @@ class AliasGenerator(AbstractTypeGenerator):
         else:
             BUILDER_PARAMETER_NAME = "value"
             with FernAwarePydanticModel(
-                class_name=self._context.get_class_name_for_type_name(self._name),
+                class_name=self._context.get_class_name_for_type_id(self._name.type_id),
                 type_name=self._name,
                 context=self._context,
                 custom_config=self._custom_config,

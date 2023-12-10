@@ -49,7 +49,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                         docs=extended_property.docs,
                     )
                     for extended_property in (
-                        self._context.pydantic_generator_context.get_all_properties_including_extensions(extension)
+                        self._context.pydantic_generator_context.get_all_properties_including_extensions(
+                            extension.type_id
+                        )
                     )
                 ]
             )

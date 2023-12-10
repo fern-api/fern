@@ -110,7 +110,7 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> None:
-        filepath = context.get_filepath_for_type_name(type_name=type.name)
+        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id)
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )

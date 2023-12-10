@@ -103,7 +103,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
         type = header.value_type.get_as_union()
         if type.type == "named":
-            shape = self.pydantic_generator_context.get_declaration_for_type_name(type).shape.get_as_union()
+            shape = self.pydantic_generator_context.get_declaration_for_type_id(type.type_id).shape.get_as_union()
             if shape.type == "alias":
                 resolved_type = shape.resolved_type.get_as_union()
                 if resolved_type.type == "container":
