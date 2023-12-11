@@ -4,8 +4,6 @@ dockerCommand: ./gradlew :client-generator:dockerTagLatest
 language: java
 generatorType: SDK
 defaultOutputMode: github
-compileCommands:
-
 fixtures:
   exhaustive:
     - customConfig: null
@@ -21,3 +19,7 @@ fixtures:
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+scripts:
+  - docker: gradle:8.5.0-jdk11
+    commands:
+      - ./gradlew build
