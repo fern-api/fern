@@ -318,8 +318,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
-                String mimeTypeVariableName = getVariableName("mimeType");
-                String mediaTypeVariableName = getVariableName("mediaType");
+                String mimeTypeVariableName =
+                        fileProperty.getKey().getName().getCamelCase().getUnsafeName() + "MimeType";
+                String mediaTypeVariableName =
+                        fileProperty.getKey().getName().getCamelCase().getUnsafeName() + "MediaType";
                 String filePropertyParameterName = getFilePropertyParameterName(fileProperty);
                 if (fileProperty.getIsOptional()) {
                     requestBodyCodeBlock
