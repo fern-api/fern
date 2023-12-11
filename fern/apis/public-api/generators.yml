@@ -1,5 +1,5 @@
 groups:
-  production:
+  node-sdk:
     audiences:
       - external
     generators:
@@ -13,6 +13,10 @@ groups:
           repository: fern-api/node-sdk
         config:
           namespaceExport: Fern
+  python-sdk:
+    audiences:
+      - external
+    generators:
       - name: fernapi/fern-python-sdk
         version: 0.6.5
         output:
