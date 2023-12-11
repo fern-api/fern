@@ -123,7 +123,12 @@ class FastAPI:
         if variable_name != wire_value:
             kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
         if docs is not None:
-            kwargs.append(("description", AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n") + '"'))))
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n") + docs.replace("\r", "\\r") + '"')),
+                )
+            )
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=_export(

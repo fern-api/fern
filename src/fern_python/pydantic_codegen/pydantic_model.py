@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import re
 from types import TracebackType
 from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
@@ -62,7 +63,6 @@ class PydanticModel:
         return self._local_class_reference
 
     def add_field(self, unsanitized_field: PydanticField) -> None:
-
         field = (
             dataclasses.replace(unsanitized_field, name=f"{unsanitized_field.name}_")
             if unsanitized_field.name in BASE_MODEL_PROPERTIES
@@ -349,7 +349,6 @@ def get_field_name_initializer(
     default_factory: Optional[AST.Expression],
     description: Optional[str],
 ) -> Union[AST.Expression, None]:
-
     if alias is None and default_factory is None and description is None:
         return default
 
@@ -376,7 +375,7 @@ def get_field_name_initializer(
             if arg_present:
                 writer.write(", ")
             arg_present = True
-            lines = description.split("\n")
+            lines = re.split("[\n|\r]", description)
             if len(lines) > 1:
                 writer.write_line("description=(")
                 for i, line in enumerate(lines):
