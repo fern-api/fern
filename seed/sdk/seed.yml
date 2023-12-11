@@ -26,3 +26,8 @@ fixtures:
         extra_dependencies:
           boto3: 1.28.57
       outputFolder: extra_dependencies
+scripts:
+  - docker: mwalbeck/python-poetry:1.7-3.11
+    commands:
+      - poetry install
+      - poetry run mypy .
