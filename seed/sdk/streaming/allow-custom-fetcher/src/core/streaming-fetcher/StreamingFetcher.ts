@@ -14,8 +14,6 @@ export declare namespace StreamingFetcher {
         timeoutMs?: number;
         withCredentials?: boolean;
         adapter?: AxiosAdapter;
-        onUploadProgress?: (event: ProgressEvent) => void;
-        onDownloadProgress?: (event: ProgressEvent) => void;
 
         abortController?: AbortController;
     }
@@ -55,8 +53,6 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
         withCredentials: args.withCredentials,
         maxBodyLength: Infinity,
         maxContentLength: Infinity,
-        onUploadProgress: args.onUploadProgress,
-        onDownloadProgress: args.onDownloadProgress,
         signal: args.abortController?.signal,
         responseType: "stream",
         adapter: args.adapter,

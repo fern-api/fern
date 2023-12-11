@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
-import { DependencyManager } from "../../dependency-manager/DependencyManager";
+import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { Fetcher } from "./Fetcher";
 
@@ -13,9 +13,10 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         originalPathOnDocker: "/assets/fetcher" as const,
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("axios", "0.27.2");
             dependencyManager.addDependency("qs", "6.11.2");
-            dependencyManager.addDependency("@types/qs", "6.9.8");
+            dependencyManager.addDependency("@types/qs", "6.9.8", {
+                type: DependencyType.DEV,
+            });
         },
     };
 
@@ -31,8 +32,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
-                adapter: "adapter",
-                onUploadProgress: "onUploadProgress",
                 responseType: "responseType",
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args"),
@@ -119,14 +118,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
-                    )
-                );
-            }
-            if (args.onUploadProgress) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.Fetcher.Args.properties.onUploadProgress,
-                        args.onUploadProgress
                     )
                 );
             }

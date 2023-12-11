@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
-import { DependencyManager } from "../../dependency-manager/DependencyManager";
+import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
 import { StreamingFetcher } from "./StreamingFetcher";
 
@@ -15,7 +15,9 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("axios", "0.27.2");
             dependencyManager.addDependency("qs", "6.11.2");
-            dependencyManager.addDependency("@types/qs", "6.9.8");
+            dependencyManager.addDependency("@types/qs", "6.9.8", {
+                type: DependencyType.DEV,
+            });
         },
     };
 
@@ -29,8 +31,6 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
-                onUploadProgress: "onUploadProgress",
-                onDownloadProgress: "onDownloadProgress",
                 abortController: "abortController",
                 adapter: "adapter",
             },
@@ -98,14 +98,6 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                     ts.factory.createPropertyAssignment(
                         this.StreamingFetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
-                    )
-                );
-            }
-            if (args.onUploadProgress != null) {
-                properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.StreamingFetcher.Args.properties.onUploadProgress,
-                        args.onUploadProgress
                     )
                 );
             }

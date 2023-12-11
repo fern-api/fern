@@ -47,7 +47,6 @@ export declare namespace StreamingFetcher {
         body: ts.Expression | undefined;
         timeoutInSeconds: ts.Expression;
         withCredentials: boolean;
-        onUploadProgress: ts.Expression | undefined;
 
         abortController: ts.Expression | undefined;
     }

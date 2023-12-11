@@ -299,9 +299,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
-    public accessFromRootClient(args: {
-        referenceToRootClient: ts.Expression;
-    }): ts.Expression {
+    public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {
         return [...this.package_.fernFilepath.allParts].reduce<ts.Expression>(
             (acc, part) => ts.factory.createPropertyAccessExpression(acc, part.camelCase.unsafeName),
             args.referenceToRootClient

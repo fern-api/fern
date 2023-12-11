@@ -1,4 +1,3 @@
-import { noop } from "@fern-api/core-utils";
 import {
     FileProperty,
     HttpEndpoint,
@@ -39,8 +38,6 @@ export declare namespace GeneratedFileUploadEndpointRequest {
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
     private static FORM_DATA_VARIABLE_NAME = "_request";
-    private static OPTS_PARAMETER_NAME = "opts";
-    private static ON_UPLOAD_PROGRESS_OPT_NAME = "onUploadProgress";
 
     private ir: IntermediateRepresentation;
     private requestParameter: FileUploadRequestParameter | undefined;
@@ -111,43 +108,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         if (this.requestParameter != null) {
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
-
-        visitJavaScriptRuntime(this.targetRuntime, {
-            node: noop,
-            browser: () => {
-                parameters.push({
-                    name: GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME,
-                    type: getTextOfTsNode(
-                        ts.factory.createTypeLiteralNode([
-                            ts.factory.createPropertySignature(
-                                undefined,
-                                GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME,
-                                undefined,
-                                ts.factory.createFunctionTypeNode(
-                                    undefined,
-                                    [
-                                        ts.factory.createParameterDeclaration(
-                                            undefined,
-                                            undefined,
-                                            undefined,
-                                            ts.factory.createIdentifier("event"),
-                                            undefined,
-                                            ts.factory.createTypeReferenceNode(
-                                                ts.factory.createIdentifier("ProgressEvent"),
-                                                undefined
-                                            )
-                                        ),
-                                    ],
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                                )
-                            ),
-                        ])
-                    ),
-                    hasQuestionToken: true,
-                });
-            },
-        });
-
         return parameters;
     }
 
@@ -214,7 +174,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: SdkContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
@@ -228,15 +188,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     ),
                 })
             ),
-            onUploadProgress: visitJavaScriptRuntime(this.targetRuntime, {
-                node: () => undefined,
-                browser: () =>
-                    ts.factory.createPropertyAccessChain(
-                        ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME
-                    ),
-            }),
         };
     }
 

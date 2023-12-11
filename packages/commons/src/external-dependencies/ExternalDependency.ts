@@ -1,4 +1,4 @@
-import { DependencyManager } from "../dependency-manager/DependencyManager";
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
 import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager";
 
 export declare namespace ExternalDependency {
@@ -69,7 +69,9 @@ export abstract class ExternalDependency {
                     this.dependencyManager.addDependency(this.PACKAGE.name, this.PACKAGE.version);
                 }
                 if (this.TYPES_PACKAGE?.version != null) {
-                    this.dependencyManager.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
+                    this.dependencyManager.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version, {
+                        type: DependencyType.DEV,
+                    });
                 }
                 this.importsManager.addImport(this.PACKAGE.name, importDeclaration);
 

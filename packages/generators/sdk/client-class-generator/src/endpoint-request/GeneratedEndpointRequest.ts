@@ -8,10 +8,7 @@ export interface GeneratedEndpointRequest {
     getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[];
     getFetcherRequestArgs: (
         context: SdkContext
-    ) => Pick<
-        Fetcher.Args & StreamingFetcher.Args,
-        "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"
-    >;
+    ) => Pick<Fetcher.Args & StreamingFetcher.Args, "headers" | "queryParameters" | "body" | "contentType">;
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
     getExampleEndpointParameters({
