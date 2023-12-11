@@ -8,6 +8,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_dict import remove_none_from_dict
 from .types.currency import Currency
 
 try:
@@ -23,18 +24,30 @@ class PaymentClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create(self, *, amount: int, currency: Currency) -> uuid.UUID:
+    def create(
+        self, *, amount: int, currency: Currency, idempotency_key: str, idempotency_expiration: int
+    ) -> uuid.UUID:
         """
         Parameters:
             - amount: int.
 
             - currency: Currency.
+
+            - idempotency_key: str.
+
+            - idempotency_expiration: int.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "payment"),
             json=jsonable_encoder({"amount": amount, "currency": currency}),
-            headers=self._client_wrapper.get_headers(),
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    "Idempotency-Key": idempotency_key,
+                    "Idempotency-Expiration": idempotency_expiration,
+                }
+            ),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -69,18 +82,30 @@ class AsyncPaymentClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create(self, *, amount: int, currency: Currency) -> uuid.UUID:
+    async def create(
+        self, *, amount: int, currency: Currency, idempotency_key: str, idempotency_expiration: int
+    ) -> uuid.UUID:
         """
         Parameters:
             - amount: int.
 
             - currency: Currency.
+
+            - idempotency_key: str.
+
+            - idempotency_expiration: int.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "payment"),
             json=jsonable_encoder({"amount": amount, "currency": currency}),
-            headers=self._client_wrapper.get_headers(),
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    "Idempotency-Key": idempotency_key,
+                    "Idempotency-Expiration": idempotency_expiration,
+                }
+            ),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:

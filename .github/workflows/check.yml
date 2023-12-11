@@ -55,7 +55,7 @@ jobs:
         run: poetry install
 
       - name: Install Seed
-        run: npm install -g @fern-api/seed-cli@0.15.11-4-g8f84ed447
+        run: npm install -g @fern-api/seed-cli@0.15.16
 
       - name: Seed Test
         run: seed test --workspace sdk --parallel 6
@@ -78,7 +78,7 @@ jobs:
         run: poetry install
 
       - name: Install Seed
-        run: npm install -g @fern-api/seed-cli@0.15.11-4-g8f84ed447
+        run: npm install -g @fern-api/seed-cli@0.15.16
 
       - name: Seed Test
         run: seed test --workspace pydantic --parallel 6
@@ -101,7 +101,7 @@ jobs:
         run: poetry install
 
       - name: Install Seed
-        run: npm install -g @fern-api/seed-cli@0.15.11-4-g8f84ed447
+        run: npm install -g @fern-api/seed-cli@0.15.16
 
       - name: Seed Test
         run: seed test --workspace fastapi --parallel 6

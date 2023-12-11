@@ -182,6 +182,7 @@ class RootClientGenerator:
                     package=self._package,
                     service=service,
                     endpoint=endpoint,
+                    idempotency_headers=self._context.ir.idempotency_headers,
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
                     is_async=is_async,
                     generated_root_client=generated_root_client,

@@ -105,6 +105,7 @@ class ClientGenerator:
                     package=self._package,
                     service=service,
                     endpoint=endpoint,
+                    idempotency_headers=self._context.ir.idempotency_headers,
                     is_async=is_async,
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
                     generated_root_client=self._generated_root_client,

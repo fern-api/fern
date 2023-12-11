@@ -52,6 +52,7 @@ class EndpointFunctionGenerator:
         package: ir_types.Package,
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
+        idempotency_headers: List[ir_types.HttpHeader],
         client_wrapper_member_name: str,
         is_async: bool,
         generated_root_client: GeneratedRootClient,
@@ -61,6 +62,7 @@ class EndpointFunctionGenerator:
         self._package = package
         self._service = service
         self._endpoint = endpoint
+        self._idempotency_headers = idempotency_headers
         self._is_async = is_async
         self._client_wrapper_member_name = client_wrapper_member_name
         self._generated_root_client = generated_root_client
@@ -93,6 +95,7 @@ class EndpointFunctionGenerator:
             service=self._service,
             endpoint=self._endpoint,
             request_body_parameters=request_body_parameters,
+            idempotency_headers=self._idempotency_headers,
         )
         endpoint_snippet = self._generate_endpoint_snippet(
             package=self._package,
@@ -129,6 +132,7 @@ class EndpointFunctionGenerator:
             body=self._create_endpoint_body_writer(
                 service=self._service,
                 endpoint=self._endpoint,
+                idempotency_headers=self._idempotency_headers,
                 request_body_parameters=request_body_parameters,
                 is_async=self._is_async,
             ),
@@ -145,6 +149,7 @@ class EndpointFunctionGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         request_body_parameters: Optional[AbstractRequestBodyParameters],
+        idempotency_headers: List[ir_types.HttpHeader],
     ) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
 
@@ -175,6 +180,20 @@ class EndpointFunctionGenerator:
                     ),
                 )
 
+        # Always include the idempotency header parameters last.
+        if endpoint.idempotent:
+            for header in idempotency_headers:
+                if not self._is_header_literal(header):
+                    parameters.append(
+                        AST.NamedFunctionParameter(
+                            name=get_parameter_name(header.name.name),
+                            docs=header.docs,
+                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                header.value_type
+                            ),
+                        ),
+                    )
+
         return parameters
 
     def _create_endpoint_body_writer(
@@ -182,6 +201,7 @@ class EndpointFunctionGenerator:
         *,
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
+        idempotency_headers: List[ir_types.HttpHeader],
         request_body_parameters: Optional[AbstractRequestBodyParameters],
         is_async: bool,
     ) -> AST.CodeWriter:
@@ -233,7 +253,9 @@ class EndpointFunctionGenerator:
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=request_body_parameters.get_files() if request_body_parameters is not None else None,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
-                    headers=self._get_headers_for_endpoint(service=service, endpoint=endpoint),
+                    headers=self._get_headers_for_endpoint(
+                        service=service, endpoint=endpoint, idempotency_headers=idempotency_headers
+                    ),
                     auth=None,
                     timeout=AST.Expression(
                         "None"
@@ -542,10 +564,15 @@ class EndpointFunctionGenerator:
         *,
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
+        idempotency_headers: List[ir_types.HttpHeader],
     ) -> Optional[AST.Expression]:
         headers: List[Tuple[str, AST.Expression]] = []
 
-        for header in service.headers + endpoint.headers:
+        ir_headers = service.headers + endpoint.headers
+        if endpoint.idempotent:
+            ir_headers += idempotency_headers
+
+        for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
             headers.append(
                 (
@@ -756,6 +783,8 @@ class EndpointFunctionSnippetGenerator:
                     ),
                 )
 
+        # TODO(amckinney): Idempotency headers aren't included in the example IR yet.
+        # We need to include those examples when they're available.
         headers: Dict[str, ir_types.HttpHeader] = {}
         for header in self.service.headers + self.endpoint.headers:
             headers[header.name.wire_value] = header

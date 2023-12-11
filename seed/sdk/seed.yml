@@ -1,4 +1,4 @@
-irVersion: v30
+irVersion: v31
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
 language: python
