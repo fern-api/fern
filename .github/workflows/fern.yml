@@ -17,7 +17,7 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
 
-      - name: Check Fern API is valid
+      - name: Check API definition is valid
         env:
           FORCE_COLOR: "2"
         run: fern check
