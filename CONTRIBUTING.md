@@ -83,7 +83,7 @@ To run the integration tests: `yarn test:ete`.
 
 Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `yarn test -u` and `yarn test:ete -u`.
 
-**Note**: use Node v18 when rewriting snapshots. `node -v` will let you know what version you're on. Node v20 is incompatible. Here are instructions on [how to change your Node version](https://chat.openai.com/share/776005d1-f3a8-4ad4-8851-9783e937bd61).
+**Note**: use Node v18 when rewriting snapshots. `node -v` will let you know what version you're on. Node v20 is incompatible. Here are instructions on [how to change your Node version](https://chat.openai.com/share/776005d1-f3a8-4ad4-8851-9783e937bd61). You'll also need to install the open package by running `yarn add open`.
 
 ### CLI
 
