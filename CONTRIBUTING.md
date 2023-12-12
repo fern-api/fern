@@ -16,21 +16,22 @@ Write code! We've got lots of open issues - feel free to volunteer for one by co
 
 ## Writing Documentation
 
-Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in 
+Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in
 [docs.yml](./fern/docs.yml).
 
-To edit the docs, you can modify `docs.yml` or any of the markdown that it references. 
+To edit the docs, you can modify `docs.yml` or any of the markdown that it references.
 
-To validate that the docs, run: 
+To validate that the docs, run:
+
 ```
 npm install -g fern-api
 fern check
 ```
 
-When you make a PR to update the docs, a PR preview link will be generated which will allow you 
-to test if your changes came out as intended. 
+When you make a PR to update the docs, a PR preview link will be generated which will allow you
+to test if your changes came out as intended.
 
-## Local Development 
+## Local Development
 
 Our repo is a monorepo that relies on [Yarn workspaces](https://yarnpkg.com/features/workspaces) and [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp) to run smoothly.
 
@@ -81,6 +82,8 @@ To run the unit tests: `yarn test`.
 To run the integration tests: `yarn test:ete`.
 
 Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `yarn test -u` and `yarn test:ete -u`.
+
+**Note**: use Node v18 when rewriting snapshots. `node -v` will let you know what version you're on. Node v20 is incompatible. Here are instructions on [how to change your Node version](https://chat.openai.com/share/776005d1-f3a8-4ad4-8851-9783e937bd61).
 
 ### CLI
 
