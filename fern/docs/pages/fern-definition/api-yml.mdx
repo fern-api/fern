@@ -1,4 +1,4 @@
-Every Fern API has a special file called `api.yml`, which includes all the API-wide configuration.
+A Fern directory has a special file called `api.yml`, which includes all the API-wide configuration.
 
 ```yaml
 fern/
@@ -11,8 +11,7 @@ fern/
 
 ## API name
 
-This name is used to uniquely identify your API in your organization. If you
-just have one API, then `api` is a sufficient name.
+This name is used to uniquely identify your API in your organization. If you just have one API, then `api` is a sufficient name.
 
 <CodeBlock title="api.yml">
 ```yaml
@@ -20,15 +19,14 @@ name: api
 ```
 </CodeBlock>
 
-## API docs
+## API description
 
-You can define top level API docs. These docs will come through in the
-OpenAPI spec and Postman collection.
+You can define a top level API description. This description will come through in the OpenAPI spec and Postman collection.
 
 <CodeBlock title="api.yml">
 ```yaml
 name: api
-docs: |
+docs: |  # <---
   ## Header
   This API provides access to...
 ```
@@ -67,7 +65,7 @@ auth-schemes:
 ```
 </CodeBlock>
 
-## API-wide headers
+## Global headers
 
 You can specify headers that are meant to be included on every request:
 
@@ -78,6 +76,22 @@ headers:
   X-App-Id: string
 ```
 </CodeBlock>
+
+## Global path parameters
+
+You can specify path parameters that are meant to be included on every request:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+path-parameters:
+  userId: string
+```
+</CodeBlock>
+
+## Global query parameters
+
+You cannot yet specify query parameters that are meant to be included on every request. If you'd like to see this feature, please upvote [this issue]().
 
 ## Environments
 
@@ -177,7 +191,7 @@ error-discrimination:
 ```
 </CodeBlock>
 
-## API-wide errors
+# Global errors
 
 You can import and list errors that will be thrown by every endpoint.
 
