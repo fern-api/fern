@@ -86,19 +86,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "path": "/artifacts.prepare",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "ArtifactsPrepareRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "artifacts-prepare-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -143,19 +131,7 @@ authenticated user.
       "path": "/auth-tokens.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "AuthTokensCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "auth-tokens-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -197,10 +173,7 @@ given Dev organization.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": undefined,
         },
       ],
@@ -212,19 +185,7 @@ given Dev organization.
       "path": "/auth-tokens.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "AuthTokensDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "auth-tokens-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": undefined,
       "sdkName": undefined,
@@ -450,15 +411,7 @@ authenticated user.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "requested_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": undefined,
         },
       ],
@@ -470,19 +423,7 @@ authenticated user.
       "path": "/auth-tokens.self.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "AuthTokensSelfDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "auth-tokens-self-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": undefined,
       "sdkName": undefined,
@@ -517,19 +458,7 @@ organization.
       "path": "/auth-tokens.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "AuthTokensUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "auth-tokens-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -578,19 +507,7 @@ enterprise connections can be created by an organization.
       "path": "/dev-orgs.auth-connections.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "DevOrgAuthConnectionsCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "dev-org-auth-connections-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -629,7 +546,15 @@ connections can not be deleted using this method.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -638,19 +563,7 @@ connections can not be deleted using this method.
       "path": "/dev-orgs.auth-connections.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "DevOrgAuthConnectionsDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "dev-org-auth-connections-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": undefined,
       "sdkName": undefined,
@@ -804,7 +717,15 @@ disabled.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
       "headers": [],
       "internal": undefined,
@@ -813,19 +734,7 @@ disabled.
       "path": "/dev-orgs.auth-connections.toggle",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "DevOrgAuthConnectionsToggleRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "dev-org-auth-connections-toggle-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": undefined,
       "sdkName": undefined,
@@ -859,19 +768,7 @@ disabled.
       "path": "/dev-orgs.auth-connections.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "DevOrgAuthConnectionsUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "dev-org-auth-connections-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -1167,19 +1064,7 @@ used.
       "path": "/parts.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "PartsCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "parts-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -1219,18 +1104,7 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "map": [],
             "type": "map",
@@ -1245,19 +1119,7 @@ used.
       "path": "/parts.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "PartsDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "parts-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -1595,19 +1457,7 @@ used.
       "path": "/parts.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "PartsUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "parts-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -1652,19 +1502,7 @@ organization.
       "path": "/rev-orgs.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "RevOrgsCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "rev-orgs-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -1704,18 +1542,7 @@ organization.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "map": [],
             "type": "map",
@@ -1730,19 +1557,7 @@ organization.
       "path": "/rev-orgs.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "RevOrgsDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "rev-orgs-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2123,19 +1938,7 @@ them.
       "path": "/rev-orgs.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "RevOrgsUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "rev-orgs-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2180,19 +1983,7 @@ and a logical concept denoted by the tag's name.
       "path": "/tags.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "TagsCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "tags-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2232,18 +2023,7 @@ and a logical concept denoted by the tag's name.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "map": [],
             "type": "map",
@@ -2258,19 +2038,7 @@ and a logical concept denoted by the tag's name.
       "path": "/tags.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "TagsDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "tags-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2498,19 +2266,7 @@ used.
       "path": "/tags.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "TagsUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "tags-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2553,19 +2309,7 @@ used.
       "path": "/timeline-entries.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "TimelineEntriesCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "timeline-entries-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2819,19 +2563,7 @@ used.
       "path": "/timeline-entries.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "TimelineEntriesUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "timeline-entries-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2874,19 +2606,7 @@ used.
       "path": "/webhooks.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WebhooksCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "webhooks-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -2926,18 +2646,7 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "map": [],
             "type": "map",
@@ -2952,19 +2661,7 @@ used.
       "path": "/webhooks.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WebhooksDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "webhooks-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -3126,19 +2823,7 @@ used.
       "path": "/webhooks.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WebhooksUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "webhooks-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -3183,19 +2868,7 @@ used.
       "path": "/works.create",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WorksCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "works-create-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -3235,18 +2908,7 @@ used.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "map": [],
             "type": "map",
@@ -3261,19 +2923,7 @@ used.
       "path": "/works.delete",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WorksDeleteRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "works-delete-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",
@@ -4080,19 +3730,7 @@ organizations.
       "path": "/works.update",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WorksUpdateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "works-update-request",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "Success.",

@@ -105,19 +105,7 @@ Creates a new document index.",
       "path": "/v1/document-indexes",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "DocumentIndexesCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "DocumentIndexCreateRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -301,19 +289,7 @@ Executes a deployed Workflow and streams back its results.",
       "path": "/v1/execute-workflow-stream",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "ExecuteWorkflowStreamRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "ExecuteWorkflowStreamRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -360,34 +336,7 @@ Generate a completion using a previously defined deployment.
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "options": {
-                "properties": {
-                  "logprobs": {
-                    "enum": "ALL",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-              "requests": {
-                "array": [
-                  {
-                    "properties": {
-                      "input_values": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "results": {
@@ -422,19 +371,7 @@ Generate a completion using a previously defined deployment.
       "path": "/v1/generate",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "GenerateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "GenerateBodyRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -485,19 +422,7 @@ Generate a stream of completions using a previously defined deployment.
       "path": "/v1/generate-stream",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "GenerateStreamRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "GenerateStreamBodyRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -613,19 +538,7 @@ Compiles the prompt backing the model version using the provided input values.",
         },
       ],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "ModelVersionCompilePromptRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "ModelVersionCompilePromptRequestRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -668,19 +581,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "path": "/v1/registered-prompts/register",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "RegisterPromptRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "RegisterPromptRequestRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -740,19 +641,7 @@ or overwritten with default values.",
         },
       ],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "UpsertSandboxScenarioRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "UpsertSandboxScenarioRequestRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -874,7 +763,23 @@ Perform a search against a document index.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "results": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SearchRequest",
       "headers": [],
       "internal": undefined,
@@ -883,19 +788,7 @@ Perform a search against a document index.
       "path": "/v1/search",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "SearchRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "SearchRequestBodyRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -941,15 +834,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "actuals": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": undefined,
         },
       ],
@@ -961,19 +846,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "path": "/v1/submit-completion-actuals",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "SubmitCompletionActualsRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "SubmitCompletionActualsRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": undefined,
       "sdkName": undefined,
@@ -1019,19 +892,7 @@ or overwritten with default values.",
             },
           ],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "evaluation_params": {
-                "properties": {},
-                "type": "object",
-              },
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "evaluation_params": {
@@ -1071,19 +932,7 @@ or overwritten with default values.",
         },
       ],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "UpsertTestSuiteTestCaseRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "TestSuiteTestCaseRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",

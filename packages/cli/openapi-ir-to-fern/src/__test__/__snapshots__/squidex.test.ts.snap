@@ -647,23 +647,6 @@ You will be assigned as owner of the new app automatically.",
             ],
             "method": "POST",
             "path": "/api/apps",
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the app.",
-                    "type": "string",
-                  },
-                  "template": {
-                    "docs": "Initialize the app with the inbuilt template.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateAppDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "App created.",
               "type": "root.AppDto",
@@ -679,6 +662,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
@@ -686,19 +685,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "id": {
-                    "docs": "The ID of the client.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateClientDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Client created.",
@@ -722,9 +708,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": "root.AssignContributorDto",
-            },
             "response": {
               "docs": "Contributor assigned to app.",
               "type": "root.ContributorsDto",
@@ -739,6 +722,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
@@ -746,19 +745,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "language": {
-                    "docs": "The language to add.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "AddLanguageDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Language created.",
@@ -774,6 +760,22 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
@@ -781,19 +783,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The role name.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "AddRoleDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Role created.",
@@ -809,6 +798,27 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "errors": [],
+                    "items": [
+                      {
+                        "_links": {},
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
@@ -816,19 +826,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the workflow.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "AddWorkflowDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Workflow created.",
@@ -852,23 +849,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "description": {
-                    "docs": "The optional description of your app.",
-                    "type": "optional<string>",
-                  },
-                  "label": {
-                    "docs": "The optional label of your app.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateAppDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "App updated.",
               "type": "root.AppDto",
@@ -890,19 +870,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app to update.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "teamId": {
-                    "docs": "The ID of the team.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "TransferToTeamDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "App transferred.",
@@ -926,43 +893,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "annotate": {
-                    "docs": "The script that is executed when annotating a content.",
-                    "type": "optional<string>",
-                  },
-                  "create": {
-                    "docs": "The script that is executed when creating an asset.",
-                    "type": "optional<string>",
-                  },
-                  "delete": {
-                    "docs": "The script that is executed when deleting a content.",
-                    "type": "optional<string>",
-                  },
-                  "move": {
-                    "docs": "The script that is executed when moving a content.",
-                    "type": "optional<string>",
-                  },
-                  "query": {
-                    "docs": "The script that is executed for each asset when querying assets.",
-                    "type": "optional<string>",
-                  },
-                  "queryPre": {
-                    "docs": "The script that is executed for all assets when querying assets.",
-                    "type": "optional<string>",
-                  },
-                  "update": {
-                    "docs": "The script that is executed when updating a content.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateAssetScriptsDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Asset scripts updated.",
               "type": "root.AssetScriptsDto",
@@ -985,7 +915,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "id": "id",
                 },
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {},
@@ -1005,35 +935,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the client that must be updated.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "allowAnonymous": {
-                    "docs": "True to allow anonymous access without an access token for this client.",
-                    "type": "optional<boolean>",
-                  },
-                  "apiCallsLimit": {
-                    "docs": "The number of allowed api calls per month for this client.",
-                    "type": "optional<integer>",
-                  },
-                  "apiTrafficLimit": {
-                    "docs": "The number of allowed api traffic bytes per month for this client.",
-                    "type": "optional<integer>",
-                  },
-                  "name": {
-                    "docs": "The new display name of the client.",
-                    "type": "optional<string>",
-                  },
-                  "role": {
-                    "docs": "The role of the client.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateClientDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Client updated.",
@@ -1057,7 +958,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "language": "language",
                 },
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {},
@@ -1077,27 +978,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The language to update.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "fallback": {
-                    "docs": "Optional fallback languages.",
-                    "type": "optional<list<string>>",
-                  },
-                  "isMaster": {
-                    "docs": "Set the value to true to make the language the master.",
-                    "type": "optional<boolean>",
-                  },
-                  "isOptional": {
-                    "docs": "Set the value to true to make the language optional.",
-                    "type": "optional<boolean>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateLanguageDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Language updated.",
@@ -1121,9 +1001,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "roleName": "role-name",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "permissions": [],
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {},
@@ -1143,23 +1021,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the role to be updated.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "permissions": {
-                    "docs": "Associated list of permissions.",
-                    "type": "list<string>",
-                  },
-                  "properties": {
-                    "docs": "Associated list of UI properties.",
-                    "type": "optional<map<string, unknown>>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateRoleDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Role updated.",
@@ -1183,31 +1044,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "editors": {
-                    "docs": "The configured UI editors.",
-                    "type": "list<root.EditorDto>",
-                  },
-                  "hideDateTimeModeButton": {
-                    "docs": "Hide the datetime mode button.",
-                    "type": "optional<boolean>",
-                  },
-                  "hideScheduler": {
-                    "docs": "Hide the scheduler for content items.",
-                    "type": "optional<boolean>",
-                  },
-                  "patterns": {
-                    "docs": "The configured app patterns.",
-                    "type": "list<root.PatternDto>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateAppSettingsDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "App updated.",
               "type": "root.AppSettingsDto",
@@ -1222,6 +1058,28 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "id": "id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_links": {},
+                    "errors": [],
+                    "items": [
+                      {
+                        "_links": {},
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
@@ -1233,31 +1091,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the workflow to update.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "initial": {
-                    "docs": "The initial step.",
-                    "type": "string",
-                  },
-                  "name": {
-                    "docs": "The name of the workflow.",
-                    "type": "optional<string>",
-                  },
-                  "schemaIds": {
-                    "docs": "The schema ids.",
-                    "type": "optional<list<string>>",
-                  },
-                  "steps": {
-                    "docs": "The workflow steps.",
-                    "type": "map<string, root.WorkflowStepDto>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateWorkflowDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Workflow updated.",
@@ -1323,13 +1156,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "app": "app",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "jobs": [
-                    {
-                      "type": "Annotate",
-                    },
-                  ],
-                },
+                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1342,31 +1169,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "checkReferrers": {
-                    "docs": "True to check referrers of deleted assets.",
-                    "type": "optional<boolean>",
-                  },
-                  "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                  "jobs": {
-                    "docs": "The contents to update or insert.",
-                    "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
-                  },
-                  "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Folder checks. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "BulkUpdateAssetsDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Assets created, update or delete.",
@@ -1787,9 +1589,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": "root.QueryDto",
-            },
             "response": {
               "docs": "Assets returned.",
               "type": "root.AssetsDto",
@@ -1895,23 +1694,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "folderName": {
-                    "docs": "The name of the folder.",
-                    "type": "string",
-                  },
-                  "parentId": {
-                    "docs": "The ID of the parent folder.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateAssetFolderDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Asset folder created.",
               "type": "root.AssetFolderDto",
@@ -1986,35 +1768,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "fileName": {
-                    "docs": "The new name of the asset.",
-                    "type": "optional<string>",
-                  },
-                  "isProtected": {
-                    "docs": "True, when the asset is not public.",
-                    "type": "optional<boolean>",
-                  },
-                  "metadata": {
-                    "docs": "The asset metadata.",
-                    "type": "optional<map<string, unknown>>",
-                  },
-                  "slug": {
-                    "docs": "The new slug of the asset.",
-                    "type": "optional<string>",
-                  },
-                  "tags": {
-                    "docs": "The new asset tags.",
-                    "type": "optional<list<string>>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "AnnotateAssetDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Asset updated.",
               "type": "root.AssetDto",
@@ -2078,19 +1831,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "folderName": {
-                    "docs": "The name of the folder.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "RenameAssetFolderDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Asset folder updated.",
               "type": "root.AssetFolderDto",
@@ -2116,19 +1856,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the asset folder.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "parentId": {
-                    "docs": "The parent folder id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "MoveAssetFolderDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset folder moved.",
@@ -2156,19 +1883,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "parentId": {
-                    "docs": "The parent folder id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "MoveAssetDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Asset moved.",
               "type": "root.AssetDto",
@@ -2183,6 +1897,20 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "name": "name",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/tags/{name}",
             "path-parameters": {
@@ -2194,19 +1922,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The tag to return.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "tagName": {
-                    "docs": "The new name for the tag.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "RenameTagDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset tag renamed and new tags returned.",
@@ -2399,25 +2114,17 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/restore",
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the app.",
-                    "type": "optional<string>",
-                  },
-                  "url": {
-                    "docs": "The url to the restore file.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "RestoreRequestDto",
-              "query-parameters": undefined,
-            },
           },
         },
       },
@@ -2563,9 +2270,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.UpsertCommentDto",
-            },
             "response": {
               "docs": "Comment created.",
               "type": "root.CommentDto",
@@ -2579,6 +2283,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                  "commentId": "comment-id",
+                  "commentsId": "comments-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -2595,9 +2312,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the comments.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.UpsertCommentDto",
             },
           },
         },
@@ -2628,13 +2342,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "jobs": [
-                    {
-                      "type": "Upsert",
-                    },
-                  ],
-                },
+                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2651,43 +2359,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "checkReferrers": {
-                    "docs": "True to check referrers of deleted contents.",
-                    "type": "optional<boolean>",
-                  },
-                  "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                  "doNotValidate": {
-                    "docs": "True to turn off validation for faster inserts. Default: false.",
-                    "type": "optional<boolean>",
-                  },
-                  "doNotValidateWorkflow": {
-                    "docs": "True to turn off validation of workflow rules. Default: false.",
-                    "type": "optional<boolean>",
-                  },
-                  "jobs": {
-                    "docs": "The contents to update or insert.",
-                    "type": "list<root.BulkUpdateContentsJobDto>",
-                  },
-                  "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                  "publish": {
-                    "docs": "True to automatically publish the content.",
-                    "type": "optional<boolean>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "BulkUpdateContentsDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "",
@@ -3006,9 +2677,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.QueryDto",
-            },
             "response": {
               "docs": "Contents returned.",
               "type": "root.ContentsDto",
@@ -3117,9 +2785,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.ContentData",
-            },
             "response": {
               "docs": "Content patched.",
               "type": "root.ContentsDto",
@@ -3147,7 +2812,6 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "root.ContentData",
               "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "id": {
@@ -3189,9 +2853,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "datas": [],
-                },
+                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -3208,31 +2870,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "datas": {
-                    "docs": "The data to import.",
-                    "type": "list<root.ContentData>",
-                  },
-                  "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                  "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                  "publish": {
-                    "docs": "True to automatically publish the content.",
-                    "type": "optional<boolean>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ImportContentsDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Contents created.",
@@ -3265,7 +2902,6 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "request": {
-              "body": "root.ContentData",
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "patch": {
@@ -3315,9 +2951,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.ContentData",
-            },
             "response": {
               "docs": "Content updated.",
               "type": "root.ContentsDto",
@@ -3347,27 +2980,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "checkReferrers": {
-                    "docs": "True to check referrers of this content.",
-                    "type": "optional<boolean>",
-                  },
-                  "dueTime": {
-                    "docs": "The due time.",
-                    "type": "optional<datetime>",
-                  },
-                  "status": {
-                    "docs": "The new status.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ChangeStatusDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Content status changed.",
@@ -3951,6 +3563,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/plan",
             "path-parameters": {
@@ -3958,9 +3583,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": "root.ChangePlanDto",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -3976,6 +3598,19 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "team": "team",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/api/teams/{team}/plan",
             "path-parameters": {
@@ -3983,9 +3618,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the team.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.ChangePlanDto",
             },
             "response": {
               "docs": "Plan changed or redirect url returned.",
@@ -4378,9 +4010,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "variable": "$appName",
               },
             },
-            "request": {
-              "body": "root.CreateRuleDto",
-            },
             "response": {
               "docs": "Rule created.",
               "type": "root.RuleDto",
@@ -4440,31 +4069,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The ID of the rule to update.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "action": {
-                    "docs": "The action properties.",
-                    "type": "optional<root.RuleActionDto>",
-                  },
-                  "isEnabled": {
-                    "docs": "Enable or disable the rule.",
-                    "type": "optional<boolean>",
-                  },
-                  "name": {
-                    "docs": "Optional rule name.",
-                    "type": "optional<string>",
-                  },
-                  "trigger": {
-                    "docs": "The trigger properties.",
-                    "type": "optional<root.RuleTriggerDto>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateRuleDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Rule updated.",
@@ -4555,9 +4159,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": "root.CreateRuleDto",
             },
             "response": {
               "docs": "Rule simulated.",
@@ -5047,9 +4648,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.AddFieldDto",
-            },
             "response": {
               "docs": "Schema field created.",
               "type": "root.SchemaDto",
@@ -5081,9 +4679,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.AddFieldDto",
-            },
             "response": {
               "docs": "Schema field created.",
               "type": "root.SchemaDto",
@@ -5105,30 +4700,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "extends": [
-                  "root.UpsertSchemaDto",
-                ],
-                "properties": {
-                  "isSingleton": {
-                    "docs": "Set to true to allow a single content item only.",
-                    "type": "boolean",
-                  },
-                  "name": {
-                    "docs": "The name of the schema.",
-                    "type": "string",
-                  },
-                  "type": {
-                    "docs": "The type of the schema.",
-                    "type": "root.SchemaType",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateSchemaDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema created.",
@@ -5182,19 +4753,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the category.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ChangeCategoryDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Schema updated.",
               "type": "root.SchemaDto",
@@ -5224,9 +4782,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.UpdateFieldDto",
             },
             "response": {
               "docs": "Schema field updated.",
@@ -5262,9 +4817,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.UpdateFieldDto",
-            },
             "response": {
               "docs": "Schema field updated.",
               "type": "root.SchemaDto",
@@ -5295,9 +4847,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.ReorderFieldsDto",
-            },
             "response": {
               "docs": "Schema fields reordered.",
               "type": "root.SchemaDto",
@@ -5323,9 +4872,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.ConfigurePreviewUrlsDto",
             },
             "response": {
               "docs": "Schema updated.",
@@ -5353,19 +4899,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "fieldRules": {
-                    "docs": "The field rules to configure.",
-                    "type": "optional<list<root.FieldRuleDto>>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ConfigureFieldRulesDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Schema updated.",
               "type": "root.SchemaDto",
@@ -5391,43 +4924,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "contentEditorUrl": {
-                    "docs": "The url to the editor plugin.",
-                    "type": "optional<string>",
-                  },
-                  "contentSidebarUrl": {
-                    "docs": "The url to a the sidebar plugin for content items.",
-                    "type": "optional<string>",
-                  },
-                  "contentsSidebarUrl": {
-                    "docs": "The url to a the sidebar plugin for content lists.",
-                    "type": "optional<string>",
-                  },
-                  "hints": {
-                    "docs": "Hints to describe the schema.",
-                    "type": "optional<string>",
-                  },
-                  "label": {
-                    "docs": "Optional label for the editor.",
-                    "type": "optional<string>",
-                  },
-                  "tags": {
-                    "docs": "Tags for automation processes.",
-                    "type": "optional<list<string>>",
-                  },
-                  "validateOnPublish": {
-                    "docs": "True to validate the content items on publish.",
-                    "type": "boolean",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateSchemaDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema updated.",
@@ -5455,9 +4951,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.ReorderFieldsDto",
-            },
             "response": {
               "docs": "Schema fields reordered.",
               "type": "root.SchemaDto",
@@ -5483,26 +4976,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "extends": [
-                  "root.UpsertSchemaDto",
-                ],
-                "properties": {
-                  "noFieldDeletion": {
-                    "docs": "True, when fields should not be deleted.",
-                    "type": "boolean",
-                  },
-                  "noFieldRecreation": {
-                    "docs": "True, when fields with different types should not be recreated.",
-                    "type": "boolean",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "SynchronizeSchemaDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema updated.",
@@ -5530,23 +5003,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "fieldsInLists": {
-                    "docs": "The name of fields that are used in content lists.",
-                    "type": "optional<list<string>>",
-                  },
-                  "fieldsInReferences": {
-                    "docs": "The name of fields that are used in content references.",
-                    "type": "optional<list<string>>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ConfigureUiFieldsDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Schema UI fields defined.",
               "type": "root.SchemaDto",
@@ -5572,9 +5028,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "docs": "The name of the schema.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.SchemaScriptsDto",
             },
             "response": {
               "docs": "Schema updated.",
@@ -6103,9 +5556,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.AssignContributorDto",
-            },
             "response": {
               "docs": "Contributor assigned to team.",
               "type": "root.ContributorsDto",
@@ -6123,19 +5573,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "method": "POST",
             "path": "/api/teams",
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the team.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateTeamDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Team created.",
               "type": "root.TeamDto",
@@ -6157,19 +5594,6 @@ You will be assigned as owner of the new team automatically.",
                 "docs": "The name of the team to update.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the team.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateTeamDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Team updated.",
@@ -6255,6 +5679,21 @@ You will be assigned as owner of the new team automatically.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "app": "app",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "result": "Translated",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/translations",
             "path-parameters": {
@@ -6262,27 +5701,6 @@ You will be assigned as owner of the new team automatically.",
                 "docs": "The name of the app.",
                 "variable": "$appName",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "sourceLanguage": {
-                    "docs": "The optional source language.",
-                    "type": "optional<string>",
-                  },
-                  "targetLanguage": {
-                    "docs": "The target language.",
-                    "type": "string",
-                  },
-                  "text": {
-                    "docs": "The text to translate.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "TranslateDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Text translated.",
@@ -6418,31 +5836,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "method": "POST",
             "path": "/api/user-management",
-            "request": {
-              "body": {
-                "properties": {
-                  "displayName": {
-                    "docs": "The display name (usually first name and last name) of the user.",
-                    "type": "string",
-                  },
-                  "email": {
-                    "docs": "The email of the user. Unique value.",
-                    "type": "string",
-                  },
-                  "password": {
-                    "docs": "The password of the user.",
-                    "type": "string",
-                  },
-                  "permissions": {
-                    "docs": "Additional permissions for the user.",
-                    "type": "list<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateUserDto",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "User created.",
               "type": "root.UserDto",
@@ -6464,31 +5857,6 @@ You will be assigned as owner of the new team automatically.",
                 "docs": "The ID of the user.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "displayName": {
-                    "docs": "The display name (usually first name and last name) of the user.",
-                    "type": "string",
-                  },
-                  "email": {
-                    "docs": "The email of the user. Unique value.",
-                    "type": "string",
-                  },
-                  "password": {
-                    "docs": "The password of the user.",
-                    "type": "optional<string>",
-                  },
-                  "permissions": {
-                    "docs": "Additional permissions for the user.",
-                    "type": "list<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "UpdateUserDto",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "User created.",
@@ -6690,6 +6058,33 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "AddLanguageDto": {
+        "docs": undefined,
+        "properties": {
+          "language": {
+            "docs": "The language to add.",
+            "type": "string",
+          },
+        },
+      },
+      "AddRoleDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The role name.",
+            "type": "string",
+          },
+        },
+      },
+      "AddWorkflowDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The name of the workflow.",
+            "type": "string",
+          },
+        },
+      },
       "AlgoliaRuleActionDto": {
         "docs": undefined,
         "properties": {
@@ -6742,6 +6137,31 @@ You will be assigned as owner of the new team automatically.",
           "scheduledTo": {
             "docs": "The end of the schedule.",
             "type": "optional<datetime>",
+          },
+        },
+      },
+      "AnnotateAssetDto": {
+        "docs": undefined,
+        "properties": {
+          "fileName": {
+            "docs": "The new name of the asset.",
+            "type": "optional<string>",
+          },
+          "isProtected": {
+            "docs": "True, when the asset is not public.",
+            "type": "optional<boolean>",
+          },
+          "metadata": {
+            "docs": "The asset metadata.",
+            "type": "optional<map<string, unknown>>",
+          },
+          "slug": {
+            "docs": "The new slug of the asset.",
+            "type": "optional<string>",
+          },
+          "tags": {
+            "docs": "The new asset tags.",
+            "type": "optional<list<string>>",
           },
         },
       },
@@ -7361,6 +6781,27 @@ You will be assigned as owner of the new team automatically.",
           "Delete",
         ],
       },
+      "BulkUpdateAssetsDto": {
+        "docs": undefined,
+        "properties": {
+          "checkReferrers": {
+            "docs": "True to check referrers of deleted assets.",
+            "type": "optional<boolean>",
+          },
+          "doNotScript": {
+            "docs": "True to turn off scripting for faster inserts. Default: true.",
+            "type": "optional<boolean>",
+          },
+          "jobs": {
+            "docs": "The contents to update or insert.",
+            "type": "optional<list<BulkUpdateAssetsJobDto>>",
+          },
+          "optimizeValidation": {
+            "docs": "True to turn off costly validation: Folder checks. Default: true.",
+            "type": "optional<boolean>",
+          },
+        },
+      },
       "BulkUpdateAssetsJobDto": {
         "docs": undefined,
         "properties": {
@@ -7417,6 +6858,39 @@ You will be assigned as owner of the new team automatically.",
           "Update",
           "Validate",
         ],
+      },
+      "BulkUpdateContentsDto": {
+        "docs": undefined,
+        "properties": {
+          "checkReferrers": {
+            "docs": "True to check referrers of deleted contents.",
+            "type": "optional<boolean>",
+          },
+          "doNotScript": {
+            "docs": "True to turn off scripting for faster inserts. Default: true.",
+            "type": "optional<boolean>",
+          },
+          "doNotValidate": {
+            "docs": "True to turn off validation for faster inserts. Default: false.",
+            "type": "optional<boolean>",
+          },
+          "doNotValidateWorkflow": {
+            "docs": "True to turn off validation of workflow rules. Default: false.",
+            "type": "optional<boolean>",
+          },
+          "jobs": {
+            "docs": "The contents to update or insert.",
+            "type": "list<BulkUpdateContentsJobDto>",
+          },
+          "optimizeValidation": {
+            "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+            "type": "optional<boolean>",
+          },
+          "publish": {
+            "docs": "True to automatically publish the content.",
+            "type": "optional<boolean>",
+          },
+        },
       },
       "BulkUpdateContentsJobDto": {
         "docs": undefined,
@@ -7529,11 +7003,37 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "ChangeCategoryDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The name of the category.",
+            "type": "optional<string>",
+          },
+        },
+      },
       "ChangePlanDto": {
         "docs": undefined,
         "properties": {
           "planId": {
             "docs": "The new plan id.",
+            "type": "string",
+          },
+        },
+      },
+      "ChangeStatusDto": {
+        "docs": undefined,
+        "properties": {
+          "checkReferrers": {
+            "docs": "True to check referrers of this content.",
+            "type": "optional<boolean>",
+          },
+          "dueTime": {
+            "docs": "The due time.",
+            "type": "optional<datetime>",
+          },
+          "status": {
+            "docs": "The new status.",
             "type": "string",
           },
         },
@@ -7684,7 +7184,29 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "ConfigureFieldRulesDto": {
+        "docs": undefined,
+        "properties": {
+          "fieldRules": {
+            "docs": "The field rules to configure.",
+            "type": "optional<list<FieldRuleDto>>",
+          },
+        },
+      },
       "ConfigurePreviewUrlsDto": "map<string, string>",
+      "ConfigureUiFieldsDto": {
+        "docs": undefined,
+        "properties": {
+          "fieldsInLists": {
+            "docs": "The name of fields that are used in content lists.",
+            "type": "optional<list<string>>",
+          },
+          "fieldsInReferences": {
+            "docs": "The name of fields that are used in content references.",
+            "type": "optional<list<string>>",
+          },
+        },
+      },
       "ContentChangedRuleTriggerDto": {
         "docs": undefined,
         "properties": {
@@ -7858,6 +7380,41 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "CreateAppDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The name of the app.",
+            "type": "string",
+          },
+          "template": {
+            "docs": "Initialize the app with the inbuilt template.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "CreateAssetFolderDto": {
+        "docs": undefined,
+        "properties": {
+          "folderName": {
+            "docs": "The name of the folder.",
+            "type": "string",
+          },
+          "parentId": {
+            "docs": "The ID of the parent folder.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "CreateClientDto": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": "The ID of the client.",
+            "type": "string",
+          },
+        },
+      },
       "CreateContentRuleActionDto": {
         "docs": undefined,
         "properties": {
@@ -7889,6 +7446,56 @@ You will be assigned as owner of the new team automatically.",
           "trigger": {
             "docs": "The trigger properties.",
             "type": "RuleTriggerDto",
+          },
+        },
+      },
+      "CreateSchemaDto": {
+        "docs": undefined,
+        "extends": [
+          "UpsertSchemaDto",
+        ],
+        "properties": {
+          "isSingleton": {
+            "docs": "Set to true to allow a single content item only.",
+            "type": "boolean",
+          },
+          "name": {
+            "docs": "The name of the schema.",
+            "type": "string",
+          },
+          "type": {
+            "docs": "The type of the schema.",
+            "type": "SchemaType",
+          },
+        },
+      },
+      "CreateTeamDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The name of the team.",
+            "type": "string",
+          },
+        },
+      },
+      "CreateUserDto": {
+        "docs": undefined,
+        "properties": {
+          "displayName": {
+            "docs": "The display name (usually first name and last name) of the user.",
+            "type": "string",
+          },
+          "email": {
+            "docs": "The email of the user. Unique value.",
+            "type": "string",
+          },
+          "password": {
+            "docs": "The password of the user.",
+            "type": "string",
+          },
+          "permissions": {
+            "docs": "Additional permissions for the user.",
+            "type": "list<string>",
           },
         },
       },
@@ -8347,6 +7954,27 @@ You will be assigned as owner of the new team automatically.",
           "WEBP",
         ],
       },
+      "ImportContentsDto": {
+        "docs": undefined,
+        "properties": {
+          "datas": {
+            "docs": "The data to import.",
+            "type": "list<ContentData>",
+          },
+          "doNotScript": {
+            "docs": "True to turn off scripting for faster inserts. Default: true.",
+            "type": "optional<boolean>",
+          },
+          "optimizeValidation": {
+            "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+            "type": "optional<boolean>",
+          },
+          "publish": {
+            "docs": "True to automatically publish the content.",
+            "type": "optional<boolean>",
+          },
+        },
+      },
       "JobStatus": {
         "docs": "",
         "enum": [
@@ -8430,6 +8058,24 @@ You will be assigned as owner of the new team automatically.",
           "title": {
             "docs": "The title, used for the url.",
             "type": "string",
+          },
+        },
+      },
+      "MoveAssetDto": {
+        "docs": undefined,
+        "properties": {
+          "parentId": {
+            "docs": "The parent folder id.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "MoveAssetFolderDto": {
+        "docs": undefined,
+        "properties": {
+          "parentId": {
+            "docs": "The parent folder id.",
+            "type": "optional<string>",
           },
         },
       },
@@ -8777,6 +8423,24 @@ You will be assigned as owner of the new team automatically.",
           "earned": "string",
         },
       },
+      "RenameAssetFolderDto": {
+        "docs": undefined,
+        "properties": {
+          "folderName": {
+            "docs": "The name of the folder.",
+            "type": "string",
+          },
+        },
+      },
+      "RenameTagDto": {
+        "docs": undefined,
+        "properties": {
+          "tagName": {
+            "docs": "The new name for the tag.",
+            "type": "string",
+          },
+        },
+      },
       "ReorderFieldsDto": {
         "docs": undefined,
         "properties": {
@@ -8852,6 +8516,19 @@ You will be assigned as owner of the new team automatically.",
           },
           "url": {
             "docs": "The uri to load from.",
+            "type": "string",
+          },
+        },
+      },
+      "RestoreRequestDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The name of the app.",
+            "type": "optional<string>",
+          },
+          "url": {
+            "docs": "The url to the restore file.",
             "type": "string",
           },
         },
@@ -9675,6 +9352,22 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "SynchronizeSchemaDto": {
+        "docs": undefined,
+        "extends": [
+          "UpsertSchemaDto",
+        ],
+        "properties": {
+          "noFieldDeletion": {
+            "docs": "True, when fields should not be deleted.",
+            "type": "boolean",
+          },
+          "noFieldRecreation": {
+            "docs": "True, when fields with different types should not be recreated.",
+            "type": "boolean",
+          },
+        },
+      },
       "TagsFieldEditor": {
         "docs": "",
         "enum": [
@@ -9796,6 +9489,32 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "TransferToTeamDto": {
+        "docs": undefined,
+        "properties": {
+          "teamId": {
+            "docs": "The ID of the team.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "TranslateDto": {
+        "docs": undefined,
+        "properties": {
+          "sourceLanguage": {
+            "docs": "The optional source language.",
+            "type": "optional<string>",
+          },
+          "targetLanguage": {
+            "docs": "The target language.",
+            "type": "string",
+          },
+          "text": {
+            "docs": "The text to translate.",
+            "type": "string",
+          },
+        },
+      },
       "TranslationDto": {
         "docs": undefined,
         "properties": {
@@ -9885,6 +9604,98 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "UpdateAppDto": {
+        "docs": undefined,
+        "properties": {
+          "description": {
+            "docs": "The optional description of your app.",
+            "type": "optional<string>",
+          },
+          "label": {
+            "docs": "The optional label of your app.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "UpdateAppSettingsDto": {
+        "docs": undefined,
+        "properties": {
+          "editors": {
+            "docs": "The configured UI editors.",
+            "type": "list<EditorDto>",
+          },
+          "hideDateTimeModeButton": {
+            "docs": "Hide the datetime mode button.",
+            "type": "optional<boolean>",
+          },
+          "hideScheduler": {
+            "docs": "Hide the scheduler for content items.",
+            "type": "optional<boolean>",
+          },
+          "patterns": {
+            "docs": "The configured app patterns.",
+            "type": "list<PatternDto>",
+          },
+        },
+      },
+      "UpdateAssetScriptsDto": {
+        "docs": undefined,
+        "properties": {
+          "annotate": {
+            "docs": "The script that is executed when annotating a content.",
+            "type": "optional<string>",
+          },
+          "create": {
+            "docs": "The script that is executed when creating an asset.",
+            "type": "optional<string>",
+          },
+          "delete": {
+            "docs": "The script that is executed when deleting a content.",
+            "type": "optional<string>",
+          },
+          "move": {
+            "docs": "The script that is executed when moving a content.",
+            "type": "optional<string>",
+          },
+          "query": {
+            "docs": "The script that is executed for each asset when querying assets.",
+            "type": "optional<string>",
+          },
+          "queryPre": {
+            "docs": "The script that is executed for all assets when querying assets.",
+            "type": "optional<string>",
+          },
+          "update": {
+            "docs": "The script that is executed when updating a content.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "UpdateClientDto": {
+        "docs": undefined,
+        "properties": {
+          "allowAnonymous": {
+            "docs": "True to allow anonymous access without an access token for this client.",
+            "type": "optional<boolean>",
+          },
+          "apiCallsLimit": {
+            "docs": "The number of allowed api calls per month for this client.",
+            "type": "optional<integer>",
+          },
+          "apiTrafficLimit": {
+            "docs": "The number of allowed api traffic bytes per month for this client.",
+            "type": "optional<integer>",
+          },
+          "name": {
+            "docs": "The new display name of the client.",
+            "type": "optional<string>",
+          },
+          "role": {
+            "docs": "The role of the client.",
+            "type": "optional<string>",
+          },
+        },
+      },
       "UpdateFieldDto": {
         "docs": undefined,
         "properties": {
@@ -9894,10 +9705,145 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
+      "UpdateLanguageDto": {
+        "docs": undefined,
+        "properties": {
+          "fallback": {
+            "docs": "Optional fallback languages.",
+            "type": "optional<list<string>>",
+          },
+          "isMaster": {
+            "docs": "Set the value to true to make the language the master.",
+            "type": "optional<boolean>",
+          },
+          "isOptional": {
+            "docs": "Set the value to true to make the language optional.",
+            "type": "optional<boolean>",
+          },
+        },
+      },
+      "UpdateRoleDto": {
+        "docs": undefined,
+        "properties": {
+          "permissions": {
+            "docs": "Associated list of permissions.",
+            "type": "list<string>",
+          },
+          "properties": {
+            "docs": "Associated list of UI properties.",
+            "type": "optional<map<string, unknown>>",
+          },
+        },
+      },
+      "UpdateRuleDto": {
+        "docs": undefined,
+        "properties": {
+          "action": {
+            "docs": "The action properties.",
+            "type": "optional<RuleActionDto>",
+          },
+          "isEnabled": {
+            "docs": "Enable or disable the rule.",
+            "type": "optional<boolean>",
+          },
+          "name": {
+            "docs": "Optional rule name.",
+            "type": "optional<string>",
+          },
+          "trigger": {
+            "docs": "The trigger properties.",
+            "type": "optional<RuleTriggerDto>",
+          },
+        },
+      },
+      "UpdateSchemaDto": {
+        "docs": undefined,
+        "properties": {
+          "contentEditorUrl": {
+            "docs": "The url to the editor plugin.",
+            "type": "optional<string>",
+          },
+          "contentSidebarUrl": {
+            "docs": "The url to a the sidebar plugin for content items.",
+            "type": "optional<string>",
+          },
+          "contentsSidebarUrl": {
+            "docs": "The url to a the sidebar plugin for content lists.",
+            "type": "optional<string>",
+          },
+          "hints": {
+            "docs": "Hints to describe the schema.",
+            "type": "optional<string>",
+          },
+          "label": {
+            "docs": "Optional label for the editor.",
+            "type": "optional<string>",
+          },
+          "tags": {
+            "docs": "Tags for automation processes.",
+            "type": "optional<list<string>>",
+          },
+          "validateOnPublish": {
+            "docs": "True to validate the content items on publish.",
+            "type": "boolean",
+          },
+        },
+      },
       "UpdateSettingDto": {
         "docs": undefined,
         "properties": {
           "value": "unknown",
+        },
+      },
+      "UpdateTeamDto": {
+        "docs": undefined,
+        "properties": {
+          "name": {
+            "docs": "The name of the team.",
+            "type": "string",
+          },
+        },
+      },
+      "UpdateUserDto": {
+        "docs": undefined,
+        "properties": {
+          "displayName": {
+            "docs": "The display name (usually first name and last name) of the user.",
+            "type": "string",
+          },
+          "email": {
+            "docs": "The email of the user. Unique value.",
+            "type": "string",
+          },
+          "password": {
+            "docs": "The password of the user.",
+            "type": "optional<string>",
+          },
+          "permissions": {
+            "docs": "Additional permissions for the user.",
+            "type": "list<string>",
+          },
+        },
+      },
+      "UpdateWorkflowDto": {
+        "docs": undefined,
+        "properties": {
+          "initial": {
+            "docs": "The initial step.",
+            "type": "string",
+          },
+          "name": {
+            "docs": "The name of the workflow.",
+            "type": "optional<string>",
+          },
+          "schemaIds": {
+            "docs": "The schema ids.",
+            "type": "optional<list<string>>",
+          },
+          "steps": {
+            "docs": "The workflow steps.",
+            "type": "map<string, WorkflowStepDto>",
+          },
         },
       },
       "UpsertCommentDto": {

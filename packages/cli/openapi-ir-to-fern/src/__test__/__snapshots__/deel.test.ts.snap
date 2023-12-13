@@ -363,28 +363,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/attachments",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "InputToCreateFileRefData",
-                },
-              },
-              "headers": undefined,
-              "name": "InputToCreateFileRef",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.OutputToCreateFileRefContainer",
             },
-          },
-        },
-      },
-      "types": {
-        "InputToCreateFileRefData": {
-          "docs": undefined,
-          "properties": {
-            "content_type": "root.FileRefTypeEnum",
           },
         },
       },
@@ -510,6 +492,27 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "contract-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "calculated_premium": 50,
+                      "id": "d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb",
+                      "misclassification_guarantee": {},
+                      "penalties": {},
+                      "third_party_liabilities": {},
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
@@ -517,16 +520,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.PremiumToAdd",
-                },
-              },
-              "headers": undefined,
-              "name": "PremiumToAddContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -556,16 +549,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractDetailsToAmend",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToAmendDetailsContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -588,16 +571,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/contracts",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractContainer",
@@ -617,16 +590,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/contracts/fixed-rate",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractToCreateOngoingTimeBased",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToCreateContainerOngoingTimeBased",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractContainerOngoingTimeBased",
@@ -646,16 +609,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/contracts/milestone-based",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractToCreatePaygMilestones",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToCreateContainerPaygMilestones",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractContainerPaygMilestones",
@@ -675,16 +628,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/contracts/task-based",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractToCreatePaygTasks",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToCreateContainerPaygTasks",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractContainerPaygTasks",
@@ -704,16 +647,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/contracts/time-based",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractToCreatePayAsYouGoTimeBased",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToCreateContainerPayAsYouGoTimeBased",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.ContractContainerPayAsYouGoTimeBased",
@@ -824,11 +757,7 @@ exports[`open api parser deel simple 1`] = `
                   "contract_id": "contract-id",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "completion_date": "1999-12-31",
-                  },
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -845,16 +774,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractToTerminate",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractToTerminateContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -961,16 +880,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractExternalIdToPatch",
-                },
-              },
-              "headers": undefined,
-              "name": "InputToPatchContractExternalId",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -1272,16 +1181,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractInvitationToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractInvitationToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -1305,23 +1204,7 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "compensation_details": {
-                      "amount": 2500,
-                      "calculation_type": "CUSTOM_AMOUNT",
-                      "currency_code": "USD",
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "payment_due_type": "REGULAR",
-                      "scale": "weekly",
-                      "work_week_end": "Sunday",
-                      "work_week_start": "Sunday",
-                    },
-                    "country_code": "US",
-                    "start_date": "1999-12-31",
-                    "type": "ongoing_time_based",
-                  },
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -1348,16 +1231,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/contracts/estimate",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.EstimateFirstPayment",
-                },
-              },
-              "headers": undefined,
-              "name": "EstimateFirstPaymentContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.ResponseEstimateFirstPaymentContainer",
@@ -1385,16 +1258,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.ContractSignatureToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "ContractSignatureToCreateContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -1470,36 +1333,7 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "client": {},
-                    "compensation_details": {},
-                    "employee": {
-                      "address": {
-                        "city": "Denver",
-                        "country": "US",
-                        "state": "CO",
-                        "street": "Deel Street 500",
-                        "zip": "44000",
-                      },
-                      "email": "employee@email.com",
-                      "first_name": "Jane",
-                      "last_name": "Doe",
-                      "nationality": "US",
-                    },
-                    "employment": {
-                      "country": "US",
-                      "end_date": "1999-12-31",
-                      "start_date": "1999-12-31",
-                      "time_off_type": "STANDARD",
-                      "type": "Full-time",
-                    },
-                    "quote_additional_fields": {
-                      "worker_type": "Skilled",
-                    },
-                    "seniority": {},
-                  },
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -1524,16 +1358,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/eor",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.EorContractToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "EorContractToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.EorContractCreatedContainer",
@@ -1675,9 +1499,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/hris/direct-employees",
-            "request": {
-              "body": "root.HrisDirectEmployee",
-            },
             "response": {
               "docs": "Hris direct employee object that was created or edited",
               "type": "root.HrisDirectEmployeeContainer",
@@ -1715,12 +1536,10 @@ exports[`open api parser deel simple 1`] = `
             "path": "/invoice-adjustments",
             "request": {
               "body": {
-                "properties": {
-                  "data": "root.InvoiceAdjustmentToCreate",
-                },
+                "properties": {},
               },
               "headers": undefined,
-              "name": "InvoiceAdjustmentToCreateContainer",
+              "name": "InvoiceAdjustmentToCreateWithFile",
               "query-parameters": undefined,
             },
             "response": {
@@ -1751,16 +1570,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "double",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.InvoiceAdjustmentReviewToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "InvoiceAdjustmentReviewToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -1783,16 +1592,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/invoice-adjustments/many/reviews",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.InvoiceAdjustmentReviewsToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "InvoiceAdjustmentReviewsToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -2013,16 +1812,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "ID of an existing invoice adjustment",
                 "type": "double",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.InvoiceAdjustmentToUpdate",
-                },
-              },
-              "headers": undefined,
-              "name": "InvoiceAdjustmentToUpdateContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -2299,12 +2088,10 @@ exports[`open api parser deel simple 1`] = `
             },
             "request": {
               "body": {
-                "properties": {
-                  "data": "root.MilestoneToCreate",
-                },
+                "properties": {},
               },
               "headers": undefined,
-              "name": "MilestoneToCreateContainer",
+              "name": "MilestoneToCreateFormWithFile",
               "query-parameters": undefined,
             },
             "response": {
@@ -2339,16 +2126,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.MilestoneReviewToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "MilestoneReviewToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -2376,16 +2153,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.MilestoneReviewsToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "MilestoneReviewsToCreateContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -2584,16 +2351,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.OffCyclePaymentToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "OffCyclePaymentToCreateContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -2878,16 +2635,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.PgoTaskToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "InputToCreatePgoTask",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -2915,13 +2662,7 @@ exports[`open api parser deel simple 1`] = `
                   "contract_id": "contract-id",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "ids": [],
-                    "reason": "Great work.",
-                    "status": "approved",
-                  },
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "data": [
@@ -2944,16 +2685,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.PgoTaskReviewsToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -2983,12 +2714,7 @@ exports[`open api parser deel simple 1`] = `
                   "task_id": "task-id",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "data": {
-                    "reason": "Excited!",
-                    "status": "approved",
-                  },
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "data": [
@@ -3015,16 +2741,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "ID of task entity.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.PgoTaskReviewsByIdToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Successful operation.",
@@ -3150,6 +2866,97 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "contract-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "applied_changes": [
+                        {
+                          "days_used_end_year": "2.00",
+                          "days_used_start_year": "2.00",
+                          "denial_reason": "No time off available",
+                          "other_timeoff_name": "This is time off for a doctor's appointment",
+                          "reason": "I have a doctors appointment",
+                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requester": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "reviewed_at": "2022-05-24T09:38:46.235Z",
+                          "reviewer": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "single_date": "2022-05-24T09:38:46.235Z",
+                          "status": "REQUESTED",
+                          "total_days_used": "4.00",
+                          "type": "VACATION",
+                        },
+                      ],
+                      "change_request": {
+                        "days_used_end_year": "2.00",
+                        "days_used_start_year": "2.00",
+                        "denial_reason": "No time off available",
+                        "other_timeoff_name": "This is time off for a doctor's appointment",
+                        "reason": "I have a doctors appointment",
+                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requester": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewer": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "single_date": "2022-05-24T09:38:46.235Z",
+                        "status": "REQUESTED",
+                        "total_days_used": "4.00",
+                        "type": "VACATION",
+                      },
+                      "contract_id": "abc123",
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "days_used_end_year": "2.00",
+                      "days_used_start_year": "2.00",
+                      "denial_reason": "No time off available",
+                      "end_date": "2022-05-24T09:38:46.235Z",
+                      "id": 6938,
+                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                      "reason": "I have a doctors appointment",
+                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "requester": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "reviewer": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "single_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "REQUESTED",
+                      "total_days_used": "4.00",
+                      "type": "VACATION",
+                      "updated_at": "2022-05-24T09:38:46.235Z",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
@@ -3157,9 +2964,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Deel contract id.",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.CreateTimeoffContainer",
             },
             "response": {
               "docs": "Successful operation.",
@@ -3209,6 +3013,98 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "contract-id",
+                  "timeoff_id": "timeoff-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "applied_changes": [
+                        {
+                          "days_used_end_year": "2.00",
+                          "days_used_start_year": "2.00",
+                          "denial_reason": "No time off available",
+                          "other_timeoff_name": "This is time off for a doctor's appointment",
+                          "reason": "I have a doctors appointment",
+                          "requested_at": "2022-05-24T09:38:46.235Z",
+                          "requester": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "reviewed_at": "2022-05-24T09:38:46.235Z",
+                          "reviewer": {
+                            "id": 409222,
+                            "name": "Mr. Rogers",
+                            "profile_type": "client",
+                          },
+                          "single_date": "2022-05-24T09:38:46.235Z",
+                          "status": "REQUESTED",
+                          "total_days_used": "4.00",
+                          "type": "VACATION",
+                        },
+                      ],
+                      "change_request": {
+                        "days_used_end_year": "2.00",
+                        "days_used_start_year": "2.00",
+                        "denial_reason": "No time off available",
+                        "other_timeoff_name": "This is time off for a doctor's appointment",
+                        "reason": "I have a doctors appointment",
+                        "requested_at": "2022-05-24T09:38:46.235Z",
+                        "requester": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "reviewed_at": "2022-05-24T09:38:46.235Z",
+                        "reviewer": {
+                          "id": 409222,
+                          "name": "Mr. Rogers",
+                          "profile_type": "client",
+                        },
+                        "single_date": "2022-05-24T09:38:46.235Z",
+                        "status": "REQUESTED",
+                        "total_days_used": "4.00",
+                        "type": "VACATION",
+                      },
+                      "contract_id": "abc123",
+                      "created_at": "2022-05-24T09:38:46.235Z",
+                      "days_used_end_year": "2.00",
+                      "days_used_start_year": "2.00",
+                      "denial_reason": "No time off available",
+                      "end_date": "2022-05-24T09:38:46.235Z",
+                      "id": 6938,
+                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                      "reason": "I have a doctors appointment",
+                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "requester": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "reviewer": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "profile_type": "client",
+                      },
+                      "single_date": "2022-05-24T09:38:46.235Z",
+                      "start_date": "2022-05-24T09:38:46.235Z",
+                      "status": "REQUESTED",
+                      "total_days_used": "4.00",
+                      "type": "VACATION",
+                      "updated_at": "2022-05-24T09:38:46.235Z",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
@@ -3220,9 +3116,6 @@ exports[`open api parser deel simple 1`] = `
                 "docs": "Time off Id",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.CreateTimeoffContainer",
             },
             "response": {
               "docs": "Successful operation.",
@@ -3454,16 +3347,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.TimeoffReview",
-                },
-              },
-              "headers": undefined,
-              "name": "TimeoffToReviewContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultUpdated",
@@ -3501,12 +3384,10 @@ exports[`open api parser deel simple 1`] = `
             "path": "/timesheets",
             "request": {
               "body": {
-                "properties": {
-                  "data": "root.TimesheetToCreate",
-                },
+                "properties": {},
               },
               "headers": undefined,
-              "name": "TimesheetToCreateContainer",
+              "name": "CreateTimesheetRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -3537,16 +3418,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "long",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.TimesheetReviewToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "TimesheetReviewToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -3569,16 +3440,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/timesheets/many/reviews",
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.TimesheetReviewsToCreate",
-                },
-              },
-              "headers": undefined,
-              "name": "TimesheetReviewsToCreateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultCreated",
@@ -3808,16 +3669,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "long",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "data": "root.TimesheetToUpdate",
-                },
-              },
-              "headers": undefined,
-              "name": "TimesheetToUpdateContainer",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Successful operation.",
               "type": "root.GenericResultUpdated",
@@ -3892,39 +3743,6 @@ exports[`open api parser deel simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "description": {
-                    "docs": "Webhook subscription description.",
-                    "type": "optional<string>",
-                  },
-                  "events": {
-                    "docs": "The list of events to enable for this subscription.",
-                    "type": "list<string>",
-                  },
-                  "name": {
-                    "docs": "Webhook subscription name.",
-                    "type": "optional<string>",
-                  },
-                  "signing_key": {
-                    "docs": "The webhook's signing key, used to generate webhook signatures.",
-                    "type": "optional<string>",
-                  },
-                  "status": {
-                    "docs": "Status of webhook.",
-                    "type": "PatchWebhookRequestStatus",
-                  },
-                  "url": {
-                    "docs": "Endpoint to receive webhook.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "PatchWebhookRequest",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "successful operation",
               "type": "root.WebhookItemResponse",
@@ -3975,43 +3793,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "method": "POST",
             "path": "/webhooks",
-            "request": {
-              "body": {
-                "properties": {
-                  "api_version": {
-                    "docs": "Deel API version. Currently Deel only has one version: v1.",
-                    "type": "string",
-                  },
-                  "description": {
-                    "docs": "Webhook subscription description.",
-                    "type": "optional<string>",
-                  },
-                  "events": {
-                    "docs": "The list of events to enable for this subscription.",
-                    "type": "list<string>",
-                  },
-                  "name": {
-                    "docs": "Webhook subscription name.",
-                    "type": "optional<string>",
-                  },
-                  "signing_key": {
-                    "docs": "The webhook's signing key, used to generate webhook signatures.",
-                    "type": "optional<string>",
-                  },
-                  "status": {
-                    "docs": "Status of webhook.",
-                    "type": "CreateWebhookRequestStatus",
-                  },
-                  "url": {
-                    "docs": "Endpoint to receive webhook.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "CreateWebhookRequest",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "successful operation",
               "type": "root.WebhookItemResponse",
@@ -4052,22 +3833,6 @@ exports[`open api parser deel simple 1`] = `
               "type": "root.WebhookListResponse",
             },
           },
-        },
-      },
-      "types": {
-        "CreateWebhookRequestStatus": {
-          "docs": "Status of webhook.",
-          "enum": [
-            "enabled",
-            "disabled",
-          ],
-        },
-        "PatchWebhookRequestStatus": {
-          "docs": "Status of webhook.",
-          "enum": [
-            "enabled",
-            "disabled",
-          ],
         },
       },
     },
@@ -4618,6 +4383,12 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
+      "ContractInvitationToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractInvitationToCreate",
+        },
+      },
       "ContractList": "list<BasicContract>",
       "ContractListContainer": {
         "docs": undefined,
@@ -4720,6 +4491,12 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
+      "ContractSignatureToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractSignatureToCreate",
+        },
+      },
       "ContractStatusEnum": {
         "docs": "Status of a contract in Deel workflow",
         "enum": [
@@ -4783,6 +4560,12 @@ exports[`open api parser deel simple 1`] = `
           "data": "ContractTerminationResult",
         },
       },
+      "ContractToAmendDetailsContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractDetailsToAmend",
+        },
+      },
       "ContractToCreate": {
         "discriminated": false,
         "docs": undefined,
@@ -4792,6 +4575,36 @@ exports[`open api parser deel simple 1`] = `
           "ContractToCreatePaygMilestones",
           "ContractToCreateOngoingTimeBased",
         ],
+      },
+      "ContractToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractToCreate",
+        },
+      },
+      "ContractToCreateContainerOngoingTimeBased": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractToCreateOngoingTimeBased",
+        },
+      },
+      "ContractToCreateContainerPayAsYouGoTimeBased": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractToCreatePayAsYouGoTimeBased",
+        },
+      },
+      "ContractToCreateContainerPaygMilestones": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractToCreatePaygMilestones",
+        },
+      },
+      "ContractToCreateContainerPaygTasks": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractToCreatePaygTasks",
+        },
       },
       "ContractToCreateOngoingTimeBased": {
         "docs": undefined,
@@ -5004,6 +4817,12 @@ exports[`open api parser deel simple 1`] = `
           "terminate_now": "optional<boolean>",
         },
       },
+      "ContractToTerminateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractToTerminate",
+        },
+      },
       "ContractTypeEnum": {
         "docs": "Type of a contract",
         "enum": [
@@ -5139,6 +4958,46 @@ exports[`open api parser deel simple 1`] = `
           "VACATION",
           "SICK_LEAVE",
           "OTHER",
+        ],
+      },
+      "CreateWebhookRequest": {
+        "docs": undefined,
+        "properties": {
+          "api_version": {
+            "docs": "Deel API version. Currently Deel only has one version: v1.",
+            "type": "string",
+          },
+          "description": {
+            "docs": "Webhook subscription description.",
+            "type": "optional<string>",
+          },
+          "events": {
+            "docs": "The list of events to enable for this subscription.",
+            "type": "list<string>",
+          },
+          "name": {
+            "docs": "Webhook subscription name.",
+            "type": "optional<string>",
+          },
+          "signing_key": {
+            "docs": "The webhook's signing key, used to generate webhook signatures.",
+            "type": "optional<string>",
+          },
+          "status": {
+            "docs": "Status of webhook.",
+            "type": "CreateWebhookRequestStatus",
+          },
+          "url": {
+            "docs": "Endpoint to receive webhook.",
+            "type": "string",
+          },
+        },
+      },
+      "CreateWebhookRequestStatus": {
+        "docs": "Status of webhook.",
+        "enum": [
+          "enabled",
+          "disabled",
         ],
       },
       "Currency": {
@@ -5594,6 +5453,12 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
             "type": "optional<string>",
           },
+        },
+      },
+      "EorContractToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "EorContractToCreate",
         },
       },
       "EorContractToCreateEmployee": {
@@ -6177,6 +6042,12 @@ exports[`open api parser deel simple 1`] = `
           "FULL_AMOUNT",
         ],
       },
+      "EstimateFirstPaymentContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "EstimateFirstPayment",
+        },
+      },
       "ExchangeRates": {
         "docs": undefined,
         "properties": {
@@ -6557,10 +6428,34 @@ exports[`open api parser deel simple 1`] = `
           "team_id": "double",
         },
       },
+      "InputToCreateFileRef": {
+        "docs": undefined,
+        "properties": {
+          "data": "InputToCreateFileRefData",
+        },
+      },
+      "InputToCreateFileRefData": {
+        "docs": undefined,
+        "properties": {
+          "content_type": "FileRefTypeEnum",
+        },
+      },
+      "InputToCreatePgoTask": {
+        "docs": undefined,
+        "properties": {
+          "data": "PgoTaskToCreate",
+        },
+      },
       "InputToDeletePgoTask": {
         "docs": undefined,
         "properties": {
           "data": "PgoTaskToDelete",
+        },
+      },
+      "InputToPatchContractExternalId": {
+        "docs": undefined,
+        "properties": {
+          "data": "ContractExternalIdToPatch",
         },
       },
       "InputToShieldContract": {
@@ -6700,6 +6595,12 @@ exports[`open api parser deel simple 1`] = `
           "status": "InvoiceAdjustmentReviewToCreateStatus",
         },
       },
+      "InvoiceAdjustmentReviewToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "InvoiceAdjustmentReviewToCreate",
+        },
+      },
       "InvoiceAdjustmentReviewToCreateStatus": {
         "enum": [
           "approved",
@@ -6712,6 +6613,12 @@ exports[`open api parser deel simple 1`] = `
           "ids": "TimesheetIdItems",
           "reason": "optional<string>",
           "status": "InvoiceAdjustmentReviewsToCreateStatus",
+        },
+      },
+      "InvoiceAdjustmentReviewsToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "InvoiceAdjustmentReviewsToCreate",
         },
       },
       "InvoiceAdjustmentReviewsToCreateStatus": {
@@ -6791,19 +6698,23 @@ exports[`open api parser deel simple 1`] = `
           "type": "InvoiceAdjustmentTypeToCreateEnum",
         },
       },
-      "InvoiceAdjustmentToCreateWithFile": {
+      "InvoiceAdjustmentToCreateContainer": {
         "docs": undefined,
-        "extends": [
-          "InvoiceAdjustmentToCreate",
-          "FileObject",
-        ],
-        "properties": {},
+        "properties": {
+          "data": "InvoiceAdjustmentToCreate",
+        },
       },
       "InvoiceAdjustmentToUpdate": {
         "docs": "Details of invoice adjustment to update.",
         "properties": {
           "amount": "optional<double>",
           "description": "string",
+        },
+      },
+      "InvoiceAdjustmentToUpdateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "InvoiceAdjustmentToUpdate",
         },
       },
       "InvoiceAdjustmentTypeEnum": {
@@ -7105,6 +7016,12 @@ exports[`open api parser deel simple 1`] = `
           "status": "MilestoneReviewToCreateStatus",
         },
       },
+      "MilestoneReviewToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "MilestoneReviewToCreate",
+        },
+      },
       "MilestoneReviewToCreateStatus": {
         "enum": [
           "approved",
@@ -7132,6 +7049,12 @@ exports[`open api parser deel simple 1`] = `
           "status": "MilestoneReviewsToCreateStatus",
         },
       },
+      "MilestoneReviewsToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "MilestoneReviewsToCreate",
+        },
+      },
       "MilestoneReviewsToCreateStatus": {
         "enum": [
           "approved",
@@ -7139,13 +7062,11 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "MilestoneToCreate": "MilestoneProperties",
-      "MilestoneToCreateFormWithFile": {
+      "MilestoneToCreateContainer": {
         "docs": undefined,
-        "extends": [
-          "MilestoneProperties",
-          "FileObject",
-        ],
-        "properties": {},
+        "properties": {
+          "data": "MilestoneToCreate",
+        },
       },
       "MonthlyPayment": {
         "docs": "Monthly payment details for the user",
@@ -7242,6 +7163,12 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
+      "OffCyclePaymentToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "OffCyclePaymentToCreate",
+        },
+      },
       "OffCyclePaymentTypeEnum": "literal<"offcycle">",
       "OrganizationList": "list<BasicOrganization>",
       "OrganizationListContainer": {
@@ -7283,6 +7210,42 @@ exports[`open api parser deel simple 1`] = `
           "offset": "double",
           "total_rows": "double",
         },
+      },
+      "PatchWebhookRequest": {
+        "docs": undefined,
+        "properties": {
+          "description": {
+            "docs": "Webhook subscription description.",
+            "type": "optional<string>",
+          },
+          "events": {
+            "docs": "The list of events to enable for this subscription.",
+            "type": "list<string>",
+          },
+          "name": {
+            "docs": "Webhook subscription name.",
+            "type": "optional<string>",
+          },
+          "signing_key": {
+            "docs": "The webhook's signing key, used to generate webhook signatures.",
+            "type": "optional<string>",
+          },
+          "status": {
+            "docs": "Status of webhook.",
+            "type": "PatchWebhookRequestStatus",
+          },
+          "url": {
+            "docs": "Endpoint to receive webhook.",
+            "type": "string",
+          },
+        },
+      },
+      "PatchWebhookRequestStatus": {
+        "docs": "Status of webhook.",
+        "enum": [
+          "enabled",
+          "disabled",
+        ],
       },
       "Payment": {
         "docs": undefined,
@@ -7856,6 +7819,12 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
+      "PremiumToAddContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "PremiumToAdd",
+        },
+      },
       "ProRata": {
         "docs": "Details of the pro rata for the first payment",
         "properties": {
@@ -7907,6 +7876,18 @@ exports[`open api parser deel simple 1`] = `
       "PublicId": {
         "docs": "The public UUID of the object",
         "type": "optional<string>",
+      },
+      "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "PgoTaskReviewsByIdToCreate",
+        },
+      },
+      "RequestBodyToCreatePgoTaskReviewsReviewsContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "PgoTaskReviewsToCreate",
+        },
       },
       "ResponseEstimateFirstPayment": {
         "docs": undefined,
@@ -8061,6 +8042,12 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
+      "TimeoffToReviewContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "TimeoffReview",
+        },
+      },
       "TimeoffTypeList": "list<string>",
       "TimeoffTypeListContainer": {
         "docs": undefined,
@@ -8184,6 +8171,12 @@ exports[`open api parser deel simple 1`] = `
           "status": "TimesheetReviewToCreateStatus",
         },
       },
+      "TimesheetReviewToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "TimesheetReviewToCreate",
+        },
+      },
       "TimesheetReviewToCreateStatus": {
         "enum": [
           "approved",
@@ -8196,6 +8189,12 @@ exports[`open api parser deel simple 1`] = `
           "ids": "TimesheetIdItems",
           "reason": "optional<string>",
           "status": "TimesheetReviewsToCreateStatus",
+        },
+      },
+      "TimesheetReviewsToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "TimesheetReviewsToCreate",
         },
       },
       "TimesheetReviewsToCreateStatus": {
@@ -8268,6 +8267,12 @@ exports[`open api parser deel simple 1`] = `
       },
       "TimesheetStatusEnumList": "list<optional<TimesheetStatusEnum>>",
       "TimesheetToCreate": "TimesheetSharedProperties",
+      "TimesheetToCreateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "TimesheetToCreate",
+        },
+      },
       "TimesheetToCreateContainerWithFile": "TimesheetToCreateWithFile",
       "TimesheetToCreateWithFile": {
         "docs": undefined,
@@ -8282,6 +8287,12 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "description": "string",
           "quantity": "double",
+        },
+      },
+      "TimesheetToUpdateContainer": {
+        "docs": undefined,
+        "properties": {
+          "data": "TimesheetToUpdate",
         },
       },
       "TimesheetTypeEnum": "literal<"work">",

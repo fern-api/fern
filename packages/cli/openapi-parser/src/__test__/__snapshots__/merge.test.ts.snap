@@ -5680,464 +5680,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates an \`Employee\` object with the given values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [
-            {
-              "name": "X-Account-Token",
-              "value": {
-                "primitive": {
-                  "string": "x-account-token",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "model": {
-                "properties": {
-                  "avatar": {
-                    "primitive": {
-                      "string": "http://alturl.com/h2h8m",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "company": {
-                    "primitive": {
-                      "string": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "date_of_birth": {
-                    "primitive": {
-                      "datetime": "1990-11-10T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "display_full_name": {
-                    "primitive": {
-                      "string": "Cousin Greg Hirsch",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "employee_number": {
-                    "primitive": {
-                      "string": "2",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "first_name": {
-                    "primitive": {
-                      "string": "Greg",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "hire_date": {
-                    "primitive": {
-                      "datetime": "2020-10-10T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "home_location": {
-                    "primitive": {
-                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "last_name": {
-                    "primitive": {
-                      "string": "Hirsch",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "manager": {
-                    "primitive": {
-                      "string": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "mobile_phone_number": {
-                    "primitive": {
-                      "string": "+1234567890",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "pay_group": {
-                    "primitive": {
-                      "string": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "personal_email": {
-                    "primitive": {
-                      "string": "greg@gmail.com",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "ssn": {
-                    "primitive": {
-                      "string": "1234567890",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "start_date": {
-                    "primitive": {
-                      "datetime": "2020-10-11T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "team": {
-                    "primitive": {
-                      "string": "249c9faa-3045-4a31-953b-8f22d3613301",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "termination_date": {
-                    "primitive": {
-                      "datetime": "2021-10-12T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "username": {
-                    "primitive": {
-                      "string": "cousingreg",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "work_email": {
-                    "primitive": {
-                      "string": "greg@merge.dev",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "work_location": {
-                    "primitive": {
-                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "errors": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "custom_fields is a required field on model.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "MISSING_REQUIRED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Missing Required Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "logs": {
-                "array": [
-                  {
-                    "properties": {
-                      "dashboard_view": {
-                        "primitive": {
-                          "string": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_id": {
-                        "primitive": {
-                          "string": "99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_summary": {
-                        "properties": {
-                          "method": {
-                            "primitive": {
-                              "string": "POST",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status_code": {
-                            "primitive": {
-                              "int": 200,
-                              "type": "int",
-                            },
-                            "type": "primitive",
-                          },
-                          "url": {
-                            "primitive": {
-                              "string": "https://harvest.greenhouse.io/v1/candidates/",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "model": {
-                "properties": {
-                  "avatar": {
-                    "primitive": {
-                      "string": "http://alturl.com/h2h8m",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "company": {
-                    "primitive": {
-                      "string": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "date_of_birth": {
-                    "primitive": {
-                      "datetime": "1990-11-10T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "display_full_name": {
-                    "primitive": {
-                      "string": "Cousin Greg Hirsch",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "employee_number": {
-                    "primitive": {
-                      "string": "2",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "first_name": {
-                    "primitive": {
-                      "string": "Greg",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "hire_date": {
-                    "primitive": {
-                      "datetime": "2020-10-10T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "home_location": {
-                    "primitive": {
-                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "id": {
-                    "primitive": {
-                      "string": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "last_name": {
-                    "primitive": {
-                      "string": "Hirsch",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "manager": {
-                    "primitive": {
-                      "string": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "mobile_phone_number": {
-                    "primitive": {
-                      "string": "+1234567890",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "modified_at": {
-                    "primitive": {
-                      "datetime": "2021-10-16T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "pay_group": {
-                    "primitive": {
-                      "string": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "personal_email": {
-                    "primitive": {
-                      "string": "greg@gmail.com",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "remote_created_at": {
-                    "primitive": {
-                      "datetime": "2020-10-11T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "remote_id": {
-                    "primitive": {
-                      "string": "19202938",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "ssn": {
-                    "primitive": {
-                      "string": "1234567890",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "start_date": {
-                    "primitive": {
-                      "datetime": "2020-10-11T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "team": {
-                    "primitive": {
-                      "string": "249c9faa-3045-4a31-953b-8f22d3613301",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "termination_date": {
-                    "primitive": {
-                      "datetime": "2021-10-12T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "username": {
-                    "primitive": {
-                      "string": "cousingreg",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "work_email": {
-                    "primitive": {
-                      "string": "greg@merge.dev",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "work_location": {
-                    "primitive": {
-                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "warnings": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "An unrecognized field, age, was passed in with request data.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "UNRECOGNIZED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Unrecognized Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmployeesCreateRequest",
       "headers": [
         {
@@ -6197,17 +5740,26 @@ exports[`open api parser merge parse open api 1`] = `
         },
       ],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "EmployeesCreateRequestBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "EmployeeEndpointRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "EmployeeEndpointRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "model",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "generatedName": "EmployeesCreateRequestModel",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "EmployeeRequest",
+                "type": "reference",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -8366,17 +7918,65 @@ exports[`open api parser merge parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "EmployeesIgnoreCreateRequestBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "IgnoreCommonModelRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "IgnoreCommonModelRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "reason",
+            "schema": {
+              "json": {
+                "oneOf": {
+                  "description": undefined,
+                  "generatedName": "EmployeesIgnoreCreateRequestReason",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schemas": [
+                    {
+                      "description": undefined,
+                      "generatedName": "EmployeesIgnoreCreateRequestReasonZero",
+                      "groupName": undefined,
+                      "nameOverride": undefined,
+                      "schema": "ReasonEnum",
+                      "type": "reference",
+                    },
+                    {
+                      "description": undefined,
+                      "groupName": undefined,
+                      "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "undisciminated",
+                },
+                "type": "oneOf",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "message",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": undefined,
@@ -9521,44 +9121,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Create a remote key.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Remote Deployment Key 1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "key": {
-                "primitive": {
-                  "string": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "Remote Deployment Key 1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -9568,17 +9131,28 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "GenerateKeyCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "GenerateRemoteKeyRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "GenerateRemoteKeyRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "name",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -10671,17 +10245,164 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "LinkTokenCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "EndUserDetailsRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "EndUserDetailsRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "end_user_email_address",
+            "schema": {
+              "json": {
+                "description": "Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.",
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "end_user_organization_name",
+            "schema": {
+              "json": {
+                "description": "Your end user's organization.",
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "end_user_origin_id",
+            "schema": {
+              "json": {
+                "description": "This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.",
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "categories",
+            "schema": {
+              "json": {
+                "description": "The integration categories to show in Merge Link.",
+                "groupName": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "LinkTokenCreateRequestCategoriesItem",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "CategoriesEnum",
+                  "type": "reference",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "integration",
+            "schema": {
+              "json": {
+                "description": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": 1,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "link_expiry_mins",
+            "schema": {
+              "json": {
+                "description": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
+                "groupName": undefined,
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "should_create_magic_link_url",
+            "schema": {
+              "json": {
+                "description": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
+                  "groupName": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "common_models",
+            "schema": {
+              "json": {
+                "description": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
+                  "groupName": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "generatedName": "LinkTokenCreateRequestCommonModelsItem",
+                    "groupName": undefined,
+                    "nameOverride": undefined,
+                    "schema": "CommonModelScopesBodyRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -11786,17 +11507,177 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "PassthroughCreateRequestBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "DataPassthroughRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "DataPassthroughRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "method",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "generatedName": "PassthroughCreateRequestMethod",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "MethodEnum",
+                "type": "reference",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "path",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "base_url_override",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": 1,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "data",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": 1,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "multipart_form_data",
+            "schema": {
+              "json": {
+                "description": "Pass an array of \`MultipartFormField\` objects in here instead of using the \`data\` param if \`request_format\` is set to \`MULTIPART\`.",
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": "Pass an array of \`MultipartFormField\` objects in here instead of using the \`data\` param if \`request_format\` is set to \`MULTIPART\`.",
+                  "groupName": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "generatedName": "PassthroughCreateRequestMultipartFormDataItem",
+                    "groupName": undefined,
+                    "nameOverride": undefined,
+                    "schema": "MultipartFormFieldRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "headers",
+            "schema": {
+              "json": {
+                "description": "The headers to use for the request (Merge will handle the account's authorization headers). \`Content-Type\` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": "The headers to use for the request (Merge will handle the account's authorization headers). \`Content-Type\` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
+                  "groupName": undefined,
+                  "key": {
+                    "description": undefined,
+                    "groupName": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": "map",
+                  "value": {
+                    "type": "unknown",
+                  },
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "request_format",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "generatedName": "PassthroughCreateRequestRequestFormat",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
+                  "schema": "RequestFormatEnum",
+                  "type": "reference",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "normalize_response",
+            "schema": {
+              "json": {
+                "description": "Optional. If true, the response will always be an object of the form \`{"type": T, "value": ...}\` where \`T\` will be one of \`string, boolean, number, null, array, object\`.",
+                "groupName": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -13017,44 +12898,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Exchange remote keys.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Remote Deployment Key 1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "key": {
-                "primitive": {
-                  "string": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "Remote Deployment Key 1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RegenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -13064,17 +12908,28 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "RegenerateKeyCreateRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "RemoteKeyForRegenerationRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "RemoteKeyForRegenerationRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "name",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -13196,25 +13051,7 @@ exports[`open api parser merge parse open api 1`] = `
           ],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "sync_configurations": {
-                "array": [
-                  {
-                    "properties": {
-                      "linked_account_conditions": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "array": [],
             "type": "array",
@@ -13244,19 +13081,7 @@ exports[`open api parser merge parse open api 1`] = `
       "path": "/selective-sync/configurations",
       "pathParameters": [],
       "queryParameters": [],
-      "request": {
-        "contentType": undefined,
-        "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "SelectiveSyncConfigurationsUpdateRequestBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "LinkedAccountSelectiveSyncConfigurationListRequest",
-          "type": "reference",
-        },
-        "type": "json",
-      },
+      "request": undefined,
       "requestNameOverride": undefined,
       "response": {
         "description": "",
@@ -14923,261 +14748,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`TimeOff\` object with the given values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [
-            {
-              "name": "X-Account-Token",
-              "value": {
-                "primitive": {
-                  "string": "x-account-token",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "model": {
-                "properties": {
-                  "amount": {
-                    "primitive": {
-                      "double": 3,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "approver": {
-                    "primitive": {
-                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "employee": {
-                    "primitive": {
-                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "employee_note": {
-                    "primitive": {
-                      "string": "Moving into the new apartment Kendall Roy gave me!",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "end_time": {
-                    "primitive": {
-                      "datetime": "2020-11-17T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "start_time": {
-                    "primitive": {
-                      "datetime": "2020-11-10T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "errors": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "custom_fields is a required field on model.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "MISSING_REQUIRED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Missing Required Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "logs": {
-                "array": [
-                  {
-                    "properties": {
-                      "dashboard_view": {
-                        "primitive": {
-                          "string": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_id": {
-                        "primitive": {
-                          "string": "99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_summary": {
-                        "properties": {
-                          "method": {
-                            "primitive": {
-                              "string": "POST",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status_code": {
-                            "primitive": {
-                              "int": 200,
-                              "type": "int",
-                            },
-                            "type": "primitive",
-                          },
-                          "url": {
-                            "primitive": {
-                              "string": "https://harvest.greenhouse.io/v1/candidates/",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "model": {
-                "properties": {
-                  "amount": {
-                    "primitive": {
-                      "double": 3,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "approver": {
-                    "primitive": {
-                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "employee": {
-                    "primitive": {
-                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "employee_note": {
-                    "primitive": {
-                      "string": "Moving into the new apartment Kendall Roy gave me!",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "end_time": {
-                    "primitive": {
-                      "datetime": "2020-11-17T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "id": {
-                    "primitive": {
-                      "string": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "modified_at": {
-                    "primitive": {
-                      "datetime": "2021-10-16T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "remote_id": {
-                    "primitive": {
-                      "string": "19202938",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "start_time": {
-                    "primitive": {
-                      "datetime": "2020-11-10T00:00:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-              "warnings": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "An unrecognized field, age, was passed in with request data.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "UNRECOGNIZED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Unrecognized Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimeOffCreateRequest",
       "headers": [
         {
@@ -15237,17 +14808,26 @@ exports[`open api parser merge parse open api 1`] = `
         },
       ],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "TimeOffCreateRequestBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "TimeOffEndpointRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "TimeOffEndpointRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "model",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "generatedName": "TimeOffCreateRequestModel",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "TimeOffRequest",
+                "type": "reference",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -16477,17 +16057,60 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "WebhookReceiversCreateRequestBody",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "WebhookReceiverRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": "WebhookReceiverRequest",
+        "properties": [
+          {
+            "description": undefined,
+            "key": "event",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "is_active",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "key",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "groupName": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -16525,8 +16148,10 @@ exports[`open api parser merge parse open api 1`] = `
     "PaginatedEmployeePayrollRunList",
     "EmployeePayrollRun",
     "PaginatedEmployeeList",
+    "EmployeeRequest",
     "EmployeeResponse",
     "Employee",
+    "ReasonEnum",
     "MetaResponse",
     "PaginatedEmploymentList",
     "Employment",
@@ -16535,10 +16160,15 @@ exports[`open api parser merge parse open api 1`] = `
     "Group",
     "PaginatedIssueList",
     "Issue",
+    "CategoriesEnum",
+    "CommonModelScopesBodyRequest",
     "LinkToken",
     "PaginatedAccountDetailsAndActionsList",
     "PaginatedLocationList",
     "Location",
+    "MethodEnum",
+    "MultipartFormFieldRequest",
+    "RequestFormatEnum",
     "RemoteResponse",
     "PaginatedPayGroupList",
     "PayGroup",
@@ -16551,6 +16181,7 @@ exports[`open api parser merge parse open api 1`] = `
     "PaginatedTeamList",
     "Team",
     "PaginatedTimeOffList",
+    "TimeOffRequest",
     "TimeOffResponse",
     "PaginatedTimeOffBalanceList",
     "TimeOffBalance",
@@ -16559,7 +16190,6 @@ exports[`open api parser merge parse open api 1`] = `
     "CategoryEnum",
     "AccountDetailsAndActionsStatusEnum",
     "AccountDetailsAndActionsIntegration",
-    "CategoriesEnum",
     "ModelOperation",
     "AccountIntegration",
     "AccountTypeEnum",
@@ -16567,16 +16197,12 @@ exports[`open api parser merge parse open api 1`] = `
     "EnabledActionsEnum",
     "ConditionTypeEnum",
     "OperatorSchema",
-    "MethodEnum",
-    "MultipartFormFieldRequest",
-    "RequestFormatEnum",
     "DebugModelLogSummary",
     "EarningTypeEnum",
     "GenderEnum",
     "EthnicityEnum",
     "MaritalStatusEnum",
     "EmploymentStatusEnum",
-    "EmployeeRequest",
     "Earning",
     "Deduction",
     "Tax",
@@ -16588,10 +16214,8 @@ exports[`open api parser merge parse open api 1`] = `
     "PayCurrencyEnum",
     "FlsaStatusEnum",
     "EmploymentTypeEnum",
-    "CommonModelScopesBodyRequest",
     "ValidationProblemSource",
     "GroupTypeEnum",
-    "ReasonEnum",
     "IssueStatusEnum",
     "LinkedAccountCondition",
     "LinkedAccountSelectiveSyncConfigurationRequest",
@@ -16611,7 +16235,6 @@ exports[`open api parser merge parse open api 1`] = `
     "UnitsEnum",
     "RequestTypeEnum",
     "PolicyTypeEnum",
-    "TimeOffRequest",
   ],
   "schemas": {
     "AccountDetails": {

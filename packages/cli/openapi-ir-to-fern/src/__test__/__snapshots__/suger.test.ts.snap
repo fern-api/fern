@@ -18,26 +18,19 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
-            "method": "POST",
-            "path": "/public/apiClient/accessToken",
-            "request": {
-              "body": {
-                "properties": {
-                  "id": {
-                    "docs": "The ID of the API Client.",
-                    "type": "string",
-                  },
-                  "organizationID": "string",
-                  "secret": {
-                    "docs": "The secret of the API Client.",
-                    "type": "string",
-                  },
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
                 },
               },
-              "headers": undefined,
-              "name": "SharedGetApiClientAccessTokenParams",
-              "query-parameters": undefined,
-            },
+            ],
+            "method": "POST",
+            "path": "/public/apiClient/accessToken",
             "response": {
               "docs": "OK",
               "type": "root.SharedApiClientAccessToken",
@@ -166,7 +159,7 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "org-id",
                 },
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -196,19 +189,6 @@ exports[`open api parser suger simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "description": "optional<string>",
-                  "id": "optional<string>",
-                  "name": "optional<string>",
-                  "organizationID": "optional<string>",
-                },
-              },
-              "headers": undefined,
-              "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "OK",
               "type": "root.SharedIdentityBuyer",
@@ -233,6 +213,20 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
@@ -244,21 +238,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "creditAmountIncrement": {
-                    "docs": "The amount to be added to the credit amount.",
-                    "type": "double",
-                  },
-                  "entitlementID": "string",
-                  "organizationID": "string",
-                },
-              },
-              "headers": undefined,
-              "name": "SharedAddEntitlementCreditParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -855,7 +834,7 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "org-id",
                 },
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -929,18 +908,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "id": "optional<string>",
-                  "name": "optional<string>",
-                  "organizationID": "optional<string>",
-                },
-              },
-              "headers": undefined,
-              "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -1187,6 +1154,23 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "CREATED",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/integration",
             "path-parameters": {
@@ -1194,20 +1178,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "createdBy": "optional<string>",
-                  "info": "root.SharedIntegrationInfo",
-                  "organizationID": "string",
-                  "partner": "SharedCreateIntegrationParamsPartner",
-                  "service": "literal<"MARKETPLACE">",
-                },
-              },
-              "headers": undefined,
-              "name": "SharedCreateIntegrationParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -1337,6 +1307,25 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                  "service": "MARKETPLACE",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "partner": "AWS",
+                    "service": "MARKETPLACE",
+                    "status": "CREATED",
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -1352,27 +1341,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Partner Service",
                 "type": "UpdateIntegrationRequestService",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "info": "root.SharedIntegrationInfo",
-                  "organizationID": "string",
-                  "partner": {
-                    "docs": undefined,
-                    "name": "sharedUpdateIntegrationParamsPartner",
-                    "type": "SharedUpdateIntegrationParamsPartner",
-                  },
-                  "service": {
-                    "docs": undefined,
-                    "name": "sharedUpdateIntegrationParamsService",
-                    "type": "literal<"MARKETPLACE">",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "SharedUpdateIntegrationParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -1434,20 +1402,6 @@ exports[`open api parser suger simple 1`] = `
           "enum": [
             "MARKETPLACE",
             "CRM",
-          ],
-        },
-        "SharedCreateIntegrationParamsPartner": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
-          ],
-        },
-        "SharedUpdateIntegrationParamsPartner": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
           ],
         },
         "UpdateIntegrationRequestPartner": {
@@ -2058,6 +2012,20 @@ exports[`open api parser suger simple 1`] = `
               "root.ConflictError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
@@ -2069,26 +2037,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "entitlementID": "string",
-                  "id": {
-                    "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
-                    "type": "optional<string>",
-                  },
-                  "metaInfo": {
-                    "docs": "read-only, don't set it when reporting the usage record group.",
-                    "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
-                  },
-                  "organizationID": "string",
-                  "records": "map<string, double>",
-                },
-              },
-              "headers": undefined,
-              "name": "SharedCreateUsageRecordGroupParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -2146,213 +2094,7 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "org-id",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "info": {
-                    "azureOriginalPlan": {
-                      "pricing": {
-                        "customMeters": {
-                          "priceInputOption": "perMarket",
-                        },
-                        "recurrentPrice": {
-                          "priceInputOption": "perMarket",
-                          "prices": [
-                            {
-                              "billingTerm": {
-                                "type": "day",
-                              },
-                              "paymentOption": {
-                                "type": "day",
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      "validations": [
-                        {
-                          "code": "businessValidationError",
-                          "level": "informational",
-                        },
-                      ],
-                    },
-                    "azurePrivateOffer": {
-                      "beneficiaries": [
-                        {
-                          "beneficiaryRecipients": [
-                            {
-                              "recipientType": "cspCustomer",
-                            },
-                          ],
-                        },
-                      ],
-                      "pricing": [
-                        {
-                          "discountType": "percentage",
-                          "originalPlan": {
-                            "pricing": {
-                              "customMeters": {
-                                "priceInputOption": "perMarket",
-                              },
-                              "recurrentPrice": {
-                                "priceInputOption": "perMarket",
-                                "prices": [
-                                  {
-                                    "billingTerm": {
-                                      "type": "day",
-                                    },
-                                    "paymentOption": {
-                                      "type": "day",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "validations": [
-                              {
-                                "code": "businessValidationError",
-                                "level": "informational",
-                              },
-                            ],
-                          },
-                          "planType": "FLAT_RATE",
-                          "privateOfferPlan": {
-                            "pricing": {
-                              "customMeters": {
-                                "priceInputOption": "perMarket",
-                              },
-                              "recurrentPrice": {
-                                "priceInputOption": "perMarket",
-                                "prices": [
-                                  {
-                                    "billingTerm": {
-                                      "type": "day",
-                                    },
-                                    "paymentOption": {
-                                      "type": "day",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "validations": [
-                              {
-                                "code": "businessValidationError",
-                                "level": "informational",
-                              },
-                            ],
-                          },
-                        },
-                      ],
-                      "privateOfferType": "customerPromotion",
-                      "state": "draft",
-                      "subState": "pendingAcceptance",
-                      "validations": [
-                        {
-                          "code": "businessValidationError",
-                          "level": "informational",
-                        },
-                      ],
-                    },
-                    "azureProductVariant": {
-                      "featureAvailabilities": [
-                        {
-                          "customMeters": [
-                            {
-                              "includedBaseQuantities": [
-                                {
-                                  "recurringUnit": "Monthly",
-                                },
-                              ],
-                            },
-                          ],
-                          "marketStates": [
-                            {
-                              "state": "Disabled",
-                            },
-                          ],
-                          "priceSchedules": [
-                            {
-                              "schedules": [
-                                {
-                                  "priceCadence": {
-                                    "type": "Month",
-                                  },
-                                  "pricingModel": "Flat",
-                                  "pricingUnits": [
-                                    {
-                                      "name": "sharedcore",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                          "trial": {
-                            "durationType": "Minute",
-                            "type": "NoTrial",
-                          },
-                          "visibility": "Public",
-                        },
-                      ],
-                      "resourceType": "AzureSkuVariant",
-                      "state": "InActive",
-                    },
-                    "commits": [
-                      {
-                        "timeUnit": "DAY",
-                        "type": "FLAT_RATE",
-                      },
-                    ],
-                    "dimensions": [
-                      {
-                        "includedBaseQuantities": [
-                          {
-                            "recurringUnit": "Monthly",
-                          },
-                        ],
-                        "valueType": "VALUE_TYPE_UNSPECIFIED",
-                      },
-                    ],
-                    "eulaType": "",
-                    "gcpMetrics": [
-                      {
-                        "valueType": "VALUE_TYPE_UNSPECIFIED",
-                      },
-                    ],
-                    "gcpPlans": [
-                      {
-                        "priceInfo": {
-                          "priceModel": "FREE",
-                          "subscriptionPlans": [
-                            {
-                              "period": "ONE_YEAR",
-                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
-                            },
-                          ],
-                          "usageFees": [
-                            {
-                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
-                            },
-                          ],
-                        },
-                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
-                      },
-                    ],
-                    "visibility": "PRIVATE",
-                  },
-                  "metaInfo": {
-                    "notifications": [
-                      {
-                        "action": "ACCEPT",
-                        "entityType": "ORGANIZATION",
-                        "eventStatus": "",
-                      },
-                    ],
-                  },
-                  "offerType": "DEFAULT",
-                  "partner": "AWS",
-                  "service": "MARKETPLACE",
-                  "status": "ACCEPTED",
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -2572,9 +2314,6 @@ exports[`open api parser suger simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "body": "root.SharedWorkloadOffer",
-            },
             "response": {
               "docs": "OK",
               "type": "root.SharedWorkloadOffer",
@@ -2595,213 +2334,7 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "org-id",
                 },
                 "query-parameters": undefined,
-                "request": {
-                  "info": {
-                    "azureOriginalPlan": {
-                      "pricing": {
-                        "customMeters": {
-                          "priceInputOption": "perMarket",
-                        },
-                        "recurrentPrice": {
-                          "priceInputOption": "perMarket",
-                          "prices": [
-                            {
-                              "billingTerm": {
-                                "type": "day",
-                              },
-                              "paymentOption": {
-                                "type": "day",
-                              },
-                            },
-                          ],
-                        },
-                      },
-                      "validations": [
-                        {
-                          "code": "businessValidationError",
-                          "level": "informational",
-                        },
-                      ],
-                    },
-                    "azurePrivateOffer": {
-                      "beneficiaries": [
-                        {
-                          "beneficiaryRecipients": [
-                            {
-                              "recipientType": "cspCustomer",
-                            },
-                          ],
-                        },
-                      ],
-                      "pricing": [
-                        {
-                          "discountType": "percentage",
-                          "originalPlan": {
-                            "pricing": {
-                              "customMeters": {
-                                "priceInputOption": "perMarket",
-                              },
-                              "recurrentPrice": {
-                                "priceInputOption": "perMarket",
-                                "prices": [
-                                  {
-                                    "billingTerm": {
-                                      "type": "day",
-                                    },
-                                    "paymentOption": {
-                                      "type": "day",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "validations": [
-                              {
-                                "code": "businessValidationError",
-                                "level": "informational",
-                              },
-                            ],
-                          },
-                          "planType": "FLAT_RATE",
-                          "privateOfferPlan": {
-                            "pricing": {
-                              "customMeters": {
-                                "priceInputOption": "perMarket",
-                              },
-                              "recurrentPrice": {
-                                "priceInputOption": "perMarket",
-                                "prices": [
-                                  {
-                                    "billingTerm": {
-                                      "type": "day",
-                                    },
-                                    "paymentOption": {
-                                      "type": "day",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "validations": [
-                              {
-                                "code": "businessValidationError",
-                                "level": "informational",
-                              },
-                            ],
-                          },
-                        },
-                      ],
-                      "privateOfferType": "customerPromotion",
-                      "state": "draft",
-                      "subState": "pendingAcceptance",
-                      "validations": [
-                        {
-                          "code": "businessValidationError",
-                          "level": "informational",
-                        },
-                      ],
-                    },
-                    "azureProductVariant": {
-                      "featureAvailabilities": [
-                        {
-                          "customMeters": [
-                            {
-                              "includedBaseQuantities": [
-                                {
-                                  "recurringUnit": "Monthly",
-                                },
-                              ],
-                            },
-                          ],
-                          "marketStates": [
-                            {
-                              "state": "Disabled",
-                            },
-                          ],
-                          "priceSchedules": [
-                            {
-                              "schedules": [
-                                {
-                                  "priceCadence": {
-                                    "type": "Month",
-                                  },
-                                  "pricingModel": "Flat",
-                                  "pricingUnits": [
-                                    {
-                                      "name": "sharedcore",
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                          "trial": {
-                            "durationType": "Minute",
-                            "type": "NoTrial",
-                          },
-                          "visibility": "Public",
-                        },
-                      ],
-                      "resourceType": "AzureSkuVariant",
-                      "state": "InActive",
-                    },
-                    "commits": [
-                      {
-                        "timeUnit": "DAY",
-                        "type": "FLAT_RATE",
-                      },
-                    ],
-                    "dimensions": [
-                      {
-                        "includedBaseQuantities": [
-                          {
-                            "recurringUnit": "Monthly",
-                          },
-                        ],
-                        "valueType": "VALUE_TYPE_UNSPECIFIED",
-                      },
-                    ],
-                    "eulaType": "",
-                    "gcpMetrics": [
-                      {
-                        "valueType": "VALUE_TYPE_UNSPECIFIED",
-                      },
-                    ],
-                    "gcpPlans": [
-                      {
-                        "priceInfo": {
-                          "priceModel": "FREE",
-                          "subscriptionPlans": [
-                            {
-                              "period": "ONE_YEAR",
-                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
-                            },
-                          ],
-                          "usageFees": [
-                            {
-                              "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
-                            },
-                          ],
-                        },
-                        "purchaseMode": "PURCHASE_MODE_PUBLIC",
-                      },
-                    ],
-                    "visibility": "PRIVATE",
-                  },
-                  "metaInfo": {
-                    "notifications": [
-                      {
-                        "action": "ACCEPT",
-                        "entityType": "ORGANIZATION",
-                        "eventStatus": "",
-                      },
-                    ],
-                  },
-                  "offerType": "DEFAULT",
-                  "partner": "AWS",
-                  "service": "MARKETPLACE",
-                  "status": "ACCEPTED",
-                },
+                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -3020,9 +2553,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": "root.SharedWorkloadOffer",
             },
             "response": {
               "docs": "OK",
@@ -4758,6 +4288,167 @@ exports[`open api parser suger simple 1`] = `
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "info": {
+                      "awsSnsSubscriptions": [
+                        {
+                          "Status": "UNKNOWN",
+                        },
+                      ],
+                      "azureProduct": {
+                        "listings": [
+                          {
+                            "assets": [
+                              {
+                                "resourceType": "ListingAsset",
+                                "state": "PendingUpload",
+                              },
+                            ],
+                            "listingContacts": [
+                              {
+                                "type": "CustomerSupport",
+                              },
+                            ],
+                            "resourceType": "AzureListing",
+                          },
+                        ],
+                        "packageConfigurations": [
+                          {
+                            "resourceType": "AzureSoftwareAsAServicePackageConfiguration",
+                          },
+                        ],
+                        "setup": {
+                          "callToAction": "free",
+                          "resourceType": "AzureProductSetup",
+                          "sellingOption": "ListingOnly",
+                        },
+                        "submissions": [
+                          {
+                            "resourceType": "Submission",
+                            "state": "Inprogress",
+                            "subState": "InDraft",
+                          },
+                        ],
+                        "variants": [
+                          {
+                            "featureAvailabilities": [
+                              {
+                                "customMeters": [
+                                  {
+                                    "includedBaseQuantities": [
+                                      {
+                                        "recurringUnit": "Monthly",
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "marketStates": [
+                                  {
+                                    "state": "Disabled",
+                                  },
+                                ],
+                                "priceSchedules": [
+                                  {
+                                    "schedules": [
+                                      {
+                                        "priceCadence": {
+                                          "type": "Month",
+                                        },
+                                        "pricingModel": "Flat",
+                                        "pricingUnits": [
+                                          {
+                                            "name": "sharedcore",
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                ],
+                                "trial": {
+                                  "durationType": "Minute",
+                                  "type": "NoTrial",
+                                },
+                                "visibility": "Public",
+                              },
+                            ],
+                            "resourceType": "AzureSkuVariant",
+                            "state": "InActive",
+                          },
+                        ],
+                      },
+                      "commits": [
+                        {
+                          "timeUnit": "DAY",
+                          "type": "FLAT_RATE",
+                        },
+                      ],
+                      "dimensions": [
+                        {
+                          "includedBaseQuantities": [
+                            {
+                              "recurringUnit": "Monthly",
+                            },
+                          ],
+                          "valueType": "VALUE_TYPE_UNSPECIFIED",
+                        },
+                      ],
+                      "gcpProduct": {
+                        "listingSpec": {
+                          "listingType": "BillingIntegratedManagedService",
+                          "purchaseSpec": {
+                            "metrics": [
+                              {
+                                "valueType": "VALUE_TYPE_UNSPECIFIED",
+                              },
+                            ],
+                            "purchaseOptionSpecs": [
+                              {
+                                "priceInfo": {
+                                  "priceModel": "FREE",
+                                  "subscriptionPlans": [
+                                    {
+                                      "period": "ONE_YEAR",
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                    },
+                                  ],
+                                  "usageFees": [
+                                    {
+                                      "taxCategoryOverride": "TAX_CATEGORY_UNSPECIFIED",
+                                    },
+                                  ],
+                                },
+                                "purchaseMode": "PURCHASE_MODE_PUBLIC",
+                              },
+                            ],
+                          },
+                        },
+                        "marketplace": "marketplaces/google-cloud",
+                        "serviceConfig": {
+                          "metrics": [
+                            {
+                              "valueType": "VALUE_TYPE_UNSPECIFIED",
+                            },
+                          ],
+                        },
+                      },
+                    },
+                    "partner": "AWS",
+                    "productType": "UNKNOWN",
+                    "service": "MARKETPLACE",
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -4769,18 +4460,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Product ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "fulfillmentUrl": "string",
-                  "id": "string",
-                  "organizationID": "string",
-                },
-              },
-              "headers": undefined,
-              "name": "SharedUpdateProductParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -4815,6 +4494,21 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "reportType": "InvoicedAmount",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/revenueReport",
             "path-parameters": {
@@ -4822,37 +4516,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "buyerID": {
-                    "docs": "Optional, if available, return the report for the Buyer.",
-                    "type": "optional<string>",
-                  },
-                  "entitlementID": {
-                    "docs": "Optional, if available, return the report for the Entitlement.",
-                    "type": "optional<string>",
-                  },
-                  "organizationID": {
-                    "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
-                    "type": "string",
-                  },
-                  "partner": {
-                    "docs": "Required.",
-                    "type": "SharedGetRevenueReportParamsPartner",
-                  },
-                  "productID": {
-                    "docs": "Optional, if available, return the report for the Product.",
-                    "type": "optional<string>",
-                  },
-                  "reportType": "root.SharedRevenueReportType",
-                  "service": "literal<"MARKETPLACE">",
-                },
-              },
-              "headers": undefined,
-              "name": "SharedGetRevenueReportParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -4867,6 +4530,19 @@ exports[`open api parser suger simple 1`] = `
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
@@ -4874,17 +4550,6 @@ exports[`open api parser suger simple 1`] = `
                 "docs": "Organization ID",
                 "type": "string",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "entitlementID": "string",
-                  "organizationID": "string",
-                },
-              },
-              "headers": undefined,
-              "name": "SharedGetUsageReportParams",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -5060,14 +4725,6 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         "ListRevenueRecordsRequestPartner": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
-          ],
-        },
-        "SharedGetRevenueReportParamsPartner": {
-          "docs": "Required.",
           "enum": [
             "AWS",
             "AZURE",
@@ -6095,6 +5752,23 @@ This member is required.",
           "withheld": "optional<double>",
         },
       },
+      "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams": {
+        "docs": undefined,
+        "properties": {
+          "description": "optional<string>",
+          "id": "optional<string>",
+          "name": "optional<string>",
+          "organizationID": "optional<string>",
+        },
+      },
+      "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+          "name": "optional<string>",
+          "organizationID": "optional<string>",
+        },
+      },
       "MarketplacemeteringBatchMeterUsageOutput": {
         "docs": undefined,
         "properties": {
@@ -6177,6 +5851,17 @@ English. Any user-facing error message should be localized and sent
 in the google.rpc.Status.details field, or localized by the client.",
             "type": "optional<string>",
           },
+        },
+      },
+      "SharedAddEntitlementCreditParams": {
+        "docs": undefined,
+        "properties": {
+          "creditAmountIncrement": {
+            "docs": "The amount to be added to the credit amount.",
+            "type": "double",
+          },
+          "entitlementID": "string",
+          "organizationID": "string",
         },
       },
       "SharedAddEntitlementCreditResponse": {
@@ -6641,6 +6326,39 @@ in the google.rpc.Status.details field, or localized by the client.",
           "company": "optional<string>",
           "email": "optional<string>",
           "name": "optional<string>",
+        },
+      },
+      "SharedCreateIntegrationParams": {
+        "docs": undefined,
+        "properties": {
+          "createdBy": "optional<string>",
+          "info": "SharedIntegrationInfo",
+          "organizationID": "string",
+          "partner": "SharedCreateIntegrationParamsPartner",
+          "service": "literal<"MARKETPLACE">",
+        },
+      },
+      "SharedCreateIntegrationParamsPartner": {
+        "enum": [
+          "AWS",
+          "AZURE",
+          "GCP",
+        ],
+      },
+      "SharedCreateUsageRecordGroupParams": {
+        "docs": undefined,
+        "properties": {
+          "entitlementID": "string",
+          "id": {
+            "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
+            "type": "optional<string>",
+          },
+          "metaInfo": {
+            "docs": "read-only, don't set it when reporting the usage record group.",
+            "type": "optional<SharedMeteringUsageRecordGroupMetaInfo>",
+          },
+          "organizationID": "string",
+          "records": "map<string, double>",
         },
       },
       "SharedEntitlementInfo": {
@@ -7268,6 +6986,62 @@ This field is present only if the product has usage-based billing configured.",
           },
         },
       },
+      "SharedGetApiClientAccessTokenParams": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "docs": "The ID of the API Client.",
+            "type": "string",
+          },
+          "organizationID": "string",
+          "secret": {
+            "docs": "The secret of the API Client.",
+            "type": "string",
+          },
+        },
+      },
+      "SharedGetRevenueReportParams": {
+        "docs": undefined,
+        "properties": {
+          "buyerID": {
+            "docs": "Optional, if available, return the report for the Buyer.",
+            "type": "optional<string>",
+          },
+          "entitlementID": {
+            "docs": "Optional, if available, return the report for the Entitlement.",
+            "type": "optional<string>",
+          },
+          "organizationID": {
+            "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
+            "type": "string",
+          },
+          "partner": {
+            "docs": "Required.",
+            "type": "SharedGetRevenueReportParamsPartner",
+          },
+          "productID": {
+            "docs": "Optional, if available, return the report for the Product.",
+            "type": "optional<string>",
+          },
+          "reportType": "SharedRevenueReportType",
+          "service": "literal<"MARKETPLACE">",
+        },
+      },
+      "SharedGetRevenueReportParamsPartner": {
+        "docs": "Required.",
+        "enum": [
+          "AWS",
+          "AZURE",
+          "GCP",
+        ],
+      },
+      "SharedGetUsageReportParams": {
+        "docs": undefined,
+        "properties": {
+          "entitlementID": "string",
+          "organizationID": "string",
+        },
+      },
       "SharedHubspotCrmCredential": {
         "docs": undefined,
         "properties": {
@@ -7851,6 +7625,30 @@ This field is present only if the product has usage-based billing configured.",
           },
           "team": "optional<SlackOAuthV2ResponseTeam>",
           "tokenType": "optional<string>",
+        },
+      },
+      "SharedUpdateIntegrationParams": {
+        "docs": undefined,
+        "properties": {
+          "info": "SharedIntegrationInfo",
+          "organizationID": "string",
+          "partner": "SharedUpdateIntegrationParamsPartner",
+          "service": "literal<"MARKETPLACE">",
+        },
+      },
+      "SharedUpdateIntegrationParamsPartner": {
+        "enum": [
+          "AWS",
+          "AZURE",
+          "GCP",
+        ],
+      },
+      "SharedUpdateProductParams": {
+        "docs": undefined,
+        "properties": {
+          "fulfillmentUrl": "string",
+          "id": "string",
+          "organizationID": "string",
         },
       },
       "SharedUsageCount": {

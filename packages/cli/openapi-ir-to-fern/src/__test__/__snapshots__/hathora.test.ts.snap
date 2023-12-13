@@ -20,9 +20,6 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "method": "POST",
             "path": "/apps/v1/create",
-            "request": {
-              "body": "root.AppConfig",
-            },
             "response": {
               "docs": "",
               "type": "root.Application",
@@ -110,9 +107,6 @@ exports[`open api parser hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
-            "request": {
-              "body": "root.AppConfig",
-            },
             "response": {
               "docs": "Ok",
               "type": "root.Application",
@@ -163,16 +157,6 @@ exports[`open api parser hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "idToken": "string",
-                },
-              },
-              "headers": undefined,
-              "name": "LoginGoogleRequest",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Ok",
               "type": "LoginGoogleResponse",
@@ -191,16 +175,6 @@ exports[`open api parser hathora simple 1`] = `
                 "docs": undefined,
                 "type": "root.AppId",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "nickname": "string",
-                },
-              },
-              "headers": undefined,
-              "name": "LoginNicknameRequest",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Ok",
@@ -407,9 +381,6 @@ exports[`open api parser hathora simple 1`] = `
                 "docs": undefined,
                 "type": "root.BuildId",
               },
-            },
-            "request": {
-              "body": "root.DeploymentConfig",
             },
             "response": {
               "docs": "",
@@ -693,13 +664,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": {
-                "properties": {
-                  "initialConfig": "map<string, unknown>",
-                  "region": "root.Region",
-                  "visibility": "CreateLobbyRequestVisibility",
-                },
-              },
               "headers": {
                 "Authorization": {
                   "docs": undefined,
@@ -740,12 +704,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": {
-                "properties": {
-                  "initialConfig": "map<string, unknown>",
-                  "region": "root.Region",
-                },
-              },
               "headers": {
                 "Authorization": {
                   "docs": undefined,
@@ -786,12 +744,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": {
-                "properties": {
-                  "initialConfig": "map<string, unknown>",
-                  "region": "root.Region",
-                },
-              },
               "headers": {
                 "Authorization": {
                   "docs": undefined,
@@ -832,12 +784,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "body": {
-                "properties": {
-                  "initialConfig": "map<string, unknown>",
-                  "region": "root.Region",
-                },
-              },
               "headers": {
                 "Authorization": {
                   "docs": undefined,
@@ -942,30 +888,11 @@ exports[`open api parser hathora simple 1`] = `
                 "type": "root.RoomId",
               },
             },
-            "request": {
-              "body": {
-                "properties": {
-                  "state": "map<string, unknown>",
-                },
-              },
-              "headers": undefined,
-              "name": "SetLobbyStateRequest",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "Ok",
               "type": "root.Lobby",
             },
           },
-        },
-      },
-      "types": {
-        "CreateLobbyRequestVisibility": {
-          "enum": [
-            "public",
-            "private",
-            "local",
-          ],
         },
       },
     },
@@ -1306,16 +1233,6 @@ exports[`open api parser hathora simple 1`] = `
                 "docs": undefined,
                 "type": "root.AppId",
               },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "region": "root.Region",
-                },
-              },
-              "headers": undefined,
-              "name": "CreateRoomRequest",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "",

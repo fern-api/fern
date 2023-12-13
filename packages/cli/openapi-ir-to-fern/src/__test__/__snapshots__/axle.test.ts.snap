@@ -156,28 +156,6 @@ exports[`open api parser axle simple 1`] = `
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
             "method": "POST",
             "path": "/ignition",
-            "request": {
-              "body": {
-                "properties": {
-                  "metadata": {
-                    "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
-                    "type": "optional<map<string, unknown>>",
-                  },
-                  "redirectUri": {
-                    "docs": "The URI we should direct the user to after authenticating successfully.",
-                    "type": "optional<string>",
-                  },
-                  "user": "optional<root.User>",
-                  "webhookUri": {
-                    "docs": "The URI we should send updates about this session or the resulting account to.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "StartIgnitionRequest",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "",
               "type": "StartIgnitionResponse",
@@ -284,19 +262,6 @@ exports[`open api parser axle simple 1`] = `
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
             "method": "POST",
             "path": "/token/exchange",
-            "request": {
-              "body": {
-                "properties": {
-                  "authCode": {
-                    "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ExchangeTokenRequest",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "",
               "type": "ExchangeTokenResponse",

@@ -519,18 +519,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 "type": "root.resourceId",
               },
             },
-            "request": {
-              "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.JointOwnerInvitationFields",
-                ],
-                "properties": {},
-              },
-              "headers": undefined,
-              "name": "NewJointOwnerInvitation",
-              "query-parameters": undefined,
-            },
             "response": {
               "docs": "OK.",
               "type": "root.JointOwnerInvitation",
@@ -632,18 +620,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
                 "docs": "The unique identifier of this account resource. This is an opaque string.",
                 "type": "root.resourceId",
               },
-            },
-            "request": {
-              "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.OverdraftProtectionFields",
-                ],
-                "properties": {},
-              },
-              "headers": undefined,
-              "name": "OverdraftProtectionPatch",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK.",
@@ -834,18 +810,6 @@ Note: This operation requires an identity challenge if the financial institution
             "method": "POST",
             "path": "/transfers",
             "request": {
-              "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.TransferFields",
-                ],
-                "properties": {
-                  "schedule": {
-                    "docs": "When the transfer should occur and any recurrence.",
-                    "type": "root.TransferSchedule",
-                  },
-                },
-              },
               "headers": {
                 "Challenge": {
                   "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
@@ -853,8 +817,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "type": "optional<root.challengeToken>",
                 },
               },
-              "name": "NewTransfer",
-              "query-parameters": undefined,
+              "name": "TransfersCreateTransferRequest",
             },
             "response": {
               "docs": "Created.",
@@ -987,18 +950,6 @@ Note: This operation requires an identity challenge if the financial institution
               },
             },
             "request": {
-              "body": {
-                "extends": [
-                  "root.AbstractBody",
-                  "root.TransferFields",
-                ],
-                "properties": {
-                  "schedule": {
-                    "docs": "When the transfer should occur and any recurrence.",
-                    "type": "optional<root.TransferSchedule>",
-                  },
-                },
-              },
               "headers": {
                 "Challenge": {
                   "docs": "This operation may require a completed challenge. If the first attempt calling this operation fails with a 401 \`challengeRequired\` error, the client should complete the challenge flow as described in the Challenges API, then retry the operation with this \`Challenge\` request header using the \`challengeToken\` returned at the end of that flow. If this is passed but the value is invalid, the operation fails with a 401 status code and the \`invalidChallengeHeader\` problem type.",
@@ -1006,8 +957,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "type": "optional<root.challengeToken>",
                 },
               },
-              "name": "TransferPatch",
-              "query-parameters": undefined,
+              "name": "TransfersPatchTransferRequest",
             },
             "response": {
               "docs": "OK.",
@@ -1865,6 +1815,27 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
         },
       },
+      "NewJointOwnerInvitation": {
+        "docs": "A request to create an invitation to add a new joint owner to an account.",
+        "extends": [
+          "AbstractBody",
+          "JointOwnerInvitationFields",
+        ],
+        "properties": {},
+      },
+      "NewTransfer": {
+        "docs": "Representation used to create a new transfer.",
+        "extends": [
+          "AbstractBody",
+          "TransferFields",
+        ],
+        "properties": {
+          "schedule": {
+            "docs": "When the transfer should occur and any recurrence.",
+            "type": "TransferSchedule",
+          },
+        },
+      },
       "OverdraftAccountFields": {
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
@@ -1901,6 +1872,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "properties": {
           "accounts": "optional<unknown>",
         },
+      },
+      "OverdraftProtectionPatch": {
+        "docs": "Representation of request used to patch the overdraft protection settings consisting of a list of overdraft protection accounts linked to the account identified by the \`{accountId}\`.",
+        "extends": [
+          "AbstractBody",
+          "OverdraftProtectionFields",
+        ],
+        "properties": {},
       },
       "ProblemResponse": {
         "docs": "API problem or error response, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
@@ -2520,6 +2499,19 @@ The response may include dates prior to requested the start date, as that is use
           "debitsOn": {
             "docs": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
             "type": "optional<string>",
+          },
+        },
+      },
+      "TransferPatch": {
+        "docs": "Representation used to patch an existing transfer using the [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules.",
+        "extends": [
+          "AbstractBody",
+          "TransferFields",
+        ],
+        "properties": {
+          "schedule": {
+            "docs": "When the transfer should occur and any recurrence.",
+            "type": "optional<TransferSchedule>",
           },
         },
       },

@@ -214,17 +214,50 @@ exports[`open api parser hume parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
-        "contentType": undefined,
         "description": undefined,
-        "schema": {
-          "description": undefined,
-          "generatedName": "StartJobRequest",
-          "groupName": undefined,
-          "nameOverride": undefined,
-          "schema": "BaseRequest",
-          "type": "reference",
-        },
-        "type": "json",
+        "name": undefined,
+        "properties": [
+          {
+            "description": undefined,
+            "key": "json",
+            "schema": {
+              "json": {
+                "description": undefined,
+                "generatedName": "StartJobRequestJson",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": "BaseRequest",
+                "type": "reference",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "file",
+            "schema": {
+              "json": {
+                "description": "Local media files (see recommended input filetypes) to be processed.
+
+If you wish to supply more than 100 files, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+                "groupName": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "groupName": undefined,
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
       },
       "requestNameOverride": undefined,
       "response": {
@@ -430,6 +463,7 @@ exports[`open api parser hume parse open api 1`] = `
     "SortBy",
     "Direction",
     "Job_Request",
+    "BaseRequest",
     "JobId",
     "SourceResult",
     "Models",
