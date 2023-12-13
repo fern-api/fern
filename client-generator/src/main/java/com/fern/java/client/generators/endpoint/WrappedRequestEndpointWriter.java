@@ -128,7 +128,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     public CodeBlock getInitializeRequestCodeBlock(
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
-            HttpEndpoint httpEndpoint,
+            HttpEndpoint _unused,
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
