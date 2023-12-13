@@ -66,7 +66,8 @@ export function convertAsyncSyncOperation({
             value: LiteralSchemaValue.string(headerValue),
             groupName: undefined
         }),
-        description: undefined
+        description: undefined,
+        parameterNameOverride: undefined
     });
 
     return {

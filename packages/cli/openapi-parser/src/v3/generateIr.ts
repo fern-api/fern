@@ -118,7 +118,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return {
                     description: queryParameter.description,
                     name: queryParameter.name,
-                    schema: convertSchemaWithExampleToSchema(queryParameter.schema)
+                    schema: convertSchemaWithExampleToSchema(queryParameter.schema),
+                    parameterNameOverride: queryParameter.parameterNameOverride
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -133,7 +134,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return {
                     description: header.description,
                     name: header.name,
-                    schema: convertSchemaWithExampleToSchema(header.schema)
+                    schema: convertSchemaWithExampleToSchema(header.schema),
+                    parameterNameOverride: header.parameterNameOverride
                 };
             }),
             examples: endpointExample == null ? [] : [endpointExample]

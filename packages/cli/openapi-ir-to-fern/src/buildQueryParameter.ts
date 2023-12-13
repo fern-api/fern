@@ -25,7 +25,8 @@ export function buildQueryParameter({
     return {
         docs: queryParameter.description ?? undefined,
         type: getTypeFromTypeReference(typeReference.value),
-        "allow-multiple": typeReference.allowMultiple ? true : undefined
+        "allow-multiple": typeReference.allowMultiple ? true : undefined,
+        name: queryParameter.parameterNameOverride ?? undefined
     };
 }
 

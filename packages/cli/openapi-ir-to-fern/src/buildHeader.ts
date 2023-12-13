@@ -22,7 +22,7 @@ export function buildHeader({
     });
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
     return {
-        name: camelCase(headerWithoutXPrefix),
+        name: header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix),
         docs: header.description ?? undefined,
         type: getTypeFromTypeReference(typeReference)
     };
