@@ -7,7 +7,7 @@ import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
-export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
+export const APPLICATION_JSON_REGEX = /^application.*json$/;
 
 export const MULTIPART_CONTENT = "multipart/form-data";
 
@@ -34,24 +34,18 @@ interface ParsedApplicationJsonRequest {
 export function getApplicationJsonRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): ParsedApplicationJsonRequest | undefined {
-    const applicationJsonSchema = getSchemaForContentType({
-        contentType: APPLICATION_JSON_CONTENT,
-        media: requestBody.content
-    });
-    if (applicationJsonSchema != null) {
-        return {
-            schema: applicationJsonSchema
-        };
-    }
-
-    const applicationJsonUtf8Schema = getSchemaForContentType({
-        contentType: APPLICATION_JSON_UTF_8_CONTENT,
-        media: requestBody.content
-    });
-    if (applicationJsonUtf8Schema != null) {
-        return {
-            schema: applicationJsonUtf8Schema
-        };
+    for (const contentType of Object.keys(requestBody.content)) {
+        if (contentType.includes(APPLICATION_JSON_CONTENT) || APPLICATION_JSON_REGEX.test(contentType)) {
+            const schema = getSchemaForContentType({
+                contentType,
+                media: requestBody.content
+            });
+            if (schema != null) {
+                return {
+                    schema
+                };
+            }
+        }
     }
     return undefined;
 }
