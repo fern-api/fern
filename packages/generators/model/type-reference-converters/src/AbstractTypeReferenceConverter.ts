@@ -15,6 +15,7 @@ export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
         typeResolver: TypeResolver;
         treatUnknownAsAny: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 

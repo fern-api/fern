@@ -1,4 +1,10 @@
-import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy, HttpEndpoint, HttpResponse, ResponseError } from "@fern-fern/ir-sdk/api";
+import {
+    ErrorDiscriminationByPropertyStrategy,
+    ErrorDiscriminationStrategy,
+    HttpEndpoint,
+    HttpResponse,
+    ResponseError,
+} from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";

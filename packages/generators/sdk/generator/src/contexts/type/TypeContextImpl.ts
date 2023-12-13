@@ -76,6 +76,7 @@ export class TypeContextImpl implements TypeContext {
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
     }
 

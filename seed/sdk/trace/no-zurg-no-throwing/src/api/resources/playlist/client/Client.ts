@@ -33,9 +33,9 @@ export class Playlist {
     ): Promise<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        _queryParams["datetime"] = datetime.toISOString();
+        _queryParams["datetime"] = datetime;
         if (optionalDatetime != null) {
-            _queryParams["optionalDatetime"] = optionalDatetime.toISOString();
+            _queryParams["optionalDatetime"] = optionalDatetime;
         }
 
         const _response = await core.fetcher({

@@ -60,12 +60,14 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
             zurg: this.coreUtilities.zurg,
             typeResolver,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;

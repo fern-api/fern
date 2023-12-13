@@ -4,17 +4,15 @@ import { ts } from "ts-morph";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export declare namespace TypeReferenceToParsedTypeNodeConverter {
-    export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init {
-        includeSerdeLayer: boolean;
-    }
+    export interface Init extends AbstractTypeReferenceToTypeNodeConverter.Init {}
 }
 
 export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
     private includeSerdeLayer: boolean;
 
-    constructor({ includeSerdeLayer, ...superInit }: TypeReferenceToParsedTypeNodeConverter.Init) {
-        super({ ...superInit });
-        this.includeSerdeLayer = includeSerdeLayer;
+    constructor(superInit: TypeReferenceToParsedTypeNodeConverter.Init) {
+        super(superInit);
+        this.includeSerdeLayer = superInit.includeSerdeLayer;
     }
 
     protected override set(itemType: TypeReference): TypeReferenceNode {

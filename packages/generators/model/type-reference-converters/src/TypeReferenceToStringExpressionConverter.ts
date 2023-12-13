@@ -16,6 +16,13 @@ export declare namespace TypeReferenceToStringExpressionConverter {
 export class TypeReferenceToStringExpressionConverter extends AbstractTypeReferenceConverter<
     (reference: ts.Expression) => ts.Expression
 > {
+    private includeSerdeLayer: boolean;
+
+    constructor(superInit: TypeReferenceToStringExpressionConverter.Init) {
+        super(superInit);
+        this.includeSerdeLayer = superInit.includeSerdeLayer;
+    }
+
     public convertWithNullCheckIfOptional(type: TypeReference): (reference: ts.Expression) => ts.Expression {
         const isNullable = TypeReference._visit(type, {
             named: (typeName) => {
@@ -102,12 +109,15 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     }
 
     protected override dateTime(): (reference: ts.Expression) => ts.Expression {
-        return (reference) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(reference, "toISOString"),
-                undefined,
-                undefined
-            );
+        if (this.includeSerdeLayer) {
+            return (reference) =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(reference, "toISOString"),
+                    undefined,
+                    undefined
+                );
+        }
+        return (reference) => reference;
     }
 
     protected override optional(itemType: TypeReference): (reference: ts.Expression) => ts.Expression {
