@@ -56,6 +56,7 @@ import okhttp3.RequestBody;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
+    private final HttpEndpoint httpEndpoint;
     private final GeneratedWrappedRequest generatedWrappedRequest;
     private final ClientGeneratorContext clientGeneratorContext;
     private final SdkRequest sdkRequest;
@@ -82,6 +83,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 generatedClientOptions,
                 generatedEnvironmentsClass,
                 requestOptionsFile);
+        this.httpEndpoint = httpEndpoint;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
@@ -263,9 +265,25 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedObjectMapper generatedObjectMapper,
             String variableToJsonify,
             CodeBlock.Builder requestBodyCodeBlock) {
+        boolean isOptional = false;
+        if (this.httpEndpoint.getRequestBody().isPresent()) {
+                isOptional = this.httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+        }
+
         requestBodyCodeBlock
                 .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
-                .beginControlFlow("try")
+                .beginControlFlow("try");
+        if (isOptional) {
+                // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
+                requestBodyCodeBlock
+                        .addStatement(
+                                "$L = $T.create(\"\", null)",
+                                getOkhttpRequestBodyName(),
+                                RequestBody.class
+                        )
+                        .beginControlFlow("if ($N.isPresent())", variableToJsonify);
+        }
+        requestBodyCodeBlock
                 .addStatement(
                         "$L = $T.create($T.$L.writeValueAsBytes($L), $T.$L)",
                         getOkhttpRequestBodyName(),
@@ -275,7 +293,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         variableToJsonify,
                         clientGeneratorContext.getPoetClassNameFactory().getMediaTypesClassName(),
                         CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
-                .endControlFlow()
+                .endControlFlow();
+        if (isOptional) {
+                requestBodyCodeBlock.endControlFlow();
+        }
+        requestBodyCodeBlock
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)
                 .endControlFlow();

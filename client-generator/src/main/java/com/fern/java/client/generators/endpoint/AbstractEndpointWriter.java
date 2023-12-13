@@ -683,7 +683,7 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    private class HttpRequestBodyIsOptional implements HttpRequestBody.Visitor<Boolean> {
+    class HttpRequestBodyIsOptional implements HttpRequestBody.Visitor<Boolean> {
 
         @Override
         public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {

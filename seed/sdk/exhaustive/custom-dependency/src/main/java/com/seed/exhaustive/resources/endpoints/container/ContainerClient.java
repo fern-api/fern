@@ -273,8 +273,11 @@ public class ContainerClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
