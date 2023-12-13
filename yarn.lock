@@ -2305,13 +2305,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.5.5":
-  version: 29.5.5
-  resolution: "@types/jest@npm:29.5.5"
+"@types/jest@npm:^29.5.11":
+  version: 29.5.11
+  resolution: "@types/jest@npm:29.5.11"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 56e55cde9949bcc0ee2fa34ce5b7c32c2bfb20e53424aa4ff3a210859eeaaa3fdf6f42f81a3f655238039cdaaaf108b054b7a8602f394e6c52b903659338d8c6
+  checksum: f892a06ec9f0afa9a61cd7fa316ec614e21d4df1ad301b5a837787e046fcb40dfdf7f264a55e813ac6b9b633cb9d366bd5b8d1cea725e84102477b366df23fdd
   languageName: node
   linkType: hard
 
@@ -4312,7 +4312,7 @@ __metadata:
     "@babel/preset-typescript": ^7.17.12
     "@fern-fern/generator-exec-client": ^0.0.6
     "@fern-fern/ir-sdk": 0.0.2828
-    "@types/jest": ^29.5.5
+    "@types/jest": ^29.5.11
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.6
     "@types/url-join": ^4.0.1
