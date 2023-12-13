@@ -267,21 +267,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock.Builder requestBodyCodeBlock) {
         boolean isOptional = false;
         if (this.httpEndpoint.getRequestBody().isPresent()) {
-                isOptional = this.httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+            isOptional = this.httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
         }
 
         requestBodyCodeBlock
                 .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
                 .beginControlFlow("try");
         if (isOptional) {
-                // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
-                requestBodyCodeBlock
-                        .addStatement(
-                                "$L = $T.create(\"\", null)",
-                                getOkhttpRequestBodyName(),
-                                RequestBody.class
-                        )
-                        .beginControlFlow("if ($N.isPresent())", variableToJsonify);
+            // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
+            requestBodyCodeBlock
+                    .addStatement("$L = $T.create(\"\", null)", getOkhttpRequestBodyName(), RequestBody.class)
+                    .beginControlFlow("if ($N.isPresent())", variableToJsonify);
         }
         requestBodyCodeBlock
                 .addStatement(
@@ -295,7 +291,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
                 .endControlFlow();
         if (isOptional) {
-                requestBodyCodeBlock.endControlFlow();
+            requestBodyCodeBlock.endControlFlow();
         }
         requestBodyCodeBlock
                 .beginControlFlow("catch($T e)", Exception.class)

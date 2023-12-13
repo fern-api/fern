@@ -249,7 +249,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         private final GeneratedObjectMapper generatedObjectMapper;
         private final HttpEndpoint endpoint;
 
-        private RequestBodyInitializer(CodeBlock.Builder codeBlock, GeneratedObjectMapper generatedObjectMapper, HttpEndpoint endpoint) {
+        private RequestBodyInitializer(
+                CodeBlock.Builder codeBlock, GeneratedObjectMapper generatedObjectMapper, HttpEndpoint endpoint) {
             this.codeBlock = codeBlock;
             this.generatedObjectMapper = generatedObjectMapper;
             this.endpoint = endpoint;
@@ -259,20 +260,16 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         public Void visitTypeReference(HttpRequestBodyReference _typeReference) {
             boolean isOptional = false;
             if (this.endpoint.getRequestBody().isPresent()) {
-                    isOptional = this.endpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+                isOptional = this.endpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
             }
             codeBlock
                     .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
                     .beginControlFlow("try");
 
             if (isOptional) {
-                    codeBlock
-                            .addStatement(
-                                    "$L = $T.create(\"\", null)",
-                                    getOkhttpRequestBodyName(),
-                                    RequestBody.class
-                            )
-                            .beginControlFlow("if ($N.isPresent())", "request");
+                codeBlock
+                        .addStatement("$L = $T.create(\"\", null)", getOkhttpRequestBodyName(), RequestBody.class)
+                        .beginControlFlow("if ($N.isPresent())", "request");
             }
             codeBlock
                     .addStatement(
@@ -286,8 +283,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             CoreMediaTypesGenerator.APPLICATION_JSON_FIELD_CONSTANT)
                     .endControlFlow();
             if (isOptional) {
-                    codeBlock.endControlFlow();
-
+                codeBlock.endControlFlow();
             }
             codeBlock
                     .beginControlFlow("catch($T e)", Exception.class)
