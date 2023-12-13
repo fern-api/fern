@@ -48,6 +48,13 @@ export function convertStreamingOperation({
             const streamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
+                    sdkMethodName:
+                        operationContext.sdkMethodName != null
+                            ? {
+                                  groupName: operationContext.sdkMethodName.groupName,
+                                  methodName: operationContext.sdkMethodName.methodName + "_stream" // TODO: Make this portable between naming conventions.
+                              }
+                            : undefined,
                     operation: {
                         ...operationContext.operation,
                         requestBody: streamingRequestBody,
