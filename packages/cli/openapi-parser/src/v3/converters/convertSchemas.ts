@@ -159,6 +159,31 @@ export function convertSchemaObject(
         }
     }
 
+    // List of types that is undiscriminated union
+    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
+    if (isListOfStrings(schema.type) && schema.type.length > 1) {
+        const wrapVariantAsNullable = schema.type.includes("null");
+        const subtypes: OpenAPIV3.SchemaObject[] = schema.type
+            .filter((val) => val !== "null")
+            .map((type) => {
+                return {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    type: type as any,
+                    nullable: wrapVariantAsNullable
+                };
+            });
+        return convertUndiscriminatedOneOf({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
+            description,
+            wrapAsNullable,
+            context,
+            subtypes,
+            groupName
+        });
+    }
+
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
         const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
