@@ -1,5 +1,10 @@
+import { default as FormData } from "form-data";
 import qs from "qs";
 import { APIResponse } from "./APIResponse";
+
+if (typeof window === "undefined") {
+    global.fetch = require("node-fetch");
+}
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -14,7 +19,7 @@ export declare namespace Fetcher {
         timeoutMs?: number;
         maxRetries?: number;
         withCredentials?: boolean;
-        responseType?: "json" | "blob";
+        responseType?: "json" | "blob" | "streaming";
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -64,6 +69,14 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             ? `${args.url}?${qs.stringify(args.queryParameters, { arrayFormat: "repeat" })}`
             : args.url;
 
+    let body: BodyInit | undefined = undefined;
+    if (args.body instanceof FormData) {
+        // @ts-expect-error
+        body = args.body;
+    } else {
+        body = JSON.stringify(args.body);
+    }
+
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();
         let abortId = undefined;
@@ -73,7 +86,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         const response = await fetch(url, {
             method: args.method,
             headers,
-            body: args.body === undefined ? undefined : JSON.stringify(args.body),
+            body,
             signal: controller.signal,
             credentials: args.withCredentials ? "same-origin" : undefined,
         });
@@ -104,10 +117,12 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         let body: unknown;
         if (response.body != null && args.responseType === "blob") {
             body = await response.blob();
+        } else if (response.body != null && args.responseType === "streaming") {
+            body = response.body;
         } else if (response.body != null) {
             try {
                 body = await response.json();
-            } catch {
+            } catch (err) {
                 return {
                     ok: false,
                     error: {
@@ -123,6 +138,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             return {
                 ok: true,
                 body: body as R,
+                headers: response.headers,
             };
         } else {
             return {
@@ -140,6 +156,14 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
                 ok: false,
                 error: {
                     reason: "timeout",
+                },
+            };
+        } else if (error instanceof Error) {
+            return {
+                ok: false,
+                error: {
+                    reason: "unknown",
+                    errorMessage: error.message,
                 },
             };
         }

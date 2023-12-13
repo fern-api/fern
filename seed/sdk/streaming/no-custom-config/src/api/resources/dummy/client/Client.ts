@@ -6,6 +6,8 @@ import * as core from "../../../../core";
 import * as SeedStreaming from "../../..";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
+import * as stream from "stream";
+import * as errors from "../../../../errors";
 
 export declare namespace Dummy {
     interface Options {
@@ -25,7 +27,7 @@ export class Dummy {
         request: SeedStreaming.GenerateStreamRequestzs,
         requestOptions?: Dummy.RequestOptions
     ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
-        const _response = await core.streamingFetcher({
+        const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "generate-stream"),
             method: "POST",
             headers: {
@@ -33,20 +35,46 @@ export class Dummy {
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
             },
+            contentType: "application/json",
             body: await serializers.GenerateStreamRequestzs.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
-        return new core.Stream({
-            stream: _response.data,
-            terminator: "\n",
-            parse: async (data) => {
-                return await serializers.StreamResponse.parseOrThrow(data, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
+        if (_response.ok) {
+            return new core.Stream({
+                stream: _response.body,
+                terminator: "\n",
+                parse: async (data) => {
+                    return await serializers.StreamResponse.parseOrThrow(data, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    });
+                },
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedStreamingError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedStreamingError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
                 });
-            },
-        });
+            case "timeout":
+                throw new errors.SeedStreamingTimeoutError();
+            case "unknown":
+                throw new errors.SeedStreamingError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

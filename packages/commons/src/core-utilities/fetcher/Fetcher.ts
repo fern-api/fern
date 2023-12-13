@@ -38,9 +38,7 @@ export interface Fetcher {
         _getReferenceTo: () => ts.Expression;
         _invoke: (
             args: Fetcher.Args,
-            opts: {
-                referenceToFetcher: ts.Expression;
-            }
+            { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
         ) => ts.Expression;
     };
 
@@ -52,6 +50,7 @@ export interface Fetcher {
         SuccessfulResponse: {
             _build: (body: ts.Expression) => ts.ObjectLiteralExpression;
             body: string;
+            headers: string;
         };
 
         FailedResponse: {
@@ -63,6 +62,10 @@ export interface Fetcher {
     readonly Supplier: {
         _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
         get: (supplier: ts.Expression) => ts.Expression;
+    };
+
+    readonly getHeader: {
+        _invoke: (args: { referenceToResponseHeaders: ts.Expression; header: string }) => ts.Expression;
     };
 
     readonly FetchFunction: {
@@ -81,6 +84,6 @@ export declare namespace Fetcher {
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
-        responseType?: "json" | "blob";
+        responseType?: "json" | "blob" | "streaming";
     }
 }

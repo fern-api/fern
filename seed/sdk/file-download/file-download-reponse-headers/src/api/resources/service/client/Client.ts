@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import * as stream from "stream";
+import * as errors from "../../../../errors";
 
 export declare namespace Service {
     interface Options {
@@ -24,7 +25,7 @@ export class Service {
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
-        const _response = await core.streamingFetcher({
+        const _response = await core.fetcher<stream.Readable>({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: {
@@ -32,13 +33,39 @@ export class Service {
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
             },
+            contentType: "application/json",
+            responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
-        const _contentLength = core.getHeader(_response, "Content-Length");
-        return {
-            data: _response.data,
-            contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
-            contentType: core.getHeader(_response, "Content-Type"),
-        };
+        if (_response.ok) {
+            const _contentLength = core.getHeader(_response.headers ?? {}, "Content-Length");
+            return {
+                data: _response.body,
+                contentLengthInBytes: _contentLength != null ? Number(_contentLength) : undefined,
+                contentType: core.getHeader(_response.headers ?? {}, "Content-Type"),
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileDownloadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileDownloadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileDownloadTimeoutError();
+            case "unknown":
+                throw new errors.SeedFileDownloadError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

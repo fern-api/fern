@@ -2,9 +2,5 @@
   "extends": "../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [
-    { "path": "../core-utilities/fetcher" },
-    { "path": "../core-utilities/streaming-fetcher" },
-    { "path": "../core-utilities/zurg" }
-  ]
+  "references": [{ "path": "../core-utilities/fetcher" }, { "path": "../core-utilities/zurg" }]
 }

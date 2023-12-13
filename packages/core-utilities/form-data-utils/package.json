@@ -25,7 +25,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "form-data": "4.0.0"
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

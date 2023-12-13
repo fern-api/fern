@@ -199,16 +199,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
             endpoint: this.endpoint,
-            additionalHeaders: [
-                {
-                    header: "Content-Length",
-                    value: context.coreUtilities.formDataUtils.getFormDataContentLength({
-                        referenceToFormData: ts.factory.createIdentifier(
-                            GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
-                        ),
-                    }),
-                },
-            ],
         });
     }
 

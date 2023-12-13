@@ -14,14 +14,7 @@ import {
     VariableDeclaration,
     VariableId,
 } from "@fern-fern/ir-sdk/api";
-import {
-    getTextOfTsNode,
-    JavaScriptRuntime,
-    maybeAddDocs,
-    NpmPackage,
-    PackageId,
-    visitJavaScriptRuntime,
-} from "@fern-typescript/commons";
+import { getTextOfTsNode, JavaScriptRuntime, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
@@ -30,9 +23,8 @@ import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/Generated
 import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
-import { GeneratedBlobDownloadEndpointImplementation } from "./endpoints/GeneratedBlobDownloadEndpointImplementation";
 import { GeneratedEndpointImplementation } from "./endpoints/GeneratedEndpointImplementation";
-import { GeneratedReadableDownloadEndpointImplementation } from "./endpoints/GeneratedReadableDownloadEndpointImplementation";
+import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
@@ -68,7 +60,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static OPTIONS_PRIVATE_MEMBER = "_options";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
-    private static CUSTOM_STREAMING_FETCHER_PROPERTY_NAME = "streamingFetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
 
     private intermediateRepresentation: IntermediateRepresentation;
@@ -152,7 +143,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getGeneratedEndpointResponse = ({
                     response,
                 }: {
-                    response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
+                    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
                 }) => {
                     if (neverThrowErrors) {
                         return new GeneratedNonThrowingEndpointResponse({
@@ -170,6 +161,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             errorResolver,
                             response,
+                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
                         });
                     }
                 };
@@ -196,29 +188,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                 return HttpResponse._visit<GeneratedEndpointImplementation>(endpoint.response, {
                     fileDownload: (fileDownload) =>
-                        visitJavaScriptRuntime<GeneratedEndpointImplementation>(targetRuntime, {
-                            node: () =>
-                                new GeneratedReadableDownloadEndpointImplementation({
-                                    endpoint,
-                                    generatedSdkClientClass: this,
-                                    includeCredentialsOnCrossOriginRequests,
-                                    defaultTimeoutInSeconds,
-                                    request: getGeneratedEndpointRequest(),
-                                    includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
-                                    includeSerdeLayer,
-                                }),
-                            browser: () =>
-                                new GeneratedBlobDownloadEndpointImplementation({
-                                    endpoint,
-                                    generatedSdkClientClass: this,
-                                    includeCredentialsOnCrossOriginRequests,
-                                    defaultTimeoutInSeconds,
-                                    request: getGeneratedEndpointRequest(),
-                                    response: getGeneratedEndpointResponse({
-                                        response: HttpResponse.fileDownload(fileDownload),
-                                    }),
-                                    includeSerdeLayer,
-                                }),
+                        new GeneratedFileDownloadEndpointImplementation({
+                            endpoint,
+                            generatedSdkClientClass: this,
+                            includeCredentialsOnCrossOriginRequests,
+                            defaultTimeoutInSeconds,
+                            request: getGeneratedEndpointRequest(),
+                            response: getGeneratedEndpointResponse({
+                                response: HttpResponse.fileDownload(fileDownload),
+                            }),
+                            includeSerdeLayer,
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -230,7 +209,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
-                            response: streamingResponse,
+                            response: getGeneratedEndpointResponse({
+                                response: HttpResponse.streaming(streamingResponse),
+                            }),
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
@@ -759,31 +740,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 type: getTextOfTsNode(context.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
                 hasQuestionToken: true,
             });
-            if (this.doesSdkUseStreamingFetcher()) {
-                properties.push({
-                    name: GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME,
-                    type: getTextOfTsNode(
-                        context.coreUtilities.streamingFetcher.StreamingFetchFunction._getReferenceToType()
-                    ),
-                    hasQuestionToken: true,
-                });
-            }
         }
 
         return {
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
             properties,
         };
-    }
-
-    private doesSdkUseStreamingFetcher(): boolean {
-        if (this.intermediateRepresentation.sdkConfig.hasStreamingEndpoints) {
-            return true;
-        }
-        return visitJavaScriptRuntime(this.targetRuntime, {
-            node: () => this.intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
-            browser: () => false,
-        });
     }
 
     private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
@@ -875,18 +837,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         } else {
             return context.coreUtilities.fetcher.fetcher._getReferenceTo();
-        }
-    }
-
-    public getReferenceToStreamingFetcher(context: SdkContext): ts.Expression {
-        if (this.allowCustomFetcher) {
-            return ts.factory.createBinaryExpression(
-                this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                context.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo()
-            );
-        } else {
-            return context.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo();
         }
     }
 

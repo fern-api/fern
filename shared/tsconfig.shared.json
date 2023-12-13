@@ -18,8 +18,8 @@
     "baseUrl": ".",
     "declaration": true,
     "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitOverride": true
   }

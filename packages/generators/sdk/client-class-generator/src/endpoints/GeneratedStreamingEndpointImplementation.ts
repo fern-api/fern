@@ -1,9 +1,10 @@
-import { HttpEndpoint, StreamingResponse } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { Fetcher, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
 import {
@@ -16,7 +17,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: StreamingResponse;
+        response: GeneratedEndpointResponse;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
         defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -26,12 +27,11 @@ export declare namespace GeneratedStreamingEndpointImplementation {
 }
 
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
-    private static DATA_PARAMETER_NAME = "data";
-    private static RESPONSE_VARIABLE_NAME = "_response";
+    public static DATA_PARAMETER_NAME = "data";
 
     public readonly endpoint: HttpEndpoint;
-    private packageId: PackageId;
-    private response: StreamingResponse;
+
+    private response: GeneratedEndpointResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
@@ -39,7 +39,6 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private includeSerdeLayer: boolean;
 
     constructor({
-        packageId,
         endpoint,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
@@ -48,7 +47,6 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         request,
         includeSerdeLayer,
     }: GeneratedStreamingEndpointImplementation.Init) {
-        this.packageId = packageId;
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
@@ -69,16 +67,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     public getSignature(context: SdkContext): EndpointSignature {
         return {
             parameters: this.getEndpointParameters(context),
-            returnTypeWithoutPromise: context.coreUtilities.streamingFetcher.Stream._getReferenceToType(
-                this.getResponseType(context)
-            ),
+            returnTypeWithoutPromise: this.response.getReturnType(context),
         };
     }
 
     private getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
-        if (this.response.dataEventType.type === "text") {
-            throw new Error("Non-json responses are not supportd");
-        }
         return [
             ...this.request.getEndpointParameters(context),
             getRequestOptionsParameter({
@@ -92,7 +85,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
-        return [...this.getRequestBuilderStatements(context), ...this.invokeFetcher(context)];
+        return [
+            ...this.getRequestBuilderStatements(context),
+            ...this.invokeFetcher(context),
+            ...this.response.getReturnResponseStatements(context),
+        ];
     }
 
     public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
@@ -130,6 +127,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     this.generatedSdkClientClass
                 ),
             }),
+            responseType: "streaming",
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
         };
 
@@ -139,64 +137,17 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            GeneratedStreamingEndpointImplementation.RESPONSE_VARIABLE_NAME,
+                            this.response.getResponseVariableName(),
                             undefined,
                             undefined,
-                            context.coreUtilities.streamingFetcher.streamingFetcher._invoke(
-                                {
-                                    ...fetcherArgs,
-                                    abortController: undefined,
-                                },
-                                {
-                                    referenceToFetcher:
-                                        this.generatedSdkClientClass.getReferenceToStreamingFetcher(context),
-                                }
-                            )
+                            context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
+                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                cast: context.externalDependencies.stream.Readable._getReferenceToType(),
+                            })
                         ),
                     ],
                     ts.NodeFlags.Const
                 )
-            ),
-            ts.factory.createReturnStatement(
-                context.coreUtilities.streamingFetcher.Stream._construct({
-                    stream: ts.factory.createPropertyAccessChain(
-                        ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.RESPONSE_VARIABLE_NAME),
-                        undefined,
-                        ts.factory.createIdentifier(
-                            context.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties.data
-                        )
-                    ),
-                    terminator: this.response.terminator ?? "\n",
-                    parse: ts.factory.createArrowFunction(
-                        [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                        undefined,
-                        [
-                            ts.factory.createParameterDeclaration(
-                                undefined,
-                                undefined,
-                                undefined,
-                                GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                            ),
-                        ],
-                        undefined,
-                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                        ts.factory.createBlock(
-                            [
-                                ts.factory.createReturnStatement(
-                                    context.sdkEndpointTypeSchemas
-                                        .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
-                                        .deserializeStreamData({
-                                            context,
-                                            referenceToRawStreamData: ts.factory.createIdentifier(
-                                                GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                            ),
-                                        })
-                                ),
-                            ],
-                            true
-                        )
-                    ),
-                })
             ),
         ];
     }
@@ -207,13 +158,5 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         return this.request.getReferenceToQueryParameter(queryParameterKey, context);
-    }
-
-    public getResponseType(context: SdkContext): ts.TypeNode {
-        const responseDataEventType = this.response.dataEventType;
-        if (responseDataEventType.type === "text") {
-            throw new Error("Cannot deserialize non-json stream data");
-        }
-        return context.type.getReferenceToType(responseDataEventType.json).typeNode;
     }
 }

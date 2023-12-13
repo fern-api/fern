@@ -9,7 +9,6 @@ export declare namespace SeedStreamingClient {
     interface Options {
         environment: core.Supplier<string>;
         fetcher?: core.FetchFunction;
-        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {

@@ -13,8 +13,13 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         originalPathOnDocker: "/assets/fetcher" as const,
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
+            dependencyManager.addDependency("form-data", "4.0.0");
+            dependencyManager.addDependency("node-fetch", "2.7.0");
             dependencyManager.addDependency("qs", "6.11.2");
             dependencyManager.addDependency("@types/qs", "6.9.8", {
+                type: DependencyType.DEV,
+            });
+            dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
                 type: DependencyType.DEV,
             });
         },
@@ -65,7 +70,10 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
 
     public readonly fetcher = {
         _getReferenceTo: this.withExportedName("fetcher", (fetcher) => () => fetcher.getExpression()),
-        _invoke: (args: Fetcher.Args, { referenceToFetcher }: { referenceToFetcher: ts.Expression }): ts.Expression => {
+        _invoke: (
+            args: Fetcher.Args,
+            { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
+        ): ts.Expression => {
             const properties: ts.PropertyAssignment[] = [
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.url, args.url),
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method),
@@ -123,11 +131,9 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             }
 
             return ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(
-                    referenceToFetcher,
-                    args.responseType === "blob" ? [ts.factory.createTypeReferenceNode("Blob")] : undefined,
-                    [ts.factory.createObjectLiteralExpression(properties, true)]
-                )
+                ts.factory.createCallExpression(referenceToFetcher, cast != null ? [cast] : [], [
+                    ts.factory.createObjectLiteralExpression(properties, true),
+                ])
             );
         },
     };
@@ -151,6 +157,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     true
                 ),
             body: "body",
+            headers: "headers",
         },
 
         FailedResponse: {
@@ -186,6 +193,24 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         _getReferenceToType: this.withExportedName(
             "FetchFunction",
             (FetchFunction) => () => FetchFunction.getTypeNode()
+        ),
+    };
+
+    public getHeader = {
+        _invoke: this.withExportedName(
+            "getHeader",
+            (getHeader) =>
+                ({
+                    referenceToResponseHeaders,
+                    header,
+                }: {
+                    referenceToResponseHeaders: ts.Expression;
+                    header: string;
+                }) =>
+                    ts.factory.createCallExpression(getHeader.getExpression(), undefined, [
+                        referenceToResponseHeaders,
+                        ts.factory.createStringLiteral(header),
+                    ])
         ),
     };
 

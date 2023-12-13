@@ -5,6 +5,7 @@ import {
     DependencyManager,
     ExternalDependencies,
     ImportsManager,
+    JavaScriptRuntime,
     NpmPackage,
 } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
@@ -93,6 +94,7 @@ export declare namespace SdkContextImpl {
         includeSerdeLayer: boolean;
         isForSnippet: boolean;
         npmPackage: NpmPackage | undefined;
+        targetRuntime: JavaScriptRuntime;
     }
 }
 
@@ -118,6 +120,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly environments: EnvironmentsContext;
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
+    public readonly targetRuntime: JavaScriptRuntime;
 
     constructor({
         npmPackage,
@@ -158,7 +161,9 @@ export class SdkContextImpl implements SdkContext {
         coreUtilitiesManager,
         fernConstants,
         includeSerdeLayer,
+        targetRuntime,
     }: SdkContextImpl.Init) {
+        this.targetRuntime = targetRuntime;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
             typeDeclarationReferencer.namespaceExport != null
                 ? camelCase(typeDeclarationReferencer.namespaceExport)

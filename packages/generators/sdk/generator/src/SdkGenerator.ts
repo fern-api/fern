@@ -699,6 +699,7 @@ export class SdkGenerator {
             timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
+            targetRuntime: this.config.targetRuntime,
         });
     }
 }

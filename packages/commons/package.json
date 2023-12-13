@@ -32,7 +32,6 @@
     "@fern-api/logging-execa": "0.0.248-7-gb4189be0",
     "@fern-fern/ir-sdk": "0.0.3088",
     "@fern-typescript/fetcher": "workspace:*",
-    "@fern-typescript/streaming-fetcher": "workspace:*",
     "@fern-typescript/zurg": "workspace:*",
     "decompress": "^4.2.1",
     "esutils": "^2.0.3",

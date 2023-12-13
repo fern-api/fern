@@ -183,6 +183,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                cast: undefined,
                             })
                         ),
                     ],

@@ -1,7 +1,8 @@
-import { Readable } from "stream";
+import { Readable } from "node:stream";
+import { ReadableStream } from "stream/web";
 
 export class Stream<T> implements AsyncIterable<T> {
-    private stream: Readable;
+    private stream: Readable | ReadableStream;
     private parse: (val: unknown) => Promise<T>;
     private terminator: string;
 
@@ -10,7 +11,7 @@ export class Stream<T> implements AsyncIterable<T> {
         parse,
         terminator,
     }: {
-        stream: Readable;
+        stream: Readable | ReadableStream;
         parse: (val: unknown) => Promise<T>;
         terminator: string;
     }) {

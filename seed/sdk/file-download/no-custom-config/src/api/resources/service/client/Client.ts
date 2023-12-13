@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import * as stream from "stream";
+import * as errors from "../../../../errors";
 
 export declare namespace Service {
     interface Options {
@@ -20,7 +21,7 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
     public async downloadFile(requestOptions?: Service.RequestOptions): Promise<stream.Readable> {
-        const _response = await core.streamingFetcher({
+        const _response = await core.fetcher<stream.Readable>({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: {
@@ -28,8 +29,34 @@ export class Service {
                 "X-Fern-SDK-Name": "",
                 "X-Fern-SDK-Version": "0.0.1",
             },
+            contentType: "application/json",
+            responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
-        return _response.data;
+        if (_response.ok) {
+            return _response.body;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileDownloadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileDownloadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileDownloadTimeoutError();
+            case "unknown":
+                throw new errors.SeedFileDownloadError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

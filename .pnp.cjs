@@ -61,8 +61,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core-utilities/form-data-utils"\
       },\
       {\
-        "name": "@fern-typescript/streaming-fetcher",\
-        "reference": "workspace:packages/core-utilities/streaming-fetcher"\
+        "name": "@fern-typescript/stream-utils",\
+        "reference": "workspace:packages/core-utilities/stream-utils"\
       },\
       {\
         "name": "@fern-typescript/zurg",\
@@ -216,7 +216,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/sdk-generator", ["workspace:packages/generators/sdk/generator"]],\
       ["@fern-typescript/sdk-generator-cli", ["workspace:packages/generators/sdk/cli"]],\
       ["@fern-typescript/sdk-inlined-request-schema-generator", ["workspace:packages/generators/sdk/sdk-inlined-request-body-schema-generator"]],\
-      ["@fern-typescript/streaming-fetcher", ["workspace:packages/core-utilities/streaming-fetcher"]],\
+      ["@fern-typescript/stream-utils", ["workspace:packages/core-utilities/stream-utils"]],\
       ["@fern-typescript/type-generator", ["workspace:packages/generators/model/type-generator"]],\
       ["@fern-typescript/type-reference-converters", ["workspace:packages/generators/model/type-reference-converters"]],\
       ["@fern-typescript/type-reference-example-generator", ["workspace:packages/generators/model/type-reference-example-generator"]],\
@@ -3735,7 +3735,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3088"],\
             ["@fern-typescript/fetcher", "workspace:packages/core-utilities/fetcher"],\
-            ["@fern-typescript/streaming-fetcher", "workspace:packages/core-utilities/streaming-fetcher"],\
             ["@fern-typescript/zurg", "workspace:packages/core-utilities/zurg"],\
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/esutils", "npm:2.0.0"],\
@@ -4103,10 +4102,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/node-fetch", "npm:2.6.9"],\
             ["@types/qs", "npm:6.9.8"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.52.0"],\
+            ["form-data", "npm:4.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["node-fetch", "virtual:a99eebc847025087907e2c3deb9a1a74aa2051802977819ddc321d0233c028f413487b60f656b269a8d8762401a9f44f121e9587251c5d9c55d4a3b5fa7cacb9#npm:2.7.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["qs", "npm:6.11.2"],\
@@ -4446,24 +4448,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-typescript/streaming-fetcher", [\
-        ["workspace:packages/core-utilities/streaming-fetcher", {\
-          "packageLocation": "./packages/core-utilities/streaming-fetcher/",\
+      ["@fern-typescript/stream-utils", [\
+        ["workspace:packages/core-utilities/stream-utils", {\
+          "packageLocation": "./packages/core-utilities/stream-utils/",\
           "packageDependencies": [\
-            ["@fern-typescript/streaming-fetcher", "workspace:packages/core-utilities/streaming-fetcher"],\
+            ["@fern-typescript/stream-utils", "workspace:packages/core-utilities/stream-utils"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.22.20"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/qs", "npm:6.9.8"],\
-            ["axios", "npm:0.27.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.52.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["qs", "npm:6.11.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
           ],\
           "linkType": "SOFT"\
@@ -5573,6 +5572,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-node-npm-18.7.18-5bcc3f839f-8aec61f0f9.zip/node_modules/@types/node/",\
           "packageDependencies": [\
             ["@types/node", "npm:18.7.18"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/node-fetch", [\
+        ["npm:2.6.9", {\
+          "packageLocation": "./.yarn/cache/@types-node-fetch-npm-2.6.9-435765ff6f-212269aff4.zip/node_modules/@types/node-fetch/",\
+          "packageDependencies": [\
+            ["@types/node-fetch", "npm:2.6.9"],\
+            ["@types/node", "npm:18.6.0"],\
+            ["form-data", "npm:4.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10922,6 +10932,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["node-fetch", [\
+        ["npm:2.7.0", {\
+          "packageLocation": "./.yarn/cache/node-fetch-npm-2.7.0-587d57004e-d76d2f5edb.zip/node_modules/node-fetch/",\
+          "packageDependencies": [\
+            ["node-fetch", "npm:2.7.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:a99eebc847025087907e2c3deb9a1a74aa2051802977819ddc321d0233c028f413487b60f656b269a8d8762401a9f44f121e9587251c5d9c55d4a3b5fa7cacb9#npm:2.7.0", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-7f1e224acf/0/cache/node-fetch-npm-2.7.0-587d57004e-d76d2f5edb.zip/node_modules/node-fetch/",\
+          "packageDependencies": [\
+            ["node-fetch", "virtual:a99eebc847025087907e2c3deb9a1a74aa2051802977819ddc321d0233c028f413487b60f656b269a8d8762401a9f44f121e9587251c5d9c55d4a3b5fa7cacb9#npm:2.7.0"],\
+            ["@types/encoding", null],\
+            ["encoding", null],\
+            ["whatwg-url", "npm:5.0.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/encoding",\
+            "encoding"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["node-gyp", [\
         ["npm:9.0.0", {\
           "packageLocation": "./.yarn/unplugged/node-gyp-npm-9.0.0-0eccfca4d1/node_modules/node-gyp/",\
@@ -12605,6 +12638,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["tr46", [\
+        ["npm:0.0.3", {\
+          "packageLocation": "./.yarn/cache/tr46-npm-0.0.3-de53018915-726321c5ea.zip/node_modules/tr46/",\
+          "packageDependencies": [\
+            ["tr46", "npm:0.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ts-loader", [\
         ["npm:9.3.1", {\
           "packageLocation": "./.yarn/cache/ts-loader-npm-9.3.1-634433ef6a-462a8ac315.zip/node_modules/ts-loader/",\
@@ -13065,6 +13107,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["webidl-conversions", [\
+        ["npm:3.0.1", {\
+          "packageLocation": "./.yarn/cache/webidl-conversions-npm-3.0.1-60310f6a2b-c92a0a6ab9.zip/node_modules/webidl-conversions/",\
+          "packageDependencies": [\
+            ["webidl-conversions", "npm:3.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["webpack", [\
         ["npm:5.76.0", {\
           "packageLocation": "./.yarn/cache/webpack-npm-5.76.0-72661ef791-e897b3b340.zip/node_modules/webpack/",\
@@ -13312,6 +13363,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/webpack-sources-npm-3.2.3-6bfb5d9563-989e401b9f.zip/node_modules/webpack-sources/",\
           "packageDependencies": [\
             ["webpack-sources", "npm:3.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["whatwg-url", [\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/whatwg-url-npm-5.0.0-374fb45e60-b8daed4ad3.zip/node_modules/whatwg-url/",\
+          "packageDependencies": [\
+            ["whatwg-url", "npm:5.0.0"],\
+            ["tr46", "npm:0.0.3"],\
+            ["webidl-conversions", "npm:3.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

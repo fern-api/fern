@@ -1,5 +1,5 @@
 import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, StreamingFetcher } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
@@ -8,7 +8,7 @@ export interface GeneratedEndpointRequest {
     getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[];
     getFetcherRequestArgs: (
         context: SdkContext
-    ) => Pick<Fetcher.Args & StreamingFetcher.Args, "headers" | "queryParameters" | "body" | "contentType">;
+    ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType">;
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
     getExampleEndpointParameters({

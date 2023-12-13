@@ -8,7 +8,7 @@ COPY packages/generators/sdk/cli/node-docker/cache_heavy_dependencies.sh /
 RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
 
 COPY packages/core-utilities/fetcher/src/ /assets/fetcher
-COPY packages/core-utilities/streaming-fetcher/src/ /assets/streaming-fetcher
+COPY packages/core-utilities/stream-utils/src/ /assets/stream-utils
 COPY packages/core-utilities/form-data-utils/src/ /assets/form-data-utils
 COPY packages/core-utilities/callback-queue/src/ /assets/callback-queue
 COPY packages/core-utilities/auth/src/ /assets/auth

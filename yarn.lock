@@ -2075,7 +2075,6 @@ __metadata:
     "@fern-api/logging-execa": 0.0.248-7-gb4189be0
     "@fern-fern/ir-sdk": 0.0.3088
     "@fern-typescript/fetcher": "workspace:*"
-    "@fern-typescript/streaming-fetcher": "workspace:*"
     "@fern-typescript/zurg": "workspace:*"
     "@types/decompress": ^4.2.7
     "@types/esutils": ^2.0.0
@@ -2417,10 +2416,13 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
+    "@types/node-fetch": ^2.6.9
     "@types/qs": ^6.9.8
     depcheck: ^1.4.3
     eslint: ^8.52.0
+    form-data: ^4.0.0
     jest: ^28.1.3
+    node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     qs: ^6.11.2
@@ -2439,7 +2441,7 @@ __metadata:
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.52.0
-    form-data: 4.0.0
+    form-data: ^4.0.0
     jest: ^28.1.3
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2735,23 +2737,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/streaming-fetcher@workspace:*, @fern-typescript/streaming-fetcher@workspace:packages/core-utilities/streaming-fetcher":
+"@fern-typescript/stream-utils@workspace:packages/core-utilities/stream-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/streaming-fetcher@workspace:packages/core-utilities/streaming-fetcher"
+  resolution: "@fern-typescript/stream-utils@workspace:packages/core-utilities/stream-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
-    "@types/qs": ^6.9.8
-    axios: 0.27.2
     depcheck: ^1.4.3
     eslint: ^8.52.0
     jest: ^28.1.3
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    qs: ^6.11.2
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -3739,6 +3738,16 @@ __metadata:
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
   checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
+  languageName: node
+  linkType: hard
+
+"@types/node-fetch@npm:^2.6.9":
+  version: 2.6.9
+  resolution: "@types/node-fetch@npm:2.6.9"
+  dependencies:
+    "@types/node": "*"
+    form-data: ^4.0.0
+  checksum: 212269aff4b251477c13c33cee6cea23e4fd630be6c0bfa3714968cce7efd7055b52f2f82aab3394596d8c758335cc802e7c5fa3f775e7f2a472fa914c90dc15
   languageName: node
   linkType: hard
 
@@ -6213,7 +6222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:4.0.0, form-data@npm:^4.0.0":
+"form-data@npm:^4.0.0":
   version: 4.0.0
   resolution: "form-data@npm:4.0.0"
   dependencies:
@@ -8126,6 +8135,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-fetch@npm:2.7.0":
+  version: 2.7.0
+  resolution: "node-fetch@npm:2.7.0"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: d76d2f5edb451a3f05b15115ec89fc6be39de37c6089f1b6368df03b91e1633fd379a7e01b7ab05089a25034b2023d959b47e59759cb38d88341b2459e89d6e5
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 9.0.0
   resolution: "node-gyp@npm:9.0.0"
@@ -9542,6 +9565,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tr46@npm:~0.0.3":
+  version: 0.0.3
+  resolution: "tr46@npm:0.0.3"
+  checksum: 726321c5eaf41b5002e17ffbd1fb7245999a073e8979085dacd47c4b4e8068ff5777142fc6726d6ca1fd2ff16921b48788b87225cbc57c72636f6efa8efbffe3
+  languageName: node
+  linkType: hard
+
 "ts-loader@npm:^9.3.1":
   version: 9.3.1
   resolution: "ts-loader@npm:9.3.1"
@@ -9881,6 +9911,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webidl-conversions@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "webidl-conversions@npm:3.0.1"
+  checksum: c92a0a6ab95314bde9c32e1d0a6dfac83b578f8fa5f21e675bc2706ed6981bc26b7eb7e6a1fab158e5ce4adf9caa4a0aee49a52505d4d13c7be545f15021b17c
+  languageName: node
+  linkType: hard
+
 "webpack-bundle-analyzer@npm:4.9.1":
   version: 4.9.1
   resolution: "webpack-bundle-analyzer@npm:4.9.1"
@@ -9991,6 +10028,16 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: e897b3b34068222fe910d8894837cbf39f5e66b4772fe8d24dfc0090cd13e19337a3a757a97bc185be6c64d9d5a7b1ae372821b65a6079ce8c7ceba606edb409
+  languageName: node
+  linkType: hard
+
+"whatwg-url@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "whatwg-url@npm:5.0.0"
+  dependencies:
+    tr46: ~0.0.3
+    webidl-conversions: ^3.0.0
+  checksum: b8daed4ad3356cc4899048a15b2c143a9aed0dfae1f611ebd55073310c7b910f522ad75d727346ad64203d7e6c79ef25eafd465f4d12775ca44b90fa82ed9e2c
   languageName: node
   linkType: hard
 
