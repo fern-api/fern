@@ -5,6 +5,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
+import { getApplicationJsonSchemaFromMedia } from "./getApplicationJsonSchema";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const APPLICATION_JSON_REGEX = /^application.*json$/;
@@ -34,30 +35,12 @@ interface ParsedApplicationJsonRequest {
 export function getApplicationJsonRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): ParsedApplicationJsonRequest | undefined {
-    for (const contentType of Object.keys(requestBody.content)) {
-        if (contentType.includes(APPLICATION_JSON_CONTENT) || APPLICATION_JSON_REGEX.test(contentType)) {
-            const schema = getSchemaForContentType({
-                contentType,
-                media: requestBody.content
-            });
-            if (schema != null) {
-                return {
-                    schema
-                };
-            }
-        }
-    }
-    return undefined;
-}
-
-function getSchemaForContentType({
-    contentType,
-    media
-}: {
-    contentType: string;
-    media: Record<string, OpenAPIV3.MediaTypeObject>;
-}): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return media[contentType]?.schema;
+    const schema = getApplicationJsonSchemaFromMedia(requestBody.content);
+    return schema != null
+        ? {
+              schema
+          }
+        : schema;
 }
 
 function multipartRequestHasFile(
